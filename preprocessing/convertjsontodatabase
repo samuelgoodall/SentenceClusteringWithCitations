@@ -1,0 +1,56 @@
+import sqlite3
+from sqlite3 import Error
+
+def create_connection(db_file):
+    """ create a database connection to a SQLite database """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+        return conn
+    except Error as e:
+        print(e)
+
+def create_table(conn,create_table_sql):
+    try:
+        c = conn.cursor()
+        c.execute(create_table_sql)
+    except Error as e:
+        print(e)
+
+def create_meta_data_entry(conn, meta_data_entry):
+    """
+    Create a new meta_data_entry
+    :param conn:
+    :param meta_data_entry:
+    :return:
+    """
+
+    sql = ''' INSERT INTO meta_data_entrys(id,submitter,authors,title,comments,journal_ref,doi,report_no,categories,license,abstract,update_date)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?) '''
+    cur = conn.cursor()
+    cur.execute(sql, meta_data_entry)
+    conn.commit()
+
+    return cur.lastrowid
+
+if __name__ == '__main__':
+
+    conn = create_connection(r"testi.db")
+    sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
+                                            id text PRIMARY KEY,
+                                            submitter text NOT NULL,
+                                            authors text NOT NULL,
+                                            title text NOT NULL,
+                                            comments text ,
+                                            journal_ref text,
+                                            doi text,
+                                            report_no text,
+                                            categories text,
+                                            license text,
+                                            abstract text,
+                                            update_date text
+                                        ); """
+
+    create_table(conn,sql_create_projects_table)
+    create_meta_data_entry(conn,meta_data_entry=("a","b","c","d","","","","","","","",""))
