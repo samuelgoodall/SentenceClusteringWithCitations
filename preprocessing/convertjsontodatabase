@@ -1,5 +1,9 @@
+import json
 import sqlite3
 from sqlite3 import Error
+
+from tqdm import tqdm
+
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
@@ -35,7 +39,6 @@ def create_meta_data_entry(conn, meta_data_entry):
     return cur.lastrowid
 
 if __name__ == '__main__':
-
     conn = create_connection(r"testi.db")
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
                                             id text PRIMARY KEY,
@@ -53,4 +56,26 @@ if __name__ == '__main__':
                                         ); """
 
     create_table(conn,sql_create_projects_table)
-    create_meta_data_entry(conn,meta_data_entry=("a","b","c","d","","","","","","","",""))
+    #create_meta_data_entry(conn,meta_data_entry=("c","b","c","d","","","","","","","",""))
+    import ijson
+
+    user_to_repos = {}
+    file_path = "../data/arxiv-metadata-oai-snapshot.json"
+    #count number of files for tqdm
+    with open(file_path, 'r') as fp:
+        for count, line in enumerate(fp):
+            pass
+    print('Total Lines', count + 1)
+
+
+    print("openingFile")
+    with tqdm(total=count) as pbar:
+        with open(file_path) as f:
+            for line in tqdm(f):
+                j_content = json.loads(line)
+                #print("j_content",j_content["id"])
+                pbar.update(1)
+                #create_meta_data_entry(conn, meta_data_entry=("", "b", "c", "d", "", "", "", "", "", "", "", ""))
+
+
+
