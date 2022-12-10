@@ -19,6 +19,14 @@ class TarExtractor:
     def __create_tar_process(self, params: str, file_name: str, file_folder_path: str):
         return subprocess.run(["tar", params, file_name, "--directory", file_folder_path], capture_output=True)
 
+    def __analyse_process(self, process):
+        fail_counter, success_counter = 0, 0
+        if process.returncode == 0 or process.returncode == 2:
+            success_counter = success_counter + 1
+        else:
+            fail_counter = fail_counter + 1
+        return (success_counter, fail_counter)
+
     def create_extract_folder_path(self) -> None:
         if not os.path.exists(self.extract_folder_path) and self.extract_folder_path != "":
             os.mkdir(self.extract_folder_path)
