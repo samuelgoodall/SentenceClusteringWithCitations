@@ -8,6 +8,17 @@ class TarExtractor:
         self.extract_folder_path = extract_folder_path
         self.dataset_folder_path = dataset_folder_path
 
+    def extract_file_into_folder(self, file_name: str, params: str, ending: str) -> tuple:
+        tar_process = any
+        if file_name.endswith(ending):
+            if ending in file_name:
+                file_folder_path = self.__create_file_folder_path(
+                    file_name, ending)
+                process = self.__create_tar_process(
+                    params, file_name, file_folder_path)
+                return self.__analyse_process(process)
+        return (0, 0)
+
     def __create_file_folder_path(self, file_name: str, ending: str) -> str:
         file_folder_path = file_name.replace(ending, "")
         if not file_folder_path.startswith(self.extract_folder_path):
