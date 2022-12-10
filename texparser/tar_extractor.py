@@ -38,6 +38,9 @@ class TarExtractor:
             fail_counter = fail_counter + 1
         return (success_counter, fail_counter)
 
+    def untargz_file_into_folder(self, filename: str):
+        return self.extract_file_into_folder(filename, "xf", ".gz")
+
     def create_extract_folder_path(self) -> None:
         if not os.path.exists(self.extract_folder_path) and self.extract_folder_path != "":
             os.mkdir(self.extract_folder_path)
