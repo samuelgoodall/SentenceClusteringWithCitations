@@ -41,6 +41,9 @@ class TarExtractor:
     def untargz_file_into_folder(self, filename: str):
         return self.extract_file_into_folder(filename, "xf", ".gz")
 
+    def untar_file_into_folder(self, file_name: str):
+        return self.extract_file_into_folder(file_name, "xvf", ".tar")
+
     def create_extract_folder_path(self) -> None:
         if not os.path.exists(self.extract_folder_path) and self.extract_folder_path != "":
             os.mkdir(self.extract_folder_path)
