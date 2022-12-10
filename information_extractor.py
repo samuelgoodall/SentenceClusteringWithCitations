@@ -16,6 +16,13 @@ class InformationExtractor:
     __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background", "\section{Theory", "\section{Overview",
                               "\section{Literature Review", "\section{Relevant Research", "\section{Literatur Comparison", "\section{Preliminaries"]
 
+    def extract_all(self, folder_path: str) -> dict:
+        for paper in os.listdir(folder_path):
+            absolute_paper_path = folder_path + "/" + paper
+            self.check_pdf(paper)
+            self.check_and_handle_folder(absolute_paper_path)
+        return self.extracted_information
+
     def check_pdf(self, paper: str) -> None:
         if paper.endswith(".pdf"):
             self.extracted_information["pdf_only"] = self.extracted_information["pdf_only"] + 1
