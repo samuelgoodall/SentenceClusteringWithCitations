@@ -7,3 +7,7 @@ class TarExtractorTest(unittest.TestCase):
         self.tar_extractor_with_extract_folder = TarExtractor("content", "extract")
         self.tar_extractor_without_extract_folder = TarExtractor("content", "")
 
+    def test_create_extract_folder_path(self):
+        self.tar_extractor_with_extract_folder.create_extract_folder_path()
+        filenames = os.listdir(".")
+        self.assertIn("extract", filenames)
