@@ -56,8 +56,6 @@ if __name__ == '__main__':
                                         ); """
 
     create_table(conn,sql_create_projects_table)
-    #create_meta_data_entry(conn,meta_data_entry=("c","b","c","d","","","","","","","",""))
-    import ijson
 
     user_to_repos = {}
     file_path = "../data/arxiv-metadata-oai-snapshot.json"
@@ -73,9 +71,8 @@ if __name__ == '__main__':
         with open(file_path) as f:
             for line in tqdm(f):
                 j_content = json.loads(line)
-                #print("j_content",j_content["id"])
                 pbar.update(1)
-                #create_meta_data_entry(conn, meta_data_entry=("", "b", "c", "d", "", "", "", "", "", "", "", ""))
+                create_meta_data_entry(conn, meta_data_entry=(j_content["id"], j_content["submitter"], j_content["authors"], j_content["title"], j_content["comments"], j_content["journal-ref"], j_content["doi"], j_content["report-no"], j_content["categories"], j_content["license"], j_content["abstract"], j_content["update_date"]))
 
 
 
