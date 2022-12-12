@@ -1,6 +1,10 @@
-from tar_extractor import TarExtractor
-import unittest
 import os
+import sys
+import unittest
+
+sys.path.append(".")
+from texparser.tar_extractor import TarExtractor
+
 
 class TarExtractorTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -16,4 +20,12 @@ class TarExtractorTest(unittest.TestCase):
         old_filenames = os.listdir(".")
         self.tar_extractor_without_extract_folder.create_extract_folder_path()
         filenames = os.listdir(".")
-        self.assertEqual(old_filenames, filenames)
+        self.assertEqual(old_filenames, filenames) 
+
+    def tearDown(self) -> None:
+        if os.path.exists(self.tar_extractor_with_extract_folder.extract_folder_path):
+            os.rmdir(self.tar_extractor_with_extract_folder.extract_folder_path)
+        if os.path.exists(self.tar_extractor_with_extract_folder.dataset_folder_path):
+            os.rmdir(self.tar_extractor_with_extract_folder.dataset_folder_path)
+
+unittest.main()
