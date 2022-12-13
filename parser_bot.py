@@ -16,3 +16,10 @@ class ParserBot:
             self.dataset_folder_path, self.extract_folder_path)
         self.informationExtractor = InformationExtractor()
 
+    def log_progress(self, data: dict, count: int) -> None:
+        if count % 20 == 0:
+            with open("backup.json", "a") as backup_file:
+                backup_file.writelines(json.dumps(data, indent=7))
+            with open("save.json", "w") as backup_file:
+                backup_file.writelines(json.dumps(data, indent=7))
+
