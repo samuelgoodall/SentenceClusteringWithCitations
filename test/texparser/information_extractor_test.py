@@ -18,3 +18,8 @@ class InformationExtractorTest(unittest.TestCase):
         test_string = self.boiler_plate + self.next_section_symbol
         related_work_length = self.information_extractor._InformationExtractor__length_related_work(test_string, -1)
         self.assertEqual(-1, related_work_length)
+
+    def test_length_related_work_no_following_section(self):
+        test_string = self.related_work_symbol + self.boiler_plate
+        related_work_length = self.information_extractor._InformationExtractor__length_related_work(test_string, 0)
+        self.assertEqual(len(test_string) - 3, related_work_length)
