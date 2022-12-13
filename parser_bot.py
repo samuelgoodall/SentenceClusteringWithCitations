@@ -43,3 +43,8 @@ class ParserBot:
             with open("save.json", "w") as backup_file:
                 backup_file.writelines(json.dumps(data, indent=7))
 
+
+if __name__ == "__main__":
+    parser = ParserBot("content/", "extract/")
+    print("Parser started")
+    parser.run()
