@@ -29,3 +29,6 @@ class InformationExtractorTest(unittest.TestCase):
         related_work_length = self.information_extractor._InformationExtractor__length_related_work(test_string, 0)
         real_related_work_length = len(self.boiler_plate)
         self.assertEqual(real_related_work_length, related_work_length)
+
+if __name__ == "__main__":  
+    unittest.main()
