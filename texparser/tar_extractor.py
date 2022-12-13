@@ -1,25 +1,12 @@
+import subprocess
 import os
 import shutil
-import subprocess
 
 
 class TarExtractor:
     def __init__(self, dataset_folder_path: str, extract_folder_path: str = "") -> None:
         self.extract_folder_path = extract_folder_path
         self.dataset_folder_path = dataset_folder_path
-
-    def extract_folder(self, folder: str, func) -> tuple:
-        success_counter, fail_counter = 0, 0
-        filenames = os.listdir(folder)
-        for filename in filenames:
-            try:
-                current_success_counter, current_fail_counter = (
-                    func(folder + "/" + filename))
-                success_counter += current_success_counter
-                fail_counter += current_fail_counter
-            except Exception as e:
-                print(e)
-        return (success_counter, fail_counter)
 
     def extract_file_into_folder(self, file_name: str, params: str, ending: str) -> tuple:
         tar_process = any
