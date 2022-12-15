@@ -37,8 +37,13 @@ def create_meta_data_entry(conn, meta_data_entry):
 
     return cur.lastrowid
 
-def write_to_meta_database(count:int):
-    # write to metadatabase
+def write_to_meta_database(count:int, conn):
+    """
+    writes data to meta database
+    :param conn: conection for to the database
+    :param count: number of items in json in order to display tqdm
+    :return:
+    """
     print("openingFile")
     with tqdm(total=count) as pbar:
         with open(file_path) as f:
@@ -51,11 +56,15 @@ def write_to_meta_database(count:int):
                 j_content["categories"], j_content["license"], j_content["abstract"], j_content["update_date"]))
 
 def count_entries_in_json(file_path):
-    # count number of files for tqdm
+    """
+    counts the entries in json
+    :param file_path: conection for to the database
+    :return:
+    """
     with open(file_path, 'r') as fp:
         for count, line in enumerate(fp):
             pass
-    print('Total Lines', count + 1)
+    return count
 
 if __name__ == '__main__':
     file_path = "../data/arxiv-metadata-oai-snapshot.json"
@@ -80,7 +89,7 @@ if __name__ == '__main__':
 
     count = count_entries_in_json(file_path)
 
-    write_to_meta_database(count)
+    write_to_meta_database(count,conn)
 
 
 
