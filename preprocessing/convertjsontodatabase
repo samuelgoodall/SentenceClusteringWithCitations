@@ -37,6 +37,26 @@ def create_meta_data_entry(conn, meta_data_entry):
 
     return cur.lastrowid
 
+def write_to_meta_database(count:int):
+    # write to metadatabase
+    print("openingFile")
+    with tqdm(total=count) as pbar:
+        with open(file_path) as f:
+            for line in tqdm(f):
+                j_content = json.loads(line)
+                pbar.update(1)
+                create_meta_data_entry(conn, meta_data_entry=(
+                j_content["id"], j_content["submitter"], j_content["authors"], j_content["title"],
+                j_content["comments"], j_content["journal-ref"], j_content["doi"], j_content["report-no"],
+                j_content["categories"], j_content["license"], j_content["abstract"], j_content["update_date"]))
+
+def count_entries_in_json(file_path):
+    # count number of files for tqdm
+    with open(file_path, 'r') as fp:
+        for count, line in enumerate(fp):
+            pass
+    print('Total Lines', count + 1)
+
 if __name__ == '__main__':
     file_path = "../data/arxiv-metadata-oai-snapshot.json"
     database_name = r"database.db"
@@ -58,21 +78,11 @@ if __name__ == '__main__':
 
     create_table(conn,sql_create_projects_table)
 
-    #count number of files for tqdm
-    with open(file_path, 'r') as fp:
-        for count, line in enumerate(fp):
-            pass
-    print('Total Lines', count + 1)
+    count = count_entries_in_json(file_path)
+
+    write_to_meta_database(count)
 
 
-    #write to metadatabase
-    print("openingFile")
-    with tqdm(total=count) as pbar:
-        with open(file_path) as f:
-            for line in tqdm(f):
-                j_content = json.loads(line)
-                pbar.update(1)
-                create_meta_data_entry(conn, meta_data_entry=(j_content["id"], j_content["submitter"], j_content["authors"], j_content["title"], j_content["comments"], j_content["journal-ref"], j_content["doi"], j_content["report-no"], j_content["categories"], j_content["license"], j_content["abstract"], j_content["update_date"]))
 
 
 
