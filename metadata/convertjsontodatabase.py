@@ -1,6 +1,8 @@
 import json
+import os
 import sqlite3
 from sqlite3 import Error
+from zipfile import ZipFile
 
 from tqdm import tqdm
 
@@ -39,7 +41,7 @@ def create_meta_data_entry(conn, meta_data_entry):
 
 def write_to_meta_database(count:int, conn):
     """
-    writes data to meta database
+    writes metadata to meta database
     :param conn: conection for to the database
     :param count: number of items in json in order to display tqdm
     :return:
@@ -58,7 +60,7 @@ def write_to_meta_database(count:int, conn):
 def count_entries_in_json(file_path):
     """
     counts the entries in json
-    :param file_path: conection for to the database
+    :param file_path: path to json
     :return:
     """
     with open(file_path, 'r') as fp:
@@ -66,9 +68,27 @@ def count_entries_in_json(file_path):
             pass
     return count
 
+def unzip_meta_dataset(file_path):
+    """
+    unzips the farxiv metadata dataset zip
+    :param file_path:
+    :return:
+    """
+    print("starting extraction")
+    with ZipFile(file_path, 'r') as file:
+        file.extractall()
+    print("finished extraction")
+
+
 if __name__ == '__main__':
-    file_path = "../data/arxiv-metadata-oai-snapshot.json"
+
+    file_path = "./arxiv-metadata-oai-snapshot.json"
     database_name = r"database.db"
+    files_in_folder = os.listdir()
+
+    dataset_zipped_file_name = "archive.zip"
+    unzip_meta_dataset(dataset_zipped_file_name)
+    
     conn = create_connection(database_name)
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
                                             id text PRIMARY KEY,
@@ -90,8 +110,6 @@ if __name__ == '__main__':
     count = count_entries_in_json(file_path)
 
     write_to_meta_database(count,conn)
-
-
 
 
 
