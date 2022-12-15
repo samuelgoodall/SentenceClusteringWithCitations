@@ -1,0 +1,44 @@
+
+Installation instructions for text2bib PHP script
+=================================================
+
+Note
+----
+This software is supplied without any warranty whatsoever.  In particular, it is not guaranteed to be free of security
+holes.  If you make the software available to third parties via a webserver, you are liable for any damage to the server
+caused by those third parties.
+
+Files
+-----
+README
+INSTALL (this file)
+COPYING (GPL license)
+Convert.inc.php (defines bibtex object and conversion class, containing the method convertToBibtex, which does the main work, and formBibtex, which creates the bibtex file (and several auxiliary methods))
+
+How to install
+--------------
+Put the files in a directory.
+
+Create a PHP file containing the following text:
+
+-----------------%<---------------------
+include("Convert.inc.php");
+
+// Following lines are examples.  See Convert.inc.php for all possibilities.
+$labelStyle = 'short';
+$overrideLabels = true;
+$lineEndings = 'w';
+$verbose = 1;
+$debug = 0;
+$itemSeparator = 'cr';
+$percentComment = 1;
+
+$convert = new Convert($labelStyle, $overrideLabels, $lineEndings, $verbose, $debug, $itemSeparator, $percentComment);
+$items = $convert->convertToBibtex($filename);
+$outputstring = $convert->formBibtex($items);
+-----------------%<---------------------
+
+Finally, display $outputstring in some way, or write it to a file.
+
+Martin J. Osborne
+2007-12-21

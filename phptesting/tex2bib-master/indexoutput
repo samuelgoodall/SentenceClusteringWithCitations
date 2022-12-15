@@ -1,0 +1,27 @@
+"@article{bv10,
+author = {Berm\'udez, J. D. and J. V. Segura y E. Vercher},
+title = {Bayesian forecasting with the Holt-Winters model},
+journal = {Journal of the Operational Research Society},
+year = {2010},
+volume = {61},
+pages = {164-171},
+}
+
+@book{k86,
+author = {Donald E. Knuth},
+title = {The \TeX Book},
+year = {1986},
+address = {},
+publisher = {Addison-Wesley Professional},
+}
+
+@book{l94,
+author = {Leslie Lamport},
+title = {\LaTeX: a document preparation system},
+edition = {2nd},
+year = {1994},
+address = {Massachusetts},
+publisher = {Addison Wesley},
+}
+
+"
