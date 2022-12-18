@@ -1,4 +1,22 @@
-#cant deal with
+citations with newblock: \neblock is in the title has to be cleaned
+
+%\cite{Kwan:1978zh}
+\bibitem{Kwan:1978zh}
+  Y.~R.~Kwan and F.~Tabakin,
+  %``Hadronic Atoms in Momentum Space,''
+  Phys.\ Rev.\ C {\bf 18}, 932 (1978).
+  %doi:10.1103/PhysRevC.18.932
+  %%CITATION = doi:10.1103/PhysRevC.18.932;%%
+  %67 citations counted in INSPIRE as of 01 Mar 2017
+
+ \end{thebibliography}
+cant deal with those!
+
+\bibitem{anpr} J.D. Barrow and K. Yamamoto. Phys. Rev. D \textbf{82}, 063516
+(2010) J.D. Barrow and C. Ganguly, Class. Quantum Grav. \textbf{33},125004
+(2016)
+\end{thebibliography}
+cant deal with this#cant deal with
 #no Title here!
 \bibitem{anpr} J.D. Barrow and K. Yamamoto. Phys. Rev. D \textbf{82}, 063516
 (2010) J.D. Barrow and C. Ganguly, Class. Quantum Grav. \textbf{33},125004

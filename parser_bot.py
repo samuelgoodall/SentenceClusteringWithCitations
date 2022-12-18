@@ -33,8 +33,8 @@ class ParserBot:
                 sub_extract_folder, self.tarExtractor.untargz_file_into_folder)[1]
             data = self.informationExtractor.extract_all(sub_extract_folder)
             self.log_progress(data, count)
-            shutil.rmtree(extract_folder)
-        self.tarExtractor.delete_extract_folder_path()
+            #shutil.rmtree(extract_folder)
+        #self.tarExtractor.delete_extract_folder_path()
 
     def log_progress(self, data: dict, count: int) -> None:
         if count % 20 == 0:

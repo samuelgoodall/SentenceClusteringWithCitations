@@ -21,9 +21,9 @@ def convert_texfile_2_bib_entries(php_convertion_script_file, tex_input_file):
         check=True  # raise exception if program fails
     )
     resultstring: string = result.stdout
+    print(resultstring)
     bib_entries = bibtexparser.loads(resultstring).entries
     return bib_entries
-
 
 if __name__ == "__main__":
     tex_input_file = '/home/samuel/Desktop/WS2223Projekt/NLPProjekt/phptesting/tex2bib-master/example-cites.tex'
