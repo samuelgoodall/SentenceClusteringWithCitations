@@ -33,6 +33,14 @@ class InformationExtractor:
             self.extracted_information["pdf_only"] = self.extracted_information["pdf_only"] + 1
             self.extracted_information["available_papers"] += 1
 
+    def length_related_work(self, complete_file_string: str, related_work_symbol_position:int):
+        if (related_work_symbol_position != -1 & complete_file_string != ""):
+            end_section = complete_file_string.find("\section{", related_work_symbol_position + 1) - 1
+            length_related_work = end_section - related_work_symbol_position
+            self.extracted_information["related_work_length_total"] += length_related_work
+            return length_related_work
+        else:
+            return -1
     def check_and_handle_folder(self, absolute_paper_path: str) -> None:
         if os.path.isdir(absolute_paper_path):
             self.extracted_information["last_paper"] = absolute_paper_path
