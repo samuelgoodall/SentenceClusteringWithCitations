@@ -9,6 +9,7 @@ class InformationExtractor:
         "tex_file_available": 0,
         "tex_file_with_cite_available": 0,
         "bib_file_available": 0,
+        "bbl_file_available": 0,
         "related_work": 0,
         "last_paper": "",
         "all_prerequisites": 0,
@@ -16,7 +17,7 @@ class InformationExtractor:
         "related_work_length_mean": 0,
         "related_work_length_max": -1,
         "related_work_length_min:"  -1
-        }
+    }
     __cite_symbol = "\cite"
     __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background", "\section{Theory", "\section{Overview",
                               "\section{Literature Review", "\section{Relevant Research", "\section{Literatur Comparison", "\section{Preliminaries"]
@@ -41,6 +42,7 @@ class InformationExtractor:
             return length_related_work
         else:
             return -1
+
     def max_length_related_work(self, length_related_work: int):
         if (self.extracted_information["related_work_length_max"]) == -1 | (self.extracted_information["related_work_length_max"]) < length_related_work:
             self.extracted_information["related_work_length_max"] = length_related_work
@@ -70,17 +72,20 @@ class InformationExtractor:
                     has_tex = True
                     absolute_file_path = absolute_paper_path + "/" + file_name
                     try:
-                    with open(absolute_file_path, 'r') as file:
-                        try:
-                            complete_file_string = file.read()
-                            has_tex_with_cite = has_tex_with_cite or self.__cite_symbol in complete_file_string
-                            for related_work_symbol in self.__related_work_symbols:
+                        with open(absolute_file_path, 'r') as file:
+                            try:
+                                complete_file_string = file.read()
+                                has_tex_with_cite = has_tex_with_cite or self.__cite_symbol in complete_file_string
+                                for related_work_symbol in self.__related_work_symbols:
                                     related_work_symbol_position = complete_file_string.find(related_work_symbol)
                                     if(related_work_symbol_position != -1):
                                         has_related_work = True
-                                        self.length_related_work(complete_file_string, related_work_symbol_position)
+                                        length_related_work = self.length_related_work(complete_file_string, related_work_symbol_position)
+                                        self.max_length_related_work(length_related_work)
+                                        self.min_length_related_work(length_related_work)
+                                        self.mean_length_related_work(length_related_work)
                                         break
-                        except UnicodeDecodeError:
+                            except UnicodeDecodeError:
                                 sys.stderr.write("Error message: Contains none unicode characters.\n")
                                 pass
                     except FileNotFoundError:
@@ -88,7 +93,7 @@ class InformationExtractor:
                         pass
                     except PermissionError:
                         sys.stderr.write("Error message: Access denied.\n")
-                            pass
+                        pass
             if has_tex:
                 self.extracted_information["tex_file_available"] += 1
             if has_tex_with_cite:
