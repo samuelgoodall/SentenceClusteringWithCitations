@@ -9,6 +9,16 @@ class TarExtractor:
         self.extract_folder_path = extract_folder_path
         self.dataset_folder_path = dataset_folder_path
 
+    def extract_folder(self, folder, func):
+        processes = []
+        filenames = os.listdir(folder)
+        for filename in filenames:
+            try:
+                processes.append(func(folder + "/" + filename))
+            except FileExistsError:
+                sys.stderr.write("Error message: File already exists. \n")
+                pass  # How should we handle already existing folders?
+        return processes
     def extract_file_into_folder(self, file_name: str, params: str, ending: str) -> tuple:
         tar_process = any
         if file_name.endswith(ending):
