@@ -22,6 +22,26 @@ class TarExtractorTest(unittest.TestCase):
         filenames = os.listdir(".")
         self.assertEqual(old_filenames, filenames) 
 
+    def test_create_file_folder_path_with_empty_extract_folder(self):
+        example_file = "filename.tar"
+        self.tar_extractor_without_extract_folder.create_file_folder_path(example_file, ".tar")
+        filenames = os.listdir(".")
+        self.assertIn(example_file.replace(".tar",""), filenames)
+
+    def test_create_file_folder_path_with_extract_folder(self):
+        example_file = "filename.tar"
+        example_folder = "extract%s" % (example_file.replace(".tar", ""))
+        self.tar_extractor_with_extract_folder.create_file_folder_path(example_file, ".tar")
+        filenames = os.listdir("/workspaces/NLPProjekt/")
+        self.assertIn(example_folder, filenames)
+
+    def test_extract_file_into_folder(self):
+        example_file = "filename.tar"
+        example_folder = example_file.replace(".tar", "")
+        self.tar_extractor_with_extract_folder.extract_file_into_folder(example_file, "filler", ".tar")
+        filenames = os.listdir("/workspaces/NLPProjekt/")
+        self.assertIn(example_folder, filenames)
+
     def tearDown(self) -> None:
         if os.path.exists(self.tar_extractor_with_extract_folder.extract_folder_path):
             os.rmdir(self.tar_extractor_with_extract_folder.extract_folder_path)
