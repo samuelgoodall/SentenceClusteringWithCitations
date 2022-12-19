@@ -49,6 +49,12 @@ class InformationExtractor:
         if (self.extracted_information["related_work_length_min"]) == -1 | (self.extracted_information["related_work_length_max"]) > length_related_work:
             self.extracted_information["related_work_length_min"] = length_related_work
 
+    def mean_length_related_work(self, length_related_work: int):
+        if length_related_work != -1:
+            total = self.extracted_information["related_work_length_total"]
+            counter = self.extracted_information["related_work"] + 1
+            self.extracted_information["related_work_length_mean"] = total / counter
+
     def check_and_handle_folder(self, absolute_paper_path: str) -> None:
         if os.path.isdir(absolute_paper_path):
             self.extracted_information["last_paper"] = absolute_paper_path
