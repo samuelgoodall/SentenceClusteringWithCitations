@@ -11,8 +11,12 @@ class InformationExtractor:
         "bib_file_available": 0,
         "related_work": 0,
         "last_paper": "",
-        "all_prerequisites": 0
-    }
+        "all_prerequisites": 0,
+        "related_work_length_total" : 0,
+        "related_work_length_mean": 0,
+        "related_work_length_max": -1,
+        "related_work_length_min:"  -1
+        }
     __cite_symbol = "\cite"
     __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background", "\section{Theory", "\section{Overview",
                               "\section{Literature Review", "\section{Relevant Research", "\section{Literatur Comparison", "\section{Preliminaries"]
