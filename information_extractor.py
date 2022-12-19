@@ -72,6 +72,8 @@ class InformationExtractor:
             for file_name in os.listdir(absolute_paper_path):
                 if file_name.endswith(".bib"):
                     has_bib = True
+                if file_name.endswith("bbl"):
+                    has_bbl = True
                 if file_name.endswith(".tex"):
                     has_tex = True
                     absolute_file_path = absolute_paper_path + "/" + file_name
