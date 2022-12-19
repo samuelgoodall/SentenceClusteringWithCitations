@@ -19,8 +19,11 @@ class InformationExtractor:
         "related_work_length_min:"  -1
     }
     __cite_symbol = "\cite"
-    __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background", "\section{Theory", "\section{Overview",
-                              "\section{Literature Review", "\section{Relevant Research", "\section{Literatur Comparison", "\section{Preliminaries"]
+    __related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}", "\section{Theory}", "\section{Overview}",
+                              "\section{Literature Review}", "\section{Relevant Research}", "\section{Literatur Comparison}", "\section{Preliminaries}", 
+                              "\section{Related Works}", "\section{Previous Work}", "\section{Literature}", "\section{State of the Art}", "\section{Current State of Research}",
+                              "\section{Relation to Prior Work}", "\section{Background and Related Work}",
+                              "\section{Technical Background}", "\section{Related Work and Background}", "\section{Related Literature}", "\section{Review of Previous Methods}"]
 
     def extract_all(self, folder_path: str) -> dict:
         for paper in os.listdir(folder_path):
