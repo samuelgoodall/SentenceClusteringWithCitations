@@ -43,13 +43,25 @@ class InformationExtractor:
                 if file_name.endswith(".tex"):
                     has_tex = True
                     absolute_file_path = absolute_paper_path + "/" + file_name
+                    try:
                     with open(absolute_file_path, 'r') as file:
                         try:
                             complete_file_string = file.read()
                             has_tex_with_cite = has_tex_with_cite or self.__cite_symbol in complete_file_string
                             for related_work_symbol in self.__related_work_symbols:
-                                has_related_work = has_related_work or related_work_symbol in complete_file_string
+                                    related_work_symbol_position = complete_file_string.find(related_work_symbol)
+                                    if(related_work_symbol_position != -1):
+                                        has_related_work = True
+                                        self.length_related_work(complete_file_string, related_work_symbol_position)
+                                        break
                         except UnicodeDecodeError:
+                                sys.stderr.write("Error message: Contains none unicode characters.\n")
+                                pass
+                    except FileNotFoundError:
+                        sys.stderr.write("Error message: File does not exist.\n")
+                        pass
+                    except PermissionError:
+                        sys.stderr.write("Error message: Access denied.\n")
                             pass
             if has_tex:
                 self.extracted_information["tex_file_available"] += 1
