@@ -68,6 +68,7 @@ class InformationExtractor:
             has_tex_with_cite = False
             has_related_work = False
             has_bib = False
+            has_bbl = False
             for file_name in os.listdir(absolute_paper_path):
                 if file_name.endswith(".bib"):
                     has_bib = True
