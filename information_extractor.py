@@ -108,5 +108,7 @@ class InformationExtractor:
                 self.extracted_information["related_work"] += 1
             if has_bib:
                 self.extracted_information["bib_file_available"] += 1
-            if has_tex and has_tex_with_cite and has_related_work and has_bib:
+            if has_bbl:
+                self.extracted_information["bbl_file_available"] += 1   
+            if has_tex and has_tex_with_cite and has_related_work and (has_bib or has_bbl):
                 self.extracted_information["all_prerequisites"] += 1
