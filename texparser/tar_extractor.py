@@ -1,6 +1,7 @@
 import subprocess
 import os
 import shutil
+import sys
 
 
 class TarExtractor:
