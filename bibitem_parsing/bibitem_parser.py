@@ -138,7 +138,7 @@ class BibitemParser():
 
         return author, title
 
-    def _parse_bibentrys_manually(self, tex_input_file: str) -> list[str]:
+    def _parse_bibentrys_manually(self, tex_input_file: str) -> list:
         """
         parses the bibitems manually
         should deal with missing newlines etc.

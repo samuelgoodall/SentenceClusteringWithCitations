@@ -29,7 +29,7 @@ class InformationExtractor:
                               "\section{Literature Review", "\section{Relevant Research",
                               "\section{Literatur Comparison", "\section{Preliminaries"]
 
-    def extract_all(self, folder_path: str) -> tuple[dict, list, list]:
+    def extract_all(self, folder_path: str) -> tuple:
         for paper in os.listdir(folder_path):
             absolute_paper_path = folder_path + "/" + paper
             self.check_pdf(paper)
