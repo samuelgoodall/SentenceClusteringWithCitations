@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.append('../')
+from phptesting.bibitem_parser import BibitemParser
 
 
 class InformationExtractor:
@@ -10,18 +14,26 @@ class InformationExtractor:
         "bib_file_available": 0,
         "related_work": 0,
         "last_paper": "",
+        "number_of_citations": 0,
+        "number_of_usable_citations": 0,
         "all_prerequisites": 0
     }
+
+    def __init__(self):
+        self.author_title_tuples = list()
+
     __cite_symbol = "\cite"
-    __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background", "\section{Theory", "\section{Overview",
-                              "\section{Literature Review", "\section{Relevant Research", "\section{Literatur Comparison", "\section{Preliminaries"]
+    __related_work_symbols = ["\section{Related Work", "\section{Theoretical Background", "\section{Background",
+                              "\section{Theory", "\section{Overview",
+                              "\section{Literature Review", "\section{Relevant Research",
+                              "\section{Literatur Comparison", "\section{Preliminaries"]
 
     def extract_all(self, folder_path: str) -> dict:
         for paper in os.listdir(folder_path):
             absolute_paper_path = folder_path + "/" + paper
             self.check_pdf(paper)
             self.check_and_handle_folder(absolute_paper_path)
-        return self.extracted_information
+        return self.extracted_information, self.author_title_tuples
 
     def check_pdf(self, paper: str) -> None:
         if paper.endswith(".pdf"):
@@ -39,6 +51,9 @@ class InformationExtractor:
             for file_name in os.listdir(absolute_paper_path):
                 if file_name.endswith(".bib"):
                     has_bib = True
+                if file_name.endswith("bbl"):
+                    has_bib = True
+                    bbl_file_name = file_name
                 if file_name.endswith(".tex"):
                     has_tex = True
                     absolute_file_path = absolute_paper_path + "/" + file_name
@@ -60,3 +75,15 @@ class InformationExtractor:
                 self.extracted_information["bib_file_available"] += 1
             if has_tex and has_tex_with_cite and has_related_work and has_bib:
                 self.extracted_information["all_prerequisites"] += 1
+
+                php_convertion_script_file = '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/phptesting/index.php'
+                bibitemparser = BibitemParser(php_convertion_script_file)
+
+                author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(
+                    tex_input_file=os.path.join(absolute_paper_path, bbl_file_name))
+                accepted, citation_count, author_title_tuples_cleaned = bibitemparser.check_how_many_titles_are_usable(
+                    author_title_tuple_list=author_title_tuples)
+
+                self.extracted_information["number_of_citations"] += citation_count
+                self.extracted_information["number_of_usable_citations"] += accepted
+                self.author_title_tuples += author_title_tuples_cleaned

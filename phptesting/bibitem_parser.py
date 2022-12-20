@@ -2,18 +2,6 @@ import re
 import string
 import subprocess
 
-
-class Bibentry(object):
-    def __init__(self, publisher: str, address: str, year: str, title: str, author: str, ENTRYTYPE: str, ID: str):
-        self.publisher = publisher
-        self.address = address
-        self.year = year
-        self.title = title
-        self.author = author
-        self.ENTRYTPE = ENTRYTYPE
-        self.ID = ID
-
-
 class BibitemParser():
     """class for parsing bibitems in a file to author name tuples"""
 
@@ -75,15 +63,21 @@ class BibitemParser():
         if (unclean_string[0] == "{"):
             unclean_string = unclean_string[1:-1]
 
+        if unclean_string == "":
+            return None
         if (unclean_string[-1] == "}"):
             if (len(unclean_string) <= 2):
                 return
             unclean_string = unclean_string[0:-1]
             unclean_string = unclean_string.strip()
 
+        if unclean_string == "":
+            return None
         if ("}" in unclean_string):
             unclean_string = unclean_string.split("}")[0]
 
+        if unclean_string == "":
+            return None
         if (unclean_string[-1] == ","):
             if (len(unclean_string) <= 2):
                 return
@@ -101,8 +95,12 @@ class BibitemParser():
         """
         if len(bibtexstring) <= 7:
             return None, None
-        title = bibtexstring.split("title =")[1].split("year =")[0][0:-2]
-        author = bibtexstring.split("author =")[1].split("title =")[0][0:-2]
+        if (len(bibtexstring.split("title = {")) < 2):
+            return None, None
+        title = bibtexstring.split("title = {")[1].split("year = {")[0][0:-2]
+        if(len(bibtexstring.split("author = {"))<2):
+            return None, None
+        author = bibtexstring.split("author = {")[1].split("title = {")[0][0:-2]
 
         title = self.clean_string(title)
         author = self.clean_string(author)
@@ -146,12 +144,16 @@ class BibitemParser():
         """
         all_count = len(author_title_tuple_list)
         accepted = 0
+        cleaned_author_title_tuples = list()
         for author_title_tuple in author_title_tuple_list:
-            if (author_title_tuple[1] != "" and author_title_tuple[1] != None):
+            if author_title_tuple[1] != "" and author_title_tuple[1] is not None:
                 accepted += 1
-        acceptancerate = accepted / all_count
-        return accepted, all_count, acceptancerate
+                cleaned_author_title_tuples.append(author_title_tuple)
+        return accepted, all_count, cleaned_author_title_tuples
 
+    def read_bbl_file(self,bbl_file_path):
+        #TODO
+        return None
 
 if __name__ == "__main__":
     tex_input_file = '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/phptesting/tex2bib-master/ss_det.bbl'  # '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/phptesting/tex2bib-master/example-cites.tex'
