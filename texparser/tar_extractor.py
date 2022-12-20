@@ -23,14 +23,14 @@ class TarExtractor:
         tar_process = any
         if file_name.endswith(ending):
             if ending in file_name:
-                file_folder_path = self.__create_file_folder_path(
+                file_folder_path = self.create_file_folder_path(
                     file_name, ending)
                 process = self.__create_tar_process(
                     params, file_name, file_folder_path)
                 return self.__analyse_process(process)
         return (0, 0)
 
-    def __create_file_folder_path(self, file_name: str, ending: str) -> str:
+    def create_file_folder_path(self, file_name: str, ending: str) -> str:
         file_folder_path = file_name.replace(ending, "")
         if not file_folder_path.startswith(self.extract_folder_path):
             file_folder_path = self.extract_folder_path + file_folder_path
