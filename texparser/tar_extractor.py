@@ -1,6 +1,7 @@
-import subprocess
 import os
 import shutil
+import subprocess
+import sys
 
 
 class TarExtractor:
@@ -14,10 +15,10 @@ class TarExtractor:
         for filename in filenames:
             try:
                 processes.append(func(folder + "/" + filename))
-            except:
+            except FileExistsError:
+                sys.stderr.write("Error message: File already exists. \n")
                 pass  # How should we handle already existing folders?
         return processes
-
     def extract_file_into_folder(self, file_name: str, params: str, ending: str) -> tuple:
         tar_process = any
         if file_name.endswith(ending):
@@ -33,8 +34,12 @@ class TarExtractor:
         file_folder_path = file_name.replace(ending, "")
         if not file_folder_path.startswith(self.extract_folder_path):
             file_folder_path = self.extract_folder_path + file_folder_path
-        if not os.path.isdir(file_folder_path):
-            os.mkdir(file_folder_path)
+        try:
+            if not os.path.isdir(file_folder_path):
+                os.mkdir(file_folder_path)
+        except FileExistsError:
+            sys.stderr.write("Error message: Directory already exists. \n")
+        pass
         return file_folder_path
 
     def __create_tar_process(self, params: str, file_name: str, file_folder_path: str):
@@ -55,11 +60,21 @@ class TarExtractor:
         return self.extract_file_into_folder(file_name, "xvf", ".tar")
 
     def create_extract_folder_path(self) -> None:
-        if not os.path.exists(self.extract_folder_path) and self.extract_folder_path != "":
-            os.mkdir(self.extract_folder_path)
-        if not os.path.exists(self.extract_folder_path + self.dataset_folder_path) and self.dataset_folder_path != "":
-            os.mkdir(self.extract_folder_path + self.dataset_folder_path)
+        try:
+            if not os.path.exists(self.extract_folder_path) and self.extract_folder_path != "":
+                os.mkdir(self.extract_folder_path)
+            if not os.path.exists(self.extract_folder_path + self.dataset_folder_path) and self.dataset_folder_path != "":
+                os.mkdir(self.extract_folder_path + self.dataset_folder_path)
+        except FileExistsError:
+            sys.stderr.write("Error message: Directory already exists. \n")
+            pass
+        except FileNotFoundError:
+            sys.stderr.write("Error message: File not found. \n")
+            pass
 
     def delete_extract_folder_path(self) -> None:
-        if os.path.exists(self.extract_folder_path):
-            shutil.rmtree(self.extract_folder_path)
+        try:
+            if os.path.exists(self.extract_folder_path):
+                shutil.rmtree(self.extract_folder_path)
+        except FileNotFoundError:
+            sys.stderr.write("Error message: File is not found. \n")
