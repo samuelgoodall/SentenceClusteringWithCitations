@@ -16,7 +16,7 @@ class InformationExtractor:
         "related_work_length_total" : 0,
         "related_work_length_mean": 0,
         "related_work_length_max": -1,
-        "related_work_length_min:"  -1
+        "related_work_length_min":  -1
     }
     __cite_symbol = "\cite"
     __related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}", "\section{Theory}", "\section{Overview}",
@@ -38,7 +38,7 @@ class InformationExtractor:
             self.extracted_information["available_papers"] += 1
 
     def length_related_work(self, complete_file_string: str, related_work_symbol_position:int):
-        if (related_work_symbol_position != -1 & complete_file_string != ""):
+        if (related_work_symbol_position != -1 and complete_file_string != ""):
             end_section = complete_file_string.find("\section{", related_work_symbol_position + 1) - 1
             length_related_work = end_section - related_work_symbol_position
             self.extracted_information["related_work_length_total"] += length_related_work
