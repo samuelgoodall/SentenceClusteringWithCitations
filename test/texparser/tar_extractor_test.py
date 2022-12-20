@@ -48,4 +48,5 @@ class TarExtractorTest(unittest.TestCase):
         if os.path.exists(self.tar_extractor_with_extract_folder.dataset_folder_path):
             os.rmdir(self.tar_extractor_with_extract_folder.dataset_folder_path)
 
-unittest.main()
+if __name__ == "__main__":
+    unittest.main()
