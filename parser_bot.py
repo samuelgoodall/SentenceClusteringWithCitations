@@ -26,20 +26,23 @@ class ParserBot:
             except Exception as e:
                 print(e)
             extract_folder = self.extract_folder_path + \
-                self.dataset_folder_path + filename.replace(".tar", "")
+                             self.dataset_folder_path + filename.replace(".tar", "")
             sub_extract_folder = extract_folder + \
-                "/" + os.listdir(extract_folder)[0]
+                                 "/" + os.listdir(extract_folder)[0]
             self.tarExtractor.extract_folder(
                 sub_extract_folder, self.tarExtractor.untargz_file_into_folder)[1]
-            data, author_citation_tuples = self.informationExtractor.extract_all(sub_extract_folder)
-            self.log_progress(data, author_citation_tuples, count)
+            data, author_citation_tuples, author_citation_tuples_failed = self.informationExtractor.extract_all(
+                sub_extract_folder)
+            self.log_progress(data, author_citation_tuples, author_citation_tuples_failed, count)
             shutil.rmtree(extract_folder)
         self.tarExtractor.delete_extract_folder_path()
 
-    def log_progress(self, data: dict,author_citation_tuples,count: int) -> None:
+    def log_progress(self, data: dict, author_citation_tuples, author_citation_tuples_failed, count: int) -> None:
         if count % 20 == 0:
             with open("author_title_tuples.json", "a") as backup_file:
                 backup_file.writelines(json.dumps(author_citation_tuples, indent=7))
+            with open("author_title_tuples_failed.json", "a") as backup_file:
+                backup_file.writelines(json.dumps(author_citation_tuples_failed, indent=7))
             with open("backup.json", "a") as backup_file:
                 backup_file.writelines(json.dumps(data, indent=7))
             with open("save.json", "w") as backup_file:
