@@ -24,22 +24,25 @@ class TarExtractorTest(unittest.TestCase):
 
     def test_create_file_folder_path_with_empty_extract_folder(self):
         example_file = "filename.tar"
-        self.tar_extractor_without_extract_folder.create_file_folder_path(example_file, ".tar")
+        self.tar_extractor_with_extract_folder.create_extract_folder_path()
+        self.tar_extractor_with_extract_folder.create_file_folder_path(example_file, ".tar")
         filenames = os.listdir(".")
-        self.assertIn(example_file.replace(".tar",""), filenames)
+        self.assertIn(example_file.replace(".tar", ""), filenames)
 
     def test_create_file_folder_path_with_extract_folder(self):
         example_file = "filename.tar"
-        example_folder = "extract%s" % (example_file.replace(".tar", ""))
+        example_folder = "filename"
+        example_folder = f"extract/{example_folder}"
+        self.tar_extractor_with_extract_folder.create_extract_folder_path()
         self.tar_extractor_with_extract_folder.create_file_folder_path(example_file, ".tar")
-        filenames = os.listdir("/workspaces/NLPProjekt/")
+        filenames = os.listdir(self.tar_extractor_with_extract_folder.extract_folder_path)
         self.assertIn(example_folder, filenames)
 
     def test_extract_file_into_folder(self):
         example_file = "filename.tar"
         example_folder = example_file.replace(".tar", "")
         self.tar_extractor_with_extract_folder.extract_file_into_folder(example_file, "filler", ".tar")
-        filenames = os.listdir("/workspaces/NLPProjekt/")
+        filenames = os.listdir(self.tar_extractor_with_extract_folder.extract_folder_path)
         self.assertIn(example_folder, filenames)
 
     def tearDown(self) -> None:
