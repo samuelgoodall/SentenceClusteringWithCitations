@@ -50,11 +50,11 @@ class InformationExtractor:
             return -1
 
     def max_length_related_work(self, length_related_work: int):
-        if (self.extracted_information["related_work_length_max"]) == -1 | (self.extracted_information["related_work_length_max"]) < length_related_work:
+        if (self.extracted_information["related_work_length_max"]) == -1 or (self.extracted_information["related_work_length_max"]) < length_related_work:
             self.extracted_information["related_work_length_max"] = length_related_work
 
     def min_length_related_work(self, length_related_work: int):
-        if (self.extracted_information["related_work_length_min"]) == -1 | (self.extracted_information["related_work_length_max"]) > length_related_work:
+        if (self.extracted_information["related_work_length_min"]) == -1 or (self.extracted_information["related_work_length_max"]) > length_related_work:
             self.extracted_information["related_work_length_min"] = length_related_work
 
     def mean_length_related_work(self, length_related_work: int):
