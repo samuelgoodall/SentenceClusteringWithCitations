@@ -127,7 +127,7 @@ class InformationExtractor:
             if has_tex and has_tex_with_cite and has_related_work and (has_bib or has_bbl):
                 self.extracted_information["all_prerequisites"] += 1
 
-                php_convertion_script_file = '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/php_script_tex2bib/index.php'
+                php_convertion_script_file = 'bibitem_parsing/php_script_tex2bib/index.php'
                 bibitemparser = BibitemParser(php_convertion_script_file)
 
                 if has_bbl:
