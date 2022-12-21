@@ -1,6 +1,8 @@
 import os
 import sys
 
+from bibitem_parsing.bibitem_parser import BibitemParser
+
 
 class InformationExtractor:
     extracted_information = {
