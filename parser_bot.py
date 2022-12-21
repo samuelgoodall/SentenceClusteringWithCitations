@@ -44,8 +44,8 @@ class ParserBot:
     def log_progress(self, data: dict, count: int) -> None:
         if count % 20 == 0:
             try:
-                with open("backup.json", "a") as backup_file:
-                    backup_file.writelines(json.dumps(data, indent=7))
+                if os.path.exists("save.json"):
+                    shutil.copyfile("save.json", "backup.json")
                 with open("save.json", "w") as backup_file:
                     backup_file.writelines(json.dumps(data, indent=7))
             except FileNotFoundError:
