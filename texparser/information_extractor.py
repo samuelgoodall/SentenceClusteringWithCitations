@@ -39,8 +39,11 @@ class InformationExtractor:
 
     def length_related_work(self, complete_file_string: str, related_work_symbol_position:int):
         if (related_work_symbol_position != -1 and complete_file_string != ""):
-            end_section = complete_file_string.find("\section{", related_work_symbol_position + 1) - 1
-            length_related_work = end_section - related_work_symbol_position
+            end_section = complete_file_string.find("\section{", related_work_symbol_position + 1)
+            if end_section == -1:
+                length_related_work = len(complete_file_string) - related_work_symbol_position
+            else:
+                length_related_work = end_section - related_work_symbol_position
             self.extracted_information["related_work_length_total"] += length_related_work
             return length_related_work
         else:
