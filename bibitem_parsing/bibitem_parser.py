@@ -25,6 +25,7 @@ class BibitemParser():
         """
         assert type(unclean_string) == str
 
+        unclean_string = unclean_string.replace("\\n ", " ")
         unclean_string_split = re.split(r"\\\S+", unclean_string)
         if len(unclean_string_split) < 2:
             return unclean_string

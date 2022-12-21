@@ -71,8 +71,8 @@ class BibitemParserTest(unittest.TestCase):
 
     def test_strip_letter_encasing__noLetterEncasingInStringInput_returnStringInput(self):
         # arrange
-        test_input = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}"
-        asserted_output = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}"
+        test_input = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\\n Video Action Recognition}"
+        asserted_output = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\\n Video Action Recognition}"
 
         # act
         output = self.bibitem_parser._strip_letter_encasing(test_input)
@@ -87,6 +87,60 @@ class BibitemParserTest(unittest.TestCase):
         # act&assert
         with self.assertRaises(AssertionError) as context:
             self.bibitem_parser._strip_letter_encasing(testinput)
+
+    def test_clean_string__noneStringInput_AssertionError(self):
+        # arrange
+        testinput = 5
+
+        # act&assert
+        with self.assertRaises(AssertionError) as context:
+            self.bibitem_parser._clean_string(testinput)
+
+    def test_clean_string__stringInput_cleanedString(self):
+        # arrange
+        test_input = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\\n Video Action Recognition}"
+        asserted_output = "Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for Video Action Recognition"
+
+        # act
+        output = self.bibitem_parser._clean_string(test_input)
+
+        # assert
+        message = "Output \n" + output + "\ndoesnt match asserted output\n " + asserted_output + "."
+        self.assertTrue(output == asserted_output, message)
+
+    def test_clean_string__stringInput_stringWithStrippedLetterEncasings(self):
+        # arrange
+        test_input = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
+        asserted_output = "ImageNet: A Large-Scale Hierarchical Image Database"
+
+        # act
+        output = self.bibitem_parser._clean_string(test_input)
+
+        # assert
+        self.assertTrue(output == asserted_output)
+
+    def test_clean_string__emptyStringInput_returnStringInput(self):
+        # arrange
+        test_input = ""
+        asserted_output = ""
+
+        # act
+        output = self.bibitem_parser._clean_string(test_input)
+
+        # assert
+        self.assertTrue(output == asserted_output)
+
+    def test_clean_string__stringInputAndNoSpecialChars_returnStringInput(self):
+        # arrange
+        testinput = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
+        assertedoutput = "ImageNet: A Large-Scale Hierarchical Image Database"
+
+        # act
+        output = self.bibitem_parser._clean_string(testinput)
+
+        # assert
+        message = "Test input \n" + testinput + "\ndoesnt match asserted output\n " + assertedoutput + "."
+        self.assertTrue(output == assertedoutput, message)
 
 
 if __name__ == "__main__":
