@@ -33,7 +33,6 @@ class TarExtractorTest(unittest.TestCase):
     def test_create_file_folder_path_with_extract_folder(self):
         example_file = "filename.tar"
         example_folder = "filename"
-        example_folder = f"extract/{example_folder}"
         self.tar_extractor_with_extract_folder.create_extract_folder_path()
         self.tar_extractor_with_extract_folder.create_file_folder_path(example_file, ".tar")
         filenames = os.listdir(self.tar_extractor_with_extract_folder.extract_folder_path)

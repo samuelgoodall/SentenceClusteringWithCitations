@@ -16,7 +16,8 @@ class TarExtractor:
         for filename in filenames:
             try:
                 path = Path(folder) / filename
-                processes.append(func(path))
+                filename, file_extension = os.path.splitext(path)
+                processes.append(func(filename + file_extension))
             except FileExistsError:
                 sys.stderr.write("Error message: File already exists. \n")
                 pass  # How should we handle already existing folders?
@@ -34,13 +35,8 @@ class TarExtractor:
 
     def create_file_folder_path(self, file_name: str, ending: str) -> str:
         file_folder_path = file_name.replace(ending, "")
-        print("FILEFOLDERPATH", file_folder_path)
-        print("EXTRACTFOLDERPATH", self.extract_folder_path)
-        print("CURRENTWD", os.getcwd())
-
         if not file_folder_path.startswith(self.extract_folder_path):
             file_folder_path = Path(self.extract_folder_path) / file_folder_path
-            print("filefolderpath", file_folder_path)
         try:
             if not os.path.isdir(file_folder_path):
                 os.mkdir(file_folder_path)
