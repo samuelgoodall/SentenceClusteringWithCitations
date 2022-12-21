@@ -24,12 +24,12 @@ class InformationExtractorTest(unittest.TestCase):
     def test_length_related_work_no_following_section(self):
         test_string = self.related_work_symbol + self.boiler_plate
         related_work_length = self.information_extractor.length_related_work(test_string, 0)
-        self.assertEqual(len(test_string) - 3, related_work_length)
+        self.assertEqual(len(test_string), related_work_length)
 
     def test_length_related_work_with_proper_related_work(self):
         test_string = self.related_work_symbol + self.boiler_plate +self.next_section_symbol
         related_work_length = self.information_extractor.length_related_work(test_string, 0)
-        real_related_work_length = len(self.boiler_plate)
+        real_related_work_length = len(self.related_work_symbol + self.boiler_plate)
         self.assertEqual(real_related_work_length, related_work_length)
 
 if __name__ == "__main__":  
