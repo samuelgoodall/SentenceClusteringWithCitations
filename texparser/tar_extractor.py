@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 
 class TarExtractor:
@@ -14,7 +15,8 @@ class TarExtractor:
         filenames = os.listdir(folder)
         for filename in filenames:
             try:
-                processes.append(func(folder + "/" + filename))
+                path = Path(folder) / filename
+                processes.append(func(path))
             except FileExistsError:
                 sys.stderr.write("Error message: File already exists. \n")
                 pass  # How should we handle already existing folders?
@@ -32,8 +34,13 @@ class TarExtractor:
 
     def create_file_folder_path(self, file_name: str, ending: str) -> str:
         file_folder_path = file_name.replace(ending, "")
+        print("FILEFOLDERPATH", file_folder_path)
+        print("EXTRACTFOLDERPATH", self.extract_folder_path)
+        print("CURRENTWD", os.getcwd())
+
         if not file_folder_path.startswith(self.extract_folder_path):
-            file_folder_path = self.extract_folder_path + file_folder_path
+            file_folder_path = Path(self.extract_folder_path) / file_folder_path
+            print("filefolderpath", file_folder_path)
         try:
             if not os.path.isdir(file_folder_path):
                 os.mkdir(file_folder_path)

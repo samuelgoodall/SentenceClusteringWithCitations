@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 import unittest
 
@@ -42,12 +43,14 @@ class TarExtractorTest(unittest.TestCase):
         example_file = "filename.tar"
         example_folder = example_file.replace(".tar", "")
         self.tar_extractor_with_extract_folder.extract_file_into_folder(example_file, "filler", ".tar")
+        print("CURRENTWD:", os.getcwd())
+        print("FOLDERPATHTOTEST", self.tar_extractor_with_extract_folder.extract_folder_path)
         filenames = os.listdir(self.tar_extractor_with_extract_folder.extract_folder_path)
         self.assertIn(example_folder, filenames)
 
     def tearDown(self) -> None:
         if os.path.exists(self.tar_extractor_with_extract_folder.extract_folder_path):
-            os.rmdir(self.tar_extractor_with_extract_folder.extract_folder_path)
+            shutil.rmtree(self.tar_extractor_with_extract_folder.extract_folder_path, ignore_errors=True)
         if os.path.exists(self.tar_extractor_with_extract_folder.dataset_folder_path):
             os.rmdir(self.tar_extractor_with_extract_folder.dataset_folder_path)
 
