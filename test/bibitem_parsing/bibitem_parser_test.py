@@ -15,6 +15,9 @@ class BibitemParserTest(unittest.TestCase):
     def setUp(self) -> None:
         """call before every testcase"""
 
+    def error_message(self, output, assertedoutput):
+        message = "Asserted output \n" + assertedoutput + "\ndoesnt match the output\n " + output + "."
+
     def test_strip_special_chars__stringInput_cleanedString(self):
         # arrange
         test_input = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}"
@@ -24,7 +27,7 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._strip_special_chars(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_strip_special_chars__emptyStringInput_returnStringInput(self):
         # arrange
@@ -35,18 +38,18 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._strip_special_chars(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_strip_special_chars__stringInputAndNoSpecialChars_returnStringInput(self):
         # arrange
         testinput = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
-        assertedoutput = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
+        asserted_output = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
 
         # act
         output = self.bibitem_parser._strip_special_chars(testinput)
 
         # assert
-        self.assertTrue(output == assertedoutput)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_strip_special_chars__nonStringInput_AssertionError(self):
         # arrange
@@ -67,7 +70,7 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._strip_letter_encasing(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_strip_letter_encasing__noLetterEncasingInStringInput_returnStringInput(self):
         # arrange
@@ -78,7 +81,7 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._strip_letter_encasing(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_strip_special_chars__noneStringInput_AssertionError(self):
         # arrange
@@ -105,8 +108,7 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._clean_string(test_input)
 
         # assert
-        message = "Output \n" + output + "\ndoesnt match asserted output\n " + asserted_output + "."
-        self.assertTrue(output == asserted_output, message)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_clean_string__stringInput_stringWithStrippedLetterEncasings(self):
         # arrange
@@ -117,7 +119,7 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._clean_string(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_clean_string__emptyStringInput_returnStringInput(self):
         # arrange
@@ -128,19 +130,48 @@ class BibitemParserTest(unittest.TestCase):
         output = self.bibitem_parser._clean_string(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
 
     def test_clean_string__stringInputAndNoSpecialChars_returnStringInput(self):
         # arrange
         testinput = "Image{N}et: {A} {L}arge-{S}cale {H}ierarchical {I}mage {D}atabase"
-        assertedoutput = "ImageNet: A Large-Scale Hierarchical Image Database"
+        asserted_output = "ImageNet: A Large-Scale Hierarchical Image Database"
 
         # act
         output = self.bibitem_parser._clean_string(testinput)
 
         # assert
-        message = "Test input \n" + testinput + "\ndoesnt match asserted output\n " + assertedoutput + "."
-        self.assertTrue(output == assertedoutput, message)
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
+
+    def test_strip_encasing_brackets__stringInputWithEncasingBrackets(self):
+        # arrange
+        testinput = "{Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\\n Video Action Recognition}"
+        asserted_output = "Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\\n Video Action Recognition"
+
+        # act
+        output = self.bibitem_parser._strip_encasing_brackets(testinput)
+
+        # assert
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
+
+    def test_strip_encasing_brackets__emptyStringInput_returnStringInput(self):
+        # arrange
+        test_input = ""
+        asserted_output = ""
+
+        # act
+        output = self.bibitem_parser._strip_encasing_brackets(test_input)
+
+        # assert
+        self.assertTrue(output == asserted_output, self.error_message(output, asserted_output))
+
+    def test_strip_encasing_brackets__noneStringInput_AssertionError(self):
+        # arrange
+        testinput = 5
+
+        # act&assert
+        with self.assertRaises(AssertionError) as context:
+            self.bibitem_parser._strip_encasing_brackets(testinput)
 
 
 if __name__ == "__main__":
