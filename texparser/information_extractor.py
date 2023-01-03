@@ -133,7 +133,7 @@ class InformationExtractor:
 
                 if has_bbl:
                     author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(
-                        tex_input_file=os.path.join(absolute_paper_path, bbl_file_name),algorithm=Algorithm.NeuralParcite)
+                        tex_input_file=os.path.join(absolute_paper_path, bbl_file_name),algorithm=Algorithm.Bib2Tex)
                     accepted, citation_count, author_title_tuples_cleaned, author_title_tuples_failed = bibitemparser.check_how_many_titles_are_usable(
                         author_title_tuple_list=author_title_tuples)
 

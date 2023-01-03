@@ -2,8 +2,8 @@ import re
 import string
 import subprocess
 
-import torch
-from sciwing.models.neural_parscit import NeuralParscit
+#import torch
+#from sciwing.models.neural_parscit import NeuralParscit
 
 from bibitem_parsing.algorithmEnum import Algorithm
 
@@ -13,7 +13,7 @@ class BibitemParser():
 
     def __init__(self, php_convertion_script_file):
         self.php_convertion_script_file = php_convertion_script_file
-        self.neural_parscit = NeuralParscit()
+        #self.neural_parscit = NeuralParscit()
 
     def _strip_special_chars(self, unclean_string: str) -> str:
         """
@@ -201,14 +201,14 @@ class BibitemParser():
 
         elif algorithm == Algorithm.NeuralParcite:
             data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
-            author_title_tuples = []
-            for dataitem in data:
+ #           author_title_tuples = []
+ #           for dataitem in data:
                 # testdata = testdata.replace("\\n", " ")
-                dataitem = self._strip_letter_encasing(dataitem)
-                dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
+ #               dataitem = self._strip_letter_encasing(dataitem)
+ #               dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
                 #dataitem = self._strip_special_chars(dataitem)
-                labels = self.neural_parscit.predict_for_text(dataitem,show=False)
-                author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
+  #              labels = self.neural_parscit.predict_for_text(dataitem,show=False)
+   #             author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
 
         data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
         zipped_list = list(zip(author_title_tuples, data))
