@@ -1,6 +1,7 @@
 import os
 import sys
 
+from bibitem_parsing.algorithmEnum import Algorithm
 from bibitem_parsing.bibitem_parser import BibitemParser
 
 
@@ -47,7 +48,7 @@ class InformationExtractor:
             self.extracted_information["available_papers"] += 1
 
     def length_related_work(self, complete_file_string: str, related_work_symbol_position:int):
-        if (related_work_symbol_position != -1 and complete_file_string != ""):
+        if related_work_symbol_position != -1 and complete_file_string != "":
             end_section = complete_file_string.find("\section{", related_work_symbol_position + 1)
             if end_section == -1:
                 length_related_work = len(complete_file_string) - related_work_symbol_position
@@ -98,7 +99,7 @@ class InformationExtractor:
                                 has_tex_with_cite = has_tex_with_cite or self.__cite_symbol in complete_file_string
                                 for related_work_symbol in self.__related_work_symbols:
                                     related_work_symbol_position = complete_file_string.find(related_work_symbol)
-                                    if(related_work_symbol_position != -1):
+                                    if related_work_symbol_position != -1:
                                         has_related_work = True
                                         length_related_work = self.length_related_work(complete_file_string, related_work_symbol_position)
                                         self.max_length_related_work(length_related_work)
@@ -132,7 +133,7 @@ class InformationExtractor:
 
                 if has_bbl:
                     author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(
-                        tex_input_file=os.path.join(absolute_paper_path, bbl_file_name))
+                        tex_input_file=os.path.join(absolute_paper_path, bbl_file_name),algorithm=Algorithm.NeuralParcite)
                     accepted, citation_count, author_title_tuples_cleaned, author_title_tuples_failed = bibitemparser.check_how_many_titles_are_usable(
                         author_title_tuple_list=author_title_tuples)
 

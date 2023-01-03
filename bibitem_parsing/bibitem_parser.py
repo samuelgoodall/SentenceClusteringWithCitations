@@ -2,12 +2,18 @@ import re
 import string
 import subprocess
 
+import torch
+from sciwing.models.neural_parscit import NeuralParscit
+
+from bibitem_parsing.algorithmEnum import Algorithm
+
 
 class BibitemParser():
     """class for parsing bibitems in a file to author name tuples"""
 
     def __init__(self, php_convertion_script_file):
         self.php_convertion_script_file = php_convertion_script_file
+        self.neural_parscit = NeuralParscit()
 
     def _strip_special_chars(self, unclean_string: str) -> str:
         """
@@ -162,34 +168,59 @@ class BibitemParser():
         if (len(split) >= 2):
             data = "\\bibitem" + split[1]
         data = data.split("\n\n")
-        if "\\newblock" in data:
-            print("DATALEN", len(data))
 
         return data
 
-    def convert_texfile_2_author_title_tuples(self, tex_input_file):
+    def convert_texfile_2_author_title_tuples(self, tex_input_file, algorithm: Algorithm):
         """
-        Uses this Bib 2 convert tex2bib: https://github.com/juusechec/tex2bib
+        Uses different librarys to get information from the citation strings:
+
+        1. tex2bib: https://github.com/juusechec/tex2bib
         that is based on :https://text2bib.economics.utoronto.ca/index.php/index
+
+        2.neuralparcite:  https://www.comp.nus.edu.sg/~kanmy/papers/neural-parscit-deep.pdf
+        found in :https://github.com/abhinavkashyap/sciwing
+
         Parameters
         ----------
-        tex_input_file : str
-            tex file with the bibitems that are to be converted
+        :param tex_input_file: tex file with the bibitems that are to be converted
+        :param algorithm:
         """
 
-        result = subprocess.run(
-            ['php', self.php_convertion_script_file,
-             tex_input_file],  # program and arguments
-            text=True,
-            capture_output=True,
-            check=True  # raise exception if program fails
-        )
-        result_string: string = result.stdout
-        citation_entry_strings = result_string.split("\n\n")
-        author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
+        if algorithm == Algorithm.Bib2Tex:
+            result = subprocess.run(
+                ['php', self.php_convertion_script_file,
+                 tex_input_file],  # program and arguments
+                text=True,
+                capture_output=True,
+                check=True  # raise exception if program fails
+            )
+            result_string: string = result.stdout
+            citation_entry_strings = result_string.split("\n\n")
+            author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
+
+        elif algorithm == Algorithm.NeuralParcite:
+            data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
+            author_title_tuples = []
+            for dataitem in data:
+                # testdata = testdata.replace("\\n", " ")
+                dataitem = self._strip_letter_encasing(dataitem)
+                dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
+                #dataitem = self._strip_special_chars(dataitem)
+                labels = self.neural_parscit.predict_for_text(dataitem,show=False)
+                author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
+
         data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
         zipped_list = list(zip(author_title_tuples, data))
         return zipped_list
+
+    def _convert_neural_parscit_output_too_author_title_tuple(self, labels, input_text):
+        tuplelist = list(zip(labels.split(), input_text.split()))
+        filteredtitlelist = list(filter(lambda x: x[0] == "title", tuplelist))
+        filteredauthorlist = list(filter(lambda x: x[0] == "author", tuplelist))
+        title = "".join(list(map(lambda x: x[1] + " ", filteredtitlelist))).strip()
+        author = "".join(list(map(lambda x: x[1] + " ", filteredauthorlist))).strip()
+        return author, title
 
     def check_how_many_titles_are_usable(self, author_title_tuple_list: list):
         """
@@ -214,14 +245,15 @@ class BibitemParser():
 
 
 if __name__ == "__main__":
-    tex_input_file = '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/ss_det.bbl'  # '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/example-cites.tex'
-    php_convertion_script_file = '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/index.php'
+    tex_input_file = 'symperC.bbl'  # '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/example-cites.tex'
+    php_convertion_script_file = 'php_script_tex2bib/index.php'
 
     bibitemparser = BibitemParser(php_convertion_script_file)
 
-    author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(tex_input_file=tex_input_file)
+    author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(tex_input_file=tex_input_file,
+                                                                              algorithm=Algorithm.NeuralParcite)
     for at in author_title_tuples:
-        print("Author:", at[0])
-        print("Title:", at[1])
+        print("Author:", at[0][0])
+        print("Title:", at[0][1])
         print("\n")
     print(bibitemparser.check_how_many_titles_are_usable(author_title_tuples))
