@@ -31,8 +31,8 @@ def create_meta_data_entry(conn, meta_data_entry):
     :return:
     """
 
-    sql = ''' INSERT INTO meta_data_entrys(id,submitter,authors,title,comments,journal_ref,doi,report_no,categories,license,abstract,update_date)
-              VALUES(?,?,?,?,?,?,?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO meta_data_entrys(entry_id,paper_id,submitter,authors,title,comments,journal_ref,doi,report_no,categories,license,abstract,update_date)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, meta_data_entry)
     conn.commit()
@@ -52,7 +52,7 @@ def write_to_meta_database(count:int, conn):
             for line in tqdm(f):
                 j_content = json.loads(line)
                 pbar.update(1)
-                create_meta_data_entry(conn, meta_data_entry=(
+                create_meta_data_entry(conn, meta_data_entry=(None,
                 j_content["id"], j_content["submitter"], j_content["authors"], j_content["title"],
                 j_content["comments"], j_content["journal-ref"], j_content["doi"], j_content["report-no"],
                 j_content["categories"], j_content["license"], j_content["abstract"], j_content["update_date"]))
@@ -91,10 +91,11 @@ if __name__ == '__main__':
     
     conn = create_connection(database_name)
     sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
-                                            id text PRIMARY KEY,
-                                            submitter text NOT NULL,
-                                            authors text NOT NULL,
-                                            title text NOT NULL,
+                                            entry_id INTEGER PRIMARY KEY,
+                                            paper_id text ,
+                                            submitter text ,
+                                            authors text ,
+                                            title text ,
                                             comments text ,
                                             journal_ref text,
                                             doi text,
