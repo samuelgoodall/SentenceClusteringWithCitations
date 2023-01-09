@@ -2,10 +2,11 @@ import re
 import string
 import subprocess
 
+from bibitem_parsing.algorithmEnum import Algorithm
+
 #import torch
 #from sciwing.models.neural_parscit import NeuralParscit
 
-from bibitem_parsing.algorithmEnum import Algorithm
 
 
 class BibitemParser():
