@@ -20,7 +20,6 @@ class TarExtractor:
                 processes.append(func(filename + file_extension))
             except FileExistsError:
                 sys.stderr.write("Error message: File already exists. \n")
-                pass  # How should we handle already existing folders?
         return processes
     def extract_file_into_folder(self, file_name: str, params: str, ending: str) -> tuple:
         tar_process = any
