@@ -11,6 +11,7 @@ class TarExtractorTest(unittest.TestCase):
     def setUp(self) -> None:
         self.tar_extractor_with_extract_folder = TarExtractor("content", "extract")
         self.tar_extractor_without_extract_folder = TarExtractor("content", "")
+        shutil.copytree("content", "content_backup")
 
     def test_create_extract_folder_path(self):
         self.tar_extractor_with_extract_folder.create_extract_folder_path()
@@ -52,7 +53,8 @@ class TarExtractorTest(unittest.TestCase):
         if os.path.exists(self.tar_extractor_with_extract_folder.extract_folder_path):
             shutil.rmtree(self.tar_extractor_with_extract_folder.extract_folder_path, ignore_errors=True)
         if os.path.exists(self.tar_extractor_with_extract_folder.dataset_folder_path):
-            os.rmdir(self.tar_extractor_with_extract_folder.dataset_folder_path)
+            shutil.rmtree(self.tar_extractor_with_extract_folder.dataset_folder_path, ignore_errors=True)
+            os.rename("content_backup", "content")
 
 if __name__ == "__main__":
     unittest.main()
