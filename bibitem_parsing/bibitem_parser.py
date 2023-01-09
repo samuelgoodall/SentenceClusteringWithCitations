@@ -188,14 +188,17 @@ class BibitemParser():
         """
 
         if algorithm == Algorithm.Bib2Tex:
-            result = subprocess.run(
-                ['php', self.php_convertion_script_file,
-                 tex_input_file],  # program and arguments
-                text=True,
-                capture_output=True,
-                check=True  # raise exception if program fails
-            )
-            result_string: string = result.stdout
+            try:
+                result = subprocess.run(
+                    ['php', self.php_convertion_script_file,
+                    tex_input_file],  # program and arguments
+                    text=True,
+                    capture_output=True,
+                    check=True  # raise exception if program fails
+                )
+                result_string: string = result.stdout
+            except UnicodeError:
+                result_string: str = ""
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
 
