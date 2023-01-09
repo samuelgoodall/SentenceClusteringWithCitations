@@ -197,7 +197,7 @@ class BibitemParser():
                     check=True  # raise exception if program fails
                 )
                 result_string: string = result.stdout
-            except UnicodeError:
+            except UnicodeDecodeError:
                 result_string: str = ""
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
