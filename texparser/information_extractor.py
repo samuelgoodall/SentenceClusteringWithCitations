@@ -115,6 +115,9 @@ class InformationExtractor:
                     except PermissionError:
                         sys.stderr.write("Error message: Access denied.\n")
                         pass
+                    except IsADirectoryError:
+                        sys.stderr.write("Error message: Is a directory. \n")
+                        pass
             if has_tex:
                 self.extracted_information["tex_file_available"] += 1
             if has_tex_with_cite:
