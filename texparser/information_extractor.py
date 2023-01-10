@@ -96,7 +96,8 @@ class InformationExtractor:
                                         break
                             except UnicodeDecodeError:
                                 sys.stderr.write("Error message: Contains none unicode characters.\n")
-                                pass
+                            except IsADirectoryError:
+                                sys.stderr.write("Error message: Is a directory.\n")
                     except FileNotFoundError:
                         sys.stderr.write("Error message: File does not exist.\n")
                         pass
