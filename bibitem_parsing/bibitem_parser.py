@@ -1,6 +1,7 @@
 import re
 import string
 import subprocess
+import sys
 
 from bibitem_parsing.algorithmEnum import Algorithm
 
@@ -157,8 +158,11 @@ class BibitemParser():
         tex_input_file : str
             tex file with the bibitems that are to be converted
         """
-        text_file = open(tex_input_file, "r")
-
+        try:
+            text_file = open(tex_input_file, "r")
+        except IsADirectoryError:
+            sys.stderr.write("Error message: Is a directory. \n")
+            pass
         # read whole file to a string
         data = text_file.read()
         data = data.strip()
