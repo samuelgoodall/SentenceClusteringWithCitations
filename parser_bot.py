@@ -43,7 +43,7 @@ class ParserBot:
         self.tarExtractor.delete_extract_folder_path()
 
     def log_progress(self, data: dict, author_citation_tuples, author_citation_tuples_failed, count: int) -> None:
-        if count % 2 == 0:
+        if count % 20 == 0:
             with open("author_title_tuples.json", "a") as backup_file:
                 backup_file.writelines(json.dumps(author_citation_tuples, indent=7))
             with open("author_title_tuples_failed.json", "a") as backup_file:
