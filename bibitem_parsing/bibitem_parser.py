@@ -160,20 +160,20 @@ class BibitemParser():
         """
         try:
             text_file = open(tex_input_file, "r")
+            # read whole file to a string
+            data = text_file.read()
+            data = data.strip()
+            # if bbl follows newblock syntax do own parsing
+            # TODO add extra newblock parsing
+            split = data.split("\\bibitem", 1)
+
+            if (len(split) >= 2):
+                data = "\\bibitem" + split[1]
+            data = data.split("\n\n")
         except IsADirectoryError:
+            data = tex_input_file + "could not be read"
             sys.stderr.write("Error message: Is a directory. \n")
             pass
-        # read whole file to a string
-        data = text_file.read()
-        data = data.strip()
-        # if bbl follows newblock syntax do own parsing
-        # TODO add extra newblock parsing
-        split = data.split("\\bibitem", 1)
-
-        if (len(split) >= 2):
-            data = "\\bibitem" + split[1]
-        data = data.split("\n\n")
-
         return data
 
     def convert_texfile_2_author_title_tuples(self, tex_input_file, algorithm: Algorithm):
