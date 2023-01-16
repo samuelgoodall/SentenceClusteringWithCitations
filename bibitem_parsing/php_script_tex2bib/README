@@ -1,0 +1,21 @@
+
+text2bib is a PHP script for converting references to BibTeX format.  It aims to convert accurately references in any
+reasonable format.  Here are three examples of references that it converts correctly:
+
+Arrow, K. J., L. Hurwicz, and H. Uzawa (1961), "Constraint qualifications in maximization problems," Naval Research 
+Logistics Quarterly 8, 175-191.
+
+Arrow, K. J., L. Hurwicz, and H. Uzawa [1961], ``Constraint qualifications in maximization problems,'' {\it Naval Research
+Logistics Quarterly}, 8(2), 175-191.
+
+Arrow, K. J., L. Hurwicz, \& H. Uzawa. Constraint qualifications in maximization problems. \textit{Naval Research
+Logistics Quarterly}, 8(2): 175--191. 1961.
+
+The script is freely available, under the GPL license (see the file COPYING).  It may currently be used via the web at
+http://theory.economics.utoronto.ca/text2bib
+where some more details of its operation are available.
+
+The file INSTALL gives instructions on how to install the script on a server.
+
+Martin J. Osborne
+2007-12-20
