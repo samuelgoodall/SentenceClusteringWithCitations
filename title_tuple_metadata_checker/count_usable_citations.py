@@ -39,7 +39,7 @@ def count_entries_in_json(file_path):
     """
     count = 0
     with open(file_path, "rb") as f:
-        for record in ijson.items(f, "item"):
+        for record in ijson.items(f, "item", multiple_values=True):
             count += 1
     return count
 
@@ -55,7 +55,7 @@ def count_entries_that_are_in_database(count, conn, file_path):
     incount = 0
     with tqdm(total=count) as pbar:
         with open(file_path, "rb") as f:
-            for record in tqdm(ijson.items(f, "item")):
+            for record in tqdm(ijson.items(f, "item", multiple_values=True)):
                 title = record[0][1]
                 indatabase = check_if_in_database(title, conn)
                 if (len(indatabase) >= 1):
@@ -78,6 +78,7 @@ def main() -> None:
     database_name, filepath = process_arguements()
     print(database_name, filepath)
     count = count_entries_in_json(filepath)
+    print("Number of Items", count)
     conn = create_connection(db_file=database_name)
     in_count = count_entries_that_are_in_database(count, conn, filepath)
     print("COUNT:", count)
