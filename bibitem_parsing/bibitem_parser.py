@@ -5,6 +5,7 @@ import sys
 
 from bibitem_parsing.algorithmEnum import Algorithm
 
+
 #import torch
 #from sciwing.models.neural_parscit import NeuralParscit
 
@@ -176,7 +177,7 @@ class BibitemParser():
             pass
         return data
 
-    def convert_texfile_2_author_title_tuples(self, tex_input_file, algorithm: Algorithm):
+    def convert_texfile_2_author_title_tuples(self, tex_input_file: bytes, algorithm: Algorithm):
         """
         Uses different librarys to get information from the citation strings:
 
