@@ -53,7 +53,6 @@ class InformationExtractor:
             if os.path.isfile(source) and (
                     file_name.endswith(".bib") or file_name.endswith(".bbl") or file_name.endswith(".tex")):
                 shutil.copy(source, destination)
-                print('copied', file_name)
 
     def extract_all(self, folder_path: str) -> dict:
         for paper in os.listdir(folder_path):

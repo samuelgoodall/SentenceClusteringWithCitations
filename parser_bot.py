@@ -36,7 +36,6 @@ class ParserBot:
                                 self.dataset_folder_path + filename.replace(".tar", "")
                 sub_extract_folder = extract_folder + \
                                     "/" + os.listdir(extract_folder)[0]
-                print("SUBEXTRACT_FOLDER", sub_extract_folder)
                 self.tarExtractor.extract_folder(
                     sub_extract_folder, self.tarExtractor.untargz_file_into_folder)[1]
                 data = self.informationExtractor.extract_all(
