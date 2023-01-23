@@ -14,9 +14,9 @@ from bibitem_parsing.algorithmEnum import Algorithm
 class BibitemParser():
     """class for parsing bibitems in a file to author name tuples"""
 
-    def __init__(self, php_convertion_script_file):
-        self.php_convertion_script_file = php_convertion_script_file
-        #self.neural_parscit = NeuralParscit()
+    def __init__(self):
+        self.php_convertion_script_file = "bibitem_parsing/php_script_tex2bib/index.php"
+        # self.neural_parscit = NeuralParscit()
 
     def _strip_special_chars(self, unclean_string: str) -> str:
         """
@@ -255,9 +255,8 @@ class BibitemParser():
 
 if __name__ == "__main__":
     tex_input_file = 'symperC.bbl'  # '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/example-cites.tex'
-    php_convertion_script_file = 'php_script_tex2bib/index.php'
 
-    bibitemparser = BibitemParser(php_convertion_script_file)
+    bibitemparser = BibitemParser()
 
     author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(tex_input_file=tex_input_file,
                                                                               algorithm=Algorithm.NeuralParcite)
