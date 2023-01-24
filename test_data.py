@@ -1,4 +1,4 @@
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 
 
 class TestDataset(Dataset):
@@ -8,12 +8,19 @@ class TestDataset(Dataset):
         content = paper.read()
         content = content.split(".")
         self.paper = content
+        size = len(content)
         paper.close()
 
     def __getitem__(self, item):
         return self.paper[item]
 
+    def __len__(self):
+        return len(self.paper)
+
 
 dataset = TestDataset()
+print(type(dataset))
+dataloader = DataLoader(dataset=dataset, batch_size=10, shuffle=False)
 
-print(dataset.paper)
+train_embeddings = next(iter(dataloader))
+print(type(train_embeddings))
