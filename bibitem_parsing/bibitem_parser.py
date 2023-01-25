@@ -36,7 +36,9 @@ class BibitemParser():
         """
         assert type(unclean_string) == str
 
+        unclean_string = unclean_string.replace("\n ", " ")
         unclean_string = unclean_string.replace("\\n ", " ")
+        unclean_string = unclean_string.replace("  ", " ")
         unclean_string_split = re.split(r"\\\S+", unclean_string)
         if len(unclean_string_split) < 2:
             return unclean_string
@@ -101,7 +103,8 @@ class BibitemParser():
             if len(unclean_string) <= 2:
                 return unclean_string
             unclean_string = unclean_string[0:-1]
-        return unclean_string.strip()
+
+        return unclean_string.strip(".").strip()
 
     def _clean_string(self, unclean_string: str):
         """
@@ -115,7 +118,6 @@ class BibitemParser():
         unclean_string = unclean_string.strip()
 
         # remove everything after linebreak
-        unclean_string = unclean_string.split("\n")[0]
         unclean_string = self._strip_special_chars(unclean_string)
         unclean_string = self._strip_letter_encasing(unclean_string)
         unclean_string = self._strip_encasing_brackets(unclean_string)
@@ -141,6 +143,7 @@ class BibitemParser():
         author = bibtexstring.split("author = {")[1].split("title = {")[0][0:-2]
 
         title = self._clean_string(title)
+        title = title.replace("  ", " ")
         author = self._clean_string(author)
 
         unidentified = bibtexstring.split("unidentified = {")
