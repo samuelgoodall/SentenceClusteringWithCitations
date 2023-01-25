@@ -1,3 +1,4 @@
+import os
 import re
 import string
 import subprocess
@@ -15,7 +16,8 @@ class BibitemParser():
     """class for parsing bibitems in a file to author name tuples"""
 
     def __init__(self):
-        self.php_convertion_script_file = "bibitem_parsing/php_script_tex2bib/index.php"
+        self.php_convertion_script_file = os.path.abspath(
+            os.path.join("bibitem_parsing", "php_script_tex2bib", "index.php"))
         # self.neural_parscit = NeuralParscit()
 
     def _strip_special_chars(self, unclean_string: str) -> str:
@@ -216,8 +218,8 @@ class BibitemParser():
  #               dataitem = self._strip_letter_encasing(dataitem)
  #               dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
                 #dataitem = self._strip_special_chars(dataitem)
-  #              labels = self.neural_parscit.predict_for_text(dataitem,show=False)
-   #             author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
+        #              labels = self.neural_parscit.predict_for_text(dataitem,show=False)
+        #             author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
 
         data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
         zipped_list = list(zip(author_title_tuples, data))
