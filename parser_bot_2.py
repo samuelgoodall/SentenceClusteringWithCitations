@@ -1,6 +1,9 @@
 import json
+import multiprocessing as mp
 import os
+from multiprocessing import Process
 
+import numpy
 from tqdm import tqdm
 
 from bibitem_parsing.algorithmEnum import Algorithm
@@ -19,8 +22,8 @@ class ExtractedParserBot:
             os.makedirs("author_title_tuples")
         self.author_title_tuples_output_folder = "author_title_tuples"
 
-    def run(self):
-        filenames = os.listdir(self.dataset_folder_path)
+    def iterate_over_dataset(self, filenames, process_id):
+        print("PROCESS", process_id)
         found_start_paper = (self.paper_to_start is None)
         dataset_len = 0
         for count, paper_folder in enumerate(tqdm(filenames)):
@@ -44,9 +47,35 @@ class ExtractedParserBot:
                         dataset_len += len(author_title_tuples)
                         with open(path, "w") as author_title_tuples_json:
                             author_title_tuples_json.writelines(json.dumps(author_title_tuples, indent=7))
-        dataset_stats_path = os.path.join(self.author_title_tuples_output_folder, "dataset_stats.json")
+        dataset_stats_path = os.path.join(self.author_title_tuples_output_folder,
+                                          "dataset_stats" + str(process_id) + ".json")
         with open(dataset_stats_path, "w") as dataset_stats:
             dataset_stats.writelines(json.dumps({"dataset_length": dataset_len}))
+
+    def split(self, a, n):
+        k, m = divmod(len(a), n)
+        return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
+
+    def run(self):
+
+        cpu_count = mp.cpu_count()
+        print("availableCPU", cpu_count)
+        cpu_used_count = 6
+        filenames = os.listdir(self.dataset_folder_path)
+        process_items_array = numpy.split(numpy.asarray(filenames), 4)
+
+        processes = []
+        for i in range(cpu_used_count):
+            processes.append(Process(target=self.iterate_over_dataset, args=(process_items_array[i], i)))
+
+        for p in processes:
+            p.start()
+
+        for p in processes:
+            p.join()
+
+        return
+
 
 if __name__ == "__main__":
     parser = ExtractedParserBot("usable_dataset/")
