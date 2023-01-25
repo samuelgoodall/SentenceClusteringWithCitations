@@ -1,6 +1,7 @@
 """script for counting the citations that are in the meta_database.
 They are given by name and author tuples in a json file"""
 import argparse
+import os
 import sqlite3
 
 import ijson
@@ -44,6 +45,17 @@ def count_entries_in_json(file_path):
     return count
 
 
+def count_entries_in_folders(author_title_tuples_folder):
+    """
+
+    :param author_title_tuples_folder:
+    :return:
+    """
+    for count, paper_folder in enumerate(tqdm(author_title_tuples_folder)):
+        abs_paper_folder_path = os.path.join(os.path.abspath(author_title_tuples_folder), paper_folder)
+        for filename in (os.listdir(abs_paper_folder_path)):
+            print("Filename!", filename)
+
 def count_entries_that_are_in_database(count, conn, file_path):
     """
         counts the entries in json
@@ -66,16 +78,17 @@ def count_entries_that_are_in_database(count, conn, file_path):
 
 def process_arguements():
     # Create the parser
-    parser = argparse.ArgumentParser()  # Add an argument
-    parser.add_argument('--db_path', type=str, required=True)  # Parse the argument
-    parser.add_argument('--json_file', type=str, required=True)  # Parse the argument
-    args = parser.parse_args()  # Print "Hello" + the user input argument
-    return args.db_path, args.json_file
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--db_path', type=str, required=True)
+    parser.add_argument('--json_file', type=str, required=False)
+    parser.add_argument('--author_title_tuples_dataset_folder', type=str, required=False)
+    args = parser.parse_args()
+    return args.db_path, args.json_file, args.author_title_tuples_dataset_folder
 
 
 def main() -> None:
     print("starting metadata cheking")
-    database_name, filepath = process_arguements()
+    database_name, filepath, dataset_folder = process_arguements()
     print(database_name, filepath)
     count = count_entries_in_json(filepath)
     print("Number of Items", count)
