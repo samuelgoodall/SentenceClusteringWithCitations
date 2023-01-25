@@ -62,7 +62,6 @@ class SentenceListGenerator:
         text_content = re.sub(r"\s", " ", text_content)
 
         parsed = re.split(self._sentence_split_regex_, text_content)
-        print(parsed)
         length_sum = 0
         positions = []
         for idx, sentence in enumerate(parsed):

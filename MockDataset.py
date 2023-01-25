@@ -6,11 +6,11 @@ class MockDataset(Dataset):
 
     def __init__(self):
         extractor = qualitativeInformationExtractor()
-        qualitativeInformationExtractor.fill_data_set(extractor, "texparser/")
-        self.paper = extractor.sentence_dataset
+        self.paper = qualitativeInformationExtractor.fill_data_set(extractor, "texparser/")
+        print(qualitativeInformationExtractor)
 
-    def __getitem__(self, item):
-        return self.paper[item]
+    def __getitem__(self, index):
+        return self.paper[index]
 
     def __len__(self):
         return len(self.paper)
