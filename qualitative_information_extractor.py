@@ -121,9 +121,10 @@ class qualitativeInformationExtractor(InformationExtractor):
                             sentence_ID = uuid.uuid3(uuid.NAMESPACE_DNS, sentence[0])
                             citations_list = self.get_citation_keywords(sentence[0])
                             self.sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': sentence, 'citations': citations_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})
+        return self.sentence_dataset
    
-if __name__ == "__main__":
-    extractor = qualitativeInformationExtractor()
-    extractor.fill_data_set("texparser/")
+# if __name__ == "__main__":
+#     extractor = qualitativeInformationExtractor()
+#     extractor.fill_data_set("texparser/")
     
-    #make clean
+#     #make clean
