@@ -212,18 +212,23 @@ class BibitemParser():
 
         elif algorithm == Algorithm.NeuralParcite:
             data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
- #           author_title_tuples = []
- #           for dataitem in data:
-                # testdata = testdata.replace("\\n", " ")
- #               dataitem = self._strip_letter_encasing(dataitem)
- #               dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
-                #dataitem = self._strip_special_chars(dataitem)
+        #           author_title_tuples = []
+        #           for dataitem in data:
+        # testdata = testdata.replace("\\n", " ")
+        #               dataitem = self._strip_letter_encasing(dataitem)
+        #               dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
+        # dataitem = self._strip_special_chars(dataitem)
         #              labels = self.neural_parscit.predict_for_text(dataitem,show=False)
         #             author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
-
-        data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
-        zipped_list = list(zip(author_title_tuples, data))
-        return zipped_list
+        try:
+            data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
+            zipped_list = list(zip(author_title_tuples, data))
+            return zipped_list
+        except Exception as error:
+            print("Exception:", error)
+            with open("exceptions.txt", "a") as error_log:
+                error_log.write(repr(error))
+        return []
 
     def _convert_neural_parscit_output_too_author_title_tuple(self, labels, input_text):
         tuplelist = list(zip(labels.split(), input_text.split()))
