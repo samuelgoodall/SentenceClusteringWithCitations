@@ -4,6 +4,7 @@ from MockDataset import MockDataset
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 sentences = MockDataset()
+
 dataloader = DataLoader(dataset=sentences, batch_size=10, shuffle=False)
 train_embeddings = next(iter(dataloader))
 

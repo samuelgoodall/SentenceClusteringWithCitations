@@ -28,8 +28,8 @@ class InformationExtractor:
         self.author_title_tuples_failed = list()
         self.author_title_tuples = list()
 
-    __cite_symbol = "\cite"
-    __related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}", "\section{Theory}", "\section{Overview}",
+    _cite_symbol = "\cite"
+    _related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}", "\section{Theory}", "\section{Overview}",
                               "\section{Literature Review}", "\section{Relevant Research}", "\section{Literatur Comparison}", "\section{Preliminaries}",
                               "\section{Related Works}", "\section{Previous Work}", "\section{Literature}", "\section{State of the Art}", "\section{Current State of Research}",
                               "\section{Relation to Prior Work}", "\section{Background and Related Work}",
