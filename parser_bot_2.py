@@ -62,7 +62,7 @@ class ExtractedParserBot:
         print("availableCPU", cpu_count)
         cpu_used_count = 6
         filenames = os.listdir(self.dataset_folder_path)
-        process_items_array = numpy.split(numpy.asarray(filenames), 4)
+        process_items_array = numpy.array_split(numpy.asarray(filenames), cpu_used_count)
 
         processes = []
         for i in range(cpu_used_count):
