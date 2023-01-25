@@ -210,6 +210,8 @@ class BibitemParser():
                 result_string: string = result.stdout
             except UnicodeDecodeError:
                 result_string: str = ""
+                sys.stderr.write("Error message: Contains none unicode characters.\n")
+                pass
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
 
@@ -227,10 +229,9 @@ class BibitemParser():
             data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
             zipped_list = list(zip(author_title_tuples, data))
             return zipped_list
-        except Exception as error:
-            print("Exception:", error)
-            with open("exceptions.txt", "a") as error_log:
-                error_log.write(repr(error))
+        except UnicodeDecodeError:
+            sys.stderr.write("Error message: Contains none unicode characters.\n")
+            pass
         return []
 
     def _convert_neural_parscit_output_too_author_title_tuple(self, labels, input_text):

@@ -29,7 +29,6 @@ class ExtractedParserBot:
                 found_start_paper = True
             if found_start_paper:
                 abs_paper_folder_path = os.path.join(os.path.abspath(self.dataset_folder_path), paper_folder)
-                self.informationExtractor.check_and_handle_folder(abs_paper_folder_path, paper_folder)
                 for filename in (os.listdir(abs_paper_folder_path)):
                     abs_file_path = os.path.abspath(os.path.join(abs_paper_folder_path, filename))
                     author_title_tuples = self.bibitem_parser.convert_texfile_2_author_title_tuples(abs_file_path,

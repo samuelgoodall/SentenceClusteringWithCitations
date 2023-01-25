@@ -87,6 +87,7 @@ class BibitemParserTest(unittest.TestCase):
         with self.assertRaises(AssertionError) as context:
             self.bibitem_parser._strip_letter_encasing(testinput)
 
+
     def test_convert_bibtexstring_2_author_title_tuple__StringInput1_returnCorrectStringInput(self):
         # arrange
         testinput = "@book{zsllwd20,\nauthor = {Xizhou Zhu and Weijie Su and Lewei Lu and Bin Li and Xiaogang Wang and Jifeng Dai.},\ntitle = {Sequence to sequence learning with\n  neural networks,},\nyear = {2020},\naddress = {},\npublisher = {ICLR}  \end{thebibliography},}"
