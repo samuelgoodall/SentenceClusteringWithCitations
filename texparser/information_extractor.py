@@ -27,8 +27,6 @@ class InformationExtractor:
     def __init__(self):
         self.author_title_tuples_failed = list()
         self.author_title_tuples = list()
-        php_convertion_script_file = 'bibitem_parsing/php_script_tex2bib/index.php'
-        self.bibitemparser = BibitemParser(php_convertion_script_file)
 
     __cite_symbol = "\cite"
     __related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}", "\section{Theory}", "\section{Overview}",
@@ -117,6 +115,9 @@ class InformationExtractor:
                     except PermissionError:
                         sys.stderr.write("Error message: Access denied.\n")
                         pass
+                    except IsADirectoryError:
+                        sys.stderr.write("Error message: Is a directory. \n")
+                        pass
             if has_tex:
                 self.extracted_information["tex_file_available"] += 1
             if has_tex_with_cite:
@@ -130,13 +131,20 @@ class InformationExtractor:
             if has_tex and has_tex_with_cite and has_related_work and (has_bib or has_bbl):
                 self.extracted_information["all_prerequisites"] += 1
 
-                if has_bbl:
-                    author_title_tuples = self.bibitemparser.convert_texfile_2_author_title_tuples(
-                        tex_input_file=os.path.join(absolute_paper_path, bbl_file_name),algorithm=Algorithm.Bib2Tex)
-                    accepted, citation_count, author_title_tuples_cleaned, author_title_tuples_failed = self.bibitemparser.check_how_many_titles_are_usable(
-                        author_title_tuple_list=author_title_tuples)
+                php_convertion_script_file = 'bibitem_parsing/php_script_tex2bib/index.php'
+                bibitemparser = BibitemParser(php_convertion_script_file)
 
-                    self.extracted_information["number_of_citations"] += citation_count
-                    self.extracted_information["number_of_usable_citations"] += accepted
-                    self.author_title_tuples += author_title_tuples_cleaned
-                    self.author_title_tuples_failed += author_title_tuples_failed
+                if has_bbl:
+                    try:
+                        author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(
+                            tex_input_file=os.path.join(absolute_paper_path, bbl_file_name),
+                            algorithm=Algorithm.Bib2Tex)
+                        accepted, citation_count, author_title_tuples_cleaned, author_title_tuples_failed = bibitemparser.check_how_many_titles_are_usable(
+                            author_title_tuple_list=author_title_tuples)
+
+                        self.extracted_information["number_of_citations"] += citation_count
+                        self.extracted_information["number_of_usable_citations"] += accepted
+                        self.author_title_tuples += author_title_tuples_cleaned
+                        self.author_title_tuples_failed += author_title_tuples_failed
+                    except UnicodeDecodeError:
+                        pass

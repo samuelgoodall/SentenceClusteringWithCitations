@@ -1,12 +1,13 @@
 import re
 import string
 import subprocess
-
-import torch
-#from sciwing.models.neural_parscit import NeuralParscit
-from tqdm import tqdm
+import sys
 
 from bibitem_parsing.algorithmEnum import Algorithm
+
+#import torch
+#from sciwing.models.neural_parscit import NeuralParscit
+
 
 
 class BibitemParser():
@@ -14,7 +15,7 @@ class BibitemParser():
 
     def __init__(self, php_convertion_script_file):
         self.php_convertion_script_file = php_convertion_script_file
-#        self.neural_parscit = NeuralParscit()
+        #self.neural_parscit = NeuralParscit()
 
     def _strip_special_chars(self, unclean_string: str) -> str:
         """
@@ -157,19 +158,22 @@ class BibitemParser():
         tex_input_file : str
             tex file with the bibitems that are to be converted
         """
-        text_file = open(tex_input_file, "r")
+        try:
+            text_file = open(tex_input_file, "r")
+            # read whole file to a string
+            data = text_file.read()
+            data = data.strip()
+            # if bbl follows newblock syntax do own parsing
+            # TODO add extra newblock parsing
+            split = data.split("\\bibitem", 1)
 
-        # read whole file to a string
-        data = text_file.read()
-        data = data.strip()
-        # if bbl follows newblock syntax do own parsing
-        # TODO add extra newblock parsing
-        split = data.split("\\bibitem", 1)
-
-        if (len(split) >= 2):
-            data = "\\bibitem" + split[1]
-        data = data.split("\n\n")
-
+            if (len(split) >= 2):
+                data = "\\bibitem" + split[1]
+            data = data.split("\n\n")
+        except IsADirectoryError:
+            data = tex_input_file + "could not be read"
+            sys.stderr.write("Error message: Is a directory. \n")
+            pass
         return data
 
     def convert_texfile_2_author_title_tuples(self, tex_input_file, algorithm: Algorithm):
@@ -189,28 +193,30 @@ class BibitemParser():
         """
 
         if algorithm == Algorithm.Bib2Tex:
-            result = subprocess.run(
-                ['php', self.php_convertion_script_file,
-                 tex_input_file],  # program and arguments
-                text=True,
-                capture_output=True,
-                check=True  # raise exception if program fails
-            )
-            result_string: string = result.stdout
+            try:
+                result = subprocess.run(
+                    ['php', self.php_convertion_script_file,
+                    tex_input_file],  # program and arguments
+                    text=True,
+                    capture_output=True,
+                    check=True  # raise exception if program fails
+                )
+                result_string: string = result.stdout
+            except UnicodeDecodeError:
+                result_string: str = ""
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
 
         elif algorithm == Algorithm.NeuralParcite:
-            i =4
-#            data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
-#            author_title_tuples = []
-#            for dataitem in tqdm(data):
-#                # testdata = testdata.replace("\\n", " ")
-#                dataitem = self._strip_letter_encasing(dataitem)
-#                dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
+            data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
+ #           author_title_tuples = []
+ #           for dataitem in data:
+                # testdata = testdata.replace("\\n", " ")
+ #               dataitem = self._strip_letter_encasing(dataitem)
+ #               dataitem = re.sub(r"({|}|\[|\])", " ", dataitem)
                 #dataitem = self._strip_special_chars(dataitem)
-#                labels = self.neural_parscit.predict_for_text(dataitem,show=False)
-#                author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
+  #              labels = self.neural_parscit.predict_for_text(dataitem,show=False)
+   #             author_title_tuples.append(self._convert_neural_parscit_output_too_author_title_tuple(labels, dataitem))
 
         data = self._parse_bibentrys_manually(tex_input_file=tex_input_file)
         zipped_list = list(zip(author_title_tuples, data))
