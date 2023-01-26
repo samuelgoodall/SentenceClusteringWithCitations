@@ -4,11 +4,11 @@ import shutil
 
 from tqdm import tqdm
 
-from texparser.information_extractor import InformationExtractor
+from texparser.UsablePaperExtractor import UsablePaperExtractor
 from texparser.tar_extractor import TarExtractor
 
 
-class ParserBot:
+class UsableDatasetTarExtractor:
     def __init__(self, file_to_start: str, dataset_folder_path, extract_folder_path: str = "",
                  extract_to_keep_path: str = None) -> None:
         self.file_to_start = file_to_start
@@ -16,7 +16,7 @@ class ParserBot:
         self.extract_folder_path = extract_folder_path
         self.tarExtractor = TarExtractor(
             self.dataset_folder_path, self.extract_folder_path)
-        self.informationExtractor = InformationExtractor(extract_to_keep_path)
+        self.usablePaperExtractor = UsablePaperExtractor(extract_to_keep_path)
 
     def run(self):
         self.tarExtractor.create_extract_folder_path()
@@ -38,7 +38,7 @@ class ParserBot:
                                     "/" + os.listdir(extract_folder)[0]
                 self.tarExtractor.extract_folder(
                     sub_extract_folder, self.tarExtractor.untargz_file_into_folder)[1]
-                data = self.informationExtractor.extract_all(
+                data = self.usablePaperExtractor.extract_all(
                     sub_extract_folder)
                 self.log_progress(data, count)
                 shutil.rmtree(extract_folder)
@@ -53,7 +53,7 @@ class ParserBot:
 
 
 if __name__ == "__main__":
-    parser = ParserBot(None, "content/", "extract/", "usable_dataset/")
+    parser = UsableDatasetTarExtractor(None, "content/", "extract/", "usable_dataset/")
 
     print("Parser started")
     parser.run()

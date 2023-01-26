@@ -1,5 +1,4 @@
 import os
-import shutil
 import sys
 
 
@@ -20,16 +19,6 @@ class InformationExtractor:
         "related_work_length_min": -1
     }
 
-    def __init__(self, destination_folder=None):
-        self.destination_folder = destination_folder
-        self.keep_usable_papers = True
-        if destination_folder is None:
-            self.keep_usable_papers = False
-        else:
-            if not os.path.exists(destination_folder):
-                print("creating outputfolder for usable dataset at:", destination_folder)
-                os.makedirs(destination_folder)
-
     __cite_symbol = "\cite"
     __related_work_symbols = ["\section{Related Work}", "\section{Theoretical Background}", "\section{Background}",
                               "\section{Theory}", "\section{Overview}",
@@ -40,19 +29,6 @@ class InformationExtractor:
                               "\section{Relation to Prior Work}", "\section{Background and Related Work}",
                               "\section{Technical Background}", "\section{Related Work and Background}",
                               "\section{Related Literature}", "\section{Review of Previous Methods}"]
-
-    def copy_usable_paper_folder(self, usable_paper_folder_path: str, paper: str):
-        destination_folder_path = self.destination_folder + "/" + paper
-        if not os.path.exists(destination_folder_path):
-            os.makedirs(destination_folder_path)
-        for file_name in os.listdir(usable_paper_folder_path):
-            # construct full file path
-            source = usable_paper_folder_path + "/" + file_name
-            destination = self.destination_folder + "/" + paper + "/" + file_name
-            # copy only files
-            if os.path.isfile(source) and (
-                    file_name.endswith(".bib") or file_name.endswith(".bbl") or file_name.endswith(".tex")):
-                shutil.copy(source, destination)
 
     def extract_all(self, folder_path: str) -> dict:
         for paper in os.listdir(folder_path):
@@ -94,7 +70,7 @@ class InformationExtractor:
             counter = self.extracted_information["related_work"] + 1
             self.extracted_information["related_work_length_mean"] = total / counter
 
-    def check_and_handle_folder(self, absolute_paper_path: str, paper: str) -> None:
+    def check_and_handle_folder(self, absolute_paper_path: str, paper: str) -> bool:
         if os.path.isdir(absolute_paper_path):
             self.extracted_information["last_paper"] = absolute_paper_path
             self.extracted_information["available_papers"] += 1
@@ -150,5 +126,5 @@ class InformationExtractor:
                 self.extracted_information["bbl_file_available"] += 1
             if has_tex and has_tex_with_cite and has_related_work and (has_bib or has_bbl):
                 self.extracted_information["all_prerequisites"] += 1
-                if self.keep_usable_papers:
-                    self.copy_usable_paper_folder(absolute_paper_path, paper)
+                return True
+            return False

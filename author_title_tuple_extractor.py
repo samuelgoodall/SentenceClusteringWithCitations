@@ -8,14 +8,14 @@ from tqdm import tqdm
 
 from bibitem_parsing.algorithmEnum import Algorithm
 from bibitem_parsing.bibitem_parser import BibitemParser
-from texparser.information_extractor import InformationExtractor
 
-
+"""
+Skript for going over the extracted Dataset and extracting the Author title tuples does so with utilizing multiple threads
+"""
 class ExtractedParserBot:
     def __init__(self, dataset_folder_path, paper_to_start: str = None) -> None:
         self.paper_to_start = paper_to_start
         self.dataset_folder_path = dataset_folder_path
-        self.informationExtractor = InformationExtractor(None)
         self.bibitem_parser = BibitemParser()
         if not os.path.exists("author_title_tuples"):
             print("creating_author_title_tuples")
@@ -36,7 +36,7 @@ class ExtractedParserBot:
                     abs_file_path = os.path.abspath(os.path.join(abs_paper_folder_path, filename))
                     author_title_tuples = self.bibitem_parser.convert_texfile_2_author_title_tuples(abs_file_path,
                                                                                                     Algorithm.Bib2Tex)
-                    if filename.endswith(".bbl") or filename.endswith(".bib"):
+                    if filename.endswith(".bbl"):
                         paper_json_output_folder = os.path.join(self.author_title_tuples_output_folder, paper_folder)
                         if not os.path.exists(paper_json_output_folder):
                             os.makedirs(paper_json_output_folder)
@@ -52,15 +52,10 @@ class ExtractedParserBot:
         with open(dataset_stats_path, "w") as dataset_stats:
             dataset_stats.writelines(json.dumps({"dataset_length": dataset_len}))
 
-    def split(self, a, n):
-        k, m = divmod(len(a), n)
-        return (a[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
-
     def run(self):
-
         cpu_count = mp.cpu_count()
         print("availableCPU", cpu_count)
-        cpu_used_count = 6
+        cpu_used_count = cpu_count if 6 > cpu_count else 6
         filenames = os.listdir(self.dataset_folder_path)
         process_items_array = numpy.array_split(numpy.asarray(filenames), cpu_used_count)
 
