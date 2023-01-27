@@ -1,0 +1,298 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{attal2021torf}
+Benjamin Attal, Eliot Laidlaw, Aaron Gokaslan, Changil Kim, Christian Richardt,
+  James Tompkin, and Matthew O'Toole.
+\newblock T\"orf: Time-of-flight radiance fields for dynamic scene view
+  synthesis, 2021.
+
+\bibitem{barron2015stereo}
+Jonathan~T. Barron, Andrew Adams, YiChang Shih, and Carlos Hern\'andez.
+\newblock Fast bilateral-space stereo for synthetic defocus.
+\newblock {\em CVPR}, 2015.
+
+\bibitem{barron2021}
+Jonathan~T. Barron, Ben Mildenhall, Matthew Tancik, Peter Hedman, Ricardo
+  Martin-Brualla, and Pratul~P. Srinivasan.
+\newblock {Mip-NeRF}: A multiscale representation for anti-aliasing neural
+  radiance fields.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{batson2019noise2self}
+Joshua Batson and Loic Royer.
+\newblock Noise2self: Blind denoising by self-supervision.
+\newblock {\em ICML}, 2019.
+
+\bibitem{brooks2019cvpr}
+Tim Brooks, Ben Mildenhall, Tianfan Xue, Jiawen Chen, Dillon Sharlet, and
+  Jonathan~T. Barron.
+\newblock Unprocessing images for learned raw denoising.
+\newblock {\em CVPR}, 2019.
+
+\bibitem{buehler01unstructlumigraph}
+Chris Buehler, Michael Bosse, Leonard McMillan, Steven Gortler, and Michael
+  Cohen.
+\newblock Unstructured lumigraph rendering.
+\newblock {\em SIGGRAPH}, 2001.
+
+\bibitem{mit5k}
+Vladimir Bychkovsky, Sylvain Paris, Eric Chan, and Fr{\'e}do Durand.
+\newblock Learning photographic global tonal adjustment with a database of
+  input / output image pairs.
+\newblock {\em CVPR}, 2011.
+
+\bibitem{chen2019iccv}
+Chen Chen, Qifeng Chen, Minh Do, and Vladlen Koltun.
+\newblock Seeing motion in the dark.
+\newblock {\em ICCV}, 2019.
+
+\bibitem{chen2018cvpr}
+Chen Chen, Qifeng Chen, Jia Xu, and Vladlen Koltun.
+\newblock Learning to see in the dark.
+\newblock {\em CVPR}, 2018.
+
+\bibitem{cook1984distributed}
+Robert~L. Cook, Thomas Porter, and Loren Carpenter.
+\newblock Distributed ray tracing.
+\newblock {\em SIGGRAPH Comput. Graph.}, 1984.
+
+\bibitem{bm3d}
+Kostadin Dabov, Alessandro Foi, Vladimir Katkovnik, and Karen Egiazarian.
+\newblock Image denoising by sparse 3-d transform-domain collaborative
+  filtering.
+\newblock {\em TIP}, 2007.
+
+\bibitem{debevec1997}
+Paul~E. Debevec and Jitendra Malik.
+\newblock Recovering high dynamic range radiance maps from photographs.
+\newblock {\em SIGGRAPH}, 1997.
+
+\bibitem{ehret2019f2f}
+Thibaud Ehret, Axel Davy, Jean-Michel Morel, Gabriele Facciolo, and Pablo
+  Arias.
+\newblock Model-blind video denoising via frame-to-frame training.
+\newblock {\em CVPR}, 2019.
+
+\bibitem{ldr2hdrcnn}
+Gabriel Eilertsen, Joel Kronander, Gyorgy Denes, Rafał Mantiuk, and Jonas
+  Unger.
+\newblock Hdr image reconstruction from a single exposure using deep cnns.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 2017.
+
+\bibitem{flynn2016deepstereo}
+John Flynn, Ivan Neulander, James Philbin, and Noah Snavely.
+\newblock Deepstereo: Learning to predict new views from the world's imagery.
+\newblock {\em CVPR}, 2016.
+
+\bibitem{foi2008noisemodel}
+Alessandro Foi, Mejdi Trimeche, Vladimir Katkovnik, and Karen~O. Egiazarian.
+\newblock Practical poissonian-gaussian noise modeling and fitting for
+  single-image raw-data.
+\newblock {\em IEEE Transactions on Image Processing}, 2008.
+
+\bibitem{hdrnet}
+Micha{\"e}l Gharbi, Jiawen Chen, Jonathan~T Barron, Samuel~W Hasinoff, and
+  Fr{\'e}do Durand.
+\newblock Deep bilateral learning for real-time image enhancement.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 2017.
+
+\bibitem{godard2018burst}
+Clement Godard, Kevin Matzen, and Matt Uyttendaele.
+\newblock Deep burst denoising.
+\newblock {\em ECCV}, 2018.
+
+\bibitem{cohen96lumigraph}
+Steven~J Gortler, Radek Grzeszczuk, Richard Szeliski, and Michael~F Cohen.
+\newblock The lumigraph.
+\newblock {\em SIGGRAPH}, pages 43--54, 1996.
+
+\bibitem{hdrplus}
+Samuel~W. Hasinoff, Dillon Sharlet, Ryan Geiss, Andrew Adams, Jonathan~T..
+  Barron, Florian Kainz, Jiawen Chen, and Marc Levoy.
+\newblock Burst photography for high dynamic range and low-light imaging on
+  mobile cameras.
+\newblock {\em SIGGRAPH Asia}, 2016.
+
+\bibitem{hedman2018deepblending}
+Peter Hedman, Julien Philip, True Price, Jan-Michael Frahm, George Drettakis,
+  and Gabriel Brostow.
+\newblock Deep blending for free-viewpoint image-based rendering.
+\newblock {\em SIGGRAPH Asia}, 2018.
+
+\bibitem{hu2018whitebox}
+Yuanming Hu, Hao He, Chenxi Xu, Baoyuan Wang, and Stephen Lin.
+\newblock Exposure: A white-box photo post-processing framework.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 2018.
+
+\bibitem{kalantari2017hdr}
+Nima~Khademi Kalantari and Ravi Ramamoorthi.
+\newblock Deep high dynamic range imaging of dynamic scenes.
+\newblock {\em ACM Transactions on Graphics (Proceedings of SIGGRAPH 2017)},
+  36(4), 2017.
+
+\bibitem{kangle2021dsnerf}
+Jun-Yan~Zhu Kangle~Deng, Andrew~Liu and Deva Ramanan.
+\newblock Depth-supervised nerf: Fewer views and faster training for free.
+\newblock {\em arXiv:2107.02791}, 2021.
+
+\bibitem{adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em ICLR}, 2015.
+
+\bibitem{lenstracing}
+Craig Kolb, Don Mitchell, and Pat Hanrahan.
+\newblock A realistic camera model for computer graphics.
+\newblock {\em SIGGRAPH}, 1995.
+
+\bibitem{kopanas2021pbr}
+Georgios Kopanas, Julien Philip, Thomas Leimk{\"u}hler, and George Drettakis.
+\newblock Point-based neural rendering with per-view optimization.
+\newblock {\em Eurographics}, 2021.
+
+\bibitem{krull2019noise2void}
+Alexander Krull, Tim-Oliver Buchholz, and Florian Jug.
+\newblock Noise2void-learning denoising from single noisy images.
+\newblock {\em CVPR}, 2019.
+
+\bibitem{laine2019blindspot}
+Samuli Laine, Tero Karras, Jaakko Lehtinen, and Timo Aila.
+\newblock High-quality self-supervised deep image denoising.
+\newblock {\em NeurIPS}, 2019.
+
+\bibitem{lehtinen2018}
+Jaakko Lehtinen, Jacob Munkberg, Jon Hasselgren, Samuli Laine, Tero Karras,
+  Miika Aittala, and Timo Aila.
+\newblock Noise2noise: Learning image restoration without clean data.
+\newblock {\em ICML}, 2018.
+
+\bibitem{levoy96lightfields}
+Marc Levoy and Pat Hanrahan.
+\newblock Light field rendering.
+\newblock {\em SIGGRAPH}, 1996.
+
+\bibitem{li2008demosaic}
+Xin Li, Bahadir Gunturk, and Lei Zhang.
+\newblock Image demosaicing: A systematic survey.
+\newblock {\em Visual Communications and Image Processing 2008}, 2008.
+
+\bibitem{lin2021barf}
+Chen-Hsuan Lin, Wei-Chiu Ma, Antonio Torralba, and Simon Lucey.
+\newblock {BARF}: Bundle-adjusting neural radiance fields.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{lombardi2019neuralvolumes}
+Stephen Lombardi, Tomas Simon, Jason Saragih, Gabriel Schwartz, Andreas
+  Lehrmann, and Yaser Sheikh.
+\newblock Neural volumes: Learning dynamic renderable volumes from images.
+\newblock {\em SIGGRAPH}, 2019.
+
+\bibitem{martinbrualla2020nerfw}
+Ricardo Martin-Brualla, Noha Radwan, Mehdi S.~M. Sajjadi, Jonathan~T. Barron,
+  Alexey Dosovitskiy, and Daniel Duckworth.
+\newblock {NeRF in the Wild: Neural Radiance Fields for Unconstrained Photo
+  Collections}.
+\newblock {\em CVPR}, 2021.
+
+\bibitem{kpn}
+Ben Mildenhall, Jonathan~T. Barron, Jiawen Chen, Dillon Sharlet, Ren Ng, and
+  Robert Carroll.
+\newblock Burst denoising with kernel prediction networks.
+\newblock {\em CVPR}, 2018.
+
+\bibitem{mildenhall2020nerf}
+Ben Mildenhall, Pratul~P. Srinivasan, Matthew Tancik, Jonathan~T. Barron, Ravi
+  Ramamoorthi, and Ren Ng.
+\newblock {NeRF}: Representing scenes as neural radiance fields for view
+  synthesis.
+\newblock {\em ECCV}, 2020.
+
+\bibitem{plotz2017cvpr}
+Tobias Pl\"otz and Stefan Roth.
+\newblock Benchmarking denoising algorithms with real photographs.
+\newblock {\em CVPR}, 2017.
+
+\bibitem{riegler2020fvs}
+Gernot Riegler and Vladlen Koltun.
+\newblock Free view synthesis.
+\newblock {\em ECCV}, 2020.
+
+\bibitem{riegler2021svs}
+Gernot Riegler and Vladlen Koltun.
+\newblock Stable view synthesis.
+\newblock {\em CVPR}, 2021.
+
+\bibitem{ruckert2021adop}
+Darius Rückert, Linus Franke, and Marc Stamminger.
+\newblock Adop: Approximate differentiable one-pixel point rendering, 2021.
+
+\bibitem{colmap}
+Johannes~Lutz Sch\"{o}nberger and Jan-Michael Frahm.
+\newblock Structure-from-motion revisited.
+\newblock {\em CVPR}, 2016.
+
+\bibitem{udvd}
+Dev~Yashpal Sheth, Sreyas Mohan, Joshua Vincent, Ramon Manzorro, Peter~A.
+  Crozier, Mitesh~M. Khapra, Eero~P. Simoncelli, and Carlos Fernandez-Granda.
+\newblock Unsupervised deep video denoising.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{srinivasan2018aperture}
+Pratul~P. Srinivasan, Rahul Garg, Neal Wadhwa, Ren Ng, and Jonathan~T. Barron.
+\newblock Aperture supervision for monocular depth estimation.
+\newblock {\em CVPR}, 2018.
+
+\bibitem{wadhwa2018defocus}
+Neal Wadhwa, Rahul Garg, David~E. Jacobs, Bryan~E. Feldman, Nori Kanazawa,
+  Robert Carroll, Yair Movshovitz-Attias, Jonathan~T. Barron, Yael Pritch, and
+  Marc Levoy.
+\newblock Synthetic depth-of-field with a single-camera mobile phone.
+\newblock {\em ACM Trans. Graph.}, 2018.
+
+\bibitem{wang2021nerfmm}
+Zirui Wang, Shangzhe Wu, Weidi Xie, Min Chen, and Victor~Adrian Prisacariu.
+\newblock Ne{RF}$--$: Neural radiance fields without known camera parameters.
+\newblock {\em arXiv:2102.07064}, 2021.
+
+\bibitem{wei2021nerfingmvs}
+Yi Wei, Shaohui Liu, Yongming Rao, Wang Zhao, Jiwen Lu, and Jie Zhou.
+\newblock Nerfingmvs: Guided optimization of neural radiance fields for indoor
+  multi-view stereo.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{jeong2021scnerf}
+Christopehr Choy Animashree Anandkumar Minsu~Cho Yoonwoo~Jeong, Seokjun~Ahn and
+  Jaesik Park.
+\newblock Self-calibrating neural radiance fields.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{rvidenet}
+Huanjing Yue, Cong Cao, Lei Liao, Ronghe Chu, and Jingyu Yang.
+\newblock Supervised raw video denoising with a benchmark dataset on dynamic
+  scenes.
+\newblock {\em CVPR}, 2020.
+
+\bibitem{zhang2017beyond}
+Kai Zhang, Wangmeng Zuo, Yunjin Chen, Deyu Meng, and Lei Zhang.
+\newblock Beyond a {Gaussian} denoiser: Residual learning of deep {CNN} for
+  image denoising.
+\newblock {\em IEEE Transactions on Image Processing}, 2017.
+
+\bibitem{zhang2019defocus}
+Xuaner Zhang, Kevin Matzen, Vivien Nguyen, Dillon Yao, You Zhang, and Ren Ng.
+\newblock Synthetic defocus and look-ahead autofocus for casual videography.
+\newblock {\em SIGGRAPH}, 2019.
+
+\bibitem{zhi2021semanticnerf}
+Shuaifeng Zhi, Tristan Laidlow, Stefan Leutenegger, and Andrew Davison.
+\newblock In-place scene labelling and understanding with implicit scene
+  representation.
+\newblock {\em ICCV}, 2021.
+
+\bibitem{zhou18stereomag}
+Tinghui Zhou, Richard Tucker, John Flynn, Graham Fyffe, and Noah Snavely.
+\newblock Stereo magnification: Learning view synthesis using multiplane
+  images.
+\newblock {\em SIGGRAPH}, 2018.
+
+\end{thebibliography}

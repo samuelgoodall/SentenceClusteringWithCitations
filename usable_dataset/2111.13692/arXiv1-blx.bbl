@@ -1,0 +1,984 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nyt/global//global/global}
+  \entry{AbelEtAl2018}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=AW}{%
+         family={Abel},
+         familyi={A\bibinitperiod},
+         given={Will},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=TS}{%
+         family={Tenreyro},
+         familyi={T\bibinitperiod},
+         given={Silvana},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=TG}{%
+         family={Thwaites},
+         familyi={T\bibinitperiod},
+         given={Gregory},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AW+1}
+    \strng{fullhash}{AWTSTG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{Center for Economic Policy Research, CEPR Working
+  Paper 13265}
+    \field{title}{Monopsony in the UK}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Arnold2020}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=AD}{%
+         family={Arnold},
+         familyi={A\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AD1}
+    \strng{fullhash}{AD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{Working Paper}
+    \field{title}{Mergers and Acquisitions, Local Labor Market Concentration,
+  and Worker Outcomes}
+    \field{year}{2020}
+  \endentry
+
+  \entry{AzarEtAl2019a}{misc}{}
+    \name{author}{5}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=HVE}{%
+         family={Huet-Vaughn},
+         familyi={H\bibinithyphendelim V\bibinitperiod},
+         given={Emiliano},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=vT}{%
+         family={{von Wachter}},
+         familyi={v\bibinitperiod},
+         given={Till},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJHVEMITBvT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{extradate}{1}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper 26101}
+    \field{title}{Minimum Wage Employment Effects and Labor Market
+  Concentration}
+    \field{year}{2019}
+  \endentry
+
+  \entry{AzarEtAl2020}{article}{}
+    \name{author}{4}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMTB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{pages}{No.\ 101886}
+    \field{title}{Concentration in US Labor Markets: Evidence from Online
+  Vacancy Data}
+    \field{volume}{66}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{AzarEtAl2017}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SMI}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall\bibnamedelima I.},
+         giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{NationalBureau of Economic Research, NBER Working
+  Paper 24147}
+    \field{title}{Labor Market Concentration}
+    \field{year}{2017}
+  \endentry
+
+  \entry{AzarEtAl2019b}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SMI}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall\bibnamedelima I.},
+         giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{extradate}{2}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{pages}{317\bibrangedash 321}
+    \field{title}{Measuring Labor Market Power Two Ways}
+    \field{volume}{109}
+    \field{journaltitle}{American Economic Association Papers and Proceedings}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BassaniniEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=BA}{%
+         family={Bassanini},
+         familyi={B\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=BC}{%
+         family={Batut},
+         familyi={B\bibinitperiod},
+         given={Cyprien},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=CE}{%
+         family={Caroli},
+         familyi={C\bibinitperiod},
+         given={Eve},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BA+1}
+    \strng{fullhash}{BABCCE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Laboratoire d'Economie de Dauphine, LEDa-LEGOS Working
+  Paper 6}
+    \field{title}{Labor Market Concentration and Stayers' Wages: Evidence from
+  France}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BassierEtAl2021}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BI}{%
+         family={Bassier},
+         familyi={B\bibinitperiod},
+         given={Ihsaan},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=DA}{%
+         family={Dube},
+         familyi={D\bibinitperiod},
+         given={Arindajit},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=NS}{%
+         family={Naidu},
+         familyi={N\bibinitperiod},
+         given={Suresh},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BI+1}
+    \strng{fullhash}{BIDANS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{Online First}
+    \field{title}{Monopsony in Movers: The Elasticity of Labor Supply to Firm
+  Wage Policies}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2021}
+  \endentry
+
+  \entry{BenmelechEtAl2020}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BE}{%
+         family={Benmelech},
+         familyi={B\bibinitperiod},
+         given={Efraim},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=BN}{%
+         family={Bergman},
+         familyi={B\bibinitperiod},
+         given={Nittai},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=KH}{%
+         family={Kim},
+         familyi={K\bibinitperiod},
+         given={Hyunseob},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BE+1}
+    \strng{fullhash}{BEBNKH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{Online First}
+    \field{title}{Strong Employers and Weak Employees: How Does Employer
+  Concentration Affect Wages?}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2020}
+  \endentry
+
+  \entry{BergerEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=BD}{%
+         family={Berger},
+         familyi={B\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=HK}{%
+         family={Herkenhoff},
+         familyi={H\bibinitperiod},
+         given={Kyle},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=MS}{%
+         family={Mongey},
+         familyi={M\bibinitperiod},
+         given={Simon},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BD+1}
+    \strng{fullhash}{BDHKMS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Institute of Labor Economics, IZA Discussion Paper
+  12276}
+    \field{title}{Labor Market Power}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BoalRansom1997}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BWM}{%
+         family={Boal},
+         familyi={B\bibinitperiod},
+         given={William\bibnamedelima M.},
+         giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=RMR}{%
+         family={Ransom},
+         familyi={R\bibinitperiod},
+         given={Michael\bibnamedelima R.},
+         giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BWMRMR1}
+    \strng{fullhash}{BWMRMR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1997}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{1}
+    \field{pages}{86\bibrangedash 112}
+    \field{title}{Monopsony in the Labor Market}
+    \field{volume}{35}
+    \field{journaltitle}{Journal of Economic Literature}
+    \field{year}{1997}
+  \endentry
+
+  \entry{Bunting1962}{book}{}
+    \name{author}{1}{}{%
+      {{hash=BRL}{%
+         family={Bunting},
+         familyi={B\bibinitperiod},
+         given={Robert\bibnamedelima L.},
+         giveni={R\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {University of North Carolina Press}%
+    }
+    \strng{namehash}{BRL1}
+    \strng{fullhash}{BRL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1962}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Employer Concentration in Local Labor Markets}
+    \list{location}{1}{%
+      {Chapel Hill}%
+    }
+    \field{year}{1962}
+  \endentry
+
+  \entry{ConleyEtAl2012}{article}{}
+    \name{author}{3}{}{%
+      {{hash=CTG}{%
+         family={Conley},
+         familyi={C\bibinitperiod},
+         given={Timothy\bibnamedelima G.},
+         giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+      {{hash=HCB}{%
+         family={Hansen},
+         familyi={H\bibinitperiod},
+         given={Christian\bibnamedelima B.},
+         giveni={C\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=RPE}{%
+         family={Rossi},
+         familyi={R\bibinitperiod},
+         given={Peter\bibnamedelima E.},
+         giveni={P\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CTG+1}
+    \strng{fullhash}{CTGHCBRPE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2012}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{1}
+    \field{pages}{260\bibrangedash 272}
+    \field{title}{Plausibly Exogenous}
+    \field{volume}{94}
+    \field{journaltitle}{Review of Economics and Statistics}
+    \field{year}{2012}
+  \endentry
+
+  \entry{DodiniEtAl2020}{misc}{}
+    \name{author}{4}{}{%
+      {{hash=DS}{%
+         family={Dodini},
+         familyi={D\bibinitperiod},
+         given={Samuel},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=LMF}{%
+         family={Lovenheim},
+         familyi={L\bibinitperiod},
+         given={Michael\bibnamedelima F.},
+         giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+      {{hash=SKG}{%
+         family={Salvanes},
+         familyi={S\bibinitperiod},
+         given={Kjell\bibnamedelima G.},
+         giveni={K\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+      {{hash=WA}{%
+         family={Willen},
+         familyi={W\bibinitperiod},
+         given={Alexander},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DS+1}
+    \strng{fullhash}{DSLMFSKGWA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{Centre for Economic Policy Research, CEPR Discussion
+  Paper 15412}
+    \field{title}{Monopsony, Skills, and Labor Market Concentration}
+    \field{year}{2020}
+  \endentry
+
+  \entry{HandwerkerDey2019}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=HEW}{%
+         family={Handwerker},
+         familyi={H\bibinitperiod},
+         given={Elizabeth\bibnamedelima W.},
+         giveni={E\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+      {{hash=DM}{%
+         family={Dey},
+         familyi={D\bibinitperiod},
+         given={Matthew},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HEWDM1}
+    \strng{fullhash}{HEWDM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{howpublished}{Discussion Paper}
+    \field{title}{Megafirms and Monopsonists: Not the Same Employers, not the
+  Same Workers}
+    \field{year}{2019}
+  \endentry
+
+  \entry{HershbeinEtAl2020}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=HB}{%
+         family={Hershbein},
+         familyi={H\bibinitperiod},
+         given={Brad},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=MC}{%
+         family={Macaluso},
+         familyi={M\bibinitperiod},
+         given={Claudia},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=YC}{%
+         family={Yeh},
+         familyi={Y\bibinitperiod},
+         given={Chen},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HB+1}
+    \strng{fullhash}{HBMCYC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{howpublished}{Working Paper}
+    \field{title}{Monopsony in the U.S.\ Labor Market}
+    \field{year}{2020}
+  \endentry
+
+  \entry{JaroschEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=JG}{%
+         family={Jarosch},
+         familyi={J\bibinitperiod},
+         given={Gregor},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=NJS}{%
+         family={Nimczik},
+         familyi={N\bibinitperiod},
+         given={Jan\bibnamedelima S.},
+         giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=SI}{%
+         family={Sorkin},
+         familyi={S\bibinitperiod},
+         given={Isaac},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JG+1}
+    \strng{fullhash}{JGNJSSI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper 26239}
+    \field{title}{Granular Search, Market Structure, and Wages}
+    \field{year}{2019}
+  \endentry
+
+  \entry{KahnTracy2019}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=KME}{%
+         family={Kahn},
+         familyi={K\bibinitperiod},
+         given={Matthew\bibnamedelima E.},
+         giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+      {{hash=TJ}{%
+         family={Tracy},
+         familyi={T\bibinitperiod},
+         given={Joseph},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KMETJ1}
+    \strng{fullhash}{KMETJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper 26295}
+    \field{title}{Monopsony in Spatial Equilibrium}
+    \field{year}{2019}
+  \endentry
+
+  \entry{KroppSchwengler2016}{article}{}
+    \name{author}{2}{}{%
+      {{hash=KP}{%
+         family={Kropp},
+         familyi={K\bibinitperiod},
+         given={Per},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=SB}{%
+         family={Schwengler},
+         familyi={S\bibinitperiod},
+         given={Barbara},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KPSB1}
+    \strng{fullhash}{KPSB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2016}
+    \field{labeldatesource}{}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{number}{3}
+    \field{pages}{429\bibrangedash 445}
+    \field{title}{Three-Step Method for Delineating Functional Labour Market
+  Regions}
+    \field{volume}{50}
+    \field{journaltitle}{Regional Studies}
+    \field{year}{2016}
+  \endentry
+
+  \entry{Lipsius2018}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=LB}{%
+         family={Lipsius},
+         familyi={L\bibinitperiod},
+         given={Ben},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LB1}
+    \strng{fullhash}{LB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{howpublished}{University of Michigan, Discussion Paper}
+    \field{title}{Labor Market Concentration Does Not Explain the Falling Labor
+  Share}
+    \field{year}{2018}
+  \endentry
+
+  \entry{LuizerThornton1986}{article}{}
+    \name{author}{2}{}{%
+      {{hash=LJ}{%
+         family={Luizer},
+         familyi={L\bibinitperiod},
+         given={James},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=TR}{%
+         family={Thornton},
+         familyi={T\bibinitperiod},
+         given={Robert},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LJTR1}
+    \strng{fullhash}{LJTR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1986}
+    \field{labeldatesource}{}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{4}
+    \field{pages}{573\bibrangedash 584}
+    \field{title}{Concentration in the Labor Market for Public School Teachers}
+    \field{volume}{39}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{1986}
+  \endentry
+
+  \entry{MarinescuEtAl2021}{article}{}
+    \name{author}{3}{}{%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=OI}{%
+         family={Ouss},
+         familyi={O\bibinitperiod},
+         given={Ivan},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=PLD}{%
+         family={Pape},
+         familyi={P\bibinitperiod},
+         given={Louis-Daniel},
+         giveni={L\bibinithyphendelim D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MI+1}
+    \strng{fullhash}{MIOIPLD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{pages}{506\bibrangedash 605}
+    \field{title}{Wages, Hires, and Labor Market Concentration}
+    \field{volume}{184}
+    \field{journaltitle}{Journal of Economic Behavior \& Organization}
+    \field{year}{2021}
+  \endentry
+
+  \entry{Martins2018}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=MPS}{%
+         family={Martins},
+         familyi={M\bibinitperiod},
+         given={Pedro\bibnamedelima S.},
+         giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MPS1}
+    \strng{fullhash}{MPS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{howpublished}{Centre for Globalisation Research, CGR Research Paper
+  95}
+    \field{title}{Making Their Own Weather? Estimating Employer Labour-Market
+  Power and Its Wage Effects}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Munguia2020}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MLF}{%
+         family={{Mungu\'{i}a Corella}},
+         familyi={M\bibinitperiod},
+         given={Luis\bibnamedelima F.},
+         giveni={L\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MLF1}
+    \strng{fullhash}{MLF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{7}
+    \field{pages}{1\bibrangedash 28}
+    \field{title}{Minimum Wages in Monopsonistic Labor Markets}
+    \field{volume}{9}
+    \field{journaltitle}{IZA Journal of Labor Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{PragerSchmitt2021}{article}{}
+    \name{author}{2}{}{%
+      {{hash=PE}{%
+         family={Prager},
+         familyi={P\bibinitperiod},
+         given={Elena},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Schmitt},
+         familyi={S\bibinitperiod},
+         given={Matt},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PESM1}
+    \strng{fullhash}{PESM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{number}{2}
+    \field{pages}{397\bibrangedash 427}
+    \field{title}{Employer Consolidation and Wages: Evidence from Hospitals}
+    \field{volume}{111}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{2021}
+  \endentry
+
+  \entry{QiuSojourner2019}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=QY}{%
+         family={Qiu},
+         familyi={Q\bibinitperiod},
+         given={Yue},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Sojourner},
+         familyi={S\bibinitperiod},
+         given={Aaron},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{QYSA1}
+    \strng{fullhash}{QYSA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{howpublished}{Institute of Labor Economics, IZA Discussion Paper
+  12089}
+    \field{title}{Labor-Market Concentration and Labor Compensation}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Rinz2020}{article}{}
+    \name{author}{1}{}{%
+      {{hash=RK}{%
+         family={Rinz},
+         familyi={R\bibinitperiod},
+         given={Kevin},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{RK1}
+    \strng{fullhash}{RK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{pages}{Online First}
+    \field{title}{Labor Market Concentration, Earnings Inequality, and Earnings
+  Mobility}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2020}
+  \endentry
+
+  \entry{SchubertEtAl2020}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=SG}{%
+         family={Schubert},
+         familyi={S\bibinitperiod},
+         given={Gregor},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Stansbury},
+         familyi={S\bibinitperiod},
+         given={Anna},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SG+1}
+    \strng{fullhash}{SGSATB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{howpublished}{Discussion Paper}
+    \field{title}{Monopsony and Outside Options}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Thoresson2021}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=TA}{%
+         family={Thoresson},
+         familyi={T\bibinitperiod},
+         given={Anna},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TA1}
+    \strng{fullhash}{TA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{howpublished}{Institute for Evaluation of Labor Market and Education
+  Policy, IFAU Working Paper 2021:6}
+    \field{title}{Employer Concentration and Wages for Specialized Workers}
+    \field{year}{2021}
+  \endentry
+
+  \entry{Webber2015}{article}{}
+    \name{author}{1}{}{%
+      {{hash=WDA}{%
+         family={Webber},
+         familyi={W\bibinitperiod},
+         given={Douglas\bibnamedelima A.},
+         giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WDA1}
+    \strng{fullhash}{WDA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2015}
+    \field{labeldatesource}{}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{pages}{123\bibrangedash 134}
+    \field{title}{Firm Market Power and the Earnings Distribution}
+    \field{volume}{35}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2015}
+  \endentry
+\enddatalist
+\endinput

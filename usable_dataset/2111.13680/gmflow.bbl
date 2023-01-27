@@ -1,0 +1,329 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{bailer2015flow}
+Christian Bailer, Bertram Taetz, and Didier Stricker.
+\newblock Flow fields: Dense correspondence fields for highly accurate large
+  displacement optical flow estimation.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 4015--4023, 2015.
+
+\bibitem{brox2009large}
+Thomas Brox, Christoph Bregler, and Jitendra Malik.
+\newblock Large displacement optical flow.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 41--48. IEEE, 2009.
+
+\bibitem{brox2004high}
+Thomas Brox, Andr{\'e}s Bruhn, Nils Papenberg, and Joachim Weickert.
+\newblock High accuracy optical flow estimation based on a theory for warping.
+\newblock In {\em European Conference on Computer Vision}, pages 25--36.
+  Springer, 2004.
+
+\bibitem{butler2012naturalistic}
+Daniel~J Butler, Jonas Wulff, Garrett~B Stanley, and Michael~J Black.
+\newblock A naturalistic open source movie for optical flow evaluation.
+\newblock In {\em European Conference on Computer Vision}, pages 611--625.
+  Springer, 2012.
+
+\bibitem{cabon2020virtual}
+Yohann Cabon, Naila Murray, and Martin Humenberger.
+\newblock Virtual kitti 2.
+\newblock {\em arXiv preprint arXiv:2001.10773}, 2020.
+
+\bibitem{carion2020end}
+Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander
+  Kirillov, and Sergey Zagoruyko.
+\newblock End-to-end object detection with transformers.
+\newblock In {\em European Conference on Computer Vision}, pages 213--229.
+  Springer, 2020.
+
+\bibitem{chen2013large}
+Zhuoyuan Chen, Hailin Jin, Zhe Lin, Scott Cohen, and Ying Wu.
+\newblock Large displacement optical flow from nearest neighbor fields.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 2443--2450, 2013.
+
+\bibitem{d2021convit}
+St{\'e}phane d'Ascoli, Hugo Touvron, Matthew Leavitt, Ari Morcos, Giulio
+  Biroli, and Levent Sagun.
+\newblock Convit: Improving vision transformers with soft convolutional
+  inductive biases.
+\newblock {\em International Conference on Machine Learning}, 2021.
+
+\bibitem{dosovitskiy2020image}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby.
+\newblock An image is worth 16x16 words: Transformers for image recognition at
+  scale.
+\newblock {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{dosovitskiy2015flownet}
+Alexey Dosovitskiy, Philipp Fischer, Eddy Ilg, Philip Hausser, Caner Hazirbas,
+  Vladimir Golkov, Patrick Van Der~Smagt, Daniel Cremers, and Thomas Brox.
+\newblock Flownet: Learning optical flow with convolutional networks.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 2758--2766, 2015.
+
+\bibitem{gaidon2016virtual}
+Adrien Gaidon, Qiao Wang, Yohann Cabon, and Eleonora Vig.
+\newblock Virtual worlds as proxy for multi-object tracking analysis.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 4340--4349, 2016.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 770--778, 2016.
+
+\bibitem{hosni2012fast}
+Asmaa Hosni, Christoph Rhemann, Michael Bleyer, Carsten Rother, and Margrit
+  Gelautz.
+\newblock Fast cost-volume filtering for visual correspondence and beyond.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  35(2):504--511, 2012.
+
+\bibitem{hu2016efficient}
+Yinlin Hu, Rui Song, and Yunsong Li.
+\newblock Efficient coarse-to-fine patchmatch for large displacement optical
+  flow.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 5704--5712, 2016.
+
+\bibitem{hur2019iterative}
+Junhwa Hur and Stefan Roth.
+\newblock Iterative residual refinement for joint optical flow and occlusion
+  estimation.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 5754--5763, 2019.
+
+\bibitem{ilg2017flownet}
+Eddy Ilg, Nikolaus Mayer, Tonmoy Saikia, Margret Keuper, Alexey Dosovitskiy,
+  and Thomas Brox.
+\newblock Flownet 2.0: Evolution of optical flow estimation with deep networks.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 2462--2470, 2017.
+
+\bibitem{Jiang_2021_ICCV}
+Shihao Jiang, Dylan Campbell, Yao Lu, Hongdong Li, and Richard Hartley.
+\newblock Learning to estimate hidden motions with global motion aggregation.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 9772--9781, October 2021.
+
+\bibitem{jiang2021cotr}
+Wei Jiang, Eduard Trulls, Jan Hosang, Andrea Tagliasacchi, and Kwang~Moo Yi.
+\newblock Cotr: Correspondence transformer for matching across images.
+\newblock {\em Proceedings of the IEEE/CVF International Conference on Computer
+  Vision}, 2021.
+
+\bibitem{kendall2017end}
+Alex Kendall, Hayk Martirosyan, Saumitro Dasgupta, Peter Henry, Ryan Kennedy,
+  Abraham Bachrach, and Adam Bry.
+\newblock End-to-end learning of geometry and context for deep stereo
+  regression.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 66--75, 2017.
+
+\bibitem{kondermann2016hci}
+Daniel Kondermann, Rahul Nair, Katrin Honauer, Karsten Krispin, Jonas Andrulis,
+  Alexander Brock, Burkhard Gussefeld, Mohsen Rahimimoghaddam, Sabine Hofmann,
+  Claus Brenner, et~al.
+\newblock The hci benchmark suite: Stereo and flow ground truth with
+  uncertainties for urban autonomous driving.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition Workshops}, pages 19--28, 2016.
+
+\bibitem{li2019scale}
+Yanghao Li, Yuntao Chen, Naiyan Wang, and Zhaoxiang Zhang.
+\newblock Scale-aware trident networks for object detection.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 6054--6063, 2019.
+
+\bibitem{li2021revisiting}
+Zhaoshuo Li, Xingtong Liu, Nathan Drenkow, Andy Ding, Francis~X Creighton,
+  Russell~H Taylor, and Mathias Unberath.
+\newblock Revisiting stereo depth estimation from a sequence-to-sequence
+  perspective with transformers.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 6197--6206, 2021.
+
+\bibitem{lin2017feature}
+Tsung-Yi Lin, Piotr Doll{\'a}r, Ross Girshick, Kaiming He, Bharath Hariharan,
+  and Serge Belongie.
+\newblock Feature pyramid networks for object detection.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 2117--2125, 2017.
+
+\bibitem{liu2021Swin}
+Ze Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng Zhang, Stephen Lin, and
+  Baining Guo.
+\newblock Swin transformer: Hierarchical vision transformer using shifted
+  windows.
+\newblock {\em Proceedings of the IEEE/CVF International Conference on Computer
+  Vision}, 2021.
+
+\bibitem{loshchilov2017decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization.
+\newblock {\em arXiv preprint arXiv:1711.05101}, 2017.
+
+\bibitem{lv2018learning}
+Zhaoyang Lv, Kihwan Kim, Alejandro Troccoli, Deqing Sun, James~M Rehg, and Jan
+  Kautz.
+\newblock Learning rigidity in dynamic scenes with a moving camera for 3d
+  motion field estimation.
+\newblock In {\em European Conference on Computer Vision}, pages 468--484,
+  2018.
+
+\bibitem{mayer2016large}
+Nikolaus Mayer, Eddy Ilg, Philip Hausser, Philipp Fischer, Daniel Cremers,
+  Alexey Dosovitskiy, and Thomas Brox.
+\newblock A large dataset to train convolutional networks for disparity,
+  optical flow, and scene flow estimation.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 4040--4048, 2016.
+
+\bibitem{menze2015object}
+Moritz Menze and Andreas Geiger.
+\newblock Object scene flow for autonomous vehicles.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 3061--3070, 2015.
+
+\bibitem{perazzi2016benchmark}
+Federico Perazzi, Jordi Pont-Tuset, Brian McWilliams, Luc Van~Gool, Markus
+  Gross, and Alexander Sorkine-Hornung.
+\newblock A benchmark dataset and evaluation methodology for video object
+  segmentation.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 724--732, 2016.
+
+\bibitem{ranjan2017optical}
+Anurag Ranjan and Michael~J Black.
+\newblock Optical flow estimation using a spatial pyramid network.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 4161--4170, 2017.
+
+\bibitem{revaud2015epicflow}
+Jerome Revaud, Philippe Weinzaepfel, Zaid Harchaoui, and Cordelia Schmid.
+\newblock Epicflow: Edge-preserving interpolation of correspondences for
+  optical flow.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 1164--1172, 2015.
+
+\bibitem{richter2017playing}
+Stephan~R Richter, Zeeshan Hayder, and Vladlen Koltun.
+\newblock Playing for benchmarks.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 2213--2222, 2017.
+
+\bibitem{sarlin2020superglue}
+Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz, and Andrew Rabinovich.
+\newblock Superglue: Learning feature matching with graph neural networks.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 4938--4947, 2020.
+
+\bibitem{sun2021autoflow}
+Deqing Sun, Daniel Vlasic, Charles Herrmann, Varun Jampani, Michael Krainin,
+  Huiwen Chang, Ramin Zabih, William~T Freeman, and Ce Liu.
+\newblock Autoflow: Learning a better training set for optical flow.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 10093--10102, 2021.
+
+\bibitem{sun2018pwc}
+Deqing Sun, Xiaodong Yang, Ming-Yu Liu, and Jan Kautz.
+\newblock Pwc-net: Cnns for optical flow using pyramid, warping, and cost
+  volume.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 8934--8943, 2018.
+
+\bibitem{sun2019models}
+Deqing Sun, Xiaodong Yang, Ming-Yu Liu, and Jan Kautz.
+\newblock Models matter, so does training: An empirical study of cnns for
+  optical flow estimation.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  42(6):1408--1423, 2019.
+
+\bibitem{sun2021loftr}
+Jiaming Sun, Zehong Shen, Yuang Wang, Hujun Bao, and Xiaowei Zhou.
+\newblock Loftr: Detector-free local feature matching with transformers.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 8922--8931, 2021.
+
+\bibitem{teed2020raft}
+Zachary Teed and Jia Deng.
+\newblock Raft: Recurrent all-pairs field transforms for optical flow.
+\newblock In {\em European Conference on Computer Vision}, pages 402--419.
+  Springer, 2020.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  5998--6008, 2017.
+
+\bibitem{wang2020displacement}
+Jianyuan Wang, Yiran Zhong, Yuchao Dai, Kaihao Zhang, Pan Ji, and Hongdong Li.
+\newblock Displacement-invariant matching cost learning for accurate optical
+  flow estimation.
+\newblock {\em Advances in Neural Information Processing Systems}, 33, 2020.
+
+\bibitem{wang2020learning}
+Qianqian Wang, Xiaowei Zhou, Bharath Hariharan, and Noah Snavely.
+\newblock Learning feature descriptors using camera pose supervision.
+\newblock In {\em European Conference on Computer Vision}, pages 757--774.
+  Springer, 2020.
+
+\bibitem{tartanair2020iros}
+Wenshan Wang, Delong Zhu, Xiangwei Wang, Yaoyu Hu, Yuheng Qiu, Chen Wang, Yafei
+  Hu, Ashish Kapoor, and Sebastian Scherer.
+\newblock Tartanair: A dataset to push the limits of visual slam.
+\newblock 2020.
+
+\bibitem{weinzaepfel2013deepflow}
+Philippe Weinzaepfel, Jerome Revaud, Zaid Harchaoui, and Cordelia Schmid.
+\newblock Deepflow: Large displacement optical flow with deep matching.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 1385--1392, 2013.
+
+\bibitem{xu2021high}
+Haofei Xu, Jiaolong Yang, Jianfei Cai, Juyong Zhang, and Xin Tong.
+\newblock High-resolution optical flow from 1d attention and correlation.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 10498--10507, 2021.
+
+\bibitem{xu2020aanet}
+Haofei Xu and Juyong Zhang.
+\newblock Aanet: Adaptive aggregation network for efficient stereo matching.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 1959--1968, 2020.
+
+\bibitem{xu2021vitae}
+Yufei Xu, Qiming Zhang, Jing Zhang, and Dacheng Tao.
+\newblock Vitae: Vision transformer advanced by exploring intrinsic inductive
+  bias.
+\newblock {\em Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem{yang2019volumetric}
+Gengshan Yang and Deva Ramanan.
+\newblock Volumetric correspondence networks for optical flow.
+\newblock {\em Advances in Neural Information Processing Systems}, 32:794--805,
+  2019.
+
+\bibitem{yin2019hierarchical}
+Zhichao Yin, Trevor Darrell, and Fisher Yu.
+\newblock Hierarchical discrete distribution decomposition for match density
+  estimation.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 6044--6053, 2019.
+
+\bibitem{Zhang_2021_ICCV}
+Feihu Zhang, Oliver~J. Woodford, Victor~Adrian Prisacariu, and Philip~H.S.
+  Torr.
+\newblock Separable flow: Learning motion cost volumes for optical flow
+  estimation.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 10807--10817, October 2021.
+
+\end{thebibliography}

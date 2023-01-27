@@ -1,0 +1,79 @@
+\section{Introduction}
+
+Quantum hardware has advanced significantly in the last decade and demonstrated `Quantum Supremacy' for the first time in 2020~\cite{Arute2019QuantumSU}. 
+Among various quantum hardware technologies~\cite{Kok2007LinearOQ, DiVincenzo2000ThePI, AsselmeyerMaluga20213DTQ, Google72Q},
+the superconducting (SC) qubit is currently one of the most promising technique candidates for building quantum processors~\cite{Paik2011ObservationOH, Chen2014QubitAW} due to its low error rates, individual qubit addressability, fabrication scalability, etc. Many latest quantum processors adopt the SC technology, e.g., IBM's 65-qubit heavy-hexagon-architecture  chip~\cite{zhang2020high}, Rigetti's 32-qubit octagonal-architecture chip~\cite{gold2021experimental}, Google's 54-qubit 2D-lattice chip~\cite{Arute2019QuantumSU}. %
+
+The low error rate %
+of SC processors makes them an ideal platform for %
+quantum error correction (QEC)~\cite{shor1995scheme, steane1996error, calderbank1996good, steane1996multiple, bravyi1998quantum} and thus realizing fault-tolerant (FT) quantum computation. Among various QEC codes, surface code~\cite{fowler2012surface} is a popular choice as it possesses one of the best error correction capabilities and can tolerate a high (up to 1\%) physical error rate. Even on noisy near-term devices, the surface code family can encode an arbitrarily accurate logical qubit with a large enough array of physical qubits.
+This makes  surface code one of the most feasible QEC choices for demonstrating near-term FT quantum computation.
+
+With a readily available surface code array, many recent research efforts have been put into improving the efficiency of FT quantum computation, varying from compilation~\cite{Ding2018MagicStateFU, Paler2019SurfBraidAC}, communication scheduling~\cite{JavadiAbhari2017OptimizedSC, Hua2021AutoBraidAF}, and micro-controller design~\cite{Tannu2017TamingTI}. All these works are based on a nontrivial assumption: we already find a scalable way to compose logical qubits on existing quantum devices, in particular SC devices, with the surface code family.
+
+Yet, implementing surface code on SC devices itself is a difficult problem. %
+The implementation of surface code separates physical qubits into two categories. 
+The first category of qubits is called ``data qubits'' and is used to encode the logical qubit. 
+Physical qubits in the second category are used to detect errors on data qubits, and are thus called ``syndrome qubits''. Each syndrome qubit extracts error syndromes on four neighboring data qubits with a specialized quantum  circuit, named ``measurement circuit''~\cite{fowler2012surface}. 
+To make measurement circuits executable, surface code requires a 2D-lattice qubit array where each qubit is connected or coupled to four other qubits. Nonetheless, such an architecture is not readily available on many latest quantum processors~\cite{zhang2020high, gold2021experimental} as the dense connection in the 2D qubit array would induce a high physical error rate. 
+Previous work tackles the gap between surface code and the sparse-connected SC device either by tailoring the architecture with tunable coupling~\cite{Google72Q} or by designing a QEC code upon the surface code~\cite{Chamberland2020TopologicalAS}. The former method is expensive and may introduce extra device noises while the latter method is not automated.
+
+In this paper, we propose the first automatic synthesis framework ``\myCompilerName'' for stitching the surface code family to various SC devices, without any variation in device or surface code. Our framework builds upon recent theoretical work on generating individual measurement circuits over sparse-connected SC devices~\cite{Lao2020FaulttolerantQE, Chamberland2020TopologicalAS}. 
+These works generalize the syndrome qubit to a tree of low-degree qubits (a.k.a bridge tree with constituent qubits called bridge qubits) that connects to the four target data qubits. In essential, these work trades the qubit degree with the qubit number.
+
+Yet, these measurement circuit generation works are far from tackling the overall surface code synthesis. 
+These works cannot generate measurement circuits unless the data qubits and bridge qubits for each measurement circuit are assigned. Even all measurement circuits are generated, how to efficiently execute them is still not answered by these works. Systematically, to tackle the surface code synthesis problem on SC devices, we should address three key challenges.
+First, \textit{the allocation of data qubits}. 
+If the four data qubits of a measurement circuit are far away from each other, many bridge qubits will be needed to connect these data qubits. Oppositely, if these data qubits are too close, there will not be enough space for a bridge tree. %
+Second, \textit{the selection of bridge qubits}. An improper selection of bridge qubits may cause conflicts in measurement circuits that several measurement circuits contend for one bridge qubit.
+Such bridge qubit conflict will cause a sequential execution of measurement circuits thus increasing the error detection latency and degrading the error correction performance.
+Third,  \textit{the execution order of measurement circuits}. As indicated above, sequential execution of measurement circuits is not acceptable and
+an efficient synthesis should utilize the parallelism between measurement circuits, as much as possible. %
+
+
+
+
+
+
+Our framework decouples the optimization space of surface code synthesis with a modular optimization scheme. 
+To be specific, our framework consists of three key steps. 
+
+In the first step, we optimize the allocation of data qubits since %
+data qubits are the key to gluing  measurement circuits together,
+and once allocated their physical mapping should not change to avoid error proliferation. As long as allocated data qubit layout ensures the existence of measurement circuits, we prefer a shorter total distance between data qubits since this reduces bridge qubits overhead for constructing measurement circuits. To enable this optimization, we search data qubits over a series of ``rectangular'' blocks, with each block created by a pair of three-degree qubits or one four-degree qubit.
+The key insight behind such design is that existing SC architectures can always be embedded into a 2D lattice and the four data qubits for a measurement circuit exactly form a rectangle in the 2D lattice.
+Our design ensures the existence of measurement circuits since there are enough high-degree qubits in each rectangle to connect data qubits. Rectangle-based search is efficient as it enables a coarse-grained exploration over the search space. Furthermore, to reduce the possible conflicts of measurement circuits, we require the overlapping between rectangular blocks at most happens on rectangle boundaries.
+
+In the second step, it naturally comes to the optimization of bridge qubits. The optimization goal is to reduce the conflicts between measurement circuits, i.e., reduce the mutual bridge qubits, and minimize the bridge tree connecting data qubits. The key insight for such optimization is that the size of the measurement circuit is proportional to the bridge tree size and measurement circuits without 
+conflicts can be executed together to shorten the time window of error correction cycles. To meet these goals, we first limit the search scope of bridge qubits inside rectangular blocks enclosed by data qubits. Since rectangular blocks have zero overlapping areas, such local search could greatly reduce bridge qubit conflict. 
+On the other hand, to find small bridge trees, we adopt two different 
+heuristics which complement each other.
+We then pick the best results from these two methods as bridge tree candidates.
+
+In the third step, we optimize the order of measurement circuit execution. The reason for this optimization is that conflicts between measurement circuits can sometimes be inevitable. In such cases, we have to execute conflicted measurement circuits in sequential. To reduce the total time window of measurement circuits execution in this case, we propose an iterative refinement method. We first place conflicted measurement circuits into different partitions, and then refine the partitions by moving large measurement circuits into one partition while ensuring the compatibility between measurement circuits.
+The key insight behind such optimization is that when executing measurement circuits in parallel, the execution time depends on the one with the largest circuit depth.  By moving large measurement circuits together, we can reduce the execution time of partitions consisting of small measurement circuits.
+
+We evaluate the proposed synthesis framework by comparing it to manually designed QEC codes~\cite{Chamberland2020TopologicalAS} on two SC architectures. The results show the surface codes synthesized by our framework can achieve equivalent or even better error thresholds. This result is inspiring as it unveils the possibility that automated synthesis by machine can surpass the manual QEC code design of experienced theorists. 
+We also investigate our framework on various mainstream SC architectures and present an analysis of several architecture design options based on the investigation result.
+The proposed synthesis framework would be of great interest to both QEC researchers and quantum hardware designers.  
+Theorists would have a baseline to compare with when designing novel QEC codes.
+Hardware researchers could benefit from our framework in two aspects: a) they could focus on improving the device without worrying about meeting the requirements of a specific QEC code;
+b) they can identify inefficient architecture designs for QEC codes with our synthesis framework.
+
+
+
+
+
+Our contributions in this paper are summarized as follows:
+\begin{itemize}
+    \item We promote the importance of a synthesis framework for achieving good QEC implementations towards different quantum hardware architectures.
+    \item We systematically formulate the surface code synthesis problem on SC devices for the first time and identify three key challenges: data qubit allocation, bridge qubit selection and  measurement circuit execution scheduling. %
+    \item We design and implement a modular synthesis framework that tackles the identified three challenges step by step, with a series of insights extracted from surface code and SC architectures.
+    \item Our evaluation demonstrates the effectiveness of the proposed synthesis framework with one comparative study to manually designed QEC codes and a comprehensive investigation on various mainstream SC architectures. 
+\end{itemize}
+
+
+
+
+
+

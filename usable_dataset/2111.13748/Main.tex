@@ -1,0 +1,243 @@
+\documentclass[11pt,english]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{bbm}
+\usepackage{graphicx,color}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{fullpage}
+\usepackage{algorithm}
+\usepackage{mathrsfs}
+\usepackage[noend]{algcompatible}
+\usepackage[noblocks]{authblk}
+\usepackage{varwidth}
+\usepackage{mathrsfs}
+\usepackage{babel}
+\usepackage{accents}
+\usepackage{mathtools}
+\usepackage{soul}
+\usepackage{tipa}
+\usepackage[most]{tcolorbox}
+\usepackage{wrapfig}
+\usepackage{thm-restate}
+\usepackage{longtable}
+\usepackage[backref=page, pagebackref=true]{hyperref}
+\usepackage[capitalize]{cleveref} % cleveref after hyperref
+\Crefname{enumtry}{try1}{}   %Appendix}{Appendices}
+
+\DeclarePairedDelimiter{\nor2}{\lVert}{\rVert}
+\newcommand\shay[1]{\textcolor{red}{[Shay: #1]}}
+\newcommand\ress[1]{\textcolor{olive}{[Shay: #1]}}
+\newcommand\newChange[1]{\textcolor{purple}{#1}}
+
+
+\newtheorem{question}{Question}
+\newtheorem{goal}{Goal}
+\input{latexmac}
+\newcommand{\mst}{\mathrm{MST}}
+\newcommand{\pak}{\mathrm{Pack}}
+%\newcommand{\st}{\mathrm{\textsc{St}}}
+\newcommand{\edm}{\mathrm{\textsc{Edm}}}
+\newcommand{\adj}{\mathtt{Adj}}
+\newcommand{\ce}{c(\epsilon)}
+\newcommand{\dk}{\Delta_{\mathcal{K}}}
+\newcommand{\sta}{\mathrm{step1}}
+\newcommand{\stb}{\mathrm{step2}}
+%\newcommand{\dwh[1]}{\widehat{\vphantom{\rule{1pt}{6.5pt}}\smash{\widehat{#1}}}}
+\newcommand{\wmc[1]}{\widehat{\mathcal{#1}}}
+\newcommand{\pzc[1]}{\mathpzc{#1}}
+\newcommand{\dl}{\mathtt{L_{left}}}
+\newcommand{\dr}{\mathtt{L_{right}}}
+\newcommand{\ngc}{\mathtt{negCost}}
+\newcommand{\be}{\delta}
+\newcommand{\dg}{\mathtt{deg}}
+\newcommand{\poly}{\mathsf{poly}}
+\newcommand{\tw}{\mathsf{tw}}
+\newcommand{\ssa}{\mathsf{SSA}}
+\newcommand{\sso}{\mathsf{SSO}}
+\newcommand{\gsso}{\mathsf{GSSO}}
+
+
+\newcommand{\pathg}{\mathsf{path~greedy}}
+\newcommand{\greedy}{\mathsf{greedy}}
+\newcommand{\msttilde}{\widetilde{\mst}}
+\newcommand{\Ftilde}{\widetilde{F}}
+\newcommand{\Ttilde}{\widetilde{T}}
+\newcommand{\Ptilde}{\widetilde{P}}
+\newcommand{\Qtilde}{\widetilde{Q}}
+\newcommand{\Fbar}{\overline{F}}
+\newcommand{\Tbar}{\overline{T}}
+\newcommand{\Pbar}{\overline{P}}
+\newcommand{\Qbar}{\overline{Q}}
+\newcommand{\Ibar}{\overline{I}}
+\newcommand{\barV}{\overline{V}}
+\newcommand{\barE}{\overline{E}}
+\newcommand{\bmx}{\overline{\mathcal{X}}}
+\newcommand{\uncontract}{\mathsf{uctrt}}
+
+\newcommand{\tm}{\mathsf{Time}}
+\newcommand{\lt}{\mathsf{Light}}
+\newcommand{\lns}{\mathsf{Lt}}
+\newcommand{\spt}{\texttt{S}}
+\newcommand{\high}{\mathsf{high}}
+\newcommand{\highp}{\mathsf{high}^+}
+\newcommand{\lowp}{\mathsf{low}^+}
+\newcommand{\lowm}{\mathsf{low}^-}
+\newcommand{\low}{\mathsf{low}}
+\newcommand{\cone}{\mathsf{Cone}}
+\newcommand{\prune}{\mathsf{pruned}}
+\newcommand{\geom}{\mathsf{Geom}}
+\newcommand{\gen}{\mathsf{Gen}}
+\newcommand{\minor}{\mathsf{Minor}}
+\newcommand{\source}{\mathsf{source}}
+\newcommand{\oracle}{\mathsf{Oracle}}
+\newcommand{\internal}{\mathsf{intrnl}}
+\newcommand{\prefix}{\mathsf{pref}}
+\newcommand{\light}{\mathsf{light}}
+\newcommand{\agen}{\mathcal{A}_{\mathsf{geom}}}
+\newcommand{\take}{\mathsf{take}}
+\newcommand{\redunt}{\mathsf{redunt}}
+\newcommand{\reduce}{\mathsf{reduce}}
+\newcommand{\pal}{\mathsf{Pal}}
+
+\def\eps{\epsilon}
+\newcommand{\grid}{\mathtt{Grid}}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\newcommand{\gr}{\mathrm{grd}}
+\newcommand{\child}{\mathtt{child}}
+\newcommand{\uwsp}{\mathsf{UWSpanner}}
+\newcommand{\dm}{\mathsf{Dm}}
+\newcommand{\adm}{\mathsf{Adm}}
+\newcommand{\EP}{E_{\mathsf{paid}}}
+
+\newcommand {\ignore} [1] {}
+
+\denseformat
+%\newcommand{\doverline}[1]{\overline{\overline{#1}}}
+\newcommand{\doverline}[1]{\widehat{#1}}
+%\newcommand{\dbar}[1]{\bar{\bar{#1}}}
+\newcommand{\dbar}[1]{\widehat{#1}}
+
+
+\newcommand{\blw}{Borradaile, Le and Wulff-Nilsen}
+\newcommand{\ma}{\mathcal{A}}
+\newcommand{\mb}{\mathcal{B}}
+\newcommand{\mc}{\mathcal{C}}
+\newcommand{\md}{\mathcal{D}}
+\newcommand{\mh}{\mathcal{H}}
+\newcommand{\mf}{\mathcal{F}}
+\newcommand{\mg}{\mathcal{G}}
+\newcommand{\mv}{\mathcal{V}}
+\newcommand{\me}{\mathcal{E}}
+\newcommand{\ms}{\mathcal{S}}
+\renewcommand{\mp}{\mathcal{P}}
+\newcommand{\mq}{\mathcal{Q}}
+\newcommand{\mk}{\mathcal{K}}
+\newcommand{\mt}{\mathcal{T}}
+\newcommand{\mx}{\mathcal{X}}
+\newcommand{\my}{\mathcal{Y}}
+\newcommand{\mz}{\mathcal{Z}}
+\newcommand{\mr}{\mathcal{R}}
+\newcommand{\mi}{\mathcal{I}}
+\newcommand{\ml}{\mathcal{L}}
+\newcommand{\wsp}{\mathtt{Ws}}
+\newcommand{\ssp}{\mathtt{Ss}}
+\newcommand{\lgt}{\mathtt{L}}
+
+\newcommand{\mbv}{\mathbf{v}}
+\newcommand{\mbe}{\mathbf{e}}
+\newcommand{\mbx}{\mathbf{x}}
+\newcommand{\mby}{\mathbf{y}}
+\newcommand{\mbz}{\mathbf{z}}
+\newcommand{\mbc}{\mathbf{c}}
+\newcommand{\mbtw}{\mathrm{tw}}
+\newcommand{\pin}{path neighbor}
+\newcommand{\pip}{$\Pi$-path}
+\newcommand{\pih}{$\Pi_{\mathrm{hub}}$}
+\newcommand{\pie}{path edge}
+\newcommand{\avgH}{\sigma_H}
+\newcommand{\savgH}{|V(H)|\sqrt{\log |V(H)|}}
+\newcommand*\trunc[2]{\lfloor {#1} \rfloor_{#2}}
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\newcommand{\ee}{$\tilde{\hat{\mbox{e}}}$}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\treeClustering}{\textsc{TreeClustering}}
+\newcommand{\real}{\mathbb{R}}
+\DeclareMathOperator{\MST}{\mathrm{MST}}
+\DeclareMathOperator{\sr}{\mathrm{SR}}
+\DeclareMathOperator{\polye}{\mathrm{poly}(\frac{1}{\epsilon})}
+\DeclareMathOperator{\degth}{\frac{3g}{\epsilon}} % the low-degree threshold
+\DeclareMathOperator{\Opst}{\mathrm{\textsc{W}}}
+\DeclareMathOperator{\enc}{\mathrm{Enc}}
+\DeclareMathOperator{\dec}{\mathrm{Dec}}
+\DeclareMathOperator{\mgw}{\boldsymbol{\omega}}
+\DeclareMathOperator{\smin}{\subseteq_{\min}}
+\DeclareMathOperator{\defi}{\overset{\mathrm{def.}}{=} }
+\DeclareMathOperator{\pr}{\mathtt{Pr}}
+\DeclareMathOperator{\spc}{\mathbb{X}}
+\DeclareMathOperator{\ind}{ \mathbb{1}}
+
+\newcommand{\we}{\omega(\epsilon)}
+\newcommand{\se}{\psi(\epsilon)}
+\newcommand{\bnu}{\bar\nu}
+\newcommand{\bmu}{\bar\mu}
+
+\newcommand{\arc}[1]{{%
+		\setbox9=\hbox{#1}%
+		\ooalign{\resizebox{\wd9}{\height}{\texttoptiebar{\phantom{A}}}\cr#1}}}
+%\newcounter{assumption}
+\newcommand{\hcomment}[1]{\textcolor{blue}{[H: #1]}}
+
+
+\date{}
+
+\title{A Unified Framework of Light Spanners II: Fine-Grained Optimality}
+%Towards a Unified Theory of Light Spanners II: \\Truly Optimal Lightness}
+\author{Hung Le}
+\affil{University of Massachusetts Amherst}
+\author{Shay Solomon}
+\affil{Tel Aviv University}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+%\thispagestyle{empty}
+\begin{abstract}
+\input{abs}
+\end{abstract}
+
+\pagebreak
+
+\tableofcontents
+%\thispagestyle{empty}
+
+\pagenumbering{arabic}
+
+\clearpage
+
+
+
+\input{introStart}
+\input{Intro}
+\input{GSSO}
+\input{Prelim}
+\input{Applications}
+\input{Lowerbounds}
+\input{Framework}
+%\input{SpannerOracles}
+\input{Stretch2}
+\input{Stretch1E}
+
+
+
+\paragraph{Acknowledgement.~} Hung Le is supported by a start up funding of University of Massachusetts at Amherst  and by the National Science Foundation under Grant No. CCF-2121952. Shay Solomon is partially supported by the Israel Science Foundation grant No.1991/19 and by Len Blavatnik and the Blavatnik Family foundation.
+We thank Oded Goldreich for his suggestions concerning the presentation of this work and we thank Lazar Milenković for his support.
+\bibliographystyle{plain}
+\bibliography{spanner}
+\pagebreak
+\appendix
+\input{Appendix}
+
+\end{document}

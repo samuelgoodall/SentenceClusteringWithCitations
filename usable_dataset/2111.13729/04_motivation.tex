@@ -1,0 +1,91 @@
+
+\begin{figure*}[ht!]
+    \centering
+    \includegraphics[width=0.85\linewidth]{fig/motivation4.pdf}
+    \caption{ A motivating example for synthesizing a (rotated) distance-3 surface code: (a) An SC device based on the hexagon structure; (b) A bad data qubit layout where the stabilizer $X_{idfe}$ cannot be measured; (c) A promising data qubit layout that ensures stabilizer measurement for all stabilizers; (d) An example for resolving bridge tree conflict. }
+    \label{fig:motivation}
+\end{figure*}
+
+\section{Design Overview}
+\label{sect: design_over}
+The surface code relies on a 2D square-grid connectivity between physical qubits, while actual superconducting (SC) processors may not satisfy this requirement and then fail to execute the vanilla surface code.
+In this paper, we aim to mitigate this gap by resynthesizing the surface code onto SC architectures with sparse connections.
+We first formulate the surface code synthesis problem and then introduce the optimization opportunities.
+
+
+
+\subsection{Surface code synthesis on SC architectures}
+
+We consider implementing the (rotated) surface code in Figure~\ref{fig:surf_logi}(b) on a quantum device with a hexagon architecture (see Figure~\ref{fig:motivation}(a))~\cite{Chamberland2020TopologicalAS}. In this hexagon device, each qubit connects to at most three other qubits.
+This imposes a challenge to synthesize stabilizer measurement circuits of a surface code since a syndrome qubit in either an X- or Z- type stabilizer measurement should connect to four data qubits (see Figure~\ref{fig:surf_grid}(b) and (c)).
+
+To resolve this constraint, we can introduce ancillary qubits when synthesizing a stabilizer measurement circuit.
+Suppose a mapping of the logical qubit in Figure~\ref{fig:surf_logi}(b) onto the hexagon architecture  is shown in Figure~\ref{fig:motivation}(b). 
+To measure the stabilizer $Z_{bcid}$, one needs to connect the four data qubits $\{b,c,i,d\}$ with a syndrome qubit. 
+In Figure~\ref{fig:motivation}(b), %
+data qubits $\{b, c, i, d\}$ are mapped to physical qubits $\{Q_9, Q_{16}, Q_{11}, Q_{20}\}$, and %
+the syndrome qubit is on $Q_{18}$.
+To connect $Q_{18}$ and $\{Q_9, Q_{16}, Q_{11}, Q_{20}\}$, one can use the two ancillary qubits $Q_{17}$ and $Q_{19}$.
+Qubits $Q_{17}$, $Q_{18}$ and $Q_{19}$ together form a tree that bridges the gap between data qubits $\{Q_9, Q_{16}, Q_{11}, Q_{20}\}$ and the syndrome qubit $Q_{18}$. Such a tree is called \textbf{bridge tree} and ancillae $\{Q_{17}, Q_{19}\}$ are called \textbf{bridge qubits}. For simplicity, we regard the syndrome qubit as a special bridge qubit. 
+
+
+\subsection{Optimization opportunities}
+
+To deploy an entire surface code QEC protocol onto an SC architecture requires synthesizing a series of non-independent stabilizer measurements, which is far more complicated than handling one single stabilizer measurement.
+In this section, we formulate the overall surface code synthesis problem into three key steps: data qubit allocation, bridge tree construction, and stabilizer measurement schedule.
+We briefly introduce the objectives and the design considerations of each step.
+
+
+
+
+
+
+\textbf{Data qubit allocation}: In this paper, we choose to allocate and fix the position of data qubits first as data qubits are the key to gluing stabilizer measurement circuits together and should not be changed once allocated.  
+Comparing to data qubits, bridge qubits are \textit{dynamic} resources which are initialized, used, measured and decoupled in every QEC cycle, making them unsuitable for a pre-allocation.
+
+The layout of the data qubits %
+affects how efficiently stabilizer measurement circuits can be executed.
+For example, we synthesize the (rotated) distance-3 surface code in Figure~\ref{fig:surf_logi}(b) with two data qubit layouts in Figure~\ref{fig:motivation}(b) and Figure~\ref{fig:motivation}(c).
+In Figure~\ref{fig:motivation}(b), the stabilizer $X_{idfe}$ cannot be measured without moving data qubits and inserting SWAP gates, which are not allowed to avoid error proliferation.%
+ In contrast, all stabilizer measurements ($\{X_{abhi}, X_{idfe}, X_{fg}, X_{bc}, Z_{bcid}, Z_{higf}, Z_{ah}, Z_{de} \}$) can be executed on Figure~\ref{fig:motivation}(c) since bridge trees for these stabilizers are readily available.
+
+
+
+
+
+
+
+
+\textbf{Bridge tree construction}: 
+After the data qubits are placed, the next step is to select the bridge qubits and construct bridge trees for stabilizer measurements.
+The first constraint in this step is that we should minimize the number of bridge qubits since using more physical qubits 
+results in larger measurement circuits which are naturally more error-prone.
+The second constraint is that the construction of bridge trees affects the efficiency of error detection because two stabilizers can be simultaneously measured only if their bridge trees do not intersect.
+For instance, referring to Figure~\ref{fig:motivation}(c), if we measure $X_{bc}$ with bridge qubits \{$r$, $s$\}, these two qubits cannot be used as bridge qubits in the measurement circuit of $X_{abhi}$ at the same time because the bridge qubits need to be reset at the beginning of any new measurement circuit.
+However, if we measure $X_{bc}$ with bridge qubits \{$p$, $q$\} in Figure~\ref{fig:motivation}(d), we can measure $X_{bc}$ and $X_{abhi}$ in parallel. An efficient bridge qubit selection and tree construction should enable the concurrent measurement of as many stabilizers as possible.
+
+
+
+
+
+\textbf{Stabilizer measurement scheduling}:
+The third step is to schedule the execution of the stabilizer measurement circuits.
+It would be desirable to execute the stabilizer measurement in parallel as much as possible since it can reduce the execution time and mitigate the decoherence error. 
+However, stabilizer measurement circuits have overlapped bridge qubits (a.k.a bridge qubit conflict) cannot be executed simultaneously. %
+For example in Figure~\ref{fig:motivation}(c), the measurement circuit of $X_{abhi}$ and $Z_{bcid}$ cannot be measured together since they share bridge qubits $\{q_{9}, q_{10}\}$. 
+One possibility is to measure $X_{abhi}$ and $X_{idhe}$ first, then measures $Z_{hgif}$ and $Z_{bcid}$. Though seems promising, it is not optimal as these two groups of measurements take 20 operation steps in total, using the flag-bridge circuit~\cite{Lao2020FaulttolerantQE}(Figure~\ref{fig:bridge_circuit_1}) as backend. As a comparison, if we measure $X_{abhi}$ and $Z_{hgif}$ first and measure $X_{idfe}$ and $Z_{bcid}$ second, the total operation step number is only 18. 
+It is usually not a simple task to schedule the stabilizer measurements optimally.
+Our objective is to identify the potential parallelism in stabilizer measurements and figure out an efficient heuristic scheduling method to minimize the overall error detection cycle time (running all stabilizer measurements once is a cycle in the surface code QEC protocol).
+
+
+
+
+
+
+
+
+
+
+
+
+

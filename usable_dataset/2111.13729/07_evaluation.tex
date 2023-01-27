@@ -1,0 +1,210 @@
+\section{Evaluation}
+\label{sect:evaluation}
+
+In this section, we first evaluate the proposed synthesis framework ``\myCompilerName'' by comparing the generated surface codes with state-of-the-art manually designed QEC codes. 
+We then demonstrate the efficiency of the proposed synthesis framework  by analyzing the error correction performance and resource overhead of the synthesized surface codes on mainstream SC architectures.
+
+\subsection{Experiment Setup}
+
+\paragraph{Evaluation setting}
+We use the flag-bridge circuit~\cite{Lao2020FaulttolerantQE} as the backend for instantiating stabilizer measurement circuits. We select this backend because it provides the extra feature of fault-tolerant error correction.
+We implement all numerical simulations with stim v1.5.0, which is a fast stabilizer circuit simulator~\cite{gidney2021stim}. We use PyMatching v0.4.0~\cite{higgott2021pymatching} for error decoding with measurement signals from bridge qubits. Error rates are computed by performing $10^5$ simulations, on a Ubuntu 18.04 server with a 6-core Intel E5-2603v4 CPU and 32GB RAM.
+
+
+
+\paragraph{Metrics} We evaluate the \textbf{error threshold} of the synthesized surface codes to demonstrate their error correction performance. Error threshold indicates what hardware error rates can be tolerated and a higher error threshold is preferred. 
+\textbf{Time-step counts} in an error detection cycle can also 
+indicate the error correction performance~\cite{fowler2012surface}. The time-step counts also determines the execution speed of the surface code. A small time-step count is preferred. 
+Finally, 
+We evaluate the resource requirement of the synthesized surface codes with \textbf{CNOT counts} and \textbf{qubit counts}. A resource-efficient synthesis should use less CNOT gates and bridge qubits.
+
+\paragraph{Device Architectures} %
+we use two categories of device architectures. The architectures are shown in Table~\ref{tab:device_arch}. The first category architectures are built by tiling polygons and serve as basic structures for many SC devices, \emph{e.g.} Google's Sycamore~\cite{Arute2019QuantumSU} and IBM's latest machines~\cite{Jurcevic2020DemonstrationOQ}. The second category architectures consist of `heavy' architectures which insert one qubit for each edge of polygon devices. Edges with one extra qubit in the middle are called ``heavy edges''.
+Heavy architectures have lower average qubit connectivity because of the inserted two-degree qubits. Heavy architectures are used by IBM devices~\cite{Jurcevic2020DemonstrationOQ}. Square and heavy square architectures can be embedded into a 2D grid naturally. Hexagon and heavy hexagon architectures can be embedded into a 2D grid by squashing the hexagon into the shape of a rectangle.
+
+
+\begin{table}[h]
+\centering
+\caption{Overview of device architectures.}
+\label{tab:device_arch}
+\resizebox{0.49\textwidth}{!}{
+\begin{tabular}{|m{1cm}|m{1.2cm}|m{1cm}|c|m{2.5cm}|}
+\hline
+Type                          & Name          & Building blocks & Tilling Example & Remark \\ \hline 
+
+
+\multirow{2}{1cm}{\raisebox{-36pt}{\parbox[c]{1cm}{Polygon Arch}}} & \raisebox{-16pt}{\parbox[c]{1cm}{Square}}       &  \raisebox{-22pt}{\hspace{6pt}\includegraphics[height=3\fontcharht\font`\B]{fig/build_square.pdf}}               &  \raisebox{-34pt}{\includegraphics[height=6\fontcharht\font`\B]{fig/tile_square.pdf}} &  \raisebox{-14pt}{\parbox[c]{2.5cm}{Each square can have at most four neighboring squares for tiling.}}      \\ \cline{2-5} 
+& \raisebox{-0pt}{\parbox[c]{1cm}{Hexagon}}     &  \raisebox{-0pt}{\hspace{5pt}\includegraphics[height=4\fontcharht\font`\B]{fig/build_hexagon.pdf}
+}               & \raisebox{-14pt}[24pt]{\includegraphics[height=6\fontcharht\font`\B]{fig/tile_hexagon.pdf}}  & 
+\raisebox{16pt}{\parbox[c]{2.5cm}{Each hexagon can have at most six neighboring hexagons for tiling.}}      \\ \hline
+
+
+\multirow{2}{1cm}{\raisebox{-24pt}{\parbox[c]{1cm}{Heavy Arch}}}   & \raisebox{12pt}{\parbox[c]{1cm}{Heavy square}}  & \raisebox{8pt}{\hspace{5pt}\includegraphics[height=3.5\fontcharht\font`\B]{fig/build_heavy_square.pdf}}                &  \raisebox{-10pt}[26pt]{\includegraphics[height=5.8\fontcharht\font`\B]{fig/tile_heavy_square.pdf}}  & \raisebox{12pt}{\parbox[c]{2.5cm}{Heavy squares are tiled like squares.}}    \\ \cline{2-5} 
+& \raisebox{14pt}{\parbox[c]{1cm}{Heavy hexagon}} & \raisebox{5pt}{\hspace{2pt}\includegraphics[height=8\fontcharht\font`\B]{fig/build_heavy_hexagon.pdf}}                & \raisebox{-19pt}[36pt]{\includegraphics[height=10\fontcharht\font`\B]{fig/tile_heavy_hexagon.pdf}}   & \raisebox{14pt}{\parbox[c]{2.5cm}{Heavy hexagons are tiled like hexagons.}}    \\ \hline
+\end{tabular}%
+}
+
+\end{table}
+
+\paragraph{Error model} In all simulations, we assume the following circuit-level error model:
+For the gate error, we assume an error probability $p_e$ for the single-qubit depolarizing error channel on single-qubit gates, the two-qubit depolarizing error channel on two-qubit gates and the Pauli-X error channel on measurement and reset operations. For the idle decoherence error, we assume each idle qubit is followed by a single-qubit depolarizing error channel per gate duration 
+with error probability $0.0002$, which is estimated by the decoherence error formula $1-e^{-\frac{t}{T}} \approx 0.0002$, with the gate execution time $t= 20\,n s$  and the relaxation or dephasing time $T= 100\,\mu s$. %
+
+These errors happen on all qubits, including data qubits and bridge qubits.
+
+
+\subsection{Comparing to manually designed QEC code}
+
+We first compare our synthesized surface code to the two manually designed QEC codes by Chamberland et al.~\cite{Chamberland2020TopologicalAS} on 
+heavy architectures.
+Figure~\ref{fig:our_ibm}(a)(b) shows the qubit layout and stabilizer measurement circuits of our synthesized surface codes on the heavy square architecture (`\myCompilerNameSpace Heavy Square')  and the heavy hexagon architecture (`\myCompilerNameSpace Heavy Hexagon'),
+Figure~\ref{fig:our_ibm}(c)(d) shows the manually designed QEC codes on the heavy square architecture (`IBM Heavy Square') and  the heavy hexagon architecture (`IBM Heavy Hexagon'). 
+The error thresholds of these codes are in  Figure~\ref{fig:comp_ibm}.
+
+Overall, compared with the manually and specifically designed codes on the two architectures, the surface codes synthesized by \myCompilerNameSpace can have comparable or even better performance.
+On the heavy hexagon architecture, the error threshold of `\myCompilerNameSpace Heavy Hexagon' is 0.0033\% which is 106\% higher than that of `IBM Heavy Hexagon' (0.0016\%), as shown in Figure~\ref{fig:comp_ibm}(a).
+Such benefit comes from the fact that the `IBM Heavy Hexagon' code uses the Bacon-Shor scheme for Pauli Z-error correction (Figure~\ref{fig:our_ibm}(d)) which is not as effective as the surface code. %
+On the heavy square architecture, the error threshold of `\myCompilerNameSpace Heavy Square' is the same as that of `IBM Heavy Square', as shown in Figure~\ref{fig:comp_ibm}(b).  This is because the code synthesized by \myCompilerNameSpace is 
+ almost identical to that of `IBM Heavy Square' except stabilizers on boundaries, as shown in Figure~\ref{fig:our_ibm}(a)(c). %
+In summary, \myCompilerNameSpace can automatically generate QEC codes that have similar or even better error correction performance compared with manually designed codes on the two studied architectures.
+
+ 
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+\node [above right,inner sep=0] (image) at (0,0) {\includegraphics[height=0.12\textwidth]{fig/oursheavysquare.pdf}};
+\node [below=0.01cm of image]  {(a) \myCompilerNameSpace Heavy Square};
+
+\node [above right,inner sep=0] (image1) at (3.8,0) {\includegraphics[height=0.12\textwidth]{fig/oursheavyhexagon.pdf}};
+\node [below=0.01cm of image1]  {(b) \myCompilerNameSpace Heavy Hexagon};
+
+\node [below=0.7cm of image, below right, inner sep=0] (image3) at (0,0) {\includegraphics[height=0.155\textwidth]{fig/ibm-heavysquare2.pdf}};
+\node [below=0.01cm of image3]  {(c) IBM Heavy Square};
+
+\node [below=0.7cm of image1, below right, inner sep=0] (image4) at (4.5,0) {\includegraphics[height=0.155\textwidth]{fig/ibm-heavyhexagon2.pdf}};
+\node [below=0.01cm of image4]  {(d) IBM Heavy Hexagon};
+
+\end{tikzpicture}
+    \caption{The synthesized distance-3 surface code by \myCompilerNameSpace and the two manually designed QEC codes by IBM~\cite{Chamberland2020TopologicalAS}. IBM  removes some boundary nodes (dotted) and edges (dotted) for better efficiency of stabilizer measurements on borderline.  }
+    \label{fig:our_ibm}
+    
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+        \begin{tikzpicture}
+\node [above right,inner sep=0] (image) at (0,0) {\includegraphics[width=0.48\textwidth]{fig/comp_ibm1.pdf}};
+\node [below=-0.2cm of image]  at (2.9,0) {(a) Heavy Hexagon};
+\node [below=-0.2cm of image]  at (6.9,0) {(b) Heavy Square};
+\end{tikzpicture}
+    \caption{The simulated error thresholds of the synthesized surface codes by \myCompilerNameSpace and the two manually designed QEC codes by IBM~\cite{Chamberland2020TopologicalAS}.
+    }
+    \label{fig:comp_ibm}
+\end{figure}
+
+\subsection{Synthesis on various SC architectures}
+
+\input{figtex/error_result_other}
+
+
+\begin{table}[h]
+\caption{Error correction metrics of the synthesized surface codes. The average numbers of bridge qubits, CNOT gates, and time steps are computed over all X-type stabilizers.}
+\label{tab:arch-result}
+\resizebox{0.48\textwidth}{!}{%
+\begin{tabular}{|m{1.9cm}|m{1.35cm}|m{1.2cm}|m{1.2cm}|m{1.2cm}|m{1.5cm}|}
+\hline
+Code  & Avg. bridge qubit \# & Avg. CNOT \# & Avg. time-step \# & Tot. time-step \# & Estimated error threshold \\ \hline
+\myCompilerNameSpace Heavy Sqaure  & 3                   & 8           & 12  & 24 & 0.53\%         \\ \hline
+\myCompilerNameSpace Heavy Hexagon & 7                   & 19          & 20 & 40 & 0.33\%           \\ \hline
+\myCompilerNameSpace Sqaure        & 2                   & 6           & 10 & 20 &  0.63\%         \\ \hline
+\myCompilerNameSpace Hexagon       & 4                   & 10          & 13 & 26 & 0.47\%        \\ \hline
+\myCompilerNameSpace Sqaure-4       & 1                   & 4           & 8 & 8 & 0.70\%   \\\hline  
+\myCompilerNameSpace Heavy Sqaure-4 & 5                   & 12           & 13  & 13 & 0.42\%  \\\hline
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[h]
+\caption{Qubit utilization of the distance-5 surface codes synthesized by \myCompilerNameSpace on different architectures.}
+\label{tab:qubit_utilize}
+\resizebox{0.49\textwidth}{!}{%
+\begin{tabular}{|m{1.9cm}|m{1.55cm}|m{1.75cm}|m{1.75cm}|m{1.5cm}|}
+\hline \footnotesize
+Code   &  data qubit \% & bridge qubit \% & unused qubit \% & Tot. qubit \# \\ \hline
+\myCompilerNameSpace Heavy Sqaure   & 31.7\%         & 45.6\%           & 22.8\%   & 79       \\ \hline
+\myCompilerNameSpace Heavy Hexagon & 18.8\%         & 59.4\%           & 21.8\%   & 133      \\ \hline
+\myCompilerNameSpace Square         & 55.6\%         & 44.4\%           & 0.0\%   &  45        \\ \hline
+\myCompilerNameSpace Hexagon        & 30.5\%         & 48.8\%           & 20.7\%    & 82      \\ \hline
+\myCompilerNameSpace Square-4         & 43.9\%         & 56.1\%           & 0.0\%   &  57    \\ \hline
+\myCompilerNameSpace Heavy Sqaure-4   & 16.3\%         & 83.7\%           & 0.0\%   & 153       \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+We then apply \myCompilerNameSpace on the square architecture and the hexagon architecture to demonstrate that \myCompilerNameSpace can accommodate various architectures.
+The synthesized surface codes on these two architectures are shown in Figure~\ref{fig:synthesis_poly}.
+We also include another two surface code synthesis generated by using syndrome rectangles centering around four-degree qubits, as shown in Figure~\ref{fig:synthesis_four}.
+Table~\ref{tab:arch-result} and Figure~\ref{fig:error_res} summarizes the error correction performance of these synthesized surface codes.
+Table~\ref{tab:qubit_utilize} shows the resource requirement of the synthesized surface codes, and is obtained by finding the smallest tiling of building blocks for each architecture that is able to support the distance-5 surface code, and then computing the ratios of different types of qubits. 
+
+\paragraph{The effect of architecture} High-degree architectures are more effective for surface code synthesis than low-degree architectures, both in error correction performance and resource requirement. Comparing to polygon architectures, heavy architectures reduces the error threshold by 26.7\% on average and they increases the average time-step number by 40.7\% averagely. Heavy architectures also increase bridge qubit number by 114\% averagely, up to 400\%. However, low-degree devices has a much lower physical error rate and are easier to fabricate than high-degree devices.
+
+\paragraph{The effect of synthesis design} Synthesis centering four-degree qubits has higher resource overhead than the synthesis induced by a pair of three-degree qubits. In Table~\ref{tab:qubit_utilize}, 26.7\% and 93.7\%  more qubits are required for `\myCompilerNameSpace Square-4' and `\myCompilerNameSpace Heavy Square-4' than `\myCompilerNameSpace Square' and `\myCompilerNameSpace Heavy Square', respectively. 
+Also, on low-degree architectures, the synthesis induced by four-degree qubits may have lower error threshold. Comparing to `\myCompilerNameSpace Heavy Square', `\myCompilerNameSpace Heavy Square-4' downgrades the error threshold by 20.8\%.
+
+In summary, not only the architecture design but also the synthesis design have a critical impact on the resource overhead and error correction performance of the synthesized code.
+By optimizing the three key steps in surface code synthesis, \textbf{our framework is able to mitigate the detrimental effect of low-degree architectures}. In fact, 
+both using syndrome rectangles induced by four-degree qubits, `\myCompilerNameSpace Heavy Square-4' only achieves 60\% error correction performance of `\myCompilerNameSpace Square-4' (the ideal surface code) while `\myCompilerNameSpace Heavy Square' achieves 75.7\% error correction performance of `\myCompilerNameSpace Square-4'. On the other hand, comparing to the synthesized code on the hexagon architecture whose asymptotic average node degree is 3, `\myCompilerNameSpace Heavy Square' on the heavy square architecture, whose asymptotic average node degree is 2.3, achieves a 12.8\% higher error threshold. These evaluation results demonstrate the effectiveness of the proposed framework for automatic surface code synthesis on any SC architectures.
+
+
+
+
+
+
+\subsection{Architecture Design Implications}
+
+Our synthesis results provide some insights for designing future SC quantum architectures that can efficiently execute the surface code. Starting from the ideal 2D qubit array equipped with the surface code in Figure~\ref{fig:arch_implict}(a),
+we discuss how to reduce the connectivity of the ideal 2D qubit array while preserving the efficiency for surface code synthesis.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+\node [above right,inner sep=0] (image) at (0,0) {\includegraphics[height=75px]{fig/square4grid}};
+\node [below=0.01cm of image]  {(a)};
+
+\node [above right,inner sep=0] (image1) at (2.2,0) {\includegraphics[height=75px]{fig/square4insertxy.pdf}};
+\node [below=0.01cm of image1]  {(b)};
+
+\node [above right,inner sep=0] (image2) at (5,0) {\includegraphics[height=75px]{fig/square4insertyy.pdf}};
+\node [below=0.01cm of image2]  {(c)};
+
+\node [below=0.7cm of image, below right, inner sep=0] (image3) at (0,0) {\includegraphics[height=75px]{fig/square4insertyyy.pdf}};
+\node [below=0.02cm of image3]  {(d)};
+
+\node [below=0.7cm of image1, below right,inner sep=0] (image4) at (2.5,0) {\includegraphics[height=75px]{fig/square4cutedge.pdf}};
+\node [below=0.01cm of image4]  {(e)};
+
+\node [below=0.7cm of image2, below right,inner sep=0] (image5) at (5,0) {\includegraphics[height=75px]{fig/square4rmnode.pdf}};
+\node [below=0.01cm of image5]  {(f)};
+\end{tikzpicture}
+    \caption{An example for potential architecture design. }
+    \label{fig:arch_implict}
+\end{figure}
+
+\paragraph{Insert two-degree nodes selectively}
+Heavy edges or extra two-degree nodes are harmful to the synthesized surface code. Yet, they can be essential when lowering the device design and fabrication complexity~\cite{Li2020TowardsES}.
+As a compromise, we can insert two-degree nodes selectively.
+
+First, we should avoid inserting two-degree nodes both in X-type syndrome rectangles and Z-type syndrome rectangles. This is because we can confine the detrimental effect of two-degree nodes only within one stabilizer set in this way.  Figure~\ref{fig:arch_implict}(b) gives an example where two-degree nodes are inserted into both X- and Z-type syndrome rectangles. Comparing to the architecture in Figure~\ref{fig:arch_implict}(c) which only inserts nodes in Z-type syndrome rectangles, the architecture in Figure~\ref{fig:arch_implict}(b) will have two more time-steps in each error detection cycle. 
+Second, it may be of merit to insert two-degree nodes in small syndrome rectangles of a scheduled stabilizer set.
+A stabilizer set may have syndrome rectangles of different sizes. Inserting two-degree nodes in small syndrome rectangles may not increase the error detection cycle time. For example, the error detection cycle length of the architecture in Figure~\ref{fig:arch_implict}(d) is the same as the one in Figure~\ref{fig:arch_implict}(c).
+
+
+
+\paragraph{Remove useless structures}
+The unused qubits and physical connections for hexagon and heavy architectures are not a few, as indicated by Table~\ref{tab:qubit_utilize}. 
+There are several types of useless structures in these architectures, including the architecture in Figure~\ref{fig:arch_implict}(d). {First}, connections between data qubits do not provide any benefits for constructing non-conflicted bridge trees. We can remove such connections to lower device complexity, as shown in Figure~\ref{fig:arch_implict}(e).
+{Second}, 
+qubits and connections on the boundaries of these architectures may not be used by any stabilizers and can thus be removed. For example, the qubits on the top right and bottom left corners of Figure~\ref{fig:arch_implict}(e) can be removed and the resulted architecture is shown in Figure~\ref{fig:arch_implict}(f).

@@ -1,0 +1,256 @@
+
+\section{Proof of \Cref{lm:Clustering-Step5B1E}}\label{app:Clustering-5BProofE}
+
+
+We follow the same construction in~\cite{LS19}.  We color the contracted nodes of  $\Pbar$ by black color, and other nodes by white color. Let $\bar{W}$ be the set of black nodes of $\Pbar$. Let $\me_{white}$ be the set of edges between two white nodes of $\Pbar$, called white edges. We will orient edges in $\me_i^{\take -}(\Pbar)\setminus  \me_{white}$ as out-going from their black endpoints. Thus, in what follows, we only focus on  orienting white edges. 
+
+
+Let $\Ptilde^{\uncontract}$ be obtained from $\Pbar$ by uncontracting contracted nodes. Let $\tilde{W}$ be the set of nodes in $\Ptilde^{\uncontract}$ that are in contracted nodes of $\Pbar$. We color nodes in $\tilde{W}$ by black color, and other nodes by white color.  Due to a special structure of contracted nodes (as shown in \Cref{lm:Clustering-Step2T2}), we can show that the potential change of a subgraph $\mx$ to be constructed is proportional to the number black nodes it has. Thus, the remaining challenge is to relate the potential change with the number of white edges incident to $\mx$. This is basically accomplished in the construction of the authors~\cite{LS19}; for completeness, we include a proof below.
+
+
+\begin{lemma}[Lemma 6.17~\cite{LS19}]\label{lm:Clustering-White} We can construct a set of subgraphs $\mathbb{C}_5(\Pbar)$ such that: 	
+	\begin{enumerate}
+		\item[(1)]  Subgraphs in $\mathbb{C}_5(\Pbar)$ contain every node in $\Ptilde^{\uncontract}$.
+		\item[(2)] For every subgraph $\mx\in \mathbb{C}_5(\Pbar)$, $\zeta L_i \leq \adm(\mx)\leq 5L_i$. Furthermore, $\mx$ is a subtree of $\Ptilde^{\uncontract}$ and some edges in  $\me_{white}$  whose both endpoints are in $\mx$.
+		\item[(3)]  There is an orientation of edges in $\me_{white}$  
+		such that, for any subgraph $\mx \in  \mathbb{C}_5(\Pbar)$,  if the total number of out-going edges incident to nodes in $\mx$ is $t$ for any $t\geq 0$, then:
+		\begin{equation}\label{eq:Step5BpotentialWhite}
+			\Delta^+_{i+1}(\mx) =  \Omega(t\eps + |\mv(\mx)\cap \tilde{W}|)\eps L_i
+		\end{equation}
+	\end{enumerate}
+\end{lemma}
+
+We now show that \Cref{lm:Clustering-White} implies \Cref{lm:Clustering-Step5B1E}.
+
+\begin{proof}[Proof of \Cref{lm:Clustering-Step5B1E}] Let  $\mathbb{C}_5(\Pbar)$  be the set of subgraphs constructed by \Cref{lm:Clustering-White}. Items (1) and (2) of \Cref{lm:Clustering-Step5B1E} follows directly from Items (1) and (2) of \Cref{lm:Clustering-White}. Thus, it remains to show Item (3).
+	
+	We orient edges of $\me_i^{\take -}(\Pbar)$ as follows. Edges in $  \me_{white}$ are oriented following \Cref{lm:Clustering-White}. For each edge in  $\me_i^{\take -}(\Pbar)\setminus  \me_{white}$, we orient it as out-going from (arbitrary) one of its black endpoint(s); there must exist at least one black endpoint by the definition of $\me_{white}$. 
+	
+	Let $t$ be the number of out-going edges in $\me_i^{\take -}(\Pbar)$ incident  to nodes in $\mx$. Let $t_1$ be the number of out-going edges in $\me_{white}$ incident to $\mx$, and $t_2 =  t-t_1$. By the construction in Step 1 (\Cref{lm:Clustering-Step1T2}), every node in $\mx$ is incident to at most $\frac{2g}{\zeta \eps} = O(1/\eps)$ edges in  $\me_i$. Thus, $t_2\leq O(1/\eps) |\mv(\mx)\cap \tilde{W}|$. That is, $ |\mv(\mx)\cap \tilde{W}| = \Omega(t_2\eps)$. Thus, by \Cref{eq:Step5BpotentialWhite}, we have:
+	 	\begin{equation*}
+	 	\Delta^+_{i+1}(\mx) =  \Omega(t_1\eps + t_2\eps)\eps L_i =  \Omega(t)\eps^2L_i
+	 \end{equation*}
+ as claimed.
+	\qed
+\end{proof}
+
+
+
+We now focus on proving \Cref{lm:Clustering-White}. There are two main steps in the construction. 
+
+\paragraph{Step 1: tiny clusters.~} We greedily break $\Pbar$ into subpaths of augmented diameter at least $\zeta L_i$ and at most $3\zeta L_i$. This is possible since each node has weight at most $\zeta L_i$ due to the construction in Step 2 (\Cref{lm:Clustering-Step2T2}) and each edge has weight at most $\eps L_i \leq \zeta L_i$ when $\eps \leq \zeta$. Each subpath of $\Pbar$ is called a tiny cluster.  Let $\mathbb{C}_{tiny}$ be the set of all tiny clusters.
+
+Since $3\zeta L_i < L_i/(2)$ (as $\zeta = 1/250$), there is no edge in $\me_i^{\take -}(\Pbar)$ whose both endpoints are in the same tiny cluster.  However, there may be parallel edges: two edges of $\me_{white}$ connecting the same two tiny clusters.
+
+
+
+Let $\widehat{P}$ be obtained from $\Pbar$ by contracting each tiny cluster in a single \emph{supernode}. We abuse notation here by viewing  $\me_{white}$ as edges between contracted nodes in $\widehat{P}$.  Given a supernode $\hat{\nu}\in \widehat{P}$, we say that an edge  $\hat{\mbe}\in \me_{white}$ \emph{shadows} $\hat{\nu}$ if  $\hat{\nu}$ lies on the subpath of  $\widehat{P}$  between two endpoints of $\hat{\mbe}$. Note that edges incident to $\hat{\nu}$ shadow  $\hat{\nu}$  by definition. 
+
+
+\paragraph{Step 2: constructing $ \mathbb{C}_5(\Pbar)$ and orient edges.~}  We iteratively construct a set of subgraphs $ \widehat{\mathbb{C}}_5$ from $\widehat{P}$ and $\me_{white}$, orient edges of $\me_{white}$ and mark contracted nodes of $\widehat{P}$ along the way.  Let  $\hat{\nu} \in \widehat{P}$ be an unmarked supernode  incident to a maximum number of \emph{unoriented edges} in $\me_{white}$. Let $\me_{white}(\hat{\nu})\subseteq \me_{white}$ be the set of unoriented edges shadowing $\hat{\nu}$; $\me_{white}(\hat{\nu})$ could be empty. Let  $\widehat{Q}$ be the minimal subpath of  $\widehat{P}$ that contains $\hat{\nu}$ and the endpoints of every edge in $\me_{white}(\hat{\nu})$. (If $\me_{white}(\hat{\nu}) = \emp$ then $\widehat{Q}$ contains a single node $\hat{\nu}$.) We refer to $\hat{\nu}$ as\emph{ the center} of  $\widehat{Q}$. We add the subgraph $\widehat{Q} \cup \me_{white}(\hat{\nu})$ to $ \widehat{\mathbb{C}}_5$. (See \Cref{fig:clustering-tiny}.) Next, we orient unoriented edges of  $\me_{white}$ incident to contracted nodes in $\widehat{Q}$ as out-going from $\widehat{Q}$. We then repeat this step until there is no unmarked supernode in $\widehat{P}$. Finally, we construct  $\mathbb{C}_5(\Pbar)$ by uncontracting each supernode  in $ \widehat{\mathbb{C}}_5$ twice; the first uncontraction gives a subbgraph of $\Pbar\cup \me_{white}$ and the second uncontraction gives a subgraph of $\Ptilde^{\uncontract}\cup \me_{white}$.  This completes the construction of  $\mathbb{C}_5(\Pbar)$ in \Cref{lm:Clustering-White}.
+
+\begin{claim}\label{clm:hatP-structure} During the construction of Step 2,  if  we remove marked supernodes from $\widehat{P}$, then there is no edge in $\me_{white}$ connecting two nodes in two different connected components. 
+\end{claim}
+\begin{proof} We assume inductively that the claim is true before the removal of  $\widehat{Q}$ in Step 2. Thus,   $\widehat{Q}$  is a subpath of a connected component, say $\widehat{P}_1$,  of $\widehat{P}$ induced by unmakred contracted nodes. Marking contracted nodes of $\widehat{Q}$  could break  $\widehat{P}_1$ into two subpaths say  $\widehat{P}_2$ and  $\widehat{P}_3$, of unmarked contracted nodes. However, any edge of $\me_{white}$ between $\widehat{P}_2$ and  $\widehat{P}_3$ must shadow the center $\hat{\nu}$ of $\widehat{Q}$. That is, there is an edge in $\me_{white}(\hat{\nu})$ whose endpoints are not in $\widehat{Q}$, contradicting the construction in Step 2. \qed
+\end{proof}
+
+
+
+\begin{figure}[htb]
+	\center{\includegraphics[width=0.9\textwidth]{figs/clustering-tiny}}
+	\caption{Rectangular nodes are tiny clusters. Every unoriented edge incident to contracted nodes of $\widehat{Q}$ will be oriented as out-going from $\widehat{Q}$ (except those with both endpoints in  $\widehat{Q}$, which will be oriented arbitrarily). Solid edges are in $\me_{white}(\hat{\nu})$ whose both endpoints are white nodes.}
+	\label{fig:clustering-tiny}
+\end{figure} 
+
+
+We now focus on proving the properties of $\mathbb{C}_5(\Pbar)$  claimed in \Cref{lm:Clustering-White}. Item (1) follows directly from the construction. Item (2) follows from the following claim.
+%\hcomment{I am working here}
+\begin{claim} \label{clm:edm-IV}
+	$\zeta L_i \leq \adm(\widehat{Q}) \leq 5L_i$.
+\end{claim}
+\begin{proof}
+	The lower bound of $ \adm(\widehat{Q}) $ follows directly from the construction. For each edge $\hat{\mbe} = (\dbar{\alpha},\dbar{\beta})$  with both endpoints in $ \adm(\widehat{Q})$, we claim that \begin{equation}\label{eq:diam-shadow}
+		\adm(\widehat{Q}[\dbar{\alpha},\dbar{\beta}]) \leq 2(1+3\zeta)L_i
+	\end{equation}
+	Let $\Qbar$ be obtained from $\widehat{Q}$ by uncontracting tiny clusters; $\Qbar$ is a path.  Let  $\bar{\alpha}$ and $\bar{\beta}$ be endpoints of $\hat{\mbe}$ on $\Qbar$; $\bar{\alpha}$ and $\bar{\beta}$  are nodes in the subpaths constituting tiny clusters  $\dbar{\alpha}$ and $\dbar{\beta}$, respectively. By definition  of $\bar{\me}_i^{close}$ in \Cref{eq:Ebar-farclose},  two intervals $\overline{\mathcal{I}}(\bar{\alpha})$ and $\overline{\mathcal{I}}(\bar{\beta})$ has $\overline{\mathcal{I}}(\bar{\alpha})\cap \overline{\mathcal{I}}(\bar{\beta}) \not=\emptyset$. By definition, each interval, say $\overline{\mathcal{I}}(\bar{\alpha})$, includes all contracted nodes within augmented distance $(1-\psi)L_i \leq L_i$ from $\bar{\alpha}$. This implies $\widehat{Q}[\bar{\alpha}, \bar{\beta}]\leq 2L_i$; thus Equation~\eqref{eq:diam-shadow} holds.  (An extra term $6\zeta L_i$ in \Cref{eq:diam-shadow}  is the upper bound on the sum of augmented diameters of $\dbar{\alpha}$ and $ \dbar{\beta}$.)
+	
+	
+	Let $\dbar\nu_0, \dbar\mu_0$ be the two tiny clusters that are endpoints of $\widehat{Q}$. Let $\hat{\mbe}_1 = (\dbar{\nu}_0, \dbar{\nu}_1)$ and $\hat{\mbe}_2 = (\dbar{\mu}_0, \dbar{\mu}_1)$	be two edges shadowing $\dbar{\nu}$, the center of $\widehat{Q}$. Two edges $\hat{\mbe}_1$ and $\hat{\mbe}_2$ exist by the minimality of $\widehat{Q}$. Then:
+	\begin{equation*}
+		\adm(\widehat{Q}) \leq \adm(\widehat{Q}[\dbar{\nu}_0, \dbar{\nu}_1]) + \adm(\widehat{Q}[\dbar{\mu}_0, \dbar{\mu}_1]) \stackrel{\text{Eq.~\eqref{eq:diam-shadow}}}{\leq} 4(1+3\zeta)L_i  < 5L_i
+	\end{equation*}
+	as $\zeta = \frac{1}{250}$.\QED
+\end{proof}
+
+We now show Item (3) of \Cref{lm:Clustering-White}.  Observe that by construction, $\widehat{Q}$ consists of a path of at most $\frac{5}{\zeta} = O(1)$ tiny clusters since $\adm(\hat{Q})\leq 5L_i$ while each tiny cluster has an augmented diameter at least $\zeta L_i$ . Let $\Qbar$ be obtained from $\widehat{Q}$  by uncontracting tiny clusters, and $\mathcal{Q}$ be obtained from $\Qbar$ by uncontracting contracted nodes. (Note by construction that $\Qbar$  is a path.) Let $\md$ be the diameter path of $\mq$; it could be that $\md$ contains edges in $\me_{white}(\hat{\nu})$.
+
+
+Let $\widehat{Q}^-$ be obtained from $\widehat{Q}$ by removing all edges in $\me_{white}(\hat{\nu})$; $\hat{\nu}$ is the center of $\widehat{Q}$. Let $\Qbar^{-}$ and $\mq^-$ be obtained from $\Qbar$ and $\mq$ by removing all edges in $\me_{white}(\hat{\nu})$, respectively.  Let $\md^-$ be the shortest path in $\mq^-$ (w.r.t both edge and node weights) between $\md$'s endpoints. (See Figure~\ref{fig:uncontract-tiny}).  Observe that:
+
+
+\begin{observation}\label{obs:Dminus-vs-AdmX}
+	$\adm(\md^-)\geq \adm(\mq)$.
+\end{observation}
+\begin{proof}
+	We have $\adm(\md^-) \geq \adm(\md) = \adm(\mq)$.\qed.
+\end{proof}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale = 1.5]{figs/uncontract-tiny.pdf}
+	\caption{\footnotesize{(a) A subgraph $\widehat{Q}$ formed in Step 5A; triangular blocks are tiny clusters. Solid blue edges are edges in $\me_{white}(\hat{\nu})$. (b) $\mq$ obtained by uncontracting tiny clusters and  contracted nodes. Diameter path $\md$ of $\mq$ is highlighted red; the path $\md^{-}$ is highlighted blue. Solid blue edges are in $\md$.}}
+	\label{fig:uncontract-tiny}
+\end{figure}
+
+
+Let 	$\me_{white}({\widehat{Q}})$ be the set of edges in $\me_{white}$ incident to tiny clusters in $\widehat{Q}$.  By construction, $\dbar{\nu}$ is incident to the maximum number of edges in $ \me_{white}$ over every node in $\widehat{Q}$. (Note that $\widehat{Q}$ only has $O(1)$ tiny clusters.) This implies that:
+
+\begin{observation}\label{obs:Incident-tiny}
+	$|\me_{white}({\widehat{Q}})| = O(| \me_{white}(\dbar{\nu})|)$.
+\end{observation}
+
+We now define:
+\begin{equation}\label{eq:PhiX}
+	\Phi(\mq) = \sum_{\varphi \in \mv(\mq)}\omega(\varphi) + \sum_{\mbe \in \msttilde_i\cap \me(\mq)}w(\mbe)
+\end{equation}
+Observe by the definition that:
+\begin{equation}\label{eq:Potential-vs-Phi}
+	\begin{split}
+		 \Delta^+_{i+1}(\mq) &= \Delta_{i+1}(\mq) +  \sum_{\mbe \in \msttilde_i\cap \me(\mq)}w(\mbe)\\
+		&= \sum_{\varphi \in \mv(\mq)}\omega(\varphi) - \adm(\mq) +  \sum_{\mbe \in \msttilde_i\cap \me(\mq)}w(\mbe)\\
+		&= \Phi(\mq) - 		\adm(\mq) 
+	\end{split}
+\end{equation}
+
+\begin{lemma}\label{lm:leftover-LS19} Let $\mu$ be node in $\md^-$ that is incident to $t \geq 1$ edges in  $\me_{white}(\dbar{\nu})$. Then  $\Delta^+_{i+1}(\mq)= \Omega(t\epsilon L_i)$.
+\end{lemma}
+\begin{proof} Let $\mz$ be the set other $t$ endpoints  of $t$ edges incident to $\mu$. If $|\mz \cap \md|\leq t/2$, then:
+	\begin{equation*}
+		\begin{split}
+			\Delta^+_{i+1}(\mq) &= \Phi(\mq) - \adm(\mq) \stackrel{\mbox{Obs.~\ref{obs:Dminus-vs-AdmX}}}{\geq} \Phi(\mq) - \adm(\md^-)\\
+			&\geq \adm(\mz\setminus \md) \stackrel{\mbox{Eq.~\eqref{eq:PhiX}}}{\geq} O(|\mz\setminus \md|\epsilon L_i) = \Omega(t\epsilon L_i),
+		\end{split}
+	\end{equation*}
+	as claimed. 
+
+
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+	\vspace{-35pt}
+	\begin{center}
+		\includegraphics[width=0.45\textwidth]{figs/z-right}
+	\end{center}
+	\caption{\footnotesize{(a) blue edges are level-$i$ edges incident to $\mu$. (b) $\md_j$ obtained by replacing $\md_{j-1}[\mu,\alpha_{j}]$ by $\mp_j = (\mu,e,\alpha_{j})$.}}
+	\vspace{-5pt}
+	\label{fig:z-right}
+\end{wrapfigure}
+
+Herein, we assume that  $|\mz \cap \md|\geq t/2$. We can also assume~w.l.o.g. that at least $t/4$ nodes in $\mz$ that are to the right of $\mu$ on $\md^-$. (Note that $\md^-$ contains only $\widetilde{\mst}_i$ edges.) Let $\mz_{right} = \{\alpha_1,\ldots, \alpha_s\}$, $s \geq t/4$,  be the set of nodes to the right of $\mu$, and such that $\alpha_{j-1}\in \md^{-}[\mu, \alpha_{j}]$ for any $j\in [2,s]$ (see Figure~\ref{fig:z-right}(a)). Let $\mbe_j = (\mu,\alpha_j)$ be the edge in $\me_{white}(\dbar{\nu})$ between $\mu$ and $\alpha_j$, $j \in [2]$. By construction, $\Qbar$ is  a path. Note that edges in $\me_{white}$ have white nodes as endpoints, which by definition, are uncontracted nodes in $\Qbar$, and hence $\mu$ and $\alpha_j$ are uncontracted nodes. That is, $\mu = \bar{\mu}$ and $\alpha_j = \bar{\alpha}_j$.  
+
+Let $\md_0 = \md^-$ and we define $\md_j$ for each $j \in [1,s]$ as follows: $\md_{j}$ is obtained from $\md_{j-1}$ by replacing the subpath $\md_{j-1}[\mu, \alpha_{j}]$ by path $\mp_{j} \stackrel{\mbox{def.}}{=} (\mu, \mbe_j, \alpha_{j})$ which has only one edge $\mbe_j$ (see Figure~\ref{fig:z-right}(b)). 
+
+\begin{claim}\label{clm:dj-vs-dj1}
+	$\adm(\md_j) \leq \adm(\md_{j-1}) + \epsilon g L_i$.
+\end{claim}
+\begin{proof}
+	We have: 
+	
+	\begin{equation*}
+		\begin{split}
+			\adm(\md_{j-1}) - \adm(\md_j) &= w(\md_{j-1}[\nu,\mu]) - \omega(\mp_j) \geq  d_{\mathcal{H}_i}(\nu,\mu) - \omega(\mp_j) \\
+			&\geq 6g\epsilon  \cdot \omega(\mbe_j)  - \omega(\nu) - \omega(\mu) \qquad \mbox{(by \Cref{obs:greedy-HiE})} \\
+			&\geq 6g\epsilon L_i/2 - 2g\epsilon L_i = g\epsilon L_i,
+		\end{split}
+	\end{equation*}
+	as claimed.\qed
+\end{proof}
+
+
+By Claim~\ref{clm:dj-vs-dj1}, we have:
+\begin{equation}\label{eq:mds-vs-mdM}
+	\adm(\md_s) ~\leq~ \adm(\md_0) + s\epsilon g L_i ~=~ \adm(\md^-) + s\epsilon g L_i.
+\end{equation}
+Since $\md_s$ and $\md$ has the same endpoint and $\md$ is a shortest path, $\adm(\md_s)\geq \adm(\md)$.  This implies:
+\begin{equation*}
+	\begin{split}
+		\Delta^+_{i+1}(\mq) &= \Phi(\mq) - \adm(\mq) =  \Phi(\mq) - \adm(\md)\\
+		&\geq \Phi(\mq)  - \adm(\md_s) \geq \adm(\md^-) - \adm(\md_s)\\
+		&\stackrel{\mbox{Eq.~\eqref{eq:mds-vs-mdM}}}{\geq} s\epsilon g L_i = \Omega(t\epsilon L_i),\qquad \mbox{since }s\geq t/4 
+	\end{split}
+\end{equation*}
+as desired.\qed		
+\end{proof}
+
+
+\begin{lemma}\label{lm:H5}
+	$\Delta^+_{i+1}(\mq) = \Omega(\eps^2)|\me_{white}(\widehat{Q})|L_i$.
+\end{lemma}
+\begin{proof}
+	Suppose that $|\me_{white}(\dbar{\nu})| = \frac{t}{\epsilon}$ for some $t > 0$. By Observation~\ref{obs:Incident-tiny}, it holds that $|\me_{white}(\widehat{Q})| = O( \frac{t}{\epsilon})$. This implies:
+	\begin{equation}\label{eq:Size-Etiny-X}
+		t = \Omega(\eps)|\me_{white}(\widehat{Q})|
+	\end{equation}
+	
+	Let $\overline{\mp}$ be the path of contracted nodes corresponding to tiny cluster $\dbar{\nu}$. Let $\mz$ be the set of uncontracted nodes of $\overline{\mp}$ that are incident to at least $\frac{t \zeta}{4g}$ edges in $\me_{white}(\hat{\nu})$. We claim that:
+	\begin{claim}\label{clm:Size-Z}
+		$|\mz|\geq \frac{t\zeta}{4g}$.
+	\end{claim}
+	\begin{proof}
+		Let $\ma$ be the set of remaining uncontracted nodes in  $\overline{\mp}\setminus \mz$.  Then $|\ma|\leq \frac{\adm(\overline{\mp})}{\zeta L_{i-1}} = \frac{2g}{\zeta \epsilon}$ since $\adm(\overline{\mp})\leq gL_i$. Recall that each in $\mz$ is incident to at most $\frac{2g}{\epsilon}$ edges by the construction in Step 1 (\Cref{lm:Clustering-Step1T2}).  Thus, we have:
+		\begin{equation*}
+			|\me_{white}(\dbar{\nu})| \leq |\mz|\frac{2g}{\zeta\epsilon} + \frac{t \zeta}{4g} |\ma|  < \frac{t\zeta}{4g} \cdot \frac{2g}{\zeta \eps} + \frac{t \zeta}{4g} \cdot \frac{2g}{\zeta \epsilon} = \frac{t}{\epsilon}
+		\end{equation*}	
+		This is a contradiction since $|\me_{white}(\dbar{\nu})| = \frac{t}{\epsilon}$.\qed
+	\end{proof}
+	We consider two cases:
+	\begin{itemize}
+		\item \textbf{Case 1:} $\mathcal{D}^- \cap \mz \not= \emptyset$.  By Lemma~\ref{lm:leftover-LS19}, $\Delta^+_{i+1}(\mq) = \Omega(\frac{t \zeta}{4g} \epsilon L_i) = \Omega(t \epsilon L_i)$ since every node in $\mz$ is incident to at least $\frac{t \zeta}{4g}$ edges in $\me_{white}(\hat{\nu})$. By Equation~\eqref{eq:Size-Etiny-X}, $\Delta^+_{i+1}(\mq) = \Omega(\epsilon^2) |\me_{white}(\widehat{Q})| L_i$.
+		
+		\item  \textbf{Case 1:} $\mathcal{D}^- \cap \mz = \emptyset$. Then, it holds that:
+		\begin{equation*}
+			\begin{split}
+				\Delta^+_{i+1}(\mq) &= \Phi(\mq^-) - \adm(\mq) \stackrel{\mbox{Obs.~\ref{obs:Dminus-vs-AdmX}}}{\geq }\Phi(\mq^-) - \md^- \\
+				&\geq~ \sum_{\varphi \in \mz} \omega(\varphi)  = \Omega(|\mz|\epsilon L_i) = \Omega(t\epsilon L_i)  =  \Omega(\epsilon^2) |\me_{white}(\widehat{Q})| L_i 
+			\end{split}
+		\end{equation*}
+	\end{itemize} 
+	In both cases,  the lemma holds. \qed
+\end{proof}
+
+We note that out-going edges of $\me_{white}$ incident to nodes in $\mathcal{Q}$ are $\me_{white}(\hat{Q})$. Thus, the following lemma implies  Item (3) of \Cref{lm:Clustering-White}. 
+
+\begin{lemma} $	\Delta^+_{i+1}(\mq) =  \Omega(|\me_{white}(\hat{Q})|\eps + |\mv(\mq)\cap \tilde{W}|)\eps L_i$.
+\end{lemma}
+\begin{proof} We will show that:
+	 \begin{equation}\label{eq:blacknodes-C}
+	 \Delta^+_{i+1}(\mq) =  \Omega(|\mathcal{Q} \cap \tilde{W}|) \epsilon L_i
+	 \end{equation}
+	 The lemma then follows from \Cref{eq:blacknodes-C} and \Cref{lm:H5}.
+	 
+	 Let $\bar{\mu}$ be a black node in $\Qbar$; $\bar{\mu}\in \Qbar\cap \bar{W}$. Let $\mathcal{T}_{\bar{\mu}}$ be the subtree of $\msttilde_{i}$ corresponding to $\bar{\mu}$. Note that $\mathcal{T}_{\bar{\mu}}$ is a subtree of $\mq$ as well. Recall that $\md^-$ is a path of  $\mq^-$. Let $\md_{\bar{\mu}} = \md^{-} \cap \mathcal{T}_{\bar{\mu}}$ be the subpath of $\md$ in the tree $\mathcal{T}_{\bar{\mu}}$. It is possible that $\md_{\bar{\mu}} = \emptyset$. 
+	 \begin{claim}\label{clm:Tmu-delta} Let $\Delta(\mt_{\bar{\mu}}) = \Phi(\mt_{\bar{\mu}}) - \adm(\md_{\bar{\nu}})$ where $\Phi(\mt_{\bar{\mu}})  = \sum_{\varphi \in \mv(\mt_{\bar{\mu}})}\omega(\varphi) + \sum_{\mbe \in \msttilde_i\cap \me(\mt_{\bar{\mu}})}w(\mbe)$. Then:
+	 	$$\Delta(\mt_{\bar{\mu}}) = \Omega(| \mv(\mt_{\bar{\mu}})|\epsi L_i).$$
+	 \end{claim}
+ 	\begin{proof}
+ 		By Item (3) of \Cref{lm:tree-clustering},  $\adm(\mt_{\bar{\mu}} \setminus \md_{\bar{\mu}}) = \Omega( \md_{\bar{\mu}}) = \Omega(|\mv(\md_{\bar{\mu}})|\eps L_i)$. Clearly, $\adm(\mt_{\bar{\mu}} \setminus \md_{\bar{\mu}}) = \Omega(|\mv(\mt_{\bar{\mu}})| - |\mv(\md_{\bar{\mu}})|)\eps L_i$.  Thus, 
+ 		\begin{equation*}
+ 			\begin{split}
+ 			\Delta(\mt_{\bar{\mu}}) &\geq \adm(\mt_{\bar{\mu}} \setminus \md_{\bar{\mu}}) = (\adm(\mt_{\bar{\mu}} \setminus \md_{\bar{\mu}}))/2 +  \adm(\mt_{\bar{\mu}} \setminus \md_{\bar{\mu}})/2\\
+ 			& =  \Omega(|\mv(\mt_{\bar{\mu}})| - |\mv(\md_{\bar{\mu}})|)\eps L_i + \Omega(|\mv(\md_{\bar{\mu}})|\eps L_i)=   \Omega(|\mv(\mt_{\bar{\mu}})|\eps L_i)~,
+ 			\end{split}
+ 		\end{equation*}
+ 	as claimed. \qed
+ 	\end{proof}
+	 
+	 Since $\adm(\md)\leq \adm(\md^{-})$, we have:
+	 \begin{equation*}
+	 	\begin{split}
+	 		\Delta^+_{i+1} (\mq) &\geq  \Phi(\mq) - \adm(\md^{-})  =\Phi(\mq-) - \adm(\md^{-})\\
+	 		& = \sum_{\bar{\mu}\in \Qbar\cap \bar{W}}\Delta(\mt_{\bar{\mu}})  \\
+	 		&=  \sum_{\bar{\mu}\in \Qbar\cap \bar{W}} \Omega(| \mv(\mt_{\bar{\mu}})|\epsi L_i) \qquad \mbox{(by \Cref{clm:Tmu-delta})}\\
+	 		&= \Omega(|\mv(\mq)\cap \tilde{W}|\epsi L_i),
+	 	\end{split}
+	 \end{equation*}
+ Thus, \Cref{eq:blacknodes-C} holds as claimed. \qed
+\end{proof}
+
+

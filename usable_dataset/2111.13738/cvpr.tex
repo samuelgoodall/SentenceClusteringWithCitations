@@ -1,0 +1,64 @@
+% This version of CVPR template is provided by Ming-Ming Cheng.
+% Please leave an issue if you found a bug:
+% https://github.com/MCG-NKU/CVPR_Template.
+
+% \documentclass[review]{cvpr}
+\documentclass[final]{cvpr}
+
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{nicefrac}
+
+\usepackage{booktabs} % To thicken table lines
+
+\newcommand\todo[1]{\textcolor{red}{#1}}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
+
+
+\def\cvprPaperID{6633} % *** Enter the CVPR Paper ID here
+\def\confYear{CVPR 2022}
+% \setcounter{page}{4321} % For final version only
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{The Implicit Values of A Good Hand Shake:\\Handheld Multi-Frame Neural Depth Refinement
+}
+
+\author{Ilya Chugunov$^1$\quad  Yuxuan Zhang$^1$\quad  Zhihao Xia$^2$ \quad Cecilia Zhang$^2$  \quad Jiawen Chen$^2$ \quad Felix Heide$^1$ \vspace{5pt}\\
+$^1$Princeton University \quad $^2$Adobe}
+
+\maketitle
+
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+    Modern smartphones can continuously stream multi-megapixel RGB images at 60~Hz, synchronized with high-quality 3D pose information and low-resolution LiDAR-driven depth estimates. During a snapshot photograph, the natural unsteadiness of the photographer's hands offers millimeter-scale variation in camera pose, which we can capture along with RGB and depth in a circular buffer. In this work we explore how, from a bundle of these measurements acquired during viewfinding, we can combine dense micro-baseline parallax cues with kilopixel LiDAR depth to distill a high-fidelity depth map. We take a test-time optimization approach and train a coordinate MLP to output photometrically and geometrically consistent depth estimates at the continuous coordinates along the path traced by the photographer's natural hand shake. The proposed method brings high-resolution depth estimates to ``point-and-shoot'' tabletop photography and requires no additional hardware, artificial hand motion, or user interaction beyond the press of a button.
+\end{abstract}
+\vspace{-1em}
+
+%%%%%%%%% BODY TEXT
+
+\input{0_introduction}
+\input{1_related_work}
+\input{2_method}
+\input{3_results}
+\input{4_conclusion}
+
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{cvpr}
+}
+
+\end{document}

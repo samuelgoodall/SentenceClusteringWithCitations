@@ -1,0 +1,181 @@
+
+\section{Lightness Lower Bounds}\label{sec:lowerbounds}
+
+
+In this section, we provide lower bounds on light $(1+\epsilon)$ spanners to prove Theorem~\ref{thm:minor-free-lowerbound} and Theorem~\ref{thm:lb-oracle-1eps}.  Interestingly, our lower bound construction draws a connection between geometry and graph spanners: we construct a fractal-like geometric graph of weight $\Omega(\frac{\mst}{\epsilon^2})$ such that it has treewidth at most $4$ and any $(1+\epsilon)$-spanner of the graph must take all the edges.
+
+\begin{theorem}\label{thm:treewdith}
+	For any $n = \Omega(\epsilon^{\Theta(1/\epsilon)})$ and $\epsilon < 1$, there is an $n$-vertex graph $G$ of treewidth at most $4$ such that any light $(1+\epsilon)$-spanner of $G$ must have lightness $\Omega(\frac{1}{\epsilon^2})$.
+\end{theorem}
+
+\noindent Before proving Theorem~\ref{thm:treewdith}, we show its implications in   Theorem~\ref{thm:minor-free-lowerbound} and Theorem~\ref{thm:lb-oracle-1eps}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:lb-oracle-1eps}]
+	Le (Theorem 1.3 in~\cite{Le20}), building upon the work of Krauthgamer, Nguy$\tilde{\hat{\mbox{e}}}$n and Zondier~\cite{KNZ14}, showed that graphs with treewidth $\tw$ has a $1$-spanner oracle with weak sparsity $O(\tw^4)$. Since the treewidth of $G$ in Theorem~\ref{thm:treewdith} is $4$, it has a $1$-spanner oracle with weak sparsity $O(1)$; this implies Theorem~\ref{thm:lb-oracle-1eps}. \qed
+\end{proof}
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:minor-free-lowerbound}]
+	First, construct a complete graph $H_1$ on $r-1$ vertices whose spanner has lightness $\Omega(\frac{r}{\epsilon})$ as follows: Let $X_1\subseteq V(H_1)$ be a subset of $r/2$ vertices and $X_2 = V(H_1)\setminus X_1$. We assign weight $2\epsilon$ to every edge with both endpoints in $X_1$ or $X_2$, and weight $1$ to every edge between $X_1$ and $X_2$. Clearly $\mst(H_1)  = 1 + (r-2)2\epsilon$. We claim that any $(1+\epsilon)$-spanner $S_1$ of $H_1$ must take every edge between $X_1$ and $X_2$; otherwise, if $e = (u,v)$ is not taken where $u\in X_1,v\in X_2$, then $d_{S_1}(u,v) \geq d_{H_1 - e}(u,v)=1+2\epsilon > (1+\epsilon)d_G(u,v)$. Thus, $w(S_1)\geq |X_1||X_2| = \Omega(r^2)$. This implies $w(S_1) = \Omega(\frac{r}{\epsilon})w(\mst(H_1))$.
+	
+	
+	Let $H_2$ be an $(n-r+1)$ vertex graph of treewidth 4 guaranteed by Theorem~\ref{thm:treewdith}; $H_2$ excludes $K_r$ as a minor for any $r\geq 6$. We scale edge weights of $H_1$ appropriately so that. $w(\mst(H_2)) = w(\mst(H_1))$.  Connect $H_1$ and $H_2$ by a single edge of weight $2w(\mst(H_1))$ to form a graph $G$. Then $G$ excludes $K_r$ as minor (for $r\geq 5$) and any $(1+\epsilon)$-spanner must have lightness at least $\Omega(\frac{r}{\epsilon} + \frac{1}{\epsilon^2})$.\qed
+\end{proof}
+
+We now focus on proving Theorem~\ref{thm:treewdith}. The core gadget in our construction is depicted in Figure~\ref{fig:core}.  Let $C_r$ be a circle on the plane centered at a point $o$ of radius $r$. We use $\arc{ab}$ to denote an arc of $C_r$ with two endpoints $a$ and $b$. We say \emph{$\arc{ab}$ has angle $\theta$} if $\angle aob = \theta$.We use $|\arc{ab}|$ to denote the (arc) length of $\arc{ab}$, and $||a,b||$ to denote the Euclidean length between $a$ and $b$.
+
+By elementary geometry and Taylor's expansion, one can verify that if $\arc{ab}$ has angle $\theta$, then:
+
+\begin{equation}\label{eq:arc-chord-length}
+\begin{split}
+|\arc{ab}| &= \theta r \\
+||a,b|| &= 2r \sin(\theta/2) = r\theta(1-\theta^2/24 + o(\theta^3)) \\
+||a,b|| &= \frac{2\sin(\theta/2)}{\theta} |\arc{ab}| = (1-\theta^2/24 + o(\theta^3))|\arc{ab}|
+\end{split}
+\end{equation}
+
+
+
+\paragraph{Core Gadget.~}  The construction starts with an arc $ab$ of angle $\sqrt{\epsilon}$ of a circle $C_r$.~W.l.o.g., we assume that $\frac{1}{\epsilon}$ is an odd integer.  Let $k = \frac{1}{2}(\frac{1}{\epsilon}+1)$.  Let $\{a \equiv x_1, x_2, \ldots, x_{2k} \equiv b\}$ be the set of points, called \emph{break points}, on the arc $ab$ such that $\angle x_iox_{i+1} = \epsilon^{3/2}$ for any $1\leq i \leq 2k-1$.
+
+Let $H_r$ be a graph with vertex set $V(H_r) = \{x_1,\ldots, x_{2k}\}$. We call $x_1$ and $x_{2k}$ two \emph{terminals} of $H_r$. For each $i \in [2k-1]$, we add an edge $x_ix_{i+1}$ of weight $w(x_ix_{i+1}) = ||x_i,x_{i+1}||$ to $E(H_r)$. We refer to edges between $x_ix_{i+1}$ for $i \in [2k-1]$ as \emph{short edges}.  For each $i \in [k]$, we add an edge $x_ix_{i+k}$ of weight $||x_{i},x_{i+k}||$.  We refer to these edges as \emph{long edges}. Finally, we add edge $||x_1,x_k||$ of $E(H_r)$, that we refer to as the \emph{terminal edge} of $H_r$.   We call $H_r$ a \emph{core gadget} of scale $r$.  See Figure~\ref{fig:core}(a) for a geometric visualization of $H_r$ and Figure~\ref{fig:core}(b) for an alternative view of $H_r$.
+
+\begin{figure}
+	\centering
+	\vspace{-20pt}
+	\includegraphics[scale = 0.8]{figs/core-gadget.pdf}
+	\caption{\footnotesize{(a) The core gadget. (b) A different view of the core gadget. (c) A tree decomposition of the core gadget. }}
+	\label{fig:core}
+\end{figure}
+
+\noindent We observe that:
+
+\begin{observation}\label{obs:edge-length} $H_r$ has the following properties:
+	\begin{enumerate}
+		\item  For any edge $e \in E(H_r)$, we have:
+		\begin{equation}
+		w(e) = \begin{cases} 2r\sin(\epsilon^{3/2}/2) &\text{if $e$ is a short edge}\\
+		2r\sin(k\epsilon^{3/2}/2) &\text{if $e$ is a long edge}\\ 2r\sin(\sqrt{\epsilon}/2) &\text{if $e$ is the terminal edge}
+		\end{cases}
+		\end{equation}
+		\item $w(\mst(H_r)) \leq r\sqrt{\epsilon}$.
+		\item $w(H_r) \geq \frac{r}{6\sqrt{\epsilon}}$ when $\epsilon \ll 1$.
+	\end{enumerate}
+	\begin{proof}
+		We only verify (3); other properties can be seen by direct calculation. By Taylor's expansion, each long edge of $H_r$ has weight $w(e) = 2\sin(\frac{1}{4}(\sqrt{\epsilon} +\epsilon^{3/2})) =  \frac{r}{2}(\sqrt{\epsilon} + o(\epsilon)) \geq r\sqrt{\epsilon}/3$ when $\epsilon \ll 1$. Since $H_r$ has $k$ long edges, $w(H_r) \geq k r \sqrt{\epsilon}/3 \geq  \frac{r}{6\sqrt{\epsilon}}$.\qed
+	\end{proof}
+\end{observation}
+
+\noindent Next, we claim that $H_r$ has small treewidth.
+
+\begin{claim} \label{clm:treewidth} $H_r$ has treewidth at most $4$.
+\end{claim}
+\begin{proof}
+	We construct a tree decomposition of width $4$ of $H_r$. In fact, we can construct a path decomposition of width $4$ for $H_r$. Let $B_1,\ldots, B_{2k-2}$ be set of vertices where $B_{2i-1}= \{x_{2i-1},x_{2i+k-1}, x_{2i+k}\}$  and $B_{2i}= \{x_{2i-1}, x_{2i+k}, x_{2i}\}$  for each $i \in [k-1]$ (see Figure~\ref{fig:core}(c)). We then add $x_1$ and $x_{k}$ to every $B_i$. Then, $\mathcal{P} = \{B_1,\ldots, B_{2k-2}\}$ is a path decomposition of $H_r$ of width $4$. \qed
+\end{proof}
+
+\noindent \textbf{Remark:} It can be seen that $H_r$ has $K_4$ as a minor, thus has treewidth at least $3$. Showing that $H_r$ has treewidth at least $4$ needs more work.
+
+	\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-30pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{figs/long-edge}
+	\end{center}
+	\caption{\footnotesize{Paths $P_e$ between $x_i$ and $x_{i+k}$ are highlighted.}}
+	\vspace{-5pt}
+	\label{fig:long-edge}
+\end{wrapfigure}
+
+\begin{lemma}\label{lm:spanner}
+	There is a constant $c$ such that any $(1+\epsilon/c)$-spanner of $H_r$ must have weight at least $$ \frac{w(\mst(H_r))}{6\epsilon}.$$
+\end{lemma}
+\begin{proof}
+	Let $e$ be a long edge of $H_r$ and $G_e = H_r\setminus \{e\}$. We claim that the shortest path between $e$'s endpoints in $G_e$ must have length at least $(1+\epsilon/c)w(e)$ for some constant $c$. That implies any $(1+\epsilon/c)$-spanner of $H_r$ must include all long edges. The lemma then follows from Observation~\ref{obs:edge-length} since $H_r$ has at least $1/2\epsilon$ long edges, and each has length at least $w(\mst(H_r))/3$ for $\epsilon \ll 1$.
+	
+	Suppose that $e = x_{i}x_{i+k}$.  Let $P_e$ is a shortest path between $x_i$ and $x_{i+k}$ in $G_e$. Suppose that $w(P_e) \leq (1+\epsilon/c)w(e)$.  Since the terminal edge has length at least $3/2 w(e)$, $P_e$ cannot  contain the terminal edge. For the same reason, $P_e$ cannot contain two long edges. It remains to consider two cases:
+	
+	\begin{enumerate}
+		\item $P_e$ contains exactly one long edge. Then, it must be that $P_e = \{x_{i},x_{i+1},x_{i+k+1},x_{i+k}\}$\footnote{indices are mod $2k$.} (Figure~\ref{fig:long-edge}(a)) or $P_e = \{x_{i},x_{i-1},x_{i+k-1},x_{i+k}\}$ (Figure~\ref{fig:long-edge}(b)). In both case, $w(P_i) = w(e) + 4r\sin(\epsilon^{3/2}/2)  \geq w(e)(1  + 2\frac{\sin(\epsilon^{3/2}/2)}{\sin(k\epsilon^{3/2}/2)}) \geq (1+2\epsilon)w(e)$.
+		\item $P_e$ contains no long edge. Then, $P_e = \{x_i,x_{i+1}, \ldots,x_{i+k}\}$. Thus we have:
+		\begin{equation*}
+		\begin{split}
+		\frac{w(P_e)}{w(e)} ~=~ \frac{2kr\sin(\epsilon^{3/2}/2)}{2r\sin(k \epsilon^{3/2}/2)} ~=~ 1 + \epsilon/96 + o(\epsilon)  ~\geq~ 1+ \epsilon/100
+		\end{split}
+		\end{equation*}
+	\end{enumerate}
+	Thus,  by choosing $c = 100$, we derive a contradiction.\qed
+\end{proof}
+
+
+
+\begin{figure}[h]
+	\centering
+	\vspace{0pt}
+	\includegraphics[scale = 1.0]{figs/fractal.pdf}
+	\caption{\footnotesize{An illustration of the recursive construction of $G_L$ with two levels.}}
+	\label{fig:fractal}
+\end{figure}
+
+\paragraph{Proof of Theorem~\ref{thm:treewdith}.~} The construction is recursive. Let $H_1$ the core gadget of scale $1$.  Let $s_1$ ($\ell_1$) be the length of short  edges (long edges) of $H_1$. Let $x^1_1,\ldots, x^1_k$ be break points of $H_1$. Let $\be$ be the ratio of  the length of a short edge to the length of the terminal edge. That is:
+\begin{equation}
+\be = \frac{||x^1_1,x^1_2||}{||x^1_1,x^1_{2k}||} = \frac{\sin(\epsilon^{3/2}/2)}{\sin(\sqrt{\epsilon}/2)} = \epsilon + o(\epsilon)
+\end{equation}
+ Let $L = \frac{1}{\epsilon}$. We construct a set of graphs $G_1,\ldots, G_L$ recursively; the output graph is $G_L$. We refer to $G_i$ is the level-$i$ graph.
+
+
+\noindent \textbf{Level-$1$ graph} $G_1 = H_1$. We refer to breakpoints of $H_1$ as breakpoints of $G$.
+
+
+\noindent \textbf{Level-$2$ graph} $G_2$ obtained from $G_1$ by: (1) making $2k-1$ copies of the core gadget $H_{\be}$ at scale $\be$ (each $H_\delta$ is obtained by scaling every edge the core gadget by $\delta$), (2) for each $i \in [2k-1]$, attach each copy of $H_{\be}$ to $G_1$ by identifying the terminal edge of $H_{\be}$ and the edge between two consecutive breakpoints $x^1_ix^1_{i+1}$ of $G_1$. We then refer to breakpoints of all $H_{\be}$ as breakpoints of $G_2$. (See Figure~\ref{fig:fractal}.) Note that by definition of $\be$, the length of the terminal edge of $H_{\be}$ is equal to $||x^1_i,x^1_{i+1}||$. We say two adjacent breakpoints of $G_2$ \emph{consecutive} if they belong to the same copy of $H_{\be}$ in $G_2$ and are connected by one short edge of $H_{\be}$.
+
+
+\noindent \textbf{Level-$j$ graph} $G_j$ obtained from $G_{j-1}$ by: (1) making $(2k-1)^j$ copies of the core gadget $H_{\be^{j-1}}$ at scale $\be^{j-1}$, (2) for every two consecutive breakpoints of $G_{j-1}$, attach each copy of $H_{\be^{j-1}}$ to $G_{j-1}$ by identifying the terminal edge of $H_{\be^{j-1}}$ and the edge between the two consecutive breakpoints. This completes the construction.
+
+
+  
+\noindent We now show some properties of $G_L$. We first claim that:
+
+\begin{claim}\label{clm:tw-GL} $G_L$ has treewidth at most $4$.
+\end{claim}
+\begin{proof}
+	Let $T_1$ be the tree decomposition of $G_1$ of width $5$, as guaranteed by Claim~\ref{clm:treewidth}. Note that for every pair of consecutive breakpoints $x^1_i,x^1_{i+1}$ of $G_1$, there is a bag, say $X_i$, of $T_1$ contains both $x^1_i$ and $x^1_{i+1}$. Also, there is a bag of $T_1$ containing both terminals of $T_1$.
+	
+	We extend the tree decomposition $T_1$ to a tree decomposition $T_2$  of $G_2$ as follows. For each gadget $H_{\be}$ attached to $G_1$ via consecutive breakpoints $x_1^i,x^1_{i+1}$, we add a bag $B = \{ x_1^i,x^1_{i+1}\}$, connect $B$ to $X_i$ of $T_1$ and to the bag containing terminals of the tree decomposition of $H_{\be}$. Observe that the resulting tree decomposition $T_2$ has treewidth at most $4$. The same construction can be applied recursively to construct a tree decomposition of $G_L$ of width at most $4$.\qed
+\end{proof}
+
+\begin{claim}\label{clm:mst-GL} $w(\mst(G_L)) = O(1) w(\mst(H_1))$.
+\end{claim}
+\begin{proof}
+	Let $r(\epsilon)$ be the ratio between $\mst(H_1)$ and the length of the terminal edge of $H_1$.  Note that $\mst(H_1)$ is a path of short edges between $x_1^1$ and $x^1_{2k}$. By Observation~\ref{obs:edge-length}, we have:
+	\begin{equation}
+	r(\epsilon)  \leq \frac{r\sqrt{\epsilon}}{2r\sin(\sqrt{\epsilon}/2)}  = 1+\epsilon/24 + o(\epsilon) \leq  1+\epsilon
+	\end{equation}
+	when $\epsilon \ll 1$. When we attach copies of $H_{\be}$ to edges between two consecutive breakpoints of $G_1$, by re-routing each edge of $\mst(H_1)$ through the path $\mst(H_{\be})$ between $H_{\be}$'s terminals, we obtain a spanning tree of $G_2$ of weight at most $r(\epsilon)w(\mst(H_1)) \leq (1+\epsilon)w(\mst(H_1))$. By induction, we have:
+	\begin{equation*}
+	w(\mst(G_j)) \leq (1+\epsilon)w(\mst(G_{j-1})) \leq (1+\epsilon)^{j-1} w(\mst(H_1))
+	\end{equation*}
+This implies that $w(\mst(G_L)) \leq (1+\epsilon)^{L-1}w(\mst(H_1)) = O(1)w(\mst(H_1))$. \qed
+\end{proof}
+
+Let $S$ be an $(1+\epsilon/100)$-spanner of $G_L$ ($c = 100$ in Lemma~\ref{lm:spanner}). By Lemma~\ref{lm:spanner}, $S$ includes every long edge of all copies of $H_r$ at every scale $r$ in the construction. Recall that $||x^1_1,x^{1}_{2k}||$ is the terminal edge of $G_1$. Let $L_j$ be the set of long edges of all copies of $H_{\be^{j-1}}$ added at level $j$. Since $\frac{\mst(G_1)}{||x^1_1,x^{1}_{2k}||} = r(\epsilon)$,  we have:
+\begin{equation}
+\begin{split}
+w(\mst(G_1) &= \frac{r(\epsilon)}{r(\epsilon)-1}\left(w(\mst(G_1)) - ||x^1_1,x^1_{2k}||\right)\geq \frac{24}{\epsilon}\left(w(\mst(G_1)) - ||x^1_1,x^1_{2k}||\right)
+\end{split}
+\end{equation}
+By Lemma~\ref{lm:spanner}, we have:
+\begin{equation}
+\begin{split}
+w(L_1) &\geq \frac{1}{6\epsilon}w(\mst(G_1)) \geq \frac{4}{\epsilon^2}(w(\mst(G_1)) - ||x^1_1,x^1_{2k}||)\\
+w(L_2) &\geq   \frac{4}{\epsilon^2}(w(\mst(G_2)) - \mst(G_1))\\
+&\ldots \\
+w(L_j) &\geq \frac{4}{\epsilon^2}(w(\mst(G_{j})) - w(\mst(G_{j-1})))
+\end{split}
+\end{equation}
+Thus, we have:
+\begin{equation*}
+w(S) \geq \sum_{j=1}^L w(L_j) \geq \frac{1}{4\epsilon^2}(w(\mst(G_L)) - ||x^1_1,x^1_{2k}||) = \Omega(\frac{1}{\epsilon^2})w(\mst(G_L)
+\end{equation*}
+
+By setting $\epsilon \leftarrow \epsilon/100$, we complete the proof of Theorem~\ref{thm:treewdith}. The condition on $n$ follows from the fact that  $G_L$ has $|V(G_L)| = O( (2k-1)^{L}) = O((\frac{1}{\epsilon})^{\frac{1}{\epsilon}})$ vertices. \qed
+

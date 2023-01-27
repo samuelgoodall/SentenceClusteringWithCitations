@@ -1,0 +1,16 @@
+\section{Discussion and Future Work}
+We show that with a modern smartphone, one can obtain a high-fidelity megapixel depth map on any snapshot of a nearby static object. We quantitatively validated that our technique outperforms several recent baselines and qualitatively compared to a dedicated depth camera.
+
+Although our training time is practical for offline processing and opens the potential for the fast and easy collection of a potentially large-scale training corpus with accurate object depth maps, our method could be further accelerated with an adaptive sampling scheme. This might take into account pose and LiDAR information to select the most useful samples for network training. We also hope in the future to get access to the raw samples recorded by the phone's LiDAR sensor, rather than filtered depth maps. Raw measurements may open the door for future end-to-end methods which use photon time tags to provide an additional sparse high-trust supervision signal, as well as potential low-light applications where we use the LiDAR measurements to help aggregate photometric information in noisy RGB images.
+
+
+% \vspace{0.5em}\noindent\textbf{Conclusion.}\hspace{0.1em}
+% We showed that with a modern smartphone, one can obtain a high-fidelity megapixel depth map on any snapshot of a nearby static object. Our ``point and shoot'' method requires no additional hardware or artificial user interactions. We quantitatively demonstrated that our technique outperforms several recent baselines and showed qualitative comparisons to a dedicated depth camera.
+
+% %\vspace{0.5em}\noindent\textbf{Future Work.}\hspace{0.1em}
+% We hope this work can rekindle some interest in the area of micro-baseline depth, as, when available, we believe these bundle captures to contain a host of geometric information not available in single-image scenarios. Namely, we see three primary potential future research paths:
+% \begin{itemize}
+%     \item \emph{Run-time.} Via importance sampling based on expected parallax and photometric content, both on the image and ray level, we believe it could be possible to greatly speed up the train time of the MLP. A carefully designed implicit-explicit representation similar to \cite{martel2021acorn} could also potentially speed up test-time reconstruction of the depth map.
+%     \item \emph{Feature mapping.} While the Gaussian-weighted patch sampling helps to make our reconstruction more robust in image regions with low-frequency texture content, it can also blur fine features. Also, although lighting variation is small for mm-scale movements, it can still occur. Ideally we could learn robust visual features during training, with a bilateral-space representation that could manage object occlusion boundaries.
+%     \item \emph{Hardware reliance.} For many applications, this micro-baseline depth could potentially replace the need for a dedicated LiDAR sensor. However, this would require a method could operate without high quality pose information, and infer the depth of textureless regions from image and object priors.
+% \end{itemize}

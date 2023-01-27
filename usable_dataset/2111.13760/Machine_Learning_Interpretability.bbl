@@ -1,0 +1,237 @@
+\begin{thebibliography}{34}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Meira~Jr et~al.(2020)Meira~Jr, Ribeiro, Oliveira, and
+  Ribeiro]{meira2020contextualized}
+Wagner Meira~Jr, Antonio~LP Ribeiro, Derick~M Oliveira, and Antonio~H Ribeiro.
+\newblock Contextualized interpretable machine learning for medical diagnosis.
+\newblock \emph{Communications of the ACM}, 63\penalty0 (11):\penalty0 56--58,
+  2020.
+
+\bibitem[Char et~al.(2018)Char, Shah, and Magnus]{char2018implementing}
+Danton~S Char, Nigam~H Shah, and David Magnus.
+\newblock Implementing machine learning in health care—addressing ethical
+  challenges.
+\newblock \emph{The New England journal of medicine}, 378\penalty0
+  (11):\penalty0 981, 2018.
+
+\bibitem[Kraus et~al.(2020)Kraus, Feuerriegel, and Oztekin]{kraus2020deep}
+Mathias Kraus, Stefan Feuerriegel, and Asil Oztekin.
+\newblock Deep learning in business analytics and operations research: Models,
+  applications and managerial implications.
+\newblock \emph{European Journal of Operational Research}, 281\penalty0
+  (3):\penalty0 628--641, 2020.
+
+\bibitem[Ebadi et~al.(2019)Ebadi, Gauthier, Tremblay, and Paul]{ebadi2019can}
+Ashkan Ebadi, Yvan Gauthier, St{\'e}phane Tremblay, and Patrick Paul.
+\newblock How can automated machine learning help business data science teams?
+\newblock In \emph{2019 18th IEEE International Conference On Machine Learning
+  And Applications (ICMLA)}, pages 1186--1191. IEEE, 2019.
+
+\bibitem[Grammenos et~al.(2021)Grammenos, Karagiannis, and
+  Escalante~Ruiz]{grammenos2021analysis}
+R~Grammenos, K~Karagiannis, and M~Escalante~Ruiz.
+\newblock Analysis and optimisation of building efficiencies through data
+  analytics and machine learning.
+\newblock ASHRAE, 2021.
+
+\bibitem[Fan et~al.(2019)Fan, Xiao, Yan, Liu, Li, and Wang]{fan2019novel}
+Cheng Fan, Fu~Xiao, Chengchu Yan, Chengliang Liu, Zhengdao Li, and Jiayuan
+  Wang.
+\newblock A novel methodology to explain and evaluate data-driven building
+  energy performance models based on interpretable machine learning.
+\newblock \emph{Applied Energy}, 235:\penalty0 1551--1560, 2019.
+
+\bibitem[Lim et~al.(2017)Lim, Son, Kim, Nah, and Mu~Lee]{lim2017enhanced}
+Bee Lim, Sanghyun Son, Heewon Kim, Seungjun Nah, and Kyoung Mu~Lee.
+\newblock Enhanced deep residual networks for single image super-resolution.
+\newblock In \emph{Proceedings of the IEEE conference on computer vision and
+  pattern recognition workshops}, pages 136--144, 2017.
+
+\bibitem[Hall and Gill(2019)]{hall2019introduction}
+Patrick Hall and Navdeep Gill.
+\newblock \emph{An introduction to machine learning interpretability}.
+\newblock O'Reilly Media, Incorporated, 2019.
+
+\bibitem[Mi et~al.(2020)Mi, Li, and Zhou]{mi2020review}
+Jian-Xun Mi, An-Di Li, and Li-Fang Zhou.
+\newblock Review study of interpretation methods for future interpretable
+  machine learning.
+\newblock \emph{IEEE Access}, 8:\penalty0 191969--191985, 2020.
+
+\bibitem[Deng et~al.(2020)Deng, Zheng, Zhang, Chen, Lou, and
+  Kim]{deng2020analysis}
+Yao Deng, Xi~Zheng, Tianyi Zhang, Chen Chen, Guannan Lou, and Miryung Kim.
+\newblock An analysis of adversarial attacks and defenses on autonomous driving
+  models.
+\newblock In \emph{2020 IEEE International Conference on Pervasive Computing
+  and Communications (PerCom)}, pages 1--10. IEEE, 2020.
+
+\bibitem[IEA(Accessed August 20, 2021)]{trackBuilding2020}
+IEA.
+\newblock International energy agency (iea), tracking buildings 2020.
+\newblock \url{https://www.iea.org/reports/tracking-buildings-2020}, Accessed
+  August 20, 2021.
+
+\bibitem[Chua et~al.(2013)Chua, Chou, Yang, and Yan]{chua2013achieving}
+Kian~Jon Chua, Siaw~Kiang Chou, WM~Yang, and Jinyue Yan.
+\newblock Achieving better energy-efficient air conditioning--a review of
+  technologies and strategies.
+\newblock \emph{Applied Energy}, 104:\penalty0 87--104, 2013.
+
+\bibitem[Shaikh et~al.(2014)Shaikh, Nor, Nallagownden, Elamvazuthi, and
+  Ibrahim]{shaikh2014review}
+Pervez~Hameed Shaikh, Nursyarizal Bin~Mohd Nor, Perumal Nallagownden, Irraivan
+  Elamvazuthi, and Taib Ibrahim.
+\newblock A review on optimized control systems for building energy and comfort
+  management of smart sustainable buildings.
+\newblock \emph{Renewable and Sustainable Energy Reviews}, 34:\penalty0
+  409--429, 2014.
+
+\bibitem[Satrio et~al.(2019)Satrio, Mahlia, Giannetti, Saito,
+  et~al.]{satrio2019optimization}
+Pujo Satrio, Teuku Meurah~Indra Mahlia, Niccolo Giannetti, Kiyoshi Saito,
+  et~al.
+\newblock Optimization of hvac system energy consumption in a building using
+  artificial neural network and multi-objective genetic algorithm.
+\newblock \emph{Sustainable Energy Technologies and Assessments}, 35:\penalty0
+  48--57, 2019.
+
+\bibitem[Liu et~al.(2019)Liu, Xu, Guo, and Chen]{liu2019novel}
+Tao Liu, Chengliang Xu, Yabin Guo, and Huanxin Chen.
+\newblock A novel deep reinforcement learning based methodology for short-term
+  hvac system energy consumption prediction.
+\newblock \emph{International Journal of Refrigeration}, 107:\penalty0 39--51,
+  2019.
+
+\bibitem[Paul et~al.(2018)Paul, Chakraborty, Datta, and Paul]{paul2018iot}
+Debayan Paul, Tanmay Chakraborty, Soumya~Kanti Datta, and Debolina Paul.
+\newblock Iot and machine learning based prediction of smart building indoor
+  temperature.
+\newblock In \emph{2018 4th International Conference on Computer and
+  Information Sciences (ICCOINS)}, pages 1--6. IEEE, 2018.
+
+\bibitem[Arendt et~al.(2018)Arendt, Jradi, Shaker, and
+  Veje]{arendt2018comparative}
+Krzysztof Arendt, Muhyiddine Jradi, Hamid~Reza Shaker, and Christian Veje.
+\newblock Comparative analysis of white-, gray-and black-box models for thermal
+  simulation of indoor environment: Teaching building case study.
+\newblock In \emph{Proceedings of the 2018 Building Performance Modeling
+  Conference and SimBuild co-organized by ASHRAE and IBPSA-USA, Chicago, IL,
+  USA}, pages 26--28, 2018.
+
+\bibitem[Alawadi et~al.(2020)Alawadi, Mera, Fern{\'a}ndez-Delgado, Alkhabbas,
+  Olsson, and Davidsson]{alawadi2020comparison}
+Sadi Alawadi, David Mera, Manuel Fern{\'a}ndez-Delgado, Fahed Alkhabbas,
+  Carl~Magnus Olsson, and Paul Davidsson.
+\newblock A comparison of machine learning algorithms for forecasting indoor
+  temperature in smart buildings.
+\newblock \emph{Energy Systems}, pages 1--17, 2020.
+
+\bibitem[Li et~al.(2013)Li, Ren, and Wang]{li2013hvac}
+Shujiang Li, Shuang Ren, and Xiangdong Wang.
+\newblock Hvac room temperature prediction control based on neural network
+  model.
+\newblock In \emph{2013 Fifth International Conference on Measuring Technology
+  and Mechatronics Automation}, pages 606--609. IEEE, 2013.
+
+\bibitem[Ruano et~al.(2006)Ruano, Crispim, Concei{\c{c}}ao, and
+  L{\'u}cio]{ruano2006prediction}
+Antonio~E Ruano, Eduardo~M Crispim, Eus{\'e}bio~ZE Concei{\c{c}}ao, and
+  Ma~Manuela~JR L{\'u}cio.
+\newblock Prediction of building's temperature using neural networks models.
+\newblock \emph{Energy and Buildings}, 38\penalty0 (6):\penalty0 682--694,
+  2006.
+
+\bibitem[Mateo et~al.(2013)Mateo, Carrasco, Sellami, Mill{\'a}n-Giraldo,
+  Dom{\'\i}nguez, and Soria-Olivas]{mateo2013machine}
+Fernando Mateo, Juan~Jos{\'e} Carrasco, Abderrahim Sellami, M{\'o}nica
+  Mill{\'a}n-Giraldo, Manuel Dom{\'\i}nguez, and Emilio Soria-Olivas.
+\newblock Machine learning methods to forecast temperature in buildings.
+\newblock \emph{Expert Systems with Applications}, 40\penalty0 (4):\penalty0
+  1061--1068, 2013.
+
+\bibitem[Godahewa et~al.(2020)Godahewa, Deng, Prouzeau, and
+  Bergmeir]{godahewa2020simulation}
+Rakshitha Godahewa, Chang Deng, Arnaud Prouzeau, and Christoph Bergmeir.
+\newblock Simulation and optimisation of air conditioning systems using machine
+  learning.
+\newblock \emph{arXiv preprint arXiv:2006.15296}, 2020.
+
+\bibitem[Xu et~al.(2019)Xu, Chen, Wang, Guo, and Yuan]{xu2019improving}
+Chengliang Xu, Huanxin Chen, Jiangyu Wang, Yabin Guo, and Yue Yuan.
+\newblock Improving prediction performance for indoor temperature in public
+  buildings based on a novel deep learning method.
+\newblock \emph{Building and Environment}, 148:\penalty0 128--135, 2019.
+
+\bibitem[Box et~al.(2015)Box, Jenkins, Reinsel, and Ljung]{box2015time}
+George~EP Box, Gwilym~M Jenkins, Gregory~C Reinsel, and Greta~M Ljung.
+\newblock \emph{Time series analysis: forecasting and control}.
+\newblock John Wiley \& Sons, 2015.
+
+\bibitem[Dickey and Fuller(1981)]{dickey1981likelihood}
+David~A Dickey and Wayne~A Fuller.
+\newblock Likelihood ratio statistics for autoregressive time series with a
+  unit root.
+\newblock \emph{Econometrica: journal of the Econometric Society}, pages
+  1057--1072, 1981.
+
+\bibitem[Agwuegbo et~al.(2010)Agwuegbo, Adewole, and
+  Maduegbuna]{agwuegbo2010random}
+SON Agwuegbo, AP~Adewole, and AN~Maduegbuna.
+\newblock A random walk model for stock market prices.
+\newblock 2010.
+
+\bibitem[Ariyo et~al.(2014)Ariyo, Adewumi, and Ayo]{ariyo2014stock}
+Adebiyi~A Ariyo, Adewumi~O Adewumi, and Charles~K Ayo.
+\newblock Stock price prediction using the arima model.
+\newblock In \emph{2014 UKSim-AMSS 16th International Conference on Computer
+  Modelling and Simulation}, pages 106--112. IEEE, 2014.
+
+\bibitem[Jain and Biswal(2016)]{jain2016dynamic}
+Anshul Jain and Pratap~Chandra Biswal.
+\newblock Dynamic linkages among oil price, gold price, exchange rate, and
+  stock market in india.
+\newblock \emph{Resources Policy}, 49:\penalty0 179--185, 2016.
+
+\bibitem[Chen et~al.(2015)Chen, He, Benesty, Khotilovich, Tang, Cho,
+  et~al.]{chen2015xgboost}
+Tianqi Chen, Tong He, Michael Benesty, Vadim Khotilovich, Yuan Tang, Hyunsu
+  Cho, et~al.
+\newblock Xgboost: extreme gradient boosting.
+\newblock \emph{R package version 0.4-2}, 1\penalty0 (4):\penalty0 1--4, 2015.
+
+\bibitem[Du et~al.(2019)Du, Liu, and Hu]{du2019techniques}
+Mengnan Du, Ninghao Liu, and Xia Hu.
+\newblock Techniques for interpretable machine learning.
+\newblock \emph{Communications of the ACM}, 63\penalty0 (1):\penalty0 68--77,
+  2019.
+
+\bibitem[Friedman(2001)]{friedman2001greedy}
+Jerome~H Friedman.
+\newblock Greedy function approximation: a gradient boosting machine.
+\newblock \emph{Annals of statistics}, pages 1189--1232, 2001.
+
+\bibitem[Ribeiro et~al.(2016)Ribeiro, Singh, and Guestrin]{ribeiro2016should}
+Marco~Tulio Ribeiro, Sameer Singh, and Carlos Guestrin.
+\newblock " why should i trust you?" explaining the predictions of any
+  classifier.
+\newblock In \emph{Proceedings of the 22nd ACM SIGKDD international conference
+  on knowledge discovery and data mining}, pages 1135--1144, 2016.
+
+\bibitem[Lundberg and Lee(2017)]{lundberg2017unified}
+Scott~M Lundberg and Su-In Lee.
+\newblock A unified approach to interpreting model predictions.
+\newblock In \emph{Proceedings of the 31st international conference on neural
+  information processing systems}, pages 4768--4777, 2017.
+
+\bibitem[Myerson(2013)]{myerson2013game}
+Roger~B Myerson.
+\newblock \emph{Game theory}.
+\newblock Harvard university press, 2013.
+
+\end{thebibliography}

@@ -1,0 +1,63 @@
+
+
+
+\subsection{A Unified Framework}\label{subsec:unified-framework-intro}
+
+
+In this section, we give a high-level overview of our framework for constructing light spanners with stretch $t(1+\eps)$, for some parameter $t$ that depends on the examined graph class; e.g., for Euclidean spaces $t  = 1+\eps$, while for general graphs $t = 2k-1$.  Let $L$ be a positive parameter, and $H_{< L}$ be a subgraph of  $G = (V,E,w)$. Our framework relies on the notion of a {\em cluster graph}, defined as follows.
+
+
+\begin{definition}[$(L,\eps,\beta)$-Cluster Graph~\cite{LS21}]\label{def:ClusterGraph-Param} An edge-weighted graph $\mg= (\mv,\me,\omega)$ is an \emph{$(L,\eps,\beta)$-cluster graph} w.r.t a subgraph $H_{< L}$ for some constant $\beta$ if:
+	\begin{enumerate}
+		\item Each node $\varphi_C \in \mv$ corresponds to a subset of vertices $C \in V$, called a \emph{cluster}. For any two different nodes $\varphi_{C_1}, \varphi_{C_2}$ in $\mv$, $C_1\cap C_2 = \emptyset$.
+		\item Each edge $(\varphi_{C_1},\varphi_{C_2})\in \me$ corresponds to an edge $(u,v)\in E$ such that $u \in C_1$ and $v\in C_2$. Furthermore, $\omega(\varphi_{C_1},\varphi_{C_2}) = w(u,v)$.
+		\item $L \leq \omega(\varphi_{C_1},\varphi_{C_2}) < 2L$ for every edge $(\varphi_{C_1},\varphi_{C_2})\in \me$.
+		\item $\dm(H_{< L}[C]) \leq \beta \eps L$ for any cluster $C$ corresponding to a node $\varphi_C \in \mv$.  
+	\end{enumerate} 
+	Here $\dm(X)$ denotes the diameter of a graph $X$. 
+\end{definition} 
+Condition (1) asserts that clusters corresponding to nodes of $\mg$ are vertex-disjoint. Furthermore, Condition (4) asserts that they induce subgraphs of low diameter in $H_{< L}$. In particular, if $\beta$ is constant, then the diameter of clusters is roughly $\eps$ times the weight of edges in the cluster graph.  
+
+The idea of using the cluster graph is to select a subset of edges of $G$ to add to a subgraph $H_{< L}$, which will be a spanner for edges of weights less than $L$ in our construction, to obtain a spanner for edges of weights less than $2L$, thereby extending the set of edges whose endpoints' distances are preserved. By repeating the same construction for edges of higher and higher weights, we eventually obtain a spanner that preserves distances for every pair of vertices in $G$.
+
+
+Our framework assumes the existence of the following algorithm, called \emph{sparse spanner oracle ($\sso$)}, which computes a subset of edges in $G$ to add to $H_{< L}$.
+
+
+\begin{tcolorbox}
+	\hypertarget{SPHigh}{}
+	\textbf{$\sso$:} Given an $(L,\eps,\beta)$-cluster graph $\mg(\mv,\me,\omega)$, 
+	the $\sso$ outputs a  subset of edges  $F$ in polynomial time such that: 
+	\begin{enumerate}[noitemsep]
+		\item \textbf{(Sparsity)~} \hypertarget{Sparsity}{} $w(F) \leq \chi|\mv| L_i$ for some $\chi> 0$. 
+		\item \textbf{(Stretch)~} \hypertarget{Stretch}{} For each edge $(\varphi_{C_u},\varphi_{C_v})\in \me$, $d_{H_{<2L}}(u,v)\leq t(1+s_{\sso}(\beta)\eps)w(u,v)$ 		where $(u,v)$ is the corresponding edge of $(\varphi_{C_u}, \varphi_{C_v})$ and $s_{\sso}(\beta)$ is some constant that depends on $\beta$  only, and $H_{< 2L}$  is the graph obtained by adding $F$ to $H_{< L}$. 
+	\end{enumerate}	
+	
+\end{tcolorbox}
+
+We can interpret the $\sso$ as a construction of a {\em sparse spanner} in the following way: If $F$ contains only edges of $G$ corresponding to a subset of $\me$, say $\me^{\prune} \subseteq \me$, then, $w(e)\geq L$ for every $e \in F$; in this case $|F| \leq \chi|\mv|$.  Importantly, for all classes of graphs considered in this paper, the implementation of $\sso$ is very simple, as we show in \Cref{sec:app}.   The highly nontrivial part of the framework is given by the following theorem, which provides a {\em black-box transformation} from an $\sso$ to an efficient {\em meta-algorithm} for constructing light spanners. We note that this transformation remains the same across all graphs.
+
+
+
+\begin{restatable}{theorem}{Framework}
+	\label{lm:framework} Let $L,\eps, t, \beta \geq 1$ be parameters where $\beta$ only takes on constant values, and $\eps \ll 1$. 
+	Let $\mathcal{F}$ be an arbitrary graph class.
+	If, for any graph $G$ in $\mathcal{F}$, the $\sso$ can take any $(L,\eps,\beta)$-cluster graph $\mg(\mv,\me,\omega)$ corresponding to $G$  as input and return as output a subset of edges $F$ of $G$ satisfying the aforementioned two properties of (\hyperlink{Sparsity}{Sparsity}) and (\hyperlink{Stretch}{Stretch}),
+	then for any graph in $\mathcal{F}$ we can construct a spanner with stretch $t(1+(2s_{\sso}(O(1))+O(1))\eps)$, lightness $\tilde{O}_{\eps}((\chi\eps^{-1} + \eps^{-2}))$ when $t = 1+\eps$, and lightness  $\tilde{O}_{\eps}((\chi\eps^{-1}))$ when $t\geq 2$. 
+\end{restatable}
+
+We remark the following regarding \Cref{lm:framework}.
+
+\begin{remark}\label{remark:ACTIntro}  Parameter $\beta$ only takes on constant values, and $\eps$ is bounded inversely by  $\beta$. In all constructions in \Cref{sec:app}, $\eps \leq 1/(4\beta)$.
+\end{remark}
+
+Our framework here builds on the framework developed in our companion work~\cite{LS21}. In particular, in~\cite{LS21}, we assume the existence of a (nearly) linear-time \emph{sparse spanner algorithm} ($\ssa$) to select edges from the cluster graph.  It was then shown (Theorem 1.7 in \cite{LS21}) that the $\ssa$ can be used as a black-box to obtain a (nearly) linear-time construction of light spanners, in a way that is analogous to how \Cref{lm:framework} uses the $\sso$. Our framework here strengthens the framework in our companion work~\cite{LS21} in three different aspects. First, edges in the set $F$  produced by the $\sso$ may not correspond to edges in $\me$ of $\mg$. This allows for more flexibility in choosing the set of edges to add to $H_{< L}$, and is the key to obtaining a fine-grained optimal dependencies on $\eps$ and the other parameters, such as the Euclidean dimension or the minor size. Second, the $\eps$-dependence in the lightness bound of \Cref{lm:framework} is better than that in Theorem 1.7 from~\cite{LS21}; in the constructions presented in this paper, this dependence is optimal as we explain below. Third, we no longer require the graph $H_{<L}$ used in the definition of \Cref{def:ClusterGraph-Param} to preserve distances less than $L$, as required in ~\cite{LS21}. 
+
+The transformation from sparsity to lightness in \Cref{lm:framework} only looses a factor of $1/\eps$ for stretch $t\geq 2$, and, in addition, another additive term of $+\frac{1}{\eps^2}$ is lost for stretch $t =  1+\eps$. 
+Later, we complement this upper bound by  a lower bound (\Cref{sec:lowerbounds}) showing that for $t = 1+\eps$, the additive  term  of $+\frac{1}{\eps^2}$ is unavoidable in the following sense: There is a graph class --- the class of bounded treewidth graphs --- where we can implement an $\sso$ with $\chi = O(1)$ for stretch $(1+\eps)$, and hence the lightness of the transformed spanner is $O(1/\eps^2)$ due to the additive term of $+\frac{1}{\eps^2}$, but any light $(1+\eps)$-spanner for this class of graphs must have lightness $\Omega(1/\eps^2)$.
+
+\Cref{lm:framework} is a powerful tool for constructing light spanners that achieve fine-grained dependency on $\epsilon$ and other parameter in the lightness. 
+Its proof builds on the basis of the framework laid   in our companion paper~\cite{LS21}, which itself is highly intricate, but it is even more complex. In particular, we also use  a hierarchy of clusters, potential function, and the notion  of augmented diameter for clusters as in \cite{LS21}. However, our goal here is to minimize the $\eps$-dependence.  To this end, we construct clusters in such a way that (1) a cluster at a higher level should contain as many clusters as possible, called subclusters, at lower levels, and (2) the augmented diameter of the cluster must be within a restricted bound. Condition (1) implies that each cluster has a large potential change, which is used to ``pay'' for spanner edges that the algorithm adds to the spanner, while condition (2) implies that the constructed spanner has the desired stretch. The two conditions are in conflict with each other, since the more subclusters we have in a single cluster, the larger the diameter of the cluster gets. Achieving the right balance between these two conflicting conditions is the main technical contribution of this paper.  
+
+
+Another strength of our framework (provided in \Cref{lm:framework}) is its flexibility. Specifically, in \Cref{subsec:oracle-intro}, we introduce another layer of abstraction via an object that we call \emph{general sparse spanner oracle} ($\gsso$). Informally, GSSO is an algorithm that constructs a sparse spanner for any given \emph{subset of vertices} of the input class of graphs (see \Cref{subsec:oracle-intro} for a formal definition).   A shared property of all graph classes for which we construct a $\gsso$ is that they come from a class of metrics that is closed under taking submetrics. In the construction of $\gsso$ in \Cref{sec:app}, we exploit this property by simply running a known sparse spanner construction on top of the subset of vertices given to the $\gsso$. However, this property does not apply to minor-free graphs. Thus, to establish  the lightness upper bound $\tilde{O}_{r,\epsilon}(\frac{r}{\epsilon} + \frac{1}{\epsilon^2})$ of \Cref{thm:minor-free-opt-lightness}, we directly implement $\sso$.

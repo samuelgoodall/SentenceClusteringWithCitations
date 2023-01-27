@@ -1,0 +1,164 @@
+
+\section{Applications}\label{sec:app}
+
+In this section, we use the framework outlined in \Cref{subsec:unified-framework-intro} to obtain all results started in \Cref{subsec:contribution}. Specifically, in \Cref{subsec:B-Oracle}, we show that the existence of a general sparse spanner oracle implies the existence of light spanners. In \Cref{subsec:Oracle}, we construct $\gsso$es for different class of graphs as claimed in \Cref{thm:graph-oracles}. Finally, in \Cref{subsec:minor-light}, we construct a light spanner for minor-free graphs by directly implementing \hyperlink{SPHigh}{$\sso$}.
+
+\subsection{Light Spanners from General Sparse Spanner Oracles}\label{subsec:B-Oracle}
+
+In this section, we provide an implementation of \hyperlink{SPHigh}{$\sso$} using a $\gsso$. We assume that we are given a $\gsso$ $\mathcal{O}_{G,t}$ with weak sparsity $\wsp_{\mathcal{O}_{G,t}}$. We denote the algorithm by $\sso_{\oracle}$. We assume that every edge in $G$ is a shortest path between its endpoints; otherwise, we can safely remove them from the graph.
+
+
+
+\begin{tcolorbox}
+	\hypertarget{SPHOracle}{}
+	\textbf{$\sso_{\oracle}$:} The input is an $(L,\eps,\beta)$-cluster graph $\mg=(\mv,\me,\omega)$. The output is a set of edges $F$.
+	\begin{quote}
+		For each node $\varphi_C \in \mv(\mathcal{G})$ corresponding to a cluster $C$, we choose a $v \in C$. Let $S$ be the set of chosen vertices. Let 
+		\begin{equation} \label{eq:F-oracle}
+			F = E(\mathcal{O}_{G,t}(S,L/2))\cup E(\mathcal{O}_{G,t}(S,L))\cup  E(\mathcal{O}_{G,t}(S,2L))
+		\end{equation}
+		 be the edge set of the spanner returned by the oracle.   We then return $F$.
+	\end{quote}
+\end{tcolorbox}
+
+
+We now show that $\sso_{\oracle}$ has all the properties as described in the abstract  \hyperlink{SPHigh}{$\sso$}.
+
+\begin{lemma}\label{lm:App-Oracle} Let $F$ be the output of \hypertarget{SPHOracle}{$\sso_{\oracle}$}. Then $w(F) = O(\wsp_{\mathcal{O}_{G,t}})L\cdot |\mv|$. Furthermore,  $d_{H_{<2L}}(u,v) \leq t(1+ s_{\sso_{\oracle}}(\beta)\eps)w(u,v)$ for every edge $(u,v)$ corresponding to an edge in $\me$, where  $s_{\sso_{\oracle}}(\beta) = 4\beta$ and $\eps$ is sufficiently smaller than $1$, in particular $\eps \leq 1/(4\beta)$. 
+\end{lemma}
+\begin{proof} Since we only choose exactly one vertex in $S$ per node in $\mg$, $|S| = |\mv|$. By the definition of the sparsity of an oracle (\Cref{def:sparsity}), $w(F) \leq \wsp_{\mathcal{O}_{G,t}} (L/2)\cdot |S| + \wsp_{\mathcal{O}_{G,t}} L\cdot |S| + \wsp_{\mathcal{O}_{G,t}} 2L\cdot |S| = O(\wsp_{\mathcal{O}_{G,t}})L\cdot |\mv|$; this implies the first claim. 
+	
+		Let $(u,v)$ be an edge in $G$ corresponding to an edge $(\varphi_{C_u}, \varphi_{C_v}) \in \me$. We have that $L \leq w(u,v)< 2L$ by property 3 in \Cref{def:ClusterGraph-Param}. By the construction of $S$ in \hyperlink{SPHOracle}{$\sso_{\oracle}$}, there are two vertices $u_1 \in C_u$ and $v_1 \in C_v$ that are in $S$. Let $P_{u_1,u}$ ($P_{v_1,v}$) be the shortest path in $H_{<L}[C_u]$ ($H_{<L}[C_v]$) between $u$ and $u_1$ ($v$ and $v_1$). By property 4 in \Cref{def:ClusterGraph-Param}, we have that $\max\{w(P_{u_1,u}), w(P_{v_1,v})\} \leq \beta \eps L$. By the triangle inequality, we have:
+	\begin{equation}\label{eq:oracleStretch-uv-up}
+		d_G(u_1,v_1)\leq w(u,v) + 2\beta\eps L < (2+2\beta\eps) L \leq 4L,
+	\end{equation}
+	since $\eps \leq 1/\beta$. Also by the triangle equality, it follows that:
+	\begin{equation}\label{eq:oracleStretch-uv-low}
+		d_G(u_1,v_1) \geq w(u,v) - 2\beta\eps L\geq (1 - 2\beta\eps L) \geq L/2,
+	\end{equation}
+	since $\eps \leq \frac{1}{4\beta}$. Thus, $d_G(u_1,v_1) \in [L/2, 2L)$. It follows by the definition of $\gsso$ (\Cref{def:oracle}) that there is a path, say $P_{u_1,v_1}$, of weight at most $t\cdot d_G(u_1,v_1)$  between $u_1$ and $v_1$ in the graph induced by $F$. Let $P_{u,v} = P_{u_1,u}\circ P_{u_1,v_1}\circ P_{v,v_1}$ be the path between $u$ and $v$  obtained by concatenating $P_{u_1,u}, P_{u_1,v_1}, P_{v,v_1}$. By the triangle inequality, it follows that:
+	\begin{equation}
+		\begin{split}
+			w(P_{u,v}) &\leq w(P_{u_1,v_1}) + w(P_{u_1,u}) + w(P_{v_1,v}) \leq t\cdot d_G(u_1,v_1) + 2\eps \beta L \\
+			&\stackrel{\mbox{\footnotesize{\cref{eq:oracleStretch-uv-up}}}}{=} t\cdot ( w(u,v) + 2\eps\beta  L) + 2\eps\beta L \\
+			&\leq t\cdot (w(u,v) + 4\eps\beta L) \qquad \mbox{(since $t\geq 1$)}\\
+			&\leq t\cdot (1 + 4\eps  \beta)w(u,v) \qquad \mbox{(since $w(u,v)\geq L$)},
+		\end{split}
+	\end{equation}
+	as desired. \qed 
+\end{proof}
+
+We are now ready to prove \Cref{thm:general-stretch-2} and \Cref{thm:general-stretch-1eps}, which we restate below.
+
+\GeneralStretchT*
+\begin{proof}
+	By \Cref{lm:framework} and \Cref{lm:App-Oracle}, we can construct in polynomial time a spanner $H$ with stretch $t(1 + (2s_{\sso_{\oracle}}(O(1)) +  O(1))\eps)$ where $s_{\sso_{\oracle}}(\beta) = 8\beta$. Thus, the stretch of $H$ is $t(1 + O(\eps))$; we then can recover stretch $t(1+\eps)$ by scaling. 
+	
+	The lightness of $H$ is  $\tilde{O}_{\eps}((\chi \eps^{-1}))$ with  $\chi = O(\wsp_{\mathcal{O}_{G,t}})$. That implies a lightness of  $\tilde{O}_{\eps}((\wsp_{\mathcal{O}_{G,t}} \eps^{-1}))$  as claimed. \qed
+\end{proof}
+
+\GeneralStretchE*
+\begin{proof} The proof follows the same line of the proof of \Cref{thm:general-stretch-2}. The difference is that we  apply \Cref{lm:App-Oracle} and \Cref{lm:framework} with $t =  1+\eps$ to construct $H$. Thus, the stretch of $H$ is $t(1 + O(\eps)) = 1 + O(\eps)$. Since   $\chi  = \wsp_{\mathcal{O}_{G,1+\eps}}$, the lightness is $\tilde{O}_{\epsilon}\left(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon} + \frac{1}{\epsilon^2}\right)$ as claimed.	\qed
+\end{proof}
+
+\subsection{General Sparse Spanner Oracles}\label{subsec:Oracle}
+
+In this section, we prove Theorem~\ref{thm:Euclidean-oracle} (Subsection~\ref{subsec:Euclidean})  and Theorem~\ref{thm:graph-oracles} (Section~\ref{subsec:general} and~\ref{subsec:metric}). We say that a pair of terminals  is \emph{critical} if their distance is in $[L, 2L)$.
+
+\subsubsection{Low Dimensional Euclidean Spaces}\label{subsec:Euclidean}
+
+We will use the following result proven in the full version of our previous work~\cite{LS19}:
+
+\begin{theorem}[Theorem 1.3~\cite{LS19}]\label{thm:sparse-Steiner}  Given an $n$-point set $P \in \mathbb{R}^d$, there is a Steiner $(1+\epsilon)$-spanner for $P$ with  $\tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2} |P|)$ edges.
+\end{theorem}
+
+Let $T\subseteq P$ be a subset of points given to the oracle and $L$ be the distance parameter. By Theorem~\ref{thm:sparse-Steiner}, we can construct a Steiner $(1+\epsilon)$-spanner $S$ for $T$ with $|E(S)| = \tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2} |T|)$. We observe that:
+
+\begin{observation}\label{obs:remove-heavy-edge} Let $x\not= y$ be two points in $T$ such that $||x,y||\leq 2L$, and $Q$ be a shortest path between $x$ and $y$ in $S$. Then, for any edge $e$ such that $w(e)\geq 4L$, $e\not\in P$ when $\epsilon < 1$.
+\end{observation}
+\begin{proof}
+	Since $S$ is a $(1+\epsilon)$-spanner, $w(P)\leq (1+\epsilon)||x,y|| \leq (1+\epsilon)2 L < 4L$.\qed
+\end{proof}
+Let $\mathcal{O}_{P,(1+\epsilon)}(T,L)$ be the graph obtained from $S$ by removing every edge $e\in E(S)$ such that $w(e)\geq 4L$. By Observation~\ref{obs:remove-heavy-edge}, $\mathcal{O}_{P,(1+\epsilon)}(T,L)$ is a $(1+\epsilon)$-spanner for $T$. Observe that $$w(\mathcal{O}_{P,(1+\epsilon)}(T,L))~\leq~ 4L |E(\mathcal{O}_{P,(1+\epsilon)}(T,L))| \leq 4L |E(S)| ~=~ \tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2} |T| L).$$ It follows that $\wsp_{\mathcal{O}_{P,1+\epsilon}} = \tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2})$. This completes the proof of Theorem~\ref{thm:Euclidean-oracle}.
+
+\subsubsection{General Graphs}\label{subsec:general}
+
+For a given graph $G(V,E)$ and $T\subseteq V$, we construct another weighted graph $G_T(T, E_T,w_T)$ with vertex set $T$ such that for every two vertices $u,v$ that form a critical pair, we add an edge $(u,v)$ with weight $w_T(u,v) = d_G(u,v)$.
+
+We apply the greedy algorithm~\cite{ADDJS93} to $G_T$ with $t = 2k-1$ and return the output of the greedy spanner, say $S_T$, (after replacing each artificial edge by the shortest path between its endpoints) as the output of the oracle $\mathcal{O}_{G,2k-1}$.  We now bound the weak sparsity of $\mathcal{O}_{G,2k-1}$.
+
+It was shown (Lemma 2 in~\cite{ADDJS93}) that $S_T$ has girth $2k+1$ and hence has at most $|T|^{1+1/k}$ edges.  It follows that $w(S_T) ~\leq~ |T|^{1+1/k}2L ~=~ O(n^{1/k})|T|L$. That implies:
+
+\begin{equation*}
+	\wsp_{\mathcal{O}_{G,2k-1}} = \sup_{T\subseteq V, L \in \mathcal{R}^+} \frac{O(n^{1/k})|T|L}{|T|L} = O(n^{1/k}).
+\end{equation*}
+This implies Item (1) of Theorem~\ref{thm:graph-oracles}.
+
+\subsubsection{Metric Spaces}\label{subsec:metric}
+
+Let $(X,d_X)$ be a metric space and $\mathcal{P}$ be a partition  of $(X,d_X)$ into clusters. We say  that $\mathcal{P}$ is  \emph{$\Delta$-bounded} if $\dm(P) \leq \Delta$ for every $P \in \mathcal{P}$.  For each $x \in X$, we denote the cluster containing $x$ in $\mathcal{P}$ by $\mathcal{P}(x)$. The following notion of $(t,\Delta,\delta$)-decomposition was introduced by Filtser and Neiman~\cite{FN18}.
+
+
+\begin{definition}[($t,\Delta,\eta$)-decomposition] Given parameters $t \geq 1, \Delta > 0, \eta \in [0,1]$, a distribution $\mathcal{D}$ over partitions of $(X,d_X)$ is a $(t,\Delta,\eta)$-decomposition if:
+	\begin{itemize}
+		\item[(a)] Every partition $\mathcal{P}$ drawn from $\mathcal{D}$ is $t\cdot\Delta$-bounded.
+		\item[(b)] For every $x\not= y \in X$ such that $d_X(x,y) \leq \Delta$, $\pr\limits_{\mathcal{P}\sim \mathcal{D}}[\mathcal{P}(x) = \mathcal{P}(y)] \geq \eta$
+	\end{itemize}
+\end{definition}
+
+$(X,d)$ is $(t,\eta)$-decomposable if it has a ($t,\Delta,\eta$)-decomposition for any $\Delta > 0$.
+
+\begin{claim}\label{clm:strong-sparse-decomposable} If $(X,d_X)$ is $(t,\eta)$-decomposable, it has a  $\gsso$ $\mathcal{O}_{X,O(t)}$ with sparsity $\wsp_{\mathcal{O}_{X,O(t)}} = O(\frac{t \log |X|}{\eta})$. Furthermore, there is a polynomial time Monte Carlo algorithm constructing  $\mathcal{O}_{X,O(t)}$ with constant success probability.
+\end{claim}
+\begin{proof}
+	Let $T$ be a set of terminals given to the oracle $\mathcal{O}_{X,O(t)}$. Let $\mathcal{D}$ be a $(t, 2L,\eta)$-decomposition of $(X,d_X)$.
+	
+	Initially the spanner $S$ has $V(S) = T$ and $E(S) = \emptyset$. We sample $\rho = \frac{2\ln |T|}{\eta}$ partitions from $\mathcal{D}$, denoted by $\mathcal{P}_1, \ldots, \mathcal{P}_\rho$. For each $i \in [\rho]$ and each cluster $C \in \mathcal{P}_i$, if $|T\cap C| \geq 2$, we pick a terminal $t\in C$ and add to $S$ edges from $t$ to all other terminals in $C$. We then return $S$ as the output of the oracle.
+	
+	For each partition $\mathcal{P}_i$, the set of edges added to $S$ forms a forest. That implies we add to $S$ at most $|T|-1$ edges per partition. Thus, $|E(S)| \leq (|T|-1) \rho = O(\frac{|T| \log |T|}{\eta})$. Observe that $w(S) \leq |E(S)| \cdot t 2L = (\frac{2|T| t L \log |T| }{\eta})$ since each edge has weight at most $t\cdot (2L)$. Thus, $\wsp_{\mathcal{O}} = O(\frac{t \log |T|}{\eta})  =  O(\frac{t\log |X|}{\eta})$.
+	
+	It remains to show that with constant probability, $d_{S}(x,y)  \leq O(t)d_X(x,y)$ for every $x\not= y \in T$  such that $L \leq d_X(x,y) < 2L$. Observe by construction that if $x$ and $y$ fall into the same cluster in any partition, there is a $2$-hop path of length at most $4tL = O(t)d_X(x,y)$. Thus, we only need to bound the probability that $x$ and $y$ are clustered together  in some partition. Observe that the probability that there is no cluster containing both  $x$ and $y$ in $\rho$ partitions is at most:
+	\begin{equation*}
+		(1-\eta)^\rho  = (1-\eta)^{ \frac{2\ln |T|}{\eta}} \leq \frac{1}{|T|^2}
+	\end{equation*}
+	Since there are at most $\frac{|T|^2}{2}$ distinct pairs, by union bound, the desired probability is at least $\frac{1}{2}$.\qed
+\end{proof}
+
+Filtser and Neiman~\cite{FN18} showed that any $n$-point Euclidean metric is $(t,n^{-O(\frac{1}{t^2})})$-decomposable for any given $t > 1$; this implies Item (2) in Theorem~\ref{thm:graph-oracles}.  If $(X,d_X)$ is an $\ell_p$ metric with $p \in (1,2)$,  Filtser and Neiman~\cite{FN18} showed that it is $(t,n^{-O(\frac{\log t}{t^2})})$-decoposable for any given $t > 1$; this implies Item (3) in Theorem~\ref{thm:graph-oracles}.
+
+\subsection{Light Spanners for Minor-Free Graphs}\label{subsec:minor-light}
+
+
+In this section, we provide an implementation of \hyperlink{SPHigh}{$\sso$} for minor-free graphs, which we denote by $\sso_{\minor}$. The algorithm simply outputs the edge set $\me$. Note that in this case, we set $t = 1+\eps$.
+
+
+\begin{tcolorbox}
+	\hypertarget{SPHMinor}{}
+	\textbf{$\sso_{\minor}$:} The input is an $(L,\eps,\beta)$-cluster graph $\mg=(\mv,\me,\omega)$. The output is a set of edges $F$. 
+	\begin{quote}
+		 Let $F$ be the subset of edges of $G$ that correspond to edges in $\me$. We then return $F$.
+	\end{quote}
+\end{tcolorbox}
+
+
+We now show that $\sso_{\minor}$ has all the properties as described in the abstract  \hyperlink{SPHigh}{$\sso$}. Our proof uses the following result:
+
+\begin{lemma}[Kostochka~\cite{Kostochka82} and Thomason~\cite{Thomason84}]\label{lm:minor-sparsity} Any $K_r$-minor-free graph with $n$ vertices has $O(r\sqrt{\log r}n)$ edges. 
+\end{lemma}
+
+We are now ready to prove \Cref{thm:minor-free-opt-lightness}, which we restate below. 
+\MinorFree*
+\begin{proof}  
+	Since we add every edge corresponds to an edge in $\me$ in \hyperlink{SPHMinor}{$\sso_{\minor}$}, $s_{\sso_{\minor}}(\beta) = 0$.
+		By \Cref{lm:framework} and \Cref{lm:App-Oracle}, we can construct in polynomial time a spanner $H$ with stretch $t(1 + (2s_{\sso_{\minor}}(O(1)) +  O(1))\eps) = (1 + O(\eps))$; note that $t = (1+\eps)$ in this case. We then can recover stretch $(1+\eps)$ by scaling. 
+	
+	We observe that $\mg$ is a minor of $G$ and hence is $K_r$-minor-free. Thus, by \Cref{lm:minor-sparsity}, $|\me| = O(r\sqrt{\log r})|\mv|$. It follows that $w(F) = O(r\sqrt{\log r})L\cdot |\mv|$ since every edge in $\mg$ has weight at most $2L$. This gives $\chi = O(r\sqrt{\log r})$. By \Cref{lm:framework} for the case $t = 1+\eps$,
+	The lightness of $H$ is  $\tilde{O}_{\eps}((\chi \eps^{-1}) + \eps^{-2}) = \tilde{O}_{\eps,r}(r\eps^{-1} + \eps^{-2})$  as claimed. \qed
+	\end{proof}
+
+
+
+
+
+
+

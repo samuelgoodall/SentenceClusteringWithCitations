@@ -1,0 +1,334 @@
+
+\section{Potential negative impact}
+
+Training any NeRF model for scene reconstruction has potential negative environmental impact, as current algorithms are very compute-intensive, requiring hours of training per scene even when run on specialized ML accelerators. This also creates an unfair advantage for research groups with access to more computational resources. Future work will likely address this issue, as it blocks the widespread practical adoption of these models.
+
+Any image restoration model could potentially be applied for illicit surveillance purposes. Multi-image denoisers provide the additional capability of potentially revealing details that are not visible in any single image due to noise. ML-based algorithms further complicate this situation by potentially ``hallucinating'' details in ambiguous regions, either intentionally (as with generative methods) or unintentionally (in the form of reconstruction artifacts). RawNeRF has a minimal ability to hallucinate, as it largely works by simply averaging the input data, but it does occasionally produce high frequency grid-like patterns due to the bias induced by positional encoding.
+
+
+
+\section{Additional qualitative results}
+
+We include additional qualitative results for both dark (Figure~\ref{fig:tableau_dark}) and high contrast scenes (Figure~\ref{fig:tableau_hdr}). We urge the reader to view our supplemental video as the results are more compelling when animated.
+
+\newcommand{\tableauheight}{4cm}
+\newcommand{\tableauinheight}{1.25cm}
+\input{tableau_dark}
+\input{tableau_hdr}
+
+
+
+\section{Training details}
+
+
+\subsection{Full derivation of gradient-weighted loss}
+
+We wish to approximate the effect of training with the following loss
+\begin{align}
+    L_\psi(\hat y, y) = \sum_i (\psi(\hat y_i) - \psi(y_i))^2\, 
+    \label{eq:supptonemaploss}
+\end{align}
+while converging to an unbiased result. This can be accomplished by using a locally valid linear approximation for the error term:
+\begin{align}
+    \psi(\hat y_i) - \psi(y_i) &\approx \psi(\hat y_i) - (\psi(\hat y_i) + \psi'(\hat y_i) (y_i - \hat y_i) \nonumber \\
+    &= \psi'(\hat y_i) (\hat y_i - y_i) \, .
+    \label{eq:linearization}
+\end{align}
+Note that we choose to linearize around $\hat y_i$ because, unlike the noisy observation $y_i$, $\hat y_i$ tends towards the true signal value $x_i = \operatorname{E}[y_i]$ over the course of training.
+
+If we use a weighted L2 loss, then as we train the network we will have $\hat y_i \to \operatorname{E}[y_i] = x_i$ in expectation (where $x_i$ is the true signal value). This means that the terms summed in our gradient-weighted loss
+\begin{align}
+   \tilde L_{\psi}(\hat y, y) = &\sum_i \left[\psi'(\sg(\hat y_i))(\hat y_i - y_i) \right]^2 
+   \label{eq:suppourloss}
+\end{align}
+will tend towards  $\psi'(x_i)(\hat y_i - y_i)$ over the course of training. Additionally, we note that the gradient of our reweighted loss~\ref{eq:suppourloss} is a linear approximation of the gradient of the tonemapped loss~\ref{eq:supptonemaploss}:
+\begin{align}
+    \nabla_\theta L_\psi(\hat y, y) 
+    &= \sum_i \nabla_\theta (\psi(\hat y_i) - \psi(y_i))^2 \\
+    &= \sum_i 2(\psi(\hat y_i) - \psi(y_i))\psi'(\hat y_i) \nabla_\theta y_i \\
+    &\approx \sum_i 2(\psi'(\hat y_i) (\hat y_i - y_i))\psi'(\hat y_i) \nabla_\theta y_i \label{eq:sublinear}\\
+    &= \sum_i 2(\psi'(\sg(\hat y_i)) (\hat y_i - y_i)) \psi'(\sg(\hat y_i)) \nabla_\theta y_i \label{eq:subsg} \\
+    &= \nabla_\theta \tilde L_{\psi}(\hat y, y) \, .
+\end{align}
+In line~\ref{eq:sublinear} we substitute the linearization from~\ref{eq:linearization}, and in line~\ref{eq:subsg} we exploit the fact that a stop-gradient has no effect for expressions that will not be further differentiated.
+
+
+
+\subsection{Weight variance regularizer}
+
+Our weight variance regularizer is a function of the compositing weights used to calculate the final color for each ray. Given MLP outputs $c_i, \sigma_i$ for respective ray segments $[t_{i-1}, t_i)$ with lengths $\Delta_i$ (see~\cite{barron2021}), these weights are 
+\begin{align}
+    w_i &= (1-\exp(-\Delta_i \sigma_i)) \exp\!\left(-\sum_{j < i} \Delta_j \sigma_j\right) \, .
+\end{align}
+If we define a piecewise-constant probability distribution $p_w$ over the ray segments using these weights, then our variance regularizer is equal to 
+\begin{align}
+    \mathcal L_w = \operatorname{Var}_{X \sim p_w}(X) = \operatorname{E}_{X\sim p_W}\left[(X - \operatorname{E}[X])^2 \right]
+\end{align}
+Calculating the mean (expected depth):
+\begin{align}
+    E_{X\sim p_W}[X] &= \sum_i \int_{t_{i-1}}^{t_i} \frac{w_i}{\Delta_i} t \, dt \\
+    &= \sum_i \frac{w_i}{\Delta_i} \frac{t_i^2 - t_{i-1}^2}{2} \\
+    &= \sum_i w_i \frac{t_i + t_{i-1}}{2} \, .
+\end{align}
+We will denote this value as $\overline{t}$. Calculating the regularizer:
+\begin{align}
+    \operatorname{Var}_{X \sim p_w}(X) &= \operatorname{E}_{X\sim p_W}\left[(X - \operatorname{E}[X])^2 \right] \\
+    &= \sum_i \int_{t_{i-1}}^{t_i} \frac{w_i}{\Delta_i} \left(t-\overline t \right)^2 \, dt \\
+    &= \sum_i \frac{w_i}{\Delta_i} \frac{\left(t_i-\overline t \right)^3 - \left( t_{i-1}-\overline t \right)^3}{3} \\
+    = \sum_i  w_i& \frac{(t_i-\overline t)^2 + \left( t_i-\overline t \right) \left(t_{i-1}-\overline t \right) + \left( t_{i-1}-\overline t \right)^2}{3} 
+\end{align}
+We apply a weight between $1 \times 10^{-2}$ and $1 \times 10^{-1}$ to $\mathcal L_w$ (relative to the rendering loss), typically using higher weights in noisier or darker scenes that are more prone to ``floater'' artifacts. Applying this regularizer with a high weight can result in a minor loss of sharpness, which can be ameliorated by annealing its weight from 0 to 1 over the course of training.
+
+
+
+\subsection{Findings with alternate loss functions}
+
+In practice, we directly scale our loss by the derivative of the desired tone curve:
+\begin{equation}
+   \psi'(\sg(\hat y_i)) = \frac{1}{\sg(\hat y_i) + \epsilon}
+\end{equation}
+We performed a hyperparameter sweep over loss weightings of the form $(\sg(\hat y_i) + \epsilon)^{-p}$ for $\epsilon$ and $p$ and found that $\epsilon=1\times 10^{-3}$ and $p=1$ produced the best qualitative results. 
+
+We also experimented with using a reweighted L1 loss or the negative log-likelihood function of the actual camera noise model (using shot/read noise parameters from the EXIF data) but found that this performed worse than reweighted L2. RawNeRF models supervised with a standard unweighted L2 or L1 loss tended to diverge early in training, particularly in very noisy scenes.
+
+We tried using the unclipped sRGB gamma curve (extended as a linear function below zero and as an exponential function above 1) in our loss, but found that it caused many color artifacts in dark regions. Directly applying our log tone curve (rather than reweighting by its gradient) before the L2 loss caused training to diverge.
+
+
+\subsection{Quality limitations}
+
+As briefly mentioned in the main text, our method cannot scale to arbitrary amounts of noise in real world scenes. For our darkest nighttime scenes, we often must run COLMAP~\cite{colmap} multiple times (varying the random seed) or tune its parameters to obtain camera poses. Even when COLMAP reports a successful reconstruction, the results are sometimes poorly aligned at image corners, where the distortion model used for camera intrinsics may not fit well. 
+
+RawNeRF itself is prone to reconstruction artifacts in very noisy scenes or scenes captured with few images (under 30), typically in the form of positional encoding grid-like artifacts. These artifacts are often more evident in videos than in still frames. In regions that are essentially pure noise and no signal, RawNeRF sometimes produces a foggy ``cloud'', since no multiview information exists to guide its recovery of geometry.
+
+The near and far plane bounds calculated using the point cloud from COLMAP are sometimes wider than the true bounds of the scene. Using these bounds wastes many samples at the front of each ray, which reduces sharpness and can cause additional ``floater'' artifacts. We therefore sometimes retrain RawNeRF models using tighter depth bounds than those reported by COLMAP.
+
+
+We found it necessary to use gradient clipping due to the high level of noise in the data we use for supervision. Certain losses (such as standard L2) are prone to producing NaN gradient values and require careful tuning of the clipping values. We found our reweighted loss to be more stable.
+
+
+\section{Data capture and postprocessing details}
+
+
+\subsection{Data capture}
+
+
+
+We captured all images using a 2017 iPhone X with the Halide app\footnote{\url{https://halide.cam/}} and a 2020 iPhone SE with the Adobe Lightroom app. We used manual modes in both apps with focus and ISO level fixed for each capture, manually adjusting shutter speed to achieve an exposure with no clipped highlights (except in scenes with varying exposure) and minimal motion blur (at least $1/100$s when possible). At night, it was usually necessary to use the maximum ISO level (approximately 2000 on the iPhones) to achieve minimal motion blur. Each capture took around 10-200 seconds, except for the denoising test scenes. All raw images are stored as Adobe DNG\footnote{\url{https://www.adobe.com/content/dam/acom/en/products/photoshop/pdfs/dng_spec_1.4.0.0.pdf}} files.
+
+We extract the following parameters from the EXIF metadata using \texttt{exiftool}:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{llc}
+        Variable & EXIF field name & \# values \\ \hline
+        $w$& \texttt{WhiteLevel} & $1$ \\
+        $b$& \texttt{BlackLevel} & $1$ \\
+        $g_\mathrm{wb}$& \texttt{AsShotNeutral}  & $3$ \\
+        $C_\mathrm{ccm}$ & \texttt{ColorMatrix2} & $3\times 3$ \\
+        $t$ &  \texttt{ShutterSpeed} & $1$  \\
+    \end{tabular}
+    \label{tab:exif}
+\end{table}
+
+The color correction matrix $C_\mathrm{ccm}$ is an XYZ-to-camera-RGB transform under the D65 illuminant, so we use the corresponding RGB-to-XYZ matrix\footnote{\url{http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html}}:
+\begin{equation}
+    \!\!\!C_{\textrm{rgb-xyz}} = \left[ \begin{array}{ccc}
+0.4124564  & 0.3575761  & 0.1804375\\
+0.2126729  & 0.7151522  & 0.0721750\\
+0.0193339  & 0.1191920  & 0.9503041 
+    \end{array} \right]
+\end{equation}
+We use these to create a single color transform $C_\mathrm{all}$ mapping from camera RGB directly to standard linear RGB space:
+\begin{equation}
+    C_\mathrm{all} = \mathrm{rownorm}((C_{\textrm{rgb-xyz}}C_\mathrm{ccm})^{-1})
+\end{equation}
+where $\mathrm{rownorm}$ normalizes each to sum to 1.
+
+We use the standard sRGB gamma curve as a basic tonemap for linear RGB space data:
+\begin{equation}
+    \gamma_\mathrm{sRGB}(z) = \begin{cases} 
+      12.92z & z \leq 0.0031308 \\
+      1.055z^{1/2.4}-0.055 & z > 0.0031308
+   \end{cases}
+\end{equation}
+
+\subsection{Postprocessing pipeline}
+\label{sec:post}
+
+Our exact postprocessing pipeline for converting raw images to postprocessed sRGB space is detailed below.
+\begin{enumerate}
+    \item Load 12-bit raw data using \texttt{rawpy}.
+    \item Cast to 32-bit floating point.
+    \item Rescale so that the black level is 0 and the white level is 1, preserving values below zero. (The result here is used to train RawNeRF.)
+    \begin{equation}
+        z \leftarrow \frac{z - b}{w - b}
+    \end{equation} 
+    \item Apply bilinear demosaicking (when necessary).
+    \item Apply elementwise white balance gains.
+    \begin{equation}
+        z \leftarrow \frac{z}{g_{\mathrm{wb}}}
+    \end{equation}
+    \item Apply a color correction matrix (from camera RGB to canonical XYZ) and XYZ-to-RGB matrix, combined into a $3\times 3$ transformation.
+    \begin{equation}
+        z \leftarrow C_{\mathrm{all}} z
+    \end{equation}
+    \item Adjust the exposure to set the white level to the $p$-th percentile ($p=97$ by default).
+    \begin{equation}
+        z \leftarrow \frac{z}{\mathrm{percentile}(z, p)}
+    \end{equation}
+    \item Clip to $[0,1]$.
+    \begin{equation}
+        z \leftarrow \mathrm{clip}(z,0,1)
+    \end{equation}
+    \item Apply the sRGB gamma curve to each color channel.
+    \begin{align}
+        z &\leftarrow \gamma_\mathrm{sRGB}(z)
+    \end{align}
+\end{enumerate}
+When applying a different tonemapping algorithm, we take the color corrected output from step 6 and pass it through the alternate method, while tuning exposure and other tonemapping parameters manually per scene.
+
+
+\subsection{Camera shutter speed miscalibration}
+\label{sec:miscalibration}
+
+In Section 4.2 of the main text, we discuss our implementation of a learned per-color-channel scaling to account for miscalibration when using variable exposure inputs. Here, we document this miscalibration effect for completeness. 
+
+Figure~\ref{fig:miscalibration} plots data taken from a ``sweep'' over many shutter speeds. The 2017 iPhone X (used for most data capture in the paper) is held fixed on a tripod, all other parameters (focus, ISO, white balance, etc.) are held fixed, and shutter speeds are sampled roughly logarithmically from 1/100 to 1/10000 seconds. We ensure that no pixels are saturated. To minimize the effect of image noise, we study the average color value $y_{t_i}^c$ for each Bayer filter channel (R, G1, G2, B) over the entire 12MP sensor. Specifically, we plot:
+\begin{equation}
+    \frac{y_{t_i}^c}{t_i}  \cdot   \frac{t_{\mathrm{max}}}{y_{t_\mathrm{max}}^c} 
+\end{equation}
+which is the ratio of normalized brightness at speed $t_i$ to normalized brightness at the longest shutter speed $t_{\mathrm{max}}$. In the case of perfect calibration, this should be equal to 1 everywhere since dividing out by shutter speed should perfectly normalize the brightness value. However, from Figure~\ref{fig:miscalibration} we see that not only does this quantity decay for faster shutter speeds, it decays at \emph{different rates} per color channel. To preempt concerns that this problem is due to black level miscalibration, we include the plot based on the correct black level 528, as well as the surrounding values, which shows that this problem is only worsened by shifting the black level higher or lower. Note that black level is an integer on the scale of 0 to 4095 (since this is a 12-bit sensor).
+
+\begin{figure}
+    \centering
+    \includegraphics[height=2.45cm]{figures/miscalibration/miscalibration_527.pdf}\hspace{-.2cm}
+    \includegraphics[height=2.45cm]{figures/miscalibration/miscalibration_528.pdf}\hspace{-.2cm}
+    \includegraphics[height=2.45cm]{figures/miscalibration/miscalibration_529.pdf}
+    \caption{Camera shutter speed miscalibration. We plot normalized brightness for each Bayer color channel, relative to its value at the longest shutter speed. For a perfectly calibrated sensor, these lines would all be at a constant height of 1. We show plots using both the true black level (528) and surrounding values.}
+    \label{fig:miscalibration}
+\end{figure}
+
+\begin{figure}
+    \centering
+\resizebox{\linewidth}{!}{
+    \begin{tabular}{@{}c@{\,}c@{\,}c@{}}
+    \includegraphics[height=2.4cm]{figures/miscalibration/yucca_noisy.png} & 
+    \includegraphics[height=2.4cm]{figures/miscalibration/yucca_noisy_wb.png} &
+    \includegraphics[height=2.4cm]{figures/miscalibration/yucca_clean.png} \\
+    (a) Fast shutter & (b) Fast shutter, corrected & (c) Slow shutter
+    \end{tabular}
+    }
+    \caption{(a) Fast and (c) slow captures of the \emph{testyucca} scene, with brightness normalized by shutter speed (heavily downscaled to minimize noise). These two images should match perfectly, but have a perceptible color difference due to the miscalibration documented in Section~\ref{sec:miscalibration} and Figure~\ref{fig:miscalibration}. (b) In the center, we show a version of (a) with per-channel rescaling in the raw domain to match the global color balance of (c).}
+    \label{fig:yucca_wb}
+\end{figure}
+
+We show an example of the resulting qualitative color shift in Figure~\ref{fig:yucca_wb} using images from one of our three real test scenes. Here the two shutter speeds are 1/1104 and 1/181 seconds, and the relative color shift from the slow to the fast channel is calculated to be $(0.89, 0.93, 0.75)$ for red, green, and blue in the raw domain. The effect of undoing this shift before postprocessing is shown in Figure~\ref{fig:yucca_wb}b. This miscalibration is another reason for primarily reporting affine-aligned metrics on our real test set, since we cannot rely on perfect color alignment between the input noisy image and the clean ground truth frame.
+
+We do not fully understand the cause of this issue. We speculate that it could be due to the sensor temperature changing over the course of capture, imprecise shutter speed timing for very fast exposures, or any number of other factors related to low level sensor hardware. Given that the effect exists and affects our captures in an unmeasurable manner, it must be accounted for. Using a DSLR or mirrorless camera with a better sensor may avoid this issue.
+
+
+
+\section{Comparison and ablation details}
+
+
+
+\subsection{Real test dataset details}
+
+\paragraph{Affine alignment} As mentioned in the main text, we solve for an affine color alignment between each output and the ground truth clean image. For all methods but SID and LDR NeRF, this is done directly in raw Bayer space for each RGGB plane separately. For SID and LDR NeRF (which output images in tonemapped sRGB space), this is done for each RGB plane against the tonemapped sRGB clean image. If the ground truth channel is $x$ and the channel to be matched is $y$, we specifically compute 
+\begin{align}
+    a &= \frac{\overline{xy} - \overline x \overline y}{\overline{x^2} - \overline x^2} = \frac{\mathrm{Cov}(x, y)}{\mathrm{Var}(x)} \, , \\
+    b &= \overline y - a \overline x
+\end{align}
+to get the least-squares fit of an affine transform $ax+b \approx y$ (here $\overline z$ indicates the mean over all elements of $z$). We then apply the inverse transform as $(y-b)/a$ to match the estimated $y$ to $x$. In the case where matching happens in the raw domain, we postprocess $(y-b)/a$ through our standard pipeline (Section~\ref{sec:post}) before calculating sRGB-space metrics.
+
+
+\paragraph{Compared baselines} We provide an overview of each baseline and the pre- and post-processing pipelines used in the main text. Unprocessing~\cite{brooks2019cvpr} is the only method that is a ``non-blind'' denoiser, and therefore requires a per-pixel noise level as input. We calculate this by using the empirical per-pixel variance from our tripod-aligned fast and clean images to estimate shot and read noise parameters as a best-fit 1D affine transform mapping from clean signal values to empirical variances. Each method required its own relative input rescaling and clipping convention, which we set based on each authors' source code. 
+
+
+\subsection{Synthetic Lego dataset details}
+
+In the synthetic Lego dataset, we did \emph{not} include the effects of remosaicking/demosaicking or quantization when unprocessing/reprocessing the data. We wanted the ``infinite'' shutter speed case to be perfectly clean, with no degradation resulting from unprocessing and reprocessing in the absence of noise, thus providing an upper bound on possible performance. This example does not particularly test the ability of RawNeRF to encode high dynamic range since the object is diffusely lit, resulting in fairly dim highlights and negligible clipping; instead, it focuses on robustness to noise.
+
+We rendered new randomly sampled images of the scene using the Blender file\footnote{\url{https://drive.google.com/file/d/1RjwxZCUoPlUgEWIUiuCmMmG0AhuV8A2Q/view?usp=sharing}} provided by the NeRF authors~\cite{mildenhall2020nerf}, saving the resulting linear space color data in EXR format. There are 120 images in the training set and 40 images in the test set. Note that metric values on this data are not comparable to metrics on the original scene, since it uses images from different random poses generated using a different postprocessing pipeline.
+
+For completeness, we report the unmasked PSNR values for this experiment in Table~\ref{tab:synthlegounmasked} (Table 2 in the main text reports masked PSNR), which is heavily skewed by the LDR NeRF's color bias in the black background regions.
+
+\input{supplegotable}
+
+\section{Further qualitative ablations}
+
+\subsection{Training with iPhone JPEG inputs}
+
+In all LDR NeRF comparisons in the main paper, we use our own simple postprocessing pipeline to generate LDR sRGB inputs from the raw data. However, a standard NeRF implementation would instead use JPEG images directly from the camera, which have a more sophisticated postprocessing pipeline that likely includes noise reduction and a more sophisticated nonlinear tonemap to better compress dynamic range. To satisfy the reader's potential curiosity, in Figure~\ref{fig:iphonejpeg} we provide an example of LDR NeRF trained on iPhone JPEGs versus our LDR images, as well as a RawNeRF result on the same scene.
+
+\begin{figure}
+    \centering
+\resizebox{\linewidth}{!}{
+    \begin{tabular}{@{}c@{\,}c@{\,}c@{}}
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_input_iphone_1x.jpg} & 
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_input_iphone_bright.jpg} &
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_iphone_bright.jpg} \\
+    (a) iPhone JPEG & (b) Brightened (a) & (c) LDR NeRF on (a) \\
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_input.jpg} & 
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_srgb.jpg} &
+    \includegraphics[height=2.4cm]{figures/avenell_jpeg/avenell_rawnerf.jpg} \\
+    (d) Our LDR input & (e) LDR NeRF on (d) & (f) RawNeRF
+    \end{tabular}
+    }
+    \caption{Comparison of training LDR NeRF using sRGB images either directly from the iPhone camera or from our simplified pipeline. (a) The JPEG image from the phone is extremely dark, so we brighten it for visualization (b). We also brighten the resulting LDR NeRF rendering (c), thereby revealing its pervasive color noise artifacts. When trained on the images from our LDR processing pipeline (d), LDR NeRF produces a more reasonable result (e), though the input images' biased noise distribution still results in muddy, low contrast dark regions and incorrectly muted colors. (f) Only RawNeRF accurately recovers the correct colors and details throughout the scene.}
+    \label{fig:iphonejpeg}
+\end{figure}
+
+\subsection{Bayer mosaic mask and sensor artifacts}
+
+In the main text, we note that we only apply our loss function to the color channel measured by the Bayer filter for each ray. (In practice, we render all three colors for every training ray, then apply a one-hot mask to select the desired output color.) In Figure~\ref{fig:demosaic}, we show an example of the color noise that emerges when supervising all 3 color channels using bilinearly demosaicked raw images instead of masking the loss. Perhaps surprisingly, we noted that relatively clean regions of the scene seemed to benefit from using all 3 channels of a bilinear demosaicked image as supervision. However, we concluded that the distracting color artifacts induced by demosaicking outweighed this occasional benefit, and opted to use Bayer masking in all scenes. 
+
+These artifacts may potentially be caused by broken ``hot'' pixels that are always fully saturated, in violation of our assumed noise distribution. Bilinear demosaicking would disperse the influence of a hot pixel to many neighboring pixels, potentially increasing its effect on the final trained NeRF. In preliminary experiments, we did not notice any benefit to additionally masking hot pixels when applying a Bayer mask. We did apply a second mask to remove a 4 pixel border from all training images, since many iPhone raw images contained 1 or 2 entire rows or columns of saturated pixels on one side, particularly in bright scenes.
+
+\begin{figure}
+    \centering
+\resizebox{\linewidth}{!}{
+    \begin{tabular}{@{}c@{\,}c@{\,}c@{\,}c@{}}
+    \includegraphics[height=4cm]{figures/morningkitchen/kitchen_demosaic2_input_full.jpg} & 
+    \includegraphics[height=4cm]{figures/morningkitchen/kitchen_demosaic2_input_0.jpg} & 
+    \includegraphics[height=4cm]{figures/morningkitchen/kitchen_demosaic2_nomask_0.jpg} & 
+    \includegraphics[height=4cm]{figures/morningkitchen/kitchen_demosaic2_ours_0.jpg} \\
+    (a) Full noisy image & (b) Noisy & (c) No mask & (d) Ours
+    \end{tabular}
+    }
+    \caption{Comparison of training with bilinear demosaicking and no Bayer masking (c), or with a Bayer mask that uses only the measured raw pixels (d). In image areas with extremely high noise, we observed unpleasant bright color noise emerge when training with bilinear demosaicked images in the raw domain.}
+    \label{fig:demosaic}
+\end{figure}
+
+
+
+\section{Synthetic defocus rendering model}
+
+To render defocused images, we use a similar rendering model as prior work that has addressed this task~\cite{barron2015stereo,wadhwa2018defocus,zhang2019defocus}. To avoid prohibitively expensive rendering speeds, we first precompute a multiplane image~\cite{zhou18stereomag} representation from the trained RawNeRF model. This MPI consists of a series of fronto-parallel RGBA planes (with colors still in linear HDR space), sampled linearly in disparity within a camera frustum at a central camera pose. Given this MPI representation, our rendering algorithm for synthetic defocus (including lateral camera translation) is described in Algorithm~\ref{alg:defocus}.
+
+\begin{algorithm}
+\caption{Synthetic defocus rendering}\label{alg:defocus}
+\begin{algorithmic}
+\Procedure{Defocus}{$c_{\textrm{mpi}}, \alpha_{\textrm{mpi}}, i_\textrm{focus}, \Delta_r, \Delta_d$}
+\State $C \gets 0$ %
+\For{$i=0,\ldots,,N-1$}
+    \State $r \gets \Delta_r \cdot |i - i_\textrm{focus}|$
+    \State $k_\textrm{blur} \gets  \mathrm{blurkernel}(r)$
+    \State $c_\textrm{blur} \gets \mathrm{convolve}(c_{\textrm{mpi}}^{(i)} \cdot \alpha_{\textrm{mpi}}^{(i)}, k_\textrm{blur})$
+    \State $\alpha_\textrm{blur} \gets \mathrm{convolve}(\alpha_{\textrm{mpi}}^{(i)}, k_\textrm{blur})$
+    \State $d \gets \Delta_d \cdot i$
+    \State $c_\textrm{trans} \gets \mathrm{translate}(c_{\textrm{blur}}, d)$
+    \State $\alpha_\textrm{trans} \gets \mathrm{translate}(\alpha_{\textrm{blur}}, d)$
+    \State $C \gets c_\textrm{trans} + (1-\alpha_\textrm{trans}) C$
+\EndFor
+\State \Return $C$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+Here the input MPI planes are indexed from back to front. $i_\textrm{focus}$ controls the focal plane, $\Delta_r$ controls the simulated aperture size (defocus strength), and $\Delta_d$ (a 2D vector) controls the camera translation parallel to the image plane. $\mathrm{blurkernel}(r)$ returns a circular mask at the origin with radius $r$ pixels. $\mathrm{blurkernel}$ is implemented as a 2D Fourier space convolution, and $\mathrm{translate}$ is a continuous 2D image translation (using bilinear resampling). Note that the color is ``premultiplied'' by alpha before blurring, which is why alpha is not applied to $c_\textrm{trans}$ in the accumulation step for $C$.
+
+\section{Scene index}
+
+We provide various details about each scene shown in the paper and video in Table~\ref{tab:sceneindex}.
+
+\input{sceneindex}

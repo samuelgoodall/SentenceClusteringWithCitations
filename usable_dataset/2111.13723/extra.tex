@@ -1,0 +1,241 @@
+\subsection{Background}
+The current severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) pandemic and its subsequent coronavirus disease 2019 COVID-19) infection is spreading across the planet at a frightening rate causing debilitating damage to the fabric of our very existence.  Economies have been crippled.  Health care systems and resources have been strained.  Food security has been tested.  Families have been torn apart as loved ones are lost \cite{Impactof55:online}.
+
+However, epidemics such as as (SARS-CoV-2) are not a recent phenomenon for humanity.  Throughout history, diseases, viruses, and pathogens have resulted in countless deaths and instilled fear in untold others.  Shamans, healers, doctors, scientists, public health officials, and researchers alike have sought to understand an outbreak to disrupt, bring under control, and ultimately eradicate the deadly plague of their time.  Through their research and discipline, the modern practice of epidemiology was born.
+
+Epidemiology is defined as ``the study of the occurrence and distribution of health-related events, states, and processes in specified populations, including the study of the determinants influencing such processes, and the application of this knowledge to control relevant health problems'' \cite{epidemiology}.  Epidemiology serves as a critical component for doctors and health officials to shape public health policy decisions by designing, collecting, and analyzing historical, contemporary, and emerging threats.  Epidemiologists utilize a variety of tools and techniques to aid in their analytical techniques.
+
+In this research, we utilize the United States county network to forecast (COVID-19) infections, deaths, and survivors within each county.
+
+\subsection{COVID-19 Modeling Approaches}
+Due to the exponential growth of big data acquisition and the advancement of machine learning techniques in recent years, epidemiologists and data scientists are able to synchronise their efforts to create a predictive forecasting model with relative ease.  Network science has certainly benefited in recent years from advancements in computational capacity and capability as researchers continue to expand the scientific study of networks and their applications.  In particular, social and telecommunications networks provide researchers an opportunity to analyze an individual's connections and key influencers, respectively.  
+
+As epidemics naturally contain data that is directly related to a specified time period, time series models such as Holt-Winters or seasonal decomposition provide an additional model opportunity.  The susceptible-infected-recovered (SIR) compartmental model and its variants provide researchers with an opportunity to efficiently classify individuals into categories as they receive and recover from a given pathogen.  Agent-based simulations provide another alternative by modeling individual movements and a pathogen's transmission within a community.
+
+\subsection{United States County Network}
+As of the 2020 census, the United States is divided into 3,143 county and county equivalents each with their own adjacency structure \cite{UCSBcounties}.  As such, this research applies network science techniques to determine underlying characteristics and properties, which can be used to develop a holistic understanding of the country.  For example, a network's centrality measures and clustering coefficient enable the network to be disintegrated and analyzed further.  To better represent the United States' county network structure, adjacencies can be represented as either binary or the great circle distance between county centroids.  
+
+\subsection{Data Availability \& Model Adaptation}
+All data in this research are openly available from organizations such as United States of America Facts (USAFacts), the United States Census Bureau (USCB), the Center for Disease Control and Prevention (CDC), and the National Bureau of Economic Research.  Figures \ref{fig:covid-19 cases_survivors} and \ref{fig:covid-19 deaths} depict the total number of COVID-19 cases \& survivors as well as deaths, respectively.  Although individuals have certainly contracted COVID-19 but haven't taken a diagnostic test and since recovered, this research defines the term ``survivor'' as those individuals who have tested positive for COVID-19 and recovered.  The vertical axis in Figures \ref{fig:covid-19 cases_survivors} and \ref{fig:covid-19 deaths} represents the total cumulative count.  The horizontal axis in Figures \ref{fig:covid-19 cases_survivors} and \ref{fig:covid-19 deaths} is the given time series for which data was collected.  By inspection, the number of survivors nearly mirrors the number of cases in Figure \ref{fig:covid-19 cases_survivors}.  Since both data sets are cumulative counts, they continue to increase.
+
+\vspace{10mm}
+
+\begin{figure} % use an H float to prevent figures from landing in the middle of paragraphs, which is not ideal.
+\centering
+\includegraphics[scale=0.6]{Figures/COVID-19_Cases_Survivors.jpg}
+\caption[United States COVID-19 Cases and Survivors]{United States COVID-19 Cases \& Survivors.  The vertical axis represents the cumulative total survivors and the horizontal axis represents time.  As we can see from the figure, {COVID-19} cases and survivors climb at an exponential rate. Adapted from: \cite{COVID19casesUSAFacts} and \cite{COVID19deathsUSAFacts}.}
+\label{fig:covid-19 cases_survivors} % for cross referencing
+\end{figure}
+
+\begin{figure} % use an H float to prevent figures from landing in the middle of paragraphs, which is not ideal.
+\centering
+\includegraphics[scale=0.6]{Figures/COVID-19 Deaths.jpg}
+\caption[United States COVID-19 Deaths]{United States COVID-19 Deaths.  The vertical axis represents the cumulative total deaths and the horizontal axis represents time.  As we can see from the figure, {COVID-19} deaths climb at an exponential rate. Adapted from: \cite{COVID19deathsUSAFacts}.}
+\label{fig:covid-19 deaths} % for cross referencing
+\end{figure}
+
+To model these data, this research employs the generalized network autoregression (GNAR) package in \texttt{R} \cite{GNARCRAN}.  Researchers created the {GNAR} package to accept univariate time series data across a given network structure to analyze, model, and develop a daily, weekly, monthly, quarterly, or yearly prediction \cite{GNARCRAN}.  In this research, we utilize COVID-19 cases, survivors, and deaths for each county as the univariate data while the network structure is the United States county adjacency network.  We use daily and weekly time intervals, binary and great circle distance network adjacency structures, and COVID-19 cases, deaths, and survivor univariate data sets, resulting in 12 total combinations.  Within each combination, we specify three different GNAR models, which adjust the influence a given county experiences by its neighbors.
+
+\subsection{Results \& Future Research}\label{section:results and future research}
+Since daily COVID-19 infections are inherently time-based data, we utilize {MAPE} and {MASE} as our primary performance measures to demonstrate that {GNAR} is able to effectively predict cases, survivors, and deaths.  We can employ a Na\"ive model by setting the forecast for any time period equal to the previous period’s actual value to establish a baseline performance measure.  Forecasting models that beat the Na\"ive model are said to have predictive power  \cite{timeseriespredictivepower}.  Each weekly model outperforms the Na\"ive model and by extension, demonstrates their employment capability.  Additionally, the results in Section XXX %\ref{ch:Model Results}
+demonstrate two recurrent trends: the mean absolute percentage error (MAPE) and mean absolute scaled error (MAPE) performance for the case and survivor combinations are nearly identical and the great circle distance often hinders accuracy.  Despite these findings, the results illustrate that the {GNAR} package is able to accurately forecast {COVID-19} cases, deaths, and survivors.  However, adapting the {GNAR} package and collecting additional data could further increase each combination's accuracy.
+
+Finally, this paper discusses potential avenues for additional research topics.  For example, we could disintegrate {COVID-19} infections to individual zone improvement plan (ZIP) codes to build a network adjacency structure at a smaller level.  Each compartment within the {SIR} model could be used as a univariate data sequence.  Despite {GNAR}'s success, this research proposes expanding the current univariate data limitation by modifying or creating an entirely new package that enables multivariate time series modeling.  Multivariate predictors such as a county's population, demographics, and economic conditions could be used to develop a deeper understanding, create a more effective model, and ultimately develop a more accurate epidemic model to aid public policy officials.
+
+\section{Background}
+
+
+
+\section{Dataset}
+
+For this research, all data are openly available and can be consumed from the following sources: United States Census Bureau (USCB), National Bureau of Economic Research,and United States of America Facts (USAFacts). As each county can be identified with its own unique federal information processing standard (FIPS) code, the USCB maintains administrative accountability of each county and its associated adjacencies. The National Bureau of Economic Research calculated the great circle distance between each county using the Haversine formula (National Bureau of Economic Research 2010a). USAFacts provides daily COVID-19 cases and deaths for each county directly from the Center for Disease Control and Prevention (CDC).
+
+Since {COVID-19} cases and deaths as well as the great circle distance are integers and decimals, respectively, all data in this research are entirely numerical with no categorical predictors or response variables.  Additionally, the original number of {COVID-19} cases and deaths were used and traditional data transformations such as logarithmic, square, or cube root were not applied.
+
+\subsection{Data Assumptions}\label{Data Assumptions}
+The model's first assumption is that {COVID-19} cases are stationary and as a result, do not depend on the time at which the series is observed \cite{hyndman2018forecasting}.  By extension, the data set does not contain any seasonal or trend components as they affect the series at different time periods.  However, a time series with only cyclic behavior can be considered stationary \cite{hyndman2018forecasting}.  As such, the data set should not contain any predictable patterns in its long-term trend.
+
+The next assumption is that there is no uncorrelated error as it is randomly distributed but its variance and mean are constant.  If random error is present, they are assumed to be randomly distributed with a constant variance and mean zero \cite{TimeSeriesAssumptions}. 
+
+The data provided by local and state officials to the {CDC} are accurate and complete.  While {COVID-19} cases and deaths may change slightly from day-to-day as human error and reporting standards may change, this research assumes the number of cases and deaths on any given day are accurate \cite{CDCFAQ}.  Moreover, this research assumes that the data set follows an autoregressive behavior as each observation is directly linked to previous observations, which forms a regression equation to predict the next value \cite{autoregression}.  Additionally, this research assumes that there are no outliers present in the data as they may affect model creation, analysis, conclusions, discussions, and recommendations as they can be misleading \cite{statisticsbyjim}. 
+
+\subsection{Data Limitations}
+Data limitations may alter the results of a model.  Since Hawaii is an island chain, geographically isolated from any continent and three of its five counties are not considered adjacent by the United States Census Bureau \cite{USCBAdjacency}, the state and, subsequently its counties', total {COVID-19} cases and deaths should remain constant at zero.  Although Alaska is also geographically isolated from the continental United States, it is adjacent to Canada.  However, both states are popular tourist destinations that contain airports and seaports where infections may enter and spread within their respective populations. 
+
+Local, state, and federal health officials would need to expend considerable resources to maintain an accurate count of active {COVID-19} infections inside a given county.  Alternatively, officials maintain a daily total count of infections and deaths.  As a result, this research models total {COVID-19} cases and deaths and is unable to accurately model active infections.
+
+\subsection{{COVID-19} Cases and Deaths}\label{subsectioncovidcases}
+To understand {SARS-CoV-2} transmission and subsequent {COVID-19} infections within the United States, one must first develop an understanding of what a positive {COVID-19} case is and how the number of cases and deaths are maintained.  By {CDC} definition, a positive {COVID-19} case is a confirmed or probable case or death \cite{CDCFAQ}.  While {COVID-19} symptoms are similar to influenza, a laboratory must conduct a specialized diagnostic test and look for the specific viral proteins or virus's genetic material to confirm an active coronavirus infection \cite{Harvard}.  As additional data became available, scientists discovered that an infected person does not begin producing antibodies immediately \cite{Harvard}.  Moreover, a blood antibody test may take up to three weeks to become positive and as a result, testing a recently exposed individual may not yield positive results. 
+
+Once a laboratory or hospital confirms that an individual is diagnosed as a positive {COVID-19} case, state disease reporting authorities, local hospitals, healthcare providers, and laboratories must report confirmed or probable cases to local or state health departments \cite{CDCFAQ}.  Public health officials then monitor local infection rates to identify and control potential outbreaks.  While case reporting to local and state health officials is mandatory under disease laws, case notification to the {CDC} is voluntary \cite{CDCFAQ}.  Once local and state officials send their data to the {CDC}, a separate {CDC} data team ensures data integrity and examines it for any irregularities.  The {CDC} then sends its parsed data back to state and local officials to correct any inconsistencies, if necessary, and ultimately for final confirmation.  Once complete, the {CDC} publishes the final data on its website and send it to the {WHO} under international health regulations \cite{CDCFAQ}.  The {CDC} also provides its data openly, with additional privacy protections, to the public and is available for consumption.
+
+{USAFacts} is a non-profit, nonpartisan organization that openly provides data such as government finances and the American population \cite{AboutUSA15}.  For {COVID-19} data, {USAFacts} collects and collates information from the {CDC} and provides two separate data sets: a county-by-county daily tally for the total number of confirmed or probable cases and a county-by-county daily tally of deaths.  The {CDC} first began reporting cases on January 22, 2020, and continues to update cases and deaths daily.  While information continues to be compiled and reported, this research utilized {CDC} data collected from January 22, 2020, to February 2, 2021, which provided 378 days of data.
+
+\subsection{County Information}
+As of 2020, the United States of America is divided into 3,143 county and county equivalents \cite{UCSBcounties}.  The term ``county'' is used in 48 states while Louisiana represents its functionally equivalent administrative districts as parishes while Alaska is comprised of boroughs and census areas.  The 48 contiguous states and Washington D.C. form a network of 3,109 counties that are separate from Alaska and Hawaii.  Although not connected to the continental United States' graph, Alaska's 30 counties and Hawaii's 5 counties form their own distinct networks. 
+
+Each county is assigned its own unique, five digit {FIPS} code where the first two numbers correspond to the state and the last three are unique to the county within the state's possession.  County administrative roles vary widely between states as some counties such as those in Rhode Island are maintained merely for administrative purposes while some counties in Maryland, Missouri, Nevada, and Virginia are independent cities not belonging to one specific county yet they may function as combined city-counties.  
+
+The number of counties per state is not predetermined based upon its geographic size, population, or prominent terrain features.  The state with the smallest square area, Rhode Island, has 5 counties while the state with the largest square area, Alaska, has 30.  Delaware and Texas contain the fewest and most counties per state, respectively.  According to the {USCB}, more than half of the United States' population resided in just 143 of the 3,143 counties in 2020 \cite{2020censusdata}.  Table \ref{tab:CountiesByState} arranges the total number of counties per state with the inclusion of Washington D.C.   As we can see from Table \ref{tab:CountiesByState}, counties vary broadly by state.
+
+% Counties-by-state table
+\begin{center}
+    \begin{table}[h]
+    \caption[United States Counties]{United States Counties.  The numbers shown in this table are the number of counties in each state. Source: \cite{totalcountynumbers}.} \label{tab:CountiesByState}
+    \begin{center}
+     \begin{tabular}{||c | c | c | c||} 
+     \hline 
+     \textbf{State} & \textbf{Counties} & \textbf{State} &\textbf{Counties} \\ [0.5ex] 
+     \hline\hline
+     Alabama & 67 & Montana & 56  \\ 
+     \hline
+     Alaska & 30 & Nebraska & 93 \\
+     \hline
+     Arizona & 15 & Nevada & 17 \\
+     \hline
+     Arkansas & 75 & New Hampshire & 10 \\
+     \hline
+     California & 58 &  New Jersey & 21  \\
+     \hline
+     Colorado & 64 &  New Mexico & 33 \\
+     \hline
+     Connecticut & 8 & New York & 62 \\
+     \hline
+     Delaware & 3 & North Carolina & 100  \\
+     \hline
+     District of Columbia & 1 &  North Dakota & 53 \\
+     \hline
+     Florida & 67 & Ohio & 88 \\
+     \hline
+     Georgia & 159 &  Oklahoma & 77 \\
+     \hline
+     Hawaii & 5 & Oregon & 36 \\ 
+     \hline
+     Idaho & 44 & Pennsylvania & 67 \\
+     \hline
+     Illinois & 102 & Rhode Island & 5\\ 
+     \hline
+     Indiana & 92 & South Carolina & 46 \\ 
+     \hline
+     Iowa & 99 & South Dakota & 66 \\
+     \hline
+     Kansas & 105 & Tennessee & 95 \\
+     \hline
+     Kentucky & 120 & Texas & 254 \\
+     \hline
+     Louisiana & 64 & Utah & 29 \\
+     \hline
+     Maine & 16 & Vermont & 14 \\
+     \hline
+     Maryland & 24 & Virginia & 133 \\
+     \hline
+     Massachusetts & 14 & Washington & 39 \\
+     \hline
+     Michigan & 83 & West Virginia & 55 \\ 
+     \hline
+     Minnesota & 87 & Wisconsin & 72 \\
+     \hline
+     Mississippi & 82 &  Wyoming & 23 \\
+     \hline
+     Missouri & 115 & & \\ [1ex] 
+     \hline
+    \end{tabular}
+    \end{center}
+    \end{table}
+
+\end{center}
+
+Due to their geographical arrangement, counties form a uniplex network as they become adjacent to one another \cite{bergs2011social}.  As such, one can apply aforementioned network science methods to calculate and analyze various underlying network properties.  Due to their adjacent structure, one can also model the free flow of goods or {SARS-CoV-2} transmission between counties.  
+
+\section{Methodology}\label{subsection:modelparam}
+
+\subsection{Generalized Network Autoregressive Processes}
+
+In this paper, with data regarding COVID-19 cases and deaths collected and network adjacencies identified, we can now fit a time series network model using the Generalized Network Autoregressive Processes (GNAR) package in \texttt{R} \cite{GNARCRAN}.  
+
+Suppose we have a directed graph $\mathcal{G} = (N, E)$ where $N$ is a node set $N = \{1, \ldots, n\}$ and $E$ is an edge set.  Suppose we have an edge $e = (i, j) \in E$ for $i, j \in N$ and suppose a direction of $e$ is from a node $i$ to a node $j$, then we write it as $i \to j$.  For any $A \subset N$ we define the {\em neighbor set} of $A$ as follows:
+\[
+\mathcal{N}(A) := \{j \in N/A| i \to j , \mbox{ for } i \in A\}.
+\]
+he {\em $r$th stage neighbors} of a node $i \in N$ is defined as
+\[
+\mathcal{N}^{(r)}(i) := \mathcal{N}\{\mathcal{N}^{(r-1))}\}/[\{\cup_{q = 1}^{r-1}\mathcal{N}^{(q)}(i)\}\cup \{i\}],
+\]
+for $r = 2, 3, \ldots$ and $\mathcal{N}^{(1)}(i) = \mathcal{N}(\{i\})$. 
+
+Under this model, we assume that we can assign a weight $\mu_{i, j}$ on an edge $(i, j)$.  We define a distance between nodes $i, j \in N$ such that there exists an edge $(i, j) \in E$ as $d_{i, j} = \mu_{i, j}^{-1}$.  Then we define  
+\[
+w_{i, k} =\mu_{i, k} \{\sum_{l \in \mathcal{N}^{(r)}(i)} \mu_{i, l}\}^{-1}.
+\]
+Assume that a covariate takes discrete values $\{1, \ldots , C\} \subset \Z$.  Also let $w_{i, k, c}$ be $w_{i, k}$ for a covariate $c$.  
+
+Now we are ready to define the generalized network autoregressive processes (GNAR) model.  Suppose we have a vector of random variables in 
+\[
+X_t := (X_{1, t}, \ldots , X_{n, t}) \in \mathbb{R}^n
+\]
+which varies over the time horizon and each random variable associates with a node.
+For each node $i \in N$ and time $t \in \{1, \ldots , T\}$ a generalized network autoregressive processes model of order $(p, [s]) \in \mathbb{N} \times (\mathbb{N}\cup \{0\})^p$ on a vector of random variables $X_t$ is
+\[
+X_{i, t}:= \sum_{j = 1}^p \left(\alpha_{i, j}X_{i, t-j} + \sum_{c = 1}^C\sum_{r = 1}^{s_j}\beta_{j, r, c} \sum_{q \in \mathcal{N}_t^{(r)}(i)} w_{i, q, c}^{(t)}X_{q, t-j}\right)
+\]
+where $p \in \mathbb{N}$ is the maximum time lag, $[s]:= (s_1, \ldots , s_p)$, $s_j \in \mathbb{N} \cup \{0\}$ is the maximum stage of neighbor dependence for time lag $j$, $\mathcal{N}_t^{(r)}(i)$ is the $r$th stage neighbor set of a node $i$ at time $t$, and  $w_{i, q, c}^{(t)} \in [0, 1]$ is the connection weight between node $i$ and node $q$ at time $t$ if the path corresponds to covariate $c$. $\alpha_{i, j} \in \mathbb{R}$ is a parameter of autoregression at lag $j$ for a node $i \in N$ and $\beta_{j, r, c} \in \mathbb{R}$ corresponds to the effect of the $r$th stage neighbors, at lag $j$,
+according to covariate $c$.
+
+\subsection{County Network}
+
+We represent county adjacencies, or edges, through either a binary structure or the great circle distance between two county centroids.  A network with a binary adjacency structure contains only 1s to represent if an edge is present or 0 if there is no edge.  
+
+In addition to a relatively simple binary adjacency matrix, one can determine the shortest path between counties using the great circle distance.  The great circle distance is determined by the shortest measured distance along the surface of the sphere between two points.  The National Bureau of Economic Research calculated the great circle distance from one county to every other county.  Therefore, we can create a matrix that contains these values.  We can then apply matrix multiplication using the binary adjacency matrix and the great circle distance matrix to produce a great circle distance adjacency matrix where zero represents no edge present and a nonzero value represents the distance between the centroid of one county to its neighbor. 
+
+
+ Due to their geographic composition, the United States' counties form a simple graph with no loops or multiple edges.  However, the entirety of the United States is not connected as Alaska and Hawaii are geographically separate.  Despite its disconnected nature, an adjacency matrix can still be used to depict this finite graph where an edge is either present or absent between adjacent pairs of nodes, which indicates connection or disconnection respectively.  In all, there are 9,294 edges in $E$ and 3,143 nodes in $V$  that comprise the United States' county adjacency network.  ``The degree of a vertex $v$ in a graph $G$ is the number of edges incident with a given vertex $v$'' \cite{chartrand2012first}.  Figure \ref{fig:countyhist} displays a histogram of the varying county degrees within the United States.  As we can see from Figure \ref{fig:countyhist}, the county degrees are approximately normally distributed where the horizontal axis is the county degree, and the vertical axis is their frequency.  
+
+\begin{figure}[h] % use an H float to prevent figures from landing in the middle of paragraphs, which is not ideal.
+\centering
+\includegraphics[width=\textwidth]{Figures/Network_Stuff/County_Histogram.png}
+\caption[United States County Degree Histogram]{United States County Degree Histogram.  The Y axis represents the degree frequency and the X axis depicts the county degree distribution.  As we can see from the figure, the degree distribution is approximately normal.  Adapted from \cite{USCBAdjacency}.}
+\label{fig:countyhist} % for cross referencing
+\end{figure}
+
+Synthetic network models are often used as a reference model to compare a given network against and to analyze and build new, complex networks.  Traditional synthetic networks such as random graphs \cite{erdHos1960evolution}, small-world graphs \cite{watts1998collective}, scale free graphs \cite{barabasi1999emergence}, Configuration model \cite{MolloyReed}, and the random geometric model \cite{gilbert1961random} do not provide an accurate representation of adjacent United States counties.  Connectivity between random graphs is independent while the edges between United States counties are dependent.  Small-world graphs have a small shortest path distance, $d$,  that is modeled after $\log(n)$ while the United States counties do not.  Scale free graphs are those whose network degree distribution is of a power law.  The United States' county degree distribution is approximately normal.  Similar to random graphs, adjacency and connections between configuration models and random geometric models are independent.
+
+Conversely, triangular lattice networks are formed in Euclidean space and create a tiling similar to the geographic layout of the United States  As a result, our real network and the triangular lattice network model share similar statistics and underlying characteristics as evidenced in Table \ref{networksummary}.  However, the triangular lattice network’s diameter and average shortest path are higher than the original network.  As a result, we can see that the network statistics provided in Table \ref{networksummary} lend credence to a large network that has few hubs, high clustering, built-in redundancy, and a sparse structure.  Therefore, a triangular lattice network provides an accurate topological representation of the original network.
+
+\vspace{-0.5 in}
+
+\begin{center}
+    \begin{table}[h]
+    \caption[Network Comparison]{Network Comparison.  This table shows graph statistics in terms of counties and in terms of a triangular lattice. Source Adapted from \cite{USCBAdjacency}.}\label{networksummary}
+    \begin{center}
+     \begin{tabular}{||c | c | c||} 
+     \hline 
+     \textbf{Network Metrics} & \textbf{United States Counties} & \textbf{Triangular Lattice} \\ [0.5ex] 
+     \hline\hline
+     Nodes & 3,109 & 3,120  \\ 
+     \hline
+     Edges & 9,242 & 9,125  \\
+     \hline
+     Degree (Avg) & 5.945 & 5.849  \\
+     \hline
+     Closeness Coefficient & 0.0396 & 0.0327 \\
+     \hline
+     Betweenness Coefficient & 0.008 & 0.010 \\
+     \hline
+     Clustering Coefficient & 0.435 & 0.410 \\
+     \hline
+     Density & 0.002 & 0.002 \\
+     \hline
+     Diameter & 68 & 78 \\
+     \hline
+     Shortest Path (Avg) & 28.823 & 31.429 \\ [1ex] 
+     \hline
+    \end{tabular}
+    \end{center}
+
+    \end{table}
+\end{center}
+
+\section{Computational results}
+
+
+\section{Discussion and future work}

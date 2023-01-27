@@ -1,0 +1,46 @@
+
+\section{Related Work}
+
+
+
+
+
+\textbf{Circuit compilation over the surface code:}
+Most circuit compilation work on surface code are at the higher logical circuit level.
+Javadi et al.~\cite{JavadiAbhari2017OptimizedSC} and Hua et al.~\cite{Hua2021AutoBraidAF} studied the routing congestion in circuit compilation over the surface code.
+Ding et al.~\cite{Ding2018MagicStateFU} and Paler et al.~\cite{Paler2019SurfBraidAC} studied the compilation of magic state distillation circuits with existing surface code logical operations. %
+These works %
+usually assume that the ideal surface code array is already available and do not consider the problem of surface code synthesis on hardware.
+In contrast, this paper focuses on optimizing the lower-level surface code synthesis on various SC architectures.
+
+\textbf{QEC code and architecture:}
+most efforts on QEC code synthesis are still on looking for an architecture that is suitable for the target code.
+Reichardt~\cite{Reichardt2018FaulttolerantQE} proposes three possible planar qubit layouts for synthesizing the seven-qubit color code.
+Chamberland et al.~\cite{Chamberland2019TriangularCC} proposes a trivalent architecture where it is straightforward to allocate data qubits of triangular color codes. 
+Chamberland et al.~\cite{Chamberland2020TopologicalAS} introduces heavy architectures which reduces frequency collision while still provides support for surface code synthesis. Instead, the synthesis framework in this paper can automatically synthesize the surface code onto various mainstream architectures and avoid manually redesigning code protocols for the ever-changing architectures.
+Another line of research targets at compiling stabilizer measurement circuits to existing architectures.
+Lao and Almudever \cite{Lao2020FaulttolerantQE} proposes the flag-bridge circuit which can measure the stabilizer of the Steane code on the IBM-20 device. However, their work relies on manually appointed data qubits and bridge qubits, and focuses on the IBM-20 device. Methods in this category are orthogonal to our work, and can be easily merged into our framework. 
+
+
+
+
+
+
+\section{Discussion}
+
+Though we propose a comprehensive framework to synthesize surface code on various SC devices, there is still much space left for potential improvements. 
+For example, besides heuristic data qubit allocation schemes, it is also promising to train a neural network to allocate data qubits.
+Non-local bridge trees may also be explored for better parallelism of stabilizer measurements. 
+It is also possible to merge bridge trees to resolve bridge qubit conflict. However, this requires careful tuning since large bridge trees may be detrimental for error detection.
+We do not include the error decoder design as our work mainly focus on surface code synthesis. Though we can reuse previous surface code decoders~\cite{Chamberland2020TopologicalAS, Varsamopoulos2017DecodingSS, Krastanov2017DeepNN, Baireuther2017MachinelearningassistedCO}, there may be some opportunities to devise more accurate error decoders for the proposed surface code synthesis scheme.
+
+Another interesting future direction is to adapt our synthesis framework to other error correction codes. Though surface code can be implemented on various SC devices, it may not be the most efficient one. Extending our framework to other error correction codes can help us fully exploiting existing device architectures for FT computation.
+On other hand, the proposed surface code synthesis framework can provide guidance for SC architecture design. Using our framework as the baseline, we can compare the efficiency of different device architectures for implementing surface code and identify the most efficient one.
+
+\section{Conclusion}
+In this paper, we formally describe the three challenges of synthesizing surface code on SC devices and present a comprehensive synthesis framework to overcome these challenges. The proposed framework consists of three optimizations.
+First, we adopt a geometrical method to allocate data qubits in a way that ensures the existence of shallow measurement circuits. 
+Second, we only consider bridge qubits enclosed by data qubits and reduce the number of bridge qubits by merging short paths between data qubits. The proposed bridge qubit optimization reduces the resource conflicts between syndrome measurement. 
+Third, we propose an iterative heuristic to schedule the execution of measurement circuits based on the proposed data qubit allocation. %
+Our comparative evaluation to manually designed QEC codes demonstrates that, with good optimization, automated synthesis can surpass manual QEC code design by experienced theorists.
+

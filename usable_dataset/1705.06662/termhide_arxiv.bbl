@@ -1,0 +1,185 @@
+\begin{thebibliography}{10}
+
+\bibitem{termhide-iclp2017-tc-short}
+Stulova, N., Morales, J., Hermenegildo, M.:
+\newblock {T}owards {R}un-time {C}hecks {S}implification via {T}erm {H}iding
+  (extended abstract).
+\newblock In: Technical Communications of ICLP'17, OASIcs (August 2017)
+
+\bibitem{hermenegildo11:ciao-design-tplp-shorter}
+Hermenegildo, M., Bueno, F., Carro, M., L\'{o}pez, P., Mera, E., Morales, J.,
+  Puebla, G.:
+\newblock {A}n {O}verview of {C}iao and its {D}esign {P}hilosophy.
+\newblock TPLP \textbf{12}(1--2) (2012)  219--252
+
+\bibitem{optchk-ppdp2016-shorter}
+Stulova, N., Morales, J., Hermenegildo, M.:
+\newblock {R}educing the {O}verhead of {A}ssertion {R}un-time {C}hecks via
+  {S}tatic {A}nalysis.
+\newblock In: PPDP'16, ACM (Sept. 2016)  90--103
+
+\bibitem{xsb-journal-2012}
+Swift, T., Warren, D.S.:
+\newblock {XSB}: {E}xtending {P}rolog with {T}abled {L}ogic {P}rogramming.
+\newblock TPLP \textbf{12}(1-2) (2012)  157--187
+
+\bibitem{ciao-modules-cl2000-short}
+Cabeza, D., Hermenegildo, M.V.:
+\newblock {A} {N}ew {M}odule {S}ystem for {P}rolog.
+\newblock In: Int'l.\ Conf.\ on Computational Logic. Volume 1861 of LNAI.,
+  Springer (July 2000)  131--148
+
+\bibitem{prog-glob-an-shorter}
+Hermenegildo, M.V., Puebla, G., Bueno, F.:
+\newblock {U}sing {G}lobal {A}nalysis, {P}artial {S}pecifications, and an
+  {E}xtensible {A}ssertion {L}anguage for {P}rogram {V}alidation and
+  {D}ebugging.
+\newblock In: {T}he {L}ogic {P}rogramming {P}aradigm.
+\newblock Springer (1999)  161--192
+
+\bibitem{assrt-theoret-framework-lopstr99-shorter}
+Puebla, G., Bueno, F., Hermenegildo, M.:
+\newblock {C}ombined {S}tatic and {D}ynamic {A}ssertion-{B}ased {D}ebugging of
+  {C}onstraint {L}ogic {P}rograms.
+\newblock In: LOPSTR'99. LNCS 1817, Springer-Verlag (March 2000)  273--292
+
+\bibitem{asrHO-ppdp2014-shorter}
+Stulova, N., Morales, J., Hermenegildo, M.:
+\newblock {A}ssertion-based {D}ebugging of {H}igher-{O}rder {(C)LP} {P}rograms.
+\newblock In: PPDP'14, ACM (Sept. 2014)
+
+\bibitem{ai-with-specs-sas06-short}
+Puebla, G., Albert, E., Hermenegildo, M.V.:
+\newblock {A}bstract {I}nterpretation with {S}pecialized {D}efinitions.
+\newblock In: SAS'06. Number 4134 in LNCS, Springer (2006)  107--126
+
+\bibitem{cached-rtchecks-iclp2015-shorter}
+Stulova, N., Morales, J., Hermenegildo, M.:
+\newblock {P}ractical {R}un-time {C}hecking via {U}nobtrusive {P}roperty
+  {C}aching.
+\newblock TPLP \textbf{15}(04-05) (Sept. 2015)  726--741
+
+\bibitem{WarrenChen87-short}
+Warren, D., Chen, W.:
+\newblock {F}ormal {S}emantics of a {T}heory of {M}odules.
+\newblock Technical report 87/11, SUNY at Stony Brook (1987)
+
+\bibitem{Chen87-short}
+Chen, W.:
+\newblock {A} {T}heory of {M}odules {B}ased on {S}econd-{O}rder {L}ogic.
+\newblock In: 4th IEEE Int'l.\ Symposium on Logic Programming, San Francisco
+  (1987)  24--33
+
+\bibitem{Miller89}
+Miller, D.:
+\newblock {A} {L}ogical {A}nalysis of {M}odules in {L}ogic {P}rogramming.
+\newblock Journal of Logic Programming (1989)  79--108
+
+\bibitem{standard-modules-final-short}
+ISO:
+\newblock PROLOG. ISO/IEC DIS 13211-2 --- Part 2: Modules. (2000)
+
+\bibitem{swi-journal-2012-short}
+Wielemaker, J., Schrijvers, T., Triska, M., Lager, T.:
+\newblock {SWI-Prolog}.
+\newblock TPLP \textbf{12}(1-2) (2012)  67--96
+
+\bibitem{sicstus-journal-2012-short}
+Carlsson, M., Mildner, P.:
+\newblock {SICS}tus {P}rolog -- the first 25 years.
+\newblock TPLP \textbf{12}(1-2) (2012)  35--66
+
+\bibitem{yap-journal-2012-short}
+{Santos Costa}, V., Rocha, R., Damas, L.:
+\newblock {T}he {YAP} {P}rolog system.
+\newblock TPLP \textbf{12}(1-2) (2012)  5--34
+
+\bibitem{eclipse-journal-2012-short}
+Schimpf, J., Shen, K.:
+\newblock {ECLiPSe} -- from {LP} to {CLP}.
+\newblock TPLP \textbf{12}(1-2) (2012)  127--156
+
+\bibitem{DBLP:conf/iclp/HaemmerleF06-short}
+Haemmerl{\'e}, R., Fages, F.:
+\newblock {M}odules for {P}rolog {R}evisited.
+\newblock In: Proc. of {ICLP'06}. (2006)  41--55
+
+\bibitem{mycr84}
+Mycroft, A., O'Keefe, R.:
+\newblock A {P}olymorphic {T}ype {S}ystem for {P}rolog.
+\newblock Artificial Intelligence \textbf{23} (1984)  295--307
+
+\bibitem{mercury-jlp}
+Somogyi, Z., Henderson, F., Conway, T.:
+\newblock {T}he {E}xecution {A}lgorithm of {M}ercury: an {E}fficient {P}urely
+  {D}eclarative {L}ogic {P}rogramming {L}anguage.
+\newblock Journal of Logic Programming \textbf{29}(1--3) (October 1996)  17--64
+
+\bibitem{goedel-short}
+Hill, P., Lloyd, J.:
+\newblock {T}he {G}oedel {P}rogramming {L}anguage.
+\newblock {MIT} Press (1994)
+
+\bibitem{visual-prolog-short}
+{P}rolog~{D}evelopment {C}enter:
+\newblock {V}isual {Prolog}
+
+\bibitem{schrijvers08:typed_prolog-short}
+Schrijvers, T., {Santos Costa}, V., Wielemaker, J., Demoen, B.:
+\newblock {T}owards {T}yped {P}rolog.
+\newblock In: ICLP'08. Number 5366 in LNCS, Springer (December 2008)  693--697
+
+\bibitem{Siek06gradualtyping}
+Siek, J.G., Taha, W.:
+\newblock {G}radual {T}yping for {F}unctional {L}anguages.
+\newblock In: Scheme and Functional Programming Workshop. (2006)  81--92
+
+\bibitem{DBLP:conf/popl/TakikawaFGNVF16-short}
+Takikawa, A., Feltey, D., Greenman, B., New, M., Vitek, J., Felleisen, M.:
+\newblock Is {S}ound {G}radual {T}yping {D}ead?
+\newblock In: {POPL} 2016. (January 2016)  456--468
+
+\bibitem{cartwright91:soft_typing-short}
+Cartwright, R., Fagan, M.:
+\newblock {S}oft {T}yping.
+\newblock In: PLDI'91, SIGPLAN, ACM (1991)  278--292
+
+\bibitem{hermenegildo11:ciao-stop-short}
+Hermenegildo, M.V., Bueno, F., Carro, M., L\'{o}pez, P., Mera, E., Morales, J.,
+  Puebla, G.:
+\newblock {T}he {C}iao {A}pproach to the {D}ynamic vs. {S}tatic {L}anguage
+  {D}ilemma.
+\newblock In: Proc.\ Int'l.\ WS on Scripts to Programs, STOP'11, ACM (2011)
+
+\bibitem{clousot-2010-short}
+F\"{a}hndrich, M., Logozzo, F.:
+\newblock {S}tatic {C}ontract {C}hecking with {A}bstract {I}nterpretation.
+\newblock In: Int'l.\ Conf.\ on Formal Verification of Object-oriented
+  Software, FoVeOOS'10. Volume 6528 of LNCS., Springer (2011)  10--30
+
+\bibitem{DBLP:conf/oopsla/Tobin-HochstadtH12-short}
+Tobin{-}Hochstadt, S., {Van Horn}, D.:
+\newblock {H}igher-{O}rder {S}ymbolic {E}xecution via {C}ontracts.
+\newblock In: OOPSLA, {ACM} (2012)  537--554
+
+\bibitem{DBLP:conf/pldi/NguyenH15-short}
+Nguyen, P., Horn, D.V.:
+\newblock {R}elatively {C}omplete {C}ounterexamples for {H}igher-{O}rder
+  {P}rograms.
+\newblock In: PLDI'15, {ACM} (2015)  446--456
+
+\bibitem{rv2014-short}
+Koukoutos, E., Kuncak, V.:
+\newblock {C}hecking {D}ata {S}tructure {P}roperties {O}rders of {M}agnitude
+  {F}aster.
+\newblock In: Runtime Verification. Volume 8734 of LNCS.
+\newblock Springer (2014)  263--268
+
+\bibitem{testchecks-iclp09-short}
+Mera, E., L\'{o}pez-Garc\'{\i}a, P., Hermenegildo, M.V.:
+\newblock {I}ntegrating {S}oftware {T}esting and {R}un-{T}ime {C}hecking in an
+  {A}ssertion {V}erification {F}ramework.
+\newblock In: ICLP'09. Volume 5649 of LNCS., Springer-Verlag (July 2009)
+  281--295
+
+\end{thebibliography}

@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{arxiv2c}
+
+\usepackage{amsmath,amssymb,amsfonts}
+
+\usepackage{booktabs}   %
+\usepackage{subcaption} %
+\usepackage[utf8]{inputenc}
+
+\input{commands}
+
+
+\title{\myFrameworkName: A Verification Framework for Quantum Error Correction Codes}         %
+
+\author{%
+	Anbang Wu \\
+	Department of Computer Science\\
+	University of California, Santa Barbara \\
+	\texttt{anbang@ucsb.edu} \\
+	\And
+	Gushu Li \\
+	Department of Electrical \& Computer Engineering\\
+	University of California, Santa Barbara \\
+	\texttt{gushuli@ece.ucsb.edu} \\
+	\AND
+	Hezi Zhang \\
+	Department of Computer Science \\
+	University of California, Santa Barbara \\
+	\texttt{hezi@ucsb.edu} \\
+	\AND
+	Gian Giacomo Guerreschi \\
+	Intel Labs \\
+	Santa Clara, California \\
+	\texttt{gian.giacomo.guerreschi@intel.com}
+	\AND
+	Yuan Xie \\
+	Department of Electrical \& Computer Engineering\\
+	University of California, Santa Barbara \\
+	\texttt{yuanxie@ucsb.edu} \\
+	\AND
+	Yufei Ding \\
+	Department of Computer Science\\
+	University of California, Santa Barbara \\
+	\texttt{yufeiding@cs.ucsb.edu} \\
+} 
+
+\begin{document}
+	
+	\maketitle
+
+\begin{abstract}
+
+Quantum Error Correction (QEC) is essential for the functioning of large-scale fault-tolerant quantum computers, and its implementation is a very sophisticated process involving both quantum and classical hardware. Formulating and verifying the decomposition of logical operations into physical ones is a challenge in itself.
+In this paper, we propose {\myFrameworkName}, a verification framework that can efficiently verify the formal correctness of stabilizer codes, arguably the most important class of QEC codes.
+{\myFrameworkName} first comes with a concise language, {\langname},  where stabilizers are treated as a first-class object, to represent QEC programs.
+Stabilizers are also used as predicates in our new assertion language, {\assnname}, as logical and arithmetic operations of stabilizers can be naturally defined.
+We derive a sound quantum Hoare logic proof system with a set of inference rules for {\myFrameworkName} to efficiently reason about the correctness of QEC programs.
+We demonstrate the effectiveness of {\myFrameworkName} with both theoretical complexity analysis and in-depth case studies of two well-known stabilizer QEC codes, the repetition code and the surface code.
+
+\end{abstract}
+
+\twocolumn
+\input{introduction}
+\input{background}
+
+\input{ProgramSyntax}
+\input{AssnLang}
+\input{Evaluation}
+\input{conclusion}
+
+\bibliographystyle{unsrt}
+\bibliography{bib}
+
+\newpage
+\appendix
+\input{appendix}
+
+\end{document}

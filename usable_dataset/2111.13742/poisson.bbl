@@ -1,0 +1,453 @@
+\begin{thebibliography}{10}
+
+\bibitem{azis}
+I.~Babuska and A.~K. Aziz.
+\newblock On the angle condition in the finite element method.
+\newblock {\em SIAM Journal on Numerical Analysis}, 13(2):214--226, 1976.
+
+\bibitem{benson2017comparison}
+David~A Benson, Tom{\'a}s Aquino, Diogo Bolster, Nicholas Engdahl,
+  Christopher~V Henri, and Daniel Fernandez-Garcia.
+\newblock A comparison of {E}ulerian and {L}agrangian transport and non-linear
+  reaction algorithms.
+\newblock {\em Advances in Water Resources}, 99:15--37, 2017.
+
+\bibitem{bern}
+Marshall Bern, Paul Chew, David Eppstein, and Jim Ruppert.
+\newblock Dihedral bounds for mesh generation in high dimensions.
+\newblock In {\em Proceedings of the Sixth Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, SODA '95, pages 189--196, USA, 1995. Society for
+  Industrial and Applied Mathematics.
+
+\bibitem{berre2018flow}
+Inga Berre, Florian Doster, and Eirik Keilegavlen.
+\newblock Flow in fractured porous media: A review of conceptual models and
+  discretization approaches.
+\newblock {\em Transport in Porous Media}, Oct 2018.
+
+\bibitem{berrone2013pde}
+Stefano Berrone, Sandra Pieraccini, and Stefano Scialo.
+\newblock A {PDE}-constrained optimization formulation for discrete fracture
+  network flows.
+\newblock {\em SIAM J. Sci. Comput.}, 35(2):B487--B510, 2013.
+
+\bibitem{berrone2019parallel}
+Stefano Berrone, Stefano Scial{\`o}, and Fabio Vicini.
+\newblock Parallel meshing, discretization, and computation of flow in massive
+  discrete fracture networks.
+\newblock {\em SIAM Journal on Scientific Computing}, 41(4):C317--C338, 2019.
+
+\bibitem{MDS_good_trig2}
+Charles Boivin and Carl Ollivier-gooch.
+\newblock Guaranteed-quality triangular mesh generation for domains with curved
+  boundaries, 2001.
+
+\bibitem{borio2021comparison}
+Andrea Borio, Alessio Fumagalli, and Stefano Scial{\`o}.
+\newblock Comparison of the response to geometrical complexity of methods for
+  unstationary simulations in discrete fracture networks with conforming,
+  polygonal, and non-matching grids.
+\newblock {\em Computational Geosciences}, 25(1):143--162, 2021.
+
+\bibitem{Bridson2007FastPD}
+Robert Bridson.
+\newblock Fast {P}oisson disk sampling in arbitrary dimensions.
+\newblock In {\em SIGGRAPH '07}, 2007.
+
+\bibitem{cacas1990modeling}
+M.~C. Cacas, E.~Ledoux, G.~De~Marsily, A.~Barbreau, P.~Calmels, B.~Gaillard,
+  and R.~Margritta.
+\newblock Modeling fracture flow with a stochastic discrete fracture network:
+  Calibration and validation: 2. {T}he transport model.
+\newblock {\em Water Resour. Res.}, 26(3):491--500, 1990.
+
+\bibitem{exudation}
+Siu-Wing Cheng, Tamal~K. Dey, Herbert Edelsbrunner, Michael~A. Facello, and
+  Shang-Hua Teng.
+\newblock Sliver exudation.
+\newblock In {\em Proceedings of the Fifteenth Annual Symposium on
+  Computational Geometry}, SCG '99, pages 1--13, New York, NY, USA, 1999.
+  Association for Computing Machinery.
+
+\bibitem{MDS_good_trig3}
+L.~Paul Chew.
+\newblock Guaranteed-quality {D}elaunay meshing in 3d (short version).
+\newblock In {\em Proceedings of the Thirteenth Annual Symposium on
+  Computational Geometry}, SCG '97, pages 391--393, New York, NY, USA, 1997.
+  Association for Computing Machinery.
+
+\bibitem{aliasing_3}
+Robert~L. Cook.
+\newblock Stochastic sampling in computer graphics.
+\newblock {\em ACM Trans. Graph.}, 5(1):51--72, January 1986.
+
+\bibitem{fastvar}
+Nicholas Dwork, Corey~A. Baron, Ethan~M.I. Johnson, Daniel O'Connor, John~M.
+  Pauly, and Peder~E.Z. Larson.
+\newblock Fast variable density poisson-disc sample generation with directional
+  variation for compressed sensing in mri.
+\newblock {\em Magnetic Resonance Imaging}, 77:186--193, 2021.
+
+\bibitem{eff_mds}
+Mohamed~S. Ebeida, Andrew~A. Davidson, Anjul Patney, Patrick~M. Knupp, Scott~A.
+  Mitchell, and John~D. Owens.
+\newblock Efficient maximal {P}oisson-disk sampling.
+\newblock {\em ACM Trans. Graph.}, 30(4), July 2011.
+
+\bibitem{MDS_good_trig1}
+Mohamed~S. Ebeida, Scott~A. Mitchell, Andrew~A. Davidson, Anjul Patney,
+  Patrick~M. Knupp, and John~D. Owens.
+\newblock Efficient and good {D}elaunay meshes from random points.
+\newblock {\em Computer-Aided Design}, 43(11):1506--1515, 2011.
+\newblock Solid and Physical Modeling 2011.
+
+\bibitem{mds_simple}
+Mohamed~S. Ebeida, Scott~A. Mitchell, Anjul Patney, Andrew~A. Davidson, and
+  John~D. Owens.
+\newblock A simple algorithm for maximal {P}oisson-disk sampling in high
+  dimensions.
+\newblock {\em Computer Graphics Forum}, 2012.
+
+\bibitem{erhel2009flow}
+J~Erhel, J-R de~Dreuzy, and B~Poirriez.
+\newblock Flow simulation in three-dimensional discrete fracture networks.
+\newblock {\em SIAM J. Sci. Comput.}, 31(4):2688--2705, 2009.
+
+\bibitem{eymard2000finite}
+Robert Eymard, Thierry Gallou{\"e}t, and Rapha{\`e}le Herbin.
+\newblock Finite volume methods.
+\newblock {\em Handbook of numerical analysis}, 7:713--1018, 2000.
+
+\bibitem{fumagalli2019conforming}
+Alessio Fumagalli, Eirik Keilegavlen, and Stefano Scial{\`o}.
+\newblock Conforming, non-conforming and non-matching discretization couplings
+  in discrete fracture network simulations.
+\newblock {\em Journal of Computational Physics}, 376:694--712, 2019.
+
+\bibitem{gerke1993dual}
+HH~Gerke and M~Th Van~Genuchten.
+\newblock A dual-porosity model for simulating the preferential movement of
+  water and solutes in structured porous media.
+\newblock {\em Water Rescour. Res.}, 29(2):305--319, 1993.
+
+\bibitem{monte-carlo}
+Jianwei Guo, Dong-Ming Yan, Li~Chen, Xiaopeng Zhang, Oliver Deussen, and Peter
+  Wonka.
+\newblock Tetrahedral meshing via maximal {P}oisson-disk sampling.
+\newblock {\em Computer Aided Geometric Design}, 43:186--199, 2016.
+\newblock Geometric Modeling and Processing 2016.
+
+\bibitem{GUO1}
+Jianwei Guo, Dong-Ming Yan, Xiaohong Jia, and Xiaopeng Zhang.
+\newblock Efficient maximal poisson-disk sampling and remeshing on surfaces.
+\newblock {\em Computers \& Graphics}, 46:72--79, 2015.
+\newblock Shape Modeling International 2014.
+
+\bibitem{Guo2}
+Jianwei Guo, Dongming Yan, Guanbo Bao, Weiming Dong, Xiaopeng Zhang, and Peter
+  Wonka.
+\newblock Efficient triangulation of poisson-disk sampled point sets.
+\newblock {\em The Visual Computer}, 30(6-8):773--785, may 2014.
+\newblock KAUST Repository Item: Exported on 2020-10-01 Acknowledgements: This
+  research was partially funded by National Natural Science Foundation of China
+  (Nos. 61372168, 61172104, 61331018, and 61271431), the KAUST Visual Computing
+  Center, and the National Science Foundation.
+
+\bibitem{hadgu2017comparative}
+Teklu Hadgu, Satish Karra, Elena Kalinina, Nataliia Makedonska, Jeffrey~D.
+  Hyman, Katherine Klise, Hari~S. Viswanathan, and Yifeng Wang.
+\newblock A comparative study of discrete fracture network and equivalent
+  continuum models for simulating flow and transport in the far field of a
+  hypothetical nuclear waste repository in crystalline host rock.
+\newblock {\em Journal of Hydrology}, 553:59 -- 70, 2017.
+
+\bibitem{hyman2017discontinuities}
+J.~D. Hyman, , S.~Karra, J.~W. Carey, C.~W. Gable, H.~S. Viswanathan,
+  E.~Rougier, and Z.~Lei.
+\newblock Discontinuities in effective permeability due to fracture
+  percolation.
+\newblock {\em Mech. Mater.}, 119:25 -- 33, 2018.
+
+\bibitem{hyman2020flow}
+J.~D. Hyman.
+\newblock Flow channeling in fracture networks: Characterizing the effect of
+  density on preferential flow path formation.
+\newblock {\em Water Resources Research}, 2020.
+
+\bibitem{hyman2019emergence}
+J.~D. Hyman, M.~Dentz, A.~Hagberg, and P.~Kang.
+\newblock Emergence of stable laws for first passage times in three-dimensional
+  random fracture networks.
+\newblock {\em Phys. Rev. Lett.}, 123(24):248501, 2019.
+
+\bibitem{hyman2019linking}
+J.~D. Hyman, M.~Dentz, A.~Hagberg, and P.~Kang.
+\newblock Linking structural and transport properties in three-dimensional
+  fracture networks.
+\newblock {\em J. Geophys. Res. Sol. Ea.}, 2019.
+
+\bibitem{hyman2014conforming}
+J.~D. Hyman, C.~W. Gable, S.~L. Painter, and N.~Makedonska.
+\newblock Conforming {D}elaunay triangulation of stochastically generated three
+  dimensional discrete fracture networks: A feature rejection algorithm for
+  meshing strategy.
+\newblock {\em SIAM J. Sci. Comput.}, 36(4):A1871--A1894, 2014.
+
+\bibitem{hyman2018dispersion}
+J.~D. Hyman and J.~Jim{\'e}nez-Mart{\'\i}nez.
+\newblock Dispersion and mixing in three-dimensional discrete fracture
+  networks: Nonlinear interplay between structural and hydraulic heterogeneity.
+\newblock {\em Water Resources Research}, 54(5):3243--3258, 2018.
+
+\bibitem{hyman2020characterizing}
+J.~D. Hyman, Joaquin Jimenez-Martinez, Carl~W Gable, Philip~H Stauffer, and
+  Rajesh~J Pawar.
+\newblock Characterizing the impact of fractured caprock heterogeneity on
+  supercritical {CO}$_2$ injection.
+\newblock {\em Transp. Porous Media}, 131(3):935--955, 2020.
+
+\bibitem{hyman2015dfnWorks}
+Jeffrey~D Hyman, Satish Karra, Nataliia Makedonska, Carl~W Gable, Scott~L
+  Painter, and Hari~S Viswanathan.
+\newblock dfnworks: A discrete fracture network framework for modeling
+  subsurface flow and transport.
+\newblock {\em Computers \& Geosciences}, 84:10--19, 2015.
+
+\bibitem{dfn}
+Jeffrey~D Hyman, Satish Karra, Nataliia Makedonska, Carl~W Gable, Scott~L
+  Painter, and Hari~S Viswanathan.
+\newblock dfnworks: A discrete fracture network framework for modeling
+  subsurface flow and transport.
+\newblock {\em Computers \& Geosciences}, 84:10--19, 2015.
+
+\bibitem{hyman2019matrix}
+Jeffrey~D. Hyman, Harihar Rajaram, Shriram Srinivasan, Nataliia Makedonska,
+  Satish Karra, Hari Viswanathan, and Gowri Srinivasan.
+\newblock Matrix diffusion in fractured media: New insights into power law
+  scaling of breakthrough curves.
+\newblock {\em Geophys. Res. Lett.}, 46(23):13785--13795, 2019.
+
+\bibitem{kang2020anomalous}
+P.~Kang, J.~D. Hyman, W.~S. Han, and M.~Dentz.
+\newblock Anomalous transport in three-dimensional discrete fracture networks:
+  Interplay between aperture heterogeneity and particle injection modes.
+\newblock {\em Water Resour. Res.}, 2020.
+
+\bibitem{karra2015effect}
+S~Karra, N~Makedonska, HS~Viswanathan, SL~Painter, and JD~Hyman.
+\newblock Effect of advective flow in fractures and matrix diffusion on natural
+  gas production.
+\newblock {\em Water Resour. Res.}, 51(10):8646--8657, 2015.
+
+\bibitem{khamayseh1996anisotropic}
+Ahmed Khamayseh and Andrew Kuprat.
+\newblock Anisotropic smoothing and solution adaption for unstructured grids.
+\newblock {\em International Journal for Numerical Methods in Engineering},
+  39(18):3163--3174, 1996.
+
+\bibitem{lichtner2015pflotran}
+P.C. Lichtner, G.E. Hammond, C.~Lu, S.~Karra, G.~Bisht, B.~Andre, R.T. Mills,
+  and J.~Kumar.
+\newblock {PFLOTRAN} user manual: A massively parallel reactive flow and
+  transport model for describing surface and subsurface processes.
+\newblock Technical report, (Report No.: LA-UR-15-20403) Los Alamos National
+  Laboratory, 2015.
+
+\bibitem{lichtner2014modeling}
+Peter Lichtner and Satish Karra.
+\newblock Modeling multiscale-multiphase-multicomponent reactive flows in
+  porous media: Application to co$_2$ sequestration and enhanced geothermal
+  energy using {PFLOTRAN}.
+\newblock In {\em Al-Khoury, R., Bundschuh, J. (eds.) Computational Models for
+  CO$_2$ Geo-sequestration \& Compressed Air Energy Storage
+  (http://www.crcnetbase.com/doi/pdfplus/10)}, pages 81--136. CRC Press, 2014.
+
+\bibitem{def_delaunay}
+Yehong Liu and Guosheng Yin.
+\newblock The {D}elaunay triangulation learner and its ensembles.
+\newblock {\em Computational Statistics \& Data Analysis}, page 107030, 2020.
+
+\bibitem{long1982porous}
+JCS Long, JS~Remer, CR~Wilson, and PA~Witherspoon.
+\newblock Porous media equivalents for networks of discontinuous fractures.
+\newblock {\em Water Resour. Res}, 18(3):645--658, 1982.
+
+\bibitem{lovell2018extracting}
+A.~E. Lovell, S.~Srinivasan, S.~Karra, D.~O'Malley, N.~Makedonska, H.~S.
+  .~Viswanathan, G.~Srinivasan, J.~W. Carey, and L.~P. Frash.
+\newblock Extracting hydrocarbon from shale: An investigation of the factors
+  that influence the decline and the tail of the production curve.
+\newblock {\em Water Resour. Res.}, 2018.
+
+\bibitem{makedonska2016evaluating}
+N.~Makedonska, J.~D.~D Hyman, S.~Karra, S.~L Painter, C.~W.~W Gable, and H.~S
+  Viswanathan.
+\newblock Evaluating the effect of internal aperture variability on transport
+  in kilometer scale discrete fracture networks.
+\newblock {\em Adv. Water Resour.}, 94:486--497, 2016.
+
+\bibitem{Lipschitz1}
+Gary~L. Miller, Dafna Talmor, Shang-Hua Teng, and Noel Walkington.
+\newblock A {D}elaunay based numerical method for three dimensions: Generation,
+  formulation, and partition.
+\newblock In {\em Proceedings of the Twenty-Seventh Annual ACM Symposium on
+  Theory of Computing}, STOC '95, pages 683--692, New York, NY, USA, 1995.
+  Association for Computing Machinery.
+
+\bibitem{Lipschitz2}
+Gary~L. Miller, Dafna Talmor, Shang-Hua Teng, Noel Walkington, and Han Wang.
+\newblock Control volume meshes using sphere packing: Generation, refinement
+  and coarsening.
+\newblock In {\em In Fifth International Meshing Roundtable}, pages 47--61,
+  1996.
+
+\bibitem{varrad}
+Scott Mitchell, Alexander Rand, Mohamed Ebeida, and Chandrajit Bajaj.
+\newblock Variable radii {P}oisson-disk sampling.
+\newblock {\em Proceedings of the 24th Canadian Conference on Computational
+  Geometry, CCCG 2012}, 01 2012.
+
+\bibitem{mudunuru2017sequential}
+M.~K. Mudunuru, S.~Karra, N.~Makedonska, and T.~Chen.
+\newblock Sequential geophysical and flow inversion to characterize fracture
+  networks in subsurface systems.
+\newblock {\em Stat. Anal. Data. Min.}, 10(5):326--342, 2017.
+
+\bibitem{murphy2001point}
+Michael Murphy, David~M Mount, and Carl~W Gable.
+\newblock A point-placement strategy for conforming {D}elaunay
+  tetrahedralization.
+\newblock {\em International Journal of Computational Geometry \&
+  Applications}, 11(06):669--682, 2001.
+
+\bibitem{mustapha2007new}
+H.~Mustapha and K.~Mustapha.
+\newblock A new approach to simulating flow in discrete fracture networks with
+  an optimized mesh.
+\newblock {\em SIAM J. Sci. Comput.}, 29:1439, 2007.
+
+\bibitem{mustapha2011efficient}
+Hussein Mustapha, Roussos Dimitrakopoulos, Thomas Graf, and Abbas Firoozabadi.
+\newblock An efficient method for discretizing 3d fractured media for
+  subsurface flow and transport simulations.
+\newblock {\em International Journal for Numerical Methods in Fluids},
+  67(5):651--670, 2011.
+
+\bibitem{national2020characterization}
+Engineering National Academies~of Sciences, Medicine, et~al.
+\newblock {\em Characterization, modeling, monitoring, and remediation of
+  fractured rock}.
+\newblock National Academies Press, 2020.
+
+\bibitem{national1996rock}
+{National Research Council}.
+\newblock {\em Rock fractures and fluid flow: contemporary understanding and
+  applications}.
+\newblock National Academy Press, 1996.
+
+\bibitem{neuman1988use}
+Shlomo~P Neuman and Joseph~S Depner.
+\newblock Use of variable-scale pressure test data to estimate the log
+  hydraulic conductivity covariance and dispersivity of fractured granites near
+  oracle, arizona.
+\newblock {\em J. Hydrol.}, 102(1-4):475--501, 1988.
+
+\bibitem{neuman2005trends}
+S.P. Neuman.
+\newblock Trends, prospects and challenges in quantifying flow and transport
+  through fractured rocks.
+\newblock {\em Hydrogeol. J.}, 13(1):124--147, 2005.
+
+\bibitem{nordqvist1992variable}
+A.~Wille Nordqvist, Y.~W. Tsang, C.~F. Tsang, Bj{\"o}rn Dverstorp, and Johan
+  Andersson.
+\newblock A variable aperture fracture network model for flow and transport in
+  fractured rocks.
+\newblock {\em Water Resources Research}, 28(6):1703--1713, 1992.
+
+\bibitem{pichot2010mixed}
+G~Pichot, J~Erhel, and J-R de~Dreuzy.
+\newblock A mixed hybrid mortar method for solving flow in discrete fracture
+  networks.
+\newblock {\em Appl. Anal.}, 89(10):1629--1643, 2010.
+
+\bibitem{pichot2012generalized}
+G~Pichot, J~Erhel, and J-R de~Dreuzy.
+\newblock A generalized mixed hybrid mortar method for solving flow in
+  stochastic discrete fracture networks.
+\newblock {\em SIAM J. Sci. Comput.}, 34(1):B86--B105, 2012.
+
+\bibitem{pruess1999tough2}
+Karsten Pruess, Curtis~M Oldenburg, and GJ~Moridis.
+\newblock Tough2 user's guide version 2.
+\newblock 1999.
+
+\bibitem{rivara1984algorithms}
+M~Cecilia Rivara.
+\newblock Algorithms for refining triangular grids suitable for adaptive and
+  multigrid techniques.
+\newblock {\em International journal for numerical methods in Engineering},
+  20(4):745--756, 1984.
+
+\bibitem{rivara1984mesh}
+Maria-Cecilia Rivara.
+\newblock Mesh refinement processes based on the generalized bisection of
+  simplices.
+\newblock {\em SIAM J. Numer. Anal.}, 21(3):604--613, 1984.
+
+\bibitem{sherman2020characterizing}
+T.~Sherman, J.~D. Hyman, M.~Dentz, and D.~Bolster.
+\newblock Characterizing the influence of fracture density on network scale
+  transport.
+\newblock {\em J. Geophys. Res. Sol. Ea.}, 125(1):e2019JB018547, 2020.
+\newblock e2019JB018547 10.1029/2019JB018547.
+
+\bibitem{strangfix}
+Gilbert Strang, George~J. Fix, and D.~S. Griffin.
+\newblock {An Analysis of the Finite-Element Method}.
+\newblock {\em Journal of Applied Mechanics}, 41(1):62--62, 03 1974.
+
+\bibitem{Lipschitz3}
+Dafna Talmor, Guy Blelloch, Alan~M. Frieze, Noel~J. Walkington, and Shang hua
+  Teng.
+\newblock Well-spaced points for numerical methods.
+\newblock Technical report, 1997.
+
+\bibitem{Perturbation}
+Jane Tournois, Camille Wormser, Pierre Alliez, and Mathieu Desbrun.
+\newblock Interleaving {D}elaunay refinement and optimization for practical
+  isotropic tetrahedron mesh generation.
+\newblock In {\em ACM SIGGRAPH 2009 Papers}, SIGGRAPH '09, New York, NY, USA,
+  2009. Association for Computing Machinery.
+
+\bibitem{tsang1996tracer}
+YW~Tsang, CF~Tsang, FV~Hale, and B~Dverstorp.
+\newblock Tracer transport in a stochastic continuum model of fractured media.
+\newblock {\em Water Resour. Res}, 32(10):3077--3092, 1996.
+
+\bibitem{DongMing}
+{Dong Ming} Yan, {Jian Wei} Guo, Bin Wang, {Xiao Peng} Zhang, and Peter Wonka.
+\newblock A survey of blue-noise sampling and its applications.
+\newblock {\em Journal of Computer Science and Technology}, 30(3):439--452, may
+  2015.
+\newblock Publisher Copyright: {\textcopyright} 2015, Springer Science+Business
+  Media New York.
+
+\bibitem{zimmerman1993numerical}
+Robert~W Zimmerman, Gang Chen, Teklu Hadgu, and Gudmundur~S Bodvarsson.
+\newblock A numerical dual-porosity model with semianalytical treatment of
+  fracture/matrix flow.
+\newblock {\em Water Resour. Res}, 29(7):2127--2137, 1993.
+
+\bibitem{ZLAMAL}
+M.~ZLAMAL.
+\newblock On the finite element method.
+\newblock {\em Numerische Mathematik}, 12:394--409, 1968.
+
+\bibitem{zyvoloski2007fehm}
+G~Zyvoloski.
+\newblock {FEHM}: A control volume finite element code for simulating
+  subsurface multi-phase multi-fluid heat and mass transfer.
+\newblock {\em Los Alamos Unclassified Report LA-UR-07-3359}, 2007.
+
+\end{thebibliography}

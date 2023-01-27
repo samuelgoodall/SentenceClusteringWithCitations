@@ -1,0 +1,22 @@
+Seminal works on {\em light} spanners over the years provide spanners with optimal {\em lightness} in various graph classes,\footnote{The {\em lightness} is a normalized notion of weight: a graph's lightness is the ratio of its weight to the MST weight.}  such as in general graphs~\cite{CW16}, Euclidean spanners \cite{das1994fast} and minor-free graphs~\cite{BLW17}.
+Three shortcomings of previous works on light spanners are: (1) The techniques are ad hoc per graph class, and thus can't be applied broadly.  (2) The runtimes of these constructions are almost always sub-optimal, and usually far from optimal.
+(3) These constructions are optimal in the standard and crude sense, but not in a refined sense that takes into account a wider range of involved parameters.
+
+This work aims at addressing these shortcomings by presenting  a {\em unified framework} of light spanners in a variety of graph classes. Informally, the framework boils down to a {\em transformation} from sparse spanners to light spanners; since the state-of-the-art for sparse spanners is much more advanced than that for light spanners, such a transformation is powerful. 
+Our framework is developed in two papers. 
+{\bf The current paper is the second of the two ---  it  builds on the basis of the unified framework laid in the first paper, 
+and then strengthens it to achieve {\em more refined} optimality bounds} for several graph classes, i.e., the bounds remain optimal when taking into account a \emph{wider range of involved parameters},
+most notably $\eps$, but also others such as the dimension (in Euclidean spaces) or the minor size (in minor-free graphs). 
+Our new constructions are significantly better than the state-of-the-art {\em for every examined graph class}. Among various applications and implications of our framework, we highlight the following:
+\noindent
+\vspace{5pt}
+\\
+For $K_r$-minor-free graphs, we provide a  $(1+\epsilon)$-spanner with lightness $\tilde{O}_{r,\epsilon}( \frac{r}{\epsilon} + \frac{1}{\epsilon^2})$,
+where $\tilde{O}_{r,\epsilon}$ suppresses $\mathsf{polylog}$ factors of $1/\epsilon$ and $r$,
+improving the lightness bound $\tilde{O}_{r,\epsilon}( \frac{r}{\epsilon^3})$ of Borradaile, Le and Wulff-Nilsen~\cite{BLW17}.
+We complement our upper bound with a highly nontrivial lower bound construction, for which any $(1+\epsilon)$-spanner must have lightness $\Omega(\frac{r}{\epsilon} + \frac{1}{\epsilon^2})$.
+Interestingly, our lower bound is realized by a geometric graph in $\mathbb{R}^2$.
+We note that the quadratic dependency on $1/\eps$ we proved here is surprising,
+as the prior work suggested that the dependency on $\eps$ should be around $1/\eps$. 
+Indeed, for minor-free graphs there is a known upper bound of lightness $O(\log(n)/\eps)$,
+whereas subclasses of minor-free graphs, primarily graphs of genus bounded by $g$, are long known to admit spanners of lightness $O(g/\eps)$.  

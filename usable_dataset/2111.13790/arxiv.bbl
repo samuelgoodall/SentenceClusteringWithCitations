@@ -1,0 +1,352 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{belagiannis2017recurrent}
+Vasileios Belagiannis and Andrew Zisserman.
+\newblock Recurrent human pose estimation.
+\newblock In {\em International Conference on Automatic Face \& Gesture
+  Recognition (AFGR)}, pages 468--475, 2017.
+
+\bibitem{chen2005estimating}
+Yinpeng Chen and Hari Sundaram.
+\newblock Estimating complexity of 2d shapes.
+\newblock In {\em Workshop on Multimedia Signal Processing (MSPW)}, pages 1--4,
+  2005.
+
+\bibitem{tmm21_pasadena}
+Yupeng Cheng, Qing Guo, Felix Juefei-Xu, Xiaofei Xie, Shang-Wei Lin, Weisi Lin,
+  Wei Feng, and Yang Liu.
+\newblock {Pasadena: Perceptually Aware and Stealthy Adversarial Denoise
+  Attack}.
+\newblock {\em IEEE Transactions on Multimedia (TMM)}, 2021.
+
+\bibitem{cheng2020adversarial}
+Yupeng Cheng, Felix Juefei-Xu, Qing Guo, Huazhu Fu, Xiaofei Xie, Shang-Wei Lin,
+  Weisi Lin, and Yang Liu.
+\newblock Adversarial exposure attack on diabetic retinopathy imagery.
+\newblock {\em arXiv preprint arXiv:2009.09231}, 2020.
+
+\bibitem{dong2018style}
+Xuanyi Dong, Yan Yan, Wanli Ouyang, and Yi Yang.
+\newblock Style aggregated network for facial landmark detection.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 379--388, 2018.
+
+\bibitem{fu2021let}
+Lan Fu, Hongkai Yu, Felix Juefei-Xu, Jinlong Li, Qing Guo, and Song Wang.
+\newblock Let there be light: Improved traffic surveillance via detail
+  preserving night-to-day transfer.
+\newblock {\em IEEE Transactions on Circuits and Systems for Video Technology
+  (TCSVT)}, 2021.
+
+\bibitem{fu2021auto}
+Lan Fu, Changqing Zhou, Qing Guo, Felix Juefei-Xu, Hongkai Yu, Wei Feng, Yang
+  Liu, and Song Wang.
+\newblock Auto-exposure fusion for single-image shadow removal.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 10571--10580, 2021.
+
+\bibitem{arxiv21_advhaze}
+Ruijun Gao, Qing Guo, Felix Juefei-Xu, Hongkai Yu, and Wei Feng.
+\newblock {AdvHaze: Adversarial Haze Attack}.
+\newblock {\em arXiv preprint arXiv:2104.13673}, 2021.
+
+\bibitem{gao2020making}
+Ruijun Gao, Qing Guo, Felix Juefei-Xu, Hongkai Yu, Xuhong Ren, Wei Feng, and
+  Song Wang.
+\newblock Making images undiscoverable from co-saliency detection.
+\newblock {\em arXiv preprint arXiv:2009.09258}, 2020.
+
+\bibitem{arxiv21_ara}
+Ruijun Gao, Qing Guo, Qian Zhang, Felix Juefei-Xu, Hongkai Yu, and Wei Feng.
+\newblock {Adversarial Relighting against Face Recognition}.
+\newblock {\em arXiv preprint arXiv:2108.07920}, 2021.
+
+\bibitem{guo2020towards}
+Jianzhu Guo, Xiangyu Zhu, Yang Yang, Fan Yang, Zhen Lei, and Stan~Z Li.
+\newblock Towards fast, accurate and stable 3d dense face alignment.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  152--168, 2020.
+
+\bibitem{iccv21_advmot}
+Qing Guo, Ziyi Cheng, Felix Juefei-Xu, Lei Ma, Xiaofei Xie, Yang Liu, and
+  Jianjun Zhao.
+\newblock {Learning to Adversarially Blur Visual Object Tracking}.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision (ICCV)}. IEEE, October 2021.
+
+\bibitem{neurips20_abba}
+Qing Guo, Felix Juefei-Xu, Xiaofei Xie, Lei Ma, Jian Wang, Bing Yu, Wei Feng,
+  and Yang Liu.
+\newblock {Watch out! Motion is Blurring the Vision of Your Deep Neural
+  Networks}.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2020.
+
+\bibitem{eccv20_spark}
+Qing Guo, Xiaofei Xie, Felix Juefei-Xu, Lei Ma, Zhongguo Li, Wanli Xue, Wei
+  Feng, and Yang Liu.
+\newblock {SPARK: Spatial-aware Online Incremental Attack Against Visual
+  Tracking}.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, Aug 2020.
+
+\bibitem{hanrahan1993reflection}
+Pat Hanrahan and Wolfgang Krueger.
+\newblock Reflection from layered surfaces due to subsurface scattering.
+\newblock In {\em Conference on Computer Graphics and Interactive Techniques
+  (CGIT)}, pages 165--174, 1993.
+
+\bibitem{hnewa2020object}
+Mazin Hnewa and Hayder Radha.
+\newblock Object detection under rainy conditions for autonomous vehicles: A
+  review of state-of-the-art and emerging techniques.
+\newblock {\em IEEE Signal Processing Magazine (SPM)}, 38(1):53--67, 2020.
+
+\bibitem{hu2019mask}
+Xiaowei Hu, Yitong Jiang, Chi-Wing Fu, and Pheng-Ann Heng.
+\newblock Mask-shadowgan: Learning to remove shadows from unpaired data.
+\newblock In {\em International Conference on Computer Vision (ICCV)}, pages
+  2472--2481, 2019.
+
+\bibitem{arxiv21_advbokeh}
+Yihao Huang, Felix Juefei-Xu, Qing Guo, Weikai Miao, Yang Liu, and Geguang Pu.
+\newblock Advbokeh: Learning to adversarially defocus blur.
+\newblock {\em arXiv preprint}, 2021.
+
+\bibitem{inoue2020learning}
+Naoto Inoue and Toshihiko Yamasaki.
+\newblock Learning from synthetic shadows for shadow detection and removal.
+\newblock {\em IEEE Transactions on Circuits and Systems for Video Technology
+  (TCSVT)}, 2020.
+
+\bibitem{ioffe2015batch}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift.
+\newblock In {\em International Conference on Machine Learning (ICML)}, pages
+  448--456, 2015.
+
+\bibitem{johnson2016perceptual}
+Justin Johnson, Alexandre Alahi, and Li Fei-Fei.
+\newblock Perceptual losses for real-time style transfer and super-resolution.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  694--711, 2016.
+
+\bibitem{juefei2013image}
+Felix Juefei-Xu and Marios Savvides.
+\newblock An image statistics approach towards efficient and robust refinement
+  for landmarks on facial boundary.
+\newblock In {\em International Conference on Biometrics: Theory, Applications
+  and Systems (BTAS)}, pages 1--8, 2013.
+
+\bibitem{kumar2020luvli}
+Abhinav Kumar, Tim~K Marks, Wenxuan Mou, Ye Wang, Michael Jones, Anoop Cherian,
+  Toshiaki Koike-Akino, Xiaoming Liu, and Chen Feng.
+\newblock Luvli face alignment: Estimating landmarks' location, uncertainty,
+  and visibility likelihood.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 8236--8246, 2020.
+
+\bibitem{le2019shadow}
+Hieu Le and Dimitris Samaras.
+\newblock Shadow removal via shadow image decomposition.
+\newblock In {\em International Conference on Computer Vision (ICCV)}, pages
+  8578--8587, 2019.
+
+\bibitem{li2020structured}
+Weijian Li, Yuhang Lu, Kang Zheng, Haofu Liao, Chihung Lin, Jiebo Luo, Chi-Tung
+  Cheng, Jing Xiao, Le Lu, Chang-Fu Kuo, et~al.
+\newblock Structured landmark detection via topology-adapting deep graph
+  learning.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  266--283, 2020.
+
+\bibitem{iccv21_flat}
+Yiming Li, Congcong Wen, Felix Juefei-Xu, and Chen Feng.
+\newblock {Fooling LiDAR Perception via Adversarial Trajectory Perturbation}.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision (ICCV)}. IEEE, October 2021.
+
+\bibitem{li2020celeb}
+Yuezun Li, Xin Yang, Pu Sun, Honggang Qi, and Siwei Lyu.
+\newblock Celeb-df: A large-scale challenging dataset for deepfake forensics.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 3207--3216, 2020.
+
+\bibitem{liu2016joint}
+Feng Liu, Dan Zeng, Qijun Zhao, and Xiaoming Liu.
+\newblock Joint face alignment and 3d face reconstruction.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  545--560, 2016.
+
+\bibitem{liu2020learning}
+Nian Liu, Ni Zhang, and Junwei Han.
+\newblock Learning selective self-mutual attention for rgb-d saliency
+  detection.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 13756--13765, 2020.
+
+\bibitem{liu2018exploring}
+Yu Liu, Fangyin Wei, Jing Shao, Lu Sheng, Junjie Yan, and Xiaogang Wang.
+\newblock Exploring disentangled feature representation beyond face
+  identification.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 2080--2089, 2018.
+
+\bibitem{pei2019effects}
+Yanting Pei, Yaping Huang, Qi Zou, Xingyuan Zhang, and Song Wang.
+\newblock Effects of image degradation and degradation removal to cnn-based
+  image classification.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence
+  (TPAMI)}, 2019.
+
+\bibitem{qu2017deshadownet}
+Liangqiong Qu, Jiandong Tian, Shengfeng He, Yandong Tang, and Rynson~WH Lau.
+\newblock Deshadownet: A multi-context embedding deep network for shadow
+  removal.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 4067--4075, 2017.
+
+\bibitem{sagonas2013300}
+Christos Sagonas, Georgios Tzimiropoulos, Stefanos Zafeiriou, and Maja Pantic.
+\newblock 300 faces in-the-wild challenge: The first facial landmark
+  localization challenge.
+\newblock In {\em International Conference on Computer Vision Workshops
+  (ICCVW)}, pages 397--403, 2013.
+
+\bibitem{shor2008the}
+Yael Shor and Dani Lischinski.
+\newblock The shadow meets the mask: Pyramid-based shadow removal.
+\newblock {\em Computer Graphics Forum (CGF)}, 27(2):577--586, 2008.
+
+\bibitem{sun2018feature}
+Zhun Sun, Mete Ozay, Yan Zhang, Xing Liu, and Takayuki Okatani.
+\newblock Feature quantization for defending against distortion of images.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 7957--7966, 2018.
+
+\bibitem{thies2016face2face}
+Justus Thies, Michael Zollhofer, Marc Stamminger, Christian Theobalt, and
+  Matthias Nie{\ss}ner.
+\newblock Face2face: Real-time face capture and reenactment of rgb videos.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 2387--2395, 2016.
+
+\bibitem{icme21_xray}
+Binyu Tian, Qing Guo, Felix Juefei-Xu, Wen~Le Chan, Yupeng Cheng, Xiaohong Li,
+  Xiaofei Xie, and Shengchao Qin.
+\newblock {Bias Field Poses a Threat to DNN-Based X-Ray Recognition}.
+\newblock In {\em IEEE International Conference on Multimedia and Expo (ICME)},
+  2021.
+
+\bibitem{ijcai21_ava}
+Binyu Tian, Felix Juefei-Xu, Qing Guo, Xiaofei Xie, Xiaohong Li, and Yang Liu.
+\newblock {AVA: Adversarial Vignetting Attack against Visual Recognition}.
+\newblock In {\em Proceedings of the International Joint Conference on
+  Artificial Intelligence (IJCAI)}, 2021.
+
+\bibitem{toshev2014deeppose}
+Alexander Toshev and Christian Szegedy.
+\newblock Deeppose: Human pose estimation via deep neural networks.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 1653--1660, 2014.
+
+\bibitem{valle2018deeply}
+Roberto Valle, Jose~M Buenaposada, Antonio Valdes, and Luis Baumela.
+\newblock A deeply-initialized coarse-to-fine ensemble of regression trees for
+  face alignment.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  585--601, 2018.
+
+\bibitem{wang2018stacked}
+Jifeng Wang, Xiang Li, and Jian Yang.
+\newblock Stacked conditional generative adversarial networks for jointly
+  learning shadow detection and shadow removal.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 1788--1797, 2018.
+
+\bibitem{wang2020deep}
+Jingdong Wang, Ke Sun, Tianheng Cheng, Borui Jiang, Chaorui Deng, Yang Zhao,
+  Dong Liu, Yadong Mu, Mingkui Tan, Xinggang Wang, et~al.
+\newblock Deep high-resolution representation learning for visual recognition.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence
+  (TPAMI)}, 2020.
+
+\bibitem{acmmm20_amora}
+Run Wang, Felix Juefei-Xu, Qing Guo, Yihao Huang, Xiaofei Xie, Lei Ma, and Yang
+  Liu.
+\newblock {Amora: Black-box Adversarial Morphing Attack}.
+\newblock In {\em Proceedings of the ACM International Conference on Multimedia
+  (ACM MM)}, 2020.
+
+\bibitem{wang2018non}
+Xiaolong Wang, Ross Girshick, Abhinav Gupta, and Kaiming He.
+\newblock Non-local neural networks.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 7794--7803, 2018.
+
+\bibitem{wu2018look}
+Wayne Wu, Chen Qian, Shuo Yang, Quan Wang, Yici Cai, and Qiang Zhou.
+\newblock Look at boundary: A boundary-aware face alignment algorithm.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 2129--2138, 2018.
+
+\bibitem{wu2019facial}
+Yue Wu and Qiang Ji.
+\newblock Facial landmark detection: A literature survey.
+\newblock {\em International Journal of Computer Vision (IJCV)},
+  127(2):115--142, 2019.
+
+\bibitem{zhai2020s}
+Liming Zhai, Felix Juefei-Xu, Qing Guo, Xiaofei Xie, Lei Ma, Wei Feng,
+  Shengchao Qin, and Yang Liu.
+\newblock It's raining cats or dogs? adversarial rain attack on dnn perception.
+\newblock {\em arXiv preprint arXiv:2009.09205}, 2020.
+
+\bibitem{zhang2020freenet}
+Jiangning Zhang, Xianfang Zeng, Mengmeng Wang, Yusu Pan, Liang Liu, Yong Liu,
+  Yu Ding, and Changjie Fan.
+\newblock Freenet: Multi-identity face reenactment.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 5326--5335, 2020.
+
+\bibitem{zhang2020portrait}
+Xuaner Zhang, Jonathan~T Barron, Yun-Ta Tsai, Rohit Pandey, Xiuming Zhang, Ren
+  Ng, and David~E Jacobs.
+\newblock Portrait shadow manipulation.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 39(4):78--1, 2020.
+
+\bibitem{zhang2014facial}
+Zhanpeng Zhang, Ping Luo, Chen~Change Loy, and Xiaoou Tang.
+\newblock Facial landmark detection by deep multi-task learning.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  94--108. Springer, 2014.
+
+\bibitem{zhao2021learning}
+Tianchen Zhao, Xiang Xu, Mingze Xu, Hui Ding, Yuanjun Xiong, and Wei Xia.
+\newblock Learning self-consistency for deepfake detection.
+\newblock In {\em International Conference on Computer Vision (ICCV)}, pages
+  15023--15033, 2021.
+
+\bibitem{zhu2018bidirectional}
+Lei Zhu, Zijun Deng, Xiaowei Hu, Chi-Wing Fu, Xuemiao Xu, Jing Qin, and
+  Pheng-Ann Heng.
+\newblock Bidirectional feature pyramid network with recurrent attention
+  residual modules for shadow detection.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  121--136, 2018.
+
+\bibitem{zhu2015high}
+Xiangyu Zhu, Zhen Lei, Junjie Yan, Dong Yi, and Stan~Z Li.
+\newblock High-fidelity pose and expression normalization for face recognition
+  in the wild.
+\newblock In {\em Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 787--796, 2015.
+
+\bibitem{zou2019learning}
+Xu Zou, Sheng Zhong, Luxin Yan, Xiangyun Zhao, Jiahuan Zhou, and Ying Wu.
+\newblock Learning robust facial landmark detection via hierarchical structured
+  ensemble.
+\newblock In {\em International Conference on Computer Vision (ICCV)}, pages
+  141--150, 2019.
+
+\end{thebibliography}

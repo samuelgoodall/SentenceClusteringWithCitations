@@ -1,0 +1,373 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{harper2018agbiodata}
+L.~Harper, J.~Campbell, E.~K. Cannon, S.~Jung, M.~Poelchau, R.~Walls,
+  C.~Andorf, E.~Arnaud, T.~Z. Berardini, C.~Birkett, et~al., Agbiodata
+  consortium recommendations for sustainable genomics and genetics databases
+  for agriculture, Database 2018 (2018).
+
+\bibitem{hunter2017knowledge}
+L.~E. Hunter, Knowledge-based biomedical data science, Data Science 1~(1-2)
+  (2017) 19--25.
+
+\bibitem{sheikhalishahi2019natural}
+S.~Sheikhalishahi, R.~Miotto, J.~T. Dudley, A.~Lavelli, F.~Rinaldi, V.~Osmani,
+  Natural language processing of clinical notes on chronic diseases: systematic
+  review, JMIR medical informatics 7~(2) (2019) e12239.
+
+\bibitem{yu2018artificial}
+K.-H. Yu, A.~L. Beam, I.~S. Kohane, Artificial intelligence in healthcare,
+  Nature biomedical engineering 2~(10) (2018) 719--731.
+
+\bibitem{davis2015commonsense}
+E.~Davis, G.~Marcus, Commonsense reasoning and commonsense knowledge in
+  artificial intelligence, Communications of the ACM 58~(9) (2015) 92--103.
+
+\bibitem{socher2013reasoning}
+R.~Socher, D.~Chen, C.~D. Manning, A.~Ng, Reasoning with neural tensor networks
+  for knowledge base completion, in: Advances in neural information processing
+  systems, 2013, pp. 926--934.
+
+\bibitem{xu-etal-2013-open}
+Y.~Xu, M.-Y. Kim, K.~Quinn, R.~Goebel, D.~Barbosa,
+  \href{https://aclanthology.org/N13-1107}{Open information extraction with
+  tree kernels}, in: Proceedings of the 2013 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, Association for Computational Linguistics, Atlanta, Georgia,
+  2013, pp. 868--877.
+\newline\urlprefix\url{https://aclanthology.org/N13-1107}
+
+\bibitem{cetto-etal-2018-graphene-context}
+M.~Cetto, C.~Niklaus, A.~Freitas, S.~Handschuh,
+  \href{https://aclanthology.org/C18-2021}{{G}raphene: a context-preserving
+  open information extraction system}, in: Proceedings of the 27th
+  International Conference on Computational Linguistics: System Demonstrations,
+  Association for Computational Linguistics, Santa Fe, New Mexico, 2018, pp.
+  94--98.
+\newline\urlprefix\url{https://aclanthology.org/C18-2021}
+
+\bibitem{shin2015incremental}
+J.~Shin, S.~Wu, F.~Wang, C.~De~Sa, C.~Zhang, C.~R{\'e}, Incremental knowledge
+  base construction using deepdive, in: Proceedings of the VLDB Endowment
+  International Conference on Very Large Data Bases, Vol.~8, NIH Public Access,
+  2015, p. 1310.
+
+\bibitem{popescul2003statistical}
+A.~Popescul, L.~H. Ungar, S.~Lawrence, D.~M. Pennock, Statistical relational
+  learning for document mining, in: Third IEEE International Conference on Data
+  Mining, IEEE, 2003, pp. 275--282.
+
+\bibitem{koller2007introduction}
+D.~Koller, N.~Friedman, S.~D{\v{z}}eroski, C.~Sutton, A.~McCallum, A.~Pfeffer,
+  P.~Abbeel, M.-F. Wong, D.~Heckerman, C.~Meek, et~al., Introduction to
+  statistical relational learning, MIT press, 2007.
+
+\bibitem{getoor2011learning}
+L.~Getoor, L.~Mihalkova, Learning statistical models from relational data, in:
+  Proceedings of the 2011 ACM SIGMOD International Conference on Management of
+  data, 2011, pp. 1195--1198.
+
+\bibitem{hochreiter1997long}
+S.~Hochreiter, J.~Schmidhuber, Long short-term memory, Neural computation 9~(8)
+  (1997) 1735--1780.
+
+\bibitem{zhou2015end}
+J.~Zhou, W.~Xu, End-to-end learning of semantic role labeling using recurrent
+  neural networks, in: Proceedings of the 53rd Annual Meeting of the
+  Association for Computational Linguistics and the 7th International Joint
+  Conference on Natural Language Processing (Volume 1: Long Papers), 2015, pp.
+  1127--1137.
+
+\bibitem{cho2014learning}
+K.~Cho, B.~Van~Merri{\"e}nboer, C.~Gulcehre, D.~Bahdanau, F.~Bougares,
+  H.~Schwenk, Y.~Bengio, Learning phrase representations using rnn
+  encoder-decoder for statistical machine translation, arXiv preprint
+  arXiv:1406.1078 (2014).
+
+\bibitem{chaudhari2021attentive}
+S.~Chaudhari, V.~Mithal, G.~Polatkan, R.~Ramanath, An attentive survey of
+  attention models, ACM Transactions on Intelligent Systems and Technology
+  (TIST) 12~(5) (2021) 1--32.
+
+\bibitem{bahdanau2015neural}
+D.~{Bahdanau}, K.~{Cho}, Y.~{Bengio}, Neural machine translation by jointly
+  learning to align and translate, in: ICLR 2015 : International Conference on
+  Learning Representations 2015, 2015.
+
+\bibitem{luong-etal-2015-effective}
+T.~Luong, H.~Pham, C.~D. Manning,
+  \href{https://aclanthology.org/D15-1166}{Effective approaches to
+  attention-based neural machine translation}, in: Proceedings of the 2015
+  Conference on Empirical Methods in Natural Language Processing, Association
+  for Computational Linguistics, Lisbon, Portugal, 2015, pp. 1412--1421.
+\newblock \href {https://doi.org/10.18653/v1/D15-1166}
+  {\path{doi:10.18653/v1/D15-1166}}.
+\newline\urlprefix\url{https://aclanthology.org/D15-1166}
+
+\bibitem{vaswani2017attention}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
+  {\L}.~Kaiser, I.~Polosukhin, Attention is all you need, in: Advances in
+  neural information processing systems, 2017, pp. 5998--6008.
+
+\bibitem{kenton2019bert}
+J.~D. M.-W.~C. Kenton, L.~K. Toutanova, Bert: Pre-training of deep
+  bidirectional transformers for language understanding, in: Proceedings of
+  NAACL-HLT, 2019, pp. 4171--4186.
+
+\bibitem{yang2019xlnet}
+Z.~Yang, Z.~Dai, Y.~Yang, J.~Carbonell, R.~R. Salakhutdinov, Q.~V. Le, Xlnet:
+  Generalized autoregressive pretraining for language understanding, Advances
+  in neural information processing systems 32 (2019).
+
+\bibitem{floridi2020gpt}
+L.~Floridi, M.~Chiriatti, Gpt-3: Its nature, scope, limits, and consequences,
+  Minds and Machines 30~(4) (2020) 681--694.
+
+\bibitem{han-etal-2021-robust}
+W.~Han, B.~Pang, Y.~N. Wu,
+  \href{https://aclanthology.org/2021.acl-short.108}{Robust transfer learning
+  with pretrained language models through adapters}, in: Proceedings of the
+  59th Annual Meeting of the Association for Computational Linguistics and the
+  11th International Joint Conference on Natural Language Processing (Volume 2:
+  Short Papers), Association for Computational Linguistics, Online, 2021, pp.
+  854--861.
+\newblock \href {https://doi.org/10.18653/v1/2021.acl-short.108}
+  {\path{doi:10.18653/v1/2021.acl-short.108}}.
+\newline\urlprefix\url{https://aclanthology.org/2021.acl-short.108}
+
+\bibitem{lee2020biobert}
+J.~Lee, W.~Yoon, S.~Kim, D.~Kim, S.~Kim, C.~H. So, J.~Kang, Biobert: a
+  pre-trained biomedical language representation model for biomedical text
+  mining, Bioinformatics 36~(4) (2020) 1234--1240.
+
+\bibitem{meng2021mixture}
+Z.~Meng, F.~Liu, T.~H. Clark, E.~Shareghi, N.~Collier, Mixture-of-partitions:
+  Infusing large biomedical knowledge graphs into bert, arXiv preprint
+  arXiv:2109.04810 (2021).
+
+\bibitem{pfeiffer2020adapterhub}
+J.~Pfeiffer, A.~R{\"u}ckl{\'e}, C.~Poth, A.~Kamath, I.~Vuli{\'c}, S.~Ruder,
+  K.~Cho, I.~Gurevych, Adapterhub: A framework for adapting transformers, in:
+  Proceedings of the 2020 Conference on Empirical Methods in Natural Language
+  Processing: System Demonstrations, 2020, pp. 46--54.
+
+\bibitem{etzioni2008open}
+O.~Etzioni, M.~Banko, S.~Soderland, D.~S. Weld, Open information extraction
+  from the web, Communications of the ACM 51~(12) (2008) 68--74.
+
+\bibitem{fader2011identifying}
+A.~Fader, S.~Soderland, O.~Etzioni, Identifying relations for open information
+  extraction, in: Proceedings of the Conference on Empirical Methods in Natural
+  Language Processing, Association for Computational Linguistics, 2011, pp.
+  1535--1545.
+
+\bibitem{arroyo2019unsupervised}
+I.~Arroyo-Fern{\'a}ndez, C.-F. M{\'e}ndez-Cruz, G.~Sierra, J.-M. Torres-Moreno,
+  G.~Sidorov, Unsupervised sentence representations as word information series:
+  Revisiting tf--idf, Computer Speech \& Language 56 (2019) 107--129.
+
+\bibitem{wang2021distributed}
+H.~Wang, H.~Mai, Z.-h. Deng, C.~Yang, L.~Zhang, H.-y. Wang, Distributed
+  representations of diseases based on co-occurrence relationship, Expert
+  Systems with Applications (2021) 115418.
+
+\bibitem{bosselut2019comet}
+A.~Bosselut, H.~Rashkin, M.~Sap, C.~Malaviya, A.~Celikyilmaz, Y.~Choi, Comet:
+  Commonsense transformers for automatic knowledge graph construction, in:
+  Proceedings of the 57th Annual Meeting of the Association for Computational
+  Linguistics, 2019, pp. 4762--4779.
+
+\bibitem{lin2019kagnet}
+B.~Y. Lin, X.~Chen, J.~Chen, X.~Ren, Kagnet: Knowledge-aware graph networks for
+  commonsense reasoning, in: Proceedings of the 2019 Conference on Empirical
+  Methods in Natural Language Processing and the 9th International Joint
+  Conference on Natural Language Processing (EMNLP-IJCNLP), 2019, pp.
+  2829--2839.
+
+\bibitem{dhingra2020differentiable}
+B.~Dhingra, M.~Zaheer, V.~Balachandran, G.~Neubig, R.~Salakhutdinov, W.~W.
+  Cohen, Differentiable reasoning over a virtual knowledge base, arXiv preprint
+  arXiv:2002.10640 (2020).
+
+\bibitem{arroyo2017lipn}
+I.~Arroyo-Fern{\'a}ndez, I.~Meza-Ruiz, Lipn-iimas at semeval-2017 task 1:
+  Subword embeddings, attention recurrent neural networks and cross word
+  alignment for semantic textual similarity, in: Proceedings of the 11th
+  International Workshop on Semantic Evaluation (SemEval-2017), 2017, pp.
+  208--212.
+
+\bibitem{10.2307/411934}
+D.~G. Hays, \href{http://www.jstor.org/stable/411934}{Dependency theory: A
+  formalism and some observations}, Language 40~(4) (1964) 511--525.
+\newline\urlprefix\url{http://www.jstor.org/stable/411934}
+
+\bibitem{dutta2021redesigning}
+S.~Dutta, T.~Gautam, S.~Chakrabarti, T.~Chakraborty, Redesigning the
+  transformer architecture with insights from multi-particle dynamical systems,
+  arXiv preprint arXiv:2109.15142 (2021).
+
+\bibitem{10.1145/2488388.2488420}
+L.~Del~Corro, R.~Gemulla,
+  \href{https://doi.org/10.1145/2488388.2488420}{Clausie: Clause-based open
+  information extraction}, in: Proceedings of the 22nd International Conference
+  on World Wide Web, WWW '13, Association for Computing Machinery, New York,
+  NY, USA, 2013, p. 355–366.
+\newblock \href {https://doi.org/10.1145/2488388.2488420}
+  {\path{doi:10.1145/2488388.2488420}}.
+\newline\urlprefix\url{https://doi.org/10.1145/2488388.2488420}
+
+\bibitem{gashteovski-etal-2017-minie}
+K.~Gashteovski, R.~Gemulla, L.~del Corro,
+  \href{https://aclanthology.org/D17-1278}{{M}in{IE}: Minimizing facts in open
+  information extraction}, in: Proceedings of the 2017 Conference on Empirical
+  Methods in Natural Language Processing, Association for Computational
+  Linguistics, Copenhagen, Denmark, 2017, pp. 2630--2640.
+\newblock \href {https://doi.org/10.18653/v1/D17-1278}
+  {\path{doi:10.18653/v1/D17-1278}}.
+\newline\urlprefix\url{https://aclanthology.org/D17-1278}
+
+\bibitem{bhardwaj-etal-2019-carb}
+S.~Bhardwaj, S.~Aggarwal, M.~Mausam,
+  \href{https://aclanthology.org/D19-1651}{{C}a{RB}: A crowdsourced benchmark
+  for open {IE}}, in: Proceedings of the 2019 Conference on Empirical Methods
+  in Natural Language Processing and the 9th International Joint Conference on
+  Natural Language Processing (EMNLP-IJCNLP), Association for Computational
+  Linguistics, Hong Kong, China, 2019, pp. 6262--6267.
+\newblock \href {https://doi.org/10.18653/v1/D19-1651}
+  {\path{doi:10.18653/v1/D19-1651}}.
+\newline\urlprefix\url{https://aclanthology.org/D19-1651}
+
+\bibitem{lechelle-etal-2019-wire57}
+W.~Lechelle, F.~Gotti, P.~Langlais,
+  \href{https://aclanthology.org/W19-4002}{{W}i{R}e57 : A fine-grained
+  benchmark for open information extraction}, in: Proceedings of the 13th
+  Linguistic Annotation Workshop, Association for Computational Linguistics,
+  Florence, Italy, 2019, pp. 6--15.
+\newblock \href {https://doi.org/10.18653/v1/W19-4002}
+  {\path{doi:10.18653/v1/W19-4002}}.
+\newline\urlprefix\url{https://aclanthology.org/W19-4002}
+
+\bibitem{world2018noncommunicable}
+W.~H. Organization, et~al., Noncommunicable diseases country profiles 2018
+  (2018).
+
+\bibitem{manning2014stanford}
+C.~D. Manning, M.~Surdeanu, J.~Bauer, J.~R. Finkel, S.~Bethard, D.~McClosky,
+  The stanford corenlp natural language processing toolkit, in: Proceedings of
+  52nd annual meeting of the association for computational linguistics: system
+  demonstrations, 2014, pp. 55--60.
+
+\bibitem{saha-etal-2017-bootstrapping}
+S.~Saha, H.~Pal, {Mausam},
+  \href{https://aclanthology.org/P17-2050}{Bootstrapping for numerical open
+  {IE}}, in: Proceedings of the 55th Annual Meeting of the Association for
+  Computational Linguistics (Volume 2: Short Papers), Association for
+  Computational Linguistics, Vancouver, Canada, 2017, pp. 317--323.
+\newblock \href {https://doi.org/10.18653/v1/P17-2050}
+  {\path{doi:10.18653/v1/P17-2050}}.
+\newline\urlprefix\url{https://aclanthology.org/P17-2050}
+
+\bibitem{li2016commonsense}
+X.~Li, A.~Taheri, L.~Tu, K.~Gimpel, Commonsense knowledge base completion, in:
+  Proceedings of the 54th Annual Meeting of the Association for Computational
+  Linguistics (Volume 1: Long Papers), 2016, pp. 1445--1455.
+
+\bibitem{bojanowski2017enriching}
+P.~Bojanowski, E.~Grave, A.~Joulin, T.~Mikolov, Enriching word vectors with
+  subword information, Transactions of the Association for Computational
+  Linguistics 5 (2017) 135--146.
+
+\bibitem{augustin2004glycemic}
+L.~Augustin, S.~Gallus, E.~Negri, C.~La~Vecchia, Glycemic index, glycemic load
+  and risk of gastric cancer, Annals of oncology 15~(4) (2004) 581--584.
+
+\bibitem{lachin2008effect}
+J.~M. Lachin, S.~Genuth, D.~M. Nathan, B.~Zinman, B.~N. Rutledge, et~al.,
+  Effect of glycemic exposure on the risk of microvascular complications in the
+  diabetes control and complications trial—revisited, Diabetes 57~(4) (2008)
+  995--1001.
+
+\bibitem{shi2017semantic}
+L.~Shi, S.~Li, X.~Yang, J.~Qi, G.~Pan, B.~Zhou, Semantic health knowledge
+  graph: semantic integration of heterogeneous medical knowledge and services,
+  BioMed research international 2017 (2017).
+
+\bibitem{bizon2019robokop}
+C.~Bizon, S.~Cox, J.~Balhoff, Y.~Kebede, P.~Wang, K.~Morton, K.~Fecho,
+  A.~Tropsha, Robokop kg and kgb: integrated knowledge graphs from federated
+  sources, Journal of chemical information and modeling 59~(12) (2019)
+  4968--4973.
+
+\bibitem{li2020real}
+L.~Li, P.~Wang, J.~Yan, Y.~Wang, S.~Li, J.~Jiang, Z.~Sun, B.~Tang, T.-H. Chang,
+  S.~Wang, et~al., Real-world data medical knowledge graph: construction and
+  applications, Artificial intelligence in medicine 103 (2020) 101817.
+
+\bibitem{8758152}
+S.~Biswas, P.~Mitra, K.~S. Rao, Relation prediction of co-morbid diseases using
+  knowledge graph completion, IEEE/ACM Transactions on Computational Biology
+  and Bioinformatics 18~(2) (2021) 708--717.
+\newblock \href {https://doi.org/10.1109/TCBB.2019.2927310}
+  {\path{doi:10.1109/TCBB.2019.2927310}}.
+
+\bibitem{du2020knowledge}
+J.~Du, X.~Li, A knowledge graph of combined drug therapies using semantic
+  predications from biomedical literature: Algorithm development, JMIR medical
+  informatics 8~(4) (2020) e18323.
+
+\bibitem{RINDFLESCH2003462}
+T.~C. Rindflesch, M.~Fiszman,
+  \href{https://www.sciencedirect.com/science/article/pii/S1532046403001175}{The
+  interaction of domain knowledge and linguistic structure in natural language
+  processing: interpreting hypernymic propositions in biomedical text}, Journal
+  of Biomedical Informatics 36~(6) (2003) 462--477, unified Medical Language
+  System.
+\newblock \href {https://doi.org/https://doi.org/10.1016/j.jbi.2003.11.003}
+  {\path{doi:https://doi.org/10.1016/j.jbi.2003.11.003}}.
+\newline\urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1532046403001175}
+
+\bibitem{Wei2013PubTatorAW}
+C.-H. Wei, H.-Y. Kao, Z.~Lu, Pubtator: a web-based text mining tool for
+  assisting biocuration, Nucleic Acids Research 41 (2013) W518 -- W522.
+
+\bibitem{8682042}
+Y.~Fang, H.~Wang, L.~Wang, R.~Di, Y.~Song, Diagnosis of copd based on a
+  knowledge graph and integrated model, IEEE Access 7 (2019) 46004--46013.
+\newblock \href {https://doi.org/10.1109/ACCESS.2019.2909069}
+  {\path{doi:10.1109/ACCESS.2019.2909069}}.
+
+\bibitem{info:doi/10.2196/20645}
+R.~Li, C.~Yin, S.~Yang, B.~Qian, P.~Zhang,
+  \href{http://www.jmir.org/2020/9/e20645/}{Marrying medical domain knowledge
+  with deep learning on electronic health records: A deep visual analytics
+  approach}, J Med Internet Res 22~(9) (2020) e20645.
+\newblock \href {https://doi.org/10.2196/20645} {\path{doi:10.2196/20645}}.
+\newline\urlprefix\url{http://www.jmir.org/2020/9/e20645/}
+
+\bibitem{zhang2017hcnn}
+J.~Zhang, J.~Gong, L.~Barnes, Hcnn: Heterogeneous convolutional neural networks
+  for comorbid risk prediction with electronic health records, in: 2017
+  IEEE/ACM International Conference on Connected Health: Applications, Systems
+  and Engineering Technologies (CHASE), IEEE, 2017, pp. 214--221.
+
+\bibitem{10.1145/3448016.3457328}
+A.~Vretinaris, C.~Lei, V.~Efthymiou, X.~Qin, F.~\"{O}zcan,
+  \href{https://doi.org/10.1145/3448016.3457328}{Medical entity disambiguation
+  using graph neural networks}, in: Proceedings of the 2021 International
+  Conference on Management of Data, SIGMOD/PODS '21, Association for Computing
+  Machinery, New York, NY, USA, 2021, p. 2310–2318.
+\newblock \href {https://doi.org/10.1145/3448016.3457328}
+  {\path{doi:10.1145/3448016.3457328}}.
+\newline\urlprefix\url{https://doi.org/10.1145/3448016.3457328}
+
+\bibitem{crichton2019improving}
+G.~K.~O. Crichton, Improving automated literature-based discovery with neural
+  networks: neural biomedical named entity recognition, link prediction and
+  discovery, Ph.D. thesis, University of Cambridge (2019).
+
+\end{thebibliography}

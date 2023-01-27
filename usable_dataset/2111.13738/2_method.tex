@@ -1,0 +1,257 @@
+\section{Neural Micro-baseline Depth}
+
+\noindent
+\noindent\textbf{Overview.}\hspace{0.1em} When capturing a ``snapshot photograph'' on a modern smartphone, the simple interface hides a significant amount of complexity. The photographer typically composes a shot with the assistance of an electronic viewfinder, holding steady before pressing the shutter. During composition, a modern smartphone streams the recent past, consisting of synchronized RGB, depth, and six degree of freedom pose (6DoF) frames into a circular buffer at 60~Hz.
+
+In this setting, we make the following observations:
+(1) A few seconds is sufficient for a typical snapshot of a static object.
+(2) During composition, the amount of hand shake is small (mm-scale).
+(3) Under small pose changes view-dependent lighting effects are minor.
+(4) Our data shows that current commercial devices have excellent pose estimation, likely due to well-calibrated sensors (IMU, LiDAR, RGB camera) collaborating to solve a smooth low-dimensional problem.
+Concretely, at each shutter press, we capture a ``data bundle'' of time-synchronized frames, each consisting of an RGB image $I$, 3D poses $P$, camera intrinsics $K$, and a depth map $Z$. In our experiments, the high-resolution RGB is 1920$\times$1440, while the LiDAR depth is 256 $\times$ 192\footnote{Though we refer to this as \emph{LiDAR depth}, the iPhone's depth stream appears to also rely on monocular depth cues, and likely uses the sparse LiDAR samples to help resolve issues of scale ambiguity. It unfortunately does not offer direct access to raw LiDAR measurements.}. To save memory, we restrict bundles to $N = 120$ frames (two seconds) in all our experiments.
+
+\noindent\textbf{Micro-Baseline parallax.}\hspace{0.1em}
+We specialize classical multi-view stereo~\cite{10.5555/861369} for our small motion scenario. Without loss of generality, we denote the first frame in our bundle the \emph{reference} (r) and represent all other \emph{query} (q) poses using the small angle approximation relative to the reference:
+\begin{equation}\label{eq:pose}
+P = \left[\begin{array}{c|c} 
+R(\bm{r}) & \bm{t}
+\end{array}\right]
+\approx  
+\left[\begin{array}{ccc|c}
+1 & -\bm{r}^{z} & \bm{r}^{y} & \bm{t}^{x} \\
+\bm{r}^{z} & 1 & -\bm{r}^{x} & \bm{t}^{y} \\
+-\bm{r}^{y} & \bm{r}^{x} & 1 & \bm{t}^{z} \\
+\end{array}\right].
+\end{equation}
+
+Let $X$ the homogeneous coordinates of a 3D point, the \emph{geometric consistency} constraint is:
+%We start with matching world points in homogeneous coordinates $X_r = [x,y,z,1]^\top$ between a \emph{reference frame} and any \emph{query frame} $X_q$. Without loss of generality, we denote the first frame the reference and represent all query poses using the small angle approximation relative to the reference:
+
+%we find ourselves with our first constraint
+\begin{equation}\label{eq:geometric_constraint}
+X_r = P_q X_q.
+\end{equation}
+I.e., the known pose should transform any 3D point in the query frame to its corresponding 3D location in the reference.
+%matching 3D points should be \emph{geometrically} consistent; the transform between their two coordinate frames $P_q$ should exactly map $X_q$ to $X_r$.   
+Next, given per-frame camera intrinsics $K_r, K_q$:
+\begin{equation}\label{eq:intrinsics}
+    K = 
+\left[\begin{array}{ccc}
+f_{x} & 0 & c_{x} \\
+0 & f_{y} & c_{y} \\
+0 & 0 & 1
+\end{array}\right]
+\end{equation}
+perspective projection yields continuous pixel coordinates $\bm{x}_r,\bm{x}_q$ via:
+
+\begin{equation}\label{eq:backward_model}
+\bm{x}
+=
+\bm{\pi}(KX)
+=
+\left[\begin{array}{c}
+u = \nicefrac{f_x x}{z} + c_x\\
+v = \nicefrac{f_y y}{z} + c_y\\
+1
+\end{array}\right],
+\bm{\pi}(e) = e / e_3
+\end{equation}
+
+%\begin{equation}\label{eq:backward_model2}
+%    \bm{x}(X) =  
+%\left[\begin{array}{c}
+%u \\
+%v \\
+%1
+%\end{array}\right]
+%=
+%\left[\begin{array}{c}
+%\nicefrac{z'(x' - c_x)}{f_x}  \\
+%\nicefrac{z'(y' - c_y)}{f_y} \\
+%1
+%\end{array}\right]
+%\mathrm{,} 
+%\left[\begin{array}{c}
+%x'  \\
+%y' \\
+%z' \\
+%1
+%\end{array}\right]
+%=
+%PX.
+%\end{equation}
+\noindent Using these pixel coordinates to index into images $I_r$ and $I_q$, we arrive at our second constraint:
+\begin{equation}\label{eq:photometric_constraint}
+    I_r(\bm{x}_r = \bm{\pi}(K_r P_q X_q)) = I_q(\bm{x}_q).
+\end{equation}
+Corresponding 3D points should be \emph{photometrically} consistent: with small motion, they should have the same color in both views. These two constraints are visualized in Fig.~\ref{fig:parallax_constraints}. Recall that a depth map $z'(u,v)$ determines at each pixel its 3D point by ``unprojection'':
+
+\begin{equation}\label{eq:forward_model}
+X = \bm{\pi}^{-1}(z'(u,v);K)
+=
+\left[\begin{array}{c}
+z'(u-c_x) / f_x \\
+z'(v-c_y) / f_y \\
+z' \\
+1
+\end{array}\right].
+\end{equation}
+Given our bundle $\mathcal{I}$, $\mathcal{P}$, $\mathcal{K}$, and $\mathcal{Z}$, we seek the \emph{high-resolution reference-frame depth $Z_r(\bm{x})$} such that its unprojected points $X(\bm{x})$ satisfy both geometric~\eqref{eq:geometric_constraint} and photometric~\eqref{eq:photometric_constraint} constraints.
+
+%Thus, given fixed images $I$, poses $P$, and camera intrinsics $K$, one way we can word our depth from parallax objective is: \emph{for all camera image points $\bm{x}$, find $z'$ such that the corresponding world points $X$ generated via \eqref{eq:forward_model} satisfy constraints \eqref{eq:geometric_constraint} and \eqref{eq:photometric_constraint}.} In short: find 3D points that are both self-consistent and match the observed scene motion.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/multiview_constraints.pdf}
+    \caption{Visualization of how we project the points $\bm{x}_r,\bm{x}_q$ with corresponding camera poses $P_r,P_q$ to 3D space, and use these to bilinearly sample image points $I_r(\bm{x}_r)$ and $I_q(\bm{x}_q)$. Note that pose change is enlarged for ease of illustration, real hand tremor views are misaligned by only millimeters. }
+    \label{fig:parallax_constraints}
+    \vspace{-1em}
+\end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/method.pdf}
+    \caption{An illustrated pipeline of our proposed model. The query depth is used to project and sample a patch from our reference image $I_r$ for input into the MLP. This is weighed by a sample patch from our confidence $C_r$ to produce a depth offset $C_r(\bm{x_r})\Delta z$, which is used to project back to our query image $I_q$ and sample an image patch for loss calculation.}
+    \label{fig:method}
+    \vspace{-1em}
+\end{figure*}
+
+\vspace{0.5em}\noindent\textbf{Implicit Depth Representation.}\hspace{0.1em} There are numerous ways with which one can represent $z'$. For example, we can represent them \emph{explicitly} with a discrete depth map from the reference view, or as a large 3D point cloud. While explicit representations have many advantages (fast data retrieval, existing processing tools), they are also challenging to optimize. Depth maps are discrete arrays and merging multiple views at continuous coordinates requires resampling. This blurs fine-scale information and is non-trivial at occlusion boundaries. Point cloud representations trade off this adaptive filtering problem with one of scale. Not only is a two second sequence with 120 million points unwieldy for conventional tools~\cite{arun1987least}, its points are almost entirely redundant.
+
+Thus, we choose an \emph{implicit} depth representation in the form of a coordinate multi-layer perceptron~(MLP)~\cite{hornik1989multilayer}, where its learnable parameters automatically adapt to the scene structure.
+Recent work have used MLPs to great success in neural rendering~\cite{mildenhall2020nerf,chen2021mvsnerf,park2021nerfies} and depth-estimation, where continuous sampling is of interest~\cite{zhang2021consistent}.
+In our application, the MLP is a differentiable function
+\begin{equation}
+    z' = f(\mathrm{inputs}; \theta)
+\end{equation}
+returning a continuous $z'$ given a continuous encoding of position, camera pose, color, and other features. In our implementation, $\mathrm{inputs}$ is a positionally encoded 3D \emph{colored point}:
+\begin{equation}
+   R^\gamma=[\gamma(x), \gamma(y), \gamma(z), r, g, b]^\top.
+\end{equation}
+We follow the encoding of \cite{mildenhall2020nerf} with:
+\begin{equation}\label{eq:positional_encoding}
+    \gamma(p)=\left[\sin \left(2^{0} \pi p\right), \cos \left(2^{0} \pi p\right), \ldots ,\cos\left(2^{L-1} \pi p\right)\right],
+\end{equation}
+where $L$ is the selected number of encoding functions, and $r,g,b$ are the its corresponding color values scaled to $[0, 1]$. 
+
+As the size of this MLP is fixed, the large dimensionality of our measurements does not affect the calculation of $z'$, and is instead a large training dataset from which to sample. Translating \eqref{eq:geometric_constraint} and \eqref{eq:photometric_constraint} into a regularized loss function on $z'$, and backpropagating through $f$, our implicit depth representation $\theta$ can be optimized using modern stochastic gradient descent. 
+
+\vspace{0.5em}\noindent\textbf{Backward-Forward Projection Model.}\hspace{0.1em} Fig. \ref{fig:method} illustrates how we combine our geometric and photometric constraints to optimize our MLP to produce a refined depth.
+% Putting these two concepts together, we arrive at our depth refinement model as illustrated in Fig. \ref{fig:method}.  We begin with a bundle of recorded images $I\in\mathcal{I}$, associated camera poses $P\in\mathcal{P}$, and rough estimate depth maps $Z\in\mathcal{Z}$; we define $N{=}|\mathcal{I}|{=}|\mathcal{P}|{=}|\mathcal{Z}|$ as the number of frames in this bundle. From these we fix a reference view $I_r, P_r$, in our case the first frame, and the implicit depth model as a continuous proxy for a refined depth $Z_r$.
+At each training step we sample a query view $I_q, P_q, Z_q$, from which we generate $M$ randomly sampled colored points $R_q$ via Eq. \ref{eq:forward_model}:
+\begin{align}\label{eq:ray_generation}
+    &R_q =  
+\left[\begin{array}{c}
+X_q(\bm{x}) \\
+I_q(\bm{x})
+\end{array}\right]
+=
+\left[\begin{array}{c}
+\left[x,y,z=Z_q(\bm{x}),1\right]^\top \\
+\left[r,g,b\right]^\top
+\end{array}\right]
+\nonumber
+\\
+&\bm{x} = \left[u,v,1\right]^\top, \quad u \sim \mathcal{U}(0,W), \quad v \sim \mathcal{U}(0,H),
+\end{align}
+where $H$ and $W$ are the image height and width, respectively. Here, $\bm{x}$ is a continuous coordinate and $I(\bm{x}), Z(\bm{x})$ represent sampling with a bilinear kernel. Following \eqref{eq:geometric_constraint} we transform these points to the reference frame as
+\begin{equation}\label{eq:project_to_ref}
+    R_{q \rightarrow r} =
+\left[\begin{array}{c}
+P_q X_q(\bm{x}) \\
+I_q(\bm{x})
+\end{array}\right]
+=
+\left[\begin{array}{c}
+\left[x',y',z',1\right]^\top \\
+I_q(\bm{x})
+\end{array}\right]
+.
+\end{equation}
+
+\noindent Rather than directly predicting a refined depth, ask our MLP to predict a \emph{depth correction} $\Delta z$:
+
+\begin{align}\label{eq:mlp_forward}
+\Delta z &= f(R^\gamma_{q \rightarrow r}) \\ \nonumber
+X_f(\bm{x}) &= \left[x',y',z' + \Delta z,1\right]^\top. \nonumber
+\end{align}
+
+\noindent As we show in Section \ref{sec:results}, this parameterization allows us to avoid local minima in poorly textured regions. We transform these points $X_f$ back to the query frame and resample the query image at updated coordinates:
+
+\begin{align}\label{eq:resample}
+I_q(\bm{x}_f) = I_q(\bm{\pi}_q(P_q^{-1}X_f(\bm{x})))
+\end{align}
+
+%\begin{align}\label{eq:resample}
+%    &R_{mlp \rightarrow q} = 
+%\left[\begin{array}{c}
+%P_q^{-1} X_{mlp}(\bm{x}) \\
+%I_q(\bm{x}_{mlp})
+%\end{array}\right]\nonumber\\
+%&\bm{x}_{mlp} = \bm{x}(P_q^{-1}X_{mlp}(\bm{x}))
+%\end{align}
+
+\noindent Finally, our photometric loss is:
+\begin{align}\label{eq:photometric_loss}
+    &\mathcal{L}_P = |I_q(\bm{x}_f) - I_r(\bm{x}_r)|^2  \nonumber\\
+    &\bm{x}_r = \bm{\pi}_r(K_r P_q X_q(\bm{x})),
+\end{align}
+which attempts to satisfy \eqref{eq:photometric_constraint} by encouraging the colors of the refined 3D points to be the same in both the query and reference frames. While \eqref{eq:photometric_constraint} works well in well-textured areas, it is fundamentally underconstrained in flat regions. Therefore, we augment our loss with a weighted geometric regularization term based on \eqref{eq:geometric_constraint} that pushes the solution towards an interpolation of $Z\in\mathcal{Z}$ in these regions:
+\begin{equation}\label{eq:geometric_loss}
+    \mathcal{R}_G = |X_f(\bm{x}) - P_q X_q(\bm{x}))| \approx |\Delta z|.
+\end{equation}
+Our final loss is a weighted combination of these two terms
+\begin{equation}\label{eq:loss}
+    \mathcal{L} = \mathcal{L}_P + \alpha\mathcal{R}_G,
+\end{equation}
+where by tuning $\alpha$ we adjust how strongly our reconstruction adheres to the LiDAR depth initialization.
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.99\linewidth]{fig/gaussian_blob.pdf}
+    \caption{A weighted sampling around a point $\bm{x}$ we can avoid false matches in otherwise color-ambiguous image regions. Opacity and border thickness represents the weight of each sample.}
+    \label{fig:gaussian-blob}
+    \vspace{-1em}
+\end{figure}
+
+\vspace{0.5em}\noindent\textbf{Patch Sampling.}\hspace{0.1em}  In practice, we cannot rely on single-pixel samples as written in Eq.~\eqref{eq:forward_model} for photometric optimization. Our two megapixel input images $I$ will almost certainly contain color patches that are larger than the depth-induced motion of pixels within them. With single-pixel samples, there are many incorrect depth solutions that yield $\mathcal{L}_P$ of zero. To combat this, we replace each sample ($I(\bm{x})$ in Eq.~\eqref{eq:ray_generation}) with Gaussian-weighted patches
+\begin{align}\label{eq:gaussian_blob}
+    &G(I(\bm{x})) = \left[\mathcal{N}(\sqrt{\delta_u^2 + \delta_v^2};\mu,\sigma^2)I(\bm{x} - [\delta_u, \delta_v, 0]^\top)\right] \nonumber\\
+    &\mathrm{for} \quad \delta_u = \left\{-K \ldots K\right\}, \;\delta_v = \left\{-K \ldots K\right\}
+\end{align}
+Fig.~\ref{fig:gaussian-blob} illustrates this for $K=3$: the increased receptive field discourages false color matches. Adjusting $K$, we trade off the ability to reconstruct fine features for robustness to noise and low-contrast textures.
+
+\vspace{0.5em}\noindent\textbf{Explicit Confidence.}\hspace{0.1em}  Another augmentation we make is that we introduce a learned explicit $H\times W$ confidence map $C_r$ to weigh the MLP outputs. That is, we replace $\Delta z$ with $C_r(\bm{x}_r)\Delta z$ in \eqref{eq:mlp_forward}. This additional degree of freedom allows the network push $\Delta z$ toward zero in color-ambiguous regions, rather than forcing it to first learn a positional mapping of where these regions are located in the image. As $C_r(\bm{x}_r)$ only adds an additional sampling step during point generation, the overhead is minimal. Once per epoch we apply an optional $5\times5$ median filter to $C_r$ to minimize the effects of sampling noise during training.
+
+\vspace{0.5em}\noindent\textbf{Final reconstruction.}\hspace{0.1em}  After training, to recover a refined depth map $Z^*$ we begin by reprojecting all low-resolution depth maps $Z_q \in \mathcal{Z}$ to the reference frame following \eqref{eq:geometric_constraint}. We then average and bilinearly resample this data to produce a $H\times W$ depth map $Z_{avg}$. We query the MLP at $H\times W$ grid-spaced points, using $I_r$ and $Z_{avg}$ to generate points as in \eqref{eq:ray_generation}. Finally, we extract and re-grid the depth channel from the MLP outputs $R_f$ to produce $Z^*$.
+
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{fig/app_design.pdf}
+    \caption{Our smartphone app for capturing data bundles, with two illustrated recording functions. The button to record only pose allows the user to save and analyze hundreds of hand motion bundles without the overhead of transferring tens of gigabytes of video.}
+    \label{fig:data-collection}
+    \vspace{-1em}
+\end{figure}
+
+
+\section{Data Collection}
+\vspace{0.5em}\noindent\textbf{Recording a Bundle.}\hspace{0.1em} We built a smartphone application for recording bundles of synchronized image, pose, and depth maps. Our app, running on an iPhone 12 Pro using ARKit 5, provides a real-time viewfinder with previews of RGB and depth (Fig. \ref{fig:data-collection}). The user can select bundle sizes of [15, 30, 60, 120] frames ([0.25, 0.5, 1, 2] seconds of recording time) and we save all data, including nanosecond-precision timestamps to disk. We will publish the code for both the app and our offline processing pipeline (which does color-space conversion, coordinate space transforms, etc.).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{fig/hand_shake.pdf}
+    \caption{(a) Distribution of displacements in camera position during the capture of a 120 frame bundle in portrait mode. (b) Visualization of a hand tremor path with labeled median displacements.}
+    \label{fig:hand-shake}
+    \vspace{-1em}
+\end{figure}
+
+\vspace{0.5em}\noindent\textbf{Natural Hand Tremor Analysis.}\hspace{0.1em} To analyze hand motion during composition, we collected fifty 2-second pose-only bundles from 10 volunteers. Each was instructed to act as if they were capturing photos of objects around them, to hold the phone naturally in their dominant hand, and to keep focus on an object in the viewfinder. We illustrate our aggregate findings in Fig. \ref{fig:hand-shake} and individual measurements in the supplemental material.
+
+We focus on in-plane displacement they are the dominant contribution to observed parallax. We find that natural hand tremor appears similar to paths traced by 2D Brownian motion, with some paths traveling far from the initial camera position as in Fig.~\ref{fig:hand-shake} (b), and others forming circles around the initial position. Consequently, while the median effective baseline from a two second sequence is just under 6mm, some recordings exhibit nearly 1cm of displacement, while others appear are almost static. We suspect that the effects of breathing and involuntary muscle twitches are greatly responsible for this variance. Herein lies the definition of \emph{good} hand shake: it is one that produces a useful micro-baseline.
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{fig/small_baseline_example.pdf}
+    \caption{(a) Anaglyph visualization of maximum observed disparity for a 1m plane-rectified 120 frame image sequence. (b) Absolute difference between the frames in (a). (c) Observed disparity (Delta) with a 6mm baseline for a 1cm feature at depth (Target). }
+    \label{fig:disparity-curve}
+    \vspace{-1em}
+\end{figure}
+Fig. \ref{fig:disparity-curve} (c) illustrates, given our smartphone's optics, what a 6mm baseline translates to in pixel disparity and therefore the depth feature precision. We intentionally limit ourselves to a depth range of approximately 50cm, beyond which image noise and errors in pose estimation overpower our ability to estimate subpixel displacement.

@@ -1,0 +1,192 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          FULL COMPILATION TIMES TABLE                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Data from the experiments-20170329.txt, for O(N) op and full rtchecks, ms
+
+% The ciaopp startup time needs to be substracted from the compilation
+% time to get the full compilation time
+%     ciaopp startup time: user 0m1.727s
+
+% ------------------------------------------- absolute compilation times
+
+\FPset{\TCiaoPP}{1727}
+
+\FPset{\TavlCHKclsf}{2981}
+\FPset{\TavlCHKctrt}{4097}
+\FPset{\TavlCHKrtsf}{2750}
+\FPset{\TavlCHKunsf}{209}
+%
+\FPadd{\TavlFULLclsf}{\TavlCHKclsf}{-\TCiaoPP}
+\FPadd{\TavlFULLctrt}{\TavlCHKctrt}{-\TCiaoPP}
+\FPadd{\TavlFULLrtsf}{\TavlCHKrtsf}{-\TCiaoPP}
+%
+\FPeval{\TavlCLSF}{round(\TavlFULLclsf,0)}
+\FPeval{\TavlCTRT}{round(\TavlFULLctrt,0)}
+\FPeval{\TavlRTSF}{round(\TavlFULLrtsf,0)}
+\FPeval{\TavlUNSF}{round(\TavlCHKunsf,0)}
+
+\FPset{\TbCHKclsf}{2825}
+\FPset{\TbCHKrtsf}{3255}
+\FPset{\TbCHKunsf}{215}
+%
+\FPadd{\TbFULLclsf}{\TbCHKclsf}{-\TCiaoPP}
+\FPset{\TbCHKctrt}{4406} \FPadd{\TbFULLctrt}{\TbCHKctrt}{-\TCiaoPP}
+\FPadd{\TbFULLrtsf}{\TbCHKrtsf}{-\TCiaoPP}
+%
+\FPeval{\TbCLSF}{round(\TbFULLclsf,0)}
+\FPeval{\TbCTRT}{round(\TbFULLctrt,0)}
+\FPeval{\TbRTSF}{round(\TbFULLrtsf,0)}
+\FPeval{\TbUNSF}{round(\TbCHKunsf,0)}
+
+\FPset{\TbinCHKclsf}{2586}
+\FPset{\TbinCHKctrt}{3200}
+\FPset{\TbinCHKrtsf}{2702}
+\FPset{\TbinCHKunsf}{188}
+%
+\FPadd{\TbinFULLclsf}{\TbinCHKclsf}{-\TCiaoPP}
+\FPadd{\TbinFULLctrt}{\TbinCHKctrt}{-\TCiaoPP}
+\FPadd{\TbinFULLrtsf}{\TbinCHKrtsf}{-\TCiaoPP}
+%
+\FPeval{\TbinCLSF}{round(\TbinFULLclsf,0)}
+\FPeval{\TbinCTRT}{round(\TbinFULLctrt,0)}
+\FPeval{\TbinRTSF}{round(\TbinFULLrtsf,0)}
+\FPeval{\TbinUNSF}{round(\TbinCHKunsf,0)}
+
+\FPset{\TheapCHKclsf}{2783}
+\FPset{\TheapCHKctrt}{3453}
+\FPset{\TheapCHKrtsf}{2857}
+\FPset{\TheapCHKunsf}{208}
+%
+\FPadd{\TheapFULLclsf}{\TheapCHKclsf}{-\TCiaoPP}
+\FPadd{\TheapFULLctrt}{\TheapCHKctrt}{-\TCiaoPP}
+\FPadd{\TheapFULLrtsf}{\TheapCHKrtsf}{-\TCiaoPP}
+%
+\FPeval{\TheapCLSF}{round(\TheapFULLclsf,0)}
+\FPeval{\TheapCTRT}{round(\TheapFULLctrt,0)}
+\FPeval{\TheapRTSF}{round(\TheapFULLrtsf,0)}
+\FPeval{\TheapUNSF}{round(\TheapCHKunsf,0)}
+
+\FPset{\TrbCHKclsf}{3410}
+\FPset{\TrbCHKctrt}{4613}
+\FPset{\TrbCHKrtsf}{3186}
+\FPset{\TrbCHKunsf}{322}
+%
+\FPadd{\TrbFULLclsf}{\TrbCHKclsf}{-\TCiaoPP}
+\FPadd{\TrbFULLctrt}{\TrbCHKctrt}{-\TCiaoPP}
+\FPadd{\TrbFULLrtsf}{\TrbCHKrtsf}{-\TCiaoPP}
+%
+\FPeval{\TrbCLSF}{round(\TrbFULLclsf,0)}
+\FPeval{\TrbCTRT}{round(\TrbFULLctrt,0)}
+\FPeval{\TrbRTSF}{round(\TrbFULLrtsf,0)}
+\FPeval{\TrbUNSF}{round(\TrbCHKunsf,0)}
+
+% ----------------------------------------------------- ratios to unsafe
+
+\FPdiv{\TavlCLSFdiv}{\TavlCLSF}{\TavlUNSF} \FPeval{\TavlCLSFratio}{round(\TavlCLSFdiv,0)}
+\FPdiv{\TavlRTSFdiv}{\TavlRTSF}{\TavlUNSF} \FPeval{\TavlRTSFratio}{round(\TavlRTSFdiv,0)}
+\FPdiv{\TavlCTRTdiv}{\TavlCTRT}{\TavlUNSF} \FPeval{\TavlCTRTratio}{round(\TavlCTRTdiv,0)}
+
+\FPdiv{\TbCLSFdiv}{\TbCLSF}{\TbUNSF} \FPeval{\TbCLSFratio}{round(\TbCLSFdiv,0)}
+\FPdiv{\TbRTSFdiv}{\TbRTSF}{\TbUNSF} \FPeval{\TbRTSFratio}{round(\TbRTSFdiv,0)}
+\FPdiv{\TbCTRTdiv}{\TbCTRT}{\TbUNSF} \FPeval{\TbCTRTratio}{round(\TbCTRTdiv,0)}
+
+\FPdiv{\TbinCLSFdiv}{\TbinCLSF}{\TbinUNSF} \FPeval{\TbinCLSFratio}{round(\TbinCLSFdiv,0)}
+\FPdiv{\TbinRTSFdiv}{\TbinRTSF}{\TbinUNSF} \FPeval{\TbinRTSFratio}{round(\TbinRTSFdiv,0)}
+\FPdiv{\TbinCTRTdiv}{\TbinCTRT}{\TbinUNSF} \FPeval{\TbinCTRTratio}{round(\TbinCTRTdiv,0)}
+
+\FPdiv{\TheapCLSFdiv}{\TheapCLSF}{\TheapUNSF} \FPeval{\TheapCLSFratio}{round(\TheapCLSFdiv,0)}
+\FPdiv{\TheapRTSFdiv}{\TheapRTSF}{\TheapUNSF} \FPeval{\TheapRTSFratio}{round(\TheapRTSFdiv,0)}
+\FPdiv{\TheapCTRTdiv}{\TheapCTRT}{\TheapUNSF} \FPeval{\TheapCTRTratio}{round(\TheapCTRTdiv,0)}
+
+\FPdiv{\TrbCLSFdiv}{\TrbCLSF}{\TrbUNSF} \FPeval{\TrbCLSFratio}{round(\TrbCLSFdiv,0)}
+\FPdiv{\TrbRTSFdiv}{\TrbRTSF}{\TrbUNSF} \FPeval{\TrbRTSFratio}{round(\TrbRTSFdiv,0)}
+\FPdiv{\TrbCTRTdiv}{\TrbCTRT}{\TrbUNSF} \FPeval{\TrbCTRTratio}{round(\TrbCTRTdiv,0)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              ANALYSIS TIMES TABLE                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Data from the experiments-20170329.txt, ms
+
+\FPset{\TavlPREPshfrMS}{2.374}   \FPeval{\TavlPREPshfr}{round(\TavlPREPshfrMS,0)}
+\FPset{\TavlANAshfrMS}{9.689}    \FPeval{\TavlANAshfr}{round(\TavlANAshfrMS,0)}
+\FPset{\TavlPREPetermsMS}{2.193} \FPeval{\TavlPREPeterms}{round(\TavlPREPetermsMS,0)}
+\FPset{\TavlANAetermsMS}{31.455} \FPeval{\TavlANAeterms}{round(\TavlANAetermsMS,0)}
+\FPset{\TavlACHKMS}{59.405}      \FPeval{\TavlACHK}{round(\TavlACHKMS,0)}
+
+\FPset{\TbPREPshfrMS}{3.135}   \FPeval{\TbPREPshfr}{round(\TbPREPshfrMS,0)}
+\FPset{\TbANAshfrMS}{9.282}    \FPeval{\TbANAshfr}{round(\TbANAshfrMS,0)}
+\FPset{\TbPREPetermsMS}{3.002} \FPeval{\TbPREPeterms}{round(\TbPREPetermsMS,0)}
+\FPset{\TbANAetermsMS}{37.907} \FPeval{\TbANAeterms}{round(\TbANAetermsMS,0)}
+\FPset{\TbACHKMS}{90.008}      \FPeval{\TbACHK}{round(\TbACHKMS,0)}
+
+\FPset{\TbinPREPshfrMS}{0.726}   \FPeval{\TbinPREPshfr}{round(\TbinPREPshfrMS,0)}
+\FPset{\TbinANAshfrMS}{9.036}    \FPeval{\TbinANAshfr}{round(\TbinANAshfrMS,0)}
+\FPset{\TbinPREPetermsMS}{0.733} \FPeval{\TbinPREPeterms}{round(\TbinPREPetermsMS,0)}
+\FPset{\TbinANAetermsMS}{14.129} \FPeval{\TbinANAeterms}{round(\TbinANAetermsMS,0)}
+\FPset{\TbinACHKMS}{33.201}      \FPeval{\TbinACHK}{round(\TbinACHKMS,0)}
+
+\FPset{\TheapPREPshfrMS}{1.884}   \FPeval{\TheapPREPshfr}{round(\TheapPREPshfrMS,0)}
+\FPset{\TheapANAshfrMS}{6.626}    \FPeval{\TheapANAshfr}{round(\TheapANAshfrMS,0)}
+\FPset{\TheapPREPetermsMS}{1.634} \FPeval{\TheapPREPeterms}{round(\TheapPREPetermsMS,0)}
+\FPset{\TheapANAetermsMS}{24.248} \FPeval{\TheapANAeterms}{round(\TheapANAetermsMS,0)}
+\FPset{\TheapACHKMS}{71.356}      \FPeval{\TheapACHK}{round(\TheapACHKMS,0)}
+
+\FPset{\TrbPREPshfrMS}{13.321}   \FPeval{\TrbPREPshfr}{round(\TrbPREPshfrMS,0)}
+\FPset{\TrbANAshfrMS}{10.98}     \FPeval{\TrbANAshfr}{round(\TrbANAshfrMS,0)}
+\FPset{\TrbPREPetermsMS}{14.092} \FPeval{\TrbPREPeterms}{round(\TrbPREPetermsMS,0)}
+\FPset{\TrbANAetermsMS}{35.289}  \FPeval{\TrbANAeterms}{round(\TrbANAetermsMS,0)}
+\FPset{\TrbACHKMS}{298.112}      \FPeval{\TrbACHK}{round(\TrbACHKMS,0)}
+
+% --------------------------------------------------------------- ratios
+
+\FPeval{\TavlANAsum}{\TavlPREPshfr+\TavlANAshfr+\TavlPREPeterms+\TavlANAeterms}
+\FPeval{\TavlANA}{round(\TavlANAsum,0)}
+\FPdiv{\TavlANAratio}{\TavlANAsum}{\TavlFULLctrt}
+\FPmul{\TavlANAproc}{\TavlANAratio}{100}
+\FPeval{\TavlANArel}{round(\TavlANAproc,0)}
+%
+\FPdiv{\TavlACHKratio}{\TavlACHK}{\TavlFULLctrt}
+\FPmul{\TavlACHKproc}{\TavlACHKratio}{100}
+\FPeval{\TavlACHKrel}{round(\TavlACHKproc,0)}
+
+\FPeval{\TbANAsum}{\TbPREPshfr+\TbANAshfr+\TbPREPeterms+\TbANAeterms}
+\FPeval{\TbANA}{round(\TbANAsum,0)}
+\FPdiv{\TbANAratio}{\TbANAsum}{\TbFULLctrt}
+\FPmul{\TbANAproc}{\TbANAratio}{100}
+\FPeval{\TbANArel}{round(\TbANAproc,0)}
+%
+\FPdiv{\TbACHKratio}{\TbACHK}{\TbFULLctrt}
+\FPmul{\TbACHKproc}{\TbACHKratio}{100}
+\FPeval{\TbACHKrel}{round(\TbACHKproc,0)}
+
+\FPeval{\TbinANAsum}{\TbinPREPshfr+\TbinANAshfr+\TbinPREPeterms+\TbinANAeterms}
+\FPeval{\TbinANA}{round(\TbinANAsum,0)}
+\FPdiv{\TbinANAratio}{\TbinANAsum}{\TbinFULLctrt}
+\FPmul{\TbinANAproc}{\TbinANAratio}{100}
+\FPeval{\TbinANArel}{round(\TbinANAproc,0)}
+%
+\FPdiv{\TbinACHKratio}{\TbinACHK}{\TbinFULLctrt}
+\FPmul{\TbinACHKproc}{\TbinACHKratio}{100}
+\FPeval{\TbinACHKrel}{round(\TbinACHKproc,0)}
+
+\FPeval{\TheapANAsum}{\TheapPREPshfr+\TheapANAshfr+\TheapPREPeterms+\TheapANAeterms}
+\FPeval{\TheapANA}{round(\TheapANAsum,0)}
+\FPdiv{\TheapANAratio}{\TheapANAsum}{\TheapFULLctrt}
+\FPmul{\TheapANAproc}{\TheapANAratio}{100}
+\FPeval{\TheapANArel}{round(\TheapANAproc,0)}
+%
+\FPdiv{\TheapACHKratio}{\TheapACHK}{\TheapFULLctrt}
+\FPmul{\TheapACHKproc}{\TheapACHKratio}{100}
+\FPeval{\TheapACHKrel}{round(\TheapACHKproc,0)}
+
+\FPeval{\TrbANAsum}{\TrbPREPshfr+\TrbANAshfr+\TrbPREPeterms+\TrbANAeterms}
+\FPeval{\TrbANA}{round(\TrbANAsum,0)}
+\FPdiv{\TrbANAratio}{\TrbANAsum}{\TrbFULLctrt}
+\FPmul{\TrbANAproc}{\TrbANAratio}{100}
+\FPeval{\TrbANArel}{round(\TrbANAproc,0)}
+%
+\FPdiv{\TrbACHKratio}{\TrbACHK}{\TrbFULLctrt}
+\FPmul{\TrbACHKproc}{\TrbACHKratio}{100}
+\FPeval{\TrbACHKrel}{round(\TrbACHKproc,0)}

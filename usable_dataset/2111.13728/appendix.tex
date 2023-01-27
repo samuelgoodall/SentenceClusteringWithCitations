@@ -1,0 +1,209 @@
+\onecolumn
+\section{Appendix}
+
+\subsection{Proof in {\assnname}}
+\label{app:assn}
+
+\implictrule*
+\begin{proof} 
+	For the first rule, note that  $(s_{e0}s_{e1})\rho = s_{e0}(s_{e1}\rho ) = s_{e0}\rho  = \rho$. 
+	Also, $\forall \svar \in \sigma$, $s_{e0}s_{e1} \svar = s_{e0}\svar s_{e1} = \svar s_{e0}s_{e1}$. Thus, $(\rho, \sigma) \models s_{e0}s_{e1}$. $(\rho, \sigma) \models \lambda_0 s_{e0} + \lambda_1 s_{e1} $ can be proved similarly. \\
+	For the second rule, note that $s_{e1}\rho = s_{e1}(s_{e0}\rho ) =
+	(s_{e1}s_{e0})\rho = \rho$, and $\forall \svar \in \sigma$, $(\svar s_{e_1})s_{e_0} = s_{e_1}s_{e_0}\svar = (s_{e_1}\svar) s_{e_0}$. Since $s_{e_0}$ is not singular, we have $\svar s_{e_1}= s_{e_1}\svar$, thus $(\rho, \sigma) \models s_{e1}$. \\
+	For the final rule, notice that $(a s_{e0} + bs_{e1}s_{e2})\rho = a s_{e0}\rho + bs_{e1}s_{e2}\rho = a s_{e0}\rho + bs_{e1}\rho = \rho$.\\
+	Finally, it is easy to see in all these rules, the stabilizer in $\sigma$ is commutable with the target stabilizer expressions. 
+\end{proof}
+
+\boolassn*
+\begin{proof}
+	We first prove the conjunction rule. Since $A_0\wedge A_1 \Rightarrow A_0$, $A_0\wedge A_1 \Rightarrow A_1$, then by the consequence rule, we have $\{A_0\wedge A_1\}\prog\{B_0\}$ and $\{A_0\wedge A_1\}\prog\{B_1\}$, i.e., $\{A_0\wedge A_1\}\prog\{B_0\wedge B_1\}$. For the disjunction rule, notice that if $(\rho,\sigma)\models (A_0\vee A_1)$, then either $(\rho,\sigma)\models A_0$ or $(\rho,\sigma)\models A_1$. 
+	Finally,
+	$\{I\}\prog\{I\}$ always holds since any state $(\rho,\sigma)$ satisfies $I$. $\{0\}\prog\{B\}$ is true because $(\rho,\sigma)\models 0 \Rightarrow \denot{P}(\rho,\sigma)\models B$.
+\end{proof}
+
+\decodecorrect*
+\begin{proof}
+First, any valid correction function will project the state into one quiescent state of the QEC code. It's the definition of QEC code error correction. \\
+Second, note that the assertion $A \wedge A_S$  represents error-free states in the QEC code, thus any valid \textbf{correct} protocol will place a \textbf{skip} statement for correcting the error-free state. 
+Assume the \textbf{correct} protocol is implemented based on the look-up table, 
+since $A \wedge A_S \wedge -\svar_i = 0$,
+then by the condition rule and $\{0\}\prog\{A \wedge A_S\}$ (Lemma~\ref{lem:bool-assn}), we directly get $\{A \wedge A_S\}\textbf{correct}(\svar_0, \svar_1, \cdots) \{A \wedge A_S\}$.
+\end{proof}
+
+
+
+\soundness*
+\begin{proof}
+\setcounter{cnt}{0}
+(\showcnt) Skip. Note than the skip rule does not change the program state.\\
+(\showcnt) Initialization.
+By the definition of the substitution rule, $(\rho, \sigma) \models A[\ket{0}/\rho]$ is equivalent to $(\rho_0^q, \sigma) \models A$, then the state after initialization $(\rho',\sigma) = (\rho_0^q,\sigma)$ also satisfies $A$. \\
+(\showcnt) Unitary. Note that $(UAU^\dagger)(U\rho U^\dagger) = U A \rho U^\dagger$, so  \\$(UAU^\dagger)(U\rho U^\dagger) = (U\rho U^\dagger) \Leftrightarrow A\rho = \rho$.
+\\
+(\showcnt) Assignment. For the first rule, assume $(\rho, \sigma) \models A$, then $A$ is commutable with $\svar$. Then, $A$ is also commutable with $-\svar$. Thus, $(\rho,\sigma') = (\rho,\sigma[-\svar/\svar])$ also satisfies $A$. \\
+The second rule is obviously correct, but it limits the selection of $A$. \\
+(\showcnt) Sequencing. Assume $(\rho, \sigma) \models A$, then $\denot{P_0}(\rho, \sigma)\models C$ by the hypothesis $\{A\}P_0\{C\}$. On the other hand $\denot{P_0;P_1}(\rho,\sigma) = \denot{P_1}(\denot{P_0}(\rho, \sigma)) \models B$ by the hypothesis $\{C\}P_1\{B\}$.
+\\
+(\showcnt) Condition. 
+First, $\sum A_i M_i$ is a legal stabilizer expression because $M_1 = \frac{I+\svar}{2}$ and $M_0 = \frac{I-\svar}{2}$ are legal stabilizer expressions. 
+Assume $(\rho, \sigma) \models A$, then $\sigma(\svar)$ is commutable with $A$, so is $M_1$ and $M_0$. Thus, $A M_1\rho M_1^\dagger = M_1 A\rho M_1^\dagger = M_1\rho M_1^\dagger$. Likewise, we have $A M_0\rho M_0^\dagger = M_0\rho M_0^\dagger$. Let $A = \sum_i A_i M_i$, then $A M_1\rho M_1^\dagger = A_1M_1(M_1\rho M_1^\dagger) + A_0M_0(M_1\rho M_1^\dagger) = A_1(M_1\rho M_1^\dagger)$ since $M_1M_1 = M_1$, $M_1M_0 = 0$. Thus, we have $A_1M_1\rho M_1^\dagger = M_1\rho M_1^\dagger$. 
+Since $\svar$ is commutable with both $A_1$ and $A_0$, we have $(M_1\rho M_1^\dagger,\sigma) \models A_1$ and $(M_0\rho M_0^\dagger,\sigma[-\svar/\svar]) \models A_0$. Also, $(M_1\rho M_1^\dagger,\sigma) \models \svar$ and $(M_0\rho M_0^\dagger,\sigma[-\svar/\svar]) \models -\svar$. Thus, if $(\rho,\sigma)\models \sum_i A_iM_i$, we have $(M_1\rho M_1^\dagger,\sigma) \models A_1\wedge \svar$ and $(M_0\rho M_0^\dagger,\sigma) \models A_0\wedge -\svar$.
+Since $\{A_1 \wedge \svar\}P_1\{B\}$ and $\{A_0 \wedge -\svar\}P_0\{B\}$, by the semantics of the condition statement, we have $\{\sum A_i M_i\}\textbf{if}\,M[\svar, \bar{q}]\,\textbf{then}\, P_0\,\textbf{else}\, P_1\,\textbf{end}\{B\}$. \\
+(\showcnt) While. The proof of the While rule is quite similar to that of the Condition rule. $\sum A_iM_i$ is called the invariant of the loop. If the execution enters the loop body, then by $\{ A_1 \wedge \svar \}P_0\{\sum A_i M_i\}$, we still have $(\rho, \sigma) \models \sum A_i M_i$ for the next loop. So, when the while loop terminates, we always have $(\rho, \sigma) \models  A_0 \wedge -\svar$. \\
+To prove the While rule more formally, we only need to show the partial correctness holds for $\textbf{while}^{(k)}$, as $\textbf{while}$ is the disjunction of $\textbf{while}^{(k)}$, $k=0,1,2,\cdots$.
+\\
+(\showcnt) Consequence. Assume $(\rho,\sigma) \models A$, then $ (\rho,\sigma) \models A'$ by $\{A\Rightarrow A'\}$. Since $\{A'\}\prog\{B'\}$, we have $\denot{P}(\rho,\sigma) \models B'$. Then $\denot{P}(\rho,\sigma) \models B$ by $B'\Rightarrow B$. Thus, $\{A\}\prog\{B\}$.
+\end{proof}
+
+\subsection{Verification of Quantum Repetition Code}
+\label{app:rep}
+\repcnot*
+\begin{proof}
+First, for control qubit $a$ and target qubit $b$, $\text{CNOT}_{ab} = \frac{1}{2}(I + X_b + Z_a - Z_aX_b)$. Then\\
+(1) $\{Z_{L0} I_{L1}\}\prog\{Z_{L0}I_{L1}\}$. Note that both $\text{CNOT}_{03}$, $\text{CNOT}_{14}$ and $\text{CNOT}_{25}$ are commutable with $Z_{L0}$, so $\text{CNOT}_{03}Z_{L0}\text{CNOT}_{03} = Z_{L0}\text{CNOT}_{03}\text{CNOT}_{03} = Z_{L0}$, , $\text{CNOT}_{14}Z_{L0}\text{CNOT}_{14}= Z_{L0}$ and $\text{CNOT}_{25}Z_{L0}\text{CNOT}_{25}= Z_{L0}$. \\
+(2) $\{X_{L0} I_{L1}\}\prog\{X_{L0}X_{L1}\}$. Note that $\text{CNOT }_{03}X_{L0}\text{CNOT}_{03} = X_{L0}X_3$. Since $X_3$ is commutable with $\text{CNOT}_{14}$, $\text{CNOT}_{14}X_{L0} X_3 \text{CNOT}_{14} = (\text{CNOT }_{14}X_{L0}\text{CNOT}_{14})X_3 = X_{L0}X_4X_3$. Finally, $\text{CNOT}_{25}X_{L0}X_4X_3\text{CNOT}_{25} = X_{L0}X_5X_4X_3 = X_{L0}X_{L1}$. \\
+(3) $\{I_{L0} X_{L1}\}\prog\{I_{L0}X_{L1}\}$. Note that both $\text{CNOT}_{03}$, $\text{CNOT}_{14}$ and $\text{CNOT}_{25}$ are commutable with $X_{L1}$. \\
+(4) $\{I_{L0} Z_{L1}\}\prog\{Z_{L0}Z_{L1}\}$. Note that  $\text{CNOT}_{03}Z_{L1}\text{CNOT}_{03} = Z_{0}Z_{L1}$, $\text{CNOT}_{14}Z_{0}Z_{L1}\text{CNOT}_{14} = Z_{0}\text{CNOT}_{14}Z_{L1}\text{CNOT}_{14} = Z_{0}Z_{1}Z_{L1}$, and $\text{CNOT}_{25}Z_{0}Z_{1}Z_{L1}\text{CNOT}_{25} = Z_{0}Z_{1}\text{CNOT}_{25}Z_{L1}\text{CNOT}_{25} = Z_{0}Z_{1}Z_{2}Z_{L1} = Z_{L0}Z_{L1}$. \\
+Finally, We can prove that $\{Z_0Z_1\}\prog\{Z_0Z_1\}$, $\{Z_1Z_2\}\prog\{Z_1Z_2\}$, $\{Z_3Z_4\}\prog\{Z_0Z_1Z_3Z_4\}$, $\{Z_4Z_5\}\prog\{Z_1Z_2Z_4Z_5\}$ in a similar way. Combing all these facts, we can prove the desired partial correctness on the logical CNOT gate.
+\end{proof}
+
+\subsection{Verification of the Surface Code}
+\label{app:surf}
+
+
+\begin{program}[Initialize $\ket{0_L}$]
+For the initialization operation in the  figure below, which initializes an X-cut logical qubit to $\ket{0_L}$,\\
+\includegraphics[width=0.5\textwidth]{figure/initplus6.pdf}\\
+\label{prog:initzero}
+we have $\prog \Coloneqq
+\bar{q} \coloneqq \ket{0};
+\svar_0 \coloneqq X_0X_1X_2X_4;
+\svar_1 \coloneqq X_4X_6X_7X_9;
+\svar_2 \coloneqq X_9X_{11}X_{12}X_{14};
+\svar_3 \coloneqq X_{14}X_{16}X_{17}X_{18}; \\
+\svar_4 \coloneqq Z_1Z_3Z_4Z_6;
+\svar_5 \coloneqq Z_2Z_4Z_5Z_7;
+\svar_6 \coloneqq Z_{6}Z_{8}Z_{9}Z_{11};
+\svar_7 \coloneqq Z_{11}Z_{13}Z_{14}Z_{16};
+\svar_8 \coloneqq Z_{7}Z_{9}Z_{10}Z_{12};
+\svar_{9} \coloneqq Z_{12}Z_{14}Z_{15}Z_{17};
+\svar_{10} \coloneqq \cdots \\
+\textbf{correct}(\svar_0,\svar_1,\cdots);
+\svar_0 \coloneqq I; 
+\svar_1 \coloneqq I;
+\svar_2 \coloneqq I; 
+\svar_3 \coloneqq I;
+\svar_4 \coloneqq Z_1Z_3Z_6; 
+\svar_5 \coloneqq Z_2Z_5Z_7; 
+\svar_6 \coloneqq Z_{6}Z_{8}Z_{11}; 
+\svar_7 \coloneqq Z_{11}Z_{13}Z_{16}; \\
+\svar_8 \coloneqq Z_{7}Z_{10}Z_{12}; 
+\svar_{9} \coloneqq Z_{12}Z_{15}Z_{17}; 
+\svar_{10} \coloneqq \cdots \\
+\svar_{\stabnum +1} \coloneqq Z_{4}; 
+\svar_{\stabnum +2} \coloneqq Z_{9};
+\svar_{\stabnum +3} \coloneqq Z_{14}; \\
+\text{// set }q_4, q_9, q_{14}\text{ to }\ket{0}; \\
+\qif{\svar_{\stabnum +1}, q_4 }{\textbf{skip}}{\bar{q} \coloneqq X_4X_6X_7X_9\bar{q}; \svar_{\stabnum +1} \coloneqq Z_{4}} %
+\\
+\textbf{if}\ M[\svar_{\stabnum +2}, q_9]\ \textbf{then}
+\myquad \textbf{skip}\ 
+\textbf{else}
+\myquad \bar{q} \coloneqq X_9X_{11}X_{12}X_{14}\bar{q}; 
+\svar_{\stabnum +2} \coloneqq Z_{9}\ 
+\textbf{end} \\
+\qif{\svar_{\stabnum +3}, q_{14}}{\textbf{skip}}{\bar{q} \coloneqq X_{14}X_{16}X_{17}X_{18}\bar{q}; \svar_{\stabnum +1} \coloneqq Z_{14}}; \\
+\svar_1 \coloneqq X_4X_6X_7X_9;
+\svar_2 \coloneqq X_9X_{11}X_{12}X_{14}$;
+$\textbf{correct}(\svar_0,\svar_1,\cdots)$.
+\end{program}
+
+\begin{restatable}[Initialize $\ket{0_L}$]{proposition}{surfinitzerol}
+For the program $\prog$ in Program~\ref{prog:initzero} which initializes a X-cut logical qubit to $\ket{0_L}$, \\
+$\{I\}\prog\{Z_4Z_9Z_{14}\}$. Here $Z_4Z_9Z_{14}$ is the logical Z operator $Z_{L}$.
+\end{restatable}
+\begin{proof}
+By Proposition~\ref{prop:decodecorrect}, after \textbf{correct} function, $(\rho,\sigma)\models (\svar_0 \wedge \svar_1 \wedge \svar_2 \cdots)$. The following stabilizer assignments which turn off X-stabilizers will just forward the precondition. \\
+For simplicity, assume there are {\stabnum} stabilizers in the surface code array. let $\Lambda = \{0,\cdots,w-1\}$, then $(\svar_0 \wedge \svar_1 \wedge \svar_2 \cdots) = \wedge_{i\in \Lambda}\svar_i$. Since $\svar_0 \wedge \svar_1 \Rightarrow X_0X_1X_2X_6X_7X_9$ and $X_0X_1X_2X_6X_7X_9$ is commutable with $Z_4$, $\{\wedge_{i\in \Lambda}\svar_i\}\svar_{\stabnum +1} \coloneqq Z_{4}\{(\wedge_{i\in \Lambda\setminus \{0,1\}}\svar_i) \wedge X_0X_1X_2X_6X_7X_9\}$. Likewise, we know that after $\svar_{\stabnum +2} \coloneqq Z_{9}$, the precondition will become \\
+$\{(\wedge_{i\in \Lambda\setminus \{0,1,2,3\}}\svar_i) \wedge X_0X_1X_2X_6X_7X_{11}X_{12}X_{16}X_{17}X_{18}\}$. \\
+Note that $(\wedge_{i\in \Lambda\setminus \{0,1,2,3\}}\svar_i) \wedge X_0X_1X_2X_6X_7X_{11}X_{12}X_{16}X_{17}X_{18} \Rightarrow X_0X_1X_2X_6X_7X_{11}X_{12}X_{16}X_{17}X_{18} $. \\
+Let $A = X_0X_1X_2X_6X_7X_{11}X_{12}X_{16}X_{17}X_{18}$, \\
+$c = \qif{\svar_{\stabnum +1}, q_4}{\textbf{skip}}{\bar{q} \coloneqq X_4X_6X_7X_9\bar{q}; \svar_{\stabnum +1} \coloneqq Z_{4}}$.
+It's easy to see that $\{A \wedge Z_4\} \textbf{skip} \{A \wedge Z_4\}$, and $\{A \wedge -Z_4\} q_4 \coloneqq Xq_4; \svar_{\stabnum +1}\coloneqq Z_4 \{A \wedge Z_4\}$. Thus, $\{A\}c\{A \wedge Z_4\}$. Then, after reset $q_{14}$ to $\ket{0}$, the precondition will become: \\
+$\{A \wedge Z_4 \wedge Z_9 \wedge Z_{14}\}$.
+Again, the following stabilizer assignments will just forward the precondition. By the implication rule, we have that $A \wedge Z_4 \wedge Z_9 \wedge Z_{14} \Rightarrow A \wedge Z_4Z_9Z_{14}$. Since $Z_4Z_9Z_{14}$ and all assertions in $A$ are commutable with stabilizers $\svar_0, \svar_1, \cdots$, we have $\{ A \wedge Z_4Z_9Z_{14}\} \textbf{correct}(\svar_0,\svar_1,\cdots) \{\wedge_{i\in \Lambda} \svar_i \wedge Z_4Z_9Z_{14}  \wedge X_0X_1X_2X_6X_7X_{11}X_{12}X_{16}X_{17}X_{18} \}$. Then by applying the consequence rule, we get $\{I\}\prog\{Z_4Z_9Z_{14}\}$.
+\end{proof}
+
+\begin{program}[Logical X gate] For the logical X gate $X_L$ in the Figure below:\\
+\includegraphics[width=0.2\textwidth]{figure/surflogx6.pdf} \\
+we have $\prog \Coloneqq q_0q_1q_2q_4 \coloneqq X_{0}X_{1}X_{2}X_{4}q_0q_1q_2q_4$.
+\end{program}
+
+\begin{proposition}[Logical X gate]
+For program $\prog$ in Figure~\ref{fig:surfcode}(d), we have  $\{Z_L\}\prog\{-Z_L\}$ and $\{-Z_L\}\prog\{Z_L\}$, \\
+where $Z_L = Z_4Z_9Z_{14}$.
+\end{proposition}
+\begin{proof}
+	Notice that $(X_L)(Z_L)(X_L)^\dagger = -Z_L$.
+\end{proof}
+
+\statestabilizer*
+\begin{proof}
+For the first part, we can get $a = \frac{\alpha^2 - \beta^2}{\alpha^2 + \beta^2}$ and $b = \frac{2\alpha\beta}{\alpha^2 + \beta^2}$ simply by solving the equation $(a Z_L + b X_L)\ket{\psi} = \ket{\psi}$. \\
+For the second part, assume $\ket{\psi_0} = \alpha_0 Z_L + \beta_0 X_L$ and $\ket{\psi_1} = \alpha_1 Z_L + \beta_1 X_L$, if there is a $aZ_L + bX_L$ s.t. $(aZ_L + bX_L)\ket{\psi_0} = \ket{\psi_0}$ and $(aZ_L + bX_L)\ket{\psi_1} = \ket{\psi_1}$. Then, we have $a = (\frac{\alpha_0^2 - \beta_0^2}{\alpha_0^2 + \beta_0^2} = (\frac{\alpha_1^2 - \beta_1^2}{\alpha_1^2 + \beta_1^2}$, which is equivalent to $1 - \frac{2}{1 + (\frac{\alpha_0}{\beta_0})^2} = 1 - \frac{2}{1 + (\frac{\alpha_1}{\beta_1})^2}$. Thus, $(\frac{\alpha_0}{\beta_0})^2 = (\frac{\alpha_1}{\beta_1})^2$. On the other hand, $b = \frac{2\alpha_0\beta_0}{\alpha_0^2 + \beta_0^2} = \frac{2\alpha_1\beta_1}{\alpha_1^2 + \beta_1^2}$, which is equivalent to $\frac{\frac{\alpha_0}{\beta_0}}{1 + (\frac{\alpha_0}{\beta_0})^2} = \frac{\frac{\alpha_1}{\beta_1}}{1 + (\frac{\alpha_1}{\beta_1})^2}$. Thus, $\frac{\alpha_0}{\beta_0} = \frac{\alpha_1}{\beta_1}$, i.e., $\ket{\psi_0} = \ket{\psi_1}$ up to a global phase.
+\end{proof}
+\surfvqmov*
+\begin{proof}
+After the first \textbf{correction} function, the precondition is transformed into: $(a Z_L + b X_L)\wedge_i \svar_i$.
+The three following stabilizer assignments will forward the precondition. Then by the implication rule, $(a Z_L + b X_L)\wedge_i \svar_i \Rightarrow (aZ_L + bX_{2}X_{3}X_{4}X_{8}X_{9}X_{10})\wedge_{i \ne 1}\svar_i$. so for the next stabilizer assignment $\svar_{\stabnum +1} = Z_6$, precondition $(aZ_L + bX_{2}X_{3}X_{4}X_{8}X_{9}X_{10}) \wedge_{i \ne 1}\svar_i$ will be forwarded. Note that $(aZ_L + b X_{2} X_{3} X_{4} X_{8} X_{9}X_{10}) \wedge_{i \ne 1}\svar_i \Rightarrow aZ_L + b X_{2} X_{3} X_{4} X_{8} X_{9}X_{10}$,
+let $A = aZ_L + b X_{2} X_{3} X_{4} X_{8} X_{9}X_{10}$, \\
+$c = \qif{\svar_{\stabnum +1}, \bar{q}}{\textbf{skip}}{\bar{q}\coloneqq X_6X_{8}X_{9}X_{10}\bar{q}; \svar_{\stabnum +1}=Z_6}$. \\
+For the if statement, $\{A \wedge \svar_{w+1}\}\textbf{skip}\{A \wedge \svar_{w+1}\}$ and $\{A \wedge -\svar_{w+1}\}\bar{q}\coloneqq X_6X_{8}X_{9}X_{10}\bar{q}; \svar_{\stabnum +1}=Z_6\{A \wedge \svar_{w+1}\}$, then $\{A\}c\{A \wedge \svar_{w+1} \}$.
+By implication rule, $A \wedge \svar_{w+1} \Rightarrow aZ_LZ_6 + bX_{2} X_{3} X_{4} X_{8} X_{9}X_{10}$. The next three stabilizer assignment will forward $aZ_LZ_6 + bX_{2} X_{3} X_{4} X_{8} X_{9}X_{10}$. Then with the \textbf{correct} function and the consequence rule, we get that $\{aZ_L + bX_L\}\prog\{aZ_L' + bX'_L\}$, i.e., the logical state is not changed by the qubit moving operation.
+\end{proof}
+
+A braiding operation involves many data qubits, and at least 51 data qubits will be referenced in the problem. To simplify the program, we will use the qubit moving as primitive. 
+$\textbf{qmov}(X_L, X_L')$ means to move the defect that changes the logical X operation of a X-cut qubit from $X_L$ to $X_L'$, and $\textbf{qmov}(Z_L, Z_L')$ to move the defect that changes the logical Z operation of a Z-cut qubit from $Z_L$ to $Z_L'$.
+
+\begin{program}[Braiding]\label{prog:surf-braid} In the figure below, we braid a Z-cut qubit with a X-cut qubit: \\
+\includegraphics[width=0.43\textwidth]{figure/surfbraid1.pdf}
+\\
+The associated program is $\prog \Coloneqq$ \\
+$
+\textbf{qmov}(Z_{5}Z_{9}Z_{10}Z_{15}, Z_{15}Z_{20}Z_{21}Z_{26}) \\
+\textbf{qmov}(Z_{15}Z_{20}Z_{21}Z_{26}, Z_{26}Z_{31}Z_{32}Z_{37}) \\
+\textbf{qmov}(Z_{26}Z_{31}Z_{32}Z_{37}, Z_{37}Z_{42}Z_{43}Z_{47}) \\
+\textbf{qmov}(Z_{37}Z_{42}Z_{43}Z_{47}, Z_{38}Z_{43}Z_{44}Z_{48}) \\
+\textbf{qmov}(Z_{38}Z_{43}Z_{44}Z_{48}, Z_{39}Z_{44}Z_{45}Z_{49}) \\
+\textbf{qmov}(Z_{39}Z_{44}Z_{45}Z_{49}, Z_{40}Z_{45}Z_{46}Z_{50}) \\
+\textbf{qmov}(Z_{40}Z_{45}Z_{46}Z_{50}, Z_{29}Z_{34}Z_{35}Z_{40}) \\
+\textbf{qmov}(Z_{29}Z_{34}Z_{35}Z_{40}, Z_{18}Z_{23}Z_{24}Z_{29}) \\
+\textbf{qmov}(Z_{18}Z_{23}Z_{24}Z_{29}, Z_{8}Z_{12}Z_{13}Z_{18}) \\
+\textbf{qmov}(Z_{8}Z_{12}Z_{13}Z_{18}, Z_{7}Z_{11}Z_{12}Z_{17}) \\
+\textbf{qmov}(Z_{7}Z_{11}Z_{12}Z_{17}, Z_{6}Z_{10}Z_{11}Z_{16}) \\
+\textbf{qmov}(Z_{6}Z_{10}Z_{11}Z_{16}, Z_{5}Z_{9}Z_{10}Z_{15})
+$
+\end{program}
+
+According to Fowler, the verification of the braiding operation only need to focus on four configurations of logical states on a pair of logical qubits: $X_{L1}\otimes I_{L2}$, $I_{L1}\otimes X_{L2}$, $I_{L1}\otimes Z_{L2}$ and $Z_{L1}\otimes I_{L2}$.
+\begin{restatable}[Braiding]{proposition}{surfbraid} 
+For the program $\prog$ in Program~\ref{prog:surf-braid}, \\
+$\{X_{L1} I_{L2}\}\prog\{X_{L1}X_{L2}\}$, $\{I_{L1} Z_{L2}\}\prog\{Z_{L1} Z_{L2}\}$, $\{I_{L1}X_{L2}\}\prog\{I_{L1} X_{L2}\}$ and $\{Z_{L1} I_{L2}\}\prog\{Z_{L1} I_{L2}\}$.
+\end{restatable}
+\begin{proof} To simplify the proof, we let $A_S = \wedge_i \svar_i$, i.e., the assertion generated by current active stabilizers in the surface code array. Note that $A_S$ may change at different time-step. The proof of the braiding operation involves tedious computation and we only give a sketch of the proof here. \\
+(1) Prove $\{X_{L1} I_{L2}\}\prog\{X_{L1} X_{L2}\}$. Since $X_{L1} I_{L2} = X_{L1}$, we only need to focus on the reasoning on $X_{L1}$ only. From the verification of the qubit moving, 
+$\{X_{L1} I_{L2}\} \textbf{qmov}(Z_{5}Z_{9}Z_{10}Z_{15}, Z_{15}Z_{20}Z_{21}Z_{26}) \{X_{L1}X_{15}  I_{L2}\}$ (after \textbf{correct} function, $\{X_{L1}I_{L2} \wedge X_{15} \wedge A_S$ becomes $\{X_{L1}X_{15}I_{L2} \wedge A_S$). Then, after all these qubit moving operations, we will get \\ $\{X_{L1}I_{L2}\}\prog\{X_{L1} X_{15}X_{26}X_{37}X_{43}X_{44}X_{45}X_{29}X_{18}X_{12}X_{11}X_{10}I_{L2} \wedge A_S\}$. Apply implication rule on $A_S$, we get \\ $A_S \Rightarrow (X_{10}X_{15}X_{16}X_{21}) (X_{21}X_{26}X_{27}X_{32})(X_{32}X_{37}X_{38}X_{43})(X_{33}X_{38}X_{39}X_{44})(X_{34}X_{39}X_{40}X_{45})\\
+(X_{23}X_{28}X_{29}X_{34})(X_{12}X_{17}X_{18}X_{23})(X_{11}X_{16}X_{17}X_{22}) = (X_{15}X_{26}X_{37}X_{43}X_{44}X_{45}X_{29}X_{18}X_{12}X_{11}X_{10})(X_{27}X_{33}X_{28}X_{22})
+$. Then, by the consequence rule, we have $\{X_{L1}I_{L2}\}\prog\{X_{L1}X_{L2}\}$.
+\\
+(2) Prove $\{I_{L1} Z_{L2}\}\prog\{Z_{L1} Z_{L2}\}$.
+Before the qubit moving operation involves qubits in $Z_{L2}$, the precondition $\{I_{L1}Z_{L2}\}$ will be forwarded by the qubit moving operation. So, we only need to elaborate on $\textbf{qmov}(Z_{38}Z_{43}Z_{44}Z_{48}, Z_{39}Z_{44}Z_{45}Z_{49})$. \\
+Before measuring $q_{44}$ in X basis, the assignment statement about $X_{44}$ will turn the precondition $\{I_{L1} Z_{L2}\}$ into \\
+$Z_{L2}(Z_{39}Z_{44}Z_{45}Z_{49})$, following the previous verification steps of qubit moving. The if statement on $X_{44}$ and $q_{44}$ will then transform the precondition into $Z_{L2}(Z_{39}Z_{44}Z_{45}Z_{49}) \wedge X_{44}$. The following assignment statement about $Z_{38}Z_{43}Z_{44}Z_{48}$ will turn the precondition $Z_{L2}(Z_{39}Z_{44}Z_{45}Z_{49}) \wedge X_{44}$ into  $Z_{L2}(Z_{39}Z_{44}Z_{45}Z_{49})$. Likewise, the remaining qubit moving operations will change the precondition $Z_{L2}(Z_{39}Z_{44}Z_{45}Z_{49})$ to $Z_{L2}(Z_{40}Z_{45}Z_{46}Z_{50})$, $\cdots$, until $Z_{L2}(Z_{5}Z_{9}Z_{10}Z_{15})$, which is just $Z_{L1}Z_{L2}$. Thus, $\{I_{L1} Z_{L2}\}\prog\{Z_{L1} Z_{L2}\}$.
+\\
+(3) Prove $\{I_{L1} X_{L2}\}\prog\{I_{L1} X_{L2}\}$. Recall the verification of the qubit moving operation. It is easy to see that $\{I_{L1}\}\textbf{qmov}\{I_{L1}\}$ for any qubit moving operation in $P$. On the other hand, the qubit moving operations in $P$ does not involve any qubits in $X_{L2}$, so precondition $I_{L1}X_{L2}$ will be forwarded by all qubit moving operations, i.e.,
+$\{I_{L1} X_{L2}\}\prog\{I_{L1} X_{L2}\}$.
+\\
+(4) Prove $\{Z_{L1} I_{L2}\}\prog\{Z_{L1}I_{L2}\}$. Since $Z_{L1} I_{L2} = Z_{L1}$, we only focus on the reasoning of $Z_{L1}$ here. It is obvious that starting from $Z_5Z_9Z_{10}Z_{15}$, the logical Z operator finally returns to $Z_5Z_9Z_{10}Z_{15}$ by a series of qubit moving operations. Thus, $\{Z_{L1} I_{L2}\}\prog\{Z_{L1}I_{L2}\}$.
+\end{proof}
+

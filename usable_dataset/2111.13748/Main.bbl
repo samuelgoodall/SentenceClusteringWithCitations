@@ -1,0 +1,400 @@
+\begin{thebibliography}{10}
+
+\bibitem{ADDJS93}
+I.~Alth\"{o}fer, G.~Das, D.~Dobkin, D.~Joseph, and J.~Soares.
+\newblock On sparse spanners of weighted graphs.
+\newblock {\em Discrete Computational Geometry}, 9(1):81--100, 1993.
+
+\bibitem{AS97}
+S.~Arya and M.~H.~M. Smid.
+\newblock Efficient construction of a bounded degree spanner with low weight.
+\newblock {\em Algorithmica}, 17(1):33--54, 1997.
+
+\bibitem{ABP90}
+B.~Awerbuch, A.~Baratz, and D.~Peleg.
+\newblock Cost-sensitive analysis of communication protocols.
+\newblock In {\em Proc. of 9th PODC}, pages 177--187, 1990.
+
+\bibitem{ABP91}
+B.~Awerbuch, A.~Baratz, and D.~Peleg.
+\newblock Efficient broadcast and light-weight spanners.
+\newblock {\em Technical Report CS92-22, Weizmann Institute}, October, 1992.
+
+\bibitem{ALGP89}
+B.~Awerbuch, M.~Luby, A.~V. Goldberg, and S.~A. Plotkin.
+\newblock Network decomposition and locality in distributed computation.
+\newblock In {\em Proceedings of the 30th Annual Symposium on Foundations of
+  Computer Science}, FOCS '89, pages 364--369, 1989.
+
+\bibitem{Awerbuch85}
+Baruch Awerbuch.
+\newblock Communication-time trade-offs in network synchronization.
+\newblock In {\em Proc. of 4th PODC}, pages 272--276, 1985.
+
+\bibitem{BDS04}
+Yehuda Ben{-}Shimol, Amit Dvir, and Michael Segal.
+\newblock {SPLAST:} a novel approach for multicasting in mobile wireless ad hoc
+  networks.
+\newblock In {\em Proceedings of the {IEEE} 15th International Symposium on
+  Personal, Indoor and Mobile Radio Communications, {PIMRC} 2004, 5-8 September
+  2004, Barcelona, Spain}, pages 1011--1015, 2004.
+
+\bibitem{BT21}
+S.~Bhore and C.~D. T\'{o}th.
+\newblock {Light Euclidean Steiner Spanners in the Plane}.
+\newblock In {\em 37th International Symposium on Computational Geometry (SoCG
+  2021)}, Leibniz International Proceedings in Informatics (LIPIcs), pages
+  15:1--15:17, 2021.
+
+\bibitem{BT21B}
+S.~Bhore and C.~D. T\'{o}th.
+\newblock {On Euclidean Steiner $(1+\epsilon)$-Spanners}.
+\newblock In {\em 38th International Symposium on Theoretical Aspects of
+  Computer Science (STACS 2021)}, pages 13:1--13:16, 2021.
+
+\bibitem{BLW17}
+G.~Borradaile, H.~Le, and C.~Wulff{-}Nilsen.
+\newblock Minor-free graphs have light spanners.
+\newblock In {\em 2017 IEEE 58th Annual Symposium on Foundations of Computer
+  Science}, FOCS '17, pages 767--778, 2017.
+
+\bibitem{BLW19}
+G.~Borradaile, H.~Le, and C.~Wulff{-}Nilsen.
+\newblock Greedy spanners are optimal in doubling metrics.
+\newblock In {\em Proceedings of the 30th Annual ACM-SIAM Symposium on Discrete
+  Algorithms}, SODA `19, pages 2371--2379, 2019.
+
+\bibitem{BKRCV02}
+R.~Braynard, D.~Kostic, A.~Rodriguez, J.~Chase, and A.~Vahdat.
+\newblock Opus: an overlay peer utility service.
+\newblock In {\em Prof. of 5th OPENARCH}, 2002.
+
+\bibitem{CDNS92}
+B.~Chandra, G.~Das, G.~Narasimhan, and J.~Soares.
+\newblock New sparseness results on graph spanners.
+\newblock In {\em Proceedings of the Eighth Annual Symposium on Computational
+  Geometry}, 1992.
+
+\bibitem{CW16}
+S.~Chechik and C.~Wulff{-}Nilsen.
+\newblock Near-optimal light spanners.
+\newblock In {\em Proceedings of the 27th Annual ACM-SIAM Symposium on Discrete
+  Algorithms}, SODA'16, pages 883--892, 2016.
+
+\bibitem{Chew86}
+L.~P. Chew.
+\newblock There is a planar graph almost as good as the complete graph.
+\newblock In {\em Proceedings of the Second Annual Symposium on Computational
+  Geometry}, SCG `86, pages 169--177, 1986.
+
+\bibitem{Chew89}
+L.~P. Chew.
+\newblock There are planar graphs almost as good as the complete graph.
+\newblock {\em Journal of Computer and System Sciences}, 39(2):205 -- 219,
+  1989.
+
+\bibitem{Clarkson87}
+K.~Clarkson.
+\newblock Approximation algorithms for shortest path motion planning.
+\newblock In {\em Proceedings of the Nineteenth Annual ACM Symposium on Theory
+  of Computing}, STOC `87, pages 56--65, 1987.
+
+\bibitem{Cohen98}
+E.~Cohen.
+\newblock Fast algorithms for constructing $t$-spanners and paths with stretch
+  $t$.
+\newblock {\em {SIAM} Journal on Computing}, 28(1):210--236, 1998.
+
+\bibitem{CKRSW91}
+J.~Cong, A.~B. Kahng, G.~Robins, M.~Sarrafzadeh, and C.~K. Wong.
+\newblock Performance-driven global routing for cell based ics.
+\newblock In {\em Proc. of 9th ICCD}, pages 170--173, 1991.
+
+\bibitem{CKRSW292}
+J.~Cong, A.~B. Kahng, G.~Robins, M.~Sarrafzadeh, and C.~K. Wong.
+\newblock Provably good algorithms for performance-driven global routing.
+\newblock In {\em Proc. of 5th ISCAS}, pages 2240--2243, 1992.
+
+\bibitem{CKRSW92}
+J.~Cong, A.~B. Kahng, G.~Robins, M.~Sarrafzadeh, and C.~K. Wong.
+\newblock Provably good performance-driven global routing.
+\newblock {\em IEEE Trans. on CAD of Integrated Circuits and Sys.},
+  11(6):739--752, 1992.
+
+\bibitem{DHN93}
+G.~Das, P.~Heffernan, and G.~Narasimhan.
+\newblock Optimally sparse spanners in 3-dimensional euclidean space.
+\newblock In {\em Proceedings of the 9th Annual Symposium on Computational
+  Geometry}, SCG '93, pages 53--62, 1993.
+
+\bibitem{DNS95}
+G.~Das, G.~Narasimhan, and J.~Salowe.
+\newblock A new way to weigh malnourished euclidean graphs.
+\newblock In {\em Proceedings of the 6th Annual ACM-SIAM Symposium on Discrete
+  Algorithms}, SODA '95, pages 215--222, 1995.
+
+\bibitem{das1994fast}
+Gautam Das and Giri Narasimhan.
+\newblock A fast algorithm for constructing sparse euclidean spanners.
+\newblock In {\em Proceedings of 10th SoCG}, pages 132--139, 1994.
+
+\bibitem{KV01}
+Amin~Vahdat Dejan~Kostic.
+\newblock Latency versus cost optimizations in hierarchical overlay networks.
+\newblock {\em {T}echnical report, Duke University}, (CS-2001-04), 2002.
+
+\bibitem{ES16}
+M.~Elkin and S.~Solomon.
+\newblock Fast constructions of lightweight spanners for general graphs.
+\newblock {\em ACM Transactions on Algorithms}, 12(3), 2016.
+
+\bibitem{Elkin05}
+Michael Elkin.
+\newblock Computing almost shortest paths.
+\newblock {\em {ACM} Trans. Algorithms}, 1(2):283--323, 2005.
+
+\bibitem{ENS14}
+Michael Elkin, Ofer Neiman, and Shay Solomon.
+\newblock Light spanners.
+\newblock In {\em Proc. of 41th ICALP}, pages 442--452, 2014.
+
+\bibitem{EZ06}
+Michael Elkin and Jian Zhang.
+\newblock Efficient algorithms for constructing (1+epsilon, beta)-spanners in
+  the distributed and streaming models.
+\newblock {\em Distributed Computing}, 18(5):375--385, 2006.
+
+\bibitem{FKMSZ05}
+Joan Feigenbaum, Sampath Kannan, Andrew McGregor, Siddharth Suri, and Jian
+  Zhang.
+\newblock Graph distances in the streaming model: the value of space.
+\newblock In {\em Proc. of 16th SODA}, pages 745--754, 2005.
+
+\bibitem{FN18}
+Arnold Filtser and Ofer Neiman.
+\newblock Light spanners for high dimensional norms via stochastic
+  decompositions.
+\newblock In {\em 26th Annual European Symposium on Algorithms, {ESA} 2018,
+  August 20-22, 2018, Helsinki, Finland}, pages 29:1--29:15, 2018.
+
+\bibitem{FS16}
+Arnold Filtser and Shay Solomon.
+\newblock The greedy spanner is existentially optimal.
+\newblock In {\em Proceedings of the 2016 ACM Symposium on Principles of
+  Distributed Computing}, PODC '16, pages 9--17, 2016.
+\newblock to appear in SICOMP 2020.
+
+\bibitem{Gottlieb15}
+Lee{-}Ad Gottlieb.
+\newblock A light metric spanner.
+\newblock In {\em {IEEE} 56th Annual Symposium on Foundations of Computer
+  Science, {FOCS} 2015, Berkeley, CA, USA, 17-20 October, 2015}, pages
+  759--772, 2015.
+
+\bibitem{GS02}
+M.~Grigni and P.~Sissokho.
+\newblock Light spanners and approximate {TSP} in weighted graphs with
+  forbidden minors.
+\newblock In {\em Proceedings of the 13th Annual ACM-SIAM Symposium on Discrete
+  Algorithms}, SODA '02, pages 852--857, 2002.
+
+\bibitem{Grigni00}
+Michelangelo Grigni.
+\newblock Approximate {TSP} in graphs with forbidden minors.
+\newblock In {\em Automata, Languages and Programming, 27th International
+  Colloquium, {ICALP} 2000, Geneva, Switzerland, July 9-15, 2000, Proceedings},
+  pages 869--877, 2000.
+
+\bibitem{GLN02}
+J.~Gudmundsson, C.~Levcopoulos, and G.~Narasimhan.
+\newblock Fast greedy algorithms for constructing sparse geometric spanners.
+\newblock {\em SIAM J. Comput.}, 31(5):1479--1500, 2002.
+
+\bibitem{HIS13}
+S.~Har-Peled, P.~Indyk, and A.~Sidiropoulos.
+\newblock Euclidean spanners in high dimensions.
+\newblock In {\em Proceedings of the 24th Annual {ACM}-{SIAM} Symposium on
+  Discrete Algorithms}, SODA `13, pages ﻿804--809, 2013.
+
+\bibitem{Keil88}
+J.~M. Keil.
+\newblock Approximating the complete euclidean graph.
+\newblock In {\em Proceedings of the first Scandinavian Workshop on Algorithm
+  Theory}, SWAT `88, pages 208--213, 1988.
+
+\bibitem{KG92}
+J.~M. Keil and C.~A. Gutwin.
+\newblock Classes of graphs which approximate the complete {E}uclidean graph.
+\newblock {\em Discrete and Computational Geometry}, 7(1):13--28, 1992.
+
+\bibitem{Klein05}
+P.~N. Klein.
+\newblock A linear-time approximation scheme for planar weighted {TSP}.
+\newblock In {\em Proceedings of the 46th Annual IEEE Symposium on Foundations
+  of Computer Science}, FOCS '05, pages 647--657, 2005.
+
+\bibitem{Klein06}
+P.~N. Klein.
+\newblock Subset spanner for planar graphs, with application to subset {TSP}.
+\newblock In {\em Proceedings of the 38th Annual ACM Symposium on Theory of
+  Computing}, STOC '06, pages 749--756, 2006.
+
+\bibitem{Kostochka82}
+A.~V. Kostochka.
+\newblock The minimum {H}adwiger number for graphs with a given mean degree of
+  vertices.
+\newblock {\em Metody Diskret. Analiz.}, (38):37--58, 1982.
+
+\bibitem{KNZ14}
+Robert Krauthgamer, Huy~L. Nguyen, and Tamar Zondiner.
+\newblock Preserving terminal distances using minors.
+\newblock {\em {SIAM} J. Discrete Math.}, 28(1):127--141, 2014.
+
+\bibitem{LS20}
+H.~Le and S.~Solomon.
+\newblock Light euclidean spanners with steiner points.
+\newblock In {\em 28th Annual European Symposium on Algorithms}, 2020.
+\newblock Full version at \url{https://arxiv.org/pdf/2007.11636.pdf}.
+
+\bibitem{LS21}
+H.~Le and S.~Solomon.
+\newblock Towards a unified theory of light spanners {I}: {F}ast (yet optimal)
+  constructions.
+\newblock arXiv preprint, 2021.
+\newblock \url{https://arxiv.org/abs/2106.15596}.
+
+\bibitem{Le20}
+Hung Le.
+\newblock A {PTAS} for subset {TSP} in minor-free graphs.
+\newblock In {\em Proceedings of the 2020 {ACM-SIAM} Symposium on Discrete
+  Algorithms, {SODA} 2020, Salt Lake City, UT, USA, January 5-8, 2020}, pages
+  2279--2298, 2020.
+\newblock Full version:
+  \href{https://arxiv.org/abs/1804.01588}{arxiv:1804.01588}.
+
+\bibitem{LS19}
+Hung Le and Shay Solomon.
+\newblock Truly optimal euclidean spanners.
+\newblock In {\em 60th {IEEE} Annual Symposium on Foundations of Computer
+  Science, {FOCS} 2019, Baltimore, Maryland, USA, November 9-12, 2019}, pages
+  1078--1100, 2019.
+\newblock Full version at \url{https://arxiv.org/abs/1904.12042}.
+
+\bibitem{NS07}
+G.~Narasimhan and M.~Smid.
+\newblock {\em Geometric Spanner Networks}.
+\newblock Cambridge University Press, 2007.
+
+\bibitem{PS89}
+D.~Peleg and A.~A. Sch\"{a}ffer.
+\newblock Graph spanners.
+\newblock {\em Journal of Graph Theory}, 13(1):99--116, 1989.
+
+\bibitem{PU89}
+D.~Peleg and J.~D. Ullman.
+\newblock An optimal synchronizer for the hypercube.
+\newblock {\em SIAM J. Comput.}, 18(4):740--747, 1989.
+
+\bibitem{Peleg00}
+David Peleg.
+\newblock {\em Distributed Computing: A Locality-Sensitive Approach}.
+\newblock SIAM, Philadelphia, PA, 2000.
+
+\bibitem{Peleg00Prox}
+David Peleg.
+\newblock Proximity-preserving labeling schemes.
+\newblock {\em Journal of Graph Theory}, 33(3):167--176, 2000.
+
+\bibitem{PU89b}
+David Peleg and Eli Upfal.
+\newblock A trade-off between space and efficiency for routing tables.
+\newblock {\em J. ACM}, 36(3):510--530, 1989.
+
+\bibitem{RS98}
+S.~B. Rao and W.~D. Smith.
+\newblock Approximating geometrical graphs via ``spanners'' and ``banyans''.
+\newblock In {\em Proceedings of the 30th Annual ACM Symposium on Theory of
+  Computing}, STOC '98, pages 540--550, 1998.
+\newblock Full version at
+  http://graphics.stanford.edu/courses/cs468-06-winter/Papers/rs-tsp.pdf.
+
+\bibitem{RTZ05}
+Liam Roditty, Mikkel Thorup, and Uri Zwick.
+\newblock Deterministic constructions of approximate distance oracles and
+  spanners.
+\newblock In {\em Automata, Languages and Programming, 32nd International
+  Colloquium, {ICALP} 2005, Lisbon, Portugal, July 11-15, 2005, Proceedings},
+  pages 261--272, 2005.
+
+\bibitem{RZ11}
+Liam Roditty and Uri Zwick.
+\newblock On dynamic shortest paths problems.
+\newblock {\em Algorithmica}, 61(2):389--401, 2011.
+
+\bibitem{RS91}
+J.~Ruppert and R.~Seidel.
+\newblock Approximating the $d$-dimensional complete {E}uclidean graph.
+\newblock In {\em Proceedings of the 3rd Canadian Conference on Computational
+  Geometry}, CCCG `91, page 207–210, 1991.
+
+\bibitem{SCRS01}
+F.~Sibel Salman, Joseph Cheriyan, R.~Ravi, and S.~Subramanian.
+\newblock Approximating the single-sink link-installation problem in network
+  design.
+\newblock {\em {SIAM} Journal on Optimization}, 11(3):595--610, 2001.
+
+\bibitem{Salowe92}
+Jeffrey~S. Salowe.
+\newblock On euclidean spanner graphs with small degree.
+\newblock In {\em Proceedings of the Eighth Annual Symposium on Computational
+  Geometry, Berlin, Germany, June 10-12, 1992}, pages 186--191, 1992.
+
+\bibitem{SS10}
+Hanan Shpungin and Michael Segal.
+\newblock Near-optimal multicriteria spanner constructions in wireless ad hoc
+  networks.
+\newblock {\em {IEEE/ACM} Trans. Netw.}, 18(6):1963--1976, 2010.
+
+\bibitem{Thomason84}
+A.~Thomason.
+\newblock An extremal function for contractions of graphs.
+\newblock {\em Mathematical Proceedings of the Cambridge Philosophical
+  Society}, 95(2):261--265, 1984.
+
+\bibitem{TZ01b}
+Mikkel Thorup and Uri Zwick.
+\newblock Approximate distance oracles.
+\newblock In {\em Proc. of 33rd STOC}, pages 183--192, 2001.
+
+\bibitem{TZ01}
+Mikkel Thorup and Uri Zwick.
+\newblock Compact routing schemes.
+\newblock In {\em Proc. of 13th SPAA}, pages 1--10, 2001.
+
+\bibitem{VWFME03}
+J{\"{u}}rgen Vogel, J{\"{o}}rg Widmer, Dirk Farin, Martin Mauve, and Wolfgang
+  Effelsberg.
+\newblock Priority-based distribution trees for application-level multicast.
+\newblock In {\em Proceedings of the 2nd Workshop on Network and System Support
+  for Games, {NETGAMES} 2003, Redwood City, California, USA, May 22-23, 2003},
+  pages 148--157, 2003.
+
+\bibitem{RW04}
+Pascal von Rickenbach and Roger Wattenhofer.
+\newblock Gathering correlated data in sensor networks.
+\newblock In {\em Proceedings of the {DIALM-POMC} Joint Workshop on Foundations
+  of Mobile Computing, Philadelphia, PA, USA, October 1, 2004}, pages 60--66,
+  2004.
+
+\bibitem{WCT02}
+Bang~Ye Wu, Kun-Mao Chao, and Chuan~Yi Tang.
+\newblock Light graphs with small routing cost.
+\newblock {\em Networks}, 39(3):130--138, 2002.
+
+\bibitem{Yao82}
+A.~C. Yao.
+\newblock On constructing minimum spanning trees in $k$-dimensional spaces and
+  related problems.
+\newblock {\em SIAM Journal on Computing}, 11(4):721--736, 1982.
+
+\end{thebibliography}

@@ -1,0 +1,285 @@
+
+\section{Unified Framework: Proof of \Cref{lm:framework}}\label{sec:framework}
+
+
+In this section, we describe the unified framework presented in our companion work~\cite{LS21}; we refer readers to~\cite{LS21} for the details of the proof.   Two important components in our spanner construction is a hierarchy of clusters and a potential function. The idea of using a hierarchy of clusters in spanner constructions dated back to the early 90s \cite{ALGP89,CDNS92}, and was used by most if not all of the works on light spanners (see, e.g.,~\cite{ES16,ENS14,CW16,BLW17,BLW19,LS19}).
+  
+
+First, we need a setup step ``normalize'' the set of edges of $G$ for which we construct a light spanner. Let $\MST$ be the minimum spanning tree of the graph $G(V,E)$ with $n$ vertices and $m$ edges. Let $T_{\MST}$ be the running time to construct $\MST$. By scaling, we assume that the minimum edge-weight is $1$. Let $\bar{w} = \frac{w(\mst)}{m}$. Next, we add every edge of length at most $\bar{w}/\eps$ to the spanner; this incurs only an additive factor $+O(\frac{1}{\eps})$ in the lightness (Observation 3.1 in \cite{LS21}). The remaining set of edges is partition into $O(\frac{1}{\psi}\log\frac{1}{\eps})$ sets of edges $E^{\sigma} \subseteq E$ for $\sigma \in \{1,\ldots, \lceil \frac{\log(1/\eps)}{\log(1+\psi)} \rceil\}$; here  $\psi \in (0,1)$ is a parameter $\psi$ chosen by specific applications of the framework.  $E^{\sigma}$ has the following property: for any two edges $e, e' \in E^{\sigma}$, their weights are either \emph{the same} up to a factor of $1+\psi$ or \emph{far apart} by a factor of at least $\frac{1}{\eps}$. Specifically, $E^{\sigma}$ can be written as $E^{\sigma} = \cup_{i\in \mathbb{Z}^+} E^{\sigma}_i$ where:
+\begin{equation}\label{eq:Esigmai}
+	E^{\sigma}_i = \left\{e : \frac{L_i}{1+\psi} \leq w(e) < L_i \right\} \mbox{ with } L_i = L_{0}/\eps^i, L_0 = (1+\psi)^{\sigma}\bar{w}~. 
+\end{equation}
+Since $\sigma,i \geq 1$, every edge in $E^{\sigma}$ has weight at least $\frac{\bar{w}}{\eps}$. We refer edges in $E^{\sigma}_i$ as \emph{level-$i$ edges}. We focus on constructing a $t(1+\eps)$-spanner for edges in $E^{\sigma}$ for a fixed $\sigma \in \{1,\ldots, \lceil \frac{\log(1/\eps)}{\log(1+\psi)} \rceil\}$. In the fast constructions in our companion work~\cite{LS21}, we choose $\psi = \eps$. As we will see later (\Cref{lm:framework-technical}), the value of $\psi$ is factored into the lightness of the spanner. Therefore, to minimize the dependency on $\eps$, we choose $\psi = 1/250$ in this paper.  
+
+
+\paragraph{Subdividing $\mst$.~} We subdivide each edge $e \in \mst$ of weight more than $\bar{w}$ into $\lceil \frac{w(e)}{\bar{w}} \rceil$ edges of weight (of at most $\bar{w}$ and at least $\bar{w}/2$ each) that sums to $w(e)$. (New edges do not have to have equal weights.)  Let $\widetilde{\mst}$ be the resulting subdivided $\mst$.
+We refer to vertices that are subdividing the $\mst$  edges as \emph{virtual vertices}. Let $\tilde V$ be the set of vertices in $V$ and virtual vertices; we call $\tilde{V}$  the {\em extended set} of vertices. Let $\tilde G = (\tilde V,\tilde E)$ be the graph that consists of the edges in $\widetilde{\mst}$ and $E^{\sigma}$. 
+
+
+Let $\tilde{G}(\tilde{V}, \tilde{E})$ be a graph obtained from $G(V,E)$ by keeping $\MST$ edges, removing every edge not in $E^{\sigma}$ or having weight (strictly) larger than $w(\MST)$, and subdividing each edge $e \in \mst$ into $\lceil \frac{w(e)}{\bar{w}} \rceil$ edges whose weights sums to $w(e)$. It was observed in~\cite{LS21} (Observation 3.4) that $|\tilde{E}| = O(m)$  
+
+
+The spanner we construct for $E^{\sigma}$ is a subgraph of $\tilde{G}$ containing all edges of $\widetilde{\mst}$. This property can be guaranteed by adding $\widetilde{\mst}$ to the spanner. By replacing the edges of $\widetilde{\mst}$ by those of $\mst$, we can transform any subgraph of $\tilde{G}$ that contains the entire tree $\widetilde{\mst}$ to a subgraph of $G$ that contains the entire tree $\mst$. We denote  by $\tilde H^{\sigma}$ the $t(1+\eps)$-spanner of $E^{\sigma}$ in $\tilde{G}$; by abusing the notation, we will write $H^{\sigma}$ rather than $\tilde H^{\sigma}$ in the sequel, under the understanding that in the end we transform $H^{\sigma}$ to a subgraph of $G$. 
+
+
+\paragraph{Cluster hierarchy.~} Our spanner construction is based on a \emph{hierarchy of clusters} $\mathcal{H} = \{\mathcal{C}_1,\mathcal{C}_2, \ldots \}$\footnote{The number of clusters is not defined beforehand; it depends on the construction.} with three properties: 
+
+\begin{itemize}  [noitemsep] 	
+	\item \textbf{(P1)~} 	\hypertarget{P1}{} For any $i\geq 1$, each $\mathcal{C}_i$ is a partition of $\tilde{V}$. When $i$ is large enough, $\mathcal{C}_i$ contains a single set $\tilde{V}$ and $\mathcal{C}_{i+1} = \emptyset$.
+	\item \textbf{(P2)~} \hypertarget{P2}{} $\mathcal{C}_i$ is an \emph{$\Omega(\frac{1}{\eps})$-refinement} of $\mathcal{C}_{i+1}$, i.e., every cluster $C\in \mathcal{C}_{i+1}$ is obtained as the union of $\Omega(\frac{1}{\epsilon})$ clusters in $\mathcal{C}_i$ for $i\geq 1$.
+	\item \textbf{(P3)~} \hypertarget{P3}{} For each cluster $C\in \mathcal{C}_i$, we have $\dm(H^{\sigma}[C]) \leq g L_{i-1}$, for a sufficiently large constant $g$ to be determined later. (Recall that $L_i$ is defined in \Cref{eq:Esigmai}.) 
+\end{itemize}
+
+Graph $H^{\sigma}$ will be constructed along with the cluster hierarchy, and at some step $s$ of the algorithm, we construct a level-$i$ cluster $C$. Let $H^{\sigma}_s$ be $H^{\sigma}$ at step $s$. We shall maintain (\hyperlink{P3}{P3}) by maintaining the invariant that $\dm(H^{\sigma}_s[C]) \leq g L_{i-1}$; indeed,  adding more edges in later steps of the algorithm does not increase the diameter of the subgraph induced by $C$. 
+
+To bound the weight of $H^{\sigma}$, we rely on a potential function $\Phi$ that is formally defined as follows:
+
+\begin{definition}[Potential Function $\Phi$]\label{def:Potential}  We use a potential function $\Phi: 2^{\tilde{V}}\rightarrow \mathbb{R}^+$ that maps each cluster $C$ in the hierarchy $\mathcal{H}$ to a potential value $\Phi(C)$, such that the total potential of clusters at level $1$ satisfies:
+	\begin{equation}\label{eq:Phi1}
+		\sum_{C\in\mathcal{C}_1}\Phi(C) ~\leq~ w(\MST)~.
+	\end{equation}
+	Level-$i$ potential is defined as $\Phi_i = \sum_{C\in \mathcal{C}_i} \Phi(C)$ for any $i\geq 1$. The \emph{potential change} at level $i$, denoted by $\Delta_i$ for every $i \geq 1$, is defined as:
+	\begin{equation}\label{eq:PotentialReduction}
+		\Delta_i ~=~ \Phi_{i-1} - \Phi_{i}~. 
+	\end{equation}
+\end{definition} 
+We call $\Phi_i$ the potential at level $i$ and $\Delta_i$ the \emph{potential reduction} at level $i$. By definition, $\Phi_1 = O(1)w(\MST)$. The following lemma proven in~\cite{LS21} is the key in our framework.
+
+
+\begin{restatable}[Lemma 4.8~\cite{LS21}]{lemma}{FrameworkTechnical}
+	\label{lm:framework-technical} Let $\psi \in (0,1], t \geq 1, \eps > 0$ be  parameters such that $\eps \ll 1$   and $E^{\sigma}= \cup_{i\in \mathbb{N}^+} E^{\sigma}_i$ be the set of edges defined in Equation~\eqref{eq:Esigmai}. Let $\{a_i\}_{i \in \mathbb{N}^+}$ be a sequence of positive real numbers such that $\sum_{i \in \mathbb{N}^+} a_i \leq A\cdot w(\mst)$ for some $A\in \mathbb{R}^+$. Let $H_0 = \mst$. For any level $i\geq 1$, if we can compute all subgraphs  $H_1,\ldots,H_i\subseteq G$  as well as the cluster sets $\{\mathcal{C}_{1},\ldots,\mathcal{C}_{i},\mathcal{C}_{i+1}\}$ such that:
+	\begin{enumerate}[noitemsep]
+		\item[(1)] $w(H_i) \leq  \lambda \Delta_{i+1} + a_i$ for some $\lambda \geq 0$,
+		\item[(2)] for every $(u,v)\in E^{\sigma}_i$, $d_{H_{<L_i}}(u,v)\leq t(1+ \rho\cdot \epsilon)w(u,v)$ when $\eps \in (1,\eps_0)$ for some constants $\rho$, $\eps_0$, where $H_{<L_i} = \cup_{j=0}^{i} H_{j}$.
+	\end{enumerate}
+	Then  we  can construct a $t(1+ \rho \eps)$-spanner  for $G(V,E)$ with lightness  $O(\frac{\lambda + A + 1}{\psi}\log \frac{1}{\epsilon} + \frac{1}{\eps})$ when $\eps \in (0,\eps_0)$.
+\end{restatable}
+
+We refer readers to Section 3 in \cite{LS21} for proof of \Cref{lm:framework}. While running time is stated in  \Cref{lm:framework-technical}, time is not the focus of our current paper. Furthermore, in  \cite{LS21}, we need a strong induction assumption that $H_{<L_i}$ is a spanner for edges of $G$ of length less than $L_i$, including those that are not in $E^{\sigma}$, as stated in Item (2) in \Cref{lm:framework-technical}. In this paper, a weaker assumption suffices: $H_{<L_i}$ is a spanner for edges of length less than $L_i$ in $E^{\sigma}$.
+
+
+%\paragraph{Assumptions on $\eps$ and the stretch.~}\hypertarget{EAsump}{} We will construct spanners with stretch $t(1+c_g\eps)$ for a sufficiently large constant $c_g$ that depends on $g$ only; here $g$ is the constant in \hyperlink{P3}{property (P3)}. We then can recover the stretch $t(1+\eps)$ by setting $\eps \leftarrow \eps/c_g$. We all also assume that $\eps$ is  a sufficiently small constant, and in particular, $\eps \leq 1/c_g$. 
+
+
+\subsection{Designing A Potential Function}\label{subsec:DesignPotential}
+
+\paragraph{Level-$1$ clusters.~} Recall that $\msttilde$ is the minimum spanning tree of $\tilde{G}$ obtained by subdividing edges of $\mst$ of $G$. We abuse notation by also using $\msttilde$ to refer to the edge set of $\msttilde$. Level-$1$ clusters  are subgraphs of $\msttilde$ constructed by the following lemma.
+
+
+\begin{lemma}[Lemma 3.8~\cite{LS21}]\label{lm:level1Const}We can construct a set of level-$1$ clusters $\mathcal{C}_1$ such that, for each cluster $C\in \mathcal{C}_1$, the subtree $\msttilde[C]$ of $\msttilde$ induced by $C$ satisfies $L_0 \leq \dm(\msttilde[C]) \leq 14L_0$. 
+\end{lemma} 
+
+The potential values of level-$1$ clusters are defined as follows:	
+	\begin{equation}\label{eq:Level1Poten}
+		\Phi(C) = \dm(\msttilde[C]) \qquad \forall C \in \mathcal{C}_1
+	\end{equation}
+
+Since level-$1$ clusters induces vertex-disjoint subtrees of $\msttilde$, $\Phi_1 = \sum_{C\in \mathcal{C}_1}\Phi(C) \leq w(\msttilde) = w(\mst)$. Thus, the potential function $\Phi$ satisfies \Cref{eq:Phi1} in \Cref{def:Potential}. 
+
+
+\paragraph{Level-$i$ clusters.~} Observe that the potential value of a level-$1$ cluster is the diameter of the subgraph of $\msttilde$ induced by the cluster. However, the potential value of a level-$i$ cluster  do not need to be its diameter. Instead, we inductively guarantee the following  {\em potential-diameter (PD) invariant}, which implies that the potential value of a level-$i$ cluster is  an {\em overestimate} of the cluster's diameter.
+\hypertarget{PD}{}
+\begin{quote}
+	\textbf{PD Invariant:} For every cluster $C \in \mathcal{C}_{i}$ and any $i\geq 1$, $\dm(H_{< L_{i-1}}[C]) \leq \Phi(C)$. (Recall that $H_{< L_{i-1}} = \cup_{j=0}^{i-1} H_j$.)
+\end{quote}
+
+Since $H_0 = \msttilde$, level-$1$ clusters satisfy \hyperlink{PD}{PD Invariant.}
+
+\paragraph{The cluster graph.~} The construction of level-$(i+1)$ relies on a \emph{cluster graph} formally defined below. 
+
+\begin{definition}[Cluster Graph]\label{def:ClusterGraphNew} A cluster graph at level $i \geq 1$, denoted by $\mg_i = (\mv_i, \me'_i, \omega)$ is a \emph{simple graph}, where each node corresponds to a cluster in $\mc_i$ and each inter-cluster edge corresponds to an edge between vertices that belong to the corresponding clusters. We assign  weights to both \emph{nodes and edges} as follows:  for each node $\varphi_C \in \mv_i$ corresponding to a cluster $C \in \mathcal{C}_i$, $\omega(\varphi_C) = \Phi(C)$, and for each edge $\mbe = (\varphi_{C_u},\varphi_{C_v}) \in \me'_i$ corresponding to an edge $(u,v)$ of $\tilde{G}$, $\omega(\mbe) = w(u,v)$.   
+\end{definition} 
+
+
+The  notion of cluster graphs in \Cref{def:ClusterGraphNew} is different from the notion of $(L,\eps,\beta)$-cluster graphs defined in \Cref{def:ClusterGraph-Param}. In particular, cluster graphs in \Cref{def:ClusterGraphNew} have weights on both edges and nodes, while $(L,\eps,\beta)$-cluster graphs in \Cref{def:ClusterGraph-Param} have weights on edges only.  The cluster graph has the following properties:
+
+\begin{definition}[Properties of $\mg_i$]\label{def:GiProp} \begin{enumerate}[noitemsep]
+		\item[(1)] The edge set $\me'_i$ of $\mg_i$ is the union $\msttilde_{i}\cup \me_i$, where $\msttilde_{i}$ is the set of edges corresponding to edges in $\msttilde$ and $\me_i$ is the set of edges corresponding to edges in $E^{\sigma}_i$.
+		\item[(2)] $\msttilde_{i}$ induces a spanning tree of $\mg_i$, which is a minimum spanning tree. We abuse notation by using $\msttilde_{i}$ to denote the induced spanning tree.
+	\end{enumerate}
+\end{definition}
+We note that $\msttilde_{i}$ is a minimum spanning tree of $\mg_i$ since any edge in $\widetilde{\mst}_i$ (of weight at most $\bar{w}$) is of strictly smaller weight than that of any edge in $E^{\sigma}_i$ (of weight at least $\frac{\bar{w}}{(1+\psi)\epsilon}$) for any $i\geq 1$ and $\epsilon \ll 1$.
+
+We note that in~\cite{LS21}, the cluster graph $\mg_i$ is required to have no \emph{removable edges}:  an edge $(\varphi_{C_u},\varphi_{C_v}) \in \me_i$ is removable if (i) the path $\msttilde_i[\varphi_{C_u},\varphi_{C_v}]$ between $\varphi_{C_u}$ and $\varphi_{C_v}$ only contains nodes in $\msttilde_{i}$ of degree at most $2$ and (ii) $\omega(\msttilde_i[\varphi_{C_u},\varphi_{C_v}]) \leq t(1 + 6g\eps)\omega(\varphi_{C_u},\varphi_{C_v})$. Eliminating removable edges from $\mg_i$ can be seen as applying a preprocessing step to $\mg_i$ before the construction of level-$(i+1)$ clusters. In this work, we require a more careful preprocessing step. When $t = 1+\eps$, we preprocess $\mg_i$ in such a way that the output is minimal: removing any edge from the cluster graph will make the stretch of the edge larger. When $t \geq 2$, we need an even more delicate construction where identifying removable edges intertwines with the construction of level-$(i+1)$ clusters.  The details are delayed to \Cref{subsec:LeveIplus1Construction}. 
+ 
+
+
+\paragraph{Structure of level-$(i+1)$ clusters.~} Similar to~\cite{LS21}, level-$(i+1)$ clusters correspond to subgraph of $\mg_i$. Specifically, we shall construct collection of subgraphs $\mathbb{X}$ of $\mg_i$, and each subgraph $\mx\in \mathbb{X}$ is mapped to a cluster $C_{\mx} \in \mathcal{C}_{i+1}$ by taking the union of all level-$i$ clusters corresponding nodes in $\mathcal{X}$. More formally:
+\begin{equation}\label{eq:XtoCluster}
+	C_{\mathcal{X}}  = \cup_{\varphi_C\in \mv(\mx)} C~.
+\end{equation}
+We use $\mv(\mx)$ and $\me(\mx)$ to denote the vertex set and edge set of a subgraph $\mx$ of $\mg_i$, respectively. The set of subgraphs $\mathbb{X}$ we construct satisfies the the following properties:
+
+\begin{itemize}[noitemsep]
+	\item \textbf{(P1').~} \hypertarget{P1'}{}  $\{\mv(\mx)\}_{\mx \in \mathbb{X}}$ is a partition of $\mv_i$.
+	\item \textbf{(P2').~} \hypertarget{P2'}{} $|\mv(\mx)| = \Omega(\frac{1}{\eps})$.
+	\item \textbf{(P3').~} \hypertarget{P3'}{} $\zeta L_i \leq \adm(\mx) \leq gL_{i}$ for $\zeta = 1/250$.
+\end{itemize}
+
+Here $\md(\mx)$ is the augmented diameter of $\mx$ defined in \Cref{sec:prelim}, which is at least the diameter of the corresponding cluster $C_{\mx}$. The potential of  $C_{\mx}$ is then defined as:
+\begin{equation}\label{eq:SetPotential-i}
+	\Phi(C_{\mx}) = \adm(\mx).
+\end{equation}
+
+This implies that $\Phi(C_{\mx})\geq \dm(C_{\mx})$. Recall that in the definition of the cluster graph (\Cref{def:ClusterGraphNew}), each node in the cluster graph for level-$(i+1)$ cluster graph $\mg_{i+1}$ has a weight to be its potential. Thus, the node $\varphi_{C_{\mx}}\in \mg_{i+1}$ has a weight $\omega(\varphi_{C_{\mx}}) = \Phi(C_{\mx}) = \adm(\mx)$ by \Cref{eq:SetPotential-i}.  The following lemma relates properties (P1')-P(3') with properties \hyperlink{P1}{(P3)}-\hyperlink{P1}{(P3)}.
+
+\begin{lemma}[Lemma 4.4~\cite{LS21}]\label{lm:PropEquiv} Let $\mx \in \mathbb{X}$ be a subgraph of $\mg_i$ satisfying properties (\hyperlink{P1'}{P1'})-(\hyperlink{P3'}{P3'}). Suppose that for every edge $(\varphi_{C_u},\varphi_{C_v})\in \me(\mx)$, $(u,v) \in H_{<L_i}$.  By setting the potential value of $C_{\mx}$ to be $\Phi(C_{\mx}) = \adm(\mx)$ for every $\mx \in \mathbb{X}$, the \hyperlink{PD}{PD Invariant} is satisfied, and that  $C_{\mx}$ satisfies all properties (\hyperlink{P1}{P1})-(\hyperlink{P3}{P3}).
+\end{lemma}
+
+\paragraph{Local potential change.~}  The notion of local potential change is central in the framework laid out in~\cite{LS21}. For each subgraph  $\mx \in \mathbb{X}$, the local potential change of $\mx$, denoted by $\Delta_{i+1}(\mx)$, is defined as follows:
+\begin{equation}\label{eq:LocalPotential}
+	\Delta_{i+1}(\mx) \stackrel{\mbox{\tiny{def.}}}{=}   \left(\sum_{\varphi_C\in \mv(\mx)} \Phi(C) \right) -  \Phi(C_{\mx}) = \left(\sum_{\varphi_C\in \mv(\mx)} \omega(\varphi_C) \right) - \adm(\mx). 
+\end{equation} 
+
+It was observed in~\cite{LS21} that the (global) potential change at level $(i+1)$ (\Cref{def:Potential}) is equal to the sum of local potential changes over all subgraphs in $\mx$.
+
+\begin{claim}[Claim 4.5~\cite{LS21}]\label{clm:localPotenDecomps}$\Delta_{i+1} = \sum_{\mx \in \mathbb{X}}\Delta_{i+1}(\mx)$.
+\end{claim}
+
+The decomposition of the global potential change makes the tasks of bounding the weight of $H_i$ (defined in \Cref{lm:framework}) easier, as we could  bound the number of edges added to $H_i$ incident to nodes in a subgraph $\mx\in \mathbb{X}$ by the local potential change of $\mx$. By summing up over all $\mx$, we obtain a bound on $w(H_i)$ in terms of the (global) potential change $\Delta_{i+1}$. 
+
+
+\subsection{Constructing Level-$(i+1)$ Clusters and $H_i$: Proof of \Cref{lm:framework}}\label{subsec:LeveIplus1Construction}
+
+Our goal is to construct a cluster graph $\mg_i$ and a collection  $\mathbb{X}$ of subgraphs of $\mg_i$ satisfying properties  \hyperlink{P1'}{(P1')}-\hyperlink{P3'}{(P3')}. By \Cref{lm:PropEquiv}, the set of level-$(i+1)$ obtained from subgraphs in $\mathbb{X}$ obtained by applying the transformation in \Cref{eq:XtoCluster} will satisfy properties \hyperlink{P1}{(P1)}-\hyperlink{P3}{(P3)}. To be able to bound the set of edges  in $H_i$ (constructed in \Cref{sec:stretch2} and \Cref{sec:stretch1E}), we need to guarantee that subgraphs in $\mathbb{X}$ have sufficiently large potential changes. This indeed is the crux of our construction. We assume that  $\eps > 0$ is a sufficiently small constant, i.e., $\eps \ll 1, \eps = \Omega(1)$.
+
+\paragraph{Constructing $\mathcal{G}_i$.~}  We shall assume inductively on $i, i \ge 1$ that:
+\begin{itemize}[noitemsep]
+	\item The set of edges $\widetilde{\mst}_i$ is given by the construction of the previous level $i$ in the hierarchy; for the base case $i = 1$ (see \Cref{subsec:DesignPotential}), $\widetilde{\mst}_1$ is simply a set of edges of $\widetilde{\mst}$ that are not in any level-$1$ cluster. 
+	\item The weight $\omega(\varphi_C )$ on each node $\varphi_C \in \mv_i$ is the potential value of cluster $C \in \mathcal{C}_i$; for the base case $i = 1$, the  potential values of level-$1$ clusters were set in \Cref{eq:Level1Poten}.
+\end{itemize}
+
+
+After completing the construction of $\mathbb{X}$, we can compute the weight of each node of $\mg_{i+1}$ by computing the augmented diameter of each subgraph in $\mathcal{X}$; the running time is clearly polynomial. By the \hyperlink{MSTiPlus1}{end of this section}, we show to compute the spanning tree  $\msttilde_{i+1}$ for $\mg_{i+1}$ for the construction of the next level.
+
+\paragraph{Realization of a path.~}  Let $\mp = ( \varphi_0, (\varphi_0,\varphi_1), \varphi_1, (\varphi_1,\varphi_2), \ldots, \varphi_{p})$ be a path of $\mg_i$, written as an alternating sequence of vertices and edges. Let $C_i$ be the cluster corresponding to $\varphi_i$, $0\leq i \leq p$. Let $u$ and $v$ be two vertices such that $u$ is in the cluster corresponding to $\varphi_0$ and $v$ is in the cluster corresponding to $\varphi_p$. 
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{figs/path}
+	\end{center}
+	\caption{A realization of a path $\mathcal{P}$ w.r.t $u$ and $v$.}
+	\label{fig:path}
+\end{figure}
+Let $\{y_i\}_{i=0}^p$ and $\{z_i\}_{i=0}^p$ be sequences of vertices of $G$ such that (a) $z_0 = u$ and $y_p = v$ and (b) $(y_{i-1}, z_i)$ is the edge on $G$ corresponds to edge $(\varphi_{i-1},\varphi_i)$ in $\mathcal{P}$ for $1\leq i\leq p$. Let $Q_i$, $0\leq i \leq p$, be a shortest path in $H_{< L_{i-1}}[C_i]$ between $z_i$ and $y_i$ where $C_i$ is the cluster corresponding to $\varphi_i$. See \Cref{fig:path} for an illustration. Let $P = Q_0\circ (y_0,z_1)\circ \ldots\circ Q_p$ be a (possibly non-simple) path from $u$ to $v$. We call $P$ a \emph{realization of $\mathcal{P}$ with respect to $u$ and $v$}. The following observation follows directly from the definition of the weight function of $\mg_i$.
+
+\begin{observation}\label{obs:realization} Let $P$ be a realization of $\mp$ w.r.t two vertices $u$ and $v$. Then $w(P) \leq \omega(\mp)$.
+\end{observation}
+
+
+
+Next, we show that to construct $H_i$, it suffices to focus on the edges of $E^{\sigma}_i$ that correspond to edges in $\me_i$ of $\mg_i$. 
+
+\begin{lemma}\label{lm:G_i-construction}Let $\psi = 1/250$. We can construct a cluster graph 
+	$\mathcal{G}_i = (\mathcal{V}_i,\mathcal{E}_i\cup \widetilde{\mst}_i,\omega)$ in  polynomial time 
+	such that $\mathcal{G}_i$ satisfies all properties in \Cref{def:GiProp}. Furthermore, let $F^{\sigma}_i$ be the set of edges in $E^{\sigma}_i$ that correspond to $\mathcal{E}_i$. If every edge in $F^{\sigma}_i$ has a stretch $t(1+s\cdot \eps)$ in $H_{<L_i}$ for some constant $s\geq 1$, then every edge in $E^{\sigma}_i$ has stretch $t(1+ (2s+16g+1)\eps)$ when $\eps < \frac{1}{2(12g+1)}$.
+\end{lemma}
+\begin{proof} Since $\msttilde_{i}$ is given  at the  outset of the construction of $\mg_i$, we only focus on constructing $\me_i$. For each edge $e = (u,v) \in E^{\sigma}_i$, we add an edge $(\varphi_{C_u}, \varphi_{C_v})$ to $\mg_i$. Next, we remove edges from $\mg_i$. (Step 1) we remove self-loops and parallel edges from $\mg_i$; we only keep the edge of minimum weight in $\mg_i$ among parallel edges. (Step 2) If $t\geq 2$, we remove every edge  $(\varphi_{C_u},\varphi_{C_v})$ from $\mg_i$ such that $\omega(\msttilde_i[\varphi_{C_u},\varphi_{C_v}]) \leq t(1 + 6g\eps)\omega(\varphi_{C_u},\varphi_{C_v})$; the remaining edges of  $\mg_i$ not in $\msttilde_{i+1}$ are $\me_i$. If $t = 1+\eps$, we  apply the  $\pathg$ algorithm  to $\mg_i$ with stretch $t(1 + 6g\eps)$ to obtain $\ms_i$. (Note that we use augmented distances rather than normal distances when apply the greedy algorithm.) It was shown~\cite{ADDJS93} that the $\pathg$ algorithm contains the minimum spanning tree of the input graph. Thus, $\ms_i$ contains $\msttilde_{i}$ as a subgraph. We then set $\me_i = \me(\ms_i)\setminus \msttilde_{i}$; this completes the construction of $\mg_i$.
+	
+	We now show  the second claim: the stretch of $E^{\sigma}_i$ in $H_{<L_i}$ is  $t(1+ \max\{s+4g,10g\}\eps)$. Let $(u',v')$ be any edge in $E^{\sigma}_i\setminus F^{\sigma}_i$.  Recall that  $(u',v')$ is not in $ F^{\sigma}_i$ because (a) both $u'$ and $v'$ are in the same level-$i$ cluster in the construction of the cluster graph in \Cref{lm:G_i-construction}, or (b) $(u',v')$ is parallel with another edge $(u,v)$, or (c) the edge $(\varphi_{C_{u'}},\varphi_{C_{v'}})$ corresponding to $(u',v')$ is removed from $\mg_i$ in Step 2. 
+	
+	We argue that case (a) does not happen.  Observe that the level-$i$ cluster containing both $u'$  and $v'$ has diameter at most $gL_{i-1}$ by property (\hyperlink{P3}{P3}), and thus we have a path from $u'$ to $v'$ in $H_{<L_i}$ of  weight at most $gL_{i-1} ~=~ g\eps L_i ~\leq \frac{L_i}{1+\psi}~\leq~w(u',v')$ when $\eps < \frac{1}{(1+\psi)g}$, contradicting that every edge is a shortest path between its endpoints. 
+	
+	For case (c), we will show that:
+	\begin{equation}\label{eq:stretch-case-c}
+		d_{H_{i}}(u',v') \leq t(1+(2s+12g+1)\eps)w(u',v')~,
+	\end{equation}
+ by considering two cases:
+ 
+ 
+ 
+	 \noindent \textbf{Subcase 1: $t \geq 2$.~} By construction, 	$d_{H_{< L_{i-1}}}(u',v') \leq t(1+ 6g\eps)w(u',v')$; \Cref{eq:stretch-case-c} holds.
+	 
+	 \noindent \textbf{Subcase 2: $t = 1+\eps$.~} Le $\mp'$ be the shortest path between $\varphi_{C_{u'}}$ and $\varphi_{C_{v'}}$ in $\ms_i$. Since $\ms_i$ is a $t(1+6g\eps)$-spanner of $\mg_i$, we have: 
+	\begin{equation} \label{eq:P-vs-uv}
+		\begin{split}
+					\omega(\mp') &\leq t(1+6g\eps)\omega(\varphi_{C_{u'}}, \varphi_{C_{v'}}) = (1+\eps)(1+6g\eps)\omega(\varphi_{C_{u'}}, \varphi_{C_{v'}})  \\ 
+					& \leq (1 + (12g+1)\eps)\omega(\varphi_{C_{u'}}, \varphi_{C_{v'}})  \qquad
+					 \mbox{ (since $\eps \leq 1$)}\\
+					 & = (1 + (12g+1)\eps)w(u',v')
+		\end{split}
+	\end{equation}
+	
+	\begin{claim}\label{clm:P-one-edge} $\mp'$ contains  at most one edge in $\me_i$. 
+	\end{claim}
+	\begin{proof} 
+		Suppose that  $\mp'$ contains at least two edges in $\me_i$. Since edges in $\me_i$ have weights at least $L_i/(1+\psi)$ and at most $L_i$, $\omega(\mp')\geq  \frac{2L_i}{1+\psi} > (1 + (12g+1)\eps) L_i$ when $\eps < \frac{1}{2(12g+1)}$ and $\psi = \frac{1}{250}$. Since $w(u',v') \leq L_i$, $\omega(\mp') >  (1 + (12g+1)\eps) w(u',v')$, contradicting \Cref{eq:P-vs-uv}.  \qed
+	\end{proof}
+	
+	Let $P'$ be a realization of $\mp'$ w.r.t $u'$ and $v'$.  If $\mp'$ contains no edge in $\me_i$, then $P'$ is a path in $H_{< L_{i-1}}$. This implies that $d_{H\leq i}(u',v') \leq (1 + (12g+1)\eps)w(u',v') \leq t(1 + (12g+1)\eps)w(u',v')$ since $t\geq 1$; \Cref{eq:stretch-case-c} holds. Otherwise,  by \Cref{clm:P-one-edge}, $P'$ contains exactly one edge $(x,y) \in F^{\sigma}_i$. By the assumption of the lemma, $d_{H_{<L_i}}(x,y) \leq t(1+s\cdot \eps)w(x,y)$. Let $Q'$ be obtained from $P'$ by replacing edge $(x,y)$ by a shortest path from $x$ to $y$ in $H_{<L_i}$. Then we have:
+	\begin{equation*}
+		\begin{split}
+				w(Q') &\leq t(1+s\cdot \eps) w(P') \\ &\leq t(1+s\cdot \eps) (1 + (12g+1)\eps)w(u',v') \qquad \mbox{(by \Cref{eq:P-vs-uv})}\\
+				 &= t(1+(2s+12g+1)\cdot \eps) \qquad \mbox{(since $(12g+1)\eps \leq 1$)}
+		\end{split}
+	\end{equation*}
+	Thus, in all cases, \Cref{eq:stretch-case-c} holds.
+
+	We now consider case (b); that is, $(u',v')$  is not in $F^{\sigma}_i $ because  it is parallel with another edge $(u,v)$. 	Let $C_u$ and $C_v$ be two level-$i$ clusters containing $u$ and $v$, respectively. W.l.o.g, we assume that $u' \in C_u$  and $v' \in C_v$. Since we only keep the edge of minimum weight among all parallel edges, $w(u,v) \leq w(u',v')$. Since the level-$i$ clusters that contain $u$  and $v$ have diameters at most $gL_{i-1} = g\eps L_i$ by property (\hyperlink{P3}{P3}), it follows that $\dm(H_{<L_i}[C_u]),\dm(H_{<L_i}[C_v]) \le g\epsi L_i$. 	We have:
+	\begin{equation*}
+		\begin{split}
+			d_{H_{<L_i}}(u',v') &\leq 	d_{H_{<L_i}}(u,v) + \dm(H_{<L_i}[C_u]) + \dm(H_{<L_i}[C_v])\\ &\leq t(1+(2s+12g+1)\eps)w(u,v) +   2g\epsi L_i \qquad \mbox{(by \Cref{eq:stretch-case-c})}\\
+			&\leq  t(1+(2s+12g+1)\eps) w(u',v')  +  2g\epsi L_i\\
+			&\leq t(1+(2s+12g+1)\eps) w(u',v') + 4g\eps w(u',v') \qquad \mbox{(since $w(u',v') \geq L_i/(1+\psi) \geq L_i/2$)}\\
+			&= t(1+(2s+16g+1)\eps) w(u',v') \qquad \mbox{(since $t\geq 1$)}.
+		\end{split}
+	\end{equation*}
+	The lemma now follows. 
+	\qed
+\end{proof}
+
+To construct the set of subgraphs $\mathbb{X}$ of $\mg_i$, we distinguish between two cases: (a) $t = 1+\eps$ and (b) $t\geq 2$. Subgraphs in $\mathbb{X}$ constructed for the case $t=1+\eps$ have properties similar to those of subgraphs constructed in~\cite{LS21}; the key difference is that subgraphs constructed in our work have a larger \emph{average potential change}, which ultimately leads to an optimal dependency on $\eps$ of the lightness. When the stretch $t\geq 2$, we show that one can construct a set of subgraphs $\mathbb{X}$ of $\mg_i$ with much larger potential change, which reduces the dependency of the lightness on $\eps$  by a factor $1/\eps$ compared to the case $t = 1+\eps$. Our construction uses \hyperlink{SPHigh}{$\sso$} as a black box. The following lemma summarizes our construction. 
+
+
+\begin{restatable}{lemma}{HiConstruction}
+	\label{lm:ConstructClusterHi} Given \hyperlink{SPHigh}{$\sso$}, we can construct in polynomial time a set of subgraphs $\mathbb{X}$ such that every subgraph $\mx \in \mathbb{X}$ satisfies the three properties (\hyperlink{P1'}{P1'})-(\hyperlink{P3'}{P3'}) with constant $g=223$, and graph $H_i$ such that:
+		\begin{equation*}
+			d_{H_{<L_i}}(u,v) \leq t(1+ \max\{s_{\sso}(2g),6g\}\eps)w(u,v) \quad \forall (u,v)\in F^{\sigma}_{i}
+		\end{equation*}
+	 where $ F^{\sigma}_{i}$ is the set of edges defined in \Cref{lm:G_i-construction}. Furthermore,  $w(H_i) \leq  \lambda \Delta_{i+1} + a_i$ such that
+	\begin{enumerate}[noitemsep]
+		\item \textbf{when $t \geq 2$:}  $\lambda = O(\chi \eps^{-1} )$, and $A = O(\chi \eps^{-1} )$.
+		\item \textbf{when $t = 1+\eps$:} $\lambda = O(\chi \eps^{-1} + \epsilon^{-2})$, and $A = O(\chi \eps^{-1} + \epsilon^{-2})$. 
+	\end{enumerate}
+Here  $A \in \mathbb{R}^+$ such that $\sum_{i\in \mathbb{N}^+}a_i \leq A \cdot w(\mst)$.
+\end{restatable}
+
+The proof of \Cref{lm:ConstructClusterHi} is deferred to \Cref{sec:stretch2} for the case $t\geq 2$ and  \Cref{sec:stretch1E} for the case $t = 1+\eps$.   
+
+\paragraph{Constructing $\msttilde_{i+1}$.~}\hypertarget{MSTiPlus1}{}  Let $\msttilde^{out}_{i} = \msttilde_{i}\setminus (\cup_{\mx \in \mathbb{X}}(\me(\mx)\cap \msttilde_{i}))$ be the set of $\msttilde_{i}$ edges that are not contained in any subgraph $\mx \in \mathbb{X}$. Let $\msttilde_{i+1}'$ be the graph with vertex set $\mv_{i+1}$ and there is an edge between two nodes $(\mx,\my)$ in $\mv_{i+1}$ of there is at least one edge in $\msttilde^{out}_{i}$ between two nodes in the two corresponding subgraphs $\mx$ and $\my$. Note that $\msttilde_{i+1}'$ could have parallel edges (but no self-loop).  Since $\msttilde_{i}$ is  a spanning tree of $\mg_i$, $\msttilde_{i+1}'$ must be connected. $\msttilde_{i+1}$ is then a spanning tree of $\msttilde_{i+1}'$.
+
+
+We are now ready to prove \Cref{lm:framework}, which we restate below.
+
+\Framework*
+\begin{proof} We apply \Cref{lm:framework-technical} to construct a light spanner $H$ for $G$ where each graph $H_i$, $i \in \mathbb{N}^+$, is constructed using \Cref{lm:ConstructClusterHi}.   
+	
+	When $t\geq 2$, by Item (1) of \Cref{lm:ConstructClusterHi} and \Cref{lm:framework-technical}, the lightness of $H$ is $O((\frac{O(\chi \eps^{-1}) +  O(\chi \eps^{-1}) + 1}{1+\psi})\log(\frac{1}{\eps}) + \frac{1}{\eps}) = O_{\eps}(\chi \eps^{-1})$. When $t = 1+\eps$, by Item (2) of \Cref{lm:ConstructClusterHi} and \Cref{lm:framework-technical}, the lightness of $H$ is $O((\frac{O(\chi \eps^{-1}) +  O(\chi \eps^{-1}) + 1}{1+\psi})\log(\frac{1}{\eps}) + \frac{1}{\eps^2}) = O_{\eps}(\chi \eps^{-1} + \eps^{-2})$. 
+	
+	We now bound the stretch of $H$. By \Cref{lm:ConstructClusterHi} and \Cref{lm:G_i-construction}, the stretch of edges in $E^{\sigma}_i$ in the graph $H_{<L_i}$  is $t(1 + (2s_{\sso}(2g) +  16g+1)\eps)$ with $g  = 223$. Thus, by \Cref{lm:framework-technical}, the stretch of $H$ is $t(1 +(2s_{\sso}(2g) +  16g+1)\eps) = t(1 + (2s_{\sso}(O(1)) +  O(1))\eps)$ as claimed.
+	\qed
+\end{proof}
+
+
+\subsection{Summary of Notation}
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{| l | l|} 
+	\hline
+	\textbf{Notation} & \textbf{Meaning} \\ \hline
+	$E^{light}$ &$ \{e \in E(G) : w(e)\le w/\varepsilon\}$\\ \hline 
+	$E^{heavy}$ & $E \setminus E^{light}$ \\\hline
+	$E^{\sigma} $ & $\bigcup_{i \in \mathbb{N}^{+}}E_{i}^{\sigma}$\\\hline
+	$E_{i}^{\sigma} $ & $\{e \in E(G) : \frac{L_i}{1+\psi} \leq w(e) < L_i\}$\\\hline
+	$g$ & constant in \hyperlink{P3}{property (P3)}, $g = 223$ \\\hline
+	$\mathcal{G}_i = (V_i, \msttilde_{i} \cup \mathcal{E}_i, \omega)$ & cluster graph; see \Cref{def:ClusterGraphNew}. \\\hline
+	$\me_i$ & corresponds to a subset of edges of $E^{\sigma}_i$\\\hline
+	$\mathbb{X}$ & a collection of subgraphs of $\mathcal{G}_i$\\\hline
+	$\mx, \mv(\mx), \me(\mx)$ & a subgraph in $\mathbb{X}$, its vertex set, and its edge set\\\hline
+	$\Phi_i$ & $\sum_{c \in C_i}\Phi(c)$ \\\hline
+	$\Delta_{i+1} $&$ \Phi_i - \Phi_{i+1}$\\\hline
+	$\Delta_{i+1}(\mx)$ & $(\sum_{\phi_C\in \mx }\Phi(C) ) - \Phi(C_{\mx})$\\\hline
+	$C_\mx$ & $\bigcup_{\phi_C \in \mx}C$ \\\hline
+	$s_{\sso}$ & the stretch constant of \hyperlink{SPHigh}{$\sso$}\\\hline
+	\caption{Notation introduced in \Cref{sec:framework}.}
+	\label{table:notation}
+\end{longtable}
+\renewcommand{\arraystretch}{1}

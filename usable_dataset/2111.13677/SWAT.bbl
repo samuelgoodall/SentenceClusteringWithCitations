@@ -1,0 +1,545 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{akbari2021vatt}
+Hassan Akbari, Linagzhe Yuan, Rui Qian, Wei-Hong Chuang, Shih-Fu Chang, Yin
+  Cui, and Boqing Gong.
+\newblock {VATT}: {T}ransformers for {M}ultimodal {S}elf-{S}upervised
+  {L}earning from {R}aw {V}ideo, {A}udio and {T}ext.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{arnab2021vivit}
+Anurag Arnab, Mostafa Dehghani, Georg Heigold, Chen Sun, Mario Lu\v{c}i\'c, and
+  Cordelia Schmid.
+\newblock Vi{V}i{T}: {A} {V}ideo {V}ision {T}ransformer.
+\newblock In {\em ICCV}, pages 6836--6846, October 2021.
+
+\bibitem{bello2021lambdanetworks}
+Irwan Bello.
+\newblock Lambda{N}etworks: {M}odeling long-range {I}nteractions without
+  {A}ttention.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{bertasius2021space}
+Gedas Bertasius, Heng Wang, and Lorenzo Torresani.
+\newblock Is {S}pace-{T}ime {A}ttention {A}ll {Y}ou {N}eed for {V}ideo
+  {U}nderstanding?
+\newblock In {\em ICML}, July 2021.
+
+\bibitem{cao2021video}
+Jiezhang Cao, Yawei Li, Kai Zhang, and Luc Van~Gool.
+\newblock Video {S}uper-{R}esolution {T}ransformer.
+\newblock {\em arXiv preprint arXiv:2106.06847}, 2021.
+
+\bibitem{carion2020end}
+Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander
+  Kirillov, and Sergey Zagoruyko.
+\newblock End-to-{E}nd {O}bject {D}etection with {T}ransformers.
+\newblock In {\em ECCV}, pages 213--229. Springer, 2020.
+
+\bibitem{caron2021emerging}
+Mathilde Caron, Hugo Touvron, Ishan Misra, Herv\'e J\'egou, Julien Mairal,
+  Piotr Bojanowski, and Armand Joulin.
+\newblock Emerging {P}roperties in {S}elf-{S}upervised {V}ision {T}ransformers.
+\newblock In {\em ICCV}, pages 9650--9660, October 2021.
+
+\bibitem{chen2021crossvit}
+Chun-Fu~(Richard) Chen, Quanfu Fan, and Rameswar Panda.
+\newblock Cross{V}i{T}: {C}ross-{A}ttention {M}ulti-{S}cale {V}ision
+  {T}ransformer for {I}mage {C}lassification.
+\newblock In {\em ICCV}, pages 357--366, October 2021.
+
+\bibitem{chen2021mm}
+Jiawei Chen and Chiu~Man Ho.
+\newblock {MM}-{V}i{T}: {M}ulti-{M}odal {V}ideo {T}ransformer for {C}ompressed
+  {V}ideo {A}ction {R}ecognition.
+\newblock In {\em WACV}, 2022.
+
+\bibitem{chen2021decision}
+Lili Chen, Kevin Lu, Aravind Rajeswaran, Kimin Lee, Aditya Grover, Michael
+  Laskin, Pieter Abbeel, Aravind Srinivas, and Igor Mordatch.
+\newblock Decision {T}ransformer: {R}einforcement {L}earning via {S}equence
+  {M}odeling.
+\newblock {\em URL Workshop in ICML}, 2021.
+
+\bibitem{chen2018encoder}
+Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig
+  Adam.
+\newblock Encoder-{D}ecoder with {A}trous {S}eparable {C}onvolution for
+  {S}emantic {I}mage {S}egmentation.
+\newblock In {\em ECCV}, pages 801--818, 2018.
+
+\bibitem{chen2021empirical}
+Xinlei Chen, Saining Xie, and Kaiming He.
+\newblock An {E}mpirical {S}tudy of {T}raining {S}elf-{S}upervised {V}ision
+  {T}ransformers.
+\newblock In {\em ICCV}, pages 9640--9649, October 2021.
+
+\bibitem{choromanski2020rethinking}
+Krzysztof~Marcin Choromanski, Valerii Likhosherstov, David Dohan, Xingyou Song,
+  Andreea Gane, Tamas Sarlos, Peter Hawkins, Jared~Quincy Davis, Afroz
+  Mohiuddin, Lukasz Kaiser, et~al.
+\newblock Rethinking {A}ttention with {P}erformers.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{mmseg2020}
+MMSegmentation Contributors.
+\newblock {{MMS}egmentation}: {O}pen{MML}ab {S}emantic {S}egmentation {T}oolbox
+  and {B}enchmark.
+\newblock \url{https://github.com/open-mmlab/mmsegmentation}, 2020.
+
+\bibitem{cubuk2020randaugment}
+Ekin~Dogus Cubuk, Barret Zoph, Jon Shlens, and Quoc Le.
+\newblock Rand{A}ugment: {P}ractical {A}utomated {D}ata {A}ugmentation with a
+  {R}educed {S}earch {S}pace.
+\newblock In {\em NeurIPS}, volume~33, pages 18613--18624, 2020.
+
+\bibitem{dai2021up}
+Zhigang Dai, Bolun Cai, Yugeng Lin, and Junying Chen.
+\newblock {UP-DETR}: {U}nsupervised {P}re-training for {O}bject {D}etection
+  with {T}ransformers.
+\newblock In {\em CVPR}, pages 1601--1610, 2021.
+
+\bibitem{d2021convit}
+St{\'e}phane d'Ascoli, Hugo Touvron, Matthew Leavitt, Ari Morcos, Giulio
+  Biroli, and Levent Sagun.
+\newblock Con{V}i{T}: {I}mproving {V}ision {T}ransformers with {S}oft
+  {C}onvolutional {I}nductive {B}iases.
+\newblock In {\em ICML}. PMLR, 2021.
+
+\bibitem{dauphin2017language}
+Yann~N Dauphin, Angela Fan, Michael Auli, and David Grangier.
+\newblock Language {M}odeling with {G}ated {C}onvolutional {N}etworks.
+\newblock In {\em ICML}, pages 933--941. PMLR, 2017.
+
+\bibitem{deng2009imagenet}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock In {\em CVPR}, pages 248--255. IEEE, 2009.
+
+\bibitem{deng2021stytr}
+Yingying Deng, Fan Tang, Xingjia Pan, Weiming Dong, Chongyang Ma, and
+  Changsheng Xu.
+\newblock Sty{T}r\^{} 2: {U}nbiased {I}mage {S}tyle {T}ransfer with
+  {T}ransformers.
+\newblock {\em arXiv preprint arXiv:2105.14576}, 2021.
+
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In {\em NAACL-HLT}, pages 4171--4186. Association for Computational
+  Linguistics, June 2019.
+
+\bibitem{dosovitskiy2020image}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, et~al.
+\newblock An {I}mage is {W}orth 16x16 {W}ords: {T}ransformers for {I}mage
+  {R}ecognition at {S}cale.
+\newblock {\em International Conference on Learning Representations (ICLR)},
+  2021.
+
+\bibitem{duke2021sstvos}
+Brendan Duke, Abdalla Ahmed, Christian Wolf, Parham Aarabi, and Graham~W
+  Taylor.
+\newblock {SSTVOS}: {S}parse {S}patiotemporal {T}ransformers for {V}ideo
+  {O}bject {S}egmentation.
+\newblock In {\em CVPR}, pages 5912--5921, 2021.
+
+\bibitem{esser2021taming}
+Patrick Esser, Robin Rombach, and Bjorn Ommer.
+\newblock Taming {T}ransformers for {H}igh-{R}esolution {I}mage {S}ynthesis.
+\newblock In {\em CVPR}, pages 12873--12883, 2021.
+
+\bibitem{fan2021multiscale}
+Haoqi Fan, Bo Xiong, Karttikeya Mangalam, Yanghao Li, Zhicheng Yan, Jitendra
+  Malik, and Christoph Feichtenhofer.
+\newblock Multiscale {V}ision {T}ransformers.
+\newblock In {\em ICCV}, pages 6824--6835, October 2021.
+
+\bibitem{fu2019dan}
+Jun Fu, Jing Liu, Haijie Tian, Yong Li, Yongjun Bao, Zhiwei Fang, and Hanqing
+  Lu.
+\newblock Dual {A}ttention {N}etwork for {S}cene {S}egmentation.
+\newblock In {\em CVPR}, pages 3146--3154, 2019.
+
+\bibitem{fu2019adaptive}
+Jun Fu, Jing Liu, Yuhang Wang, Yong Li, Yongjun Bao, Jinhui Tang, and Hanqing
+  Lu.
+\newblock Adaptive {C}ontext {N}etwork for {S}cene {P}arsing.
+\newblock In {\em ICCV}, pages 6748--6757, 2019.
+
+\bibitem{girdhar2021anticipative}
+Rohit Girdhar and Kristen Grauman.
+\newblock {Anticipative {V}ideo {T}ransformer}.
+\newblock In {\em ICCV}, 2021.
+
+\bibitem{graham2021levit}
+Benjamin Graham, Alaaeldin El-Nouby, Hugo Touvron, Pierre Stock, Armand Joulin,
+  Herv\'e J\'egou, and Matthijs Douze.
+\newblock Le{V}i{T}: {A} {V}ision {T}ransformer in {C}onv{N}et's {C}lothing for
+  {F}aster {I}nference.
+\newblock In {\em ICCV}, pages 12259--12269, October 2021.
+
+\bibitem{guo2021pct}
+Meng-Hao Guo, Jun-Xiong Cai, Zheng-Ning Liu, Tai-Jiang Mu, Ralph~R Martin, and
+  Shi-Min Hu.
+\newblock {PCT}: {P}oint {C}loud {T}ransformer.
+\newblock {\em Computational Visual Media}, 7(2):187--199, 2021.
+
+\bibitem{han2021transformer}
+Kai Han, An Xiao, Enhua Wu, Jianyuan Guo, Chunjing Xu, and Yunhe Wang.
+\newblock Transformer in {T}ransformer.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep {R}esidual {L}earning for {I}mage {R}ecognition.
+\newblock In {\em CVPR}, pages 770--778, 2016.
+
+\bibitem{heo2021rethinking}
+Byeongho Heo, Sangdoo Yun, Dongyoon Han, Sanghyuk Chun, Junsuk Choe, and
+  Seong~Joon Oh.
+\newblock Rethinking {S}patial {D}imensions of {V}ision {T}ransformers.
+\newblock In {\em ICCV}, pages 11936--11945, October 2021.
+
+\bibitem{hoffer2020augment}
+Elad Hoffer, Tal Ben-Nun, Itay Hubara, Niv Giladi, Torsten Hoefler, and Daniel
+  Soudry.
+\newblock Augment {Y}our {B}atch: {I}mproving {G}eneralization {T}hrough
+  {I}nstance {R}epetition.
+\newblock In {\em CVPR}, pages 8129--8138, 2020.
+
+\bibitem{hu2018squeeze}
+Jie Hu, Li Shen, and Gang Sun.
+\newblock Squeeze-and-{E}xcitation {N}etworks.
+\newblock In {\em CVPR}, pages 7132--7141, 2018.
+
+\bibitem{huang2016deep}
+Gao Huang, Yu Sun, Zhuang Liu, Daniel Sedra, and Kilian~Q Weinberger.
+\newblock Deep {N}etworks with {S}tochastic {D}epth.
+\newblock In {\em ECCV}, pages 646--661. Springer, 2016.
+
+\bibitem{janner2021reinforcement}
+Michael Janner, Qiyang Li, and Sergey Levine.
+\newblock Offline {R}einforcement {L}earning as {O}ne {B}ig {S}equence
+  {M}odeling {P}roblem.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{jiang2021transgan}
+Yifan Jiang, Shiyu Chang, and Zhangyang Wang.
+\newblock Trans{GAN}: {T}wo {P}ure {T}ransformers {C}an {M}ake {O}ne {S}trong
+  {GAN}, and {T}hat {C}an {S}cale {U}p.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{kingma15adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} {M}ethod for {S}tochastic {O}ptimization.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2015.
+
+\bibitem{lecun2015deep}
+Yann LeCun, Yoshua Bengio, and Geoffrey Hinton.
+\newblock Deep {L}earning.
+\newblock {\em Nature}, 521(7553):436--444, 2015.
+
+\bibitem{lee2020parameter}
+Sangho Lee, Youngjae Yu, Gunhee Kim, Thomas Breuel, Jan Kautz, and Yale Song.
+\newblock Parameter {E}fficient {M}ultimodal {T}ransformers for {V}ideo
+  {R}epresentation {L}earning.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{li2021convmlp}
+Jiachen Li, Ali Hassani, Steven Walton, and Humphrey Shi.
+\newblock Conv{MLP}: {H}ierarchical {C}onvolutional {MLP}s for {V}ision.
+\newblock {\em arXiv preprint arXiv:2109.04454}, 2021.
+
+\bibitem{liang2021swinir}
+Jingyun Liang, Jiezhang Cao, Guolei Sun, Kai Zhang, Luc Van~Gool, and Radu
+  Timofte.
+\newblock Swin{IR}: {I}mage {R}estoration {U}sing {S}win {T}ransformer.
+\newblock In {\em ICCV}, pages 1833--1844, 2021.
+
+\bibitem{liu2021pay}
+Hanxiao Liu, Zihang Dai, David~R So, and Quoc~V Le.
+\newblock Pay {A}ttention to {MLP}s.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{liu2021end}
+Xiaolong Liu, Qimeng Wang, Yao Hu, Xu Tang, Song Bai, and Xiang Bai.
+\newblock End-to-{E}nd {T}emporal {A}ction {D}etection with {T}ransformer.
+\newblock {\em arXiv preprint arXiv:2106.10271}, 2021.
+
+\bibitem{liu2021swin}
+Ze Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng Zhang, Stephen Lin, and
+  Baining Guo.
+\newblock Swin {T}ransformer: {H}ierarchical {V}ision {T}ransformer {U}sing
+  {S}hifted {W}indows.
+\newblock In {\em ICCV}, pages 10012--10022, October 2021.
+
+\bibitem{liu2021video}
+Ze Liu, Jia Ning, Yue Cao, Yixuan Wei, Zheng Zhang, Stephen Lin, and Han Hu.
+\newblock Video {S}win {T}ransformer.
+\newblock {\em arXiv preprint arXiv:2106.13230}, 2021.
+
+\bibitem{loshchilov2017decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled {W}eight {D}ecay {R}egularization.
+\newblock In {\em ICLR}, 2018.
+
+\bibitem{nagrani2021attention}
+Arsha Nagrani, Shan Yang, Anurag Arnab, Aren Jansen, Cordelia Schmid, and Chen
+  Sun.
+\newblock Attention {B}ottlenecks for {M}ultimodal {F}usion.
+\newblock {\em NeurIPS}, 34, 2021.
+
+\bibitem{naseer2021intriguing}
+Muzammal Naseer, Kanchana Ranasinghe, Salman Khan, Munawar Hayat, Fahad~Shahbaz
+  Khan, and Ming-Hsuan Yang.
+\newblock Intriguing {P}roperties of {V}ision {T}ransformers.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{pan2021less}
+Zizheng Pan, Bohan Zhuang, Haoyu He, Jing Liu, and Jianfei Cai.
+\newblock Less is {M}ore: {P}ay {L}ess {A}ttention in {V}ision {T}ransformers.
+\newblock {\em arXiv preprint arXiv:2105.14217}, 2021.
+
+\bibitem{peng2021conformer}
+Zhiliang Peng, Wei Huang, Shanzhi Gu, Lingxi Xie, Yaowei Wang, Jianbin Jiao,
+  and Qixiang Ye.
+\newblock Conformer: {L}ocal {F}eatures {C}oupling {G}lobal {R}epresentations
+  for {V}isual {R}ecognition.
+\newblock In {\em ICCV}, pages 367--376, October 2021.
+
+\bibitem{polyak1992acceleration}
+Boris~T Polyak and Anatoli~B Juditsky.
+\newblock Acceleration of {S}tochastic {A}pproximation by {A}veraging.
+\newblock {\em SIAM journal on control and optimization}, 30(4):838--855, 1992.
+
+\bibitem{ranftl2021vision}
+Ren{\'e} Ranftl, Alexey Bochkovskiy, and Vladlen Koltun.
+\newblock Vision {T}ransformers for {D}ense {P}rediction.
+\newblock In {\em ICCV}, pages 12179--12188, 2021.
+
+\bibitem{ryoo2021tokenlearner}
+Michael~S Ryoo, AJ Piergiovanni, Anurag Arnab, Mostafa Dehghani, and Anelia
+  Angelova.
+\newblock Token{L}earner: {A}daptive {S}pace-{T}ime {T}okenization for
+  {V}ideos.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{sharir2021image}
+Gilad Sharir, Asaf Noy, and Lihi Zelnik-Manor.
+\newblock An {I}mage is {W}orth 16x16 {W}ords, {W}hat is a {V}ideo {W}orth?
+\newblock {\em arXiv preprint arXiv:2103.13915}, 2021.
+
+\bibitem{srinivas2021bottleneck}
+Aravind Srinivas, Tsung-Yi Lin, Niki Parmar, Jonathon Shlens, Pieter Abbeel,
+  and Ashish Vaswani.
+\newblock Bottleneck {T}ransformers for {V}isual {R}ecognition.
+\newblock In {\em CVPR}, pages 16519--16529, 2021.
+
+\bibitem{srivastava2014dropout}
+Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+  Salakhutdinov.
+\newblock Dropout: {A} {S}imple {W}ay to {P}revent {N}eural {N}etworks from
+  {O}verfitting.
+\newblock {\em JMLR}, 15(1):1929--1958, 2014.
+
+\bibitem{steiner2021train}
+Andreas Steiner, Alexander Kolesnikov, Xiaohua Zhai, Ross Wightman, Jakob
+  Uszkoreit, and Lucas Beyer.
+\newblock How to train your {V}i{T}? {D}ata, {A}ugmentation, and
+  {R}egularization in {V}ision {T}ransformers.
+\newblock {\em arXiv preprint arXiv:2106.10270}, 2021.
+
+\bibitem{sun2020transtrack}
+Peize Sun, Yi Jiang, Rufeng Zhang, Enze Xie, Jinkun Cao, Xinting Hu, Tao Kong,
+  Zehuan Yuan, Changhu Wang, and Ping Luo.
+\newblock Trans{T}rack: {M}ultiple {O}bject {T}racking with {T}ransformer.
+\newblock {\em arXiv preprint arXiv:2012.15460}, 2020.
+
+\bibitem{tan2019efficientnet}
+Mingxing Tan and Quoc Le.
+\newblock Efficient{N}et: {R}ethinking {M}odel {S}caling for {C}onvolutional
+  {N}eural {N}etworks.
+\newblock In {\em ICML}, pages 6105--6114. PMLR, 2019.
+
+\bibitem{tang2021sparse}
+Chuanxin Tang, Yucheng Zhao, Guangting Wang, Chong Luo, Wenxuan Xie, and Wenjun
+  Zeng.
+\newblock Sparse {MLP} for {I}mage {R}ecognition: {I}s {S}elf-{A}ttention
+  {R}eally {N}ecessary?
+\newblock {\em arXiv preprint arXiv:2109.05422}, 2021.
+
+\bibitem{tolstikhin2021mixer}
+Ilya Tolstikhin, Neil Houlsby, Alexander Kolesnikov, Lucas Beyer, Xiaohua Zhai,
+  Thomas Unterthiner, Jessica Yung, Andreas~Peter Steiner, Daniel Keysers,
+  Jakob Uszkoreit, et~al.
+\newblock {MLP}-{M}ixer: {A}n {A}ll-{MLP} {A}rchitecture for {V}ision.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{touvron2021resmlp}
+Hugo Touvron, Piotr Bojanowski, Mathilde Caron, Matthieu Cord, Alaaeldin
+  El-Nouby, Edouard Grave, Gautier Izacard, Armand Joulin, Gabriel Synnaeve,
+  Jakob Verbeek, et~al.
+\newblock Res{MLP}: {F}eedforward networks for image classification with
+  data-efficient training.
+\newblock {\em arXiv preprint arXiv:2105.03404}, 2021.
+
+\bibitem{touvron2021deit}
+Hugo Touvron, Matthieu Cord, Matthijs Douze, Francisco Massa, Alexandre
+  Sablayrolles, and Herv{\'e} J{\'e}gou.
+\newblock Training data-efficient image transformers \& distillation through
+  attention.
+\newblock In {\em ICML}, pages 10347--10357. PMLR, 2021.
+
+\bibitem{touvron2021going}
+Hugo Touvron, Matthieu Cord, Alexandre Sablayrolles, Gabriel Synnaeve, and
+  Herv\'e J\'egou.
+\newblock Going {D}eeper {W}ith {I}mage {T}ransformers.
+\newblock In {\em ICCV}, pages 32--42, October 2021.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention {I}s {A}ll {Y}ou {N}eed.
+\newblock In {\em NeurIPS}, pages 5998--6008, 2017.
+
+\bibitem{wang2021pyramid}
+Wenhai Wang, Enze Xie, Xiang Li, Deng-Ping Fan, Kaitao Song, Ding Liang, Tong
+  Lu, Ping Luo, and Ling Shao.
+\newblock Pyramid {V}ision {T}ransformer: {A} {V}ersatile {B}ackbone for
+  {D}ense {P}rediction {W}ithout {C}onvolutions.
+\newblock In {\em ICCV}, pages 568--578, October 2021.
+
+\bibitem{wang2018non}
+Xiaolong Wang, Ross Girshick, Abhinav Gupta, and Kaiming He.
+\newblock Non-local {N}eural {N}etworks.
+\newblock In {\em CVPR}, pages 7794--7803, 2018.
+
+\bibitem{rw2019timm}
+Ross Wightman.
+\newblock Pytorch {I}mage {M}odels.
+\newblock \url{https://github.com/rwightman/pytorch-image-models}, 2019.
+
+\bibitem{wu2021cvt}
+Haiping Wu, Bin Xiao, Noel Codella, Mengchen Liu, Xiyang Dai, Lu Yuan, and Lei
+  Zhang.
+\newblock Cvt: Introducing convolutions to vision transformers.
+\newblock {\em arXiv preprint arXiv:2103.15808}, 2021.
+
+\bibitem{xiao2018unified}
+Tete Xiao, Yingcheng Liu, Bolei Zhou, Yuning Jiang, and Jian Sun.
+\newblock Unified {P}erceptual {P}arsing for {S}cene {U}nderstanding.
+\newblock In {\em ECCV}, pages 418--434, 2018.
+
+\bibitem{xiao2021early}
+Tete Xiao, Mannat Singh, Eric Mintun, Trevor Darrell, Piotr Doll{\'a}r, and
+  Ross Girshick.
+\newblock Early convolutions help transformers see better.
+\newblock {\em arXiv preprint arXiv:2106.14881}, 2021.
+
+\bibitem{xie2021segformer}
+Enze Xie, Wenhai Wang, Zhiding Yu, Anima Anandkumar, Jose~M Alvarez, and Ping
+  Luo.
+\newblock Seg{F}ormer: {S}imple and {E}fficient {D}esign for {S}emantic
+  {S}egmentation with {T}ransformers.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{yang2021transformer}
+Guanglei Yang, Hao Tang, Mingli Ding, Nicu Sebe, and Elisa Ricci.
+\newblock Transformer-{B}ased {A}ttention {N}etworks for {C}ontinuous
+  {P}ixel-{W}ise {P}rediction.
+\newblock In {\em ICCV}, pages 16269--16279, 2021.
+
+\bibitem{yang2021focal}
+Jianwei Yang, Chunyuan Li, Pengchuan Zhang, Xiyang Dai, Bin Xiao, Lu Yuan, and
+  Jianfeng Gao.
+\newblock Focal {S}elf-attention for {L}ocal-{G}lobal {I}nteractions in
+  {V}ision {T}ransformers.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{yin2020disentangled}
+Minghao Yin, Zhuliang Yao, Yue Cao, Xiu Li, Zheng Zhang, Stephen Lin, and Han
+  Hu.
+\newblock Disentangled {N}on-{L}ocal {N}eural {N}etworks.
+\newblock In {\em ECCV}, pages 191--207. Springer, 2020.
+
+\bibitem{yuan2021incorporating}
+Kun Yuan, Shaopeng Guo, Ziwei Liu, Aojun Zhou, Fengwei Yu, and Wei Wu.
+\newblock Incorporating {C}onvolution {D}esigns {I}nto {V}isual {T}ransformers.
+\newblock In {\em ICCV}, pages 579--588, October 2021.
+
+\bibitem{yuan2021tokens}
+Li Yuan, Yunpeng Chen, Tao Wang, Weihao Yu, Yujun Shi, Zi-Hang Jiang,
+  Francis~E.H. Tay, Jiashi Feng, and Shuicheng Yan.
+\newblock Tokens-to-{T}oken {V}i{T}: {T}raining {V}ision {T}ransformers {F}rom
+  {S}cratch on {I}mage{N}et.
+\newblock In {\em ICCV}, pages 558--567, October 2021.
+
+\bibitem{yuan2020object}
+Yuhui Yuan, Xilin Chen, and Jingdong Wang.
+\newblock Segmentation {T}ransformer: {O}bject-{C}ontextual {R}epresentations
+  for {S}emantic {S}egmentation.
+\newblock In {\em ECCV}, pages 173--190. Springer, 2020.
+
+\bibitem{yue2021vision}
+Xiaoyu Yue, Shuyang Sun, Zhanghui Kuang, Meng Wei, Philip~H.S. Torr, Wayne
+  Zhang, and Dahua Lin.
+\newblock Vision {T}ransformer {W}ith {P}rogressive {S}ampling.
+\newblock In {\em ICCV}, pages 387--396, October 2021.
+
+\bibitem{yun2019cutmix}
+Sangdoo Yun, Dongyoon Han, Seong~Joon Oh, Sanghyuk Chun, Junsuk Choe, and
+  Youngjoon Yoo.
+\newblock Cut{M}ix: {R}egularization {S}trategy to {T}rain {S}trong
+  {C}lassifiers with {L}ocalizable {F}eatures.
+\newblock In {\em ICCV}, pages 6023--6032, 2019.
+
+\bibitem{zhai2021attention}
+Shuangfei Zhai, Walter Talbott, Nitish Srivastava, Chen Huang, Hanlin Goh,
+  Ruixiang Zhang, and Josh Susskind.
+\newblock An {A}ttention {F}ree {T}ransformer.
+\newblock {\em arXiv preprint arXiv:2105.14103}, 2021.
+
+\bibitem{zhang2017mixup}
+Hongyi Zhang, Moustapha Cisse, Yann~N Dauphin, and David Lopez-Paz.
+\newblock mixup: {B}eyond {E}mpirical {R}isk {M}inimization.
+\newblock In {\em ICLR}, 2018.
+
+\bibitem{zhang2021vidtr}
+Yanyi Zhang, Xinyu Li, Chunhui Liu, Bing Shuai, Yi Zhu, Biagio Brattoli, Hao
+  Chen, Ivan Marsic, and Joseph Tighe.
+\newblock Vid{T}r: {V}ideo {T}ransformer {W}ithout {C}onvolutions.
+\newblock In {\em ICCV}, pages 13577--13587, 2021.
+
+\bibitem{zhang2021aggregating}
+Zizhao Zhang, Han Zhang, Long Zhao, Ting Chen, and Tomas Pfister.
+\newblock Aggregating {N}ested {T}ransformers.
+\newblock {\em arXiv preprint arXiv:2105.12723}, 2021.
+
+\bibitem{zhao2020exploring}
+Hengshuang Zhao, Jiaya Jia, and Vladlen Koltun.
+\newblock Exploring {S}elf-attention for {I}mage {R}ecognition.
+\newblock In {\em CVPR}, pages 10076--10085, 2020.
+
+\bibitem{zhao2021point}
+Hengshuang Zhao, Li Jiang, Jiaya Jia, Philip~HS Torr, and Vladlen Koltun.
+\newblock Point {T}ransformer.
+\newblock In {\em ICCV}, pages 16259--16268, 2021.
+
+\bibitem{zhou2019ade20k}
+Bolei Zhou, Hang Zhao, Xavier Puig, Tete Xiao, Sanja Fidler, Adela Barriuso,
+  and Antonio Torralba.
+\newblock Semantic {U}nderstanding of {S}cenes {T}hrough the {ADE20K}
+  {D}ataset.
+\newblock {\em IJCV}, 127(3):302--321, 2019.
+
+\bibitem{zhu2020deformable}
+Xizhou Zhu, Weijie Su, Lewei Lu, Bin Li, Xiaogang Wang, and Jifeng Dai.
+\newblock Deformable {DETR}: {D}eformable {T}ransformers for {E}nd-to-{E}nd
+  {O}bject {D}etection.
+\newblock In {\em ICLR}, 2020.
+
+\end{thebibliography}

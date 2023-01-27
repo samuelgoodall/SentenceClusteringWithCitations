@@ -1,0 +1,187 @@
+\section{{\assnname}}
+In this section, 
+we first introduce an expressive assertion language \textbf{\assnname} and then derive a Hoare logic to verify QEC programs.
+\subsection{Syntax of \assnname}
+
+Stabilizer is a kind of Hermitian operator and can be used  as predicate for QEC programs. 
+We observe that  the exponential computational overhead on Hermitian-based predicates may be circumvented by using stabilizers as predicates. In fact arithmetic operations (e.g. addition and multiplication) between stabilizers can be completed within a time polynomial in the number of qubits.
+This observation is particularly important for QEC programs in which the majority of logical operations can be described with a few stabilizers and the corresponding predicate transformation can be framed as the multiplication of stabilizers.
+
+However, as predicates, stabilizers are not universal.
+There are infinitely many quantum states that are not eigenstates of any non-identity stabilizer, e.g., $\ket{\psi} = \frac{\sqrt{3}}{2}\ket{0} + \frac{1}{2}\ket{1}$. 
+Such limitation will cause difficulty in the verification of QEC programs. For example, if we are given some state that is not the +1 eigenstate of any stabilizer (this is possible to happen in future universal fault-tolerant computation), we cannot find any predicate except $I$ to accommodate such state.%
+One well-studied way in the quantum information community to address this problem is to use the Pauli expansion of quantum Observable (Hermitian matrices)~\cite{nielsen2002quantum,Wilde2013QuantumIT}: \nothmskip
+\begin{lemma}[Pauli expansion]\label{lem:pauli-expansion}
+The quantum observable $O$ of a $n$-qubit system can be expressed as a linear combination of Pauli strings:
+   $ O = \sum_i w^i\sigma^i_n$,
+where $\sigma_n^i \in \{I, X, Y, Z\}^{\otimes n}$ is a length-$n$ Pauli string, and $w_i \in \mathbb{R}$ is its coefficient.
+\nothmskip
+\end{lemma}
+
+The Pauli expansion motivates the following proposition which provides a universal way to deal with arbitrary logical states in QEC programs: 
+\nothmskip
+\begin{proposition}\label{prop:universal-stabilizer}
+$\forall\, \ket{\psi} \in \mathcal{H}_n$, there is a $\projector$ which is a sum of stabilizers (Pauli strings), that satisfies $\projector \ket{\psi} = \ket{\psi}$, and $\projector \ne I$.
+\nothmskip
+\end{proposition}
+\myproof{
+Note that $(\ket{\psi}\bra{\psi})\ket{\psi} = \ket{\psi}$, $\ket{\psi}\bra{\psi}$ is a non-identity observable and by Pauli expansion, it can be represented by a linear combination of Pauli strings, i.e., stabilizers.}
+
+Inspired by Lemma~\ref{lem:pauli-expansion} and Proposition~\ref{prop:universal-stabilizer}, we introduce arithmetic expressions of stabilizers, and define the stabilizer expression $s_e$ as follows, 
+\begin{align}
+    s_e \Coloneqq s \vsep \lambda_0 s_{e0} + \lambda_1 s_{e1}, \ \lambda_0, \lambda_1 \in \mathbb{C}
+\end{align}
+where $s$ is a stabilizer. $s_e$ is different from the $s_e^u$ used for stabilizer variables which only consists of unary operations on stabilizers. However, by describing both the stabilizer variable and the predicate within the language of stabilizer, we can easily incorporate the information from stabilizer measurement into predicates.
+
+By Proposition~\ref{prop:universal-stabilizer},
+$s_e$ is universal as $\forall\ket{\psi}, \exists s_e\ s.t.\ s_e\ket{\psi} = \ket{\psi}$. For example, the state $\ket{\psi} = \frac{\sqrt{3}}{2}\ket{0} + \frac{1}{2}\ket{1}$ is a +1 eigenstate of  $s_e \coloneqq\,\frac{1}{2}Z + \frac{\sqrt{3}}{2}X$. %
+We then formulate the assertion language \textbf{{\assnname}} on QEC programs as follows:
+\begin{align}
+    A \Coloneqq s_e \vsep A_0 \wedge A_1 \vsep A_0 \vee A_1 \vsep A_0 \Rightarrow A_1.
+\end{align}
+
+When $A \coloneqq s_e$, we say a QEC program state $(\rho, \sigma)$ satisfies an assertion $A$ if $A\rho = \rho$ (for $\rho=\ket{\psi}\bra{\psi}$, $A\rho = \rho \Leftrightarrow A\ket{\psi} = \ket{\psi}$) , and $s_e$ is commutable with all stabilizer variables in $\sigma$. We denote this relation by $(\rho,\sigma) \models A$. Requiring $s_e$ to be commutable with stabilizer variables in $\sigma$ is essential for developing the quantum Hoare logic in section~\ref{subsect:partial}.
+
+The semantics of $A_0 \wedge A_1$ and other Boolean expressions can then be derived by structural induction:
+\begin{itemize}
+    \item $(\rho,\sigma) \models A_1 \wedge A_2$ iff $(\rho,\sigma) \models A_1$ and $(\rho,\sigma) \models A_2$;
+    \item $(\rho,\sigma) \models A_1 \vee A_2$ iff $(\rho,\sigma) \models A_1$ or $(\rho,\sigma) \models A_2$;
+    \item $(\rho,\sigma) \models (A_1 \Rightarrow A_2)$ iff $((\rho,\sigma) \models A_1) \Rightarrow ((\rho,\sigma) \models A_2)$.
+\end{itemize}
+
+If an assertion $A$ is satisfied by any program states $(\rho, \sigma)$, we simply denote such property as $\models A$.
+
+
+
+The following lemma presents an important result for {\assnname} that will be frequently utilized in later sections.
+
+\begin{restatable}[Implication rule]{lemma}{implictrule}
+	\label{lem:implicitrule}
+	For stabilizer expressions,
+	\begin{enumerate}
+		\item If $(\rho, \sigma) \models s_{e0}$ and $(\rho, \sigma) \models s_{e1}$, we have $(\rho, \sigma) \models s_{e0}s_{e1}$ and $(\rho, \sigma) \models \lambda_0 s_{e0}+\lambda_1 s_{e1}$, where  $\lambda_0+ \lambda_1=1$.
+		\item Assume $s_{e0}$ is not singular. If $(\rho, \sigma) \models s_{e0}$ and $(\rho, \sigma) \models s_{e1}s_{e0}$, we have $(\rho, \sigma) \models s_{e1}$.
+		\item Assume $(a s_{e0} + bs_{e1})\rho = \rho$, every stabilizer in $\sigma$ is commutable with $s_{e0}$ and $s_{e1}$, and $(\rho, \sigma) \models  s_{e2}$, then
+		$(\rho, \sigma) \models a s_{e0} + bs_{e1}s_{e2}$.
+	\end{enumerate}
+\end{restatable}
+\myproof{\postpone{\ref{app:assn}}.}
+
+Rules from classical Boolean predicates can also be used for {\assnname}, such as the rules for disjunction and conjunction. We will use these rules directly without extra description. Especially, the identity operator $I$ represents \textbf{True} and the empty operator $0$ represents \textbf{False} in {\assnname}.
+
+
+
+\subsection{Partial Correctness}
+\label{subsect:partial}
+
+\begin{figure}
+\begingroup\fontsize{\myfontsize}{\mylinesize}
+    $\{A\}\textbf{skip}\{A\}\ \hfill\text{(Skip)}$%
+    
+    $\{A[\ket{0}/q]\} q\coloneqq \ket{0} \{A\} \hfill \text{(Initialization)}$ %
+    
+    $\{A\} \bar{q}\coloneqq U\bar{q} \{UAU^\dagger\} \hfill\text{(Unitary)}$\\
+    \hfill  $U$ is a unitary, but written in the sum of stabilizers.
+     %
+    
+    $\{A\} \svar\coloneqq \pm\svar \{A\} \hfill \text{(Assignment)}$%
+    
+    $\{A\} \svar\coloneqq s \{A\} \hfill \text{(Assignment)}$ \\
+    \hfill  where $s$ is commutable with $A$, otherwise $\{A\} \svar\coloneqq s \{I\}$.
+    %
+    
+    $\infer{\{A\}\prog_1;\prog_2\{B\}}{\{A\}\prog_1\{C\}\quad \{C\}\prog_2\{B\}}\hfill \text{(Sequencing)}$%
+    
+    
+    $\infer{\{\sum_{i=0}^1 A_i M_i\}\textbf{if}\,M[\svar, \bar{q}]\,\textbf{then}\, \prog_1\,\textbf{else}\, \prog_0\,\textbf{end}\{B\}}{\{A_1 \wedge \svar\}\prog_1\{B\}\quad \{A_0 \wedge -\svar \}\prog_0\{B\}} \hfill \text{(Condition)}$
+    \\
+    
+    
+    $\infer{\{\sum_{i=0}^1 A_i M_i\} \textbf{while}\, M[\svar, \bar{q}]\, \textbf{do}\, \prog_1\, \textbf{end}\,\{ A_0 \wedge -\svar \} }{\{ A_1 \wedge \svar \}\prog_1\{\sum_{i=0}^1 A_i M_i\} }\hfill \text{(While)}$\\
+    
+    $\infer{\{A\}\prog\{B\} }{\models (A \Rightarrow A')\quad \{A'\}\prog\{B'\}\quad \models (B' \Rightarrow B)} \hfill \text{(Consequence)}$\\
+    
+\endgroup
+%
+    \caption{Hoare rules for partial correctness assertions when $A \coloneqq s_e$.
+    }
+    \label{fig:pca}%
+\end{figure}
+
+A partial correctness assertion in \assnname\ has the form:
+\hfill{} $\{A\} c \{B\}$, where $A, B \in $ \assnname, and $c\in$ \langname. We first present the Hoare logic for partial correctness assertions in which the precondition $A$ is a stabilizer expression $s_e$, as shown in Figure~\ref{fig:pca}. We will extend the Hoare logic to Boolean expressions like $A_1 \wedge A_2$ in Proposition~\ref{lem:bool-assn}. %
+ 
+ 
+The proof rules in Figure~\ref{fig:pca} are syntax-directed and reduce proving a partial correctness assertion of a compound statement to proving partial correctness assertions of its sub-statements. We only explain some rules below, since most rules are self-explained.
+
+In the initialization rule, $(\rho, \sigma)\models A[\ket{0}/q]$ means that $A\rho_0^q = \rho_0^q$ and $A$ commutes with all stabilizer variables in $\sigma$.  This can be seen as the quantum version substitution rule. 
+A more useful case of the initialization rule is when all qubits are reset to $\ket{0}$, and for the $n$-qubit system, we have 
+\begin{align}
+    \{I\}q_{n-1}\cdots q_0\coloneqq \ket{0}^{\otimes n}\{Z_0\wedge Z_1\wedge \cdots \wedge Z_n\}.
+\end{align}
+
+In the unitary rule, we represent unitary matrices as the sum of stabilizers in order to utilize the cheap computational cost of stabilizer multiplication. 
+
+The rules for condition and while loop resembles their classical counterparts except the state may be changed by the branching condition. A direct derivative of the Condition rule 
+is to make $A_1 = A_0 = A$ as follows,
+\begin{lemma}
+$\dfrac{\{A \wedge \svar\}\prog_1\{B\}\quad \{A \wedge -\svar \}\prog_0\{B\}}{\{A\}\textbf{if}\,M[\svar, \bar{q}]\,\textbf{then}\, \prog_1\,\textbf{else}\, \prog_0\,\textbf{end}\{B\}}
+$.\end{lemma}
+\myproof{
+Note that $M_0 + M_1 = I$.
+}
+
+Likewise, by letting $A_1 = A_0 = A$, we have%
+\begin{lemma}
+$\dfrac{\{ A \wedge \svar \}\prog_1\{A\} }{\{A\} \textbf{while}\, M[\svar, \bar{q}]\, \textbf{do}\, \prog_1\, \textbf{end}\,\{ A \wedge -\svar \} }$.
+\end{lemma}
+
+
+The consequence rule is a powerful tool for the verification of QEC programs since it can encode facts of QEC codes into partial correctness assertions. 
+The following example demonstrates the usage of the proposed Hoare rules, including the consequence rule:
+\begin{example}
+Assume $\prog\Coloneqq \svar\coloneqq Z_1; \textbf{if}\ M[\svar, q_1]\ \textbf{then}\\\textbf{skip} \textbf{else}\,q_1\coloneqq Xq_1;q_0\coloneqq Xq_0 \,\textbf{end}$. \\We prove  $\{Z_0Z_1\}\prog\{Z_0\}$ as follows:\\
+$\{Z_0Z_1\}\svar\coloneqq Z_1; \{Z_0Z_1\}$ \hfill{} (Assignment) \\
+$(Z_0Z_1) M_1 = (Z_0Z_1)\frac{I+Z_1}{2} = Z_0\frac{I+Z_1}{2}$, 
+$(Z_0Z_1) M_0 = -Z_0\frac{I-Z_1}{2}$ \\
+$\{Z_0Z_1 \wedge Z_1\}\textbf{skip}\{Z_0Z_1 \wedge Z_1\}$ \hfill{}(Skip) \\
+$\{Z_0Z_1 \wedge -Z_1\}q_1\coloneqq Xq_1 \{-Z_0Z_1 \wedge Z_1\}$ \hfill{} (Unitary) \\
+$\{-Z_0Z_1 \wedge Z_1\} q_0\coloneqq Xq_0 \{Z_0Z_1 \wedge Z_1\}$ \hfill{} (Unitary) \\
+$\{Z_0Z_1 \wedge -Z_1\}q_1\coloneqq Xq_1; q_0\coloneqq Xq_0 \{Z_0Z_1 \wedge Z_1\}$ \hfill{} (Sequencing)\\
+$\{Z_0Z_1= (Z_0Z_1)M_0+ (Z_0Z_1)M_1\}\textbf{if}\ M[\svar, \bar{q}]\ \textbf{then}\  \textbf{skip}\,\\\textbf{else}\,q_1\coloneqq Xq_1; q_0\coloneqq Xq_0 \,\textbf{end}\{Z_0Z_1 \wedge Z_1\}$ \hfill{} (Condition)\\
+Then, $\{Z_0Z_1\}\prog\{Z_0Z_1 \wedge Z_1\}$ \hfill{} (Sequencing)\\
+$Z_0Z_1 \wedge Z_1 \Rightarrow Z_0$ \hfill (Implication) \\
+With the consequence rule, we have 
+$\{Z_0Z_1\}\prog\{Z_0\}$.
+\end{example}
+
+Now we extend the Hoare rules in Figure~\ref{fig:pca} to other Boolean assertions in \assnname. \nothmskip
+\begin{restatable}[]{proposition}{boolassn}
+\label{lem:bool-assn}
+	We restate the Hoare rules for classical Boolean assertions as follows, \\
+	if $\{A_0\}\prog\{B_0\} \wedge \{A_1\}\prog\{B_1\}$,  $\{A_0\wedge A_1\}\prog\{B_0\wedge B_1\}$; \\
+	if $\{A_0\}\prog\{B_0\} \vee \{A_1\}\prog\{B_1\}$,  $\{A_0\vee A_1\}\prog\{B_0\vee B_1\}$; \\
+	$\{I\}\prog\{I\}, \{0\}\prog\{B\}$, where $B$ is any assertion, and $0$ represents an empty set of program states. For example, if $s_{e_1}$ and $s_{e_2}$ anti-commutes, $s_{e_1} \wedge s_{e_2} = 0$.
+\end{restatable}\nothmskip
+\myproof{
+\postpone{\ref{app:assn}}.}
+
+
+We prove a lemma for error correction which is frequently used in verification sections later.
+\nothmskip
+\begin{restatable}[Decoding correctness]{proposition}{decodecorrect}
+\label{prop:decodecorrect}
+Assume an valid error decoding and correction protocol for $\textbf{correct}$ function. Let $S$ be the set of all active stabilizer measurements in error correction, and  define $ A_S = \wedge_{s_i \in S} s_i$, then \\
+$\{I \}\textbf{correct}(\svar_0, \svar_1, \cdots) \{ A_S\}$,\\
+$\{A \wedge A_S \}\textbf{correct}(\svar_0, \svar_1, \cdots) \{A \wedge A_S\}$,\\ where $\svar_0, \svar_1, \cdots$ enumerate all elements of $S$.
+\end{restatable}
+\myproof{
+\postpone{\ref{app:assn}}.}
+
+Finally, we prove the soundness of Hoare rules in Figure~\ref{fig:pca}. %
+\begin{restatable}[Soundness]{theorem}{soundness}
+\label{thm:soundness}
+The proof system in Figure~\ref{fig:pca} is sound for the partial correctness assertions.
+\end{restatable}\nothmskip
+\myproof{
+\postpone{\ref{app:assn}}.}

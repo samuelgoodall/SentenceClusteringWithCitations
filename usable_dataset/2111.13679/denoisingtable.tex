@@ -1,0 +1,20 @@
+\begin{table}[]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{@{}l|c|c|ccc@{}}
+& Num. & Raw & \multicolumn{3}{c}{Affine-aligned sRGB} \\
+Method  & inputs   & PSNR$\uparrow$  & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\ \hline
+Noisy input & -                          &  54.38  &  10.24  &  0.035  &  0.733   \\
+SID~\cite{chen2018cvpr} & $1$            &    -    &  21.62  & \cellcolor{yellow}0.525  &  0.547   \\
+Unprocess~\cite{brooks2019cvpr} & $1$    & \cellcolor{tabred}70.80  & \cellcolor{yellow}23.02  &  0.491  & \cellcolor{tabred}0.489   \\
+RViDeNet~\cite{rvidenet} & $3$           & \cellcolor{yellow}68.29  &  22.20  &  0.516  &  0.545   \\
+UDVD~\cite{udvd} & $5$                   & \cellcolor{orange}70.68  &  22.75  &  0.514  & \cellcolor{yellow}0.507   \\
+LDR NeRF~\cite{barron2021} & $N-1$   &    -    &  19.43  &  0.518  &  0.544   \\
+Un+RawNeRF & $N-1$                   &  67.99  & \cellcolor{orange}23.35  & \cellcolor{orange}0.531  &  0.507   \\
+RawNeRF & $N-1$                          &  67.20  & \cellcolor{tabred}23.53  & \cellcolor{tabred}0.536  & \cellcolor{orange}0.501
+\end{tabular}
+}
+\caption{We compare RawNeRF's denoising performance to various single and multi-image denoisers and NeRF ablations. Despite only being optimized on a single scene and never having seen even a noisy version of the test view, RawNeRF achieves results competitive with deep denoising methods trained on large image datasets. RawNeRF also outperforms NeRF trained on LDR sRGB images (LDR NeRF) and an ablation where RawNeRF's inputs have been denoised using ``Unprocess'' (Un+RawNeRF).
+}
+\label{table:realdenoising}
+\end{table}

@@ -1,0 +1,402 @@
+
+\begin{abstract}
+
+Neural Radiance Fields (NeRF) is a technique for high quality novel view synthesis from a collection of posed input images. Like most view synthesis methods, NeRF uses tonemapped low dynamic range (LDR) as input; these images have been processed by a lossy camera pipeline that smooths detail, clips highlights, and distorts the simple noise distribution of raw sensor data. We modify NeRF to instead train directly on linear raw images, preserving the scene's full dynamic range. By rendering raw output images from the resulting NeRF, we can perform novel high dynamic range (HDR) view synthesis tasks. In addition to changing the camera viewpoint, we can manipulate focus, exposure, and tonemapping after the fact. Although a single raw image appears significantly more noisy than a postprocessed one, we show that NeRF is highly robust to the zero-mean distribution of raw noise. When optimized over many noisy raw inputs (25-200), NeRF produces a scene representation so accurate that its rendered novel views outperform dedicated single and multi-image deep raw denoisers run on the same wide baseline input images. As a result, our method, which we call \emph{RawNeRF}, can reconstruct scenes from extremely noisy images captured in near-darkness.
+
+
+
+
+\end{abstract}
+
+
+\section{Introduction}
+\label{sec:intro}
+
+View synthesis methods, such as neural radiance fields (NeRF)~\cite{mildenhall2020nerf}, typically use tonemapped low dynamic range (LDR) images as input and directly reconstruct and render new views of a scene in LDR space. This poses no issues for scenes that are well-lit and do not contain large brightness variations, since they can be captured with minimal noise using a single fixed camera exposure setting. However, this precludes many common capture scenarios: images taken at nighttime or in any but the brightest indoor spaces will have poor signal-to-noise ratios, and scenes with regions of both daylight and shadow have extreme contrast ratios that require high dynamic range (HDR) to represent accurately.
+
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/pdfs/teaser.pdf}  
+    \caption{By jointly optimizing a single scene representation over many input images, NeRF is surprisingly robust to high levels of image noise. We exploit this fact to train RawNeRF directly on completely unprocessed HDR linear raw images. In this nighttime scene lit only by a single candle (a), RawNeRF can extract details from the noisy raw data that would have been destroyed by postprocessing (b, c). RawNeRF recovers full HDR color information, enabling HDR view synthesis tasks such as changing focus and exposure for rendered novel views. The resulting renderings can be retouched like any raw photograph: here we show (d, left) a dark all-in-focus exposure with a simple global tonemap and (d, right) a brighter, synthetically refocused exposure postprocessed by HDRNet~\cite{hdrnet}.
+    See our supplementary video for more results.
+    }
+    \label{fig:teaser}
+\end{figure}
+
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/pdfs/srgb_vs_raw.pdf}
+    \caption{
+    Failure modes of NeRF on a daytime indoor scene.
+    (a) Here we show two exposures ($24\times$ apart) of a full RawNeRF output rendering, both passed through a global tonemapping curve.
+    Training NeRF with postprocessed LDR images, as done in prior work, (b) prevents it from recovering bright highlights clipped above at 1, resulting in the missing car outside the window, and (c) corrupts the per-pixel noise distribution such that NeRF recovers incorrect colors due to the nonlinear tonemap and clipping below at 0, particularly in dark regions around the plant and sofa. In contrast, RawNeRF trains directly on HDR linear raw images and correctly recovers the radiance distribution in both extremely bright and extremely dark parts of the scene.
+    }
+    \label{fig:raw_vs_srgb}
+\end{figure*}
+
+
+
+
+
+Our method, RawNeRF, modifies NeRF to reconstruct the scene in linear HDR color space by supervising directly on noisy raw input images.
+This bypasses the lossy postprocessing that cameras apply to compress dynamic range and smooth out noise in order to produce visually palatable 8-bit JPEGs.
+By preserving the full dynamic range of the raw inputs, RawNeRF enables various novel HDR view synthesis tasks. We can modify the exposure level and tonemapping algorithm applied to rendered outputs and even create synthetically refocused images with accurately rendered bokeh effects around out-of-focus light sources. 
+
+Beyond these view synthesis applications, we show that training directly on raw data effectively turns RawNeRF into
+a multi-image denoiser capable of reconstructing scenes captured in near-darkness (Figure~\ref{fig:teaser}). 
+The standard camera postprocessing pipeline (\eg, HDR+~\cite{hdrplus}) corrupts the simple noise distribution of raw data, introducing significant bias in order to reduce variance and produce an acceptable output image. 
+Feeding these images into NeRF thus produces a biased reconstruction with incorrect colors, particularly in the darkest regions of the scene (see Figure~\ref{fig:raw_vs_srgb} for an example). 
+We instead exploit NeRF's ability to reduce variance by aggregating information across frames, demonstrating that it is possible for RawNeRF to produce a clean reconstruction from many noisy raw inputs. 
+
+Unlike typical video or burst image denoising methods, RawNeRF assumes a static scene and expects camera poses as input. Provided with these extra constraints, RawNeRF is able to make use of 3D multiview consistency to average information across nearly \emph{all} of the input frames at once. Since our captured scenes each contain 25-200 input images, this means RawNeRF can remove more noise than feed-forward single or multi-image denoising networks that only make use of 1-5 input images for each output. 
+
+In summary, we make the following contributions:
+\begin{compactenum}
+    \item We propose a method for training RawNeRF directly on raw images
+    that can handle high dynamic range scenes as well as noisy inputs captured in the dark.
+    \item We show that RawNeRF outperforms NeRF on noisy real and synthetic datasets and is a competitive multi-image denoiser for wide-baseline static scenes.
+    \item We showcase novel view synthesis applications made possible by our linear HDR scene representation (varying exposure, tonemapping, and focus).
+\end{compactenum}
+
+
+
+
+\section{Related Work}
+\label{sec:relatedwork}
+
+RawNeRF combines concepts from several areas of research. We build upon NeRF as a baseline for high quality view synthesis, bring in ideas from low level image processing to optimize NeRF directly on noisy raw data, and take inspiration from uses of HDR in computer graphics and computational photography to showcase new applications made possible by an HDR scene reconstruction. We briefly cover relevant prior work across each of these areas.
+
+
+\subsection{Novel view synthesis}
+
+Novel view synthesis is the task of using a set of input images and their camera poses to reconstruct a scene representation capable of rendering novel views. When the input images are densely sampled, it is possible to use direct interpolation in pixel space for view synthesis~\cite{levoy96lightfields,cohen96lumigraph}. A more feasible capture scenario is to capture more widely spaced inputs and use a ``proxy'' geometry (\eg, a reconstructed triangle mesh) to reproject and combine colors from the input images, using either a heuristic~\cite{buehler01unstructlumigraph} or learned~\cite{hedman2018deepblending,riegler2020fvs,riegler2021svs} blending function.
+
+Recent work on applying deep learning to view synthesis has focused on volumetric rather than mesh-based scene representations~\cite{flynn2016deepstereo,zhou18stereomag,lombardi2019neuralvolumes}. 
+NeRF~\cite{mildenhall2020nerf} directly optimizes a \emph{neural} volumetric scene representation to match all input images using gradient descent on a rendering loss. 
+Various extensions have improved NeRF's robustness to varying lighting conditions~\cite{martinbrualla2020nerfw} or added supervision with  depth~\cite{wei2021nerfingmvs,jeong2021scnerf,kangle2021dsnerf}, time-of-flight data~\cite{attal2021torf}, or semantic segmentation labels~\cite{zhi2021semanticnerf}. As of yet, no approach has extended NeRF to work with high dynamic range color data.
+Some previous view synthesis methods trained using LDR data jointly solve for per-image scaling factors to account for inconsistent lighting or miscalibration between cameras~\cite{lombardi2019neuralvolumes,kopanas2021pbr}.
+ADOP~\cite{ruckert2021adop} supervises with LDR images and solves for exposure through a differentiable tonemapping step to approximately recover HDR, but does not focus on robustness to noise or supervision with raw data.
+
+
+
+\subsection{Denoising}
+
+
+Early neural denoising approaches mostly focused on denoising sRGB images synthetically corrupted with additive white Gaussian noise~\cite{zhang2017beyond}. In 2017, Pl\"otz and Roth~\cite{plotz2017cvpr} established a real raw image denoising benchmark, which showed that these deep denoisers failed to generalize beyond the synthetic data used during training and were outperformed by standard non-learned methods, such as BM3D~\cite{bm3d}. Subsequent work on both single~\cite{chen2018cvpr,brooks2019cvpr} and multi-image~\cite{kpn,godard2018burst,chen2019iccv,rvidenet} denoising demonstrated the benefits of training networks to operate directly on noisy raw input data. Modern cellphone camera pipelines perform a robust averaging of multiple noisy input frames in the raw domain~\cite{hdrplus}, though they typically cannot afford to employ deep networks due to speed and power limitations. 
+
+Another line of research investigated whether denoisers could be trained using \emph{only} noisy data when no corresponding clean ground truth exists. Noise2Noise~\cite{lehtinen2018} demonstrated this was possible given a dataset of pairs of independent noisy observations of the same image, an insight Ehret \etal~\cite{ehret2019f2f} applied to denoise videos by aligning consecutive noisy frames.
+Various followups to Noise2Noise proposed modified network architectures allowing supervision with a dataset of single noisy images~\cite{krull2019noise2void,batson2019noise2self,laine2019blindspot}. 
+Sheth \etal~\cite{udvd} showed that this paradigm could be applied to train a denoiser using a \emph{single} noisy video, including an application to raw video data. Similarly, RawNeRF is optimized over a single set of images to both denoise and recover the 3D structure of the captured scene.
+
+
+
+
+
+
+
+\subsection{Applications of raw and HDR image data}
+
+\paragraph{Computational photography}
+The value of working directly with raw data has long been noted by digital photographers due to the fact that its preservation of dynamic range allows for maximum postprocessing flexibility, letting users modify exposure, white balance, and tonemapping after the fact. Many works have tried to automate this process by using heuristics or machine learning to map directly from raw data to postprocessed LDR images~\cite{mit5k,chen2018cvpr,hdrnet,hu2018whitebox}. 
+
+Another line of work focuses on recovering HDR images from LDR inputs. This concept was pioneered by Debevec and Malik~\cite{debevec1997}, who used a stack of aligned LDR images taken at different exposures to recover and invert the camera's nonlinear response curve. 
+Current approaches apply machine learning to produce HDR outputs from single~\cite{ldr2hdrcnn} or multiple misaligned~\cite{kalantari2017hdr} LDR inputs, either recovering or hallucinating detail in clipped highlights.
+
+\paragraph{Synthetic defocus} Many modern cellphones include a postprocessing option to add synthetic defocus blur after capture~\cite{wadhwa2018defocus}. Though it is possible to accurately simulate defocus using a thin-lens model~\cite{cook1984distributed} or real multi-element camera lens~\cite{lenstracing} using ray tracing, most machine learning models use a much faster approximate rendering model, predicting a depth map and applying a depth-varying blur kernel to each discretized depth layer~\cite{barron2015stereo,srinivasan2018aperture}. Performing this blur in HDR space is critical to achieving the correct appearance of defocused bright highlights (known as ``bokeh''), as demonstrated by Zhang \etal~\cite{zhang2019defocus}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Noisy Raw Input Data}
+\label{sec:isp}
+
+NeRF~\cite{mildenhall2020nerf} takes postprocessed low dynamic range (LDR) sRGB color space images as input. This works well when using clean, noise-free images with minimal constrast. However, all real images contain some level of noise, and each step in the camera postprocessing pipeline corrupts this distribution in a certain way.
+Here we briefly describe the simplified pipeline stages relevant to our method. 
+
+
+
+
+
+
+
+
+
+\paragraph{Raw camera measurements}
+
+When capturing an image, the number of photons hitting a pixel on the camera sensor is converted to an electrical charge, which is recorded as a high bit-depth digital signal (typically 10 to 14 bits). These values are offset by a ``black level'' to allow for negative measurements due to noise. After black level subtraction, the signal is a noisy measurement $y_i$ of a quantity $x_i$ proportional to the expected number of photons arriving while the shutter is open. This noise results from both the physical fact that photon arrivals are a Poisson process (``shot'' noise) and noise in the readout circuitry that converts the analog electrical signal to a digital value (``read'' noise). The combined shot and read noise distribution can be well modeled as a Gaussian whose variance is an affine function of its mean~\cite{foi2008noisemodel}; importantly, this implies that the distribution of the error $y_i - x_i$ is zero mean.
+
+
+\paragraph{Color filter demosaicking} Color cameras contain a Bayer color filter array in front of the image sensor such that each pixel's spectral response curve measures either red, green or blue light. The pixel color values are typically arranged in $2\times 2$ squares containing two green pixels, one red, and one blue pixel (known as a Bayer pattern), resulting in ``mosaicked'' data. To generate a full-resolution color image, the missing color channels are interpolated using a demosaicking algorithm~\cite{li2008demosaic}. 
+This interpolation correlates noise spatially, and the checkerboard pattern of the mosaic leads to different noise levels in alternating pixels.
+
+
+
+
+
+\paragraph{Color correction and white balance} 
+The spectral response curves for each color filter element vary between different cameras, and a color correction matrix is used to convert the image from this camera-specific color space to a standardized color space. Additionally, because human perception is robust to the color tint imparted by different light sources, cameras attempt to account for this tint (\ie, make white surfaces appear RGB-neutral white) by scaling each color channel by an estimated white balance coefficient. These two steps are typically combined into a single linear $3\times 3$ matrix transform, which further correlates the noise between color channels.
+
+
+\paragraph{Gamma compression and tonemapping}
+
+Humans are able to discern smaller relative differences in dark regions compared to bright regions of an image. 
+This fact is exploited by sRGB gamma compression, which optimizes the final image encoding by clipping values outside $[0,1]$ and applying a nonlinear curve to the signal that dedicates more bits to dark regions at the cost of compressing bright highlights.
+In addition to gamma compression, tonemapping algorithms can be used to better preserve contrast in high dynamic range scenes (where the bright regions are several orders of magnitude brighter than the darkest) when the image is quantized to 8 bits~\cite{debevec1997,hdrplus}.
+
+In a slight abuse of terminology, we will refer both of these steps jointly as ``tonemapping'' in the rest of the paper, indicating the process by which linear HDR values are mapped to nonlinear LDR space for visualization. We will refer to signals before tonemapping as high dynamic range (HDR) and signals after as low dynamic range (LDR).
+Of all postprocessing operations, tonemapping has the most drastic effect on the noise distribution: clipping completely discards information in the brightest and darkest regions, and after the non-linear tonemapping curve the noise is no longer guaranteed to be Gaussian or even zero mean.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{RawNeRF}
+\label{sec:method}
+
+
+A neural radiance field (NeRF)~\cite{mildenhall2020nerf} is a neural network based scene representation that is optimized to reproduce the appearance of a set of input images with known camera poses. The resulting reconstruction can then be used to render novel views from previously unobserved poses. NeRF's multilayer perceptron (MLP) network takes 3D position and 2D viewing direction as input and outputs volume density and color. To render each pixel in an output image, NeRF uses volume rendering to combine the colors and densities from many points sampled along the corresponding 3D ray.
+
+Standard NeRF takes clean, low dynamic range (LDR) sRGB color space images with values in the range $[0, 1]$ as input. Converting raw HDR images to LDR images (\eg, using the pipeline described in Section~\ref{sec:isp}) has two significant consequences:
+\begin{enumerate}
+    \item Detail in bright areas is lost when values are clipped from above at one, and detail across the image is compressed by the tonemapping curve and subsequent quantization to 8 bits.
+    \item The per-pixel noise distribution becomes biased (no longer zero-mean) after passing through a nonlinear tonemapping curve and being clipped from below at zero.
+\end{enumerate}
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/pdfs/pipeline.pdf}
+    \caption{
+    The standard NeRF training pipeline (a) takes in LDR images that have been sent through a camera processing pipeline, reconstructing the scene and rendering new views in LDR color space. As such, its renderings are effectively already postprocessed and cannot be significantly retouched. In contrast, our method RawNeRF (b) modifies NeRF to train directly on linear raw HDR input data. The resulting scene representation produces novel views that can be edited like any raw photograph.
+    }
+    \label{fig:pipeline}
+\end{figure}
+
+
+
+The goal of RawNeRF is to make use of this information rather than discarding it, optimizing NeRF directly on linear raw input data in HDR color space (Figure~\ref{fig:pipeline}).
+In Section~\ref{sec:results}, we will show that reconstructing NeRF in raw space makes it much more robust to noisy inputs and allows for novel HDR view synthesis applications. First, we detail the changes required to make NeRF work with raw data.
+
+
+
+
+
+
+
+
+
+\subsection{Loss function}
+
+Since the color distribution in an HDR image can span many orders of magnitude, a standard L2 loss applied in HDR space will be completely dominated by error in bright areas and produce an image that has muddy dark regions with low contrast when tonemapped (see  Figure~\ref{fig:l2loss}).
+Instead, we apply a loss that more strongly penalizes errors in dark regions to align with how human perception compresses dynamic range. One way to achieve this is by passing both the rendered estimate $\hat y$ and noisy observed intensity $y$ through a tonemapping curve $\psi$ before the loss is applied:
+\begin{align}
+    L_\psi(\hat y, y) = \sum_i (\psi(\hat y_i) - \psi(y_i))^2\, .
+    \label{eq:tonemaploss}
+\end{align}
+However, in low-light raw images the observed signal $y$ is heavily corrupted by zero-mean noise, and a nonlinear tonemap will introduce bias that changes the noisy signal's expected value ($E[\psi(y)] \neq \psi(E[y])$). In order 
+for the network to converge to an unbiased result~\cite{lehtinen2018}, 
+we instead use a weighted L2 loss of the form
+\begin{align}
+    L(\hat y, y) = \sum_i w_i (\hat y_i - y_i)^2\,  .
+\end{align}
+We can approximate the tonemapped loss (\ref{eq:tonemaploss}) in this form by using a linearization of the tone curve $\psi$ around each $\hat y_i$:
+\begin{align}
+   \tilde L_{\psi}(\hat y, y) = &\sum_i \left[\psi'(\sg(\hat y_i))(\hat y_i - y_i) \right]^2 \, ,
+\end{align}
+where $\sg(\cdot )$ indicates a stop-gradient that treats its argument as an constant with zero derivative, preventing it from influencing the loss gradient during backpropagation.
+We find that a ``gradient supervision'' tone curve $\psi(z) = \log(y + \epsilon)$ with $\epsilon=10^{-3}$ produces perceptually high quality results with minimal artifacts, implying a loss weighting term of $\psi'(\sg(\hat y_i)) = (\sg(\hat y_i) + \epsilon )^{-1}$ and final loss
+\begin{align}
+\label{eq:loss}
+    \tilde L_{\psi}(\hat y, y) = &\sum_i \left(\frac{\hat y_i - y_i}{\sg(\hat y_i) + \epsilon} \right)^2 .
+\end{align}
+This corresponds exactly to the relative MSE loss used to achieve unbiased results when training on noisy HDR pathtracing data in Noise2Noise~\cite{lehtinen2018}. The curve $\psi$ is proportional to the $\mu$-law function used for range compression in audio processing, and has previously been applied as a tonemapping function when supervising a network to map from a burst of LDR images to an HDR output~\cite{kalantari2017hdr}. 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/pdfs/loss.pdf}
+    \caption{
+    This challenging scene (a) has a $7000\times$ ratio between its $90^{\textrm{th}}$ and $10^{\textrm{th}}$ raw color percentiles.
+    (b) When faced with such high-contrast inputs, the standard L2 loss from NeRF manages to recover the bright parts of the scene but produces poor results in darker regions, which becomes particularly apparent after LDR tonemapping. (c) Our proposed loss (\ref{eq:loss}), reweighted according to the gradient of a log tonemap curve, successfully reconstructs all parts of the scene. 
+    Both rendered images are tonemapped using HDR+~\cite{hdrplus} for visualization.
+    }
+    \label{fig:l2loss}
+\end{figure}
+
+
+
+\subsection{Variable exposure training}
+
+
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/pdfs/varyexposure.pdf}  
+    \caption{A fixed shutter speed is not sufficient for capturing the full dynamic range in scenes with extreme brightness variation. (a) For example, this scene requires variable exposure capture to avoid either poor quality in dark indoor regions or blown-out sky highlights. Only a RawNeRF model optimized using both short and long exposures recovers the full dynamic range. (b) This brightness variation is too high to visualize in a single image using a simple global sRGB gamma curve, requiring a more sophisticated local tonemapping algorithm (\eg, HDR+ postprocessing~\cite{hdrplus}).
+    }
+    \label{fig:shortlong}
+\end{figure}
+
+
+
+\input{denoisingfigure}
+
+
+
+In scenes with very high dynamic range, even a 10-14 bit raw image may not be sufficient for capturing both bright and dark regions in a single exposure. This is addressed by the ``bracketing'' mode included in many digital cameras, where multiple images with varying shutter speeds are captured in a burst, then merged to take advantage of the bright highlights preserved in the shorter exposures and the darker regions captured with more detail in the faster exposures.
+
+We can similarly take advantage of variable exposures in RawNeRF (Figure~\ref{fig:shortlong}). Given a sequence of images $I_i$ with exposure times $t_i$ (and all other capture parameters held constant), we can
+``expose'' RawNeRF's linear space color output to match the brightness in image $I_i$ by scaling it by the recorded shutter speed $t_i$.
+In practice, we find that varying exposures cannot be precisely aligned using shutter speed alone due to sensor miscalibration (see supplement). 
+To correct for this, we add a learned per-color-channel scaling factor for each unique shutter speed present in the set of captured images, which we jointly optimize along with the NeRF network. The final RawNeRF ``exposure'' given a output color $\hat y_i$ from the network is then
+$
+    \min(\hat y_i^c \cdot t_i \cdot \alpha_{t_i}^c, 1),
+$
+where $c$ indexes color channels, and $\alpha_{t_i}^c$ is the learned scaling factor for shutter speed $t_i$ and channel $c$ (we constrain $\alpha_{t_\textrm{max}}^c=1$ for the longest exposure).
+We clip from above at 1 to account for the fact that pixels saturate in overexposed regions. 
+This scaled and clipped value is passed to the previously described loss (Equation~\ref{eq:loss}).
+
+\input{denoisingtable}
+
+
+\subsection{Implementation details}
+
+Our implementation is based on the mip-NeRF~\cite{barron2021} codebase, which improves upon the positional encoding used in the original NeRF method. Please see that paper for further details on the MLP scene representation and volumetric rendering algorithm. 
+Our only network architecture change is to modify the activation function for the MLP's output color from a sigmoid to an exponential function to better parameterize linear radiance values. We use the Adam optimizer~\cite{adam} with batches of $16$k random rays sampled across all training images and a learning rate decaying from $10^{-3}$ to $10^{-5}$ over $500$k steps of optimization.
+
+We find that extremely noisy scenes benefit from a regularization loss on volume density to prevent partially transparent ``floater'' artifacts. We apply a loss on the variance of the weight distribution used to accumulate color values along the ray during volume rendering; please see the supplement for details.
+
+As our raw input data is mosaicked, it only contains one color value per pixel. We  
+only apply the loss to the active color channel for each pixel,
+such that optimizing NeRF effectively demosaics the input images. 
+Since any resampling steps will effect the raw noise distribution, we do not undistort or downsample the inputs, and instead train using the full resolution mosaicked images (usually 12MP for our scenes).
+To achieve this, we use camera intrinsics to account for radial distortion when generating rays.
+We use full resolution postprocessed JPEG images to calculate camera poses as COLMAP~\cite{colmap} does not support raw images.
+
+
+
+
+
+
+\section{Results}
+\label{sec:results}
+
+We present results exploring two consequences of supervising NeRF with raw HDR data. First, we show that RawNeRF is surprisingly robust to high levels of noise, to the extent that it can act as a competitive multi-image denoiser when applied to wide-baseline images of a static scene. Second, we demonstrate the HDR view synthesis applications enabled by recovering a scene representation that preserves high dynamic range color values.
+
+\subsection{Denoising}
+
+
+Recent years have seen an increasing focus on developing deep learning methods for denoising images directly in the raw linear domain~\cite{brooks2019cvpr,chen2018cvpr}. This effort has expanded to include multi-image denoisers that can be applied to burst images or video frames~\cite{chen2019iccv,rvidenet,udvd}. These multi-image denoisers typically assume that there is a relatively small amount of motion between frames, but that there may be large amounts of object motion within the scene. When nearby frames can be well aligned, these methods merge information from similar image patches (typically across 2-8 neighboring images) to outperform single image denoisers.
+
+By comparison, NeRF (and by extension, RawNeRF) optimizes for a single scene reconstruction that is consistent with \emph{all} input images. By specializing to wide-baseline static scenes and taking advantage of 3D multiview information, RawNeRF can aggregate observations from much more widely spaced input images than a typical multi-image denoising method. 
+
+
+\paragraph{Real dataset} We collect a real world denoising dataset with 3 different scenes, each consisting of 101 noisy images and a clean reference image merged from stabilized long exposures. The first 100 images are taken handheld across a wide baseline (a standard forward-facing NeRF capture), using a fast shutter speed to accentuate noise. We then capture a stabilized burst of 50-100 longer exposures on a tripod and robustly merge them using HDR+~\cite{hdrplus} to create a clean ground truth frame. One additional tripod image taken at the original fast shutter speed serves as a noisy input ``base frame'' for the deep denoising methods. All images are taken with an iPhone X at 12MP resolution using the wide-angle lens and saved as 12-bit raw DNG files.
+
+
+\paragraph{Comparisons} In Table~\ref{table:realdenoising} and Figure~\ref{fig:realdenoising}, we compare RawNeRF's joint view synthesis and denoising performance to several recent deep single and multi-image denoising methods. Note that all denoisers require the noisy version of the test image as input, whereas RawNeRF and its ablations only require its camera pose.
+
+
+
+
+
+
+We focus our comparison on methods explicitly designed to handle raw input images. Chen \etal~\cite{chen2018cvpr} (SID) present a single image denoiser that maps from raw inputs to postprocessed LDR images and is trained on a large dataset of noisy raw and clean postprocessed image pairs collected by the authors. Brooks \etal~\cite{brooks2019cvpr} (Unprocess) is a method for training a raw single image denoiser on simulated raw data created from internet image datasets that transfers well to real raw images. RViDeNet~\cite{rvidenet} trains a raw video denoiser on a combination of Unprocessing-style synthetic data and a new real raw video dataset. Sheth \etal~\cite{udvd} (UDVD) present a ``self-supervised'' method for training a video denoiser only using noisy data, building on ideas from Noise2Noise~\cite{lehtinen2018} and blind-spot networks~\cite{laine2019blindspot}. UDVD provides network weights specifically trained on the raw video dataset from RViDeNet. For all methods, we use publicly available code and pretrained model weights.
+
+We also compare to two ablations of our method. LDR NeRF represents mip-NeRF~\cite{barron2021} trained (as usual) in LDR sRGB space on images postprocessed by a minimal sRGB tonemapping pipeline. ``Un+RawNeRF'' preprocesses the training images using the single image raw denoiser from Brooks \etal~\cite{brooks2019cvpr} (``Unprocess'') before training RawNeRF.
+
+\input{legofigure}
+
+
+\input{legotable}
+
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/pdfs/bokeh.pdf}
+    \caption{Synthetic defocus examples. In this nighttime garden scene (a), LDR NeRF cannot accurately render defocused bright highlights since it is trained on images that have already been tonemapped and clipped (b). RawNeRF recovers the linear intensity of the light sources such that applying defocus blur produces correctly oversaturated ``bokeh balls'' (c). 
+    Since RawNeRF is optimized for view synthesis from wide-baseline inputs, it can achieve 3D defocus effects not possible with a single image and depth map, such as revealing occluded parts of the background by focusing behind the foreground bulldozer (d) or focusing on the bookshelves reflected above the piano keys (e).
+    }
+    \label{fig:bokeh_banner}
+\end{figure*}
+
+
+All compared methods take mosaicked raw images as input. 
+Every deep denoiser~\cite{chen2018cvpr,brooks2019cvpr,rvidenet,udvd} uses the noisy ``base frame'' as input, and the two multi-image denoising networks~\cite{rvidenet,udvd} also receive the nearest images from the wide-baseline capture (based on camera position).
+We convert the 12-bit raw input to floating point by normalizing with the white and black levels. 
+Since each method was trained on raw data from a different source, they impart different color tints to the output. So this not affect metrics, we calculate a per-color-channel affine transform that best matches each method's raw output to the ground truth raw image. (The exceptions are SID and LDR NeRF, whose sRGB output we match to the postprocessed sRGB ground truth.) Our basic postprocessing pipeline for visualization and computing sRGB metrics is to apply a bilinear demosaic (when necessary), perform white balance/color correction, rescale white level, clip to $[0, 1]$, and apply the sRGB gamma curve. Please see the supplement for details.
+
+
+
+
+
+\paragraph{Analysis} Despite simultaneously performing denoising and novel view synthesis, our method is competitive with all compared deep denoisers (Table~\ref{table:realdenoising}, Figure~\ref{fig:realdenoising}). We suspect that the multi-image denoisers struggle to make use of the additional frames provided from the wide-baseline capture, as the camera movement is larger than in a typical sub-second burst or video clip. By comparison, RawNeRF, despite lacking any explicitly learned image priors, clean training data, or even a ``base frame'' input image, produces high quality outputs by combining information from across all input images in its reconstruction. 
+Despite the fact that LDR NeRF is directly trained to minimize mean-squared error in sRGB space, RawNeRF achieves significantly better sRGB metrics.
+We also find that applying a single image denoiser to the inputs before training RawNeRF results in oversmoothed renderings (Un+RawNeRF).
+
+
+
+\paragraph{Synthetic noise ablation} In Table~\ref{tab:synthlego} and Figure~\ref{fig:synthlego}, we demonstrate the impact of noise level on RawNeRF image quality. For training, we render 120 linear HDR images using the \emph{Lego} scene from NeRF~\cite{mildenhall2020nerf}, borrowing color correction, white balance, and noise parameters from our iPhone captures' EXIF metadata to ``unprocess'' this data into raw space~\cite{brooks2019cvpr}. Since the renderings have a large amount of empty space, we report sRGB PSNR on the object only, by using the provided alpha masks (otherwise error from the background pixels heavily penalizes LDR NeRF). Even in this synthetic setting free from camera miscalibration issues, we can clearly observe the color bias and loss of detail caused by training LDR NeRF on postprocessed noisy data. 
+
+
+
+
+
+\subsection{HDR view synthesis applications}
+
+
+
+\paragraph{Modifying exposure and tonemapping} Figures~\ref{fig:teaser}, \ref{fig:raw_vs_srgb},
+\ref{fig:l2loss}, \ref{fig:shortlong}, and \ref{fig:bokeh_banner} include examples of varying the exposure level and tonemapping algorithm for images output by RawNeRF, which exist in linear HDR space and can thus be postprocessed like a raw photo from a digital camera. 
+Please see our supplement and video for many more examples.
+
+
+\paragraph{Synthetic defocus} 
+Given a full 3D model of a scene, physically-based renderers accurately simulate camera lens defocus effects by tracing rays refracted through each lens element~\cite{lenstracing}, but this process is extremely computationally expensive. 
+A reasonably convincing and much cheaper solution is to apply a varying blur kernel to different depth layers of the scene and composite them together~\cite{barron2015stereo,wadhwa2018defocus}. In Figure~\ref{fig:bokeh_banner}, we apply this synthetic defocus rendering model to sets of RGBA depth layers precomputed from trained RawNeRF models (similar to a multiplane image~\cite{zhou18stereomag}). 
+As shown by Zhang \etal~\cite{zhang2019defocus}, recovering linear HDR color is critical for achieving the characteristic oversaturated ``bokeh balls'' around defocused bright light sources. 
+
+
+
+
+\section{Discussion}
+
+We have demonstrated the benefits of training NeRF directly on linear raw camera images. However, this modification is not without tradeoffs. Most digital cameras can only save raw images at full resolution with minimal compression, 
+resulting in huge storage requirements when capturing tens or hundreds of images per scene.
+Our method is also dependent on COLMAP's~\cite{colmap} robustness for computing camera poses, preventing us from capturing scenes below a certain light level. This could potentially be addressed by jointly optimizing RawNeRF and the input camera poses~\cite{wang2021nerfmm,lin2021barf}. Finally, despite its robustness to noise, RawNeRF cannot be considered a general purpose denoiser as it cannot handle scene motion and requires orders of magnitude more computation than a feed-forward network. 
+
+Despite these shortcomings, we believe that RawNeRF represents a step toward robust, high quality capture of real world environments. Training on raw images with variable exposure allows us to capture scenes with a much wider dynamic range, and robustness to noise makes reconstructing dark nighttime captures possible. Lifting these constraints greatly increases the fraction of the world that can be reconstructed and explored with photorealistic view synthesis.
+
+
+
+

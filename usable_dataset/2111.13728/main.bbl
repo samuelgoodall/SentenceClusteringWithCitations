@@ -1,0 +1,227 @@
+\begin{thebibliography}{10}
+
+\bibitem{Fowler2012SurfaceCT}
+Austin~G. Fowler, Matteo Mariantoni, John~M. Martinis, and Andrew~N Cleland.
+\newblock Surface codes: Towards practical large-scale quantum computation.
+\newblock {\em Physical Review A}, 86:032324, 2012.
+
+\bibitem{Chamberland2020BuildingAF}
+Christopher Chamberland, Kyungjoo Noh, Patricio Arrangoiz-Arriola, Earl~T.
+  Campbell, Connor~T. Hann, Joseph Iverson, Harald Putterman, Thomas~C.
+  Bohdanowicz, Steven~T. Flammia, Andrew~J. Keller, Gil Refael, John Preskill,
+  Liang Jiang, Amir~H. Safavi-Naeini, Oskar~J. Painter, and Fernando G. S.~L.
+  Brand{\~a}o.
+\newblock Building a fault-tolerant quantum computer using concatenated cat
+  codes.
+\newblock {\em arXiv: Quantum Physics}, 2020.
+
+\bibitem{Chamberland2020TopologicalAS}
+Christopher Chamberland, Guanyu Zhu, Theodore~J. Yoder, Jared~B. Hertzberg, and
+  Andrew~W. Cross.
+\newblock Topological and subsystem codes on low-degree graphs with flag
+  qubits.
+\newblock {\em Physical Review X}, 10, 2020.
+
+\bibitem{Preskill2018QuantumCI}
+John Preskill.
+\newblock Quantum computing in the nisq era and beyond.
+\newblock {\em Quantum}, 2018.
+
+\bibitem{Holmes2020NISQBQ}
+Adam Holmes, Mohammad~Reza Jokar, Ghasem Pasandi, Yongshan Ding, Massoud
+  Pedram, and Frederic~T. Chong.
+\newblock Nisq+: Boosting quantum computing power by approximating quantum
+  error correction.
+\newblock {\em 2020 ACM/IEEE 47th Annual International Symposium on Computer
+  Architecture (ISCA)}, pages 556--569, 2020.
+
+\bibitem{nielsen2002quantum}
+Michael~A Nielsen and Isaac Chuang.
+\newblock Quantum computation and quantum information, 2002.
+
+\bibitem{google50296}
+Adam~Jozef Zalcman, Alan Derk, Alan Ho, Alex Opremcak, Alexander Korotkov,
+  Alexandre Bourassa, Andre~Gregory Petukhov, Andreas Bengtsson, Andrew
+  Dunsworth, Anthony Megrant, Austin Fowler, Bálint Pató, Benjamin Chiaro,
+  Benjamin Villalonga, Brian Burkett, Brooks~Riley Foxen, Catherine Erickson,
+  Charles Neill, Chris Quintana, Cody Jones, Craig~Michael Gidney, Daniel
+  Eppens, Daniel Sank, Dave Landhuis, David~A Buell, Doug Strain, Dvir Kafri,
+  Edward Farhi, Eric Ostby, Erik Lucero, Evan Jeffrey, Fedor Kostritsa,
+  Frank~Carlton Arute, Hartmut Neven, Igor Aleiner, Jamie Yao, Jarrod~Ryan
+  McClean, Jeremy~Patterson Hilton, Jimmy Chen, Jonathan~Arthur Gross, Joseph
+  Bardin, Josh Mutus, Juan Atalaya, Julian Kelly, Kevin Miao, Kevin Satzinger,
+  Kostyantyn Kechedzhi, Kunal Arya, Marco Szalay, Marissa Giustina, Masoud
+  Mohseni, Matt McEwen, Matt Trevithick, Matthew Neeley, Matthew~P Harrigan,
+  Michael Broughton, Michael Newman, Murphy~Yuezhen Niu, Nicholas Bushnell,
+  Nicholas Redd, Nicholas Rubin, Ofer Naaman, Orion Martin, Paul~Victor Klimov,
+  Pavel Laptev, Pedram Roushan, Ping Yeh, Rami Barends, Roberto Collins, Ryan
+  Babbush, Sabrina Hong, Sean Demura, Sean Harrington, Seon Kim, Sergei Isakov,
+  Sergio Boixo, Ted White, Thomas~E O'Brien, Trent Huang, Trevor Mccourt, Vadim
+  Smelyanskiy, Vladimir Shvarts, William Courtney, Wojtek Mruczkiewicz, Xiao
+  Mi, Yu~Chen, and Zhang Jiang.
+\newblock Exponential suppression of bit or phase flip errors with repetitive
+  quantum error correction.
+\newblock {\em Nature}, 2021.
+
+\bibitem{Chamberland2020}
+Christopher Chamberland, Guanyu Zhu, Theodore~J. Yoder, Jared~B. Hertzberg, and
+  Andrew~W. Cross.
+\newblock Topological and subsystem codes on low-degree graphs with flag
+  qubits.
+\newblock {\em Phys. Rev. X}, 10:011022, Jan 2020.
+
+\bibitem{Gottesman1997StabilizerCA}
+Daniel Gottesman.
+\newblock Stabilizer codes and quantum error correction.
+\newblock {\em arXiv: Quantum Physics}, 1997.
+
+\bibitem{Lao2020FaulttolerantQE}
+Lingling Lao and Carmen~Garcia Almudever.
+\newblock Fault-tolerant quantum error correction on near-term quantum
+  processors using flag and bridge qubits.
+\newblock {\em Physical Review A}, 101:032333, 2020.
+
+\bibitem{Chao2019FlagFE}
+Rui Chao and Ben Reichardt.
+\newblock Flag fault-tolerant error correction for any stabilizer code.
+\newblock {\em arXiv: Quantum Physics}, 2019.
+
+\bibitem{Noh2020FaulttolerantBQ}
+Kyungjoo Noh and Christopher Chamberland.
+\newblock Fault-tolerant bosonic quantum error correction with the
+  surface–gottesman-kitaev-preskill code.
+\newblock {\em Physical Review A}, 101:012316, 2020.
+
+\bibitem{Wu2019FullstateQC}
+Xin-Chuan Wu, Sheng Di, Emma~Maitreyee Dasgupta, Franck Cappello, Hal Finkel,
+  Yuri Alexeev, and Frederic~T. Chong.
+\newblock Full-state quantum circuit simulation by using data compression.
+\newblock {\em Proceedings of the International Conference for High Performance
+  Computing, Networking, Storage and Analysis}, 2019.
+
+\bibitem{Zhou2019AnAQ}
+Li~Zhou, Nengkun Yu, and Mingsheng Ying.
+\newblock An applied quantum hoare logic.
+\newblock {\em Proceedings of the 40th ACM SIGPLAN Conference on Programming
+  Language Design and Implementation}, 2019.
+
+\bibitem{Li2020ProjectionbasedRA}
+Gushu Li, Li~Zhou, Nengkun Yu, Yufei Ding, Mingsheng Ying, and Yuan Xie.
+\newblock Projection-based runtime assertions for testing and debugging quantum
+  programs.
+\newblock {\em Proceedings of the ACM on Programming Languages}, 4:1 -- 29,
+  2020.
+
+\bibitem{Ying2012FloydhoareLF}
+Mingsheng Ying.
+\newblock Floyd--hoare logic for quantum programs.
+\newblock {\em ACM Trans. Program. Lang. Syst.}, 33:19:1--19:49, 2012.
+
+\bibitem{Ying2018ReasoningAP}
+Mingsheng Ying and Yangjia Li.
+\newblock Reasoning about parallel quantum programs.
+\newblock {\em ArXiv}, abs/1810.11334, 2018.
+
+\bibitem{Unruh2019QuantumHL}
+Dominique Unruh.
+\newblock Quantum hoare logic with ghost variables.
+\newblock {\em 2019 34th Annual ACM/IEEE Symposium on Logic in Computer Science
+  (LICS)}, pages 1--13, 2019.
+
+\bibitem{DHondt2006QuantumWP}
+Ellie D'Hondt and P.~Panangaden.
+\newblock Quantum weakest preconditions.
+\newblock {\em Mathematical Structures in Computer Science}, 16:429 -- 451,
+  2006.
+
+\bibitem{Selinger2004TowardsAQ}
+Peter Selinger.
+\newblock Towards a quantum programming language.
+\newblock {\em Mathematical Structures in Computer Science}, 14:527 -- 586,
+  2004.
+
+\bibitem{Feng2020QuantumHL}
+Yuan Feng and Mingsheng Ying.
+\newblock Quantum hoare logic with classical variables.
+\newblock {\em ArXiv}, abs/2008.06812, 2020.
+
+\bibitem{Feng2021VerificationOD}
+Yuan Feng, Sanjiang Li, and Mingsheng Ying.
+\newblock Verification of distributed quantum programs.
+\newblock {\em ArXiv}, abs/2104.14796, 2021.
+
+\bibitem{Yu2021QuantumAI}
+Nengkun Yu and Jens Palsberg.
+\newblock Quantum abstract interpretation.
+\newblock {\em Proceedings of the 42nd ACM SIGPLAN International Conference on
+  Programming Language Design and Implementation}, 2021.
+
+\bibitem{Rand2021StaticAO}
+Robert Rand, Aarthi Sundaram, Kartik Singhal, and Brad Lackey.
+\newblock Static analysis of quantum programs via gottesman types.
+\newblock {\em ArXiv}, abs/2101.08939, 2021.
+
+\bibitem{Rand2021ExtendingGT}
+Robert Rand, Kartik Singhal, Brad Lackey, and Microsoft.
+\newblock Extending gottesman types beyond the clifford group.
+\newblock In {\em arXiv}, 2021.
+
+\bibitem{Rand2021GottesmanTF}
+Robert Rand, Aarthi Sundaram, Kartik Singhal, and Brad Lackey.
+\newblock Gottesman types for quantum programs.
+\newblock {\em ArXiv}, abs/2109.02197, 2021.
+
+\bibitem{Birkhoff1936TheLO}
+Garrett Birkhoff and John von Neumann.
+\newblock The logic of quantum mechanics.
+\newblock {\em Annals of Mathematics}, 37:1--26, 1936.
+
+\bibitem{Winskel1993TheFS}
+Glynn Winskel.
+\newblock The formal semantics of programming languages - an introduction.
+\newblock In {\em Foundation of computing series}, 1993.
+
+\bibitem{Wilde2013QuantumIT}
+Mark~M. Wilde.
+\newblock Quantum information theory.
+\newblock In {\em Quantum Information Theory}, 2013.
+
+\bibitem{Horsman2012SurfaceCQ}
+Clare Horsman, Austin~G. Fowler, Simon~J. Devitt, and Rodney~Van Meter.
+\newblock Surface code quantum computing by lattice surgery.
+\newblock {\em New Journal of Physics}, 14:123011, 2012.
+
+\bibitem{Fowler2015MinimumWP}
+Austin~G. Fowler.
+\newblock Minimum weight perfect matching of fault-tolerant topological quantum
+  error correction in average o(1) parallel time.
+\newblock {\em Quantum Inf. Comput.}, 15:145--158, 2015.
+
+\bibitem{ChenSatzingerAtalayaKorotkovDunsworthSankQui2}
+Zijun Kevin J. Juan Alexander N. Andrew Daniel Chris Mat Chen Satzinger Atalaya
+  Korotkov Dunsworth~Sank Qui, Zijun Chen, Kevin~J Satzinger, Juan Atalaya,
+  Alexander~N. Korotkov, Andrew Dunsworth, Daniel~Thomas Sank, Chris Quintana,
+  Matthew~J. McEwen, Rami Barends, Paul Klimov, Sabrina Hong, Cody Jones, Andre
+  Petukhov, Dvir Kafri, Sean Demura, Brian Burkett, Craig Gidney, Austin~G.
+  Fowler, Alexandru Paler, Harald Putterman, Igor~L. Aleiner, Frank Arute,
+  Kunal Arya, Ryan Babbush, Joseph~C. Bardin, Andreas Bengtsson, Alexandre
+  Bourassa, Mick Broughton, Bob~B. Buckley, David~A. Buell, Nicholas Bushnell,
+  Benjamin Chiaro, Roberto Collins, William Courtney, Alan~R. Derk, Daniel
+  Eppens, Catherine Erickson, Edward Farhi, Brooks Foxen, Marissa Giustina, Ami
+  Greene, Jonathan~A. Gross, Matthew~P. Harrigan, Sean~D. Harrington, Jeremy~P.
+  Hilton, Alan Ho, Trent Huang, William~J. Huggins, L~B Ioffe, Sergei~V.
+  Isakov, Evan Jeffrey, Zhang Jiang, Kostyantyn Kechedzhi, Seon Kim, Alexei~Y.
+  Kitaev, Fedor Kostritsa, David Landhuis, Pavel Laptev, Erik Lucero, Orion
+  Martin, Jarrod~R. McClean, Trevor McCourt, Xiao Mi, Kevin~C. Miao, Masoud
+  Mohseni, Shirin Montazeri, Wojciech Mruczkiewicz, Josh Mutus, Ofer Naaman,
+  Matthew Neeley, Charles~J. Neill, Michael Newman, Murphy~Yuezhen Niu,
+  Thomas~E. O’Brien, Alexander Opremcak, Eric~P. Ostby, B{\'a}lint Pat{\'o},
+  N~Redd, Pedram Roushan, Nicholas~C Rubin, Vladimir Shvarts, Doug Strain,
+  Marco Szalay, Matthew~D Trevithick, Benjamin Villalonga, Theodore White,
+  Z.~Jamie Yao, P~Yeh, Juhwan Yoo, Adam Zalcman, Hartmut Neven, Sergio Boixo,
+  Vadim~N. Smelyanskiy, Yu~Chen, Anthony Megrant, and Julian Kelly.
+\newblock Exponential suppression of bit or phase errors with cyclic error
+  correction.
+\newblock {\em Nature}, 595:383 -- 387, 2021.
+
+\end{thebibliography}

@@ -1,0 +1,91 @@
+\section{Results}\label{sec:results}
+\vspace{0.5em}\noindent\textbf{Implementation Details.}\hspace{0.1em} We use $N=120$ frame bundles for our main experiments. Images are recorded with portrait orientation, with $H=1920$, $W=1440$. Our MLP is a 4 layer fully connected network with ReLU activations and a hidden layer size of 256. For training we use inputs of $M=4096$ colored points, a kernel size of $K=11$, and $L=6$ encoding functions. We use the Adam optimizer~\cite{kingma2014adam} with an initial learning rate of $10^{-5}$, exponentially decreased over $200$ epochs with a decay rate of $0.985$. We apply the geometric regularization $\mathcal{R}_G$ with weight $\alpha=0.01$. We provide ablation experiments on the effects of many of these parameters in the supplement. Training takes about 45 minutes on an NVIDIA Tesla P100 GPU, or 180 minutes on an Intel Xeon Gold 6148 CPU.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/results.pdf}
+    \caption{Qualitative comparison of depth reconstruction methods on tabletop scenes. Normals are shown for $Z_{avg}$ and our proposed method to highlight how we recover centimeter-scale features absent from the input depths. The supplement contains additional results.}
+    \label{fig:results}
+    \vspace{-1em}
+\end{figure*}
+
+\vspace{0.5em}\noindent\textbf{Comparisons.}\hspace{0.1em} We compare our method (Proposed) to the input LiDAR data and several recent baselines. Namely, we reproject all the depth maps in our bundle to the reference frame and resample them to produce a $1920\times1440$ LiDAR baseline $Z_{avg}$. For the depth reconstruction methods we look to Consistent Video Depth Estimation~\cite{luo2020consistent} (CVD), which similarly uses photometric loss between frames in a video to refine a consistent depth; Depth Supervised NeRF~\cite{deng2021depth} (DSNeRF), which also features an MLP for depth prediction; and Structure from Small Motion~\cite{ha2016high} (SfSM), which investigates a closed-form solution to depth estimation from micro-baseline stereo. Both DSNeRF and CVD rely on COLMAP~\cite{schonberger2016structure} for poses or depth inputs; however, when given our micro-baseline data COLMAP \emph{fails to converge}, returning neither. For a fair comparison, we substitute our poses and LiDAR depth.
+
+\begin{table}[h]
+	\resizebox{\columnwidth}{!}{
+	\begin{tabular}{ c c  c  c  c  c}
+		\toprule
+		\textbf{Scene} & CVD~\cite{luo2020consistent} & DSNeRF~\cite{deng2021depth} & SfSM~\cite{ha2016high} & $Z_{avg}$ & Proposed \\
+			\midrule
+			\midrule
+		\emph{castle}      &9.36$/$405 &9.70$/$445 &10.4$/$499 &9.66$/$438 &\textbf{8.48$/$336} \\ % castle2
+		\emph{thinker}     &4.73$/$115&4.59$/$109 &5.78$/$170 &4.50$/$107 &\textbf{4.26$/$89.4} \\ % thinking_man2
+		\emph{rocks}       &6.68$/$212 &5.83$/$180 &6.43$/$190 &5.52$/$163 &\textbf{4.59$/$97.3} \\ % rocks1
+		\emph{gourd}       &4.25$/$92.6&4.00$/$108 &3.72$/$70.7&3.77$/$92.8&\textbf{3.14$/$52.9} \\ % gourd2
+		\emph{frog}        &3.44$/$68.2 &3.11$/$58.9&3.05$/$51.5&2.80$/$49.9&\textbf{2.58$/$34.1} \\ % frog2
+		\emph{eagle}       &3.93$/$63.1&4.09$/$93.4&6.60$/$219 &3.98$/$93.2&\textbf{3.32$/$49.0} \\ % hawk1
+		\emph{ganesha}     &7.07$/$236 &7.84$/$318 &7.03$/$218 &7.68$/$301 &\textbf{5.09$/$117} \\ % ganesha1
+		\emph{elephant}    &5.12$/$101 &5.20$/$124 &5.49$/$120 &5.09$/$127 &\textbf{4.46$/$78.8} \\ % elephant2
+			\bottomrule
+	\end{tabular}
+	}
+	\vspace{0.1em}
+	\caption{\label{tab:photo_error}%
+	Quantitative comparison for our eight tested scenes. Each entry shows: mean absolute error $/$ mean squared error. Note that different scenes can have different scales of error, as it is dependent on their overall image texture content.
+	}
+% 	\vspace{-1em}
+\end{table}
+
+\vspace{0.5em}\noindent\textbf{Experimental Results.}\hspace{0.1em} We present our results visually in Fig.~\ref{fig:results} and quantitatively in Table~\ref{tab:photo_error} in the form of photometric error (PE). To compute PE, we take the final depth map $Z^*$ output by each method, use the phone's poses and intrinsics to project each color point in $I_r$ to all other frames, and compare their 8-bit RGB values:
+\begin{align}\label{eq:photometric_error}
+    &PE = |I_q(\bm{x}_q) - I_r(\bm{x})|, \quad \mathbf{x}_q=\bm{\pi}_q(P_q^{-1}X^{*}(\bm{x}))\nonumber\\
+    &X^{*} = \bm{\pi}^{-1}(Z^*(u,v);K), \quad \bm{x}=[u,v,1]^\top.
+\end{align}
+We exclude points $\bm{x}$ that transform outside the image bounds. Like traditional camera calibration or stereo methods, in the absence of ground truth depth, PE serves as a measure of how consistent our estimated depth is with the observed RGB parallax.
+
+Table~\ref{tab:photo_error} summarizes the relative performance between these methods on 8 geometrically diverse scenes. Our method achieves the lowest PE for all scenes. Note that neither CVD nor DSNeRF achieve significantly lower PE as compared to the LiDAR depth $Z_{avg}$ even though both contain explicit photometric loss terms in their objective. We speculate that our micro-baseline data is out of distribution for these methods, and that the large loss gradients induced by small changes in pose results in unstable reconstructions. DSNeRF also has the added complexity of being a novel view synthesis method and is therefore encouraged to overfit to the scene RGB content in the presence of only small motion. We see this confirmed in Fig.~\ref{fig:results}, as DSNeRF produces an edge-aligned depth map but also produces hallucinated image texture. SFsM successfully reconstructs textured regions close to the camera ($<$20cm), but fails for smaller disparity regions and the textureless spaces around objects. The reprojected LiDAR depth produces well edge-aligned results but lacks intra-object structure, as it is relying on ambiguous mono-depth cues. Contrastingly, our proposed method reconstructs the \emph{castle}'s towers, the hand under the \emph{thinker}'s head, the depth disparity between stones in the \emph{rocks} object, and the smooth undulations of the \emph{gourd}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/frame_ablation.pdf}
+    \caption{Frame count ablation with corresponding network train times. Note that due to various overheads, training time is not linear in the number of frames.}
+    \label{fig:frame-count}
+    \vspace{-1em}
+\end{figure}
+
+\vspace{0.5em}\noindent\textbf{Frame Ablation.}\hspace{0.1em} Though the average max baseline in a recorded bundle is ~6mm, the baseline between neighboring frames is on the order of 0.1mm. This means that we need not use every frame for effective photometric refinement. This tradeoff between frame count, training time, and reconstruction detail is illustrated in Fig.~\ref{fig:frame-count}. We retain most of the \emph{castle} detail by skipping every other frame, but as we discard more data, the reconstruction is progressively blurred instead of completely failing.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/photo_ablation.pdf}
+    \caption{We reconstruct the \emph{gourd} scene without LiDAR supervision to analyze the contribution of photometric loss vs geometric regularization.}
+    \label{fig:photo-ablation}
+    \vspace{-1em}
+\end{figure}
+
+\vspace{0.5em}\noindent\textbf{Role of LiDAR Supervision.}\hspace{0.1em} To determine the contribution of low-resolution LiDAR data in our pipeline, we perform an ablation where we set $Z = 1$m and disable our geometric regularizer by setting $\alpha=0$. Fig.~\ref{fig:photo-ablation} shows that, as expected, it fails to reconstruct the textureless background, simply adding noise. However, it does correctly reconstruct the \emph{gourd}, producing a result close to the pipeline with full supervision. This demonstrates that our technique does indeed extract depth details from micro-baseline RGB images. LiDAR depth, however, is an effective regularizer: in regions without strong visual features, our learned confidence map $C_r$ is nearly zero and our reconstruction gracefully degrades to the LiDAR data. Finally, we note that even though this ablation discards depth supervision, the LiDAR sensor is still used by the phone to determine pose.
+
+\vspace{0.5em}\noindent\textbf{Comparison to Dedicated ToF Camera.}\hspace{0.1em} For additional qualitative validation, we record several scenes with a high-resolution time-of-flight depth camera (LucidVision Helios Flex). Given the differences in optics and effective operating range, the viewpoints and metric depths are not exactly the same. We offset (but not rescale) and crop the depth maps for qualitative comparison. Fig.~\ref{fig:tof-comparison} illustrates that although our technique can reconstruct centimeter-scale features matching that of the ToF sensor, it oversmoothes finer details corresponding to subpixel disparities. Since we rely on passive RGB rather than direct illumination, our technique can reconstruct regions the ToF camera cannot such as specular surfaces on the back of \emph{frog} and areas of \emph{gourd} with high subsurface scattering. Note that in these two cases the amplitude modulated ToF measurements measure incorrect depth due to multi-path interference, even merging object depth with the background.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig/tof_comparison.pdf}
+    \caption{Qualitative comparison of proposed reconstruction results with depths captured by a time-of-flight camera. Examples (c) and (d) include arrows to highlight where the ToF camera suffers from severe multi-path interference artifacts and produces sharp depth discontinuities in place of expected smooth geometry.}
+    \label{fig:tof-comparison}
+    % \vspace{-1em}
+\end{figure}
+
+\vspace{0.5em}\noindent\textbf{Offsets over Direct Depth.}\hspace{0.1em} Rather than directly learn $Z^*$, we opt to learn offsets to the collected LiDAR depth data. In this way we start at a coarse, albeit smoothed, depth estimate and for each location in space, effectively search the local neighborhood for a more photometrically consistent depth solution. This allows us to avoid local minima solutions that overpower the regularization $\alpha R_G$ -- e.g. the accidental matching of similar-looking high-contrast patches. This proves essential for objects with repetitive textures, as demonstrated in Fig.~\ref{fig:offset-ablation}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{fig/offset_ablation.pdf}
+    \caption{When we learn depth directly without a reasonable initialization we find that many samples end up stuck in local minima. This leads to noisy predictions where the MLP finds a false photometric matches far from the LiDAR depth estimate.}
+    \label{fig:offset-ablation}
+    \vspace{-1em}
+\end{figure}
+
+
+
+
+

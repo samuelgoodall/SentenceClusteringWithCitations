@@ -1,0 +1,374 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{arun1987least}
+K~Somani Arun, Thomas~S Huang, and Steven~D Blostein.
+\newblock Least-squares fitting of two 3-d point sets.
+\newblock {\em IEEE Transactions on pattern analysis and machine intelligence},
+  (5):698--700, 1987.
+
+\bibitem{bao2019depth}
+Wenbo Bao, Wei-Sheng Lai, Chao Ma, Xiaoyun Zhang, Zhiyong Gao, and Ming-Hsuan
+  Yang.
+\newblock Depth-aware video frame interpolation.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 3703--3712, 2019.
+
+\bibitem{callenberg2021low}
+Clara Callenberg, Zheng Shi, Felix Heide, and Matthias~B Hullin.
+\newblock Low-cost spad sensing for non-line-of-sight tracking, material
+  classification and depth imaging.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 40(4):1--12, 2021.
+
+\bibitem{Chang2018}
+Jia-Ren Chang and Yong-Sheng Chen.
+\newblock Pyramid stereo matching network.
+\newblock In {\em IEEE Conf. Comput. Vis. Pattern Recog.}, pages 5410--5418,
+  2018.
+
+\bibitem{chen2021mvsnerf}
+Anpei Chen, Zexiang Xu, Fuqiang Zhao, Xiaoshuai Zhang, Fanbo Xiang, Jingyi Yu,
+  and Hao Su.
+\newblock Mvsnerf: Fast generalizable radiance field reconstruction from
+  multi-view stereo.
+\newblock {\em arXiv preprint arXiv:2103.15595}, 2021.
+
+\bibitem{chen2016monocular}
+Xiaozhi Chen, Kaustav Kundu, Ziyu Zhang, Huimin Ma, Sanja Fidler, and Raquel
+  Urtasun.
+\newblock Monocular 3d object detection for autonomous driving.
+\newblock In {\em IEEE Conf. Comput. Vis. Pattern Recog.}, pages 2147--2156,
+  2016.
+
+\bibitem{chen20173d}
+Xiaozhi Chen, Kaustav Kundu, Yukun Zhu, Huimin Ma, Sanja Fidler, and Raquel
+  Urtasun.
+\newblock 3d object proposals using stereo imagery for accurate object class
+  detection.
+\newblock 40(5):1259--1272, 2017.
+
+\bibitem{cova1996avalanche}
+Sergio Cova, Massimo Ghioni, Andrea Lacaita, Carlo Samori, and Franco Zappa.
+\newblock Avalanche photodiodes and quenching circuits for single-photon
+  detection.
+\newblock {\em Applied optics}, 35(12):1956--1976, 1996.
+
+\bibitem{delbracio2021mobile}
+Mauricio Delbracio, Damien Kelly, Michael~S Brown, and Peyman Milanfar.
+\newblock Mobile computational photography: A tour.
+\newblock {\em arXiv preprint arXiv:2102.09000}, 2021.
+
+\bibitem{deng2021depth}
+Kangle Deng, Andrew Liu, Jun-Yan Zhu, and Deva Ramanan.
+\newblock Depth-supervised nerf: Fewer views and faster training for free.
+\newblock {\em arXiv preprint arXiv:2107.02791}, 2021.
+
+\bibitem{dong2017lidar}
+Pinliang Dong and Qi Chen.
+\newblock {\em LiDAR remote sensing and applications}.
+\newblock CRC Press, 2017.
+
+\bibitem{durrant2006simultaneous}
+Hugh Durrant-Whyte and Tim Bailey.
+\newblock Simultaneous localization and mapping: part i.
+\newblock {\em IEEE robotics \& automation magazine}, 13(2):99--110, 2006.
+
+\bibitem{fan2020rethinking}
+Deng-Ping Fan, Zheng Lin, Zhao Zhang, Menglong Zhu, and Ming-Ming Cheng.
+\newblock Rethinking rgb-d salient object detection: Models, data sets, and
+  large-scale benchmarks.
+\newblock {\em IEEE Transactions on neural networks and learning systems},
+  32(5):2075--2089, 2020.
+
+\bibitem{fonder2021m4depth}
+Micha{\"e}l Fonder, Damien Ernst, and Marc Van~Droogenbroeck.
+\newblock M4depth: A motion-based approach for monocular depth estimation on
+  video sequences.
+\newblock {\em arXiv preprint arXiv:2105.09847}, 2021.
+
+\bibitem{furukawa2009accurate}
+Yasutaka Furukawa and Jean Ponce.
+\newblock Accurate, dense, and robust multiview stereopsis.
+\newblock {\em IEEE transactions on pattern analysis and machine intelligence},
+  32(8):1362--1376, 2009.
+
+\bibitem{galliani2015massively}
+Silvano Galliani, Katrin Lasinger, and Konrad Schindler.
+\newblock Massively parallel multiview stereopsis by surface normal diffusion.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 873--881, 2015.
+
+\bibitem{gerup2020augmented}
+Jaris Gerup, Camilla~B Soerensen, and Peter Dieckmann.
+\newblock Augmented reality and mixed reality for healthcare education beyond
+  surgery: an integrative review.
+\newblock {\em International journal of medical education}, 11:1, 2020.
+
+\bibitem{godard2019digging}
+Cl{\'e}ment Godard, Oisin Mac~Aodha, Michael Firman, and Gabriel~J Brostow.
+\newblock Digging into self-supervised monocular depth estimation.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 3828--3838, 2019.
+
+\bibitem{ha2016high}
+Hyowon Ha, Sunghoon Im, Jaesik Park, Hae-Gon Jeon, and In~So Kweon.
+\newblock High-quality depth from uncalibrated small motion clip.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern Recognition}, pages 5413--5421, 2016.
+
+\bibitem{hansard2012time}
+Miles Hansard, Seungkyu Lee, Ouk Choi, and Radu~Patrice Horaud.
+\newblock {\em Time-of-flight cameras: principles, methods and applications}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{10.5555/861369}
+Richard Hartley and Andrew Zisserman.
+\newblock {\em Multiple View Geometry in Computer Vision}.
+\newblock Cambridge University Press, USA, 2 edition, 2003.
+
+\bibitem{hornik1989multilayer}
+Kurt Hornik, Maxwell Stinchcombe, and Halbert White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock {\em Neural networks}, 2(5):359--366, 1989.
+
+\bibitem{im2018accurate}
+Sunghoon Im, Hyowon Ha, Gyeongmin Choe, Hae-Gon Jeon, Kyungdon Joo, and In~So
+  Kweon.
+\newblock Accurate 3d reconstruction from small motion clip for rolling shutter
+  cameras.
+\newblock {\em IEEE transactions on pattern analysis and machine intelligence},
+  41(4):775--787, 2018.
+
+\bibitem{joshi2014micro}
+Neel Joshi and C~Lawrence Zitnick.
+\newblock Micro-baseline stereo.
+\newblock {\em Technical Report MSR-TR-2014--73}, page~8, 2014.
+
+\bibitem{Kendall2017}
+Alex Kendall, Hayk Martirosyan, Saumitro Dasgupta, Peter Henry, Ryan Kennedy,
+  Abraham Bachrach, and Adam Bry.
+\newblock End-to-end learning of geometry and context for deep stereo
+  regression.
+\newblock In {\em Int. Conf. Comput. Vis.}, 2017.
+
+\bibitem{kingma2014adam}
+Diederik~P Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{kolb2010time}
+Andreas Kolb, Erhardt Barth, Reinhard Koch, and Rasmus Larsen.
+\newblock Time-of-flight cameras in computer graphics.
+\newblock In {\em Computer Graphics Forum}, volume~29, pages 141--159. Wiley
+  Online Library, 2010.
+
+\bibitem{lange20003d}
+Robert Lange.
+\newblock 3d time-of-flight distance measurement with custom solid-state image
+  sensors in cmos/ccd-technology.
+\newblock 2000.
+
+\bibitem{lange2001solid}
+Robert Lange and Peter Seitz.
+\newblock Solid-state time-of-flight range camera.
+\newblock {\em IEEE Journal of quantum electronics}, 37(3):390--397, 2001.
+
+\bibitem{li2018critical}
+Xiao Li, Wen Yi, Hung-Lin Chi, Xiangyu Wang, and Albert~PC Chan.
+\newblock A critical review of virtual and augmented reality (vr/ar)
+  applications in construction safety.
+\newblock {\em Automation in Construction}, 86:150--162, 2018.
+
+\bibitem{lipson2021raft}
+Lahav Lipson, Zachary Teed, and Jia Deng.
+\newblock Raft-stereo: Multilevel recurrent field transforms for stereo
+  matching.
+\newblock {\em arXiv preprint arXiv:2109.07547}, 2021.
+
+\bibitem{luo2020consistent}
+Xuan Luo, Jia-Bin Huang, Richard Szeliski, Kevin Matzen, and Johannes Kopf.
+\newblock Consistent video depth estimation.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 39(4):71--1, 2020.
+
+\bibitem{mccarthy2009long}
+Aongus McCarthy, Robert~J Collins, Nils~J Krichel, Ver{\'o}nica Fern{\'a}ndez,
+  Andrew~M Wallace, and Gerald~S Buller.
+\newblock Long-range time-of-flight scanning sensor based on high-speed
+  time-correlated single-photon counting.
+\newblock {\em Applied optics}, 48(32):6241--6251, 2009.
+
+\bibitem{mildenhall2020nerf}
+Ben Mildenhall, Pratul~P Srinivasan, Matthew Tancik, Jonathan~T Barron, Ravi
+  Ramamoorthi, and Ren Ng.
+\newblock Nerf: Representing scenes as neural radiance fields for view
+  synthesis.
+\newblock In {\em European conference on computer vision}, pages 405--421.
+  Springer, 2020.
+
+\bibitem{morimoto2020megapixel}
+Kazuhiro Morimoto, Andrei Ardelean, Ming-Lo Wu, Arin~Can Ulku, Ivan~Michel
+  Antolovic, Claudio Bruschini, and Edoardo Charbon.
+\newblock Megapixel time-gated spad image sensor for 2d and 3d imaging
+  applications.
+\newblock {\em Optica}, 7(4):346--354, 2020.
+
+\bibitem{mur2017orb}
+Raul Mur-Artal and Juan~D Tard{\'o}s.
+\newblock Orb-slam2: An open-source slam system for monocular, stereo, and
+  rgb-d cameras.
+\newblock {\em IEEE transactions on robotics}, 33(5):1255--1262, 2017.
+
+\bibitem{pandey2021total}
+Rohit Pandey, Sergio~Orts Escolano, Chloe Legendre, Christian Haene, Sofien
+  Bouaziz, Christoph Rhemann, Paul Debevec, and Sean Fanello.
+\newblock Total relighting: learning to relight portraits for background
+  replacement.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 40(4):1--21, 2021.
+
+\bibitem{park2021nerfies}
+Keunhong Park, Utkarsh Sinha, Jonathan~T Barron, Sofien Bouaziz, Dan~B Goldman,
+  Steven~M Seitz, and Ricardo Martin-Brualla.
+\newblock Nerfies: Deformable neural radiance fields.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 5865--5874, 2021.
+
+\bibitem{ranftl2021vision}
+Ren{\'e} Ranftl, Alexey Bochkovskiy, and Vladlen Koltun.
+\newblock Vision transformers for dense prediction.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 12179--12188, 2021.
+
+\bibitem{ranftl2019towards}
+Ren{\'e} Ranftl, Katrin Lasinger, David Hafner, Konrad Schindler, and Vladlen
+  Koltun.
+\newblock Towards robust monocular depth estimation: Mixing datasets for
+  zero-shot cross-dataset transfer.
+\newblock {\em arXiv preprint arXiv:1907.01341}, 2019.
+
+\bibitem{scharstein2003high}
+Daniel Scharstein and Richard Szeliski.
+\newblock High-accuracy stereo depth maps using structured light.
+\newblock In {\em 2003 IEEE Computer Society Conference on Computer Vision and
+  Pattern Recognition, 2003. Proceedings.}, volume~1, pages I--I. IEEE, 2003.
+
+\bibitem{schonberger2016structure}
+Johannes~L Schonberger and Jan-Michael Frahm.
+\newblock Structure-from-motion revisited.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 4104--4113, 2016.
+
+\bibitem{schops2019bad}
+Thomas Schops, Torsten Sattler, and Marc Pollefeys.
+\newblock Bad slam: Bundle adjusted direct rgb-d slam.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 134--144, 2019.
+
+\bibitem{schwarz2010mapping}
+Brent Schwarz.
+\newblock Mapping the world in 3d.
+\newblock {\em Nature Photonics}, 4(7):429--430, 2010.
+
+\bibitem{schwarz2018rgb}
+Max Schwarz, Anton Milan, Arul~Selvam Periyasamy, and Sven Behnke.
+\newblock Rgb-d object detection and semantic segmentation for autonomous
+  manipulation in clutter.
+\newblock {\em The International Journal of Robotics Research},
+  37(4-5):437--451, 2018.
+
+\bibitem{shamsafar2021mobilestereonet}
+Faranak Shamsafar, Samuel Woerz, Rafia Rahim, and Andreas Zell.
+\newblock Mobilestereonet: Towards lightweight deep networks for stereo
+  matching.
+\newblock {\em arXiv preprint arXiv:2108.09770}, 2021.
+
+\bibitem{sinha2007multi}
+Sudipta~N Sinha, Philippos Mordohai, and Marc Pollefeys.
+\newblock Multi-view stereo via graph cuts on the dual of an adaptive
+  tetrahedral mesh.
+\newblock In {\em 2007 IEEE 11th International Conference on Computer Vision},
+  pages 1--8. IEEE, 2007.
+
+\bibitem{sun2019single}
+Tiancheng Sun, Jonathan~T Barron, Yun-Ta Tsai, Zexiang Xu, Xueming Yu, Graham
+  Fyffe, Christoph Rhemann, Jay Busch, Paul~E Debevec, and Ravi Ramamoorthi.
+\newblock Single image portrait relighting.
+\newblock {\em ACM Trans. Graph.}, 38(4):79--1, 2019.
+
+\bibitem{tankovich2021hitnet}
+Vladimir Tankovich, Christian Hane, Yinda Zhang, Adarsh Kowdle, Sean Fanello,
+  and Sofien Bouaziz.
+\newblock Hitnet: Hierarchical iterative tile refinement network for real-time
+  stereo matching.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 14362--14372, 2021.
+
+\bibitem{tsai1984multiframe}
+R Tsai.
+\newblock Multiframe image restoration and registration.
+\newblock {\em Advance Computer Visual and Image Processing}, 1:317--339, 1984.
+
+\bibitem{ullman1979interpretation}
+Shimon Ullman.
+\newblock The interpretation of structure from motion.
+\newblock {\em Proceedings of the Royal Society of London. Series B. Biological
+  Sciences}, 203(1153):405--426, 1979.
+
+\bibitem{warren2018low}
+Mial~E Warren, David Podva, Preethi Dacha, Matthew~K Block, Christopher~J
+  Helms, John Maynard, and Richard~F Carson.
+\newblock Low-divergence high-power vcsel arrays for lidar application.
+\newblock In {\em Vertical-Cavity Surface-Emitting Lasers XXII}, volume 10552,
+  page 105520E. International Society for Optics and Photonics, 2018.
+
+\bibitem{watson2021temporal}
+Jamie Watson, Oisin Mac~Aodha, Victor Prisacariu, Gabriel Brostow, and Michael
+  Firman.
+\newblock The temporal opportunist: Self-supervised multi-frame monocular
+  depth.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 1164--1174, 2021.
+
+\bibitem{wronski2019handheld}
+Bartlomiej Wronski, Ignacio Garcia-Dorado, Manfred Ernst, Damien Kelly, Michael
+  Krainin, Chia-Kai Liang, Marc Levoy, and Peyman Milanfar.
+\newblock Handheld multi-frame super-resolution.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 38(4):1--18, 2019.
+
+\bibitem{yao2018mvsnet}
+Yao Yao, Zixin Luo, Shiwei Li, Tian Fang, and Long Quan.
+\newblock Mvsnet: Depth inference for unstructured multi-view stereo.
+\newblock In {\em Proceedings of the European Conference on Computer Vision
+  (ECCV)}, pages 767--783, 2018.
+
+\bibitem{yu20143d}
+Fisher Yu and David Gallup.
+\newblock 3d reconstruction from accidental motion.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 3986--3993, 2014.
+
+\bibitem{zhang2018high}
+Song Zhang.
+\newblock High-speed 3d shape measurement with structured light methods: A
+  review.
+\newblock {\em Optics and Lasers in Engineering}, 106:119--131, 2018.
+
+\bibitem{zhang2021bts}
+Wenbo Zhang, Yao Jiang, Keren Fu, and Qijun Zhao.
+\newblock Bts-net: Bi-directional transfer-and-selection network for rgb-d
+  salient object detection.
+\newblock In {\em 2021 IEEE International Conference on Multimedia and Expo
+  (ICME)}, pages 1--6. IEEE, 2021.
+
+\bibitem{zhang2021consistent}
+Zhoutong Zhang, Forrester Cole, Richard Tucker, William~T Freeman, and Tali
+  Dekel.
+\newblock Consistent depth of moving objects in video.
+\newblock {\em ACM Transactions on Graphics (TOG)}, 40(4):1--12, 2021.
+
+\bibitem{zhuang2021semantic}
+Chungang Zhuang, Zhe Wang, Heng Zhao, and Han Ding.
+\newblock Semantic part segmentation method based 3d object pose estimation
+  with rgb-d images for bin-picking.
+\newblock {\em Robotics and Computer-Integrated Manufacturing}, 68:102086,
+  2021.
+
+\end{thebibliography}

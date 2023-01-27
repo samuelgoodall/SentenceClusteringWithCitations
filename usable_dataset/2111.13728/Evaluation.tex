@@ -1,0 +1,288 @@
+\section{Theoretical Analysis}
+In this section, we give a theoretical analysis of %
+both the program size  and the computational complexity of our framework for implementing and verifying surface codes~\cite{Fowler2012SurfaceCT, Horsman2012SurfaceCQ}, respectively.
+
+
+\subsection{Program Size}
+We first compare the program size (i.e., the number of statements) when implementing the surface code~\cite{Fowler2012SurfaceCT, Horsman2012SurfaceCQ}, in the qWhile-Lang (i.e., the {\qwhilelang}) and the {\langname} (see row 2-3 of Table~\ref{tab:comp}).
+In surface code, we consider two approaches to encode a logical qubit, the planar code and the double defect code (detailed implementation of these codes can be found in \cite{Fowler2012SurfaceCT, Horsman2012SurfaceCQ}).
+For the distance-$d$ surface code, the planar version requires $O(d^2)$ data qubits, $O(d^2)$ parity qubits as well as $O(d^2)$ stabilizers. The double-defect version introduces an overhead of a factor 10 in all the three quantities.
+
+As a code size estimation of {\langname}, we only need one statement per stabilizer measurement, whereas the qWhile-Lang requires at least eight gate operations
+to describe the circuit measuring a stabilizer~\cite{Fowler2012SurfaceCT}. Thus, {\langname} provides $8\times$ program size compression for the surface code implementations.
+
+\subsection{Verification Complexity of Clifford Gates} %
+
+The defining property of Clifford operations is that, given a Clifford gate $G$ and a stabilizer $s$, $GsG^\dagger$ must also be a stabilizer, i.e. Clifford operations do not increase the number of stabilizers in the assertion. 
+
+By framing both assertions and unitary operations in the language of stabilizers, {\myFrameworkName} can efficiently processes the verification of Clifford operations. The efficiency stems from the low cost of multiplying stabilizers, which is $O(d)$ because the length of the stabilizers for logical states is at most $d$ for a distance-$d$ surface code.
+In this way we avoid representing stabilizers as exponentially-large matrices.
+Therefore, \myFrameworkName~only incurs $O(d^3)$ computational overhead for the planar surface code and $O(10d^3)$ computational overhead for the double-defect surface code.
+
+However, 
+the vanilla quantum Hoare logic in qWhile-Lang can not exploit the property of Clifford operations and the low computational complexity of stabilizer multiplication. 
+The Clifford operations are treated like any other unitary operations and the predicate in qWhile-Lang is a Hermitian matrix
+of size $O(2^{n_d + n_p}\times 2^{n_d + n_p})$, where $n_d$ is the number of data qubits and $n_p$ is the number of parity qubits. Hoare rules with such predicates incurs at least $O(2^{n_d + n_p}\times 2^{n_d + n_p})$ computational overhead. Thus, the verification with qWhile-Lang requires $O(8d^24^{2d^2})$ time for the planar surface code, and $O(80d^24^{20d^2})$ for the double-defect surface code.
+In summary, the proposed language design, assertion design, and the logic proof system can significantly simplify the verification of all Clifford operations of stabilizer codes.
+
+
+\begin{table}[]
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{|p{1.8cm}|p{2cm}|p{3cm}|p{2.5cm}|}
+\hline
+      Metric                &       Method                             & Planar surface code & Double-defect surface code \\ \hline
+Statements \#           & qWhile-Lang & $O(8d^2)$           & $O(80d^2)$                 \\ \cline{2-4} 
+                                         & {\myFrameworkName}               & $O(d^2)$            & $O(10d^2)$                 \\ \hline
+Verification  & qWhile-Lang & $O(8d^24^{2d^2})$     & $O(80d^24^{20d^2})$             \\ \cline{2-4} 
+                  Complexity                      & {\myFrameworkName}               & $O(d^3)$            & $O(10d^3)$                 \\ \hline             
+\end{tabular}
+}
+\caption{
+Comparison of {{\myFrameworkName}} and  qWhile-Lang on implementing and verifying surface codes. 
+}
+\label{tab:comp}
+%
+\end{table}
+
+
+
+
+
+\subsection{Verification Complexity of T Gate}
+
+The logical T gate is usually the most challenging problem in quantum program verification in general.
+The T gate, loosely speaking, represents a fundamental boundary between classical and quantum computing. 
+A quantum program with T gates cannot be efficiently and precisely simulated or verified on a classical computer. 
+In \myFrameworkName, the number of stabilizers in our predicate will rapidly increase when the program to be verified has some T gates.
+
+With this being said, we argue that verifying a QEC implementation of \textbf{one} logical T gate could be easier in many cases. The exact verification efficiency would be determined by the amount of the non-Clifford operations involved in the implementation of a logical T gate.
+In the surface code, for example, there is only \textbf{one} non-Clifford single-qubit physical  gate~\cite{Fowler2015MinimumWP} for a logical T gate. 
+The verification complexity will remain $O(d^2)$ because the number of stabilizer terms in a predicate is still $O(1)$. As such, \myFrameworkName~can still hold the exponential advantage for surface code. We remark again that such advantages come from our stabilizer-centric design in developing the verification framework. 
+
+
+\section{Case Study I: Repetition Code}
+In this section and the next section, we give step-by-step case study on two well-known QEC codes to guide through the usage of our framework. 
+For each QEC code, we first express its implementation in our {\langname}. %
+Then we verify the correctness of the logical operation with our proof system and show that the implemented QEC code can correct local errors on the physical qubits.
+
+We start from the quantum repetition code~\cite{nielsen2002quantum}, which is relatively simple with light error correction overhead. 
+This code can correct bit-flip error or phase-flip error, but not when they happen simultaneously. 
+The repetition code is mainly deployed on quantum architectures whose underlying physical qubits (e.g., the cat qubit built upon bosonic quantum system~\cite{Chamberland2020BuildingAF}) already have extremely low phase-flip (or bit-flip) error rates. %
+
+\subsection{Quantum Repetition Code}
+We consider a three-qubit quantum repetition code to simplify the discussion. At high level, the three-qubit code just encodes one logical qubit with three physical qubits. For example, the $\ket{000}$ state of three physical qubits represents the logical $\ket{0_L}$ state of a logical qubit, and the $\ket{111}$ state represents the logical $\ket{1_L}$ state. 
+We first give the circuit diagrams for  primitive operations in quantum repetition code and their code implementations in {\langname} (Figure~\ref{fig:repcode}). 
+The interested reader can find detailed explanations of the repetition code design in references~\cite{nielsen2002quantum, google50296}. 
+
+
+Figure~\ref{fig:repcode} (a) (b) (c) gives the implementations of the qubit initialization, the logical X gate $X_L = X_0X_1X_2$, and the logical Z gate $Z_L = Z_0Z_1Z_2$, respectively. 
+The logical CNOT gate between two logical qubits can be implemented by imposing CNOT gates on three pairs of physical qubits, as shown in Figure~\ref{fig:repcode} (d).
+
+
+
+\subsection{Verification of Logic Operations}
+
+
+\input{figtex/repcode}
+
+This part prove the correctness of the code segments in Figure~\ref{fig:repcode} with our frameworks. It contains two major steps, defining the predicates for each logical operation and constructing the proof. 
+
+For the initialization operation, the expected behavior is that, for arbitrary input state, the output state should be in the logical state $\ket{0_L}$, which is the simultaneous eigenstate of the logical Z operator $Z_L$ and the stabilizers $Z_0Z_1$ and $Z_1Z_2$. Thus, we set the precondition to $\{I\}$ and the post-condition to $\{Z_L\wedge Z_0Z_1 \wedge Z_1Z_2\}$, as formulated below. \nothmskip
+\begin{proposition}[Initialize to $\ket{0}$]
+For the program $\prog$ in Figure~\ref{fig:repcode}(a), we have $\{I\}\prog\{Z_L\wedge Z_0Z_1 \wedge Z_1Z_2\}$.
+\end{proposition}\nothmskip
+\myproof{
+For the initialization, $\{I\}q_0q_1q_2 \coloneqq \ket{000}\{Z_0 \wedge Z_1 \wedge Z_2\}$. And  $\{Z_0 \wedge Z_1 \wedge Z_2\}\svar_0\coloneqq Z_0Z_1\{Z_0\wedge Z_1 \wedge Z_2\}$ and $\{Z_0 \wedge Z_1 \wedge Z_2\}\svar_1\coloneqq Z_1Z_2\{Z_0\wedge Z_1 \wedge Z_2\}$. Since $Z_0\wedge Z_1 \wedge Z_2 \Rightarrow Z_0 Z_1 $ and $Z_0\wedge Z_1 \wedge Z_2 \Rightarrow Z_1 Z_2$, we have $Z_0\wedge Z_1 \wedge Z_2 \Rightarrow Z_0\wedge Z_1 \wedge Z_2 \wedge (Z_0 Z_1) \wedge (Z_1 Z_2)$. Then by Proposition~\ref{prop:decodecorrect},
+$\{Z_0\wedge Z_1 \wedge Z_2 \wedge (Z_0 Z_1) \wedge (Z_1 Z_2)\}\textbf{correct}(\svar_0,\svar_1)\{Z_0\wedge Z_1 \wedge Z_2 \wedge (Z_0 Z_1) \wedge (Z_1 Z_2)\}$. By the consequence rule, we get $\{I\}\prog\{Z_L\wedge Z_0Z_1 \wedge Z_{1}Z_2\}$ since $Z_0\wedge Z_1 \wedge Z_2 \Rightarrow Z_L$.
+}
+
+We then verify the logical X operation.
+It is sufficient to verify two cases, the output state $\ket{1_L}$ under the input state $\ket{0}_L$, and vice versa. Arbitrary logical states can be processed as the linear combination of these two cases by taking advantage of the linearity of the logical X operation.
+Since $\ket{0}_L$ corresponds to the predicate $Z_L\wedge Z_0Z_1 \wedge Z_1Z_2$, and $\ket{1}_L$ corresponds to the predicate $-Z_L\wedge Z_0Z_1 \wedge Z_1Z_2$, we have the following proposition: \nothmskip
+\begin{proposition}[Logical X gate]
+For the program $\prog$ in Figure~\ref{fig:repcode}(b), we have $\{Z_L\wedge Z_0Z_1\wedge Z_1Z_2\}\prog\{-Z_L\wedge Z_0Z_1\wedge Z_1Z_2\}$ and $\{-Z_L\wedge Z_0Z_1\wedge Z_1Z_2\}\prog\{Z_L\wedge Z_0Z_1\wedge Z_1Z_2\}$.
+\end{proposition} \nothmskip
+\myproof{
+Note that $X_0X_1X_2 Z_L X_0 X_1X_2 = -Z_1Z_2Z_3= - Z_L$, $X_0X_1\\X_2Z_0Z_1X_0X_1X_2 = Z_0Z_1$, $X_0X_1X_2Z_1Z_2X_0X_1X_2 = Z_1Z_2$.
+}
+
+Likewise, for thel logical Z gate, we only need to verify that, the precondition $\{X_L\wedge Z_0Z_1\wedge Z_1Z_2\}$ relates to the post-condition $\{-X_L\wedge Z_0Z_1 \wedge Z_1Z_2\}$, and vice versa. %
+\nothmskip
+\begin{proposition}[Logical Z gate]
+For the program $\prog$ in Figure~\ref{fig:repcode}(c), $\{X_L\wedge Z_0Z_1\wedge Z_1Z_2\}\prog\{-X_L\wedge Z_0Z_1\wedge Z_1Z_2\}$ and $\{-X_L\wedge Z_0Z_1\wedge Z_1Z_2\}\prog\{X_L\wedge Z_0Z_1\wedge Z_1Z_2\}$.
+\end{proposition} \nothmskip
+\myproof{
+Note that $Z_0Z_1Z_2X_LZ_0Z_1Z_2  = -X_0X_1X_2 = -X_L$.
+}
+
+
+The verification of the logical CNOT gate involves four preconditions: $Z_{L0}I_{L1}$, $X_{L0}I_{L1}$, $I_{L0}X_{L1}$, and $I_{L0}Z_{L1}$, where $Z_0Z_1 \wedge Z_1Z_2 \wedge Z_3Z_4 \wedge Z_4Z_5$ are omitted for simplicity. These four Pauli strings are able to represent any input state by multiplication and addition. The post-conditions for these four preconditions are $Z_{L0}I_{L1}$, $X_{L0}X_{L1}$, $I_{L0}X_{L1}$, and $Z_{L0}Z_{L1}$. While the first three post-conditions are straightforward to understand, we elaborate on the fourth post-condition. 
+The precondition $I_{L0}Z_{L1}$ specifies pure states of the form $(a\ket{0}+b\ket{1})_{L0}\ket{0}_{L1}$. After the CNOT gate, the state becomes $a\ket{00}+b\ket{11}$ which is the +1 eigenstate of $Z_{L0}Z_{L1}$, for arbitrary $a$ and $b$. \nothmskip
+\begin{restatable}[Logical CNOT]{proposition}{repcnot}
+\label{prop:rep-cnot}
+For the program $\prog$ in Figure~\ref{fig:repcode}(d), assume $A_S = Z_0Z_1\wedge Z_1Z_2\wedge Z_3Z_4\wedge Z_4Z_5$, we have\\
+$\{Z_{L0} I_{L1}\wedge A_S\}\prog\{Z_{L0}I_{L1}\wedge A_S\}$, $\{X_{L0} I_{L1} \wedge A_S\}\prog\{X_{L0}X_{L1}\wedge A_S\}$, $\{I_{L0} X_{L1}\wedge A_S\}\prog\{I_{L0}X_{L1}\wedge A_S\}$, and $\{I_{L0} Z_{L1}\wedge A_S\}\prog\{\\Z_{L0}Z_{L1}\wedge A_S\}$.
+\end{restatable} \nothmskip
+\myproof{
+Note that for control qubit $a$ and target qubit $b$, \\$\text{CNOT}_{ab} = \frac{1}{2}(I + X_b + Z_a - Z_aX_b)$. %
+\postpone{\ref{app:rep}}.
+}
+
+\subsection{Verification on Noise Injection}
+\myFrameworkName~can also reason about the correctness with hardware noise. We assume a minimum weight perfect matching error decoding~\cite{Fowler2015MinimumWP} and correction as follows, \nothmskip
+\begin{program}[Quantum repetition code error correction]\label{prog:rep-decoder} For the quantum repetition code in Figure~\ref{fig:repcode}, define the error correction protocol as follows, for $\svar_0 = Z_0Z_1, \svar_1 = Z_1Z_2$, \\ $\textbf{correct}(\svar_0, \svar_1) \Coloneqq \\$
+$
+\qif{Z_0Z_1, q_0q_1}{\qif{Z_1Z_2, q_1q_2}{\textbf{skip}\\}{q_2\coloneqq Xq_2;\ \svar_1 \coloneqq -\svar_1}\\}{\qif{Z_1Z_2, q_1q_2}{q_0 \coloneqq Xq_0;\ \svar_0 \coloneqq -\svar_0 \\}{q_1\coloneqq Xq_1;\ \svar_0 \coloneqq -\svar_0; \ \svar_1 \coloneqq -\svar_1}}
+$
+\end{program} \nothmskip
+
+In Figure~\ref{fig:noisyrepcode}(a), we present a noisy logical X gate where an X error occurs on $q_1$. We prove that the expected behavior of the noisy logical X gate is the same as that of the error-free logical X gate with the help of error correction.
+
+\input{figtex/noisyrep}
+\nothmskip
+\begin{proposition}\label{prop:rep-noise-x} For the program $\prog$ in Figure~\ref{fig:noisyrepcode}(a), which implements a noisy logical X gate, \\
+$\{Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}\prog\{-Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}$, \\
+and $\{-Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}\prog\{Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}$.
+\end{proposition} \nothmskip
+\myproof{
+We only prove $\{Z_L\wedge Z_0Z_1 \wedge Z_1Z_2\}{\prog}\{-Z_L\wedge Z_0Z_1 \wedge Z_1Z_2\}$ for simplicity.\\
+$Z_L \wedge Z_0Z_1 \wedge Z_1Z_2 \Rightarrow Z_0 \wedge Z_1 \wedge Z_2$; \\
+$\{Z_0\wedge Z_1 \wedge Z_2\}\svar_0 \coloneqq I \{Z_0\wedge Z_1 \wedge Z_2\}$; \\
+$\{Z_0\wedge Z_1 \wedge Z_2\}\svar_1 \coloneqq I \{Z_0\wedge Z_1 \wedge Z_2\}$;
+\\
+$\{Z_0\wedge Z_1\wedge Z_2\}q_2q_1q_0 \coloneqq X_2X_1X_0q_2q_1q_0\{-Z_0\wedge -Z_1 \wedge -Z_2\}$; \\
+$\{-Z_0\wedge -Z_1 \wedge -Z_2\}q_1 \coloneqq X_1q_1\{-Z_0\wedge Z_1 \wedge -Z_2\}$; 
+\\
+$\{-Z_0\wedge Z_1 \wedge -Z_2\}\svar_0 \coloneqq Z_0Z_1 \{-Z_0\wedge Z_1 \wedge -Z_2\}$;
+\\
+$\{-Z_0\wedge Z_1 \wedge -Z_2\}\svar_1 \coloneqq Z_1Z_2 \{-Z_0\wedge Z_1 \wedge -Z_2\}$;
+\\
+For the \textbf{correct} statement, \\$-Z_0\wedge Z_1 \wedge -Z_2\wedge Z_0Z_1 = 0$, $-Z_0\wedge Z_1 \wedge -Z_2 \wedge Z_1Z_2 = 0$, \\and $\{-Z_0\wedge Z_1\wedge -Z_2 \wedge -Z_0Z_1 \wedge -Z_1Z_2\}q_1\coloneqq Xq_1;\ \svar_0\coloneqq -\svar_0;\ \svar_1 \coloneqq -\svar_1\{-Z_0\wedge -Z_1 \wedge -Z_2 \wedge Z_0Z_1 \wedge Z_1Z_2\}$, \\
+so $\{-Z_0\wedge Z_1 \wedge -Z_2\}\textbf{correct}(\svar_0, \svar_1)\{-Z_0\wedge -Z_1 \wedge -Z_2 \wedge Z_0Z_1 \wedge Z_1Z_2 \}$. Then by the consequence rule, we get $\{Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}\prog\{-Z_L \wedge Z_0Z_1 \wedge Z_1Z_2\}$.
+}
+
+However, the error correction protocol in Program~\ref{prog:rep-decoder} can not correct Z errors, as shown in the following proposition, \nothmskip
+\begin{proposition} For the program $\prog$ in Figure~\ref{fig:noisyrepcode}(b), where a Z error happens on $q_1$, we have \\
+$\{X_L \wedge Z_0Z_1 \wedge Z_1Z_2\}\prog\{-X_L \wedge Z_0Z_1 \wedge Z_1Z_2\}$ and $\{-X_L \wedge Z_0Z_1 \wedge Z_1Z_2\}\prog\{X_L \wedge Z_0Z_1 \wedge Z_1Z_2\}$, \\
+which is not the desired behaviour of the logical X gate.
+\end{proposition} \nothmskip
+\myproof{
+Similar to the proof in Proposition~\ref{prop:rep-noise-x}.
+}
+
+\section{Case Study II: Surface Code}
+
+In this section, we present the verification of the double-defect surface code~\cite{Fowler2012SurfaceCT}. There are two types of stabilizers in surface code, of which one is called `Z-type' stabilizer as it only consists of Pauli Z operators and the other one is called `X-type' stabilizer as it only contains Pauli X operators. These two types of stabilizers together enable high error tolerance of surface code as well as  the ability to correct both bit-flip error and phase-flip error simultaneously. 
+Implementing surface code has been pursued by several major quantum computing vendors including IBM~\cite{Chamberland2020TopologicalAS} and Google~\cite{ChenSatzingerAtalayaKorotkovDunsworthSankQui2}.
+
+\subsection{Surface Code}
+
+Double-defect surface code includes a series of logical operations to support fault-tolerant quantum computation, such as 
+initialization, measurement, defect enlarging, defect shrinking, logical single-qubit gates (X, Z, H), qubit moving, braiding and the logical CNOT gate. 
+In this section, we only verify qubit initialization, qubit moving, logical Pauli gates and logical qubit braiding. The verification of remaining operations is similar to or can be built upon the verified operations.
+For example, qubit measurement is the reversing process of qubit initialization, 
+and the logical CNOT gate is the concatenation of three braiding operations.
+
+
+Without loss of generality, we only consider  the distance-3 surface code.
+The logical operations shown in Figure~\ref{fig:surfop} is implemented in {\langname} in Figure~\ref{fig:surfcode}. %
+We mainly focus on the operations on the X-cut qubit, which is a kind of logical qubit created by disabling X-type stabilizers.
+We present the initialization operation in Figure~\ref{fig:surfop}(a) which initializes a X-cut qubit to the logical state $\ket{+_L}$, i.e., the +1 eigenstate of the logical X operator $X_L$ in Figure~\ref{fig:surfop}.
+Figure~\ref{fig:surfop}(b) %
+shows the logical Z gate $Z_L$. 
+We then implements the qubit moving operation and the loigcal H gate shown in Figure~\ref{fig:surfop}(c)(d).  The qubit moving operation 
+will not change the logical state. For the logical H gate, we only presents a simplified version which is enough to demonstrate the core idea of the logical H gate in ~\cite{Fowler2012SurfaceCT}. Finally, we include the verification of qubit initialization (to $\ket{0_L}$), the logical X gate  and the braiding operation in  Appendix~\ref{app:surf}. %
+
+\textbf{All proofs in this section will be postponed to Appendix~\ref{app:surf}.}
+
+
+
+
+\input{figtex/surffig}
+\input{figtex/surfcode}
+
+\subsection{Verification of Logic Operations}
+
+As specified by the surface code~\cite{Fowler2012SurfaceCT}, any valid logical state should always be in the +1 eigenspace of all active stabilizers on the surface code array, $S = \{s_0,s_1,\cdots\}$. %
+For simplification, we omit the stabilizers that does not involve in proof. For example, %
+$(\ket{0_L}\bra{0_L},\sigma)\models Z_L \wedge s_0 \wedge s_1 \cdots$ will be denoted by $(\ket{0_L}\bra{0_L},\sigma)\models Z_L$.
+In the cases where we need to stress other active stabilizers in the array, we will have $(\ket{0_L}\bra{0_L},\sigma)\models Z_L \wedge A_S$, where $A_S = \wedge_{s\in S}s$.
+
+
+We first verify the initialization to  $\ket{+_L}$. 
+The expected functionality of the initialization operation is to prepare arbitrary state into a desired state, as shown in the following proposition. The precondition of the partial correctness is just $I$ which allows any state. As for the post-condition,
+notice that $\ket{+_L}$ is stabilized by the stabilizer $X_0X_1X_2X_4$ (i.e., $X_L$) and other active stabilizers in $S$. 
+The verification of initialization to $\ket{0_L}$ is similar and postponed to Appendix~\ref{app:surf}.
+\nothmskip
+\begin{proposition}[Initialize $\ket{+}_L$]
+For the program $\prog$ in Figure~\ref{fig:surfcode}(a) which initializes a X-cut logical qubit to $\ket{+}_L$, as shown in Figure~\ref{fig:surfop}(a), we have
+$\{I\}\prog\{X_0X_1X_2X_4 \wedge A_S\}$.
+\end{proposition} \nothmskip
+
+
+The verification of the logical Z gate is similar to that in quantum repetition code and the precondition and post-condition 
+can be derived in a similar way.  The verification of logical X gate is similar and postponed to Appendix~\ref{app:surf}.
+\nothmskip
+\begin{proposition}[Logical Z gate]
+	For program $\prog$ in Figure~\ref{fig:surfcode}(b) which implements the logical Z gate in Figure~\ref{fig:surfop}(b), we have $\{X_L\}\prog\{-X_L\}$ and $\{-X_L\}\prog\{X_L\}$, \\
+	where $X_L = X_0X_1X_2X_4$.
+\end{proposition} \nothmskip
+
+
+
+
+To reason about qubit moving, the key is to prove that the logical state is preserved. 
+We first represent the current state of data qubits with the stabilizer language. The following lemma shows that there is a one-to-one mapping between the stabilizer expressions and the logical  quantum states. %
+\nothmskip
+\begin{restatable}{lemma}{statestabilizer}
+\label{lemma:state-stabilizer}
+For a X-cut qubit state $\ket{\psi}$, if $\ket{\psi} = \alpha \ket{0}_L + \beta \ket{1}_L$ ($\vert\alpha\vert^2 + \vert\beta\vert^2 = 1$), then there is a unique $(a Z_L + b X_L)$ s.t. $(a Z_L + b X_L)\ket{\psi} = \ket{\psi}$, and in this case $a = \frac{\alpha^2 - \beta^2}{\alpha^2 + \beta^2}$ and $b = \frac{2\alpha\beta}{\alpha^2 + \beta^2}$ .
+
+\noindent\textbf{Conversely}, for a X-cut qubit state $\ket{\psi}$, if $(\frac{\alpha^2 - \beta^2}{\alpha^2 + \beta^2} Z_L + \frac{2\alpha\beta}{\alpha^2 + \beta^2} X_L)\\ *\ket{\psi} = \ket{\psi}$, and $\ket{\psi}$ is in the space spanned by $\{\ket{0_L}, \ket{1_L}\}$, then $\ket{\psi} = \alpha \ket{0}_L + \beta \ket{1}_L$, up to a global phase.
+\end{restatable} \nothmskip
+We then apply Lemma~\ref{lemma:state-stabilizer} to verify the vertical qubit moving operation in Figure~\ref{fig:surfop}(c). The verification of the horizontal qubit moving is similar. The following proposition confirms that the logical state is not changed since the precondition and the post-condition have equal coefficients w.r.t. the logical X and logical Z operators. 
+\nothmskip
+\begin{restatable}[Vertical qubit moving]{proposition}{surfvqmov}
+For program $\prog$ in Figure~\ref{fig:surfcode}(c) which implements the qubit moving operation in Figure~\ref{fig:surfop}(c) %
+, we have 
+$\{a Z_L + b X_L\}\prog\{a Z'_L + b X'_L\}$, 
+where $Z_L = Z_0Z_1Z_2$, $X_L = X_{2}X_{3}X_{4}X_{6}$, $Z'_L = Z_{0}Z_{1}Z_{2}Z_{6}$, $X'_L = X_{6}X_{8}X_{9}X_{10}$, $a,b \in \mathbb{C}$.
+\end{restatable} \nothmskip
+
+
+
+While the implementation of the logical H gate requires isolating the defects of a logical qubit, the core of logical H operation is to perform local H gates for the area outlined in Figure~\ref{fig:surfop}(d), which alone is a distance-$3$ planar surface code. We will only verify that part of program for simplicity. Other parts of the logical H operation can be verified on top of verified operations above. Like in the case in quantum repetition code, we only need to verify that the logical X operator is transformed into the logical Z operator and the logical Z operator is transformed into the logical X operator. 
+\nothmskip
+\begin{proposition}[Logical H gate]
+	For the program $\prog$ in Figure~\ref{fig:surfcode}(d) which implements the simplified logical H gate in Figure~\ref{fig:surfop}(d) , we have
+	$\{Z_L\}\prog\{X_L' \}$, $\{X_L\}\prog\{Z_L'\}$, 
+	where $Z_L = Z_{1}Z_{6}Z_{11}$, $X_L = X_{5}X_{6}X_{7}$, $Z_L' = Z_{5}Z_{6}Z_{7}$, $X_L' = X_{1}X_{6}X_{11}$ for the distance-$3$ planar surface code  outlined in Figure~\ref{fig:surfop}(d).
+\end{proposition} \nothmskip
+
+\subsection{Verification on Noise Injection}
+\input{figtex/noisysurf}
+
+
+To reason the correctness when noise exists, we assume a minimal weight perfect matching (MWPM) decoder~\cite{Fowler2015MinimumWP} and error correction for the surface code array.
+When the error only happens on one qubit, it can be easily detected by the decoder and be corrected, as indicated below:
+\nothmskip
+\begin{proposition}
+For the program $\prog$ in Figure~\ref{fig:noisysurfcode}(a) which implements a noisy version of the logical Z gate in Figure~\ref{fig:surfop}(b), \\
+$\{X_L \wedge A_S\}\prog\{-X_L \wedge A_S\}, \{-X_L \wedge A_S\}\prog\{X_L \wedge A_S\}$, \\
+where $X_L = X_{0}X_{1}X_{2}X_{4}$.
+\end{proposition} \nothmskip
+
+When we increase the Z error location by one, the error correction protocol may fail.
+\nothmskip
+\begin{proposition}\label{prop:noisyfail}
+For the program $\prog$ in Figure~\ref{fig:noisysurfcode}(b), \\
+$\{X_L \wedge A_S\}\prog\{X_L \wedge A_S\}, \{-X_L \wedge A_S\}\prog\{-X_L \wedge A_S\}$,\\
+which is not the desired behavior of the logical Z gate.
+\end{proposition} \nothmskip
+
+The proposition~\ref{prop:noisyfail} is expected because a distance-$d$ surface code cannot correct errors on more than $\lfloor\frac{d}{2} \rfloor$ qubits.
+More complicated cases can be proved in a similar way with our verification framework. 
+
+
+
+

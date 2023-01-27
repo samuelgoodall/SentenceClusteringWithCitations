@@ -1,0 +1,4414 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nyt/global//global/global}
+  \entry{AbelEtAl2018}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=AW}{%
+         family={Abel},
+         familyi={A\bibinitperiod},
+         given={Will},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=TS}{%
+         family={Tenreyro},
+         familyi={T\bibinitperiod},
+         given={Silvana},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=TG}{%
+         family={Thwaites},
+         familyi={T\bibinitperiod},
+         given={Gregory},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AW+1}
+    \strng{fullhash}{AWTSTG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{Center for Economic Policy Research, CEPR Working
+  Paper 13265}
+    \field{title}{Monopsony in the UK}
+    \field{year}{2018}
+  \endentry
+
+  \entry{AbowdEtAl1999}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AJM}{%
+         family={Abowd},
+         familyi={A\bibinitperiod},
+         given={John\bibnamedelima M.},
+         giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=KF}{%
+         family={Kramarz},
+         familyi={K\bibinitperiod},
+         given={Francais},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=MDN}{%
+         family={Margolis},
+         familyi={M\bibinitperiod},
+         given={David\bibnamedelima N.},
+         giveni={D\bibinitperiod\bibinitdelim N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJM+1}
+    \strng{fullhash}{AJMKFMDN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1999}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{2}
+    \field{pages}{251\bibrangedash 333}
+    \field{title}{High Wage Workers and High Wage Firms}
+    \field{volume}{67}
+    \field{journaltitle}{Econometrica}
+    \field{year}{1999}
+  \endentry
+
+  \entry{Adelman1969}{article}{}
+    \name{author}{1}{}{%
+      {{hash=AMA}{%
+         family={Adelman},
+         familyi={A\bibinitperiod},
+         given={Morris\bibnamedelima A.},
+         giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AMA1}
+    \strng{fullhash}{AMA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1969}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{1}
+    \field{pages}{99\bibrangedash 101}
+    \field{title}{Comment on the ``H'' Concentration Measure as a
+  Num\-bers-\-Equi\-va\-lent}
+    \field{volume}{51}
+    \field{journaltitle}{Review of Economic and Statistics}
+    \field{year}{1969}
+  \endentry
+
+  \entry{AhlfeldtEtAl2018}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AGM}{%
+         family={Ahlfeldt},
+         familyi={A\bibinitperiod},
+         given={Gabriel\bibnamedelima M.},
+         giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=RD}{%
+         family={Roth},
+         familyi={R\bibinitperiod},
+         given={Duncan},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=ST}{%
+         family={Seidel},
+         familyi={S\bibinitperiod},
+         given={Tobias},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AGM+1}
+    \strng{fullhash}{AGMRDST1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{pages}{127\bibrangedash 130}
+    \field{title}{The Regional Effects of Germany's National Minimum Wage}
+    \field{volume}{172}
+    \field{journaltitle}{Economics Letters}
+    \field{year}{2018}
+  \endentry
+
+  \entry{AllegrettoEtAl2011}{article}{}
+    \name{author}{3}{}{%
+      {{hash=ASA}{%
+         family={Allegretto},
+         familyi={A\bibinitperiod},
+         given={Sylvia\bibnamedelima A.},
+         giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=DA}{%
+         family={Dube},
+         familyi={D\bibinitperiod},
+         given={Arindrajit},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Reich},
+         familyi={R\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ASA+1}
+    \strng{fullhash}{ASADARM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{2}
+    \field{pages}{205\bibrangedash 240}
+    \field{title}{Do Minimum Wages Really Reduce Teen Employment? Accounting
+  for Heterogeneity and Selectivity in State Panel Data}
+    \field{volume}{50}
+    \field{journaltitle}{Industrial Relations}
+    \field{year}{2011}
+  \endentry
+
+  \entry{AretzEtAl2013}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AB}{%
+         family={Aretz},
+         familyi={A\bibinitperiod},
+         given={Bodo},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=AM}{%
+         family={Arntz},
+         familyi={A\bibinitperiod},
+         given={Melanie},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=GT}{%
+         family={Gregory},
+         familyi={G\bibinitperiod},
+         given={Terry},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AB+1}
+    \strng{fullhash}{ABAMGT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{3}
+    \field{pages}{282\bibrangedash 315}
+    \field{title}{The Minimum Wage Affects Them All: Evidence on Employment
+  Spillovers in the Roofing Sector}
+    \field{volume}{14}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2013}
+  \endentry
+
+  \entry{AshenfelterEtAl2010}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AOC}{%
+         family={Ashenfelter},
+         familyi={A\bibinitperiod},
+         given={Orley\bibnamedelima C.},
+         giveni={O\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=FH}{%
+         family={Farber},
+         familyi={F\bibinitperiod},
+         given={Henry},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=RMR}{%
+         family={Ransom},
+         familyi={R\bibinitperiod},
+         given={Michael\bibnamedelima R.},
+         giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AOC+1}
+    \strng{fullhash}{AOCFHRMR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2010}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{2}
+    \field{pages}{203\bibrangedash 210}
+    \field{title}{Labor Market Monopsony}
+    \field{volume}{28}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2010}
+  \endentry
+
+  \entry{AshenfelterSmith1979}{article}{}
+    \name{author}{2}{}{%
+      {{hash=AOC}{%
+         family={Ashenfelter},
+         familyi={A\bibinitperiod},
+         given={Orley\bibnamedelima C.},
+         giveni={O\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=SRS}{%
+         family={Smith},
+         familyi={S\bibinitperiod},
+         given={Robert\bibnamedelima S.},
+         giveni={R\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AOCSRS1}
+    \strng{fullhash}{AOCSRS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1979}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{2}
+    \field{pages}{333\bibrangedash 350}
+    \field{title}{Compliance with the Minimum Wage Law}
+    \field{volume}{87}
+    \field{journaltitle}{Journal of Political Economy}
+    \field{year}{1979}
+  \endentry
+
+  \entry{AutorEtAl2020}{article}{}
+    \name{author}{5}{}{%
+      {{hash=AD}{%
+         family={Autor},
+         familyi={A\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=DD}{%
+         family={Dorn},
+         familyi={D\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=KLF}{%
+         family={Katz},
+         familyi={K\bibinitperiod},
+         given={Lawrence\bibnamedelima F.},
+         giveni={L\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+      {{hash=PC}{%
+         family={Patterson},
+         familyi={P\bibinitperiod},
+         given={Christina},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=vJ}{%
+         family={{van Reenen}},
+         familyi={v\bibinitperiod},
+         given={John},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AD+1}
+    \strng{fullhash}{ADDDKLFPCvJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{number}{2}
+    \field{pages}{645\bibrangedash 709}
+    \field{title}{The Fall of the Labor Share and the Rise of Superstar Firms}
+    \field{volume}{135}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{AzarEtAl2019a}{misc}{}
+    \name{author}{5}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=HVE}{%
+         family={Huet-Vaughn},
+         familyi={H\bibinithyphendelim V\bibinitperiod},
+         given={Emiliano},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=vT}{%
+         family={{von Wachter}},
+         familyi={v\bibinitperiod},
+         given={Till},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJHVEMITBvT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{extradate}{1}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper 26101}
+    \field{title}{Minimum Wage Employment Effects and Labor Market
+  Concentration}
+    \field{year}{2019}
+  \endentry
+
+  \entry{AzarEtAl2020}{article}{}
+    \name{author}{4}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMTB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{pages}{No.\ 101886}
+    \field{title}{Concentration in US Labor Markets: Evidence from Online
+  Vacancy Data}
+    \field{volume}{66}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{AzarEtAl2017}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SMI}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall\bibnamedelima I.},
+         giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{howpublished}{NationalBureau of Economic Research, NBER Working
+  Paper 24147}
+    \field{title}{Labor Market Concentration}
+    \field{year}{2017}
+  \endentry
+
+  \entry{AzarEtAl2019b}{article}{}
+    \name{author}{3}{}{%
+      {{hash=AJ}{%
+         family={Azar},
+         familyi={A\bibinitperiod},
+         given={Jos\'{e}},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=SMI}{%
+         family={Steinbaum},
+         familyi={S\bibinitperiod},
+         given={Marshall\bibnamedelima I.},
+         giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AJ+1}
+    \strng{fullhash}{AJMISMI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{extradate}{2}
+    \field{labeldatesource}{}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{pages}{317\bibrangedash 321}
+    \field{title}{Measuring Labor Market Power Two Ways}
+    \field{volume}{109}
+    \field{journaltitle}{American Economic Association Papers and Proceedings}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BachmannEtAl2014}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BR}{%
+         family={Bachmann},
+         familyi={B\bibinitperiod},
+         given={Ronald},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=BTK}{%
+         family={Bauer},
+         familyi={B\bibinitperiod},
+         given={Thomas\bibnamedelima K.},
+         giveni={T\bibinitperiod\bibinitdelim K\bibinitperiod},
+      }}%
+      {{hash=FH}{%
+         family={Frings},
+         familyi={F\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BR+1}
+    \strng{fullhash}{BRBTKFH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2014}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{3}
+    \field{pages}{338\bibrangedash 357}
+    \field{title}{Minimum Wages as a Barrier to Entry: Evidence from Germany}
+    \field{volume}{28}
+    \field{journaltitle}{LABOUR}
+    \field{year}{2014}
+  \endentry
+
+  \entry{BachmannEtAl2021}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BR}{%
+         family={Bachmann},
+         familyi={B\bibinitperiod},
+         given={Ronald},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=DG}{%
+         family={Demir},
+         familyi={D\bibinitperiod},
+         given={Gökay},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=FH}{%
+         family={Frings},
+         familyi={F\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BR+1}
+    \strng{fullhash}{BRDGFH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{Online First}
+    \field{title}{Labour Market Polarisation, Job Tasks and Monopsony Power}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2021}
+  \endentry
+
+  \entry{BachmannFrings2017}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BR}{%
+         family={Bachmann},
+         familyi={B\bibinitperiod},
+         given={Ronald},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=FH}{%
+         family={Frings},
+         familyi={F\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BRFH1}
+    \strng{fullhash}{BRFH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{51}
+    \field{pages}{5268\bibrangedash 5286}
+    \field{title}{Monopsonistic Competition, Low-Wage Labour Markets, and
+  Minimum Wages: An Empirical Analysis}
+    \field{volume}{49}
+    \field{journaltitle}{Applied Economics}
+    \field{year}{2017}
+  \endentry
+
+  \entry{BaileyEtAl2021}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BMJ}{%
+         family={Bailey},
+         familyi={B\bibinitperiod},
+         given={Martha\bibnamedelima J.},
+         giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=DJ}{%
+         family={DiNardo},
+         familyi={D\bibinitperiod},
+         given={John},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SBA}{%
+         family={Stuart},
+         familyi={S\bibinitperiod},
+         given={Bryan\bibnamedelima A.},
+         giveni={B\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BMJ+1}
+    \strng{fullhash}{BMJDJSBA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{S2}
+    \field{pages}{329\bibrangedash 367}
+    \field{title}{The Economic Impact of a High National Minimum Wage: Evidence
+  from the 1966 Fair Labor Standards Act}
+    \field{volume}{39}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2021}
+  \endentry
+
+  \entry{BassaniniEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=BA}{%
+         family={Bassanini},
+         familyi={B\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=BC}{%
+         family={Batut},
+         familyi={B\bibinitperiod},
+         given={Cyprien},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=CE}{%
+         family={Caroli},
+         familyi={C\bibinitperiod},
+         given={Eve},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BA+1}
+    \strng{fullhash}{BABCCE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Laboratoire d'Economie de Dauphine, LEDa-LEGOS Working
+  Paper 6}
+    \field{title}{Labor Market Concentration and Stayers' Wages: Evidence from
+  France}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BellmannEtAl2020}{misc}{}
+    \name{author}{4}{}{%
+      {{hash=BL}{%
+         family={Bellmann},
+         familyi={B\bibinitperiod},
+         given={Lisa},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=LB}{%
+         family={Lochner},
+         familyi={L\bibinitperiod},
+         given={Benjamin},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=SS}{%
+         family={Seth},
+         familyi={S\bibinitperiod},
+         given={Stefan},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=WS}{%
+         family={Wolter},
+         familyi={W\bibinitperiod},
+         given={Stefanie},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BL+1}
+    \strng{fullhash}{BLLBSSWS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Institute for Employment Research, FDZ Method Report
+  Series 01/2020}
+    \field{title}{AKM Effects for German Labour Market Data}
+    \field{year}{2020}
+  \endentry
+
+  \entry{BelmanWolfson2014}{book}{}
+    \name{author}{2}{}{%
+      {{hash=BD}{%
+         family={Belman},
+         familyi={B\bibinitperiod},
+         given={Dale},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=WPJ}{%
+         family={Wolfson},
+         familyi={W\bibinitperiod},
+         given={Paul\bibnamedelima J.},
+         giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {W.\ E.\ Upjohn Institute for Employment Research}%
+    }
+    \strng{namehash}{BDWPJ1}
+    \strng{fullhash}{BDWPJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2014}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{What Does the Minimum Wage Do?}
+    \list{location}{1}{%
+      {Kalamazoo}%
+    }
+    \field{year}{2014}
+  \endentry
+
+  \entry{BenmelechEtAl2020}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BE}{%
+         family={Benmelech},
+         familyi={B\bibinitperiod},
+         given={Efraim},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=BN}{%
+         family={Bergman},
+         familyi={B\bibinitperiod},
+         given={Nittai},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=KH}{%
+         family={Kim},
+         familyi={K\bibinitperiod},
+         given={Hyunseob},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BE+1}
+    \strng{fullhash}{BEBNKH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{pages}{Online First}
+    \field{title}{Strong Employers and Weak Employees: How Does Employer
+  Concentration Affect Wages?}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2020}
+  \endentry
+
+  \entry{BergerEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=BD}{%
+         family={Berger},
+         familyi={B\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=HK}{%
+         family={Herkenhoff},
+         familyi={H\bibinitperiod},
+         given={Kyle},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=MS}{%
+         family={Mongey},
+         familyi={M\bibinitperiod},
+         given={Simon},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BD+1}
+    \strng{fullhash}{BDHKMS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Institute of Labor Economics, IZA Discussion Paper
+  12276}
+    \field{title}{Labor Market Power}
+    \field{year}{2019}
+  \endentry
+
+  \entry{BhaskarEtAl2002}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BV}{%
+         family={Bhaskar},
+         familyi={B\bibinitperiod},
+         given={Venkataraman},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=TT}{%
+         family={To},
+         familyi={T\bibinitperiod},
+         given={Ted},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BV+1}
+    \strng{fullhash}{BVMATT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2002}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{2}
+    \field{pages}{155\bibrangedash 174}
+    \field{title}{Oligopsony and Monopsonistic Competition in Labor Markets}
+    \field{volume}{16}
+    \field{journaltitle}{Journal of Economic Literature}
+    \field{year}{2002}
+  \endentry
+
+  \entry{BhaskarTo1999}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BV}{%
+         family={Bhaskar},
+         familyi={B\bibinitperiod},
+         given={Venkataraman},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=TT}{%
+         family={To},
+         familyi={T\bibinitperiod},
+         given={Ted},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BVTT1}
+    \strng{fullhash}{BVTT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1999}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{455}
+    \field{pages}{190\bibrangedash 203}
+    \field{title}{Minimum Wages for Ronald McDonald Monopsonies: A Theory of
+  Monopsonistic Competition}
+    \field{volume}{109}
+    \field{journaltitle}{Economic Journal}
+    \field{year}{1999}
+  \endentry
+
+  \entry{BloemerEtAl2018}{misc}{}
+    \name{author}{5}{}{%
+      {{hash=BMJ}{%
+         family={Blömer},
+         familyi={B\bibinitperiod},
+         given={Maximilian\bibnamedelima J.},
+         giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=GN}{%
+         family={Gürtzgen},
+         familyi={G\bibinitperiod},
+         given={Nicole},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=PL}{%
+         family={Pohlan},
+         familyi={P\bibinitperiod},
+         given={Laura},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Stichnoth},
+         familyi={S\bibinitperiod},
+         given={Holger},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=vGJ}{%
+         family={{van den Berg}},
+         familyi={v\bibinitperiod},
+         given={Gerard\bibnamedelima J.},
+         giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BMJ+2}
+    \strng{fullhash}{BMJGNPLSHvGJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Center for Economic Studies, CESifo Working Paper
+  7160}
+    \field{title}{Unemployment Effects of the German Minimum Wage in an
+  Equilibirum Job Search Model}
+    \field{year}{2018}
+  \endentry
+
+  \entry{BoalRansom1997}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BWM}{%
+         family={Boal},
+         familyi={B\bibinitperiod},
+         given={William\bibnamedelima M.},
+         giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=RMR}{%
+         family={Ransom},
+         familyi={R\bibinitperiod},
+         given={Michael\bibnamedelima R.},
+         giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BWMRMR1}
+    \strng{fullhash}{BWMRMR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1997}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{1}
+    \field{pages}{86\bibrangedash 112}
+    \field{title}{Monopsony in the Labor Market}
+    \field{volume}{35}
+    \field{journaltitle}{Journal of Economic Literature}
+    \field{year}{1997}
+  \endentry
+
+  \entry{BoockmannEtAl2011a}{misc}{}
+    \name{author}{15}{}{%
+      {{hash=BB}{%
+         family={Boockmann},
+         familyi={B\bibinitperiod},
+         given={Bernhard},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=HK}{%
+         family={Harsch},
+         familyi={H\bibinitperiod},
+         given={Katrin},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Kirchmann},
+         familyi={K\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KG}{%
+         family={Klee},
+         familyi={K\bibinitperiod},
+         given={G\"{u}nther},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Kleimann},
+         familyi={K\bibinitperiod},
+         given={Rolf},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=KC}{%
+         family={Klempt},
+         familyi={K\bibinitperiod},
+         given={Charlotte},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Koch},
+         familyi={K\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Krumm},
+         familyi={K\bibinitperiod},
+         given={Raimund},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=NM}{%
+         family={Neumann},
+         familyi={N\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RP}{%
+         family={Rattenhuber},
+         familyi={R\bibinitperiod},
+         given={Pia},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Rosemann},
+         familyi={R\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SR}{%
+         family={Sappl},
+         familyi={S\bibinitperiod},
+         given={Regina},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Sp\"{a}th},
+         familyi={S\bibinitperiod},
+         given={Jochen},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Strotmann},
+         familyi={S\bibinitperiod},
+         given={Harald},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=VH}{%
+         family={Verbeek},
+         familyi={V\bibinitperiod},
+         given={Hans},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BB+1}
+    \strng{fullhash}{BBHKKAKGKRKCKAKRNMRPRMSRSJSHVH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011a}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Abschlussbericht an das Bundesministerium für Arbeit
+  und Soziales}
+    \field{title}{Evaluation bestehender gesetzlicher Mindestlohnregelungen,
+  Branche: Pflege}
+    \field{year}{2011a}
+  \endentry
+
+  \entry{BoockmannEtAl2011b}{misc}{}
+    \name{author}{15}{}{%
+      {{hash=BB}{%
+         family={Boockmann},
+         familyi={B\bibinitperiod},
+         given={Bernhard},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=HK}{%
+         family={Harsch},
+         familyi={H\bibinitperiod},
+         given={Katrin},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Kirchmann},
+         familyi={K\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KG}{%
+         family={Klee},
+         familyi={K\bibinitperiod},
+         given={G\"{u}nther},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Kleimann},
+         familyi={K\bibinitperiod},
+         given={Rolf},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=KC}{%
+         family={Klempt},
+         familyi={K\bibinitperiod},
+         given={Charlotte},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Koch},
+         familyi={K\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Krumm},
+         familyi={K\bibinitperiod},
+         given={Raimund},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=NM}{%
+         family={Neumann},
+         familyi={N\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RP}{%
+         family={Rattenhuber},
+         familyi={R\bibinitperiod},
+         given={Pia},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Rosemann},
+         familyi={R\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Sp\"{a}th},
+         familyi={S\bibinitperiod},
+         given={Jochen},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Strotmann},
+         familyi={S\bibinitperiod},
+         given={Harald},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=VH}{%
+         family={Verbeek},
+         familyi={V\bibinitperiod},
+         given={Hans},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=WR}{%
+         family={Weber},
+         familyi={W\bibinitperiod},
+         given={Regina},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BB+1}
+    \strng{fullhash}{BBHKKAKGKRKCKAKRNMRPRMSJSHVHWR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011b}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Abschlussbericht an das Bundesministerium für Arbeit
+  und Soziales}
+    \field{title}{Evaluation bestehender gesetzlicher Mindestlohnregelungen,
+  Branche: Maler- und Lackiererhandwerk}
+    \field{year}{2011b}
+  \endentry
+
+  \entry{BoockmannEtAl2011c}{misc}{}
+    \name{author}{15}{}{%
+      {{hash=BB}{%
+         family={Boockmann},
+         familyi={B\bibinitperiod},
+         given={Bernhard},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=HK}{%
+         family={Harsch},
+         familyi={H\bibinitperiod},
+         given={Katrin},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Kirchmann},
+         familyi={K\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KG}{%
+         family={Klee},
+         familyi={K\bibinitperiod},
+         given={G\"{u}nther},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Kleimann},
+         familyi={K\bibinitperiod},
+         given={Rolf},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=KC}{%
+         family={Klempt},
+         familyi={K\bibinitperiod},
+         given={Charlotte},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Koch},
+         familyi={K\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Krumm},
+         familyi={K\bibinitperiod},
+         given={Raimund},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=NM}{%
+         family={Neumann},
+         familyi={N\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RP}{%
+         family={Rattenhuber},
+         familyi={R\bibinitperiod},
+         given={Pia},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Rosemann},
+         familyi={R\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Späth},
+         familyi={S\bibinitperiod},
+         given={Jochen},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Strotmann},
+         familyi={S\bibinitperiod},
+         given={Harald},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=VH}{%
+         family={Verbeek},
+         familyi={V\bibinitperiod},
+         given={Hans},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=WR}{%
+         family={Weber},
+         familyi={W\bibinitperiod},
+         given={Regina},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BB+1}
+    \strng{fullhash}{BBHKKAKGKRKCKAKRNMRPRMSJSHVHWR2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011c}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{howpublished}{Abschlussbericht an das Bundesministerium für Arbeit
+  und Soziales}
+    \field{title}{Evaluation bestehender gesetzlicher Mindestlohnregelungen,
+  Branche: Elektrohandwerk}
+    \field{year}{2011c}
+  \endentry
+
+  \entry{BoockmannEtAl2013}{article}{}
+    \name{author}{4}{}{%
+      {{hash=BB}{%
+         family={Boockmann},
+         familyi={B\bibinitperiod},
+         given={Bernhard},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=KR}{%
+         family={Krumm},
+         familyi={K\bibinitperiod},
+         given={Raimund},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=NM}{%
+         family={Neumann},
+         familyi={N\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RP}{%
+         family={Rattenhuber},
+         familyi={R\bibinitperiod},
+         given={Pia},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BB+1}
+    \strng{fullhash}{BBKRNMRP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{3}
+    \field{pages}{316\bibrangedash 348}
+    \field{title}{Turning the Switch: An Evaluation of the Minimum Wage in the
+  German Electrical Trade Using Repeated Natural Experiments}
+    \field{volume}{14}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2013}
+  \endentry
+
+  \entry{BosslerGerner2020}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BM}{%
+         family={Bossler},
+         familyi={B\bibinitperiod},
+         given={Mario},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=GHD}{%
+         family={Gerner},
+         familyi={G\bibinitperiod},
+         given={Hans-Dieter},
+         giveni={H\bibinithyphendelim D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BMGHD1}
+    \strng{fullhash}{BMGHD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{5}
+    \field{pages}{1070\bibrangedash 1094}
+    \field{title}{Employment Effects of the New German Minimum Wage: Evidence
+  from Establishment-Level Micro Data}
+    \field{volume}{73}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Brown1999}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=BCC}{%
+         family={Brown},
+         familyi={B\bibinitperiod},
+         given={Charles\bibnamedelima C.},
+         giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \name{editor}{2}{}{%
+      {{hash=AO}{%
+         family={Ashenfelter},
+         familyi={A\bibinitperiod},
+         given={Orley},
+         giveni={O\bibinitperiod},
+      }}%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {North Holland}%
+    }
+    \strng{namehash}{BCC1}
+    \strng{fullhash}{BCC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1999}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{Handbook of Labor Economics: Vol.\ 3B}
+    \field{pages}{2101\bibrangedash 2163}
+    \field{title}{Minimum Wages, Employment, and the Distribution of Income}
+    \list{location}{1}{%
+      {Amsterdam}%
+    }
+    \field{year}{1999}
+  \endentry
+
+  \entry{BrownEtAl1982}{article}{}
+    \name{author}{3}{}{%
+      {{hash=BCC}{%
+         family={Brown},
+         familyi={B\bibinitperiod},
+         given={Charles\bibnamedelima C.},
+         giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=GC}{%
+         family={Gilroy},
+         familyi={G\bibinitperiod},
+         given={Curtis},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=KA}{%
+         family={Kohen},
+         familyi={K\bibinitperiod},
+         given={Andrew},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BCC+1}
+    \strng{fullhash}{BCCGCKA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1982}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{2}
+    \field{pages}{487\bibrangedash 528}
+    \field{title}{The Effect of the Minimum Wage on Employment and
+  Unemployment}
+    \field{volume}{20}
+    \field{journaltitle}{Journal of Economic Literature}
+    \field{year}{1982}
+  \endentry
+
+  \entry{BrownHamermesh2019}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BCC}{%
+         family={Brown},
+         familyi={B\bibinitperiod},
+         given={Charles\bibnamedelima C.},
+         giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=HDS}{%
+         family={Hamermesh},
+         familyi={H\bibinitperiod},
+         given={Daniel\bibnamedelima S.},
+         giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BCCHDS1}
+    \strng{fullhash}{BCCHDS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{5}
+    \field{pages}{68\bibrangedash 87}
+    \field{title}{Wages and Hours Laws: What Do We Know? What Can Be Done?}
+    \field{volume}{5}
+    \field{journaltitle}{The Russell Sage Foundation Journal of the Social
+  Sciences}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Bunting1962}{book}{}
+    \name{author}{1}{}{%
+      {{hash=BRL}{%
+         family={Bunting},
+         familyi={B\bibinitperiod},
+         given={Robert\bibnamedelima L.},
+         giveni={R\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {University of North Carolina Press}%
+    }
+    \strng{namehash}{BRL1}
+    \strng{fullhash}{BRL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1962}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Employer Concentration in Local Labor Markets}
+    \list{location}{1}{%
+      {Chapel Hill}%
+    }
+    \field{year}{1962}
+  \endentry
+
+  \entry{BurdettMortensen1998}{article}{}
+    \name{author}{2}{}{%
+      {{hash=BK}{%
+         family={Burdett},
+         familyi={B\bibinitperiod},
+         given={Kenneth},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=MDT}{%
+         family={Mortensen},
+         familyi={M\bibinitperiod},
+         given={Dale\bibnamedelima T.},
+         giveni={D\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BKMDT1}
+    \strng{fullhash}{BKMDT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1998}
+    \field{labeldatesource}{}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{2}
+    \field{pages}{257\bibrangedash 273}
+    \field{title}{Wage Differentials, Employer Size, and Unemployment}
+    \field{volume}{39}
+    \field{journaltitle}{International Economic Review}
+    \field{year}{1998}
+  \endentry
+
+  \entry{CaliendoEtAl2017}{misc}{}
+    \name{author}{5}{}{%
+      {{hash=CM}{%
+         family={Caliendo},
+         familyi={C\bibinitperiod},
+         given={Marco},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=FA}{%
+         family={Fedorets},
+         familyi={F\bibinitperiod},
+         given={Alexandra},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=PM}{%
+         family={Preuss},
+         familyi={P\bibinitperiod},
+         given={Malte},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schr\"{o}der},
+         familyi={S\bibinitperiod},
+         given={Carsten},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=WL}{%
+         family={Wittbrodt},
+         familyi={W\bibinitperiod},
+         given={Linda},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CM+1}
+    \strng{fullhash}{CMFAPMSCWL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{howpublished}{Institute of Labor Economics, IZA Discussion Paper
+  11246}
+    \field{title}{The Short-Term Distributional Effects of the German Minimum
+  Wage Reform}
+    \field{year}{2017}
+  \endentry
+
+  \entry{CaliendoEtAl2018}{article}{}
+    \name{author}{5}{}{%
+      {{hash=CM}{%
+         family={Caliendo},
+         familyi={C\bibinitperiod},
+         given={Marco},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=FA}{%
+         family={Fedorets},
+         familyi={F\bibinitperiod},
+         given={Alexandra},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=PM}{%
+         family={Preuss},
+         familyi={P\bibinitperiod},
+         given={Malte},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schr\"{o}der},
+         familyi={S\bibinitperiod},
+         given={Carsten},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=WL}{%
+         family={Wittbrodt},
+         familyi={W\bibinitperiod},
+         given={Linda},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CM+1}
+    \strng{fullhash}{CMFAPMSCWL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{pages}{46\bibrangedash 62}
+    \field{title}{The Short-Run Employment Effects of the German Minimum Wage
+  Reform}
+    \field{volume}{53}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2018}
+  \endentry
+
+  \entry{CaliendoEtAl2019}{article}{}
+    \name{author}{3}{}{%
+      {{hash=CM}{%
+         family={Caliendo},
+         familyi={C\bibinitperiod},
+         given={Marco},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schr\"{o}der},
+         familyi={S\bibinitperiod},
+         given={Carsten},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=WL}{%
+         family={Wittbrodt},
+         familyi={W\bibinitperiod},
+         given={Linda},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CM+1}
+    \strng{fullhash}{CMSCWL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{3}
+    \field{pages}{257\bibrangedash 292}
+    \field{title}{The Causal Effects of the Minimum Wage Introduction in
+  Germany: An Overview}
+    \field{volume}{20}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Card1992a}{article}{}
+    \name{author}{1}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CD1}
+    \strng{fullhash}{CD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1992}
+    \field{extradate}{1}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{1}
+    \field{pages}{38\bibrangedash 54}
+    \field{title}{Do Minimum Wages Reduce Employment? A Case Study of
+  California, 1987-89}
+    \field{volume}{46}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{1992}
+  \endentry
+
+  \entry{Card1992b}{article}{}
+    \name{author}{1}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CD1}
+    \strng{fullhash}{CD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1992}
+    \field{extradate}{2}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{1}
+    \field{pages}{22\bibrangedash 37}
+    \field{title}{Using Regional Variation in Wages to Measure the Effects of
+  the Federal Minimum Wage}
+    \field{volume}{46}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{1992}
+  \endentry
+
+  \entry{CardEtAl2018}{article}{}
+    \name{author}{4}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=CAR}{%
+         family={Cardoso},
+         familyi={C\bibinitperiod},
+         given={Ana\bibnamedelima R.},
+         giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+      {{hash=HJ}{%
+         family={Heining},
+         familyi={H\bibinitperiod},
+         given={J\"{o}rg},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=KP}{%
+         family={Kline},
+         familyi={K\bibinitperiod},
+         given={Patrick},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CD+1}
+    \strng{fullhash}{CDCARHJKP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{1}
+    \field{pages}{13\bibrangedash 70}
+    \field{title}{Firms and Labor Market Inequality: Evidence and Some Theory}
+    \field{volume}{36}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2018}
+  \endentry
+
+  \entry{CardEtAl2013}{article}{}
+    \name{author}{3}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=HJ}{%
+         family={Heining},
+         familyi={H\bibinitperiod},
+         given={J\"{o}rg},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=KP}{%
+         family={Kline},
+         familyi={K\bibinitperiod},
+         given={Patrick},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CD+1}
+    \strng{fullhash}{CDHJKP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{3}
+    \field{pages}{967\bibrangedash 1015}
+    \field{title}{Workplace Heterogeneity and the Rise of West German Wage
+  Inequality}
+    \field{volume}{128}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2013}
+  \endentry
+
+  \entry{CardKrueger1994}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=KAB}{%
+         family={Krueger},
+         familyi={K\bibinitperiod},
+         given={Alan\bibnamedelima B.},
+         giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CDKAB1}
+    \strng{fullhash}{CDKAB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1994}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{4}
+    \field{pages}{772\bibrangedash 793}
+    \field{title}{Minimum Wages and Employment: A Case Study of the Fast-Food
+  Industry in New Jersey and Pennsylvania}
+    \field{volume}{84}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{1994}
+  \endentry
+
+  \entry{CardKrueger1995}{book}{}
+    \name{author}{2}{}{%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=KAB}{%
+         family={Krueger},
+         familyi={K\bibinitperiod},
+         given={Alan\bibnamedelima B.},
+         giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Princeton University Press}%
+    }
+    \strng{namehash}{CDKAB1}
+    \strng{fullhash}{CDKAB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1995}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{Myth and Measurement: The New Economics of the Minimum Wage}
+    \list{location}{1}{%
+      {Princeton}%
+    }
+    \field{year}{1995}
+  \endentry
+
+  \entry{CengizEtAl2019}{article}{}
+    \name{author}{4}{}{%
+      {{hash=CD}{%
+         family={Cengiz},
+         familyi={C\bibinitperiod},
+         given={Doruk},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=DA}{%
+         family={Dube},
+         familyi={D\bibinitperiod},
+         given={Arindrajit},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=LA}{%
+         family={Lindner},
+         familyi={L\bibinitperiod},
+         given={Attila},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=ZB}{%
+         family={Zipperer},
+         familyi={Z\bibinitperiod},
+         given={Ben},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CD+2}
+    \strng{fullhash}{CDDALAZB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{3}
+    \field{pages}{1405\bibrangedash 1454}
+    \field{title}{The Effect of Minimum Wages on Low-Wage Jobs}
+    \field{volume}{134}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2019}
+  \endentry
+
+  \entry{ClemensWither2019}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CJ}{%
+         family={Clemens},
+         familyi={C\bibinitperiod},
+         given={Jeffrey},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=WM}{%
+         family={Wither},
+         familyi={W\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CJWM1}
+    \strng{fullhash}{CJWM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{pages}{53\bibrangedash 67}
+    \field{title}{The Minimum Wage and the Great Recession: Evidence of Effects
+  on the Employment and Income Trajectories of Low-Skilled Workers}
+    \field{volume}{170}
+    \field{journaltitle}{Journal of Public Economics}
+    \field{year}{2019}
+  \endentry
+
+  \entry{ConleyEtAl2012}{article}{}
+    \name{author}{3}{}{%
+      {{hash=CTG}{%
+         family={Conley},
+         familyi={C\bibinitperiod},
+         given={Timothy\bibnamedelima G.},
+         giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+      {{hash=HCB}{%
+         family={Hansen},
+         familyi={H\bibinitperiod},
+         given={Christian\bibnamedelima B.},
+         giveni={C\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=RPE}{%
+         family={Rossi},
+         familyi={R\bibinitperiod},
+         given={Peter\bibnamedelima E.},
+         giveni={P\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CTG+1}
+    \strng{fullhash}{CTGHCBRPE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2012}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{1}
+    \field{pages}{260\bibrangedash 272}
+    \field{title}{Plausibly Exogenous}
+    \field{volume}{94}
+    \field{journaltitle}{Review of Economics and Statistics}
+    \field{year}{2012}
+  \endentry
+
+  \entry{CurrieFallick1996}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CJ}{%
+         family={Currie},
+         familyi={C\bibinitperiod},
+         given={Janet},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=FBC}{%
+         family={Fallick},
+         familyi={F\bibinitperiod},
+         given={Bruce\bibnamedelima C.},
+         giveni={B\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CJFBC1}
+    \strng{fullhash}{CJFBC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1996}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{2}
+    \field{pages}{404\bibrangedash 428}
+    \field{title}{The Minimum Wage and the Employment of Youth: Evidence from
+  the NLSY}
+    \field{volume}{31}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{1996}
+  \endentry
+
+  \entry{CurryGeorge1983}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CB}{%
+         family={Curry},
+         familyi={C\bibinitperiod},
+         given={Bruce},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=GKD}{%
+         family={George},
+         familyi={G\bibinitperiod},
+         given={Kenneth\bibnamedelima D.},
+         giveni={K\bibinitperiod\bibinitdelim D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CBGKD1}
+    \strng{fullhash}{CBGKD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1983}
+    \field{labeldatesource}{}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{3}
+    \field{pages}{203\bibrangedash 255}
+    \field{title}{Industrial Concentration: A Survey}
+    \field{volume}{31}
+    \field{journaltitle}{Journal of Industrial Economics}
+    \field{year}{1983}
+  \endentry
+
+  \entry{DerenoncourtMontialoux2021}{article}{}
+    \name{author}{2}{}{%
+      {{hash=DE}{%
+         family={Derenoncourt},
+         familyi={D\bibinitperiod},
+         given={Ellora},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=MC}{%
+         family={Montialoux},
+         familyi={M\bibinitperiod},
+         given={Claire},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DEMC1}
+    \strng{fullhash}{DEMC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{1}
+    \field{pages}{169\bibrangedash 228}
+    \field{title}{Minimum Wages and Racial Inequality}
+    \field{volume}{136}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2021}
+  \endentry
+
+  \entry{Destatis2008}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=D}{%
+         family={Destatis},
+         familyi={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{D1}
+    \strng{fullhash}{D1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2008}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{title}{Klassifikation der Wirtschaftszweige 2008}
+    \field{year}{2008}
+  \endentry
+
+  \entry{DodiniEtAl2020}{misc}{}
+    \name{author}{4}{}{%
+      {{hash=DS}{%
+         family={Dodini},
+         familyi={D\bibinitperiod},
+         given={Samuel},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=LMF}{%
+         family={Lovenheim},
+         familyi={L\bibinitperiod},
+         given={Michael\bibnamedelima F.},
+         giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+      {{hash=SKG}{%
+         family={Salvanes},
+         familyi={S\bibinitperiod},
+         given={Kjell\bibnamedelima G.},
+         giveni={K\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+      {{hash=WA}{%
+         family={Willen},
+         familyi={W\bibinitperiod},
+         given={Alexander},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DS+1}
+    \strng{fullhash}{DSLMFSKGWA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{Centre for Economic Policy Research, CEPR Discussion
+  Paper 15412}
+    \field{title}{Monopsony, Skills, and Labor Market Concentration}
+    \field{year}{2020}
+  \endentry
+
+  \entry{DoladoEtAl1996}{article}{}
+    \name{author}{6}{}{%
+      {{hash=DJ}{%
+         family={Dolado},
+         familyi={D\bibinitperiod},
+         given={Juan},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=KF}{%
+         family={Kramarz},
+         familyi={K\bibinitperiod},
+         given={Francis},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=MS}{%
+         family={Machin},
+         familyi={M\bibinitperiod},
+         given={Stephen},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=MD}{%
+         family={Margolis},
+         familyi={M\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=TC}{%
+         family={Teulings},
+         familyi={T\bibinitperiod},
+         given={Coen},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DJ+1}
+    \strng{fullhash}{DJKFMSMAMDTC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1996}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{23}
+    \field{pages}{317\bibrangedash 372}
+    \field{title}{Minimum Wages: The European Experience}
+    \field{volume}{11}
+    \field{journaltitle}{Economic Policy}
+    \field{year}{1996}
+  \endentry
+
+  \entry{DoucouliagosStanley2009}{article}{}
+    \name{author}{2}{}{%
+      {{hash=DH}{%
+         family={Doucouliagos},
+         familyi={D\bibinitperiod},
+         given={Hristos},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=STD}{%
+         family={Stanley},
+         familyi={S\bibinitperiod},
+         given={Tom\bibnamedelima D.},
+         giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DHSTD1}
+    \strng{fullhash}{DHSTD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{2}
+    \field{pages}{406\bibrangedash 428}
+    \field{title}{Publication Selection Bias in Minimum-Wage Research? A
+  Meta-Regression Analysis}
+    \field{volume}{47}
+    \field{journaltitle}{British Journal of Industrial Relations}
+    \field{year}{2009}
+  \endentry
+
+  \entry{Dube2019}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=DA}{%
+         family={Dube},
+         familyi={D\bibinitperiod},
+         given={Arindrajit},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DA1}
+    \strng{fullhash}{DA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{Independent Report, November 2019}
+    \field{title}{Impacts of Minimum Wages: Review of the International
+  Evidence}
+    \field{year}{2019}
+  \endentry
+
+  \entry{DubeEtAl2010}{article}{}
+    \name{author}{3}{}{%
+      {{hash=DA}{%
+         family={Dube},
+         familyi={D\bibinitperiod},
+         given={Arindrajit},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=LTW}{%
+         family={Lester},
+         familyi={L\bibinitperiod},
+         given={T.\bibnamedelima William},
+         giveni={T\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Reich},
+         familyi={R\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DA+1}
+    \strng{fullhash}{DALTWRM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2010}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{4}
+    \field{pages}{945\bibrangedash 964}
+    \field{title}{Minimum Wage Effects across State Borders: Estimates Using
+  Contiguous Counties}
+    \field{volume}{92}
+    \field{journaltitle}{Review of Economics and Statistics}
+    \field{year}{2010}
+  \endentry
+
+  \entry{DustmannEtAl2021}{article}{}
+    \name{author}{5}{}{%
+      {{hash=DC}{%
+         family={Dustmann},
+         familyi={D\bibinitperiod},
+         given={Christian},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=LA}{%
+         family={Lindner},
+         familyi={L\bibinitperiod},
+         given={Attila},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=SU}{%
+         family={Sch\"{o}nberg},
+         familyi={S\bibinitperiod},
+         given={Uta},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Umkehrer},
+         familyi={U\bibinitperiod},
+         given={Matthias},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=vP}{%
+         family={{vom Berge}},
+         familyi={v\bibinitperiod},
+         given={Philipp},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DC+1}
+    \strng{fullhash}{DCLASUUMvP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{pages}{Online First}
+    \field{title}{Reallocation Effects of the Minimum Wage}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2021}
+  \endentry
+
+  \entry{DustmannEtAl2009}{article}{}
+    \name{author}{3}{}{%
+      {{hash=DC}{%
+         family={Dustmann},
+         familyi={D\bibinitperiod},
+         given={Christian},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Ludsteck},
+         familyi={L\bibinitperiod},
+         given={Johannes},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SU}{%
+         family={Schönberg},
+         familyi={S\bibinitperiod},
+         given={Uta},
+         giveni={U\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DC+1}
+    \strng{fullhash}{DCLJSU1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{labeldatesource}{}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{number}{2}
+    \field{pages}{843\bibrangedash 881}
+    \field{title}{Revisiting the German Wage Structure}
+    \field{volume}{124}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{2009}
+  \endentry
+
+  \entry{EgelnEtAl2011}{misc}{}
+    \name{author}{8}{}{%
+      {{hash=EJ}{%
+         family={Egeln},
+         familyi={E\bibinitperiod},
+         given={J\"{u}rgen},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=GS}{%
+         family={Gottschalk},
+         familyi={G\bibinitperiod},
+         given={Sandra},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=GN}{%
+         family={G\"{u}rtzgen},
+         familyi={G\bibinitperiod},
+         given={Nicole},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=NM}{%
+         family={Niefert},
+         familyi={N\bibinitperiod},
+         given={Michaela},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RC}{%
+         family={Rammer},
+         familyi={R\bibinitperiod},
+         given={Christian},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Sprietsma},
+         familyi={S\bibinitperiod},
+         given={Maresa},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Schr\"{o}der},
+         familyi={S\bibinitperiod},
+         given={Helmut},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=SH}{%
+         family={Sch\"{u}tz},
+         familyi={S\bibinitperiod},
+         given={Holger},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EJ+1}
+    \strng{fullhash}{EJGSGNNMRCSMSHSH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011}
+    \field{labeldatesource}{}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{howpublished}{Ab\-schluss\-be\-richt an das Bundesministerium für
+  Arbeit und Soziales}
+    \field{title}{Evaluation bestehender gesetzlicher Mindestlohnregelungen,
+  Branche: Ab\-fall\-wirt\-schaft}
+    \field{year}{2011}
+  \endentry
+
+  \entry{Eichhorst2005}{article}{}
+    \name{author}{1}{}{%
+      {{hash=EW}{%
+         family={Eichhorst},
+         familyi={E\bibinitperiod},
+         given={Werner},
+         giveni={W\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EW1}
+    \strng{fullhash}{EW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2005}
+    \field{labeldatesource}{}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{number}{2-3}
+    \field{pages}{197\bibrangedash 217}
+    \field{title}{Gleicher Lohn f\"{u}r gleiche Arbeit am gleichen Ort? Die
+  Ent\-sen\-dung von Arbeitnehmern in der Europ\"{a}ischen Union}
+    \field{volume}{38}
+    \field{journaltitle}{Journal for Labour Market Research}
+    \field{year}{2005}
+  \endentry
+
+  \entry{EllguthEtAl2014}{article}{}
+    \name{author}{3}{}{%
+      {{hash=EP}{%
+         family={Ellguth},
+         familyi={E\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=KS}{%
+         family={Kohaut},
+         familyi={K\bibinitperiod},
+         given={Susanne},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=MI}{%
+         family={M\"{o}ller},
+         familyi={M\bibinitperiod},
+         given={Iris},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EP+1}
+    \strng{fullhash}{EPKSMI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2014}
+    \field{labeldatesource}{}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{number}{1-2}
+    \field{pages}{27\bibrangedash 41}
+    \field{title}{The IAB Establishment Panel: Methodological Essentials and
+  Data Quality}
+    \field{volume}{47}
+    \field{journaltitle}{Journal for Labour Market Research}
+    \field{year}{2014}
+  \endentry
+
+  \entry{EC2004}{article}{}
+    \name{author}{1}{}{%
+      {{hash=E}{%
+         family={{European Commission}},
+         familyi={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{E1}
+    \strng{fullhash}{E1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2004}
+    \field{labeldatesource}{}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{number}{3}
+    \field{pages}{5\bibrangedash 18}
+    \field{title}{Guidelines on the Assessment of Horizontal Mergers under the
+  Council Regulation on the Control of Concentration between Undertakings}
+    \field{volume}{31}
+    \field{journaltitle}{Official Journal of the European Union}
+    \field{year}{2004}
+  \endentry
+
+  \entry{FacklerEtAl2013}{article}{}
+    \name{author}{3}{}{%
+      {{hash=FD}{%
+         family={Fackler},
+         familyi={F\bibinitperiod},
+         given={Daniel},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schnabel},
+         familyi={S\bibinitperiod},
+         given={Claus},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=WJ}{%
+         family={Wagner},
+         familyi={W\bibinitperiod},
+         given={Joachim},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FD+1}
+    \strng{fullhash}{FDSCWJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{3}
+    \field{pages}{683\bibrangedash 700}
+    \field{title}{Establishment Exits in Germany: The Role of Size and Age}
+    \field{volume}{41}
+    \field{journaltitle}{Small Business Economics}
+    \field{year}{2013}
+  \endentry
+
+  \entry{Falch2010}{article}{}
+    \name{author}{1}{}{%
+      {{hash=FT}{%
+         family={Falch},
+         familyi={F\bibinitperiod},
+         given={Torberg},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FT1}
+    \strng{fullhash}{FT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2010}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{2}
+    \field{pages}{237\bibrangedash 266}
+    \field{title}{The Elasticity of Labor Supply at the Establishment Level}
+    \field{volume}{28}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2010}
+  \endentry
+
+  \entry{Fitzenberger2009}{article}{}
+    \name{author}{1}{}{%
+      {{hash=FB}{%
+         family={Fitzenberger},
+         familyi={F\bibinitperiod},
+         given={Bernd},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FB1}
+    \strng{fullhash}{FB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{1}
+    \field{pages}{85\bibrangedash 92}
+    \field{title}{Anmerkungen zur Mindestlohndebatte: Elastizitäten,
+  Strukturparameter und Topfschlagen}
+    \field{volume}{42}
+    \field{journaltitle}{Journal for Labour Market Research}
+    \field{year}{2009}
+  \endentry
+
+  \entry{FitzenbergerDoerr2016}{article}{}
+    \name{author}{2}{}{%
+      {{hash=FB}{%
+         family={Fitzenberger},
+         familyi={F\bibinitperiod},
+         given={Bernd},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=DA}{%
+         family={Doerr},
+         familyi={D\bibinitperiod},
+         given={Annabelle},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FBDA1}
+    \strng{fullhash}{FBDA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2016}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{4}
+    \field{pages}{329\bibrangedash 347}
+    \field{title}{Konzeptionelle Lehren aus der ersten Evaluationsrunde der
+  Branchenmindestl\"{o}hne in Deutschland}
+    \field{volume}{49}
+    \field{journaltitle}{Journal for Labour Market Research}
+    \field{year}{2016}
+  \endentry
+
+  \entry{Frings2013}{article}{}
+    \name{author}{1}{}{%
+      {{hash=FH}{%
+         family={Frings},
+         familyi={F\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FH1}
+    \strng{fullhash}{FH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{3}
+    \field{pages}{258\bibrangedash 281}
+    \field{title}{The Employment Effect of Industry-Specific, Collectively
+  Bargained Minimum Wages}
+    \field{volume}{14}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2013}
+  \endentry
+
+  \entry{FuestEtAl2018}{article}{}
+    \name{author}{3}{}{%
+      {{hash=FC}{%
+         family={Fuest},
+         familyi={F\bibinitperiod},
+         given={Clemens},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=PA}{%
+         family={Peichl},
+         familyi={P\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=SS}{%
+         family={Siegloch},
+         familyi={S\bibinitperiod},
+         given={Sebastian},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FC+1}
+    \strng{fullhash}{FCPASS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{number}{2}
+    \field{pages}{393\bibrangedash 418}
+    \field{title}{Do Higher Corporate Taxes Reduce Wages? Micro Evidence from
+  Germany}
+    \field{volume}{108}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{2018}
+  \endentry
+
+  \entry{GanzerEtAl2020}{misc}{}
+    \name{author}{4}{}{%
+      {{hash=GA}{%
+         family={Ganzer},
+         familyi={G\bibinitperiod},
+         given={Andreas},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=SL}{%
+         family={Schmidtlein},
+         familyi={S\bibinitperiod},
+         given={Lisa},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Stegmaier},
+         familyi={S\bibinitperiod},
+         given={Jens},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=WS}{%
+         family={Wolter},
+         familyi={W\bibinitperiod},
+         given={Stefanie},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GA+1}
+    \strng{fullhash}{GASLSJWS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{howpublished}{Institute for Employment Research, FDZ Data Report
+  Series 01/2020}
+    \field{title}{Establishment History Panel 1975-2018}
+    \field{year}{2020}
+  \endentry
+
+  \entry{GiesselmannSchmidtCatran2020}{article}{}
+    \name{author}{2}{}{%
+      {{hash=GM}{%
+         family={Giesselmann},
+         familyi={G\bibinitperiod},
+         given={Marco},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=SCAW}{%
+         family={Schmidt-Catran},
+         familyi={S\bibinithyphendelim C\bibinitperiod},
+         given={Alexander\bibnamedelima W.},
+         giveni={A\bibinitperiod\bibinitdelim W\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GMSCAW1}
+    \strng{fullhash}{GMSCAW1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{pages}{Online First}
+    \field{title}{Interactions in Fixed Effects Regression Models}
+    \field{journaltitle}{Sociological Methods \& Research}
+    \field{year}{2020}
+  \endentry
+
+  \entry{HallTideman1967}{article}{}
+    \name{author}{2}{}{%
+      {{hash=HM}{%
+         family={Hall},
+         familyi={H\bibinitperiod},
+         given={Marshall},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=TN}{%
+         family={Tideman},
+         familyi={T\bibinitperiod},
+         given={Nicolaus},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HMTN1}
+    \strng{fullhash}{HMTN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1967}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{317}
+    \field{pages}{162\bibrangedash 168}
+    \field{title}{Measures of Concentration}
+    \field{volume}{62}
+    \field{journaltitle}{Journal of the American Statistical Association}
+    \field{year}{1967}
+  \endentry
+
+  \entry{Hamermesh1993}{book}{}
+    \name{author}{1}{}{%
+      {{hash=HD}{%
+         family={Hamermesh},
+         familyi={H\bibinitperiod},
+         given={Daniel},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Princeton University Press}%
+    }
+    \strng{namehash}{HD1}
+    \strng{fullhash}{HD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1993}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{Labor Demand}
+    \list{location}{1}{%
+      {Princeton}%
+    }
+    \field{year}{1993}
+  \endentry
+
+  \entry{HarasztosiLindner2019}{article}{}
+    \name{author}{2}{}{%
+      {{hash=HP}{%
+         family={Harasztosi},
+         familyi={H\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=LA}{%
+         family={Lindner},
+         familyi={L\bibinitperiod},
+         given={Attila},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HPLA1}
+    \strng{fullhash}{HPLA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{8}
+    \field{pages}{2693\bibrangedash 2727}
+    \field{title}{Who Pays for the Minimum Wage?}
+    \field{volume}{109}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{2019}
+  \endentry
+
+  \entry{HaucapEtAl2011}{article}{}
+    \name{author}{3}{}{%
+      {{hash=HJ}{%
+         family={Haucap},
+         familyi={H\bibinitperiod},
+         given={Justus},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PU}{%
+         family={Pauly},
+         familyi={P\bibinitperiod},
+         given={Uwe},
+         giveni={U\bibinitperiod},
+      }}%
+      {{hash=HC}{%
+         family={Hey},
+         familyi={H\bibinitperiod},
+         given={Christian},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HJ+1}
+    \strng{fullhash}{HJPUHC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{3}
+    \field{pages}{287\bibrangedash 307}
+    \field{title}{Collective Wage Setting When Wages Are Generally Binding: An
+  Antitrust Perspective}
+    \field{volume}{21}
+    \field{journaltitle}{International Review of Law and Economics}
+    \field{year}{2011}
+  \endentry
+
+  \entry{Herfindahl1950}{book}{}
+    \name{author}{1}{}{%
+      {{hash=HOC}{%
+         family={Herfindahl},
+         familyi={H\bibinitperiod},
+         given={Orris\bibnamedelima C.},
+         giveni={O\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Ph.D. Dissertation, Columbia University}%
+    }
+    \strng{namehash}{HOC1}
+    \strng{fullhash}{HOC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1950}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{Concentration in the U.S.\ Steel Industry}
+    \field{year}{1950}
+  \endentry
+
+  \entry{HirschEtAl2020}{article}{}
+    \name{author}{4}{}{%
+      {{hash=HB}{%
+         family={Hirsch},
+         familyi={H\bibinitperiod},
+         given={Boris},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=JEJ}{%
+         family={Jahn},
+         familyi={J\bibinitperiod},
+         given={Elke\bibnamedelima J.},
+         giveni={E\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=OM}{%
+         family={Oberfichtner},
+         familyi={O\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HB+1}
+    \strng{fullhash}{HBJEJMAOM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{pages}{Online First}
+    \field{title}{The Urban Wage Premium in Imperfect Labour Markets}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2020}
+  \endentry
+
+  \entry{HirschEtAl2010}{article}{}
+    \name{author}{3}{}{%
+      {{hash=HB}{%
+         family={Hirsch},
+         familyi={H\bibinitperiod},
+         given={Boris},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=ST}{%
+         family={Schank},
+         familyi={S\bibinitperiod},
+         given={Thorsten},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=SC}{%
+         family={Schnabel},
+         familyi={S\bibinitperiod},
+         given={Claus},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HB+1}
+    \strng{fullhash}{HBSTSC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2010}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{2}
+    \field{pages}{291\bibrangedash 330}
+    \field{title}{Differences in Labor Supply to Monopsonistic Firms and the
+  Gender Pay Gap: An Empirical Analysis Using Linked Employer-Employee Data
+  from Germany}
+    \field{volume}{28}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2010}
+  \endentry
+
+  \entry{Hirschman1945}{book}{}
+    \name{author}{1}{}{%
+      {{hash=HAO}{%
+         family={Hirschman},
+         familyi={H\bibinitperiod},
+         given={Albert\bibnamedelima O.},
+         giveni={A\bibinitperiod\bibinitdelim O\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {University of California Press}%
+    }
+    \strng{namehash}{HAO1}
+    \strng{fullhash}{HAO1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1945}
+    \field{labeldatesource}{}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{National Power and the Structure of Foreign Trade}
+    \list{location}{1}{%
+      {Berkeley, Los Angeles}%
+    }
+    \field{year}{1945}
+  \endentry
+
+  \entry{JaroschEtAl2019}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=JG}{%
+         family={Jarosch},
+         familyi={J\bibinitperiod},
+         given={Gregor},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=NJS}{%
+         family={Nimczik},
+         familyi={N\bibinitperiod},
+         given={Jan\bibnamedelima S.},
+         giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=SI}{%
+         family={Sorkin},
+         familyi={S\bibinitperiod},
+         given={Isaac},
+         giveni={I\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JG+1}
+    \strng{fullhash}{JGNJSSI1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper 26239}
+    \field{title}{Granular Search, Market Structure, and Wages}
+    \field{year}{2019}
+  \endentry
+
+  \entry{KoenigMoeller2009}{article}{}
+    \name{author}{2}{}{%
+      {{hash=KM}{%
+         family={K\"{o}nig},
+         familyi={K\bibinitperiod},
+         given={Marion},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=MJ}{%
+         family={M\"{o}ller},
+         familyi={M\bibinitperiod},
+         given={Joachim},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KMMJ1}
+    \strng{fullhash}{KMMJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{labeldatesource}{}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{number}{7}
+    \field{pages}{716\bibrangedash 741}
+    \field{title}{Impacts of Minimum Wages: A Microdata Analysis for the German
+  Construction Sector}
+    \field{volume}{30}
+    \field{journaltitle}{International Journal of Manpower}
+    \field{year}{2009}
+  \endentry
+
+  \entry{KroppSchwengler2016}{article}{}
+    \name{author}{2}{}{%
+      {{hash=KP}{%
+         family={Kropp},
+         familyi={K\bibinitperiod},
+         given={Per},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=SB}{%
+         family={Schwengler},
+         familyi={S\bibinitperiod},
+         given={Barbara},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KPSB1}
+    \strng{fullhash}{KPSB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2016}
+    \field{labeldatesource}{}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{number}{3}
+    \field{pages}{429\bibrangedash 445}
+    \field{title}{Three-Step Method for Delineating Functional Labour Market
+  Regions}
+    \field{volume}{50}
+    \field{journaltitle}{Regional Studies}
+    \field{year}{2016}
+  \endentry
+
+  \entry{KruegerAshenfelter2018}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=KAB}{%
+         family={Krueger},
+         familyi={K\bibinitperiod},
+         given={Alan\bibnamedelima B.},
+         giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=AOC}{%
+         family={Ashenfelter},
+         familyi={A\bibinitperiod},
+         given={Orley\bibnamedelima C.},
+         giveni={O\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KABAOC1}
+    \strng{fullhash}{KABAOC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{howpublished}{National Bureau of Economic Research, NBER Working
+  Paper Series 24831}
+    \field{title}{Theory and Evidence on Employer Collusion in the Franchise
+  Sector}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Lemos2008}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LS}{%
+         family={Lemos},
+         familyi={L\bibinitperiod},
+         given={Sara},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LS1}
+    \strng{fullhash}{LS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2008}
+    \field{labeldatesource}{}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{1}
+    \field{pages}{187\bibrangedash 212}
+    \field{title}{A Survey of the Effects of the Minimum Wage on Prices}
+    \field{volume}{22}
+    \field{journaltitle}{Journal of Economic Surveys}
+    \field{year}{2008}
+  \endentry
+
+  \entry{Lester1947}{article}{}
+    \name{author}{1}{}{%
+      {{hash=LRA}{%
+         family={Lester},
+         familyi={L\bibinitperiod},
+         given={Richard\bibnamedelima A.},
+         giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LRA1}
+    \strng{fullhash}{LRA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1947}
+    \field{labeldatesource}{}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{number}{1}
+    \field{pages}{135\bibrangedash 148}
+    \field{title}{Marginalism, Mininum Wages, and Labor Markets}
+    \field{volume}{37}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{1947}
+  \endentry
+
+  \entry{Lipsius2018}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=LB}{%
+         family={Lipsius},
+         familyi={L\bibinitperiod},
+         given={Ben},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LB1}
+    \strng{fullhash}{LB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{howpublished}{University of Michigan, Discussion Paper}
+    \field{title}{Labor Market Concentration Does Not Explain the Falling Labor
+  Share}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Manning2003a}{book}{}
+    \name{author}{1}{}{%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Princeton University Press}%
+    }
+    \strng{namehash}{MA1}
+    \strng{fullhash}{MA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2003}
+    \field{extradate}{1}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Monopsony in Motion}
+    \list{location}{1}{%
+      {Princeton}%
+    }
+    \field{year}{2003}
+  \endentry
+
+  \entry{Manning2003b}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MA1}
+    \strng{fullhash}{MA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2003}
+    \field{extradate}{2}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{2}
+    \field{pages}{105\bibrangedash 131}
+    \field{title}{The Real Thin Theory: Monopsony in Modern Labour Markets}
+    \field{volume}{10}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2003}
+  \endentry
+
+  \entry{Manning2011}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \name{editor}{2}{}{%
+      {{hash=AO}{%
+         family={Ashenfelter},
+         familyi={A\bibinitperiod},
+         given={Orley},
+         giveni={O\bibinitperiod},
+      }}%
+      {{hash=CD}{%
+         family={Card},
+         familyi={C\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {North Holland}%
+    }
+    \strng{namehash}{MA1}
+    \strng{fullhash}{MA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{booktitle}{Handbook of Labor Economics: Vol.\ 4B}
+    \field{pages}{973\bibrangedash 1041}
+    \field{title}{Imperfect Competition in the Labor Market}
+    \list{location}{1}{%
+      {Amsterdam}%
+    }
+    \field{year}{2011}
+  \endentry
+
+  \entry{Manning2021}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MA1}
+    \strng{fullhash}{MA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{1}
+    \field{pages}{3\bibrangedash 26}
+    \field{title}{Monopsony in Labor Markets: A Review}
+    \field{volume}{74}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{2021}
+  \endentry
+
+  \entry{ManningPetrongolo2017}{article}{}
+    \name{author}{2}{}{%
+      {{hash=MA}{%
+         family={Manning},
+         familyi={M\bibinitperiod},
+         given={Alan},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=PB}{%
+         family={Petrongolo},
+         familyi={P\bibinitperiod},
+         given={Barbara},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MAPB1}
+    \strng{fullhash}{MAPB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{10}
+    \field{pages}{2877\bibrangedash 2907}
+    \field{title}{How Local Are Labor Markets? Evidence from a Spatial Job
+  Search Model}
+    \field{volume}{107}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{2017}
+  \endentry
+
+  \entry{Marfels1971}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MC}{%
+         family={Marfels},
+         familyi={M\bibinitperiod},
+         given={Christian},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MC1}
+    \strng{fullhash}{MC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1971}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{4}
+    \field{pages}{753\bibrangedash 766}
+    \field{title}{Absolute and Relative Measures of Concentration Reconsidered}
+    \field{volume}{24}
+    \field{journaltitle}{Kyklos}
+    \field{year}{1971}
+  \endentry
+
+  \entry{MarinescuEtAl2021}{article}{}
+    \name{author}{3}{}{%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=OI}{%
+         family={Ouss},
+         familyi={O\bibinitperiod},
+         given={Ivan},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=PLD}{%
+         family={Pape},
+         familyi={P\bibinitperiod},
+         given={Louis-Daniel},
+         giveni={L\bibinithyphendelim D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MI+1}
+    \strng{fullhash}{MIOIPLD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{pages}{506\bibrangedash 605}
+    \field{title}{Wages, Hires, and Labor Market Concentration}
+    \field{volume}{184}
+    \field{journaltitle}{Journal of Economic Behavior \& Organization}
+    \field{year}{2021}
+  \endentry
+
+  \entry{MarinescuRathelot2018}{article}{}
+    \name{author}{2}{}{%
+      {{hash=MI}{%
+         family={Marinescu},
+         familyi={M\bibinitperiod},
+         given={Ioana},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=RR}{%
+         family={Rathelot},
+         familyi={R\bibinitperiod},
+         given={Roland},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MIRR1}
+    \strng{fullhash}{MIRR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{3}
+    \field{pages}{42\bibrangedash 70}
+    \field{title}{Mismatch Unemployment and the Geography of Job Search}
+    \field{volume}{10}
+    \field{journaltitle}{American Economic Journal: Macroeconomics}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Martins2018}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=MPS}{%
+         family={Martins},
+         familyi={M\bibinitperiod},
+         given={Pedro\bibnamedelima S.},
+         giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MPS1}
+    \strng{fullhash}{MPS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{howpublished}{Centre for Globalisation Research, CGR Research Paper
+  95}
+    \field{title}{Making Their Own Weather? Estimating Employer Labour-Market
+  Power and Its Wage Effects}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Moeller2012}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MJ}{%
+         family={M\"{o}ller},
+         familyi={M\bibinitperiod},
+         given={Joachim},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MJ1}
+    \strng{fullhash}{MJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2012}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{3-4}
+    \field{pages}{187\bibrangedash 199}
+    \field{title}{Minimum Wages in German Industries: What Does the Evidence
+  Tell Us so Far?}
+    \field{volume}{45}
+    \field{journaltitle}{Journal for Labour Market Research}
+    \field{year}{2012}
+  \endentry
+
+  \entry{MoellerEtAl2011}{misc}{}
+    \name{author}{14}{}{%
+      {{hash=MJ}{%
+         family={M\"{o}ller},
+         familyi={M\bibinitperiod},
+         given={Joachim},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=BS}{%
+         family={Bender},
+         familyi={B\bibinitperiod},
+         given={Stefan},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=KM}{%
+         family={K\"{o}nig},
+         familyi={K\bibinitperiod},
+         given={Marion},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=vP}{%
+         family={{vom Berge}},
+         familyi={v\bibinitperiod},
+         given={Philipp},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=UM}{%
+         family={Umkehrer},
+         familyi={U\bibinitperiod},
+         given={Matthias},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=WS}{%
+         family={Wolter},
+         familyi={W\bibinitperiod},
+         given={Stefanie},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=SS}{%
+         family={Schaffner},
+         familyi={S\bibinitperiod},
+         given={Sandra},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=BR}{%
+         family={Bachmann},
+         familyi={B\bibinitperiod},
+         given={Ronald},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=KH}{%
+         family={Kröger},
+         familyi={K\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=JTR}{%
+         family={Janßen-Timmen},
+         familyi={J\bibinithyphendelim T\bibinitperiod},
+         given={Ronald},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=PA}{%
+         family={Paloyo},
+         familyi={P\bibinitperiod},
+         given={ALfredo},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=TM}{%
+         family={Tamm},
+         familyi={T\bibinitperiod},
+         given={Marcus},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=FM}{%
+         family={Fertig},
+         familyi={F\bibinitperiod},
+         given={Michael},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=AH}{%
+         family={Apel},
+         familyi={A\bibinitperiod},
+         given={Helmut},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MJ+1}
+    \strng{fullhash}{MJBSKMvPUMWSSSBRKHJTRPATMFMAH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2011}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{howpublished}{Abschlussbericht an das Bundesministerium für Arbeit
+  und Soziales}
+    \field{title}{Evaluation bestehender gesetzlicher Mindestlohnregelungen,
+  Branche: Bauhauptgewerbe}
+    \field{year}{2011}
+  \endentry
+
+  \entry{MuellerWolter2020}{article}{}
+    \name{author}{2}{}{%
+      {{hash=MD}{%
+         family={M\"{u}ller},
+         familyi={M\bibinitperiod},
+         given={Dana},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=WS}{%
+         family={Wolter},
+         familyi={W\bibinitperiod},
+         given={Stefanie},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MDWS1}
+    \strng{fullhash}{MDWS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{3}
+    \field{pages}{313\bibrangedash 333}
+    \field{title}{German Labour Market Data: Data Provision and Access for the
+  International Scientific Community}
+    \field{volume}{21}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Munguia2020}{article}{}
+    \name{author}{1}{}{%
+      {{hash=MLF}{%
+         family={{Mungu\'{i}a Corella}},
+         familyi={M\bibinitperiod},
+         given={Luis\bibnamedelima F.},
+         giveni={L\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MLF1}
+    \strng{fullhash}{MLF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{number}{7}
+    \field{pages}{1\bibrangedash 28}
+    \field{title}{Minimum Wages in Monopsonistic Labor Markets}
+    \field{volume}{9}
+    \field{journaltitle}{IZA Journal of Labor Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{NaiduEtAl2018}{article}{}
+    \name{author}{3}{}{%
+      {{hash=NS}{%
+         family={Naidu},
+         familyi={N\bibinitperiod},
+         given={Suresh},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=PEA}{%
+         family={Posner},
+         familyi={P\bibinitperiod},
+         given={Eric\bibnamedelima A.},
+         giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+      {{hash=WGF}{%
+         family={Weyl},
+         familyi={W\bibinitperiod},
+         given={Glen\bibnamedelima F.},
+         giveni={G\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NS+1}
+    \strng{fullhash}{NSPEAWGF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2018}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{number}{2}
+    \field{pages}{536\bibrangedash 601}
+    \field{title}{Antitrust Remedies for Labor Market Power}
+    \field{volume}{132}
+    \field{journaltitle}{Harvard Law Review}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Neal1995}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ND}{%
+         family={Neal},
+         familyi={N\bibinitperiod},
+         given={Derek},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ND1}
+    \strng{fullhash}{ND1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1995}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{number}{4}
+    \field{pages}{653\bibrangedash 677}
+    \field{title}{Industry-Specific Human Capital: Evidence from Displaced
+  Workers}
+    \field{volume}{13}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{1995}
+  \endentry
+
+  \entry{Neumark2019}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ND}{%
+         family={Neumark},
+         familyi={N\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ND2}
+    \strng{fullhash}{ND2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{number}{3}
+    \field{pages}{293\bibrangedash 329}
+    \field{title}{The Econometrics and Economics of the Employment Effects of
+  Minimum Wages: Getting from Known Unknowns to Known Knowns}
+    \field{volume}{20}
+    \field{journaltitle}{German Economic Review}
+    \field{year}{2019}
+  \endentry
+
+  \entry{NeumarkShirley2021}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=ND}{%
+         family={Neumark},
+         familyi={N\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=SP}{%
+         family={Shirley},
+         familyi={S\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NDSP1}
+    \strng{fullhash}{NDSP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{howpublished}{National Bureau of Economic Research, NBER Discussion
+  Paper 28388}
+    \field{title}{Myth or Measurement: What Does the New Minimum Wage Research
+  Say About Minimum Wages and Job Loss in the United States?}
+    \field{year}{2021}
+  \endentry
+
+  \entry{NeumarkWascher1992}{article}{}
+    \name{author}{2}{}{%
+      {{hash=ND}{%
+         family={Neumark},
+         familyi={N\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=WWL}{%
+         family={Wascher},
+         familyi={W\bibinitperiod},
+         given={William\bibnamedelima L.},
+         giveni={W\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NDWWL1}
+    \strng{fullhash}{NDWWL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1992}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{number}{1}
+    \field{pages}{55\bibrangedash 81}
+    \field{title}{Employment Effects of Minimum and Subminimum Wages: Panel
+  Data on State Minimum Wage Laws}
+    \field{volume}{46}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{1992}
+  \endentry
+
+  \entry{NeumarkWascher2008}{book}{}
+    \name{author}{2}{}{%
+      {{hash=ND}{%
+         family={Neumark},
+         familyi={N\bibinitperiod},
+         given={David},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=WWL}{%
+         family={Wascher},
+         familyi={W\bibinitperiod},
+         given={William\bibnamedelima L.},
+         giveni={W\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {MIT Press}%
+    }
+    \strng{namehash}{NDWWL1}
+    \strng{fullhash}{NDWWL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2008}
+    \field{labeldatesource}{}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{title}{Minimum Wages}
+    \list{location}{1}{%
+      {Cambridge}%
+    }
+    \field{year}{2008}
+  \endentry
+
+  \entry{PragerSchmitt2021}{article}{}
+    \name{author}{2}{}{%
+      {{hash=PE}{%
+         family={Prager},
+         familyi={P\bibinitperiod},
+         given={Elena},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Schmitt},
+         familyi={S\bibinitperiod},
+         given={Matt},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PESM1}
+    \strng{fullhash}{PESM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{number}{2}
+    \field{pages}{397\bibrangedash 427}
+    \field{title}{Employer Consolidation and Wages: Evidence from Hospitals}
+    \field{volume}{111}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{2021}
+  \endentry
+
+  \entry{QiuSojourner2019}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=QY}{%
+         family={Qiu},
+         familyi={Q\bibinitperiod},
+         given={Yue},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Sojourner},
+         familyi={S\bibinitperiod},
+         given={Aaron},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{QYSA1}
+    \strng{fullhash}{QYSA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{Q}
+    \field{sortinithash}{Q}
+    \field{howpublished}{Institute of Labor Economics, IZA Discussion Paper
+  12089}
+    \field{title}{Labor-Market Concentration and Labor Compensation}
+    \field{year}{2019}
+  \endentry
+
+  \entry{Rattenhuber2014}{article}{}
+    \name{author}{1}{}{%
+      {{hash=RP}{%
+         family={Rattenhuber},
+         familyi={R\bibinitperiod},
+         given={Pia},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{RP1}
+    \strng{fullhash}{RP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2014}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{number}{4}
+    \field{pages}{1429\bibrangedash 1446}
+    \field{title}{Building the Minimum Wage: The Distributional Impact of
+  Germany's First Sectoral Minimum Wage on Wages and Hours across Different
+  Wage Bargaining Regimes}
+    \field{volume}{46}
+    \field{journaltitle}{Empirical Economics}
+    \field{year}{2014}
+  \endentry
+
+  \entry{RebitzerTaylor1995}{article}{}
+    \name{author}{2}{}{%
+      {{hash=RJB}{%
+         family={Rebitzer},
+         familyi={R\bibinitperiod},
+         given={James\bibnamedelima B.},
+         giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=TLJ}{%
+         family={Taylor},
+         familyi={T\bibinitperiod},
+         given={Lowell\bibnamedelima J.},
+         giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{RJBTLJ1}
+    \strng{fullhash}{RJBTLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1995}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{number}{2}
+    \field{pages}{245\bibrangedash 255}
+    \field{title}{The Consequences of Minimum Wage Laws: Some New Theoretical
+  Ideas}
+    \field{volume}{56}
+    \field{journaltitle}{Journal of Public Economics}
+    \field{year}{1995}
+  \endentry
+
+  \entry{Rinz2020}{article}{}
+    \name{author}{1}{}{%
+      {{hash=RK}{%
+         family={Rinz},
+         familyi={R\bibinitperiod},
+         given={Kevin},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{RK1}
+    \strng{fullhash}{RK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{pages}{Online First}
+    \field{title}{Labor Market Concentration, Earnings Inequality, and Earnings
+  Mobility}
+    \field{journaltitle}{Journal of Human Resources}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Robinson1933}{book}{}
+    \name{author}{1}{}{%
+      {{hash=RJ}{%
+         family={Robinson},
+         familyi={R\bibinitperiod},
+         given={Joan},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Macmillan}%
+    }
+    \strng{namehash}{RJ1}
+    \strng{fullhash}{RJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1933}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{title}{The Economics of Imperfect Competition}
+    \list{location}{1}{%
+      {London}%
+    }
+    \field{year}{1933}
+  \endentry
+
+  \entry{Rosenbluth1955}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=RG}{%
+         family={Rosenbluth},
+         familyi={R\bibinitperiod},
+         given={Gideon},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \name{editor}{1}{}{%
+      {{hash=SG}{%
+         family={Stigler},
+         familyi={S\bibinitperiod},
+         given={George},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Princeton University Press}%
+    }
+    \strng{namehash}{RG1}
+    \strng{fullhash}{RG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1955}
+    \field{labeldatesource}{}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{booktitle}{Business Concentration and Price Policy}
+    \field{pages}{57\bibrangedash 99}
+    \field{title}{Measures of Concentration}
+    \list{location}{1}{%
+      {Princeton}%
+    }
+    \field{year}{1955}
+  \endentry
+
+  \entry{Schmitt2015}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SJ}{%
+         family={Schmitt},
+         familyi={S\bibinitperiod},
+         given={John},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SJ1}
+    \strng{fullhash}{SJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2015}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{4}
+    \field{pages}{547\bibrangedash 581}
+    \field{title}{Explaining the Small Employment Effects of the Minimum Wage
+  in the United States}
+    \field{volume}{54}
+    \field{journaltitle}{Industrial Relations}
+    \field{year}{2015}
+  \endentry
+
+  \entry{SchubertEtAl2020}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=SG}{%
+         family={Schubert},
+         familyi={S\bibinitperiod},
+         given={Gregor},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Stansbury},
+         familyi={S\bibinitperiod},
+         given={Anna},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=TB}{%
+         family={Taska},
+         familyi={T\bibinitperiod},
+         given={Bledi},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SG+1}
+    \strng{fullhash}{SGSATB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{howpublished}{Discussion Paper}
+    \field{title}{Monopsony and Outside Options}
+    \field{year}{2020}
+  \endentry
+
+  \entry{SokolovaSorensen2021}{article}{}
+    \name{author}{2}{}{%
+      {{hash=SA}{%
+         family={Sokolova},
+         familyi={S\bibinitperiod},
+         given={Anna},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=ST}{%
+         family={Sorensen},
+         familyi={S\bibinitperiod},
+         given={Todd},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SAST1}
+    \strng{fullhash}{SAST1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{1}
+    \field{pages}{27\bibrangedash 55}
+    \field{title}{Monopsony in Labor Markets: A Meta-Analysis}
+    \field{volume}{74}
+    \field{journaltitle}{Industrial and Labor Relations Review}
+    \field{year}{2021}
+  \endentry
+
+  \entry{StaigerEtAl2010}{article}{}
+    \name{author}{3}{}{%
+      {{hash=SDO}{%
+         family={Staiger},
+         familyi={S\bibinitperiod},
+         given={Douglas\bibnamedelima O.},
+         giveni={D\bibinitperiod\bibinitdelim O\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Spetz},
+         familyi={S\bibinitperiod},
+         given={Joanne},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=PCS}{%
+         family={Phibbs},
+         familyi={P\bibinitperiod},
+         given={Ciaran\bibnamedelima S.},
+         giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SDO+1}
+    \strng{fullhash}{SDOSJPCS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2010}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{2}
+    \field{pages}{211\bibrangedash 236}
+    \field{title}{Is there Monopsony in the Labor Market? Evidence from a
+  Natural Experiment}
+    \field{volume}{28}
+    \field{journaltitle}{Journal of Labor Economics}
+    \field{year}{2010}
+  \endentry
+
+  \entry{Stigler1946}{article}{}
+    \name{author}{1}{}{%
+      {{hash=SGJ}{%
+         family={Stigler},
+         familyi={S\bibinitperiod},
+         given={George\bibnamedelima J.},
+         giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SGJ1}
+    \strng{fullhash}{SGJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1946}
+    \field{labeldatesource}{}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{number}{3}
+    \field{pages}{358\bibrangedash 365}
+    \field{title}{The Economics of Minimum Wage Legislation}
+    \field{volume}{36}
+    \field{journaltitle}{American Economic Review}
+    \field{year}{1946}
+  \endentry
+
+  \entry{Thoresson2021}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=TA}{%
+         family={Thoresson},
+         familyi={T\bibinitperiod},
+         given={Anna},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TA1}
+    \strng{fullhash}{TA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2021}
+    \field{labeldatesource}{}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{howpublished}{Institute for Evaluation of Labor Market and Education
+  Policy, IFAU Working Paper 2021:6}
+    \field{title}{Employer Concentration and Wages for Specialized Workers}
+    \field{year}{2021}
+  \endentry
+
+  \entry{vomBergeFrings2020}{article}{}
+    \name{author}{2}{}{%
+      {{hash=vP}{%
+         family={{vom Berge}},
+         familyi={v\bibinitperiod},
+         given={Phillip},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=FH}{%
+         family={Frings},
+         familyi={F\bibinitperiod},
+         given={Hanna},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{vPFH1}
+    \strng{fullhash}{vPFH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2020}
+    \field{labeldatesource}{}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{number}{2}
+    \field{pages}{701\bibrangedash 729}
+    \field{title}{High-Impact Minimum Wages and Heterogeneous Regions}
+    \field{volume}{59}
+    \field{journaltitle}{Empirical Economics}
+    \field{year}{2020}
+  \endentry
+
+  \entry{Walsh2003}{article}{}
+    \name{author}{1}{}{%
+      {{hash=WF}{%
+         family={Walsh},
+         familyi={W\bibinitperiod},
+         given={Frank},
+         giveni={F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WF1}
+    \strng{fullhash}{WF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2003}
+    \field{labeldatesource}{}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{489}
+    \field{pages}{718\bibrangedash 722}
+    \field{title}{Comment on `Minimum Wages for Ronald McDonald Monopsonies: A
+  Theory of Monopsonistic Competition'}
+    \field{volume}{113}
+    \field{journaltitle}{Economic Journal}
+    \field{year}{2003}
+  \endentry
+
+  \entry{Webber2015}{article}{}
+    \name{author}{1}{}{%
+      {{hash=WDA}{%
+         family={Webber},
+         familyi={W\bibinitperiod},
+         given={Douglas\bibnamedelima A.},
+         giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WDA1}
+    \strng{fullhash}{WDA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2015}
+    \field{labeldatesource}{}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{pages}{123\bibrangedash 134}
+    \field{title}{Firm Market Power and the Earnings Distribution}
+    \field{volume}{35}
+    \field{journaltitle}{Labour Economics}
+    \field{year}{2015}
+  \endentry
+
+  \entry{Williamson1968}{article}{}
+    \name{author}{1}{}{%
+      {{hash=WOE}{%
+         family={Williamson},
+         familyi={W\bibinitperiod},
+         given={Oliver\bibnamedelima E.},
+         giveni={O\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WOE1}
+    \strng{fullhash}{WOE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{1968}
+    \field{labeldatesource}{}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{1}
+    \field{pages}{85\bibrangedash 116}
+    \field{title}{Wage Rates as a Barrier to Entry: The Pennington Case in
+  Perspective}
+    \field{volume}{82}
+    \field{journaltitle}{Quarterly Journal of Economics}
+    \field{year}{1968}
+  \endentry
+
+  \entry{WolfsonBelman2019}{article}{}
+    \name{author}{2}{}{%
+      {{hash=WP}{%
+         family={Wolfson},
+         familyi={W\bibinitperiod},
+         given={Paul},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=BD}{%
+         family={Belman},
+         familyi={B\bibinitperiod},
+         given={Dale},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{WPBD1}
+    \strng{fullhash}{WPBD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2019}
+    \field{labeldatesource}{}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{number}{4}
+    \field{pages}{488\bibrangedash 506}
+    \field{title}{15 Years of Research on US Employment and the Minimum Wage}
+    \field{volume}{33}
+    \field{journaltitle}{LABOUR}
+    \field{year}{2019}
+  \endentry
+\enddatalist
+\endinput

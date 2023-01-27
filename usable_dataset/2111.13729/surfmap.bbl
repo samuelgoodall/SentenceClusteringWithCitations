@@ -1,0 +1,256 @@
+\begin{thebibliography}{10}
+
+\bibitem{Arute2019QuantumSU}
+F.~Arute, K.~Arya, R.~Babbush, D.~Bacon, J.~Bardin, R.~Barends, R.~Biswas,
+  S.~Boixo, F.~Brand{\~a}o, D.~Buell, B.~Burkett, Y.~Chen, Zijun Chen,
+  B.~Chiaro, R.~Collins, W.~Courtney, A.~Dunsworth, E.~Farhi, B.~Foxen,
+  A.~Fowler, C.~Gidney, M.~Giustina, R.~Graff, Keith Guerin, Steve Habegger,
+  M.~Harrigan, M.~Hartmann, A.~Ho, M.~Hoffmann, Trent Huang, T.~Humble,
+  S.~Isakov, E.~Jeffrey, Zhang Jiang, D.~Kafri, K.~Kechedzhi, J.~Kelly,
+  P.~Klimov, S.~Knysh, A.~Korotkov, F.~Kostritsa, D.~Landhuis, Mike Lindmark,
+  E.~Lucero, Dmitry~I. Lyakh, Salvatore Mandr{\`a}, J.~McClean, M.~McEwen,
+  A.~Megrant, X.~Mi, K.~Michielsen, M.~Mohseni, J.~Mutus, O.~Naaman, M.~Neeley,
+  C.~Neill, M.~Niu, E.~Ostby, A.~Petukhov, John~C. Platt, C.~Quintana,
+  E.~Rieffel, P.~Roushan, N.~Rubin, D.~Sank, K.~Satzinger, V.~Smelyanskiy,
+  Kevin~J. Sung, M.~Trevithick, A.~Vainsencher, B.~Villalonga, T.~White,
+  Z.~Yao, P.~Yeh, Adam Zalcman, H.~Neven, and J.~Martinis.
+\newblock Quantum supremacy using a programmable superconducting processor.
+\newblock {\em Nature}, 574:505--510, 2019.
+
+\bibitem{Kok2007LinearOQ}
+Pieter Kok, William~J. Munro, Kae Nemoto, Timothy~C. Ralph, Jonathan~P.
+  Dowling, and Gerard~J. Milburn.
+\newblock Linear optical quantum computing with photonic qubits.
+\newblock {\em Reviews of Modern Physics}, 79:135--174, 2007.
+
+\bibitem{DiVincenzo2000ThePI}
+David~P. DiVincenzo and Ibm.
+\newblock The physical implementation of quantum computation.
+\newblock {\em Protein Science}, 48:771--783, 2000.
+
+\bibitem{AsselmeyerMaluga20213DTQ}
+Torsten Asselmeyer-Maluga.
+\newblock 3d topological quantum computing.
+\newblock {\em International Journal of Quantum Information}, 2021.
+
+\bibitem{Google72Q}
+{J. Kelly}.
+\newblock {A Preview of Bristlecone, Google’s New Quantum Processor}.
+\newblock
+  https://ai.googleblog.com/2018/03/a-preview-of-bristlecone-googles-new.html,
+  2017.
+
+\bibitem{Paik2011ObservationOH}
+Hanhee Paik, David~I. Schuster, Lev Bishop, Gerhard Kirchmair, Gianluigi
+  Catelani, Adam~P. Sears, B.~R. Johnson, Matthew Reagor, Luigi Frunzio,
+  Leonid~I. Glazman, Steven~M. Girvin, Michel~H. Devoret, and Robert~J.
+  Schoelkopf.
+\newblock Observation of high coherence in josephson junction qubits measured
+  in a three-dimensional circuit qed architecture.
+\newblock {\em Physical review letters}, 107 24:240501, 2011.
+
+\bibitem{Chen2014QubitAW}
+Yu~Chen, Charles~J. Neill, Pedram Roushan, Nelson Leung, Michael Fang, Rami
+  Barends, Julian Kelly, Brooks Campbell, Z~Chen, Benjamin Chiaro, Andrew
+  Dunsworth, Evan Jeffrey, Anthony Megrant, Josh Mutus, P.~J.~J. O’Malley,
+  Chris Quintana, Daniel~Thomas Sank, Amit Vainsencher, J.~Wenner, Theodore
+  White, Michael~R. Geller, Andrew~N Cleland, and John~M. Martinis.
+\newblock Qubit architecture with high coherence and fast tunable coupling.
+\newblock {\em Physical review letters}, 113 22:220502, 2014.
+
+\bibitem{zhang2020high}
+Eric~J Zhang, Srikanth Srinivasan, Neereja Sundaresan, Daniela~F Bogorin, Yves
+  Martin, Jared~B Hertzberg, John Timmerwilke, Emily~J Pritchett, Jeng-Bang
+  Yau, Cindy Wang, et~al.
+\newblock High-fidelity superconducting quantum processors via laser-annealing
+  of transmon qubits.
+\newblock {\em arXiv preprint arXiv:2012.08475}, 2020.
+
+\bibitem{gold2021experimental}
+Alysson Gold, Anna Stockklauser, Matt Reagor, Jean-Philip Paquette, Andrew
+  Bestwick, Cody~James Winkleblack, Ben Scharmann, Feyza Oruc, and Brandon
+  Langley.
+\newblock Experimental demonstration of entangling gates across chips in a
+  multi-core qpu.
+\newblock {\em Bulletin of the American Physical Society}, 2021.
+
+\bibitem{shor1995scheme}
+Peter~W Shor.
+\newblock Scheme for reducing decoherence in quantum computer memory.
+\newblock {\em Physical review A}, 52(4):R2493, 1995.
+
+\bibitem{steane1996error}
+Andrew~M Steane.
+\newblock Error correcting codes in quantum theory.
+\newblock {\em Physical Review Letters}, 77(5):793, 1996.
+
+\bibitem{calderbank1996good}
+A~Robert Calderbank and Peter~W Shor.
+\newblock Good quantum error-correcting codes exist.
+\newblock {\em Physical Review A}, 54(2):1098, 1996.
+
+\bibitem{steane1996multiple}
+Andrew Steane.
+\newblock Multiple-particle interference and quantum error correction.
+\newblock {\em Proceedings of the Royal Society of London. Series A:
+  Mathematical, Physical and Engineering Sciences}, 452(1954):2551--2577, 1996.
+
+\bibitem{bravyi1998quantum}
+Sergey~B Bravyi and A~Yu Kitaev.
+\newblock Quantum codes on a lattice with boundary.
+\newblock {\em arXiv preprint quant-ph/9811052}, 1998.
+
+\bibitem{fowler2012surface}
+Austin~G Fowler, Matteo Mariantoni, John~M Martinis, and Andrew~N Cleland.
+\newblock Surface codes: Towards practical large-scale quantum computation.
+\newblock {\em Physical Review A}, 86(3):032324, 2012.
+
+\bibitem{Ding2018MagicStateFU}
+Yongshan Ding, Adam Holmes, Ali JavadiAbhari, Diana Franklin, Margaret
+  Martonosi, and Frederic~T. Chong.
+\newblock Magic-state functional units: Mapping and scheduling multi-level
+  distillation circuits for fault-tolerant quantum architectures.
+\newblock {\em 2018 51st Annual IEEE/ACM International Symposium on
+  Microarchitecture (MICRO)}, pages 828--840, 2018.
+
+\bibitem{Paler2019SurfBraidAC}
+Alexandru Paler.
+\newblock Surfbraid: A concept tool for preparing and resource estimating
+  quantum circuits protected by the surface code.
+\newblock {\em ArXiv}, abs/1902.02417, 2019.
+
+\bibitem{JavadiAbhari2017OptimizedSC}
+Ali JavadiAbhari, Pranav Gokhale, Adam Holmes, Diana Franklin, Kenneth~R.
+  Brown, Margaret Martonosi, and Frederic~T. Chong.
+\newblock Optimized surface code communication in superconducting quantum
+  computers.
+\newblock {\em 2017 50th Annual IEEE/ACM International Symposium on
+  Microarchitecture (MICRO)}, pages 692--705, 2017.
+
+\bibitem{Hua2021AutoBraidAF}
+Fei Hua, Yan-Hao Chen, Yuwei Jin, Chi Zhang, Ari~B. Hayes, Youtao Zhang, and
+  Eddy~Z. Zhang.
+\newblock Autobraid: A framework for enabling efficient surface code
+  communication in quantum computing.
+\newblock {\em MICRO-54: 54th Annual IEEE/ACM International Symposium on
+  Microarchitecture}, 2021.
+
+\bibitem{Tannu2017TamingTI}
+Swamit~S. Tannu, Zachary Myers, Prashant~J. Nair, Douglas~M. Carmean, and
+  Moinuddin~K. Qureshi.
+\newblock Taming the instruction bandwidth of quantum computers via
+  hardware-managed error correction.
+\newblock {\em 2017 50th Annual IEEE/ACM International Symposium on
+  Microarchitecture (MICRO)}, pages 679--691, 2017.
+
+\bibitem{Chamberland2020TopologicalAS}
+C.~Chamberland, Guanyu Zhu, Theodore~J. Yoder, J.~Hertzberg, and A.~Cross.
+\newblock Topological and subsystem codes on low-degree graphs with flag
+  qubits.
+\newblock {\em Physical Review X}, 10, 2020.
+
+\bibitem{Lao2020FaulttolerantQE}
+L.~Lao and C.~G. Almud{\'e}ver.
+\newblock Fault-tolerant quantum error correction on near-term quantum
+  processors using flag and bridge qubits.
+\newblock {\em Physical Review A}, 101:032333, 2020.
+
+\bibitem{dennis2002topological}
+Eric Dennis, Alexei Kitaev, Andrew Landahl, and John Preskill.
+\newblock Topological quantum memory.
+\newblock {\em Journal of Mathematical Physics}, 43(9):4452--4505, 2002.
+
+\bibitem{barends2014superconducting}
+Rami Barends, Julian Kelly, Anthony Megrant, Andrzej Veitia, Daniel Sank, Evan
+  Jeffrey, Ted~C White, Josh Mutus, Austin~G Fowler, Brooks Campbell, et~al.
+\newblock Superconducting quantum circuits at the surface code threshold for
+  fault tolerance.
+\newblock {\em Nature}, 508(7497):500--503, 2014.
+
+\bibitem{nielsen2002quantum}
+Michael~A Nielsen and Isaac Chuang.
+\newblock Quantum computation and quantum information, 2002.
+
+\bibitem{gottesman1996class}
+Daniel Gottesman.
+\newblock Class of quantum error-correcting codes saturating the quantum
+  hamming bound.
+\newblock {\em Physical Review A}, 54(3):1862, 1996.
+
+\bibitem{calderbank1997quantum}
+A~Robert Calderbank, Eric~M Rains, Peter~W Shor, and Neil~JA Sloane.
+\newblock Quantum error correction and orthogonal geometry.
+\newblock {\em Physical Review Letters}, 78(3):405, 1997.
+
+\bibitem{knill2000theory}
+Emanuel Knill, Raymond Laflamme, and Lorenza Viola.
+\newblock Theory of quantum error correction for general noise.
+\newblock {\em Physical Review Letters}, 84(11):2525, 2000.
+
+\bibitem{Chao2019FlagFE}
+R.~Chao and B.~Reichardt.
+\newblock Flag fault-tolerant error correction for any stabilizer code.
+\newblock {\em arXiv: Quantum Physics}, 2019.
+
+\bibitem{Chamberland2017FLAGFE}
+C.~Chamberland and M.~Beverland.
+\newblock Flag fault-tolerant error correction with arbitrary distance codes.
+\newblock {\em arXiv: Quantum Physics}, 2:53, 2017.
+
+\bibitem{Chamberland2019TriangularCC}
+C.~Chamberland, Aleksander Kubica, Theodore~J. Yoder, and Guanyu Zhu.
+\newblock Triangular color codes on trivalent graphs with flag qubits.
+\newblock {\em arXiv: Quantum Physics}, 2019.
+
+\bibitem{gidney2021stim}
+Craig Gidney.
+\newblock Stim: a fast stabilizer circuit simulator.
+\newblock {\em {Quantum}}, 5:497, July 2021.
+
+\bibitem{higgott2021pymatching}
+Oscar Higgott.
+\newblock {PyMatching}: A python package for decoding quantum codes with
+  minimum-weight perfect matching.
+\newblock {\em arXiv preprint arXiv:2105.13082}, 2021.
+
+\bibitem{Jurcevic2020DemonstrationOQ}
+P.~Jurcevic, Ali Javadi-Abhari, L.~Bishop, I.~Lauer, D.~Bogorin, M.~Brink,
+  L.~Capelluto, O.~G{\"u}nl{\"u}k, Toshinari Itoko, Naoki Kanazawa, A.~Kandala,
+  G.~Keefe, Kevin~D Krsulich, W.~Landers, E.~Lewandowski, D.~McClure,
+  G.~Nannicini, Adinath Narasgond, H.~Nayfeh, E.~Pritchett, M.~Rothwell,
+  S.~Srinivasan, N.~Sundaresan, Cindy Wang, K.~X. Wei, C.~J. Wood, J.~Yau,
+  E.~Zhang, O.~Dial, J.~Chow, and J.~Gambetta.
+\newblock Demonstration of quantum volume 64 on a superconducting quantum
+  computing system.
+\newblock {\em Quantum Science \& Technology}, 6, 2020.
+
+\bibitem{Li2020TowardsES}
+Gushu Li, Yufei Ding, and Yuan Xie.
+\newblock Towards efficient superconducting quantum processor architecture
+  design.
+\newblock {\em Proceedings of the Twenty-Fifth International Conference on
+  Architectural Support for Programming Languages and Operating Systems}, 2020.
+
+\bibitem{Reichardt2018FaulttolerantQE}
+B.~Reichardt.
+\newblock Fault-tolerant quantum error correction for steane's seven-qubit
+  color code with few or no extra qubits.
+\newblock {\em arXiv: Quantum Physics}, 2018.
+
+\bibitem{Varsamopoulos2017DecodingSS}
+S.~Varsamopoulos, B.~Criger, and K.~Bertels.
+\newblock Decoding small surface codes with feedforward neural networks.
+\newblock {\em arXiv: Quantum Physics}, 2017.
+
+\bibitem{Krastanov2017DeepNN}
+Stefan Krastanov and Liang Jiang.
+\newblock Deep neural network probabilistic decoder for stabilizer codes.
+\newblock {\em Scientific Reports}, 7, 2017.
+
+\bibitem{Baireuther2017MachinelearningassistedCO}
+P.~Baireuther, T.~O'Brien, B.~Tarasinski, and C.~Beenakker.
+\newblock Machine-learning-assisted correction of correlated qubit errors in a
+  topological code.
+\newblock {\em arXiv: Quantum Physics}, 2017.
+
+\end{thebibliography}

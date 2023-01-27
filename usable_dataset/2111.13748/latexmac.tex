@@ -1,0 +1,488 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   PAGE LENGTH PARAMETERS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Springer Verlag format: depends on font size. For 12pt:
+% 9.2 x 6.3 inches, which is roughly 23 x 15.8 cm
+% Latest - in cm, and slightly changed: 23.8 x 15.4cm (narrower).
+%
+% MENTION: REDUCE TO 83%
+%
+%Margins adjusted properly
+\def\svformat{
+\setlength{\textheight}{23.8cm}
+\setlength{\textwidth}{15.4cm}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\headsep}{10pt}
+\setlength{\topmargin}{-0.3in}
+\setlength{\columnsep}{0.375in}
+\setlength{\itemsep}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Springer Verlag format: depends on font size. For 10pt:
+%
+% PROBLEM - wisdom does not have 10pt.sty
+%
+% For 10pt they wanted pages of 5.3 x 7.9 inches.
+% But apparently they changed that: Now, they specify things in cm,
+% and require 12.8 x 19.8 cm (which is 5.1 x 7.9 inches) (narrower).
+%Margins not adjusted properly
+\def\svtenformat{
+\setlength{\textheight}{19.8cm}
+\setlength{\textwidth}{12.8cm}
+\setlength{\evensidemargin}{0.4in}
+\setlength{\oddsidemargin}{0.4in}
+\setlength{\headsep}{10pt}
+\setlength{\topmargin}{0.2in}
+\setlength{\columnsep}{0.375in}
+\setlength{\itemsep}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dense format
+\def\denseformat{
+\setlength{\textheight}{9in}
+\setlength{\textwidth}{6.9in}
+\setlength{\evensidemargin}{-0.2in}
+\setlength{\oddsidemargin}{-0.2in}
+\setlength{\headsep}{10pt}
+\setlength{\topmargin}{-0.3in}
+\setlength{\columnsep}{0.375in}
+\setlength{\itemsep}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New Dense format
+\def\newdenseformat{
+\setlength{\textheight}{8.9in}
+\setlength{\textwidth}{6.6in}
+\setlength{\evensidemargin}{-0.2in}
+\setlength{\oddsidemargin}{-0.2in}
+\setlength{\headsep}{10pt}
+\setlength{\topmargin}{-0.3in}
+\setlength{\columnsep}{0.375in}
+\setlength{\itemsep}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mid format
+\def\midformat{
+\setlength{\textheight}{8.9in}
+\setlength{\textwidth}{6.7in}
+\setlength{\evensidemargin}{-0.19in}
+\setlength{\oddsidemargin}{-0.19in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{10pt}
+\setlength{\topsep}{0in}
+\setlength{\topmargin}{0.0in}
+\setlength{\itemsep}{0in}       % 10pt is too big with the 1.2 stretch
+\renewcommand{\baselinestretch}{1.1}
+\parskip=0.06in
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mid-spacy format
+\def\midspacyformat{
+\setlength{\textheight}{8.9in}
+\setlength{\textwidth}{6.7in}
+\setlength{\evensidemargin}{-0.19in}
+\setlength{\oddsidemargin}{-0.19in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{10pt}
+\setlength{\topsep}{0in}
+\setlength{\topmargin}{0.0in}
+\setlength{\itemsep}{0in}       % 10pt is too big with the 1.2 stretch
+\renewcommand{\baselinestretch}{1.2}
+\parskip=0.070in
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spacy format
+\def\spacyformat{
+\setlength{\textheight}{8.8in}
+\setlength{\textwidth}{6.5in}
+\setlength{\evensidemargin}{-0.18in}
+\setlength{\oddsidemargin}{-0.18in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{10pt}
+\setlength{\topsep}{0in}
+\setlength{\topmargin}{0.0in}
+\setlength{\itemsep}{0in}      % 10pt is too big with the 1.2 stretch
+\renewcommand{\baselinestretch}{1.2}
+\parskip=0.080in
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Super spacy format
+\def\superspacyformat{
+\setlength{\textheight}{8in}
+\setlength{\textwidth}{5.7in}
+\setlength{\evensidemargin}{0.2in}
+\setlength{\oddsidemargin}{0.2in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{20pt}
+\setlength{\topsep}{0in}
+\setlength{\topmargin}{0.0in}
+\setlength{\itemsep}{0in}      % 10pt is too big with the 1.2 stretch
+\renewcommand{\baselinestretch}{1.2}
+\parskip=0.080in
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DEFINING THEOREM-LIKE ENVIRONMENTS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Examine sometime.
+% Here: the first, theorem, is defined [section],
+%       and the rest are defined [theorem].
+%
+% Possible: define all as [section].
+%
+% Better, if I copy just a few lines.
+%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+%\newtheorem{comment}[theorem]{Comment}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{dfn}[theorem]{Definition}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\weizprinter{\setlength{\topmargin}{0.3in}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MY MACROS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\nipar{\par\noindent}
+\def\xskip#1{$\mbox{\hskip #1}$}
+\def\yskip#1{$\vbox{\vskip #1}$}
+\def\boldhead#1:{\par\vskip 7pt\noindent{\bf #1:}\hskip 10pt}
+\def\ithead#1:{\par\vskip 7pt\noindent{\it #1:}\hskip 10pt}
+\def\ceil#1{\lceil #1\rceil}
+\def\floor#1{\lfloor #1\rfloor}
+\def\inline#1:{\par\vskip 7pt\noindent{\bf #1:}\hskip 10pt}
+\def\midinline#1:{\par\noindent{\bf #1:}\hskip 10pt}
+\def\dnsinline#1:{\par\vskip -7pt\noindent{\bf #1:}\hskip 10pt}
+\def\ddnsinline#1:{\newline{\bf #1:}\hskip 10pt}
+\def\largeinline#1:{\par\vskip 7pt\noindent{\large\bf #1:}\hskip 10pt}
+%
+%The next command is essentially equivalent to \section*,
+%except smaller font
+\def\heading#1{\par\medskip\noindent{\bf #1}\par\smallskip\noindent}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\long\def\comment #1\commentend{}
+\long\def\commhide #1\commhideend{}
+\long\def\commfull #1\commend{#1}
+\long\def\commabs #1\commenda{}
+\long\def\commtim #1\commendt{#1}
+\long\def\commb #1\commbend{}
+%
+%% FOR LN:
+%
+\long\def\commedit #1\commeditend{} % Editing comments, marked also by $>>>$
+
+\long\def\commB #1\commBend{}       % Omit in 1996 (both TR and Siena)
+                                    % Leave for phase B.
+
+\long\def\commex #1\commexend{}     % LN home exercise (hide solutions)
+
+\long\def\commsiena #1\commsienaend{}  % omit in Siena, show in TR
+
+\long\def\commBI #1\commBIend{}  % omit in Bar-Ilan
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\long\def\CProof #1\CQED{}
+\def\qed{\mbox{}\hfill $\Box$\\}
+\def\blackslug{\hbox{\hskip 1pt \vrule width 4pt height 8pt
+    depth 1.5pt \hskip 1pt}}
+\def\QED{\quad\blackslug\lower 8.5pt\null\par}
+% In-line QED, for ending a proof with a $$ formula
+\def\inQED{\quad\quad\blackslug}
+\def\Qed{\QED}
+\def\QUAD{$\Box$}
+
+%\def\Proof{\noindent{\bf Proof:~}}
+\def\Proof{\par\noindent{\bf Proof:~}}
+\def\Proofb{\par\noindent\hbox{hskip 7pt}{\bf Proof:~}}
+\def\proof{\Proof}
+\def\Sketch{\par\noindent{\bf Proof Sketch:~}}
+\def\sketch{\Sketch}
+\def\Method{\noindent{\bf Proof Method}: }
+\long\def\PPP#1{\noindent{\bf Proof:}{ #1}{\quad\blackslug\lower 8.5pt\null}}
+\long\def\PP#1{\noindent {\bf Proof}:{ #1} $\Box$ \\}
+\long\def\P#1{{\Proof}{#1}\Qed\\}
+\def\Remark{\noindent{\bf Remark:~}}
+\def\Comment{\noindent{\bf Comment:~}}
+\long\def\denspar #1\densend
+{#1}
+%{{\renewcommand{\baselinestretch}{0.8}\small #1\par\medskip}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  DELIMITER PAIRS AND MATHEMATICAL FUNCTIONS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand{\attention}[1]{{\bf \textcolor{red}{\# #1 \#}} \\}
+
+\newcommand{\pare}[1]{\left( #1\right)}
+\newcommand{\abs}[1]{\left| #1\right|}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\norm}[1]{\parallel #1\parallel}
+\newcommand{\card}[1]{\left| #1\right|}
+\newcommand{\bigo}[1]{O\left( #1\right)}
+\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+%\newcommand{\prob}[1]{\Pr\left\{ #1 \right\}}
+
+\newcommand{\OO}[1]{O\left( #1\right)}
+\newcommand{\OM}[1]{\Omega\left( #1 \right)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  MARGINAL NOTES FOR COMMUNICATING WITH COAUTHORS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\marginparwidth}{1in}
+\setlength{\marginparpush}{-5ex}
+\newif\ifnotesw\noteswtrue% T to show box & marginal notes; F supresses.
+\newenvironment{change}%
+   {\ifnotesw\marginpar[\hfill\(\top\)]{\(\top\)}\fi}%
+   {\ifnotesw\marginpar[\hfill\(\bot\)]{\(\bot\)}\fi}
+\newcommand{\deletion}{\ifnotesw\marginpar[\hfill\(\vartheta\)]{\
+(\vartheta\)}\fi}
+\newcommand{\mnote}[1]%
+    {\ifnotesw\marginpar%
+        [{\scriptsize\it\begin{minipage}[t]{\marginparwidth}
+        \raggedleft#1%
+                        \end{minipage}}]%
+        {\scriptsize\it\begin{minipage}[t]{\marginparwidth}
+        \raggedright#1%
+                        \end{minipage}}%
+    \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% SPECIAL LETTERS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\cA{{\cal A}}
+\def\cB{{\cal B}}
+\def\cC{{\cal C}}
+\def\cD{{\cal D}}
+\def\cE{{\cal E}}
+\def\cF{{\cal F}}
+\def\cG{{\cal G}}
+\def\cH{{\cal H}}
+\def\cI{{\cal I}}
+\def\cJ{{\cal J}}
+\def\cK{{\cal K}}
+\def\cL{{\cal L}}
+\def\cM{{\cal M}}
+\def\cN{{\cal N}}
+\def\cO{{\cal O}}
+\def\cP{{\cal P}}
+\def\cQ{{\cal Q}}
+\def\cR{{\cal R}}
+\def\cS{{\cal S}}
+\def\cT{{\cal T}}
+\def\cU{{\cal U}}
+\def\cV{{\cal V}}
+\def\cW{{\cal W}}
+\def\cX{{\cal X}}
+\def\cY{{\cal Y}}
+\def\cZ{{\cal Z}}
+%%%%%%%%%%%%%%%%%%
+\def\hA{{\hat A}}
+\def\hB{{\hat B}}
+\def\hC{{\hat C}}
+\def\hD{{\hat D}}
+\def\hE{{\hat E}}
+\def\hF{{\hat F}}
+\def\hG{{\hat G}}
+\def\hH{{\hat H}}
+\def\hI{{\hat I}}
+\def\hJ{{\hat J}}
+\def\hK{{\hat K}}
+\def\hL{{\hat L}}
+\def\hM{{\hat M}}
+\def\hN{{\hat N}}
+\def\hO{{\hat O}}
+\def\hP{{\hat P}}
+\def\hQ{{\hat Q}}
+\def\hR{{\hat R}}
+\def\hS{{\hat S}}
+\def\hT{{\hat T}}
+\def\hU{{\hat U}}
+\def\hV{{\hat V}}
+\def\hW{{\hat W}}
+\def\hX{{\hat X}}
+\def\hY{{\hat Y}}
+\def\hZ{{\hat Z}}
+\def\hb{{\hat b}}
+\def\hGamma{{\hat \Gamma}}
+\def\hPi{{\hat \Pi}}
+\def\htau{{\hat \tau}}
+\def\hi{{\hat i}}
+\def\hj{{\hat j}}
+%\def\wmax{{\hat \omega}}
+%%%%%%%%%%%%%%%%%%
+\def\bA{{\bar A}}
+\def\bB{{\bar B}}
+\def\bC{{\bar C}}
+\def\bD{{\bar D}}
+\def\bE{{\bar E}}
+\def\bF{{\bar F}}
+\def\bG{{\bar G}}
+\def\bH{{\bar H}}
+\def\bI{{\bar I}}
+\def\bJ{{\bar J}}
+\def\bK{{\bar K}}
+\def\bL{{\bar L}}
+\def\bM{{\bar M}}
+\def\bN{{\bar N}}
+\def\bO{{\bar O}}
+\def\bP{{\bar P}}
+\def\bQ{{\bar Q}}
+\def\bR{{\bar R}}
+\def\bS{{\bar S}}
+\def\bT{{\bar T}}
+\def\bU{{\bar U}}
+\def\bV{{\bar V}}
+\def\bW{{\bar W}}
+\def\bX{{\bar X}}
+\def\bY{{\bar Y}}
+\def\bZ{{\bar Z}}
+\def\bff{{\bar f}}      % seems that \bf is occupied
+\def\bq{{\bar q}}
+\def\bx{{\bar x}}
+\def\btau{{\bar \tau}}
+\def\bomega{{\bar \omega}}
+%%%%%%%%%%%%%%%%%%
+\def\tA{{\tilde A}}
+\def\tB{{\tilde B}}
+\def\tC{{\tilde C}}
+\def\tD{{\tilde D}}
+\def\tE{{\tilde E}}
+\def\tF{{\tilde F}}
+\def\tG{{\tilde G}}
+\def\tH{{\tilde H}}
+\def\tI{{\tilde I}}
+\def\tJ{{\tilde J}}
+\def\tK{{\tilde K}}
+\def\tL{{\tilde L}}
+\def\tM{{\tilde M}}
+\def\tN{{\tilde N}}
+\def\tO{{\tilde O}}
+\def\tP{{\tilde P}}
+\def\tQ{{\tilde Q}}
+\def\tR{{\tilde R}}
+\def\tS{{\tilde S}}
+\def\tT{{\tilde T}}
+\def\tU{{\tilde U}}
+\def\tV{{\tilde V}}
+\def\tW{{\tilde W}}
+\def\tX{{\tilde X}}
+\def\tY{{\tilde Y}}
+\def\tZ{{\tilde Z}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\dist{{\mathit{dist}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DOUBLING LETTERS (e.g. IE as E).
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% For the Z I changes to san-serif, to avoid strange tags,
+% and decreased the spacing (from -3 to -4).
+%
+\def\MathF{\hbox{\rm I\kern-2pt F}}
+\def\MathP{\hbox{\rm I\kern-2pt P}}
+\def\MathR{\hbox{\rm I\kern-2pt R}}
+\def\MathZ{\hbox{\sf Z\kern-4pt Z}}
+\def\MathN{\hbox{\rm I\kern-2pt I\kern-3.1pt N}}
+\def\MathC{\hbox{\rm \kern0.7pt\raise0.8pt\hbox{\footnotesize I}
+\kern-4.2pt C}}
+\def\MathQ{\hbox{\rm I\kern-6pt Q}}
+
+%% Fails:
+%% \def\MathC{\hbox{\rm \kern0.7pt\raise0.8pt\hbox{\specialeightrm I}
+%% \kern-4.2pt C}}
+\def\MathE{\hbox{{\rm I}\hskip -2pt {\rm E}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ANOTHER NICE FONT TO USE - for doubled letters
+
+\def\dblA{\Bbb{A}}
+\def\dblM{\Bbb{M}}
+\def\dblN{\Bbb{N}}
+\def\dblP{\Bbb{P}}
+\def\dblR{\Bbb{R}}
+\def\dblW{\Bbb{W}}
+\def\dblZ{\Bbb{Z}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MATHEMATICAL NOTATION
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \tends  -  for limit notation (f(x)--->0)
+% Avishai's version:::
+\newcommand{\Tends}[1]
+   {\mathrel{\mathop{\longrightarrow}\limits_{#1\to\infty}}}
+% Malki's version:::
+\newsavebox{\ttop}\newsavebox{\bbot}
+\newcommand{\tends}[4]{\sbox{\ttop}{${#1}\longrightarrow{#2}$}
+\savebox{\bbot}[1\wd\ttop]{\hfill$\scriptstyle{#3}\rightarrow{#4}$\hfill}
+\rlap{\usebox{\ttop}}\raisebox{-7pt}{\usebox{\bbot}}\; }
+%
+\def\mod{\pmod}
+% nice AMS TeX empty set
+\newcommand{\emp}{\varnothing}
+\def\eps{\epsilon}
+\def\epsi{\varepsilon}
+\def\polylog{\mbox{polylog}}
+\def\setmns{\setminus}
+\def\scrpolylog{\mbox{\rm\scriptsize polylog~}}
+%\def\polylog{\mbox{polylog}\,}
+%\def\polylog{\mbox{\it polylog}\,}
+\newcommand{\half}{{1\over2}}
+%\def\st{\mbox{~~s.t.~~}}
+\def\nin{{~\not \in~}}
+\def\emset{\emptyset}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% PROBABILITY TERMINOLOGY
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\Prob}[1]{\Pr\left( #1 \right)}
+\newcommand{\Exp}[1]{\MathE\left( #1 \right)}
+%\newcommand{\Set}[1]{\left\{ #1 \right\}}
+%\def\Prob{\mbox{\tt Prob}}
+\def\Event{\cE}
+%\def\Expect{\mbox{\bf E}}
+\newcommand{\Prob}{\MathP}
+\newcommand{\Expect}{\MathE}
+
+%%%###########################################################
+
+

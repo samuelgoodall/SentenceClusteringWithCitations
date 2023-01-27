@@ -1,0 +1,194 @@
+\section{Synthesis Algorithm Design}
+\label{sect:algorithm}
+In this section, we introduce our surface code synthesis flow. As discussed above, we will introduce three key steps, data qubit allocation, bridge tree construction and stabilizer measurement scheduling.
+
+\subsection{Data qubit allocator}
+\label{sect:map_data}
+
+\begin{algorithm}[h]\footnotesize
+\SetAlgoLined
+\KwIn{Device architecture graph $G$}
+\KwOut{Data qubit layout $data\_layout$}
+
+$L_h =$ all three- and four-degree nodes in $G$\;
+$bridge\_rects = []$ ; \tcp{the set of bridge rectangles} 
+\For{$n_a$ in $L_h$}{
+    \uIf{$deg(n_a) == 3$}{
+        $n_b$ = the nearest high-degree node of $n_a$\;
+        $rect =$ the minimal rectangle containing $n_a$, $n_b$ and their neighboring qubits\;
+    }
+    \Else{
+        $rect =$ the minimal rectangle containing $n_a$ and its neighboring qubits \;
+    }
+    $bridge\_rects.append(rect)$\;
+}
+$r_0 =$ the bridge rectangle at the top left corner of $G$\;
+
+$bridge\_rect\_tuple = []$; \tcp{tuples of compatible bridge rectangles;}
+
+\Repeat{$bridge\_rect\_tuple$ converges}{
+    \For{$(r_1, r_2, r_3) \in \otimes^3{bridge\_rects}$}{ 
+        \uIf{$r_0, r_1, r_2, r_3$ are mutually compatible}{
+            $potent\_dqbits = $ qubits enclosed by $r_0, r_1, r_2, r_3$; \tcp{potential data area;}
+            \uIf{$potent\_dqbits \ne \emptyset$}{
+               $bridge\_rect\_tuple.append((r_0,r_1,r_2,r_3))$; \\
+                break\;
+            }
+        }
+    }
+    set $r_0$ to $r_1, r_2, r_3$ in turn to find new combination of $r_0, r_1, r_2, r_3$ that has non-empty $potent\_dqbits$\;
+}
+
+$data\_layout = []$\;
+\For{$r_0, r_1, r_2, r_3$ in $bridge\_rect\_tuple$}{
+    $dqb$ = the qubit at the center of $potent\_dqbits$ of $r_0, r_1, r_2, r_3$\;
+    $data\_layout.append(dqb)$\;
+}
+\caption{Data qubit allocation}
+\label{alg:map_data_qubits}
+\end{algorithm}
+
+\begin{figure*}[ht!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{fig/data_placement2.pdf}
+    \caption{ Data qubit allocation example. (a) A modified device from Figure~\ref{fig:motivation}(a). Red circles indicate physical qubits with high degree of connectivity (i.e. with 3 or more edges). (b) Finding compatible bridge rectangles. (c) Locating data qubits. (d) Final data qubit layout and syndrome rectangles. }
+    \label{fig:data_placement}
+\end{figure*}
+
+Since we decided to fix the location of data qubits, the basic requirement is that the measurement circuits can be feasibly constructed for all stabilizers. 
+To ensure this property is guaranteed in the data qubit mapping we found, we have the following proposition regarding the bridge tree construction.
+\begin{prop}\label{prop:bridge_tree}
+In any bridge tree for a stabilizer having support on four data qubits, there are at least one four-degree node or two three-degree nodes.
+\end{prop}
+\begin{proof}
+For any graph $G(V,E)$ where $V$ is the vertex set and $E$ is the edge set, we have $\sum_{v\in V}deg(v) = 2|E|$. An $n$-vertex tree always has $n-1$ edges. A bridge tree with four data qubits has four $1$-degree leaf nodes and all other nodes should have degree of at least $2$. Therefore we have $4 + \sum_{v\in V\backslash \text{data qubits}} deg(v) = 2n-2$ and $\sum_{v\in V\backslash \text{data qubits}} deg(v) = 2n-6 = 2(n-4) + 2$. We only have $n-4$ vertices after removing the four leaf nodes. So we must have at least one four-degree node or two three-degree nodes.
+\end{proof}
+
+Proposition~\ref{prop:bridge_tree} provides a necessary condition for a feasible data qubit layout. For each stabilizer to be executable, we should ensure that there are enough three-degree or four-degree qubits around data qubits of this stabilizer. We then introduce a graph-based data qubit layout where we can find bridge trees `locally'. A local bridge tree locates inside the spatial area bounded by the data qubits of a stabilizer. Such a bridge tree is promising as it often leads to a shallow  measurement circuit.
+We use the SC device shown in Figure~\ref{fig:data_placement}(a) to illustrate the data qubit allocation algorithm. 
+We embed the coupling graph of this SC device into a 2D grid so that all qubits can be referenced by the spatial coordinates on the plane.
+Such embedding is possible as latest SC processors are usually designed in a modular structure.
+
+Since high-degree nodes are critical, we %
+keep a list (denoted by $L_h$) of all three- and four-degree nodes in the device grid and record their coordinates. 
+In Figure~\ref{fig:data_placement}(a), $L_h = \{ Q_{2}, Q_{4}, Q_{10}, Q_{12}, Q_{13}, Q_{18}, Q_{21} \}$. 
+We then process the list of high degrees sequentially.
+For the next %
+node $n_a$ in $L_h$, if it is a three-degree node, we search for its nearest high-degree node $n_b$ and then create a minimal rectangle that contains $n_a$ and $n_b$ as well as their neighboring qubits.  If $n_a$ is node with degree $\ge 4$, then we create a rectangle that contains $n_a$ and its neighboring qubits. The rectangle created at this step is called ``bridge rectangle''. 
+Figure~\ref{fig:data_placement}(a) depicts five bridge rectangles resulted from $\{Q_2, Q_{10}\}$, $\{ Q_{10} \}$, $\{Q_4, Q_{12}\}$, $\{Q_{13}, Q_{21}\}$ and $\{Q_{18}, Q_{10}\}$ , and we index them from 1 to 5. There are also other bridge rectangles that can be identified, but we omit them here for simplicity.
+
+
+
+We can now determine the position of data qubits by using bridge rectangles. 
+As shown in Figure~\ref{fig:surf_grid}, each data qubit is shared by four stabilizers. Thus, we can fix the position of a data qubit with four bridge rectangles. We begin with rectangle 1 to find four compatible bridge rectangles.
+We can also begin with rectangle 2 which is created from a four-degree qubit. This will create a different surface code synthesis and we will discuss it in Section~\ref{sect:evaluation}. Here we focus on rectangle 1. Two bridge rectangles are said to be compatible if their intersection area is zero. As we can see in Figure~\ref{fig:data_placement}(b), rectangle 2 is not compatible with rectangle 1 and rectangle 4, while rectangles 1, 3, 4, and 5 are mutually compatible. We do not use incompatible rectangles because they may not allow a feasible data qubit mapping.
+We then search for data qubits in the potential data area (black  rectangle in Figure~\ref{fig:data_placement}(c)) which is enclosed by four compatible bridge rectangles, as shown in Figure~\ref{fig:data_placement}(c). If the potential data area is empty, we choose another four compatible bridge rectangles. Otherwise,
+we pick the qubit at the center of the potential data area as a data qubit. 
+
+For boundary cases, we may not have enough bridge rectangles to locate one data qubit. For example, for rectangle 3, its bottom right corner is only neighbored by rectangle 5. In this case, we should locate the data qubit with constraints only from these two bridge rectangles. Specifically, a potential data qubit should satisfy: A) its x axis value $\ge$ the largest x axis value in rectangle 3 and 5; B) its y axis value should lie between the largest y axis value of rectangle 3 and the smallest y axis value of rectangle 5.  With these spatial constraints, the only qubit we can find is $Q_{14}$, as shown in Figure~\ref{fig:data_placement}(c). Other data points are found in a similar way. 
+
+The final layout for data qubits and syndrome rectangles defined by data qubits are shown in Figure~\ref{fig:data_placement}(d). 
+A syndrome rectangle is 
+the extension of the bridge rectangle to include  allocated data qubits. We can then assign a stabilizer to each syndrome rectangle and synthesize the corresponding measurement circuits locally (using qubits inside each syndrome rectangle). The syndrome rectangle ensures the existence of local bridge trees and enables a natural data qubit assignment for the assigned stabilizer. For the stabilizer $X_{abcd}$ (or $Z_{abcd}$) in Figure~\ref{fig:surf_grid},
+we can simply assign the topmost data qubit in a syndrome rectangle to be the data qubit `a', with the leftmost, rightmost, and bottom data qubit being data qubits `b', `c', `d', respectively. In the next section, we will discuss how to find an efficient bridge tree to connect data qubits $\{a,b,c,d\}$.
+
+
+
+
+
+
+
+
+\subsection{Bridge tree finder}
+\begin{algorithm}[h]\footnotesize
+\SetAlgoLined
+ 
+\KwIn{A syndrome rectangle $R$ with data qubits $\{a,b,c,d\}$}
+\KwOut{Candidate bridge trees}
+
+$star\_trees = []$; \tcp{bridge trees generated by the star tree method;}
+$branching\_trees = []$; \tcp{bridge trees generated by the star tree method;}
+
+\For{$qb$ in $R$} {
+    $T$ = the bridge tree by connecting qubit $qb$ to data qubits $\{a,b,c,d\}$ with shortest paths\;
+    update $star\_trees$ s.t. it only contains trees no larger than $T$\;
+}
+
+let $\{a',b',c',d'\}$ be a arrangement of $\{a,b,c,d\}$ s.t.  $l_{a'b'} + l_{c'd'} = \min \{ l_{ab} + l_{cd}, l_{ac} + l_{bd}, l_{ad} + l_{bc} \}$\; \tcp{$l_{ab}$ is the distance of $a\to b$;}
+
+connect $a'$ and $b'$, $c'$ and $d'$ with shortest paths, respectively\;
+
+connect the path $a' \to b'$ and $c' \to d'$ with shortest paths\;
+
+\For{$qb_1$ in $a' \to b'$, $qb_2$ in $c' \to d'$} {
+    $T$ = the bridge tree by connecting $qb_1$ and $qb_2$ by shortest paths\;
+    update $branching\_trees$ s.t. it only contains trees no larger than $T$\;
+    
+}
+Merge $star\_trees$ and $branching\_trees$ to find a list of minimal bridge trees;
+
+\caption{Bridge tree finder}
+\label{alg:bridge_tree_finder}
+\end{algorithm}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\linewidth]{fig/bridge-path5.pdf}
+    \caption{ Finding bridge trees in a syndrome rectangle with data qubits $\{a,b,c,d\}$. (a)(b) shows the case where path merge is efficient, while (c) shows when path merge incurs extra overhead. (a) Green edges denote the shortest paths from qubit $E$ to data qubits and these paths form a bridge tree with length 10. (b) Blue edges form a bridge tree with length 8. (c) An example where data qubits are close to each other.}
+    \label{fig:bridge_path}
+\end{figure}
+
+After locating the data qubits and syndrome rectangles, we then construct the bridge tree for each syndrome rectangle.
+Since syndrome rectangles only intersect at borderlines, strict local bridge trees, whose bridge qubits all locate within the interior of the syndrome rectangle, will enable concurrent measurement of stabilizers naturally. Thus, we only consider finding bridge trees in the syndrome rectangle. %
+To enable higher stabilizer measurement fidelity, we prefer using small bridge trees. 
+Actually, the error correction of the synthesized code is sensitive to the length of the bridge tree because one more edge in the bridge tree will result in two more CNOT gates in the measurement circuit and likely leads to a high probability of correlated errors which are hard to detect and correct. Thus, 
+bridge trees should be as small as possible.
+
+One natural way for finding small bridge trees is to first locate the bridge tree root and then connect the tree root to data qubits with shortest paths. We denote this method by ``{star tree}'' method. One drawback of this method is that it may miss the opportunity of path merge.
+ For example, in the syndrome rectangle in Figure~\ref{fig:bridge_path}(a), the bridge tree induced by the shortest paths from interior qubit $E$ to data qubits has a length 10 (green edges) . In contrast, by merging paths $E\to F\to b$ and $E \to d$, we can get a bridge tree of length 8 (blue edges in Figure~\ref{fig:bridge_path}(b)) , which reduces the number of CNOT gates by at least 4 in the resulted stabilizer measurement circuit.
+
+To overcome the problem above, we propose the ``{branching tree}'' method, which first connects close data qubit pairs by shortest paths and then connects these shortest paths to build a complete bridge tree (pseudo code in in Algorithm~\ref{alg:bridge_tree_finder}). Suppose we are constructing the bridge tree for the syndrome rectangle in Figure~\ref{fig:bridge_path}(a). We first find the shortest paths $a \to c$ and $b \to d$, since $l_{ac} + l_{bd}$ ($l_{ac}$ is the length of the shortest path from $a$ to $c$) is shorter than $l_{ab} + l_{cd}$ and $l_{ad} + l_{bc}$. We then connect path $a\to c$ and $b \to d$ with the path $E \to F$,  immediately resulting in the small bridge tree (blue edges) in Figure~\ref{fig:bridge_path}(b). The following proposition bounds the length of the bridge tree generated by the branching tree method:
+
+\begin{prop}\label{prop:bridge_perf}
+Let the total edge length of the bridge tree $T$ generated by the branching tree method be $E(T)$, then,
+$$E(T) \le \frac{1}{2}(l_{ab}+l_{ac}+l_{ad}+l_{bc}+l_{bd}+l_{cd}).$$
+\end{prop}
+\begin{proof}
+W.l.o.g., we assume $l_{ab}+l_{cd} \le \min \{l_{ac} + l_{bd}, l_{ad}+l_{bc}\}$. Then in $T$, we first connect $a$ and $b$, $c$ and $d$, respectively.
+On the other hand, the distance between shortest paths $a\to b$ and $c \to d$ is smaller than $\min \{l_{ac}, l_{ad}, l_{bc}, l_{bd}\}$. This proposition then can be proved by combining these two inequality. %
+\end{proof}
+
+
+Generally, the branching tree method is more efficient if $\min \{ l_{ab}+l_{cd}, l_{ac}+l_{bd}, l_{ad}+l_{bc}  \}$ is small, as shown in Figure~\ref{fig:bridge_path}(a)(b). In this case, the length of the resulted branching tree is very close to $\frac{1}{2} ( l_{ad} + l_{bc} )$. Instead, the length of a star tree is at least $\max \{ l_{ad}, l_{bc} \} + 2$, thus leading to a larger bridge tree. On the other hand, if $\max \{ l_{ab}+l_{cd}, l_{ac}+l_{bd}, l_{ad}+l_{bc} \}$ is small, the benefit of path merge may not cancel out its overhead for not using shortest paths. Figure~\ref{fig:bridge_path}(c) shows an example where the star tree has shorter length.
+In practice, we will run both star tree method and branching tree method and find small bridge trees by merging the result of these two methods, as shown in Algorithm~\ref{alg:bridge_tree_finder}. Once the bridge tree is determined, we can assign the syndrome qubit to the center node of the bridge tree.
+
+Overall, Algorithm~\ref{alg:bridge_tree_finder} can generate small bridge trees that approximate the optimal bridge tree as long as the distance between data qubits is small %
+(by Proposition~\ref{prop:bridge_perf}). 
+Another feature of Algorithm~\ref{alg:bridge_tree_finder} is that it may find many different bridge trees for a stabilizer since the shortest paths between nodes are not unique. This feature provides some flexibility for the stabilizer scheduling discussed in the next section.
+
+\subsection{Stabilizer measurement scheduler}
+
+\input{algo/scheduler}
+
+The order of stabilizer measurements affects the time required by the error detection protocol. 
+Our goal is to reduce the time requirement for all stabilizer measurements since it will naturally reduce the decoherence error during the process of stabilizer measurements.
+To achieve this goal, we need to measure as many stabilizers as possible in parallel. Yet the fact that only compatible bridge trees that do not have common bridge qubits can be measured simultaneously imposes a constraint for  stabilizer measurement scheduling: only stabilizers that have compatible bridge trees can be measured in the same time. A valid schedule for the order of stabilizer measurements should avoid executing two ``conflicted'' stabilizers together.
+To satisfy the constraint of stabilizer measurement scheduling yet exploit the parallelism in stabilizer measurements, we propose a heuristic scheduling approach in Algorithm~\ref{alg:stabilizer_schedule}, which consists of two steps: schedule initialization and refinement loop.
+
+\paragraph{Schedule initialization} the proposed data qubit allocation ensures that syndrome rectangles of the same type do not have bridge tree conflicts, i.e., the measurements of X (or Z) stabilizers are compatible with each other. We then initialize the stabilizer measurement schedule by two sets $S_1$ and $S_2$ which contain X- and Z-type stabilizers, respectively.
+
+\paragraph{Refinement Loop} the core idea of the refinement loop in Algorithm~\ref{alg:stabilizer_schedule} is to move stabilizers with large bridge trees into one set. The motivation for such refinement is that the execution time for a set of stabilizers is determined by the stabilizer with the deepest measurement circuit. With the refinement loop, except one stabilizer set which contains stabilizers with 
+large bridge trees, remaining stabilizer sets only include stabilizers with small bridge trees and can be measured in a short time. %
+
+To illustrate how the Algorithm~\ref{alg:stabilizer_schedule} works, suppose we are given stabilizers and syndrome rectangles in Figure~\ref{fig:stabilizer_schedule}. Initially, we have $S_1 = \{(s_1, R_1), (s_4, R_4), (s_5, R_5)\}$ and $S_2 = \{(s_2, R_2), (s_3, R_3), (s_6, R_6)\}$. We then send the largest element in $S_2$, which is $(s_2, R_2)$ in this case, to the $swap\_list$ and swap it into $S_1$. Since $(s_4, R_4)$ and $(s_2, R_2)$ do not have compatible bridge trees, we will move $(s_4, R_4)$ to $S_2$.
+In $S_2$, $(s_6, R_6)$ is not compatible with $(s_4, R_4)$, so it will be swapped into $S_1$. 
+After this swap, the refinement loop will stop since the $swap\_list$ is empty and every stabilizer in $S_1$ has a larger bridge tree than the stabilizer in $S_2$. The resulted stabilizer schedule is shown in Figure~\ref{fig:stabilizer_schedule}(b). Comparing to the initial schedule, the refined schedule in Figure~\ref{fig:stabilizer_schedule}(b) reduces the error detection cycle by one time step, and reduces the CNOT gate number by two.
+
+The stabilizer measurement schedule found by the proposed heuristic should be better than the schedule where different types of stabilizers are measured in different rounds since every successful refinement iteration returns a better stabilizer measurement schedule.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\linewidth]{fig/stabilizer_sched6.pdf}
+    \caption{ An example of stabilizer measurement scheduling. } %
+    \label{fig:stabilizer_schedule}
+\end{figure}

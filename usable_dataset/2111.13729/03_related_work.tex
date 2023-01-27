@@ -1,0 +1,66 @@
+
+\section{Background} 
+
+In this section, we introduce the key concepts for understanding the implementation requirements of surface code~\cite{bravyi1998quantum,dennis2002topological,barends2014superconducting}. 
+We do not cover the basics of quantum computing and recommend~\cite{nielsen2002quantum} for reference.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{fig/surfgrid2.pdf}
+    \caption{Common components of the surface code. (a) Surface code lattice with data qubits (blue dots) and syndrome qubits (red dots). (b) Z-type syndrome extraction and its circuit. (c) X-type syndrome extraction and its circuit.}
+    \label{fig:surf_grid}
+\end{figure}
+
+\textbf{Data and syndrome qubits:}
+Surface code encodes logical qubit information in a 2D lattice of physical qubits shown in Figure~\ref{fig:surf_grid}(a). Physical qubits in the code lattice can be divided into two types: data qubits and syndrome qubits (represented as blue and red dots respectively, see Figure~\ref{fig:surf_grid}(a)).
+The logical information is encoded in the data qubits.
+The error information on these data qubits can be extracted by applying surface code operations and measuring  syndrome qubits.
+
+\textbf{Pauli operator and stabilizer:}
+In surface codes, the relationship between one syndrome qubits and its neighboring data qubits is represented by the product of an array of Pauli operators (a.k.a Pauli string) labeled on the edges between data qubits and syndrome qubits (Figure~\ref{fig:surf_grid}(a)).
+For each syndrome qubit, the Pauli string on its edges can be in one of two possible patterns. %
+The first one (Z-type) is shown in Figure~\ref{fig:surf_grid}(b).
+The connections between the center syndrome qubit and the four data qubits are all labeled by the $Z$ operators and represented by the Pauli string $Z_aZ_bZ_cZ_d$.
+The second one (X-type) in Figure~\ref{fig:surf_grid}(c) is similar but all connections are labeled by the $X$ operators and represented by the Pauli string $X_aX_bX_cX_d$.
+For these two different patterns, we will have corresponding syndrome measurement circuits to detect errors in the data qubits (shown on the right of Figure~\ref{fig:surf_grid}(b) and (c)).
+The syndrome extraction circuits project the state of data qubits $\{a,b,c,d\}$ into the eigenstates of the corresponding Pauli strings.
+In the context of QEC, the specific Pauli strings that one measures are called \textit{stabilizers}~\cite{gottesman1996class} and the syndrome extraction circuits are also known as \textit{stabilizer measurements} ~\cite{ calderbank1997quantum}.
+Without ambiguity, we use the stabilizer notation to represent a syndrome extraction. And we denote the stabilizer $Z_aZ_bZ_cZ_d$ ($X_aX_bX_cX_d$) with $Z_{abcd}$ (respectively $X_{abcd}$) for simplicity.
+
+\textbf{Error detection:} Surface code can detect Pauli X- and Z-errors on data qubits by using Z- and X-type stabilizer measurement circuits, respectively. 
+An error on a data qubit may affect the measurement results of stabilizers associated with this data qubit.
+By gathering all such stabilizer measurement results, a surface code error correction protocol can infer what errors occurred in the lattice and consequently apply the corresponding correction. 
+Further details of the error correction protocol
+can be found in \cite{fowler2012surface}.
+
+
+\begin{figure}[ht]
+    \hspace{-15pt}
+    \centering
+    \includegraphics[width=\linewidth]{fig/surflogi3.pdf}
+    \caption{Code distance and compact lattice. (a)  Surface code logical operations with distance 3. (b) Inside the rotated rectangle (dashed brown line) is a compact surface code lattice with the same code distance.}
+    \label{fig:surf_logi}
+\end{figure}
+
+\textbf{Code distance:} The error correction ability of QEC codes is measured by their code distance~\cite{knill2000theory,calderbank1996good}. The code distance is defined to be the minimum number of physical qubits in the support of logical X or Z operations on the encoded logical qubit
+(denoted by $X_L$ or $Z_L$ in Figure~\ref{fig:surf_logi}). 
+Figure~\ref{fig:surf_logi} (a) shows logical operations in a distance-3 surface code. It is possible to obtain a more compact surface code lattice without changing the code distance, as shown in Figure~\ref{fig:surf_logi}(b). In this paper, we focus on the rotated surface code in Figure~\ref{fig:surf_logi}(b).
+
+\textbf{Stabilizer synthesis}: The first step of surface code synthesis is to implement individual stabilizer measurement circuit. Various methods have been proposed to map one single stabilizer to sparse-connected SC devices, such as the degree-deduction technique~\cite{Chamberland2020TopologicalAS}, and the flag-bridge circuit~\cite{Lao2020FaulttolerantQE, Chao2019FlagFE, Chamberland2017FLAGFE, Chamberland2019TriangularCC}. Once data qubits and needed ancillary qubits (including the syndrome qubit) for the stabilizer measurement are appointed, these method can generate the corresponding  measurement circuit.
+Figure~\ref{fig:bridge_circuit_1} 
+%
+shows the generated flag-bridge circuit for stabilizer $Z_{bcid}$ with ancillary qubits $\{ e,s,f \}$.
+These work only solved the low-level circuit generation problem of one stabilizer measurement, far from tackling the overall surface code synthesis, which is more than a simple collection of measurement circuits. %
+
+%
+
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{fig/bridge-circuit8.pdf}    %
+    \caption{ Z-type stabilizer measurement circuit synthesis: (a) The coupling graph of data qubits (blue) and ancillary qubits (red). Qubit $s$ is the syndrome qubit. (b) The synthesized stabilizer measurement circuit that satisfies the coupling graph in (a). }\label{fig:bridge_circuit_1}
+%
+\end{figure}
+
+Our framework targets at the high-level synthesis of the entire surface code and use these low-level stabilizer synthesis methods as the backend.
+

@@ -1,0 +1,42 @@
+
+\section{Preliminaries}\label{sec:prelim}
+
+Let $G$ be an arbitrary weighted graph. We denote by $V(G)$ and $E(G)$ the vertex set and edge set of $G$, respectively. We denote by $w: E(G)\rightarrow \mathbb{R}^+$ the weight function on the edge set.  Sometimes we write $G = (V,E)$ to clearly explicate the vertex set and edge set of $G$, and  $G =(V,E,w)$ to further indicate the weight function $w$ associated with $G$. We denote by $\deg_{G}(v)$ the degree of vertex $v$ in $G$. For a subset of vertices $S$, we denote by $\deg_G(S) = \sum_{v\in S}\deg_G(v)$ the total degree of vertices in $S$.  We use $\mst(G)$ to denote a minimum spanning tree of $G$; when the graph is clear from context, we simply use $\mst$  as a shorthand for $\mst(G)$. W
+
+
+For a subgraph $H$ of $G$, we use $w(H) \defi \sum_{e\in E(H)}w(e)$ to denote the total edge weight of $H$.   The {\em distance} between two vertices $p,q$ in $G$, denoted by $d_G(p,q)$, is the minimum weight of a path between them in $G$. The diameter of $G$,
+denoted by $\dm(G)$, is the maximum pairwise distance in $G$. A \emph{diameter path} of $G$ is a shortest (i.e., of minimum weight) path in $G$ realizing the diameter of $G$, that is, 
+it is a shortest path between some pair $u,v$ of vertices in $G$ such that $\dm(G) = d_G(u,v)$.
+
+
+Sometimes we shall consider graphs with weights on both \emph{edges and vertices}. We define the \emph{augmented weight} of a path to be the total weight of all edges and vertices along the path. The \emph{augmented distance} between two vertices in $G$ is defined as the minimum augmented weight of a path between them in $G$. 
+Likewise, the \emph{augmented diameter} of $G$, denoted by $\adm(G)$,
+ is the maximum pairwise augmented distance in $G$; 
+since we will focus on non-negative weights, the augmented distance and augmented diameter
+are no smaller than the (ordinary notions of) distance and diameter. 
+An \emph{augmented diameter path} of $G$ is a path of minimum augmented weight realizing the augmented diameter of $G$. 
+
+
+Given a subset of vertices $X\subseteq V(G)$, we denote by $G[X]$ the subgraph of $G$ \emph{induced by $X$}: $G[X]$ has $V(G[X]) = X$ and $E(G[X]) = \{(u,v)\in E(G) ~\vert~   u,v \in X\}$. Let $F\subseteq E(G)$ be a subset of edges of $G$. We denote by $G[F]$ the subgraph of $G$ with $V(G[F]) = V(G)$ and $E(G[F]) = F$.
+
+
+Let $S$ be a \emph{spanning} subgraph of $G$; weights of edges in $S$ are inherited from $G$. The \emph{stretch} of $S$  is  given by $\max_{x,y \in V(G)} \frac{d_S(x,y)}{d_G(x,y)}$, and it is realized by some edge $e$ of $G$. Throughout we will use the following known observation,
+which implies that stretch of $S$ is  equal to $\frac{d_S(u,v)}{w(u,v)}$ for some edge $(u,v) \in E(G)$. 
+\begin{observation} \label{stretch:ob}
+ $\max_{x,y \in V(G)} \frac{d_S(x,y)}{d_G(x,y)} =  \max_{(x,y) \in E(G)} \frac{d_S(x,y)}{d_G(x,y)}$.
+\end{observation}
+ We say that $S$ is a \emph{$t$-spanner} of $G$ if the stretch of $S$ is at most $t$. There is a simple greedy algorithm,  called $\pathg$ (or shortly $\greedy$), to find a $t$-spanner of a graph $G$: Examine the edges $e = (x,y)$ in  $G$ in nondecreasing order of weights, and add to the spanner edge $(x,y)$ iff the distance between $x$ and $y$ in the {\em current} spanner is larger than $t\cdot w(x,y)$. This algorithm can be naturally extended to the case where $G$ has weights on both edges and vertices; the distance function considered in this case is the augmented distance.  We say that a subgraph $H$ of $G$ is a $t$-spanner for a \emph{subset of edges $X\subseteq E$} if $\max_{(u,v) \in X} \frac{d_H(u,v)}{d_G(u,v)} \leq t$. 
+
+
+
+ 
+
+In the context of minor-free graphs, we denote by $G/e$ the graph obtained from $G$ by contracting $e$, where $e$ is an edge in $G$. If $G$ has weights on edges, then every edge in $G/e$ inherits its weight from $G$.
+
+In addition to general and minor-free graphs, this paper studies {\em geometric graphs}.  Let $P$ be a set of $n$ points in $\mathbb{R}^d$. We denote by $\nor2{p,q}$ the Euclidean distance between two points $p,q\in \mathbb{R}^d$.   A  \emph{geometric graph} $G$ for $P$ is a graph where the vertex set corresponds to the point set, i.e., $V(G) = P$, and the edge weights are the Euclidean distances, i.e.,  $w(u,v) = \nor2{u,v}$ for every edge $(u,v)$ in $G$. Note that $G$ need not be a complete graph. If $G$ is a complete graph, i.e., $G = (P, {P \choose 2},\nor2{\cdot})$, then $G$ is equivalent to the {\em Euclidean space} induced by the point set $P$.
+For geometric graphs, we use the term \emph{vertex} and \emph{point} interchangeably. 
+
+
+We use $[n]$ and $[0,n]$ to denote the sets $\{1,2,\ldots,n\}$ and $\{0,1,\ldots,n\}$, respectively.
+
+

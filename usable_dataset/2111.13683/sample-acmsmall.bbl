@@ -1,0 +1,1479 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{108}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Al-Jaroodi and Mohamed}{Al-Jaroodi and
+  Mohamed}{2019}]%
+        {al2019blockchain}
+\bibfield{author}{\bibinfo{person}{Jameela Al-Jaroodi} {and}
+  \bibinfo{person}{Nader Mohamed}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Blockchain in industries: A survey}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{7}
+  (\bibinfo{year}{2019}), \bibinfo{pages}{36500--36515}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ali, Gervais, Ahene, and Li}{Ali
+  et~al\mbox{.}}{2019}]%
+        {DBLP:journals/jsa/AliGAL19}
+\bibfield{author}{\bibinfo{person}{Ikram Ali}, \bibinfo{person}{Mwitende
+  Gervais}, \bibinfo{person}{Emmanuel Ahene}, {and} \bibinfo{person}{Fagen
+  Li}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{A blockchain-based certificateless public key
+  signature scheme for vehicle-to-infrastructure communication in VANETs}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{99}
+  (\bibinfo{year}{2019}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ali, Nelson, Shea, and Freedman}{Ali
+  et~al\mbox{.}}{2016}]%
+        {DBLP:conf/usenix/AliNSF16}
+\bibfield{author}{\bibinfo{person}{Muneeb Ali}, \bibinfo{person}{Jude~C.
+  Nelson}, \bibinfo{person}{Ryan Shea}, {and} \bibinfo{person}{Michael~J.
+  Freedman}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Blockstack: {A} Global Naming and Storage System
+  Secured by Blockchains}. In \bibinfo{booktitle}{\emph{2016 {USENIX} Annual
+  Technical Conference, {USENIX} {ATC} 2016, Denver, CO, USA, June 22-24,
+  2016}}, \bibfield{editor}{\bibinfo{person}{Ajay Gulati} {and}
+  \bibinfo{person}{Hakim Weatherspoon}} (Eds.). \bibinfo{publisher}{{USENIX}
+  Association}, \bibinfo{pages}{181--194}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ali, Wang, White, and Cottrell}{Ali
+  et~al\mbox{.}}{2018}]%
+        {ali2018blockchain}
+\bibfield{author}{\bibinfo{person}{Saqib Ali}, \bibinfo{person}{Guojun Wang},
+  \bibinfo{person}{Bebo White}, {and} \bibinfo{person}{Roger~Leslie Cottrell}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Blockchain-Based Decentralized Data Storage and
+  Access Framework for PingER}. In \bibinfo{booktitle}{\emph{17th {IEEE}
+  International Conference On Trust, Security And Privacy In Computing And
+  Communications / 12th {IEEE} International Conference On Big Data Science And
+  Engineering, TrustCom/BigDataSE 2018, New York, NY, USA, August 1-3, 2018}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{1303--1308}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Anita and Vijayalakshmi}{Anita and
+  Vijayalakshmi}{2019}]%
+        {8944615}
+\bibfield{author}{\bibinfo{person}{N. Anita} {and} \bibinfo{person}{M.
+  Vijayalakshmi}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Blockchain Security Attack: {A} Brief Survey}. In
+  \bibinfo{booktitle}{\emph{10th International Conference on Computing,
+  Communication and Networking Technologies, {ICCCNT} 2019, Kanpur, India, July
+  6-8, 2019}}. \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{Kanpur, India},
+  \bibinfo{pages}{1--6}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Armknecht, Karame, Mandal, Youssef, and
+  Zenner}{Armknecht et~al\mbox{.}}{2015}]%
+        {armknecht2015ripple}
+\bibfield{author}{\bibinfo{person}{Frederik Armknecht},
+  \bibinfo{person}{Ghassan~O. Karame}, \bibinfo{person}{Avikarsha Mandal},
+  \bibinfo{person}{Franck Youssef}, {and} \bibinfo{person}{Erik Zenner}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Ripple: Overview and Outlook}. In
+  \bibinfo{booktitle}{\emph{Trust and Trustworthy Computing - 8th International
+  Conference, {TRUST} 2015, Heraklion, Greece, August 24-26, 2015,
+  Proceedings}} \emph{(\bibinfo{series}{Lecture Notes in Computer Science},
+  Vol.~\bibinfo{volume}{9229})}, \bibfield{editor}{\bibinfo{person}{Mauro
+  Conti}, \bibinfo{person}{Matthias Schunter}, {and}
+  \bibinfo{person}{Ioannis~G. Askoxylakis}} (Eds.).
+  \bibinfo{publisher}{Springer}, \bibinfo{address}{Heraklion, Greece},
+  \bibinfo{pages}{163--180}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Back, Corallo, Dashjr, Friedenbach, Maxwell,
+  Miller, Poelstra, Tim{\'o}n, and Wuille}{Back et~al\mbox{.}}{2014}]%
+        {back2014enabling}
+\bibfield{author}{\bibinfo{person}{Adam Back}, \bibinfo{person}{Matt Corallo},
+  \bibinfo{person}{Luke Dashjr}, \bibinfo{person}{Mark Friedenbach},
+  \bibinfo{person}{Gregory Maxwell}, \bibinfo{person}{Andrew Miller},
+  \bibinfo{person}{Andrew Poelstra}, \bibinfo{person}{Jorge Tim{\'o}n}, {and}
+  \bibinfo{person}{Pieter Wuille}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Enabling blockchain innovations with pegged
+  sidechains}.
+\newblock \bibinfo{journal}{\emph{URL: http://www. opensciencereview.
+  com/papers/123/enablingblockchain-innovations-with-pegged-sidechains}}
+  \bibinfo{volume}{72} (\bibinfo{year}{2014}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bandara, Liang, Foytik, Shetty, Ranasinghe,
+  and Zoysa}{Bandara et~al\mbox{.}}{2021}]%
+        {DBLP:journals/jsa/BandaraLFSRZ21}
+\bibfield{author}{\bibinfo{person}{Eranga Bandara}, \bibinfo{person}{Xueping
+  Liang}, \bibinfo{person}{Peter Foytik}, \bibinfo{person}{Sachin Shetty},
+  \bibinfo{person}{Nalin Ranasinghe}, {and} \bibinfo{person}{Kasun~De Zoysa}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Rahasak - Scalable blockchain architecture for
+  enterprise applications}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{116}
+  (\bibinfo{year}{2021}), \bibinfo{pages}{102061}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bonneau, Miller, Clark, Narayanan, Kroll, and
+  Felten}{Bonneau et~al\mbox{.}}{2015}]%
+        {bonneau2015sok}
+\bibfield{author}{\bibinfo{person}{Joseph Bonneau}, \bibinfo{person}{Andrew
+  Miller}, \bibinfo{person}{Jeremy Clark}, \bibinfo{person}{Arvind Narayanan},
+  \bibinfo{person}{Joshua~A. Kroll}, {and} \bibinfo{person}{Edward~W. Felten}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{SoK: Research Perspectives and Challenges for
+  Bitcoin and Cryptocurrencies}. In \bibinfo{booktitle}{\emph{2015 {IEEE}
+  Symposium on Security and Privacy, {SP} 2015, San Jose, CA, USA, May 17-21,
+  2015}}. \bibinfo{publisher}{{IEEE} Computer Society}, \bibinfo{address}{San
+  Jose, CA, USA,}, \bibinfo{pages}{104--121}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bruce}{Bruce}{2014}]%
+        {bruce2014mini}
+\bibfield{author}{\bibinfo{person}{JD Bruce}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{The mini-blockchain scheme}.
+\newblock \bibinfo{journal}{\emph{White paper}} (\bibinfo{year}{2014}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Buchman, Kwon, and Milosevic}{Buchman
+  et~al\mbox{.}}{2018}]%
+        {buchman2018latest}
+\bibfield{author}{\bibinfo{person}{Ethan Buchman}, \bibinfo{person}{Jae Kwon},
+  {and} \bibinfo{person}{Zarko Milosevic}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{The latest gossip on BFT consensus}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1807.04938}}
+  (\bibinfo{year}{2018}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Buterin et~al\mbox{.}}{Buterin
+  et~al\mbox{.}}{2014}]%
+        {buterin2014next}
+\bibfield{author}{\bibinfo{person}{Vitalik Buterin} {et~al\mbox{.}}}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{A next-generation smart contract and decentralized
+  application platform}.
+\newblock \bibinfo{journal}{\emph{white paper}} \bibinfo{volume}{3},
+  \bibinfo{number}{37} (\bibinfo{year}{2014}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Cachin et~al\mbox{.}}{Cachin
+  et~al\mbox{.}}{2016}]%
+        {cachin2016architecture}
+\bibfield{author}{\bibinfo{person}{Christian Cachin} {et~al\mbox{.}}}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Architecture of the hyperledger blockchain fabric}.
+  In \bibinfo{booktitle}{\emph{Workshop on distributed cryptocurrencies and
+  consensus ledgers}}, Vol.~\bibinfo{volume}{310}. \bibinfo{pages}{4}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Chen, Li, Li, and Zhang}{Chen
+  et~al\mbox{.}}{2017}]%
+        {chen2017improved}
+\bibfield{author}{\bibinfo{person}{Yongle Chen}, \bibinfo{person}{Hui Li},
+  \bibinfo{person}{Kejiao Li}, {and} \bibinfo{person}{Jiyang Zhang}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{An improved {P2P} file system scheme based on
+  {IPFS} and Blockchain}. In \bibinfo{booktitle}{\emph{2017 {IEEE}
+  International Conference on Big Data, BigData 2017, Boston, MA, USA, December
+  11-14, 2017}}, \bibfield{editor}{\bibinfo{person}{Jian{-}Yun Nie},
+  \bibinfo{person}{Zoran Obradovic}, \bibinfo{person}{Toyotaro Suzumura},
+  \bibinfo{person}{Rumi Ghosh}, \bibinfo{person}{Raghunath Nambiar},
+  \bibinfo{person}{Chonggang Wang}, \bibinfo{person}{Hui Zang},
+  \bibinfo{person}{Ricardo Baeza{-}Yates}, \bibinfo{person}{Xiaohua Hu},
+  \bibinfo{person}{Jeremy Kepner}, \bibinfo{person}{Alfredo Cuzzocrea},
+  \bibinfo{person}{Jian Tang}, {and} \bibinfo{person}{Masashi Toyoda}} (Eds.).
+  \bibinfo{publisher}{{IEEE} Computer Society}, \bibinfo{address}{Boston, MA,
+  USA}, \bibinfo{pages}{2652--2657}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Chen, Li, Cai, jia, Wang, Shao, and Shen}{Chen
+  et~al\mbox{.}}{2021}]%
+        {chenzehao}
+\bibfield{author}{\bibinfo{person}{Zehao Chen}, \bibinfo{person}{Bingzhe Li},
+  \bibinfo{person}{Xiaojun Cai}, \bibinfo{person}{Zhiping jia},
+  \bibinfo{person}{Yi Wang}, \bibinfo{person}{Zili Shao}, {and}
+  \bibinfo{person}{Zhaoyan Shen}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Block-LSM: An Ether-aware Block-ordered LSM-tree
+  based Key-Value Storage Engine}. In \bibinfo{booktitle}{\emph{International
+  Conference on High Performance Computing and Communications (ICCD’21)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Churyumov}{Churyumov}{2016}]%
+        {churyumov2016byteball}
+\bibfield{author}{\bibinfo{person}{Anton Churyumov}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Byteball: A decentralized system for storage and
+  transfer of value}.
+\newblock \bibinfo{journal}{\emph{URL https://byteball. org/Byteball. pdf}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Corallo}{Corallo}{2016}]%
+        {corallo2016bip152}
+\bibfield{author}{\bibinfo{person}{Matt Corallo}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Bip152: Compact block relay}.
+\newblock \bibinfo{journal}{\emph{See https://github.
+  com/bitcoin/bips/blob/master/bip-0152. mediawiki}} (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dai, Zheng, and Zhang}{Dai
+  et~al\mbox{.}}{2019b}]%
+        {dai2019blockchain}
+\bibfield{author}{\bibinfo{person}{Hong{-}Ning Dai}, \bibinfo{person}{Zibin
+  Zheng}, {and} \bibinfo{person}{Yan Zhang}.} \bibinfo{year}{2019}\natexlab{b}.
+\newblock \showarticletitle{Blockchain for Internet of Things: {A} Survey}.
+\newblock \bibinfo{journal}{\emph{{IEEE} Internet Things J.}}
+  \bibinfo{volume}{6}, \bibinfo{number}{5} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{8076--8094}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dai, Zhang, Wang, and Jin}{Dai
+  et~al\mbox{.}}{2018}]%
+        {dai2018low}
+\bibfield{author}{\bibinfo{person}{Mingjun Dai}, \bibinfo{person}{Shengli
+  Zhang}, \bibinfo{person}{Hui Wang}, {and} \bibinfo{person}{Shi Jin}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A low storage room requirement framework for
+  distributed ledger in blockchain}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{6}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{22970--22975}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dai, Xiao, Yang, Wang, and Jin}{Dai
+  et~al\mbox{.}}{2019a}]%
+        {dai2019jidar}
+\bibfield{author}{\bibinfo{person}{Xiaohai Dai}, \bibinfo{person}{Jiang Xiao},
+  \bibinfo{person}{Wenhui Yang}, \bibinfo{person}{Chaofan Wang}, {and}
+  \bibinfo{person}{Hai Jin}.} \bibinfo{year}{2019}\natexlab{a}.
+\newblock \showarticletitle{Jidar: {A} Jigsaw-like Data Reduction Approach
+  Without Trust Assumptions for Bitcoin System}. In
+  \bibinfo{booktitle}{\emph{39th {IEEE} International Conference on Distributed
+  Computing Systems, {ICDCS} 2019, Dallas, TX, USA, July 7-10, 2019}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{Dallas, TX, USA},
+  \bibinfo{pages}{1317--1326}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dang, Dinh, Loghin, Chang, Lin, and Ooi}{Dang
+  et~al\mbox{.}}{2019}]%
+        {dang2019towards}
+\bibfield{author}{\bibinfo{person}{Hung Dang}, \bibinfo{person}{Tien Tuan~Anh
+  Dinh}, \bibinfo{person}{Dumitrel Loghin}, \bibinfo{person}{Ee{-}Chien Chang},
+  \bibinfo{person}{Qian Lin}, {and} \bibinfo{person}{Beng~Chin Ooi}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Towards Scaling Blockchain Systems via Sharding}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 2019 International Conference
+  on Management of Data, {SIGMOD} Conference 2019, Amsterdam, The Netherlands,
+  June 30 - July 5, 2019}}, \bibfield{editor}{\bibinfo{person}{Peter~A. Boncz},
+  \bibinfo{person}{Stefan Manegold}, \bibinfo{person}{Anastasia Ailamaki},
+  \bibinfo{person}{Amol Deshpande}, {and} \bibinfo{person}{Tim Kraska}} (Eds.).
+  \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Amsterdam, The Netherlands},
+  \bibinfo{pages}{123--140}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ding, Jiang, Wang, Wang, Zhang, and Sun}{Ding
+  et~al\mbox{.}}{2019}]%
+        {ding2019txilm}
+\bibfield{author}{\bibinfo{person}{Donghui Ding}, \bibinfo{person}{Xin Jiang},
+  \bibinfo{person}{Jiaping Wang}, \bibinfo{person}{Hao Wang},
+  \bibinfo{person}{Xiaobing Zhang}, {and} \bibinfo{person}{Yi Sun}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Txilm: Lossy Block Compression with Salted Short
+  Hashing}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1906.06500}
+  (\bibinfo{year}{2019}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Divya and Biradar}{Divya and Biradar}{2018}]%
+        {attias2018tangle}
+\bibfield{author}{\bibinfo{person}{M Divya} {and} \bibinfo{person}{Nagaveni~B
+  Biradar}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{IOTA-next generation block chain}.
+\newblock \bibinfo{journal}{\emph{International journal of engineering and
+  computer science}} \bibinfo{volume}{7}, \bibinfo{number}{04}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{23823--23826}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Do and Ng}{Do and Ng}{2017}]%
+        {do2017blockchain}
+\bibfield{author}{\bibinfo{person}{Hoang~Giang Do} {and}
+  \bibinfo{person}{Wee~Keong Ng}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Blockchain-Based System for Secure Data Storage
+  with Private Keyword Search}. In \bibinfo{booktitle}{\emph{2017 {IEEE} World
+  Congress on Services, {SERVICES} 2017, Honolulu, HI, USA, June 25-30, 2017}},
+  \bibfield{editor}{\bibinfo{person}{Rami Bahsoon} {and}
+  \bibinfo{person}{Zhixiong Chen}} (Eds.). \bibinfo{publisher}{{IEEE} Computer
+  Society}, \bibinfo{address}{Honolulu, HI, USA}, \bibinfo{pages}{90--93}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Drakatos, Demetriou, Koumou, Konstantinidis,
+  and Zeinalipour{-}Yazti}{Drakatos et~al\mbox{.}}{2021}]%
+        {DBLP:conf/icde/DrakatosDKKZ21}
+\bibfield{author}{\bibinfo{person}{Panagiotis Drakatos},
+  \bibinfo{person}{Erodotos Demetriou}, \bibinfo{person}{Stavroulla Koumou},
+  \bibinfo{person}{Andreas Konstantinidis}, {and} \bibinfo{person}{Demetrios
+  Zeinalipour{-}Yazti}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Towards a Blockchain Database for Massive IoT
+  Workloads}. In \bibinfo{booktitle}{\emph{37th {IEEE} International Conference
+  on Data Engineering Workshops, {ICDE} Workshops 2021, Chania, Greece, April
+  19-22, 2021}}. \bibinfo{publisher}{{IEEE}}, \bibinfo{pages}{76--79}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Duy, Hien, Hien, and Pham}{Duy
+  et~al\mbox{.}}{2018}]%
+        {duy2018survey}
+\bibfield{author}{\bibinfo{person}{Phan~The Duy}, \bibinfo{person}{Do~Thi~Thu
+  Hien}, \bibinfo{person}{Do~Hoang Hien}, {and} \bibinfo{person}{Van{-}Hau
+  Pham}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A survey on opportunities and challenges of
+  Blockchain technology adoption for revolutionary innovation}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the Ninth International Symposium on
+  Information and Communication Technology, SoICT 2018, Danang City, Vietnam,
+  December 06-07, 2018}}. \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Danang
+  City, Vietnam}, \bibinfo{pages}{200--207}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{El{-}Hindi, Heyden, Binnig, Ramamurthy, Arasu,
+  and Kossmann}{El{-}Hindi et~al\mbox{.}}{2019}]%
+        {el2019blockchaindb}
+\bibfield{author}{\bibinfo{person}{Muhammad El{-}Hindi},
+  \bibinfo{person}{Martin Heyden}, \bibinfo{person}{Carsten Binnig},
+  \bibinfo{person}{Ravi Ramamurthy}, \bibinfo{person}{Arvind Arasu}, {and}
+  \bibinfo{person}{Donald Kossmann}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{BlockchainDB - Towards a Shared Database on
+  Blockchains}. In \bibinfo{booktitle}{\emph{Proceedings of the 2019
+  International Conference on Management of Data, {SIGMOD} Conference 2019,
+  Amsterdam, The Netherlands, June 30 - July 5, 2019}},
+  \bibfield{editor}{\bibinfo{person}{Peter~A. Boncz}, \bibinfo{person}{Stefan
+  Manegold}, \bibinfo{person}{Anastasia Ailamaki}, \bibinfo{person}{Amol
+  Deshpande}, {and} \bibinfo{person}{Tim Kraska}} (Eds.).
+  \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Amsterdam, The Netherlands},
+  \bibinfo{pages}{1905--1908}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Eltayieb, Elhabob, Hassan, and Li}{Eltayieb
+  et~al\mbox{.}}{2020}]%
+        {DBLP:journals/jsa/EltayiebEHL20}
+\bibfield{author}{\bibinfo{person}{Nabeil Eltayieb}, \bibinfo{person}{Rashad
+  Elhabob}, \bibinfo{person}{Alzubair Hassan}, {and} \bibinfo{person}{Fagen
+  Li}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{A blockchain-based attribute-based signcryption
+  scheme to secure data sharing in the cloud}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{102}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Feng, He, Zeadally, Khan, and Kumar}{Feng
+  et~al\mbox{.}}{2019}]%
+        {feng2019survey}
+\bibfield{author}{\bibinfo{person}{Qi Feng}, \bibinfo{person}{Debiao He},
+  \bibinfo{person}{Sherali Zeadally}, \bibinfo{person}{Muhammad~Khurram Khan},
+  {and} \bibinfo{person}{Neeraj Kumar}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{A survey on privacy protection in blockchain
+  system}.
+\newblock \bibinfo{journal}{\emph{Journal of Network and Computer
+  Applications}}  \bibinfo{volume}{126} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{45--58}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ferraro, King, and Shorten}{Ferraro
+  et~al\mbox{.}}{2019}]%
+        {ferraro2018iota}
+\bibfield{author}{\bibinfo{person}{Pietro Ferraro},
+  \bibinfo{person}{Christopher~K. King}, {and} \bibinfo{person}{Robert
+  Shorten}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{IOTA-based Directed Acyclic Graphs without
+  Orphans}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1901.07302}
+  (\bibinfo{year}{2019}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gao, Li, and Li}{Gao et~al\mbox{.}}{2018}]%
+        {gao2018blockchain}
+\bibfield{author}{\bibinfo{person}{Junying Gao}, \bibinfo{person}{Bo Li}, {and}
+  \bibinfo{person}{Zhihuai Li}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Blockchain Storage Analysis and Optimization of
+  Bitcoin Miner Node}. In \bibinfo{booktitle}{\emph{Communications, Signal
+  Processing, and Systems - Proceedings of the 2018 CSPS, Volume {III:}
+  Systems, Dalian, China, 14-16 July 2018}} \emph{(\bibinfo{series}{Lecture
+  Notes in Electrical Engineering}, Vol.~\bibinfo{volume}{517})},
+  \bibfield{editor}{\bibinfo{person}{Qilian Liang}, \bibinfo{person}{Xin Liu},
+  \bibinfo{person}{Zhenyu Na}, \bibinfo{person}{Wei Wang},
+  \bibinfo{person}{Jiasong Mu}, {and} \bibinfo{person}{Baoju Zhang}} (Eds.).
+  \bibinfo{publisher}{Springer}, \bibinfo{address}{Dalian, China},
+  \bibinfo{pages}{922--932}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ge, Ma, and Liu}{Ge et~al\mbox{.}}{2020}]%
+        {DBLP:journals/jsa/GeML20}
+\bibfield{author}{\bibinfo{person}{Chunpeng Ge}, \bibinfo{person}{Xinshu Ma},
+  {and} \bibinfo{person}{Zhe Liu}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{A semi-autonomous distributed blockchain-based
+  framework for UAVs system}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{107}
+  (\bibinfo{year}{2020}), \bibinfo{pages}{101728}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ghemawat and Dean}{Ghemawat and Dean}{2011}]%
+        {ghemawat2011leveldb}
+\bibfield{author}{\bibinfo{person}{Sanjay Ghemawat} {and} \bibinfo{person}{Jeff
+  Dean}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \bibinfo{title}{LevelDB}.
+\newblock
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Grabis, Stankovski, and Zarins}{Grabis
+  et~al\mbox{.}}{2020}]%
+        {DBLP:conf/icde/GrabisSZ20}
+\bibfield{author}{\bibinfo{person}{Janis Grabis}, \bibinfo{person}{Vlado
+  Stankovski}, {and} \bibinfo{person}{Roberts Zarins}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Blockchain Enabled Distributed Storage and Sharing
+  of Personal Data Assets}. In \bibinfo{booktitle}{\emph{36th {IEEE}
+  International Conference on Data Engineering Workshops, {ICDE} Workshops
+  2020, Dallas, TX, USA, April 20-24, 2020}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{pages}{11--17}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Guo, Gao, Mei, Zhao, and Yang}{Guo
+  et~al\mbox{.}}{2019}]%
+        {guo2019design}
+\bibfield{author}{\bibinfo{person}{Zhaohui Guo}, \bibinfo{person}{Zhen Gao},
+  \bibinfo{person}{Haojuan Mei}, \bibinfo{person}{Ming Zhao}, {and}
+  \bibinfo{person}{Jinsheng Yang}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Design and Optimization for Storage Mechanism of
+  the Public Blockchain Based on Redundant Residual Number System}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{7}
+  (\bibinfo{year}{2019}), \bibinfo{pages}{98546--98554}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gupta, Hans, Aggarwal, Mehta, Chatterjee, and
+  Jayachandran}{Gupta et~al\mbox{.}}{2018a}]%
+        {gupta2018efficiently}
+\bibfield{author}{\bibinfo{person}{Himanshu Gupta}, \bibinfo{person}{Sandeep
+  Hans}, \bibinfo{person}{Kushagra Aggarwal}, \bibinfo{person}{Sameep Mehta},
+  \bibinfo{person}{Bapi Chatterjee}, {and} \bibinfo{person}{Praveen
+  Jayachandran}.} \bibinfo{year}{2018}\natexlab{a}.
+\newblock \showarticletitle{Efficiently Processing Temporal Queries on
+  Hyperledger Fabric}. In \bibinfo{booktitle}{\emph{34th {IEEE} International
+  Conference on Data Engineering, {ICDE} 2018, Paris, France, April 16-19,
+  2018}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{Paris, France}, \bibinfo{pages}{1489--1494}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gupta, Hans, Mehta, and Jayachandran}{Gupta
+  et~al\mbox{.}}{2018b}]%
+        {gupta2018building}
+\bibfield{author}{\bibinfo{person}{Himanshu Gupta}, \bibinfo{person}{Sandeep
+  Hans}, \bibinfo{person}{Sameep Mehta}, {and} \bibinfo{person}{Praveen
+  Jayachandran}.} \bibinfo{year}{2018}\natexlab{b}.
+\newblock \showarticletitle{On Building Efficient Temporal Indexes on
+  Hyperledger Fabric}. In \bibinfo{booktitle}{\emph{11th {IEEE} International
+  Conference on Cloud Computing, {CLOUD} 2018, San Francisco, CA, USA, July
+  2-7, 2018}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{San Francisco, CA, USA}, \bibinfo{pages}{294--301}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Han, Xu, and Chen}{Han et~al\mbox{.}}{2018}]%
+        {DBLP:conf/icde/HanXC18}
+\bibfield{author}{\bibinfo{person}{Siyuan Han}, \bibinfo{person}{Zihuan Xu},
+  {and} \bibinfo{person}{Lei Chen}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Jupiter: {A} Blockchain Platform for Mobile
+  Devices}. In \bibinfo{booktitle}{\emph{34th {IEEE} International Conference
+  on Data Engineering, {ICDE} 2018, Paris, France, April 16-19, 2018}}.
+  \bibinfo{publisher}{{IEEE} Computer Society}, \bibinfo{pages}{1649--1652}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Hanley and Tewari}{Hanley and Tewari}{2018}]%
+        {hanley2018managing}
+\bibfield{author}{\bibinfo{person}{Mark Hanley} {and} \bibinfo{person}{Hitesh
+  Tewari}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Managing Lifetime Healthcare Data on the
+  Blockchain}. In \bibinfo{booktitle}{\emph{2018 {IEEE} SmartWorld, Ubiquitous
+  Intelligence {\&} Computing, Advanced {\&} Trusted Computing, Scalable
+  Computing {\&} Communications, Cloud {\&} Big Data Computing, Internet of
+  People and Smart City Innovation, SmartWorld/SCALCOM/UIC/ATC/CBDCom/IOP/SCI
+  2018, Guangzhou, China, October 8-12, 2018}},
+  \bibfield{editor}{\bibinfo{person}{Guojun Wang}, \bibinfo{person}{Qi~Han},
+  \bibinfo{person}{Md. Zakirul~Alam Bhuiyan}, \bibinfo{person}{Xiaoxing Ma},
+  \bibinfo{person}{Fr{\'{e}}d{\'{e}}ric Loulergue}, \bibinfo{person}{Peng Li},
+  \bibinfo{person}{Manuel Roveri}, {and} \bibinfo{person}{Lei Chen}} (Eds.).
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{Guangzhou, China},
+  \bibinfo{pages}{246--251}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{intotheblock}{intotheblock}{2017}]%
+        {timmurphy.org}
+\bibfield{author}{\bibinfo{person}{intotheblock}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{Bitcoin blockchain size over time}.
+\newblock
+  \bibinfo{howpublished}{\url{http://blockchain.info/charts/blocks-size}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jiang, Li, Gong, Yan, Yan, Sun, and Li}{Jiang
+  et~al\mbox{.}}{2020}]%
+        {DBLP:journals/jsa/JiangLGYYSL20}
+\bibfield{author}{\bibinfo{person}{Shuhao Jiang}, \bibinfo{person}{Jiajun Li},
+  \bibinfo{person}{Shijun Gong}, \bibinfo{person}{Junchao Yan},
+  \bibinfo{person}{Guihai Yan}, \bibinfo{person}{Yi Sun}, {and}
+  \bibinfo{person}{Xiaowei Li}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{BZIP:} {A} compact data memory system for
+  UTXO-based blockchains}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{109}
+  (\bibinfo{year}{2020}), \bibinfo{pages}{101809}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Joshi, Han, and Wang}{Joshi
+  et~al\mbox{.}}{2018}]%
+        {joshi2018survey}
+\bibfield{author}{\bibinfo{person}{Archana~Prashanth Joshi},
+  \bibinfo{person}{Meng Han}, {and} \bibinfo{person}{Yan Wang}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A survey on security and privacy issues of
+  blockchain technology}.
+\newblock \bibinfo{journal}{\emph{Mathematical foundations of computing}}
+  \bibinfo{volume}{1}, \bibinfo{number}{2} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{121}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kim, Jeong, Jezek, Burgstaller, and
+  Scholz}{Kim et~al\mbox{.}}{2021}]%
+        {DBLP:conf/usenix/KimJJBS21}
+\bibfield{author}{\bibinfo{person}{Yeonsoo Kim}, \bibinfo{person}{Seongho
+  Jeong}, \bibinfo{person}{Kamil Jezek}, \bibinfo{person}{Bernd Burgstaller},
+  {and} \bibinfo{person}{Bernhard Scholz}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{An Off-The-Chain Execution Environment for Scalable
+  Testing and Profiling of Smart Contracts}. In \bibinfo{booktitle}{\emph{2021
+  {USENIX} Annual Technical Conference, {USENIX} {ATC} 2021, July 14-16,
+  2021}}, \bibfield{editor}{\bibinfo{person}{Irina Calciu} {and}
+  \bibinfo{person}{Geoff Kuenning}} (Eds.). \bibinfo{publisher}{{USENIX}
+  Association}, \bibinfo{pages}{565--579}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kokoris{-}Kogias, Jovanovic, Gasser, Gailly,
+  Syta, and Ford}{Kokoris{-}Kogias et~al\mbox{.}}{2018}]%
+        {kokoris2018omniledger}
+\bibfield{author}{\bibinfo{person}{Eleftherios Kokoris{-}Kogias},
+  \bibinfo{person}{Philipp Jovanovic}, \bibinfo{person}{Linus Gasser},
+  \bibinfo{person}{Nicolas Gailly}, \bibinfo{person}{Ewa Syta}, {and}
+  \bibinfo{person}{Bryan Ford}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{OmniLedger: {A} Secure, Scale-Out, Decentralized
+  Ledger via Sharding}. In \bibinfo{booktitle}{\emph{2018 {IEEE} Symposium on
+  Security and Privacy, {SP} 2018, Proceedings, 21-23 May 2018, San Francisco,
+  California, {USA}}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{San Francisco, California, USA}, \bibinfo{pages}{583--598}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Konsta, Mytilinis, Doka, Niarchos, and
+  Koziris}{Konsta et~al\mbox{.}}{2021}]%
+        {DBLP:conf/icde/KonstaMDNK21}
+\bibfield{author}{\bibinfo{person}{Alyzia Konsta}, \bibinfo{person}{Ioannis
+  Mytilinis}, \bibinfo{person}{Katerina Doka}, \bibinfo{person}{Sotiris
+  Niarchos}, {and} \bibinfo{person}{Nectarios Koziris}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Clouseau: Blockchain-based Data Integrity for
+  {HDFS} Clusters}. In \bibinfo{booktitle}{\emph{37th {IEEE} International
+  Conference on Data Engineering, {ICDE} 2021, Chania, Greece, April 19-22,
+  2021}}. \bibinfo{publisher}{{IEEE}}, \bibinfo{pages}{2725--2728}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kwon and Buchman}{Kwon and Buchman}{2016}]%
+        {kwon2016cosmos}
+\bibfield{author}{\bibinfo{person}{Jae Kwon} {and} \bibinfo{person}{Ethan
+  Buchman}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Cosmos: A network of distributed ledgers}.
+\newblock \bibinfo{journal}{\emph{URL https://cosmos. network/whitepaper}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lao, Li, Hou, Xiao, Guo, and Yang}{Lao
+  et~al\mbox{.}}{2020}]%
+        {lao2020survey}
+\bibfield{author}{\bibinfo{person}{Laphou Lao}, \bibinfo{person}{Zecheng Li},
+  \bibinfo{person}{Songlin Hou}, \bibinfo{person}{Bin Xiao},
+  \bibinfo{person}{Songtao Guo}, {and} \bibinfo{person}{Yuanyuan Yang}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{A survey of IoT applications in blockchain systems:
+  Architecture, consensus, and traffic modeling}.
+\newblock \bibinfo{journal}{\emph{ACM Computing Surveys (CSUR)}}
+  \bibinfo{volume}{53}, \bibinfo{number}{1} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1--32}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lerner}{Lerner}{2015}]%
+        {lerner2015dagcoin}
+\bibfield{author}{\bibinfo{person}{Sergio~Demian Lerner}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{DagCoin: a cryptocurrency without blocks}.
+\newblock \bibinfo{journal}{\emph{White paper}} (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lesavich and Lesavich}{Lesavich and
+  Lesavich}{2017}]%
+        {lesavich2017method}
+\bibfield{author}{\bibinfo{person}{Stephen Lesavich} {and}
+  \bibinfo{person}{Zachary~C Lesavich}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{Method and system for storage and retrieval of
+  blockchain blocks using galois fields}.
+\newblock
+\newblock
+\newblock
+\shownote{US Patent 9,569,771.}
+
+
+\bibitem[\protect\citeauthoryear{Li, Li, Xu, Long, and Yao}{Li
+  et~al\mbox{.}}{2018a}]%
+        {DBLP:journals/corr/abs-1805-03870}
+\bibfield{author}{\bibinfo{person}{Chenxing Li}, \bibinfo{person}{Peilun Li},
+  \bibinfo{person}{Wei Xu}, \bibinfo{person}{Fan Long}, {and}
+  \bibinfo{person}{Andrew~Chi{-}Chih Yao}.} \bibinfo{year}{2018}\natexlab{a}.
+\newblock \showarticletitle{Scaling Nakamoto Consensus to Thousands of
+  Transactions per Second}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1805.03870}
+  (\bibinfo{year}{2018}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Li, Zhou, Yang, Wu, Yang, Xu, Long, and
+  Yao}{Li et~al\mbox{.}}{2020b}]%
+        {DBLP:conf/usenix/LiLZYWYXLY20}
+\bibfield{author}{\bibinfo{person}{Chenxing Li}, \bibinfo{person}{Peilun Li},
+  \bibinfo{person}{Dong Zhou}, \bibinfo{person}{Zhe Yang},
+  \bibinfo{person}{Ming Wu}, \bibinfo{person}{Guang Yang}, \bibinfo{person}{Wei
+  Xu}, \bibinfo{person}{Fan Long}, {and} \bibinfo{person}{Andrew~Chi{-}Chih
+  Yao}.} \bibinfo{year}{2020}\natexlab{b}.
+\newblock \showarticletitle{A Decentralized Blockchain with High Throughput and
+  Fast Confirmation}. In \bibinfo{booktitle}{\emph{2020 {USENIX} Annual
+  Technical Conference, {USENIX} {ATC} 2020, July 15-17, 2020}},
+  \bibfield{editor}{\bibinfo{person}{Ada Gavrilovska} {and}
+  \bibinfo{person}{Erez Zadok}} (Eds.). \bibinfo{publisher}{{USENIX}
+  Association}, \bibinfo{pages}{515--528}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Zhang, He, and Tian}{Li
+  et~al\mbox{.}}{2017a}]%
+        {li2017searchable}
+\bibfield{author}{\bibinfo{person}{Huige Li}, \bibinfo{person}{Fangguo Zhang},
+  \bibinfo{person}{Jiejie He}, {and} \bibinfo{person}{Haibo Tian}.}
+  \bibinfo{year}{2017}\natexlab{a}.
+\newblock \showarticletitle{A Searchable Symmetric Encryption Scheme using
+  BlockChain}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1711.01030}
+  (\bibinfo{year}{2017}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Wu, and Chen}{Li et~al\mbox{.}}{2018b}]%
+        {li2018block}
+\bibfield{author}{\bibinfo{person}{Jiaxing Li}, \bibinfo{person}{Jigang Wu},
+  {and} \bibinfo{person}{Long Chen}.} \bibinfo{year}{2018}\natexlab{b}.
+\newblock \showarticletitle{Block-secure: Blockchain based scheme for secure
+  P2P cloud storage}.
+\newblock \bibinfo{journal}{\emph{Information Sciences}}  \bibinfo{volume}{465}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{219--231}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Jiang, Chen, Luo, and Wen}{Li
+  et~al\mbox{.}}{2020a}]%
+        {li2020survey}
+\bibfield{author}{\bibinfo{person}{Xiaoqi Li}, \bibinfo{person}{Peng Jiang},
+  \bibinfo{person}{Ting Chen}, \bibinfo{person}{Xiapu Luo}, {and}
+  \bibinfo{person}{Qiaoyan Wen}.} \bibinfo{year}{2020}\natexlab{a}.
+\newblock \showarticletitle{A survey on the security of blockchain systems}.
+\newblock \bibinfo{journal}{\emph{Future Generation Computer Systems}}
+  \bibinfo{volume}{107} (\bibinfo{year}{2020}), \bibinfo{pages}{841--853}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Zheng, Yan, Liu, and Zhou}{Li
+  et~al\mbox{.}}{2017b}]%
+        {li2017etherql}
+\bibfield{author}{\bibinfo{person}{Yang Li}, \bibinfo{person}{Kai Zheng},
+  \bibinfo{person}{Ying Yan}, \bibinfo{person}{Qi Liu}, {and}
+  \bibinfo{person}{Xiaofang Zhou}.} \bibinfo{year}{2017}\natexlab{b}.
+\newblock \showarticletitle{EtherQL: {A} Query Layer for Blockchain System}. In
+  \bibinfo{booktitle}{\emph{Database Systems for Advanced Applications - 22nd
+  International Conference, {DASFAA} 2017, Suzhou, China, March 27-30, 2017,
+  Proceedings, Part {II}}} \emph{(\bibinfo{series}{Lecture Notes in Computer
+  Science}, Vol.~\bibinfo{volume}{10178})},
+  \bibfield{editor}{\bibinfo{person}{K.~Sel{\c{c}}uk Candan},
+  \bibinfo{person}{Lei Chen}, \bibinfo{person}{Torben~Bach Pedersen},
+  \bibinfo{person}{Lijun Chang}, {and} \bibinfo{person}{Wen Hua}} (Eds.).
+  \bibinfo{publisher}{Springer}, \bibinfo{address}{Suzhou, China},
+  \bibinfo{pages}{556--567}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lin and Liao}{Lin and Liao}{2017}]%
+        {lin2017survey}
+\bibfield{author}{\bibinfo{person}{Iuon-Chang Lin} {and}
+  \bibinfo{person}{Tzu-Chun Liao}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{A survey of blockchain security issues and
+  challenges.}
+\newblock \bibinfo{journal}{\emph{IJ Network Security}} \bibinfo{volume}{19},
+  \bibinfo{number}{5} (\bibinfo{year}{2017}), \bibinfo{pages}{653--659}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Linoy, Ray, and Stakhanova}{Linoy
+  et~al\mbox{.}}{2020}]%
+        {DBLP:conf/icde/LinoyRS20}
+\bibfield{author}{\bibinfo{person}{Shlomi Linoy}, \bibinfo{person}{Suprio Ray},
+  {and} \bibinfo{person}{Natalia Stakhanova}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Towards Eidetic Blockchain Systems with Enhanced
+  Provenance}. In \bibinfo{booktitle}{\emph{36th {IEEE} International
+  Conference on Data Engineering Workshops, {ICDE} Workshops 2020, Dallas, TX,
+  USA, April 20-24, 2020}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{pages}{7--10}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Liu and Liu}{Liu and Liu}{2019}]%
+        {liu2019survey}
+\bibfield{author}{\bibinfo{person}{Jing Liu} {and} \bibinfo{person}{Zhentian
+  Liu}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{A survey on security verification of blockchain
+  smart contracts}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{7}
+  (\bibinfo{year}{2019}), \bibinfo{pages}{77894--77904}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Liu, Wang, Lin, and Xu}{Liu
+  et~al\mbox{.}}{2019}]%
+        {DBLP:journals/tii/LiuWLX19}
+\bibfield{author}{\bibinfo{person}{Yinqiu Liu}, \bibinfo{person}{Kun Wang},
+  \bibinfo{person}{Yun Lin}, {and} \bibinfo{person}{Wenyao Xu}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{\emph{LightChain}: {A} Lightweight Blockchain
+  System for Industrial Internet of Things}.
+\newblock \bibinfo{journal}{\emph{{IEEE} Trans. Ind. Informatics}}
+  \bibinfo{volume}{15}, \bibinfo{number}{6} (\bibinfo{year}{2019}),
+  \bibinfo{pages}{3571--3581}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lombrozo, Lau, and Wuille}{Lombrozo
+  et~al\mbox{.}}{2015}]%
+        {lombrozo2015segregated}
+\bibfield{author}{\bibinfo{person}{Eric Lombrozo}, \bibinfo{person}{Johnson
+  Lau}, {and} \bibinfo{person}{Pieter Wuille}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Segregated witness (consensus layer)}.
+\newblock \bibinfo{journal}{\emph{Bitcoin Core Develop. Team, Tech. Rep. BIP}}
+  \bibinfo{volume}{141} (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Luu, Narayanan, Zheng, Baweja, Gilbert, and
+  Saxena}{Luu et~al\mbox{.}}{2016}]%
+        {luu2016secure}
+\bibfield{author}{\bibinfo{person}{Loi Luu}, \bibinfo{person}{Viswesh
+  Narayanan}, \bibinfo{person}{Chaodong Zheng}, \bibinfo{person}{Kunal Baweja},
+  \bibinfo{person}{Seth Gilbert}, {and} \bibinfo{person}{Prateek Saxena}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{A Secure Sharding Protocol For Open Blockchains}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 2016 {ACM} {SIGSAC}
+  Conference on Computer and Communications Security, Vienna, Austria, October
+  24-28, 2016}}, \bibfield{editor}{\bibinfo{person}{Edgar~R. Weippl},
+  \bibinfo{person}{Stefan Katzenbeisser}, \bibinfo{person}{Christopher
+  Kruegel}, \bibinfo{person}{Andrew~C. Myers}, {and} \bibinfo{person}{Shai
+  Halevi}} (Eds.). \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Vienna,
+  Austria}, \bibinfo{pages}{17--30}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lys, Micoulet, and Potop{-}Butucaru}{Lys
+  et~al\mbox{.}}{2020}]%
+        {herlihy2018atomic}
+\bibfield{author}{\bibinfo{person}{L{\'{e}}onard Lys}, \bibinfo{person}{Arthur
+  Micoulet}, {and} \bibinfo{person}{Maria Potop{-}Butucaru}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Atomic cross chain swaps via relays and adapters}.
+  In \bibinfo{booktitle}{\emph{CryBlock@MOBICOM 2020: Proceedings of the 3rd
+  Workshop on Cryptocurrencies and Blockchains for Distributed Systems, London,
+  UK, September 25, 2020}}. \bibinfo{publisher}{{ACM}},
+  \bibinfo{address}{London, UK}, \bibinfo{pages}{59--64}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Maurer and Lewis}{Maurer and Lewis}{1975}]%
+        {maurer1975hash}
+\bibfield{author}{\bibinfo{person}{Ward~Douglas Maurer} {and}
+  \bibinfo{person}{Theodore~Gyle Lewis}.} \bibinfo{year}{1975}\natexlab{}.
+\newblock \showarticletitle{Hash table methods}.
+\newblock \bibinfo{journal}{\emph{ACM Computing Surveys (CSUR)}}
+  \bibinfo{volume}{7}, \bibinfo{number}{1} (\bibinfo{year}{1975}),
+  \bibinfo{pages}{5--19}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{McConaghy, Marques, M{\"u}ller, De~Jonghe,
+  McConaghy, McMullen, Henderson, Bellemare, and Granzotto}{McConaghy
+  et~al\mbox{.}}{2016}]%
+        {mcconaghy2016bigchaindb}
+\bibfield{author}{\bibinfo{person}{Trent McConaghy}, \bibinfo{person}{Rodolphe
+  Marques}, \bibinfo{person}{Andreas M{\"u}ller}, \bibinfo{person}{Dimitri
+  De~Jonghe}, \bibinfo{person}{Troy McConaghy}, \bibinfo{person}{Greg
+  McMullen}, \bibinfo{person}{Ryan Henderson}, \bibinfo{person}{Sylvain
+  Bellemare}, {and} \bibinfo{person}{Alberto Granzotto}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Bigchaindb: a scalable blockchain database}.
+\newblock \bibinfo{journal}{\emph{white paper, BigChainDB}}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Muzammal, Qu, Nasrulin, and
+  Skovsgaard}{Muzammal et~al\mbox{.}}{2018}]%
+        {muzammal2018blockchain}
+\bibfield{author}{\bibinfo{person}{Muhammad Muzammal}, \bibinfo{person}{Qiang
+  Qu}, \bibinfo{person}{Bulat Nasrulin}, {and} \bibinfo{person}{Anders
+  Skovsgaard}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Blockchain Database Application Platform}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1808.05199}
+  (\bibinfo{year}{2018}).
+\newblock
+\newblock
+\shownote{Withdrawn.}
+
+
+\bibitem[\protect\citeauthoryear{Nakamoto}{Nakamoto}{2019}]%
+        {nakamoto2019bitcoin}
+\bibfield{author}{\bibinfo{person}{Satoshi Nakamoto}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Bitcoin: A peer-to-peer electronic cash
+  system}}.
+\newblock \bibinfo{type}{{T}echnical {R}eport}. \bibinfo{institution}{Manubot}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Network}{Network}{2018}]%
+        {network2018raiden}
+\bibfield{author}{\bibinfo{person}{Raiden Network}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{title}{What is the raiden network}.
+\newblock
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Nguyen and Kim}{Nguyen and Kim}{2018}]%
+        {nguyen2018survey}
+\bibfield{author}{\bibinfo{person}{Giang{-}Truong Nguyen} {and}
+  \bibinfo{person}{Kyungbaek Kim}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Survey about Consensus Algorithms Used in
+  Blockchain}.
+\newblock \bibinfo{journal}{\emph{J. Inf. Process. Syst.}}
+  \bibinfo{volume}{14}, \bibinfo{number}{1} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{101--128}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Palai, Vora, and Shah}{Palai
+  et~al\mbox{.}}{2018}]%
+        {palai2018empowering}
+\bibfield{author}{\bibinfo{person}{Asutosh Palai}, \bibinfo{person}{Meet Vora},
+  {and} \bibinfo{person}{Aashaka Shah}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Empowering Light Nodes in Blockchains with Block
+  Summarization}. In \bibinfo{booktitle}{\emph{9th {IFIP} International
+  Conference on New Technologies, Mobility and Security, {NTMS} 2018, Paris,
+  France, February 26-28, 2018}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{address}{Paris, France}, \bibinfo{pages}{1--5}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Patsonakis and Roussopoulos}{Patsonakis and
+  Roussopoulos}{2019}]%
+        {patsonakis2019alternative}
+\bibfield{author}{\bibinfo{person}{Christos Patsonakis} {and}
+  \bibinfo{person}{Mema Roussopoulos}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{An Alternative Paradigm for Developing and Pricing
+  Storage on Smart Contract Platforms}. In \bibinfo{booktitle}{\emph{{IEEE}
+  International Conference on Decentralized Applications and Infrastructures,
+  {DAPPCON} 2019, Newark, CA, USA, April 4-9, 2019}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{Newark, CA, USA},
+  \bibinfo{pages}{170--175}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Peng, Wu, Xiao, and Guo}{Peng
+  et~al\mbox{.}}{2019}]%
+        {peng2019vql}
+\bibfield{author}{\bibinfo{person}{Zhe Peng}, \bibinfo{person}{Haotian Wu},
+  \bibinfo{person}{Bin Xiao}, {and} \bibinfo{person}{Songtao Guo}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{{VQL:} Providing Query Efficiency and Data
+  Authenticity in Blockchain Systems}. In \bibinfo{booktitle}{\emph{35th {IEEE}
+  International Conference on Data Engineering Workshops, {ICDE} Workshops
+  2019, Macao, China, April 8-12, 2019}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{address}{Macao, China}, \bibinfo{pages}{1--6}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Perard, Lacan, Bachy, and Detchart}{Perard
+  et~al\mbox{.}}{2018}]%
+        {perard2018erasure}
+\bibfield{author}{\bibinfo{person}{Doriane Perard},
+  \bibinfo{person}{J{\'{e}}r{\^{o}}me Lacan}, \bibinfo{person}{Yann Bachy},
+  {and} \bibinfo{person}{Jonathan Detchart}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Erasure Code-Based Low Storage Blockchain Node}. In
+  \bibinfo{booktitle}{\emph{{IEEE} International Conference on Internet of
+  Things (iThings) and {IEEE} Green Computing and Communications (GreenCom) and
+  {IEEE} Cyber, Physical and Social Computing (CPSCom) and {IEEE} Smart Data
+  (SmartData), iThings/GreenCom/CPSCom/SmartData 2018, Halifax, NS, Canada,
+  July 30 - August 3, 2018}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{address}{Halifax, NS, Canada}, \bibinfo{pages}{1622--1627}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ponnapalli, Shah, Banerjee, Malkhi, Tai,
+  Chidambaram, and Wei}{Ponnapalli et~al\mbox{.}}{2021}]%
+        {DBLP:conf/usenix/PonnapalliSBMTC21}
+\bibfield{author}{\bibinfo{person}{Soujanya Ponnapalli},
+  \bibinfo{person}{Aashaka Shah}, \bibinfo{person}{Souvik Banerjee},
+  \bibinfo{person}{Dahlia Malkhi}, \bibinfo{person}{Amy Tai},
+  \bibinfo{person}{Vijay Chidambaram}, {and} \bibinfo{person}{Michael Wei}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{RainBlock: Faster Transaction Processing in Public
+  Blockchains}. In \bibinfo{booktitle}{\emph{2021 {USENIX} Annual Technical
+  Conference, {USENIX} {ATC} 2021, July 14-16, 2021}},
+  \bibfield{editor}{\bibinfo{person}{Irina Calciu} {and} \bibinfo{person}{Geoff
+  Kuenning}} (Eds.). \bibinfo{publisher}{{USENIX} Association},
+  \bibinfo{pages}{333--347}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ponnapalli, Shah, Tai, Banerjee, Chidambaram,
+  Malkhi, and Wei}{Ponnapalli et~al\mbox{.}}{2019}]%
+        {ponnapalli2019scalable}
+\bibfield{author}{\bibinfo{person}{Soujanya Ponnapalli},
+  \bibinfo{person}{Aashaka Shah}, \bibinfo{person}{Amy Tai},
+  \bibinfo{person}{Souvik Banerjee}, \bibinfo{person}{Vijay Chidambaram},
+  \bibinfo{person}{Dahlia Malkhi}, {and} \bibinfo{person}{Michael Wei}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Scalable and Efficient Data Authentication for
+  Decentralized Systems}.
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{abs/1909.11590}
+  (\bibinfo{year}{2019}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Poon and Buterin}{Poon and Buterin}{2017}]%
+        {poon2017plasma}
+\bibfield{author}{\bibinfo{person}{Joseph Poon} {and} \bibinfo{person}{Vitalik
+  Buterin}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Plasma: Scalable autonomous smart contracts}.
+\newblock \bibinfo{journal}{\emph{White paper}} (\bibinfo{year}{2017}),
+  \bibinfo{pages}{1--47}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Poon and Dryja}{Poon and Dryja}{2016}]%
+        {poon2016bitcoin}
+\bibfield{author}{\bibinfo{person}{Joseph Poon} {and} \bibinfo{person}{Thaddeus
+  Dryja}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \bibinfo{title}{The bitcoin lightning network: Scalable off-chain
+  instant payments}.
+\newblock
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Popov}{Popov}{2016}]%
+        {popov2016tangle}
+\bibfield{author}{\bibinfo{person}{Serguei Popov}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{The tangle}.
+\newblock \bibinfo{journal}{\emph{cit. on}} (\bibinfo{year}{2016}),
+  \bibinfo{pages}{131}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Popov, Saa, and Finardi}{Popov
+  et~al\mbox{.}}{2019}]%
+        {popov2019equilibria}
+\bibfield{author}{\bibinfo{person}{Serguei Popov}, \bibinfo{person}{Olivia
+  Saa}, {and} \bibinfo{person}{Paulo Finardi}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Equilibria in the Tangle}.
+\newblock \bibinfo{journal}{\emph{Computers \& Industrial Engineering}}
+  \bibinfo{volume}{136} (\bibinfo{year}{2019}), \bibinfo{pages}{160--172}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Qi, Zhang, Jin, and Zhou}{Qi
+  et~al\mbox{.}}{2020}]%
+        {DBLP:conf/icde/QiZJZ20}
+\bibfield{author}{\bibinfo{person}{Xiaodong Qi}, \bibinfo{person}{Zhao Zhang},
+  \bibinfo{person}{Cheqing Jin}, {and} \bibinfo{person}{Aoying Zhou}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{BFT-Store: Storage Partition for Permissioned
+  Blockchain via Erasure Coding}. In \bibinfo{booktitle}{\emph{36th {IEEE}
+  International Conference on Data Engineering, {ICDE} 2020, Dallas, TX, USA,
+  April 20-24, 2020}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{pages}{1926--1929}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Qin, Huang, Yang, and Li}{Qin
+  et~al\mbox{.}}{2021}]%
+        {DBLP:journals/jsa/QinHYL21}
+\bibfield{author}{\bibinfo{person}{Xuanmei Qin}, \bibinfo{person}{Yongfeng
+  Huang}, \bibinfo{person}{Zhen Yang}, {and} \bibinfo{person}{Xing Li}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{A Blockchain-based access control scheme with
+  multiple attribute authorities for secure cloud data sharing}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{112}
+  (\bibinfo{year}{2021}), \bibinfo{pages}{101854}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Regnath and Steinhorst}{Regnath and
+  Steinhorst}{2018}]%
+        {DBLP:conf/iccad/RegnathS18}
+\bibfield{author}{\bibinfo{person}{Emanuel Regnath} {and}
+  \bibinfo{person}{Sebastian Steinhorst}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{LeapChain: efficient blockchain verification for
+  embedded IoT}. In \bibinfo{booktitle}{\emph{Proceedings of the International
+  Conference on Computer-Aided Design, {ICCAD} 2018, San Diego, CA, USA,
+  November 05-08, 2018}}, \bibfield{editor}{\bibinfo{person}{Iris Bahar}}
+  (Ed.). \bibinfo{publisher}{{ACM}}, \bibinfo{pages}{74}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Shafeeq, Zeadally, Alam, and Khan}{Shafeeq
+  et~al\mbox{.}}{2020}]%
+        {shafeeq2019curbing}
+\bibfield{author}{\bibinfo{person}{Sehrish Shafeeq}, \bibinfo{person}{Sherali
+  Zeadally}, \bibinfo{person}{Masoom Alam}, {and} \bibinfo{person}{Abid Khan}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Curbing Address Reuse in the {IOTA} Distributed
+  Ledger: {A} Cuckoo-Filter-Based Approach}.
+\newblock \bibinfo{journal}{\emph{{IEEE} Trans. Engineering Management}}
+  \bibinfo{volume}{67}, \bibinfo{number}{4} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1244--1255}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Soloman and Felder}{Soloman and
+  Felder}{2005}]%
+        {soloman2005index}
+\bibfield{author}{\bibinfo{person}{Barbara~A Soloman} {and}
+  \bibinfo{person}{Richard~M Felder}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Index of learning styles questionnaire}.
+\newblock \bibinfo{journal}{\emph{NC State University. Available online at:
+  http://www. engr. ncsu. edu/learningstyles/ilsweb. html (last visited on
+  14.05. 2010)}}  \bibinfo{volume}{70} (\bibinfo{year}{2005}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Tao, Li, Jiang, Ng, Wang, and Li}{Tao
+  et~al\mbox{.}}{2020}]%
+        {DBLP:conf/icde/TaoLJNWL20}
+\bibfield{author}{\bibinfo{person}{Yuechen Tao}, \bibinfo{person}{Bo Li},
+  \bibinfo{person}{Jingjie Jiang}, \bibinfo{person}{Hok~Chu Ng},
+  \bibinfo{person}{Cong Wang}, {and} \bibinfo{person}{Baochun Li}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{On Sharding Open Blockchains with Smart Contracts}.
+  In \bibinfo{booktitle}{\emph{36th {IEEE} International Conference on Data
+  Engineering, {ICDE} 2020, Dallas, TX, USA, April 20-24, 2020}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{pages}{1357--1368}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Tasatanattakool and
+  Techapanupreeda}{Tasatanattakool and Techapanupreeda}{2018}]%
+        {tasatanattakool2018blockchain}
+\bibfield{author}{\bibinfo{person}{Pinyaphat Tasatanattakool} {and}
+  \bibinfo{person}{Chian Techapanupreeda}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Blockchain: Challenges and applications}. In
+  \bibinfo{booktitle}{\emph{2018 International Conference on Information
+  Networking (ICOIN)}}. IEEE, \bibinfo{pages}{473--475}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wai, Htoon, and Thein}{Wai
+  et~al\mbox{.}}{2019}]%
+        {wai2019storage}
+\bibfield{author}{\bibinfo{person}{Khin Su~Su Wai}, \bibinfo{person}{Ei~Chaw
+  Htoon}, {and} \bibinfo{person}{Nwe Nwe~Myint Thein}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Storage Structure of Student Record based on
+  Hyperledger Fabric Blockchain}. In \bibinfo{booktitle}{\emph{2019
+  International Conference on Advanced Information Technologies (ICAIT)}}.
+  IEEE, \bibinfo{address}{Yangon, Myanmar, Myanmar}, \bibinfo{pages}{108--113}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang and Wang}{Wang and Wang}{2019}]%
+        {wang2019monoxide}
+\bibfield{author}{\bibinfo{person}{Jiaping Wang} {and} \bibinfo{person}{Hao
+  Wang}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Monoxide: Scale out Blockchains with Asynchronous
+  Consensus Zones}. In \bibinfo{booktitle}{\emph{16th {USENIX} Symposium on
+  Networked Systems Design and Implementation, {NSDI} 2019, Boston, MA,
+  February 26-28, 2019}}, \bibfield{editor}{\bibinfo{person}{Jay~R. Lorch}
+  {and} \bibinfo{person}{Minlan Yu}} (Eds.). \bibinfo{publisher}{{USENIX}
+  Association}, \bibinfo{address}{Boston, MA}, \bibinfo{pages}{95--112}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Wang, Shen, Jia, Zhao, and Shao}{Wang
+  et~al\mbox{.}}{2019b}]%
+        {wang2019re}
+\bibfield{author}{\bibinfo{person}{Qian Wang}, \bibinfo{person}{Tianyu Wang},
+  \bibinfo{person}{Zhaoyan Shen}, \bibinfo{person}{Zhiping Jia},
+  \bibinfo{person}{Mengying Zhao}, {and} \bibinfo{person}{Zili Shao}.}
+  \bibinfo{year}{2019}\natexlab{b}.
+\newblock \showarticletitle{Re-Tangle: {A} ReRAM-based Processing-in-Memory
+  Architecture for Transaction-based Blockchain}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the International Conference on
+  Computer-Aided Design, {ICCAD} 2019, Westminster, CO, USA, November 4-7,
+  2019}}, \bibfield{editor}{\bibinfo{person}{David~Z. Pan}} (Ed.).
+  \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Westminster, CO, USA},
+  \bibinfo{pages}{1--8}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Zhang, and Zhang}{Wang
+  et~al\mbox{.}}{2018}]%
+        {wang2018blockchain}
+\bibfield{author}{\bibinfo{person}{Shangping Wang}, \bibinfo{person}{Yinglong
+  Zhang}, {and} \bibinfo{person}{Yaling Zhang}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A blockchain-based framework for data sharing with
+  fine-grained access control in decentralized storage systems}.
+\newblock \bibinfo{journal}{\emph{Ieee Access}}  \bibinfo{volume}{6}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{38437--38450}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Zhu, Ma, Shen, and Shao}{Wang
+  et~al\mbox{.}}{2020}]%
+        {wangtianyu}
+\bibfield{author}{\bibinfo{person}{Tianyu Wang}, \bibinfo{person}{Wenbin Zhu},
+  \bibinfo{person}{Qun Ma}, \bibinfo{person}{Zhaoyan Shen}, {and}
+  \bibinfo{person}{Zili Shao}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{ABACUS:} Address-partitioned Bloom filter on
+  Address Checking for UniquenesS in IoT Blockchain}. In
+  \bibinfo{booktitle}{\emph{{IEEE/ACM} International Conference On Computer
+  Aided Design, {ICCAD} 2020, San Diego, CA, USA, November 2-5, 2020}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{address}{San Diego, CA, USA},
+  \bibinfo{pages}{1--7}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Hoang, Hu, Xiong, Niyato, Wang, Wen, and
+  Kim}{Wang et~al\mbox{.}}{2019a}]%
+        {wang2019survey}
+\bibfield{author}{\bibinfo{person}{Wenbo Wang}, \bibinfo{person}{Dinh~Thai
+  Hoang}, \bibinfo{person}{Peizhao Hu}, \bibinfo{person}{Zehui Xiong},
+  \bibinfo{person}{Dusit Niyato}, \bibinfo{person}{Ping Wang},
+  \bibinfo{person}{Yonggang Wen}, {and} \bibinfo{person}{Dong~In Kim}.}
+  \bibinfo{year}{2019}\natexlab{a}.
+\newblock \showarticletitle{A survey on consensus mechanisms and mining
+  strategy management in blockchain networks}.
+\newblock \bibinfo{journal}{\emph{IEEE Access}}  \bibinfo{volume}{7}
+  (\bibinfo{year}{2019}), \bibinfo{pages}{22328--22370}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wiki}{Wiki}{2015}]%
+        {wiki2015scalability}
+\bibfield{author}{\bibinfo{person}{Bitcoin Wiki}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Scalability}.
+\newblock \bibinfo{journal}{\emph{Bitcoin Wiki}} (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wilkinson, Lowry, and Boshevski}{Wilkinson
+  et~al\mbox{.}}{2014}]%
+        {wilkinson2014metadisk}
+\bibfield{author}{\bibinfo{person}{Shawn Wilkinson}, \bibinfo{person}{Jim
+  Lowry}, {and} \bibinfo{person}{Tome Boshevski}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Metadisk a blockchain-based decentralized file
+  storage application}.
+\newblock \bibinfo{journal}{\emph{Tech. Rep.}} (\bibinfo{year}{2014}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wong.}{Wong.}{2017}]%
+        {eth}
+\bibfield{author}{\bibinfo{person}{JI Wong.}} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Cryptokitties is causing ethereum network
+  congestion}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wood}{Wood}{2016}]%
+        {wood2016polkadot}
+\bibfield{author}{\bibinfo{person}{Gavin Wood}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Polkadot: Vision for a heterogeneous multi-chain
+  framework}.
+\newblock \bibinfo{journal}{\emph{White Paper}} (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Xu, Zhang, and Xu}{Xu et~al\mbox{.}}{2019}]%
+        {xu2019vchain}
+\bibfield{author}{\bibinfo{person}{Cheng Xu}, \bibinfo{person}{Ce Zhang}, {and}
+  \bibinfo{person}{Jianliang Xu}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{vChain: Enabling Verifiable Boolean Range Queries
+  over Blockchain Databases}. In \bibinfo{booktitle}{\emph{Proceedings of the
+  2019 International Conference on Management of Data, {SIGMOD} Conference
+  2019, Amsterdam, The Netherlands, June 30 - July 5, 2019}},
+  \bibfield{editor}{\bibinfo{person}{Peter~A. Boncz}, \bibinfo{person}{Stefan
+  Manegold}, \bibinfo{person}{Anastasia Ailamaki}, \bibinfo{person}{Amol
+  Deshpande}, {and} \bibinfo{person}{Tim Kraska}} (Eds.).
+  \bibinfo{publisher}{{ACM}}, \bibinfo{address}{Amsterdam, The Netherlands},
+  \bibinfo{pages}{141--158}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Xu}{Xu}{2018}]%
+        {xu2018section}
+\bibfield{author}{\bibinfo{person}{Yibin Xu}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Section-Blockchain: {A} Storage Reduced Blockchain
+  Protocol, the Foundation of an Autotrophic Decentralized Storage
+  Architecture}. In \bibinfo{booktitle}{\emph{23rd International Conference on
+  Engineering of Complex Computer Systems, {ICECCS} 2018, Melbourne, Australia,
+  December 12-14, 2018}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{Melbourne, Australia}, \bibinfo{pages}{115--125}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Xu, Han, and Chen}{Xu et~al\mbox{.}}{2018}]%
+        {xu2018cub}
+\bibfield{author}{\bibinfo{person}{Zihuan Xu}, \bibinfo{person}{Siyuan Han},
+  {and} \bibinfo{person}{Lei Chen}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{CUB, a Consensus Unit-Based Storage Scheme for
+  Blockchain System}. In \bibinfo{booktitle}{\emph{34th {IEEE} International
+  Conference on Data Engineering, {ICDE} 2018, Paris, France, April 16-19,
+  2018}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{Paris, France}, \bibinfo{pages}{173--184}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Yang, Chen, and Xiang}{Yang
+  et~al\mbox{.}}{2018a}]%
+        {yang2018blockchain}
+\bibfield{author}{\bibinfo{person}{Changsong Yang}, \bibinfo{person}{Xiaofeng
+  Chen}, {and} \bibinfo{person}{Yang Xiang}.} \bibinfo{year}{2018}\natexlab{a}.
+\newblock \showarticletitle{Blockchain-based publicly verifiable data deletion
+  scheme for cloud storage}.
+\newblock \bibinfo{journal}{\emph{Journal of Network and Computer
+  Applications}}  \bibinfo{volume}{103} (\bibinfo{year}{2018}),
+  \bibinfo{pages}{185--193}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Yang, Lu, and Wu}{Yang et~al\mbox{.}}{2018b}]%
+        {DBLP:journals/jsa/YangLW18}
+\bibfield{author}{\bibinfo{person}{Jian Yang}, \bibinfo{person}{Zhihui Lu},
+  {and} \bibinfo{person}{Jie Wu}.} \bibinfo{year}{2018}\natexlab{b}.
+\newblock \showarticletitle{Smart-toy-edge-computing-oriented data exchange
+  based on blockchain}.
+\newblock \bibinfo{journal}{\emph{J. Syst. Archit.}}  \bibinfo{volume}{87}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{36--48}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zamani, Movahedi, and Raykova}{Zamani
+  et~al\mbox{.}}{2018}]%
+        {zamani2018rapidchain}
+\bibfield{author}{\bibinfo{person}{Mahdi Zamani}, \bibinfo{person}{Mahnush
+  Movahedi}, {and} \bibinfo{person}{Mariana Raykova}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{RapidChain: Scaling Blockchain via Full Sharding}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the 2018 {ACM} {SIGSAC}
+  Conference on Computer and Communications Security, {CCS} 2018, Toronto, ON,
+  Canada, October 15-19, 2018}}, \bibfield{editor}{\bibinfo{person}{David Lie},
+  \bibinfo{person}{Mohammad Mannan}, \bibinfo{person}{Michael Backes}, {and}
+  \bibinfo{person}{XiaoFeng Wang}} (Eds.). \bibinfo{publisher}{{ACM}},
+  \bibinfo{address}{Toronto, ON, Canada}, \bibinfo{pages}{931--948}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Xu, Wang, Xu, and Choi}{Zhang
+  et~al\mbox{.}}{2021}]%
+        {DBLP:conf/icde/ZhangXWXC21}
+\bibfield{author}{\bibinfo{person}{Ce Zhang}, \bibinfo{person}{Cheng Xu},
+  \bibinfo{person}{Haixin Wang}, \bibinfo{person}{Jianliang Xu}, {and}
+  \bibinfo{person}{Byron Choi}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Authenticated Keyword Search in Scalable
+  Hybrid-Storage Blockchains}. In \bibinfo{booktitle}{\emph{37th {IEEE}
+  International Conference on Data Engineering, {ICDE} 2021, Chania, Greece,
+  April 19-22, 2021}}. \bibinfo{publisher}{{IEEE}}, \bibinfo{pages}{996--1007}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Xu, Xu, Tang, and Choi}{Zhang
+  et~al\mbox{.}}{2019}]%
+        {zhang2019gem}
+\bibfield{author}{\bibinfo{person}{Ce Zhang}, \bibinfo{person}{Cheng Xu},
+  \bibinfo{person}{Jianliang Xu}, \bibinfo{person}{Yuzhe Tang}, {and}
+  \bibinfo{person}{Byron Choi}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{GEM{\^{}}2-Tree: {A} Gas-Efficient Structure for
+  Authenticated Range Queries in Blockchain}. In \bibinfo{booktitle}{\emph{35th
+  {IEEE} International Conference on Data Engineering, {ICDE} 2019, Macao,
+  China, April 8-11, 2019}}. \bibinfo{publisher}{{IEEE}},
+  \bibinfo{address}{Macao, China}, \bibinfo{pages}{842--853}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Zhong, Wang, Chao, and Wang}{Zhang
+  et~al\mbox{.}}{2020}]%
+        {zhang2020blockchain}
+\bibfield{author}{\bibinfo{person}{Jingyu Zhang}, \bibinfo{person}{Siqi Zhong},
+  \bibinfo{person}{Tian Wang}, \bibinfo{person}{Han-Chieh Chao}, {and}
+  \bibinfo{person}{Jin Wang}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Blockchain-based systems and applications: A
+  survey}.
+\newblock \bibinfo{journal}{\emph{Journal of Internet Technology}}
+  \bibinfo{volume}{21}, \bibinfo{number}{1} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1--14}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zheng, Xu, Zheng, Zhou, Yan, and Zhang}{Zheng
+  et~al\mbox{.}}{2021}]%
+        {DBLP:conf/icde/ZhengXZZYZ21}
+\bibfield{author}{\bibinfo{person}{Peilin Zheng}, \bibinfo{person}{Quanqing
+  Xu}, \bibinfo{person}{Zibin Zheng}, \bibinfo{person}{Zhiyuan Zhou},
+  \bibinfo{person}{Ying Yan}, {and} \bibinfo{person}{Hui Zhang}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Meepo: Sharded Consortium Blockchain}. In
+  \bibinfo{booktitle}{\emph{37th {IEEE} International Conference on Data
+  Engineering, {ICDE} 2021, Chania, Greece, April 19-22, 2021}}.
+  \bibinfo{publisher}{{IEEE}}, \bibinfo{pages}{1847--1852}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zheng, Li, Chen, and Dong}{Zheng
+  et~al\mbox{.}}{2018}]%
+        {zheng2018innovative}
+\bibfield{author}{\bibinfo{person}{Qiuhong Zheng}, \bibinfo{person}{Yi Li},
+  \bibinfo{person}{Ping Chen}, {and} \bibinfo{person}{Xinghua Dong}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{An Innovative IPFS-Based Storage Model for
+  Blockchain}. In \bibinfo{booktitle}{\emph{2018 {IEEE/WIC/ACM} International
+  Conference on Web Intelligence, {WI} 2018, Santiago, Chile, December 3-6,
+  2018}}. \bibinfo{publisher}{{IEEE} Computer Society},
+  \bibinfo{address}{Santiago, Chile}, \bibinfo{pages}{704--708}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zheng, Xie, Dai, Chen, and Wang}{Zheng
+  et~al\mbox{.}}{2017}]%
+        {zheng2017overview}
+\bibfield{author}{\bibinfo{person}{Zibin Zheng}, \bibinfo{person}{Shaoan Xie},
+  \bibinfo{person}{Hongning Dai}, \bibinfo{person}{Xiangping Chen}, {and}
+  \bibinfo{person}{Huaimin Wang}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{An Overview of Blockchain Technology: Architecture,
+  Consensus, and Future Trends}. In \bibinfo{booktitle}{\emph{2017 {IEEE}
+  International Congress on Big Data, BigData Congress 2017, Honolulu, HI, USA,
+  June 25-30, 2017}}, \bibfield{editor}{\bibinfo{person}{George Karypis} {and}
+  \bibinfo{person}{Jia Zhang}} (Eds.). \bibinfo{publisher}{{IEEE} Computer
+  Society}, \bibinfo{address}{Honolulu, HI, USA}, \bibinfo{pages}{557--564}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhu, Ma, Shen, Wang, and jia}{Zhu
+  et~al\mbox{.}}{2020}]%
+        {zhuwenbin}
+\bibfield{author}{\bibinfo{person}{Wenbin Zhu}, \bibinfo{person}{Qun Ma},
+  \bibinfo{person}{Zhaoyan Shen}, \bibinfo{person}{Tianyu Wang}, {and}
+  \bibinfo{person}{Zhiping jia}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{HF-BF: A Hotness-aware Fine-grained Bloom Filter
+  for Unique Address Checking in IoT Blockchain}. In
+  \bibinfo{booktitle}{\emph{International Conference on High Performance
+  Computing and Communications (HPCC’20)}}.
+\newblock
+
+
+\end{thebibliography}

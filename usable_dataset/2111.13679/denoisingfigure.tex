@@ -1,0 +1,100 @@
+\newcommand{\realinsetwidth}{.13\linewidth}
+\newcommand{\realfullwidth}{.17333\linewidth}
+\newcommand{\raisedrule}[2][0pt]{\leaders\hbox{\rule[#1]{1pt}{#2}}\hfill}
+\begin{figure*}[]
+    \centering
+\resizebox{\linewidth}{!}{
+    \begin{tabular}{c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}}
+    
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/0_input.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/2_sid.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/3_unprocessing.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/4_rvidenet.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/5_udvd.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/6_nerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/6_rawnerf_unproc.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/6_rawnerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pbrt/7_truth.png} &
+\includegraphics[width=\realfullwidth]{figures/denoising_insets/pbrt/_gt_marked_small.png} \\
+
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/0_input.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/2_sid.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/3_unprocessing.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/4_rvidenet.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/5_udvd.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/6_nerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/6_rawnerf_unproc.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/6_rawnerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/harrypotter/7_truth.png} &
+\includegraphics[width=\realfullwidth]{figures/denoising_insets/harrypotter/_gt_marked_small.png} \\
+
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/0_input.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/2_sid.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/3_unprocessing.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/4_rvidenet.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/5_udvd.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/6_nerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/6_rawnerf_unproc.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/6_rawnerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/pianokeys/7_truth.png} &
+\includegraphics[width=\realfullwidth]{figures/denoising_insets/pianokeys/_gt_marked_small.png} \\
+
+
+
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/0_input.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/2_sid.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/3_unprocessing.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/4_rvidenet.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/5_udvd.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/6_nerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/6_rawnerf_unproc.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/6_rawnerf.png} & 
+\includegraphics[width=\realinsetwidth]{figures/denoising_insets/bike/7_truth.png} &
+\includegraphics[width=\realfullwidth]{figures/denoising_insets/bike/_gt_marked_small.png} \\
+
+
+
+Noisy image & SID~\cite{chen2018cvpr} & Unprocess~\cite{brooks2019cvpr} & RViDeNet~\cite{rvidenet} & UDVD~\cite{udvd} & LDR NeRF~\cite{barron2021} & Un+RawNeRF & RawNeRF & GT crop & Ground truth \\[-1ex]
+& \multicolumn{2}{@{}c@{}}{\upbracefill} & \upbracefill & \upbracefill &  
+\multicolumn{3}{@{}c@{}}{\upbracefill}
+& \\[-0ex]
+& \multicolumn{2}{@{}c@{}}{1 input} & 3 inputs & 5 inputs &  
+\multicolumn{3}{@{}c@{}}{100 inputs, excluding test image}
+& &
+
+
+    \end{tabular}
+    }
+    \caption{
+    Example postprocessed and color-aligned patches from our real denoising dataset. RawNeRF produces the most detailed output in each case. All deep denoising methods (columns 2-5) receive the noisy test image as input, whereas NeRF variants (columns 6-8) perform both novel view synthesis and denoising. 
+    }
+    \label{fig:realdenoising}
+\end{figure*}
+
+
+\newcommand{\cnnfigstreet}{%
+  \parbox[b]{\fma}{\centering\vspace{0mm}%
+    \includegraphics[width=\fma]{instant3d/figures/monodepth/street/example_color.jpg}\vspace{-1mm}\\%
+  	\footnotesize Example input\vspace{1mm}\\
+    \includegraphics[width=\fma]{instant3d/figures/monodepth/street/example_depth.png}\vspace{-1mm}\\%
+	 \footnotesize CNN depth}%
+  \hfill%
+	$\underbracket[1pt][2.0mm]{%
+	  \parbox[b]{3.1\fmb}{%
+      \cnnres{street}{global}{\footnotesize\cnnglobal}{0mm}{0mm}{-0.5mm}%
+      \hfill%
+      \cnnres{street}{colmap}{\footnotesize\cnncolmap}{-1.5mm}{-1.5mm}{-1.5mm}%
+      \hfill%
+      \cnnres{street}{mono}{\footnotesize\cnnours}{0mm}{0mm}{-0.5mm}%
+		}%
+	}_{\substack{\vspace{-3.0mm}\\\colorbox{white}{\footnotesize~~CNN depth~~}}}$%
+  \hfill%
+	$\underbracket[1pt][2.0mm]{%
+	  \parbox[t]{\fmb}{%
+      \cnnres{street}{dual}{\footnotesize\final{\cnnours}}{0mm}{0mm}{-0.5mm}%
+		}%
+	}_{\substack{\vspace{-3.5mm}\\\colorbox{white}{\scriptsize~~\final{Dual camera depth}~~}}}$%
+	\\}%
+
+
+

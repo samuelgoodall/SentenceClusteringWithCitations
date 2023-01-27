@@ -1,0 +1,190 @@
+
+\section{Introduction}\label{sec:intro}
+
+For a weighted graph $G = (V,E,w)$ and a {\em stretch parameter} $t \ge 1$, a subgraph $H = (V,E')$ of $G$
+is called a \emph{$t$-spanner} if $d_H(u,v) \le t \cdot d_G(u,v)$, for every $e = (u,v) \in E$,
+where $d_G(u,v)$ and $d_H(u,v)$ are the distances between $u$ and $v$ in $G$ and $H$, respectively.
+Graph spanners were introduced in two celebrated papers from 1989 \cite{PS89,PU89} for unweighted graphs,
+where it is shown that for any $n$-vertex graph $G = (V,E)$ and integer $k \ge 1$, there is an $O(k)$-spanner with $O(n^{1+ 1/k})$ edges.
+We shall sometimes use a normalized notion of size, {\em sparsity}, which is the ratio of the size of the spanner to the size of a spanning tree, namely $n-1$.
+Since then, graph spanners have been extensively studied, both for general weighted graphs and for restricted graph families,
+such as Euclidean spaces and minor-free graphs.  
+In fact, spanners for Euclidean spaces---{\em Euclidean spanners}---were studied implicitly already in the pioneering SoCG'86 paper of Chew~\cite{Chew86}, who showed that any 2-dimensional Euclidean space admits a spanner of $O(n)$ edges and stretch $\sqrt{10}$, and later improved the stretch to 2~\cite{Chew89}.
+
+
+As with the sparsity parameter, its weighted variant---lightness---has been extremely well-studied; the \emph{lightness} is the ratio of the weight of the spanner to $w(MST(G))$. 
+Seminal works on {\em light} spanners over the years provide spanners with optimal {\em lightness} in various graph classes, such as in general graphs~\cite{CW16}, Euclidean spanners \cite{das1994fast} and minor-free graphs~\cite{BLW17}.
+{\bf Despite the large body of work on light spanners,  the stretch-lightness tradeoff is not nearly as well-understood as the stretch-sparsity tradeoff}, and the intuitive reason behind that is clear: Lightness seems inherently more challenging to optimize than sparsity, since different edges may contribute disproportionately to the overall lightness due to differences in their weights.  The three shortcomings of light spanners that emerge, when considering the large body of work in this area, are: (1) The techniques are ad hoc per graph class, and thus can't be applied broadly 
+(e.g., some require large stretch and are thus suitable to general graphs, while others are naturally suitable to stretch $1 + \eps$). 
+(2) The runtimes of these constructions are usually far from optimal.
+(3) These constructions are optimal in the standard and crude sense, but not in a refined sense that takes into account a wider range of involved parameters.
+
+In this work, we are set out to address these shortcomings by presenting  a {\em unified framework} of light spanners in a variety of graph classes. Informally, the framework boils down to a {\em transformation} from sparse spanners to light spanners; since the state-of-the-art for sparse spanners is much more advanced than that for light spanners, such a transformation is powerful.
+
+Our framework is developed in two papers. 
+{\bf The current paper is the second of the two --- it builds on the {basis of the unified framework} laid in the first paper, and strengthens it to achieve {\em fine-grained optimality}}, i.e., constructions that are {optimal even when taking into account a wider range of involved parameters}. Our ultimate goal is to bridge the gap in the understanding between light spanners and sparse spanners.  This gap is very prominent when considering constructions through the lens of fine-grained optimality.  
+Indeed, the state-of-the-art spanner constructions for general graphs, as well as for most restricted graph families, incur a (multiplicative) $(1+\eps)$-factor slack on the stretch with a suboptimal dependence on $\eps$ as well as other parameters in the lightness bound. 
+To exemplify this statement, we next survey results on light spanners in several basic graph classes. Subsequently, we present our new constructions, all of which are derived as applications and implications of the unified framework developed in this work. Our constructions are significantly better than the state-of-the-art {\em for every examined graph class}. 
+{\bf Our main result is for minor-free graphs, where we achieve tight dependencies on both $\eps$ and the minor size parameter} --- the upper bound follows as an application of the unified framework whereas the lower bound is obtained by different means.
+
+\paragraph{General weighted graphs.~} 
+The aforementioned results of \cite{PS89,PU89} for general graphs were strengthened in \cite{ADDJS93}, where it was shown that for every $n$-vertex \emph{weighted} graph $G = (V,E,w)$ and integer $k \ge 1$, there is a {\em greedy} algorithm for constructing a $(2k-1)$-spanner with $O(n^{1+1/k})$ edges, which is optimal under Erd\H{o}s' girth conjecture. Thus, the stretch-sparsity tradeoff is resolved up to the girth conjecture. 
+
+The stretch-lightness tradeoff, on the other hand, is still far from being resolved.  % understood.
+Alth\"{o}fer et al.~\cite{ADDJS93}   showed that the lightness of the greedy spanner is $O(n/k)$. Chandra et al.~\cite{CDNS92} improved this lightness bound to $O(k \cdot n^{(1+\eps)/{(k-1)}} \cdot (1/\eps)^2)$, for any $\eps > 0$;
+another, somewhat stronger, form of this tradeoff from \cite{CDNS92}, is stretch $(2k-1)\cdot(1+\eps)$,
+$O(n^{1+1/k})$ edges and lightness $O(k \cdot n^{1/{k}} \cdot (1/\eps)^{2})$.
+In a sequence of works from recent years \cite{ENS14,CW16,FS16},
+it was shown that the lightness of the greedy spanner is
+$O(n^{1/k} (1/\eps)^{3+2/k})$ (this lightness bound is due to \cite{CW16}; the fact that this bound holds   for the greedy spanner is due to \cite{FS16}).
+We note that the previous best known dependence on $1/\epsilon$ for near-optimal lightness bound $O(n^{1/{k}})$ (as a function of $n$ and $k$)
+is super-cubic~\cite{CW16,FS16}. 
+
+\paragraph{Minor-free graphs}
+A graph $H$ is called a \emph{minor} of graph $G$ if $H$ can be obtained from $G$ by deleting edges and vertices and by contracting edges. A graph $G$ is said to be {\em $K_r$-minor-free},
+if it excludes  $K_r$ as a minor for some fixed $r$, where $K_r$ is the complete graph on $r$ vertices. (We shall omit the prefix $K_r$ in the term ``$K_r$-minor-free'',   when the value of $r$ is not important.)
+
+The gap between sparsity and lightness is prominent in minor-free graphs, for stretch $1+\eps$.
+Indeed, minor-free graphs are sparse to begin with, and no further edge sparsification is possible for stretch $2-\eps$ (let alone $1+\eps$),
+thus the sparsity of $(1+\eps)$-spanners in minor-free graphs is trivially $\tilde \Theta(r)$. 
+(E.g., consider a path that connects $n/(r-1)$ vertex-disjoint copies of $K_{r-1}$;
+the only $(2-\eps)$-spanner of such a graph, which is $K_r$-minor free and has $\Theta(n r)$ edges, is itself.)
+On the other hand, for lightness, bounds are much more interesting.
+Borradaile, Le, and Wulff-Nilsen~\cite{BLW17} showed that the greedy $(1+\eps)$-spanners of $K_r$-minor-free graphs have lightness $\tilde{O}_{r,\epsilon}(\frac{r}{\epsilon^3})$, where the notation $\tilde{O}_{r,\epsilon}(.)$ hides polylog factors of $r$ and $\frac{1}{\epsilon}$. Moreover, this is the state-of-the-art lightness bound also in some sub-classes of minor-free graphs, particularly bounded treewidth graphs.
+
+Past works provided strong evidence that the dependence of lightness on $1/\epsilon$ of $(1+\epsilon)$-spanners
+should be \emph{linear}: $O(\frac{1}{\epsilon})$ in planar graphs by Alth\"{o}fer et al.~\cite{ADDJS93}, 
+$O(\frac{g}{\epsilon})$ in bounded genus graphs by Grigni~\cite{Grigni00}, and $\tilde{O}_{r}(\frac{r \log n}{\epsilon})$ in $K_r$-minor-free graphs by Grigni and Sissokho~\cite{GS02}. (The $\log n$ factor in the lightness bound of~\cite{GS02} was removed by~\cite{BLW17} at the cost of a cubic dependence on $1/\epsilon$.) 
+
+\paragraph{Low-dimensional Euclidean spaces.~}
+Low-dimensional Euclidean spaces is another class of graphs for which sparsity is much better understood than lightness. The authors of this paper showed in ~\cite{LS19} the existence of point sets $P$ in $\mathbb{R}^d$, $d = O(1)$, for which any $(1+\epsilon)$-spanner for $P$ must have sparsity $\Omega(\epsilon^{-d+1})$ and lightness $\Omega(\epsilon^{-d})$, when  $\epsilon = \Omega(n^{-1/(d-1)})$. The sparsity lower bound matched the long-known upper bound of $O(\epsilon^{-d+1})$, realized by various spanner constructions, including the greedy spanner~\cite{ADDJS93,CDNS92,NS07}, the {\em $\Theta$-graph} and {\em Yao graph} \cite{Yao82, Clarkson87,Keil88,KG92,RS91,ADDJS93}, and the gap-greedy spanner~\cite{Salowe92,AS97}.
+While all the aforementioned sparsity upper bounds are tight and rather simple,  the best lightness upper bound prior to \cite{LS19} was $O(\epsilon^{-2d})$ \cite{NS07} (building on \cite{ADDJS93,DHN93,DNS95,RS98}), 
+which is quadratically larger than the lower bound; moreover, it uses a very complex argument to analyze the lightness of the greedy spanner. In~\cite{LS19}, the authors improved the analysis of the greedy spanner by \cite{NS07} to achieve a lightness bound of $\tilde{O}(\epsilon^{-d})$,
+matching their lower bound (up to a factor of $\log(1/\epsilon)$); the improved upper bound argument of \cite{LS19} is also very complex.
+  
+In the same paper \cite{LS19}, the authors studied {\em Steiner spanners}, namely, spanners that are allowed to use 
+{\em Steiner points}, which are additional points that are not part of the input point set.
+It was shown there that Steiner points can be used to improve the sparsity quadratically, i.e., to $O(\epsilon^{\frac{-d+1}{2}})$,
+which was shown to be tight for dimension $d = 2$ in \cite{LS19}, and for any $d = O(1)$ by Bhore and T\'{o}th~\cite{BT21B}.
+
+An important question left open in~\cite{LS19} is whether one could use Steiner points to improve the lightness bound to $o(\epsilon^{-d})$.
+In~\cite{LS20}, the authors made  the first progress on this question by showing that  any point set $P \in \mathbb{R}^d$ with spread $\Delta(P)$ admits a Steiner $(1+\epsilon)$-spanner with lightness $O(\frac{\log (\Delta(P))}{\epsilon})$ when $d = 2$ and with lightness $\tilde{O}(\epsilon^{-(d+1)/2} + \epsilon^{-2} \log (\Delta(P)))$ when $d\geq 3$~\cite{LS20}. In particular, when $\Delta(P) = \poly(\frac{1}{\epsilon})$, the lightness bounds are $\tilde{O}(\frac{1}{\epsilon})$ when $d = 2$ and $\tilde{O}(\epsilon^{-(d+1)/2})$ when $d \geq 3$.  However, $\Delta(P)$ could be huge, and it could also depend on $n$. Bhore and T\'{o}th~\cite{BT21} removed the dependency on $\Delta(P)$ for   $d=2$ by showing that any point set $P \in \mathbb{R}^2$ admits a Steiner  $(1+\epsilon)$-spanner with lightness $O(\frac{1}{\eps})$. 
+The question of whether one can achieve lightness $o(\epsilon^{-d})$ for $d \geq 3$ (for any spread) remains open.
+
+\paragraph{High-dimensional Euclidean metric spaces.~} 
+The literature on spanners in high-dimensional Euclidean spaces is surprisingly sparse.
+Har-Peled, Indyk and Sidiropoulos~\cite{HIS13} showed that for any set of $n$-point Euclidean space (in any dimension) 
+and any parameter $t \geq 2$, there is an $O(t)$-spanner with sparsity $O(n^{1/t^2} \cdot (\log n \log t))$.  Filtser and Neiman~\cite{FN18} gave an analogous but weaker result for lightness, achieving a lightness bound of $O(t^3 n^{\frac{1}{t^2}}\log n)$. They also generalized their results to any $\ell_p$ metric, for $p \in (1,2]$, achieving a lightness bound of $O(\frac{t^{1+p}}{\log^2 t}n^{\frac{\log^2 t}{t^p}}\log n)$.  
+
+\subsection{Research Agenda: From Sparse to Light Spanners}
+
+Thus far we exemplified the statement that the stretch-lightness tradeoff is not as well-understood as the stretch-sparsity tradeoff,
+when considering {fine-grained dependencies}. In the companion paper~\cite{LS21}, we exemplified the statement when considering the construction time.  This statement is not to underestimate in any way the exciting line of work on light spanners,
+but rather to call for attention to the important research agenda of narrowing this gap and ideally closing it.
+
+\paragraph{Fine-grained optimality.~}  A fine-grained optimization of the stretch-lightness tradeoff, which takes into account the exact dependencies on $\eps$ and the other involved parameters, is a highly challenging goal. For planar graphs, the aforementioned result~\cite{ADDJS93} on the greedy $(1+\eps)$-spanner with lightness $O(1/\eps)$ provides an optimal dependence on $\eps$ in the lightness bound, due to a matching lower bound.
+For constant-dimensional Euclidean spaces, the aforementioned result on the greedy $(1+\eps)$-spanner with lightness $\Theta(\eps^{-d})$ was achieved recently \cite{LS19}. We are not aware of any other well-studied graph classes for which such fine-grained optimality is known. 
+Achieving fine-grained optimality is of particular importance for graph families that admit light spanners with stretch $1+\eps$, such as minor-free graphs and Euclidean spaces, in spanner applications where precision is a necessity. Indeed, in such applications, the precision is basically determined by $\eps$, hence if it is a tiny (sub-constant) parameter, then improving the $\eps$-dependence on the lightness could lead to significant improvements in the performance.
+
+\begin{goal} \label{g2}
+Achieve fine-grained optimality for light spanners in basic graph families. 
+\end{goal}
+
+\paragraph{Fast constructions.~}
+The companion paper revolves around the following question: Can one achieve {\em fast constructions} of light spanners that {\em match} the corresponding results for sparse spanners? 
+
+\begin{goal} \label{g1}
+Achieve {\em fast constructions} of light spanners that {\em match} the corresponding constructions of sparse spanners. 
+In particular, achieve (nearly) linear-time constructions of spanners with optimal lightness for basic graph families, such as the ones covered in the aforementioned questions. 
+\end{goal}
+
+\paragraph{Unification.~}
+Some of the papers on light spanners employ inherently different techniques than others, e.g., the technique of \cite{CW16} requires large stretch while others are naturally suitable to stretch $1+\eps$.
+Since the techniques in this area are ad hoc per graph class, they can't be applied broadly.
+A unified framework for light spanners would be of both theoretical and practical merit.
+\begin{goal} \label{g3}
+Achieve a unified framework of light spanners.
+\end{goal}
+
+
+Establishing a thorough understanding of light spanners by meeting (some of) the above goals is not only of theoretical interest, but is also of practical importance, due to the wide applicability of spanners.  Perhaps the most prominent applications of light spanners are to efficient broadcast protocols in the message-passing model of distributed computing \cite{ABP90,ABP91},
+to network synchronization and computing global functions \cite{Awerbuch85,PU89,ABP90,ABP91,Peleg00}, and to the TSP \cite{Klein05,Klein06,RS98,GLN02,BLW17,Gottlieb15}.
+There are many more applications, such as to data gathering and dissemination tasks in overlay networks \cite{BKRCV02,VWFME03,KV01}, 
+to VLSI circuit design \cite{CKRSW91,CKRSW292,CKRSW92,SCRS01},
+to wireless and sensor networks \cite{RW04,BDS04,SS10}, 
+to routing \cite{WCT02,PU89,PU89b,TZ01}, 
+to compute almost shortest paths \cite{Cohen98,RZ11,Elkin05,EZ06,FKMSZ05},
+and to computing distance oracles and labels \cite{Peleg00Prox,TZ01b,RTZ05}. 
+
+
+\subsection{Our Contribution} \label{subsec:contribution}
+Our work aims at meeting the above goals (\Cref{g2}---\Cref{g3}) by presenting a unified framework for optimal constructions of light spanners in a variety of graph classes.
+Basically, we strive to translate results --- in a unified manner --- from sparse spanners to light spanners, without significant loss in any parameter. 
+
+As mentioned, the current paper is the second of two, building on the {\em basis of the framework} laid in the first paper,  aiming to achieve fine-grained optimality. Such a fine-grained optimization is highly challenging, and towards meeting this goal we had to give up on the running time bounds achieved in the companion paper. Thus the current paper achieves \Cref{g2} and \Cref{g3} whereas the companion paper achieves \Cref{g1} and \Cref{g3};
+achieving all three goals simultaneously is left open by our work. 
+
+Next, we elaborate on the applications and implications of our framework, and put it into context with previous work. 
+
+\paragraph{$K_r$-minor-free graphs.~}  The most important implication of our framework is to minor-free graphs,
+where we improve the $\eps$-dependence in the lightness bound of \cite{BLW17}; as will be asserted in \cref{thm:minor-free-lowerbound},
+our improved lightness bound is tight.
+
+\begin{restatable}{theorem}{MinorFree}
+	\label{thm:minor-free-opt-lightness}
+	Any $K_r$-minor-free graph admits a $(1+\epsilon)$-spanner with lightness $\tilde{O}_{r,\epsilon}(\frac{r}{\epsilon} + \frac{1}{\epsilon^2})$ for any $\epsilon< 1$ and $r\geq 3$. 
+\end{restatable}
+
+The $\tilde{O}_{\eps,r}(.)$ notation in \Cref{thm:minor-free-opt-lightness} hides a poly-logarithmic factor of $1/\eps$ and $r$.   The quadratic dependence on $\frac{1}{\epsilon}$ in the lightness bound of \Cref{thm:minor-free-opt-lightness}  may seem artificial;
+indeed, as mentioned already, past works \cite{ADDJS93, Grigni00,GS02} provided evidence that the dependence on $1/\epsilon$ 
+in the lightness bound of $(1+\epsilon)$-spanners should be \emph{linear}. Surprisingly perhaps, we show that the quadratic dependence on $\frac{1}{\epsilon}$ in the lightness bound of \Cref{thm:minor-free-opt-lightness} is required:
+
+\begin{theorem}\label{thm:minor-free-lowerbound}
+For any fixed $r\geq 6$, any  $\epsilon < 1$  and $n \geq r + (\frac{1}{\epsilon})^{\Theta(1/\epsilon)}$, there is an $n$-vertex graph $G$ excluding $K_r$ as a minor for which any $(1+\eps)$-spanner must have lightness $\Omega(\frac{r}{\epsilon} + \frac{1}{\epsilon^2})$.
+\end{theorem}	
+	
+We remark that, in \Cref{thm:minor-free-lowerbound}, the exponential dependence on $1/\epsilon$ in the lower bound on $n$ is unavoidable since, if $n = \mathrm{poly}(1/\epsilon)$, the result of ~\cite{GS02} yields a lightness of
+$\tilde{O}_r(\frac{r}{\epsilon}\log(n)) = \tilde{O}_{r,\epsilon}(\frac{r}{\epsilon})$.
+
+Interestingly, our lower bound  applies to a geometric graph, where the vertices correspond to points in $\mathbb R^2$ and the edge weights are the Euclidean distances between the points. The construction is recursive. We start with a basic gadget and then recursively ``stick'' many copies of the same basic gadgets in a fractal-like structure. We use geometric considerations to show that any $(1+\eps)$-spanner must take every edge of this graph, whose total edge weight is $\Omega(1/\eps^2)w(\mst)$. The resulting graph has treewidth at most $4$; by a simple modification, we obtain the lower bound for any $K_r$-minor-free graphs as claimed in \Cref{thm:minor-free-lowerbound}.
+
+\paragraph{General graphs.~} 
+For general graphs we prove the following result.
+
+\begin{theorem}\label{thm:light-general-spanner}
+Given an edge-weighted graph $G(V,E)$ and two parameters $k \geq 1, \epsilon < 1$, there is a $(2k-1)(1+\epsilon)$-spanner of $G$ with lightness $O(n^{1/k}/{\epsilon})$.
+\end{theorem}
+
+The spanner construction provided by \Cref{thm:light-general-spanner}
+provides the first improvement over the super-cubic dependence on $1/\eps$ in the lightness bound of $O(n^{1/k}(1/\eps)^{3+2/k})$ of  \cite{CW16}.  Moreover, by substituting $\eps$ with $\eta / k$, for an arbitrarily small constant $\eta \le 1$, we get a stretch arbitrarily close to $2k-1$ with lightness $O({n^{1/k} \cdot k})$,
+whereas all previous spanner constructions for general graphs with stretch at most $2k$ have lightness $\Omega(n^{1/k} \cdot k^2 / \log k)$ \cite{CDNS92,ENS14,CW16}, which is bigger by a factor of at least $k / \log k$.
+
+\paragraph{Low-dimensional Euclidean Spaces.~} 
+We prove the following result, which provides a near-quadratic improvement over the lightness bound of \cite{LS19}. 
+
+ \begin{theorem}\label{thm:light-Steiner}
+ For any $n$-point set $P \in \mathbb{R}^d$ and any $d \ge 3$, $d = O(1)$, there is a Steiner $(1+\epsilon)$-spanner for $P$ with lightness 
+ $\tilde{O}(\epsilon^{-(d+1)/2})$ that is constructable in polynomial time.
+ \end{theorem}
+
+The lightness bound in \Cref{thm:light-Steiner} has no dependence whatsoever on $\Delta(P)$ for any $d\geq 3$, $d = O(1)$. This lightness bound nearly matches (up to a factor of $\sqrt{1/\eps}$) the recent lower bound of $\Omega(\epsilon^{-d/2})$ by
+Bhore and T{\'{o}}th \cite{BT21B}, for any $d = O(1)$.
+
+\paragraph{High dimensional Euclidean metric spaces.~}
+
+We prove the following result. 
+
+\begin{theorem}\label{thm:Euclidean-high} For any $n$-point set $P$ in a Euclidean space and any given $t \ge 2$, there is an $O(t)$-spanner for $P$ with lightness %and sparsity
+	$O(tn^{\frac{1}{t^2}}\log n)$ that is constructable in polynomial time.
+\end{theorem}
+
+Recall that the previous state-of-the-art lightness bound is  $O(t^3 n^{\frac{1}{t^2}}\log n)$ \cite{FN18};
+e.g., when $t = \sqrt{\log n}$, the lightness of our spanner is $O(\log^{3/2} n)$ while the lightness bound of~\cite{FN18} is $O(\log^{5/2} n)$. 
+
+We also extend \Cref{thm:Euclidean-high} to any $\ell_p$ metric, for $p \in (1,2]$,
+which improves over the lightness bound $O(\frac{t^{1+p}}{\log^2 t}n^{\frac{\log^2 t}{t^p}}\log n)$ of~\cite{FN18}. 
+
+
+\begin{theorem}\label{thm:Lp-high} For any $n$-point $\ell_p$ normed space $(X,d_X)$ with $p \in (1,2]$ and any $t \ge 2$, there is an $O(t)$-spanner for $(X,d_X)$ with lightness $O(t n^{\frac{\log^2 t}{t^p}}\log n)$.
+\end{theorem}
+

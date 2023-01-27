@@ -1,0 +1,189 @@
+\section{{\langname}}
+In this section, we introduce {\langname}, a concise language for QEC Programs. We define its syntax, operational semantics, and denotational semantics. 
+
+
+
+\subsection{Syntax}\label{subsect: syntax}
+We restate the notation for quantum variables as follows:
+Define $\text{qVar}$ as the set of quantum variables,  $q$ as a metavariable ranging over quantum variables, and $\bar{q}$ to be a quantum register associated with a finite set of distinct quantum variables. We denote the state space of $q$ by $\mathcal{H}_q$ which is a two-dimensional Hilbert space spanned by the computational basis states $\{\qstate{0}, \qstate{1}\}$. The state space of $\bar{q}$ is the tensor product of Hilbert spaces
+$\mathcal{H}_{\bar{q}} = \otimes_{q\in \bar{q}}\mathcal{H}_q$.
+
+
+Logical operations in QEC codes are often associated with changes in the set of stabilizer measurements. For example, the surface code~\cite{Fowler2012SurfaceCT} frequently turns on and turn off specific stabilizer measurement circuits to implement logical gates. Besides, the outcomes of stabilizer measurements act as signals for error correction. By introducing a stabilizer variable, which  represents a stabilizer measurement circuit without the need of specifying its actual implementation, we can greatly simplify the description of QEC programs. %
+We define the notations for the stabilizer variable as follows:
+
+Define $S$ as the set of stabilizers on $\text{qVar}$, $s$ as an individual stabilizer in $S$, $\text{sVar}$ as the set of stabilzer variables, and $\svar$ as a metavariable ranging over $\text{sVar}$. To avoid $S$ being uncountable, we assume that every $s \in S$ only involves a finite number of qubits. The range of values for the stabilizer variable $\svar$ is $S\cup -S \cup iS \cup -iS$, where $i$ is the imaginary unit.
+
+
+
+We define the syntax of {\langname} as follows:
+\begin{tcolorbox}[colback=yellow!10!white,
+                  colframe=white!20!black]
+%
+\begin{grammar}
+
+\label{equ:qeclang}
+  \let\syntleft\relax
+  \let\syntright\relax
+%
+<$\prog$> $\Coloneqq$ \textbf{skip}
+\vsep $q \coloneqq \qstate{0}$
+\vsep $\bar{q} \coloneqq U[\bar{q}]$
+\vsep $\svar \coloneqq s_e^u$
+\alt $\prog_1;\prog_2$
+\alt $\textbf{if}\ M[\svar,\bar{q}]\ \textbf{then}\  \prog_1\ \textbf{else}\ \prog_0\ \textbf{end}$
+\alt $\textbf{while}\  M[\svar,\bar{q}]\ \textbf{do}\ \prog_1\ \textbf{done}$ %
+
+<$s_e^u$> $\Coloneqq$ $\pm s$ | $\pm i\,s$ | $\pm \svar$
+%
+\end{grammar}
+\end{tcolorbox}
+
+
+
+
+\setcounter{cnt}{0}
+The proposed language constructs consisting of instructions as follows: 
+(\showcnt)  \textbf{skip} does nothing; 
+(\showcnt) $q \coloneqq \qstate{0}$ resets quantum variable $q$ to ground state $\qstate{0}$; 
+(\showcnt) $\bar{q} \coloneqq U[\bar{q}]$ perform unitary operation $U$ on quantum register $\bar{q}$; 
+(\showcnt) $\svar \coloneqq s_e^u$ assigns a unary stabilizer expression $s_e^u$ to the stabilizer variable $\svar$;
+(\showcnt) $\prog_1;\prog_2$ is the sequencing of programs; 
+(\showcnt) $\textbf{if}\ M[\svar,\bar{q}]\ \textbf{then}\  \prog_1\ \textbf{else}\ \prog_0\ \textbf{end}$ perform the stabilizer measurement represented by $\svar$ on qubits $\bar{q}$ (or in short, measures $\svar$ on qubits $\bar{q}$)
+measures qubits in $\bar{q}$ with the stabilizer $\svar$ and executes program $\prog_1$ if the measurement outcome is $1$. If the measurement outcome is $-1$, i.e. \textbf{the measured state is in the -1 eigenspace of} $\svar$, we first execute $\svar=-\svar$ which flips the sign of $\svar$, then execute $\prog_0$. 
+We can see (6) as a short-term for $\textbf{if}\ M[\svar,\bar{q}]=1\ \textbf{then}\ \prog_1\ \textbf{else}\ \svar \coloneqq -\svar ;\ \prog_0\ \textbf{end}$.
+(\showcnt) $\textbf{while}\  M[\svar,\bar{q}]\ \textbf{do}\ \prog_1\ \textbf{done}$ measures $\svar$ on qubits $\bar{q}$, and perform $\prog_1$ if the measurement outcome is 1. If the measurement outcome is -1, the sign of $\svar$ will be flipped automatically, and then the while loop terminates. 
+
+
+The language constructs above are similar to those of the quantum \textbf{while}-language, except the part associated with stabilizer variables. Stabilizer variables can be used to describe operations on stabilizers.
+For example, to turn off one stabilizer measurement circuit in a QEC program, we can simply set $\svar = {\rm I}$. The stabilizer variable can also serve to inform the error correction procedure. Every time we detect one or more stabilizer variables with a negative sign (this may happen after a stabilizer measurement), 
+the decoder knows that at least one error affected the physical circuit. It proceeds to identifying the specific error and applies the corresponding correction. We define the error correction protocol as a function over stabilizer variables as follows:
+\begin{definition}[Error correction protocol] Define \\
+$\textbf{correct}(\svar_0,\svar_1,\cdots)$ as an error decoding and correction protocol by measuring $\svar_0,\svar_1,\cdots$.
+\end{definition}
+
+As an example, we present a snippet of {\langname} code that corresponds to  one stabilizer measurement of the surface code, where the parity qubit $s$ is connected to four data qubits $\{q_0,q_1,q_2,q_3\}$ with one Z-type stabilizer. Figure~\ref{fig:one-stabilizer}(a) shows the target stabilizer measurement circuit, while panel (b) shows an error correction program based on the stabilizer measurement in (a).  %
+The basic idea of the program in Figure~\ref{fig:one-stabilizer}(b) is that, if the state of $q_0q_1q_2q_3$ is not stabilized by the stabilizer variable $\svar_0$, then some errors have happened and the QEC program should correct them.
+
+Comparing to the \qwhilelang, {\langname} avoids the explicit introduction of parity qubits and the  implementation of stabilizer measurement circuits. Instead, it simply provides the stabilizer to measure as the value of variable $\svar$.
+This approach makes {\langname} programs very flexible and independent from the specific implementation of stabilizer measurements. The latter would, for example, depend on architectural properties like the underlying hardware connectivity~\cite{Chamberland2020TopologicalAS}.
+
+While being optimized for QEC codes, {\langname} contains all the program constructs necessary to describe general quantum programs. Actually, all programs in {\qwhilelang} can be translated into {\langname} by setting the stabilizer variable to a Pauli Z operator when qubits need to be measured.
+
+
+
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.25\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figure/syntax-zmeasure.pdf}%
+         \subcaption{}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.20\textwidth}
+    \begingroup \fontsize{\myfontsize}{\mylinesize}
+    \addtolength{\jot}{-4pt}
+    \begin{align*}
+        & \svar_0 \coloneqq Z_{0}Z_{1}Z_{2}Z_{3} \\ 
+        & \textbf{if}\ M[\svar_0, q_3q_2q_1q_0]\ \textbf{then} \\
+        & \quad \textbf{skip} \\
+        & \textbf{else} \\
+        & \quad \text{// correct error....}\\
+        & \quad \cdots \\
+        & \quad \text{// Recover signal} \\
+        & \quad \svar_0 \coloneqq -\svar_0\ 
+    \end{align*}%
+    \endgroup
+    \subcaption{}
+    \end{subfigure}
+    %
+    \caption{An example for {\langname}. 
+    (a) is the stabilizer measurement for $Z_{0}Z_{1}Z_{2}Z_{3}$. (b) is an error correction program associated with (a). The detailed error correction operation depends the error correction protocol and are omitted here.  
+        }
+    \label{fig:one-stabilizer}%
+\end{figure}
+
+
+\input{figtex/lang-operational}
+\input{figtex/lang-denotational}
+
+\subsection{Operational Semantics}\label{subsect:operational}
+
+The \textit{operational semantics} of the proposed {\langname} are presented in Figure~\ref{fig:qec-lang-op}.
+Different from the \qwhilelang, {\langname} denotes the state in QEC programs by the tuple $(\rho, \sigma)$, where $\rho$ is a partial density matrix that describes the current state of $\bar{q}$ , and $\sigma$ represents the current state of stabilizer variables. 
+The quantum state $\rho$ can be regarded as a function over quantum variables $q$, and $\rho(q)$ represents the reduced partial density matrix where quantum variables except $q$ are all traced out.
+Likewise, $\sigma$ represents a function over stabilizer variables, and $\sigma(\svar)$ is defined to be the current value of $\svar$.
+The stabilizer state $\sigma$ is functionally similar to the classical program state~\cite{Winskel1993TheFS}, and 
+we can define the substution rule for $\sigma$ in a similar way, which is then used in Figure~\ref{fig:qec-lang-op}.
+
+\begin{definition}[Substitution rule] The substitution rules for stabilizer state $\sigma$ are defined as follows,
+\begin{align*}
+\sigma[s/\svar_i](\svar_j) &= \begin{cases}
+s, \text{ if }\ i = j;\\
+\sigma(\svar_j), \textbf{ otherwise} 
+\end{cases}.
+\end{align*}
+\end{definition}
+
+
+
+Rules in Figure~\ref{fig:qec-lang-op} are self-explained and represent reformulation of concepts familiar in quantum computing. The notation in these rules follows the convention in programming language research, for example, the expressions over the bar in the inference rules are \textit{premises} while the expression under the bar is \textit{conclusion}.
+For pure quantum state operations in Figure~\ref{fig:qec-lang-op}, the operational semantics follows the flow in {\qwhilelang}~\cite{Ying2012FloydhoareLF}.  
+For stabilizer related operations, we introduce extra operational semantics for the unary stabilizer expression $s_e^u$, as shown in the top right corner of Figure~\ref{fig:qec-lang-op}. We then process the assignment operation on stabilizer variables with the substitution rule.
+When measuring the stabilizer variable $\svar$, its sign will get flipped if the current quantum state is not a +1 eigenstate of  $\svar$. Thus, we include one operation in the ``If -1'' and ``While -1'' rule to take care of the sign flipping on $\svar$.
+
+To illustrate the use of the operational semantics in Figure~\ref{fig:qec-lang-op}, we revisit the program in Figure~\ref{fig:one-stabilizer}(b). We use $(0,\{\})$ to represent the initial state of $(\rho, \sigma)$ before the program.
+
+\begin{example}[Error correction experiment]
+Assume the initialization $q_3q_2q_1q_0 \coloneqq \ket{0000}$ on data qubits is distorted by noise and data qubits are assigned to be $\ket{0001}$. This may happen when, after the initialization in the logical subspace, a Pauli X error affects one of the qubits. 
+For illustration purposes we consider that such error was on qubit $q_0$ and therefore use $q_0\coloneqq Xq_0;$ to correct the error. Notice that, in general, the error correcting protocol $\textbf{correct}(\svar_0, \cdots)$ depends on the outcome of multiple stabilizer measurements.
+The program in Figure~\ref{fig:one-stabilizer}(b) then becomes
+\begin{align*}
+    \prog \equiv \ &q_3q_2q_1q_0 \coloneqq \ket{0001}; \svar_0 \coloneqq Z_{0123} ; \\
+    &\textbf{if}\ M[\svar_0, q_3q_2q_1q_0]\ \textbf{then}\ \textbf{skip}\ \\
+    &\textbf{else}\ q_0\coloneqq Xq_0; \svar_0 \coloneqq -\svar_0\ \textbf{end}.
+\end{align*}
+We write $Z_{0}Z_{1}Z_{2}Z_{3}$ as $Z_{0123}$ for simplicity.
+Then the evaluation of $\prog$ with the operational semantics proceeds as follows:
+
+\noindent
+$
+    \conf{\prog, \rho}  = \conf{q_3q_2q_1q_0 \coloneqq \ket{1110}; \svar_0 \coloneqq Z_{0123} ; \textbf{if}\ M[\svar_0, \\q_3q_2q_1q_0]\textbf{then}\ 
+    \textbf{skip}\ \textbf{else}\ q_0\coloneqq Xq_0; \svar_0 \coloneqq -\svar_0\ \textbf{end}, (0, \{\})} \\
+     \to \conf{\svar_0 \coloneqq Z_{0123} ; \textbf{if}\ M[\svar_0, q_3q_2q_1q_0]\ \textbf{then}\ \textbf{skip}\ 
+    \  \textbf{else} \ q_0\coloneqq Xq_0; \svar_0 \coloneqq -\svar_0\ \textbf{end}, (\ket{0001}\bra{0001}, \{\})} \\
+     \to \conf{\textbf{if}\ M[\svar_0, q_3q_2q_1q_0]\ \textbf{then}\
+    \textbf{skip}\ \textbf{else}\ q_0\coloneqq Xq_0; \svar_0 \coloneqq -\svar_0\ \textbf{end}, (\ket{0001}\bra{0001}, \{\svar_0=Z_{0123}\})} \\
+     \to \conf{q_0\coloneqq Xq_0; \svar_0 \coloneqq -\svar_0, (\ket{0001}\bra{0001}, \{\svar_0=-Z_{0123}\})} \\
+     \to \conf{\svar_0 \coloneqq -\svar_0, (\ket{0000}\bra{0000}, \{\svar_0=-Z_{0123}\})} \\
+     \to \conf{E, (\ket{0000}\bra{0000}, \{\svar_0=Z_{0123}\})}
+$
+\end{example}
+
+\subsection{Denotational Semantics}\label{subsect:denotational}
+The denotational semantics of the {\langname}  is given in Figure~\ref{fig:lang-denote}. The program $\prog$ is denoted as a super-operator $\denot{\prog}$ that acts on $(\rho, \sigma)$. While most rules in Figure~\ref{fig:lang-denote} are  self-explained, the \textbf{while} rule relies a partial order on $(\rho, \sigma)$ to compute the fixed point, i.e., the lowest upper bound ($\sqcup$) for the complete partial ordering (CPO) of  $\textbf{while}^{(k)}$.
+
+To define the partial order on state $(\rho, \sigma)$, we first need to define a partial order on the state of stabilizers. Consider a trivial lattice on the stabilizer set $S$, where $s_i \sqsubseteq s_j$ if $s_i = I$, and $s_i$ and $s_j$ cannot be compared if they are both not identity. We can then define the partial order on $\sigma$ as follows: \\
+\centerline{$\sigma_1 \sqsubseteq \sigma_2 \ \textbf{if}\ \sigma_1(\svar) \sqsubseteq \sigma_2(\svar), \forall \svar \in \textbf{sVar},$} \\
+which immediately induces a partial order on $(\rho, \sigma)$: \\
+\centerline{
+$(\rho_1, \sigma_1) \sqsubseteq (\rho_2, \sigma_2) \ \textbf{if}\ \rho_1 \sqsubseteq \rho_2 \ \textbf{and}\ \sigma_1 \sqsubseteq \sigma_2,$} \\
+where $\rho_1 \sqsubseteq \rho_2$ means that $Tr(O\rho_1) \le Tr(O\rho_2)$, for any semi-positive observable $O$. %
+
+The reason to select the partial order above is that it strictly ensures the consistency of fault-tolerant computation. If any error happens in one while loop and does not get corrected in time, the stabilizer state $\sigma$ will get some variables flipped. Let the resulted stabilizer state be $\sigma'$. Obviously, there does not exist any $\sigma_1$ s.t. $\sigma \sqsubseteq \sigma_1$ and $\sigma' \sqsubseteq \sigma_1$. 
+In this case, we just set $\sqcup_{k=0}^{\infty} \denot{\textbf{while}^{(k)}}(\rho, \sigma)$ to be $\perp$, the bottom element of the CPO~\cite{Winskel1993TheFS}, which does not provide any information for the program.  On the other hand, if all errors get corrected in each loop, the resulted state of \textbf{while} can be calculated coordinate-wisely: \\
+\centerline{$(\sqcup_{k=0}^{\infty} \denot{\textbf{while}^{(k)}}\rho, \sqcup_{k=0}^{\infty} \denot{\textbf{while}^{(k)}}\sigma)$}.
+
+We connect the denotational semantics to the operational semantics through the following proposition:
+
+\begin{proposition}[Equivalence of the denotational semantics and the operational semantics]\label{prop:equiv}
+For a strict QEC program $\prog$ that corrects errors when the errors appear, we have
+$
+    \denot{\prog}(\rho, \sigma) \equiv \sum \{  (\rho', \sigma'):\conf{\prog, (\rho, \sigma)} \to^* \conf{E, (\rho', \sigma')} \},
+$
+where $\to^*$ denotes the reflective, transitive closure of $\to$,  and $\{\cdot\}$ represents a multi-set.
+\end{proposition}
+\myproof{
+Except the while loop, other statements can be proved trivially by structural induction. For the while loop, the consistency can be proved with the assumption of a just-in-time error correction.}
+

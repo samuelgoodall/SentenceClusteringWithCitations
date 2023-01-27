@@ -1,0 +1,87 @@
+\begin{thebibliography}{}
+
+\bibitem[Baier and Cowling, 2018]{baier2018evolutionary}
+Baier, H. and Cowling, P.~I. (2018).
+\newblock Evolutionary mcts for multi-action adversarial games.
+\newblock In {\em 2018 IEEE Conference on Computational Intelligence and Games
+  (CIG)}, pages 1--8. IEEE.
+
+\bibitem[Browne et~al., 2012]{Browne2012}
+Browne, C., Powley, E.~J., Whitehouse, D., Lucas, S., Cowling, P.~I.,
+  Rohlfshagen, P., Tavener, S., Perez, D., Samothrakis, S., and Colton, S.
+  (2012).
+\newblock {A Survey of Monte Carlo Tree Search Methods}.
+\newblock {\em IEEE Transactions on Computational Intelligence and AI in
+  Games}, 4:1:1--43.
+
+\bibitem[Cinjon et~al., 2018]{DBLP}
+Cinjon, R., Eldridge, W., Ha, D., Britz, D., Foerster, J., Togelius, J., Cho,
+  K., and Bruna, J. (2018).
+\newblock Pommerman: {A} multi-agent playground.
+\newblock {\em CoRR}, abs/1809.07124.
+
+\bibitem[Gaina et~al., 2021]{gaina2021rolling}
+Gaina, R.~D., Devlin, S., Lucas, S.~M., and Perez, D. (2021).
+\newblock Rolling horizon evolutionary algorithms for general video game
+  playing.
+\newblock {\em IEEE Transactions on Games}.
+
+\bibitem[Kendall and Smith, 1938]{kendall1938randomness}
+Kendall, M.~G. and Smith, B.~B. (1938).
+\newblock Randomness and random sampling numbers.
+\newblock {\em Journal of the royal Statistical Society}, 101(1):147--166.
+
+\bibitem[Kitano et~al., 1997]{kitano1997robocup}
+Kitano, H., Asada, M., Kuniyoshi, Y., Noda, I., Osawa, E., and Matsubara, H.
+  (1997).
+\newblock Robocup: A challenge problem for ai.
+\newblock {\em AI magazine}, 18(1):73--73.
+
+\bibitem[Lucas et~al., 2014]{lucas2014fast}
+Lucas, S.~M., Samothrakis, S., and Perez, D. (2014).
+\newblock Fast evolutionary adaptation for monte carlo tree search.
+\newblock In {\em European Conference on the Applications of Evolutionary
+  Computation}, pages 349--360. Springer.
+
+\bibitem[Nardi et~al., 2014]{nardi2014robocup}
+Nardi, D., Noda, I., Ribeiro, F., Stone, P., von Stryk, O., and Veloso, M.
+  (2014).
+\newblock Robocup soccer leagues.
+\newblock {\em AI Magazine}, 35(3):77--85.
+
+\bibitem[Osogami and Takahashi, 2019]{osogami2019real}
+Osogami, T. and Takahashi, T. (2019).
+\newblock Real-time tree search with pessimistic scenarios.
+\newblock {\em arXiv preprint arXiv:1902.10870}.
+
+\bibitem[Perez-Liebana et~al., 2019]{perez2019analysis}
+Perez-Liebana, D., Gaina, R.~D., Drageset, O., Ilhan, E., Balla, M., and Lucas,
+  S.~M. (2019).
+\newblock Analysis of statistical forward planning methods in pommerman.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence
+  and Interactive Digital Entertainment}, volume~15, pages 66--72.
+
+\bibitem[Resnick et~al., 2018]{resnick2018pommerman}
+Resnick, C., Eldridge, W., Ha, D., Britz, D., Foerster, J., Togelius, J., Cho,
+  K., and Bruna, J. (2018).
+\newblock Pommerman: A multi-agent playground.
+\newblock {\em arXiv preprint arXiv:1809.07124}.
+
+\bibitem[Sironi et~al., 2018]{sironi2018self}
+Sironi, C.~F., Liu, J., Perez-Liebana, D., Gaina, R.~D., Bravi, I., Lucas,
+  S.~M., and Winands, M.~H. (2018).
+\newblock Self-adaptive mcts for general video game playing.
+\newblock In {\em International Conference on the Applications of Evolutionary
+  Computation}, pages 358--375. Springer.
+
+\bibitem[Soft, 2021]{wikipedia_2021}
+Soft, H. (2021).
+\newblock Bomberman.
+
+\bibitem[{\'S}wiechowski et~al., 2021]{swiechowski2021monte}
+{\'S}wiechowski, M., Godlewski, K., Sawicki, B., and Ma{\'n}dziuk, J. (2021).
+\newblock Monte carlo tree search: A review of recent modifications and
+  applications.
+\newblock {\em arXiv preprint arXiv:2103.04931}.
+
+\end{thebibliography}

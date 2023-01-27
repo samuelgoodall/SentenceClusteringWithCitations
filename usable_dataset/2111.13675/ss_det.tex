@@ -1,0 +1,665 @@
+
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage[pagenumbers]{cvpr} %
+
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{tablefootnote}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\usepackage{xcolor,colortbl}
+\usepackage{booktabs}
+\usepackage[caption=false]{subfig}
+
+\usepackage{nicefrac}       %
+\usepackage{microtype}      %
+\usepackage{balance}
+
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabulary,multirow,overpic,xcolor}
+
+\usepackage[caption=false]{subfig}
+\usepackage{pifont}%
+\usepackage{epstopdf}
+\epstopdfsetup{update} %
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+
+\usepackage{t1enc}
+\usepackage{colortbl}
+\usepackage{cite}
+\usepackage{soul}
+
+\usepackage[british,UKenglish,USenglish,english,american]{babel}
+
+
+
+\definecolor{pos}{RGB}{0,153,0}
+\definecolor{neg}{RGB}{204,0,0}
+\definecolor{smpos}{RGB}{255,128,0}
+
+
+\newcommand{\ve}[1]{\mathbf{#1}} %
+\newcommand{\ma}[1]{\mathrm{#1}} %
+\newcommand{\fref}[1]{Fig.~\ref{#1}}
+\newcommand{\tref}[1]{Table~\ref{#1}}
+\newcommand{\sref}[1]{Sec.~\ref{#1}}
+
+\newcommand{\bd}[1]{\textbf{#1}}
+\newcommand{\app}{\raise.17ex\hbox{$\scriptstyle\sim$}}
+\def\x{$\times$}
+\newcommand{\blocket}[4]{\multirow{3}{*}{\(\left[\begin{array}{c}\text{1$\times$1$^\text{2}$, #1}\\[-.1em] \text{$3$$\times$3$^\text{2}$, #2}\\[-.1em] \text{1$\times$1$^\text{2}$, #3}\end{array}\right]\)$\times$#4}
+}
+
+
+\newlength\savewidth\newcommand\shline{\noalign{\global\savewidth\arrayrulewidth\global\arrayrulewidth1pt}\hline\noalign{\global\arrayrulewidth\savewidth}}
+\newcommand{\tablestyle}[2]{\setlength{\tabcolsep}{#1}\renewcommand{\arraystretch}{#2}\centering\footnotesize}
+
+\newcommand{\round}[1]{\ensuremath{\left\lfloor#1\right\rceil}}
+
+\makeatletter\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@} {.5em \@plus1ex \@minus.2ex}{-.5em}{\normalfont\normalsize\bfseries}}\makeatother
+
+\addtolength{\floatsep}{-2mm}
+\addtolength{\textfloatsep}{-1mm}
+\addtolength{\intextsep}{-1mm}
+
+
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
+
+
+
+
+\def\cvprPaperID{9839} %
+\def\confYear{CVPR 2022}
+
+\newcommand{\zhenyu}[1]{{\color{blue}{\small\bf\sf [zhenyu: #1]}}}
+\newcommand{\kk}[1]{{\color{orange}{\small\bf\sf [kk: #1]}}}
+
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\def\cf{\emph{c.f}\onedot} \def\Cf{\emph{C.f}\onedot}
+\def\etc{\emph{etc}\onedot} \def\vs{\emph{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{\emph{et al}\onedot}
+
+\makeatother
+
+\begin{document}
+
+\title{Self-supervised Pretraining with Classification Labels \\for Temporal Activity Detection \vspace{-2mm}}
+
+\author{Kumara Kahatapitiya$^1$\thanks{work done during an internship at Wormpex AI Research.},$\;$ Zhou Ren$^2$,$\;$ Haoxiang Li$^2$,$\;$ Zhenyu Wu$^2$ and Michael S. Ryoo$^1$\\
+$^1$Stony Brook University \hspace{3mm} $^2$Wormpex AI Research\\%, Stony Brook, NY 11794, USA\\
+}
+
+\maketitle
+
+
+\begin{abstract}
+	\vspace{-3mm}
+	
+	Temporal Activity Detection aims to predict activity classes per frame, in contrast to video-level predictions as done in Activity Classification (i.e., Activity Recognition). Due to the expensive frame-level annotations required for detection, the scale of detection datasets is limited. Thus, commonly, previous work on temporal activity detection resorts to fine-tuning a classification model pretrained on large-scale classification datasets (e.g., Kinetics-400). However, such pretrained models are not ideal for downstream detection performance due to the disparity between the pretraining and the downstream fine-tuning tasks. This work proposes a novel self-supervised pretraining method for detection leveraging classification labels to mitigate such disparity by introducing frame-level pseudo labels, multi-action frames, and action segments. We show that the models pretrained with the proposed self-supervised detection task outperform prior work on multiple challenging activity detection benchmarks, including Charades and MultiTHUMOS. Our extensive ablations further provide insights on when and how to use the proposed models for activity detection. Code and models will be released online.
+	\vspace{-5mm}
+\end{abstract}
+
+
+\section{Introduction}
+
+Pretraining has become an indispensable component in the deep learning pipeline. Most computer vision tasks leverage large-scale labeled or unlabeled data to do pretraining in a supervised or unsupervised way, which gives performance boosts in downstream tasks, especially when training data is scarce. Such benefits of pretraining have been observed in many applications including object detection \cite{mahajan2018exploring, dai2021up}, segmentation \cite{poudel2019fast}, video understanding \cite{ghadiyaram2019large}, reinforcement learning \cite{schwarzer2021pretraining} and language modeling \cite{liu2019roberta}. This behavior can be attributed to models becoming more robust by looking at more data, which helps generalize to unseen distributions in the downstream tasks \cite{bommasani2021opportunities}. 
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1.\linewidth]{intro.pdf}
+	\caption{\textbf{Our self-supervised pretraining strategy:} Previous work on temporal activity detection are usually pretrained on large-scale activity classification datasets ($e.g.$, Kinetics-400 \cite{carreira2017quo}). However, there is a disparity between pretraining and downstream tasks, which hurts the detection performance. To bridge this gap, we propose a new self-supervised pretraining detection task on classification data, by introducing frame-level pseudo labels, multi-action frames and action segments. %
+	}
+	\vspace{-5mm}
+	\label{fig:intro}
+\end{figure}
+
+Even though pretraining generally helps downstream tasks, the amount of boost depends on the compatibility of the pretrained task and the downstream task \cite{abnar2021exploring}. The pretraining task (or distribution) should be as close as possible to the downstream task (or distribution) to achieve the highest possible gain. However, in a traditional pretraining pipeline, such compatibility may not always be an option. We only have a few large-scale labeled datasets limited to general tasks such as classification. Hence, models for most downstream tasks are usually pretrained in a classification task on either ImageNet-1K \cite{deng2009imagenet} (image domain) or Kinetics-400 \cite{carreira2017quo} (video domain), which often leaves a disparity between pretraining and downstream tasks. 
+
+To mitigate such disparity, several works have been proposed for image domain tasks. For instance, in 3D scene understanding tasks such as object pose estimation and depth estimation, \cite{Newell2020SSP} proposed self-supervised learning to generate synthetic data for pretraining. \cite{Zoph2020SSP} proposed a self-training method for object detection and segmentation, by designing pretext tasks similar to the downstream setting. 
+
+Similarly, in temporal activity detection that is defined as predicting (one or more) activity classes per frame, we have the same observation: although pretraining on activity classification improves downstream detection performance, it is limited by the disparity, since in activity classification pretraining, a model can aggregate temporal information, learning to only look at the bigger picture of an input clip, while the downstream activity detection task is more fine-grained, which requires the model to retain temporal information as much as possible, looking at the composition of atomic actions.  
+
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.95\linewidth]{improvement_charades.pdf}
+	\vspace{-3mm}
+	\caption{\textbf{Performance comparison} between models pretrained for classification and the proposed self-supervised detection, on downstream Charades \cite{sigurdsson2016hollywood} activity detection setting. Our model ensembles pretrained with \textit{Volume Freeze}, \textit{Volume MixUp} and \textit{Volume CutMix} achieve significant performance boosts over their classification pretrained counterparts. Relative improvement is shown as Classification-pretrained $\rightarrow$ Detection--pretrained $\rightarrow$ Detection-pretrained (Ensemble). Model names are shown for Classification pretrained versions in space (red circles).}
+	\label{fig:improvement}
+	\vspace{-4mm}
+\end{figure}
+
+As for video understanding tasks, it is challenging to mitigate the pretraining and downstream disparity. Previous works have proposed specific temporal \cite{piergiovanni2018learning, piergiovanni2019temporal, kahatapitiya2021coarse} or graphical \cite{ghosh2020stacked, mavroudi2020representation} modeling. Such additional modeling focus on capturing aspects not seen in the pretraining data, such as long-term motion, human-object interactions, or multiple overlapping actions in fine detail. However, it can be difficult for those modeling techniques to alleviate the data disparity. 
+
+
+In this work, we propose a self-supervised pretraining method for activity detection by using classification data only and \textbf{no additional labels}. We generate pretraining data to capture fine-grained details in a multi-action-per-frame setting and use detection as the pretraining task --- a step closer to the downstream detection (see \fref{fig:intro}). Specifically, we first extend video-level labels of classification clips (with a single action per clip) to every frame, creating frame-level pseudo labels. Then, we propose three self-supervised augmentation techniques to generate multi-action frames and action segments within a clip; namely, \textit{Volume Freeze}, \textit{Volume MixUp} and \textit{Volume CutMix}. Volume Freeze creates a motion-less segment within a clip introducing segmented actions, whereas Volume MixUp and Volume CutMix seamlessly merge multiple clip segments into one, which tries to mimic the downstream data distribution of multiple actions per frame. Based on the augmented data, models are pretrained on activity detection task. As shown in \fref{fig:improvement}, our evaluations validate the benefits of the proposed pretraining strategy on multiple temporal activity detection benchmarks, including Charades~\cite{sigurdsson2016hollywood} and MultiTHUMOS~\cite{yeung2018every}. We further investigate the extent of the detection-pretrained features in our ablations and recommend when and how to use them best. 
+
+\vspace{-1mm}
+
+
+
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Video understanding:} Spatio-temporal (3D) convolutional architectures (CNNs) are commonly used for video modeling \cite{tran2014c3d,carreira2017quo, tran2017convnet}. Among these, multi-stream architectures fusing different modalities \cite{simonyan2014two, feichtenhofer2016convolutional} or different temporal resolutions \cite{feichtenhofer2019slowfast, kahatapitiya2021coarse} have achieved state-of-the-art results. To improve the efficiency of video models, Neural Architecture Search (NAS) has also been explored recently in \cite{ryoo2019assemblenet, feichtenhofer2020x3d}. Multiple other directions either try to take advantage of long-term motion \cite{yue2015beyond, varol2017long, piergiovanni2018learning, piergiovanni2019temporal, kahatapitiya2021coarse, dai2021pdan}, graphical modeling \cite{zhao2021video, ghosh2020stacked, mavroudi2020representation, ji2020action}, object detection \cite{ma2018attend, baradel2018object, zhou2019grounded} or attention mechanisms \cite{nawhal2021activity, tan2021relaxed, chang2021augmented} to improve video understanding. Activity detection goes beyond making a classification decision per segmented video, by annotating every frame with multiple ongoing activities. Use of sequential models such as RNNs have been popular \cite{escorcia2016daps, buch2017sst, yuan2016temporal, yeung2016end, yeung2018every}, and fully convolutional approaches also showed promising results \cite{shou2016temporal, zhao2017temporal, xu2017r, shou2017cdc}.
+
+
+\paragraph{Limited Supervision:} In contrast to supervised methods, limited supervision requires no or partial annotations. It includes weakly-supervised \cite{sun2015temporal,richard2017weakly,kuehne2017weakly,nguyen2019weakly,liu2019weakly,shi2020weakly,nguyen2018weakly,liu2019completeness}, unsupervised \cite{sener2018unsupervised,kukleva2019unsupervised,gong2020learning}, self-supervised \cite{jain2020actionbytes,chen2020action}, and semi-supervised \cite{ji2019learning} settings. In particular, we are interested in self-supervision, which explores two directions: pretext tasks or contrastive learning. Pretext tasks include generative modeling \cite{zhang2016colorful, pathak2016context, chu2020learning}, predicting spatial structure \cite{ahsan2019video, kim2018learning, doersch2015unsupervised, jing2018self,gidaris2018unsupervised}, temporal structure \cite{misra2016shuffle, wei2018learning, xu2019self, purushwalkam2020aligning, zhukov2020learning} or different views \cite{recasens2021broaden, grill2020bootstrap}. On the other hand, contrastive learning \cite{chen2021exploring, he2020momentum, chen2020simple} in video focus on contrasting between different spatio-temporal \cite{qian2021spatiotemporal, jabri2020space, bai2020can} or multi-modal \cite{kong2020cycle, han2020self} views.
+
+This work focuses on designing a self-supervised pretext task for temporal activity detection, using only video-level classification labels.
+
+\vspace{-1mm}
+
+
+\section{Self-supervised Pretraining with Classification Labels for Activity Detection}
+\label{method}
+
+\begin{figure*}[t]
+	\centering
+	\vspace{-1mm}
+	\includegraphics[width=0.85\textwidth]{aug_methods.pdf}
+	\vspace{-1mm}
+	\caption{\textbf{Volume Augmentations for our self-supervised detection pretraining:} \textit{Volume Freeze}, \textit{Volume MixUp} and \textit{Volume CutMix}. We first extend video-level labels (of single-action videos from Kinetics-400 \cite{carreira2017quo}) into every frame, creating frame-level pseudo labels. Next, to introduce action segments and multi-action frames similar to downstream detection, we propose the above three augmentation strategies. Volume Freeze stops the motion of a video segment, creating a background segment (assuming no action can be performed without motion). Hard-labels are assigned for action and background accordingly. Volume MixUp and CutMix introduce a seamless spatio-temporal (random) transition between two clips inspired by similar ideas in image domain \cite{zhang2017mixup, yun2019cutmix}. Here, labels are weighted to create soft-labels based on the alpha values or the area of each frame, respectively. Augmented frames are best viewed zoomed-in.}
+	\vspace{-5mm}
+	\label{fig:aug}
+\end{figure*}
+
+We introduce a self-supervised pretraining task for activity detection, which uses classification data and no additional labels. This idea is primarily motivated by removing the disparity between classification pretraining and downstream detection. Almost all the temporal activity detection works are pretrained for classification on large-scale datasets such as Kinetics-400 \cite{carreira2017quo}. This is because (1) video models need large-scale data to mitigate overfitting during training, and (2) detection annotations (frame-level) are too expensive to collect for a large enough dataset. Even with such classification-based pretraining at scale, the performance on downstream detection task is unsatisfactory. One reason for this is the complexity of the downstream task: predicting fine-grained activity classes per frame is challenging. Also, it can be partially attributed to the striking difference in tasks (and data distributions) during pretraining and downstream detection. As shown in \fref{fig:intro}, pretraining videos have only a single action per clip with video-level annotations, whereas, in the downstream detection task, one needs to predict multiple actions for each frame. It means that although such classification-based pretraining leveraged large-scale labeled data for training, the inherent bias which comes with it acts as a limiting factor for the downstream performance. 
+
+We try to bridge this gap by proposing a pretraining task that closely resembles the downstream task. Specifically, we introduce frame-level pseudo labels followed by multi-action frames and action segments through a set of data augmentation strategies. By doing so, we benefit from the scale of data, while having a similar data distribution as downstream detection. In the following subsections, we will introduce our pseudo labeling, volume augmentations, and how we combine these ideas.
+
+\vspace{-1mm}
+\subsection{Frame-level Pseudo Labels}
+\vspace{-1mm}
+
+Downstream detection is about fine-grained predictions of activity classes, which requires frame-level annotations to train. However, in the pretraining data that we consider (Kinetics-400 \cite{carreira2017quo}), each clip contains a single action and a video-level label. Since we want to design a pretraining task as close as possible to the downstream detection, we create frame-level labels from the available video-level labels by replicating the same label for every frame. Such labels can be noisy because not every frame in a clip may contain the annotated video-level action. However, we know such clips do not contain any additional actions, at least in the context of the original action categories. It is worth noting that we do not create new labels, thus no extra annotation effort is spent creating frame-level pseudo labels for classification data.
+
+\vspace{-1mm}
+\subsection{Self-Supervised Volume Augmentations}
+\vspace{-1mm}
+
+Based on the frame-level pseudo labels, we design a self-supervised detection task on the pretraining data. The idea here is to introduce action segments and multi-action frames similar to the downstream data. To do this, we propose three augmentation methods specifically for video data: (1) Volume Freeze, (2) Volume MixUp and, (3) Volume CutMix. Next, we will explain these concepts in detail.
+
+\vspace{-3mm}
+\subsubsection{Volume Freeze}
+
+Since downstream data contains multiple action segments per clip, we want to introduce the notion of action segments in pretraining data as well. However, the videos in the pretraining dataset contain only a single action per clip, in which, it is a challenge to have such segments. 
+Our solution here is to create an action-less (background) segment within a clip. We do this by randomly selecting a frame in a given clip, and replicating it for a random time interval (or number of frames). We call this `Background'. Such background segments are appended to the original clip at the corresponding frame location, maintaining the temporal consistency. Here, we assume that no action can be performed without any motion and label the frozen segment with a \textit{new} background label. Volume Freeze augmentation is shown in \fref{fig:aug} (top) and elaborated \fref{fig:vf}. It can be denoted as follows,
+{\small
+	\begin{align*}
+		\text{VF}(v) &= \text{concat}(v[1:r-1], \{v[r]\}^m, v[r+1:n-m+1]), \\
+		\text{VF}(l) &= \text{concat}(l[1:r-1], \{0\}^m, l[r+1:n-m+1]),
+	\end{align*}
+}%
+where $\text{VF}(v)$ and $\text{VF}(l)$ denote the augmented video and associated label using Volume Freeze. Also, $v$ and $l$ correspond to a given video clip of length $n$ and its frame-level pseudo label (one-hot), respectively. We freeze a frame for random $m$ times (denoted by $\{\cdot\}^m$) at a random temporal location $r \in [1,n-1]$, where $m \in [2,n-r+1]$, and we concatenate it to the original clip to create an augmented clip of the same original length $n$. The labels for the augmented clip are created accordingly, where we have zero labels for the frozen segment, and original frame-level labels elsewhere. We further experiment with freezing multiple segments within a clip, which gives only a small gain.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.85\linewidth]{vf_fig.pdf}
+	\vspace{-2mm}
+	\caption{\textbf{Volume Freeze:} Given an input clip of length $n$, a randomly selected frame $r$ is replicated for a random $m$ duration and appended in place. Overflowing frames from the end of the clip ($t>n$) are discarded. Labels are hard labels: either action or background. Frame number is shown here with each frame.}
+	\label{fig:vf}
+	\vspace{-3mm}
+\end{figure}
+
+\vspace{-2mm}
+\subsubsection{Volume MixUp}
+\label{subsec:mu}
+
+With Volume MixUp, we introduce multi-action frames to pretraining clips, which originally have a single action per clip. More specifically, we combine randomly selected two clips with a random temporal overlap, so that the overlapping region contains two actions per frame. This is inspired by the MixUp operation in image domain \cite{zhang2017mixup}. However, here we focus more on preserving the temporal consistency in Volume MixUp when combining two clips, by having seamlessly varying temporal alpha masks for each clip. It means, we have a smooth transition from one clip to the other within the temporal overlap. The labels for each clip are weighted with the corresponding temporal alpha mask to create soft labels. Such an augmented example with Volume MixUp is given in \fref{fig:aug} (middle) and elaborated in \fref{fig:vm}. This can also be denoted as,
+{\small
+	\begin{align*}
+		\text{VM}(v_1,v_2)[t] &= \alpha[t] \cdot v_1[t] + (1-\alpha[t]) \cdot v_2[t-r],\\
+		\text{VM}(l_1,l_2)[t] &= \alpha[t] \cdot l_1[t] + (1-\alpha[t]) \cdot l_2[t-r],
+	\end{align*}
+}%
+for two video clips $v_1$ and $v_2$ of length $n_1$ and $n_2$ respectively. $v_i[t]$ and $l_i[t]$ denote the $t$-th frame and its corresponding one-hot labels, and $\alpha[t]$ represents the scalar alpha values at time $t$ for mixing frames. Both clips are temporally padded to accommodate corresponding lengths $n_1, n_2$ and random shift $r$. The seamless temporal alpha mask for the overlapping region is defined as,
+{\small
+	\begin{equation*}
+		\label{eq:alpha}
+		\alpha[t]=
+		\begin{dcases}
+			\mathsf{T}_{[0,1]}(\frac{n_1-t}{n_1-r}) &\text{if}\; n_2+r\geq n_1\; \text{(Scenario 1),}\\
+			\mathsf{T}_{[0,1]}(\frac{|n_2+2r-2t|}{n_2}) & \text{otherwise}\; \text{(Scenario 2).}\\
+		\end{dcases}  
+	\end{equation*}
+}%
+The ``truncation'' operator $\mathsf{T}_{[0,1]}(\cdot)$ clips the mask values within the range of $[0,1]$. More detailed definition is in Appendix \ref{app:a}. In our case, it makes $\alpha[t]$ to be a piecewise linear function w.r.t. $t$ in the overlapping segment between two clips, and makes $\alpha[t]$ of the non-overlapping segment to be either 0 or 1, as illustrated in \fref{fig:vm}. 
+In scenario 1, the augmented clip transit as Clip$_1 \rightarrow$ Clip$_2$, whereas in scenario 2, it works as Clip$_1 \rightarrow$ Clip$_2 \rightarrow$ Clip$_1$. It depends on the clip lengths $n_1, n_2$ and the random shift $r$.
+
+\begin{figure}[t]
+	\centering
+	\vspace{-2mm}
+	\includegraphics[width=0.85\linewidth]{vm_fig.pdf}
+	\vspace{-2mm}
+	\caption{\textbf{Volume MixUp:} Given two input clips of length $n_1, n_2$, one clip is randomly shifted by $r$ to create a random overlap. When mixing, a seamlessly varying alpha mask is applied in the overlapping region so that we have smooth transitions between clips. Soft-labels are created based on the alpha values. There can be two cases based on clip lengths $n_1, n_2$ and the random shift $r$: scenario 1: Clip$_1\rightarrow\;$Clip$_2$, or, scenario 2: Clip$_1\rightarrow\;$Clip$_2\rightarrow\;$Clip$_1$. Clip length is shown here at the end of each clip.}
+	\label{fig:vm}
+	\vspace{-3mm}
+\end{figure}
+
+\vspace{-2mm}
+\subsubsection{Volume CutMix}
+\label{subsec:cm}
+
+\begin{figure}[t]
+	\centering
+	\vspace{-2mm}
+	\includegraphics[width=0.85\linewidth]{vc_fig.pdf}
+	\vspace{-2mm}
+	\caption{\textbf{Volume CutMix:} We have two settings: (1) Transient Window and, (2) Transient View. In Transient Window, random relative shift $r$ is given similar to Volume MixUp. Smooth transition between clips is achieved when the transient window is moving from left to right (this setting can have the same two scenarios as in Volume MixUp). In Transient View, we have constant windows (half-sized) looking at transient views of the content inside (i.e., the content of each frame is moved inside the corresponding window with time, in addition to the natural motion of the clip). Clip length is shown here at the end of each clip.}
+	\label{fig:vc}
+	\vspace{-5mm}
+\end{figure}
+
+Similar to Volume MixUp, we introduce multi-action frames with Volume CutMix. Here, given two clips, we define an overlapping region and assign a seamlessly changing spatial window for each clip within this region. This is inspired by CutMix \cite{yun2019cutmix} operation in image domain. In Volume CutMix however, we focus on a seamless transition between clips in time. We introduce two strategies for Volume CutMix: (1) Transient Window and (2) Transient View (Constant Window). We show an example in \fref{fig:aug} (bottom) and elaborate in \fref{fig:vc}. \vspace{-1mm}
+
+\paragraph{Transient Window:} This is closely-related to our Volume MixUp. Given two clips, we insert a random relative shift $r$ to create a random overlapping region. Clips are temporally padded at the ends to accommodate different clip lengths and shift. This can have the same two scenarios as before, depending on $n_1, n_2$ and $r$. However, rather than defining a scalar alpha mask per frame, now we define a 2D spatial window $\mathbf{M}$ as a mask, which changes seamlessly in time, within the overlapping region. The soft-labels for the overlapping region are weighted based on the area of each window. For convenience, we define the two windows based on a moving vertical plane as shown in \fref{fig:vc} (top). In between two windows, we have a short but smooth spatial transition, instead of a hard spatial boundary. This operation can be denoted as,
+{\small
+	\begin{align*}
+		\text{VC}(v_1,v_2)[t] &= \mathbf{M}[t] \odot v_1[t] + (1-\mathbf{M}[t]) \odot v_2[t-r],\\
+		\text{VC}(l_1,l_2)[t] &= |\mathbf{M}[t]| \cdot l_1[t] + (1-|\mathbf{M}[t]|) \cdot l_2[t-r]\;,
+	\end{align*}
+}%
+where $\mathbf{M}[t]$ is the spatial mask at time $t$. $v_i$ and $l_i$ represent a clip and the corresponding one-hot label . The symbols $\odot$ and $|\cdot|$ mean Hadamard (element-wise) product and ``area'' of the mask (defined as the average of all its elements), respectively. More details on $\mathbf{M}$ are in Appendix \ref{app:b}. 
+
+\paragraph{Transient View:} In this setting, we keep the window size constant for each clip (half of the frame) within the overlapping region (not random, but $n$ in this case). For each window to cover the spatial range of each clip, we move each clip within the constant window from left-to-right, in time. This artificial movement is introduced in addition to the natural motion in each clip. We have a constant clip length and no random shift in this case, since a zero-padding in only one-half of a frame may cause problems for convolution kernels. With the same notations as before, the augmented clip and labels can be denoted as,
+{\small
+	\begin{align*}
+		\text{VC}(v_1,v_2)[t] &= \mathbf{M} \odot v_1[t] + (1-\mathbf{M}) \odot v_2[t],\\
+		\text{VC}(l_1,l_2)[t] &= 0.5 \cdot l_1[t] + 0.5 \cdot l_2[t],
+	\end{align*}
+}%
+
+\vspace{-1mm}
+\subsection{Combining Augmentations}
+\vspace{-1mm}
+
+In the previous subsections, we defined the components of the proposed pretraining scheme: namely, frame-level pseudo labeling and volume augmentations. We always use the pseudo labeling method to generate frame-level labels in classification data. When considering the augmentations, we try two strategies to combine them: (1) joint training and (2) model ensembling.
+
+\vspace{-1mm}
+\paragraph{Joint training:} Here, we combine the three augmentations during training. Each augmentation is randomly applied to a given batch of input clips. Thus, an augmented sample may see no augmentation, or up to all three augmentations. Although this strategy seems flexible, applying multiple of the proposed augmentations on a given sample can create confusing inputs, which are hard to train with.
+
+\vspace{-1mm}
+\paragraph{Model ensembling:} In this strategy, we apply only a single augmentation among the proposed Volume Freezing, MixUp, and CutMix during training. At inference, we combine predictions coming from such separate models trained with each augmentation. By doing so, we can combine the benefits of each augmentation method, without worrying about the input confusion at training. However, this incurs more compute requirement at inference, compared to a jointly trained single model.
+
+\vspace{-2mm}
+
+
+
+\section{Experiments}
+\label{sec:results}
+\vspace{-1mm}
+
+To validate the benefits of our proposed method, we pretrain on Kinetics-400 \cite{carreira2017quo} and evaluate on Charades \cite{sigurdsson2016hollywood} and MultiTHUMOS \cite{yeung2018every} for downstream detection, using the efficient video backbone X3D \cite{feichtenhofer2020x3d}. In addition to applying the proposed augmentations at the input level, we also run a few experiments with manifold augmentations \cite{verma2019manifold}, where each augmentation method is applied to the feature maps at a random depth of the network.
+
+\vspace{-1mm}
+\subsection{Kinetics-400 Detection Pretraining}
+\vspace{-1mm}
+
+\paragraph{Dataset:} Kinetics-400 \cite{carreira2017quo} is a large-scale activity classification dataset commonly used for pretraining video models. It contained 240k training and 20k validation videos at release, but due to the unavailability of some videos, our version contains $\app$220k training and $\app$17k validation videos. Each clip contains a single action out of 400 human action categories, and comes with video-level annotations. Kinetics clips are usually $\app10s$ long.
+
+\paragraph{Pretraining:} We start with an X3D-M (medium) \cite{feichtenhofer2020x3d} checkpoint pretrained for classification on Kinetics-400 \cite{carreira2017quo}. This allows faster adoption and shorter pretraining schedules for our self-supervised detection. We pretrain X3D for 100k iterations with a batch size of 64 and an initial learning rate of 0.05, and reduce the learning rate by a factor of 10 after 80k iterations. We use a dropout rate of 0.5 before the last fully-connected layer. From each clip, we sample 16 frames at a stride of 5, following the usual X3D training setup. During training, first, each input is randomly sampled in [256, 320] pixels, spatially cropped to 224$\times$224, and applied a random horizontal flip. Next, we extend the labels to every frame as we described earlier, and apply one of the proposed volume augmentations to a batch of input clips.
+
+\vspace{-2mm}
+\subsection{Charades Evaluation}
+\label{subsec:charades}
+
+\paragraph{Dataset:} Charades \cite{sigurdsson2016hollywood} is a mid-scale activity classification or temporal detection dataset consisting of $\app$9.8k continuous videos with frame-level annotations of 157 common household activities. The dataset is split as $\app$7.9k training and $\app$1.8k validation videos. Each video contains an average of 6.8 activity instances, often with multiple activity classes per frame, and has longer clips averaging a duration of $\app30s$.
+
+\vspace{-1mm}
+\paragraph{Training and Inference:} We initialize X3D \cite{feichtenhofer2020x3d} with checkpoints from our detection pretraining. From each clip, we sample 16 frames at a stride of 10 and train for 100 epochs with a batch size of 16. Initially, we have a learning rate of 0.02, which is decreased by a factor of 10 at 80 epochs. For Coarse-Fine and SlowFast$_\text{det}$, we follow the same two-staged training strategy as in \cite{kahatapitiya2021coarse}. Namely, each stream is first trained separately, followed by joint training with newly-initialized fusion parameters. We train all methods on Charades with Binary Cross-Entropy (BCE) as localization and classification losses. At inference, we make predictions for 25 equally-sampled frames per each input in the validation set, which is the standard Charades localization evaluation protocol \cite{sigurdsson2016hollywood} followed by all previous work. Also, it is important to note that the original evaluation script from the Charades challenge scales the Average Precision for each class with a corresponding class weight. However, in our ablations, we report the performance on predictions for every frame, which gives a more fine-grained evaluation, and do not perform such class-dependent weighting. The detection performance here is measured by mean Average Precision (mAP).
+
+\vspace{-1mm}
+\paragraph{Results:}
+\label{subsubsec:main_results}
+
+\begin{table}[t!]
+	\centering
+	\tablestyle{1.8pt}{1.}
+	\resizebox{1.\linewidth}{!}{
+		\begin{tabular}{l|c|c|c|r}
+			\multicolumn{1}{c|}{\multirow{2}{*}{Model}} & \multicolumn{1}{c|}{\multirow{2}{*}{Modality}} & \multicolumn{2}{c|}{ $\;$Pretraining$\;$}  & \multirow{2}{*}{$\;$mAP (\%)} \\
+			{} & {} & $\;\;$cls.$\;$ & det. & {} \\
+			\shline
+			{Two-stream I3D (Inception) \cite{carreira2017quo}} & {R+F} & \checkmark & {} & 17.22 \\
+			3D ResNet-50 \cite{tran2018closer,he2016deep} & {R} & \checkmark & {} &   18.60 \\
+			{I3D + STGCN \cite{ghosh2020stacked}} & {R+F} & \checkmark & {} & 19.09 \\
+			{I3D + biGRU + VS-ST-MPNN \cite{mavroudi2020representation}} & {R+O} & \checkmark & {} & 23.70 \\
+			{I3D + PDAN \cite{dai2021pdan}} & {R+F} & \checkmark & {} & \underline{26.50} \\
+			
+			\hline
+			\multirow{2}{*}{{X3D \cite{feichtenhofer2020x3d}}} & \multirow{2}{*}{R} & \checkmark & {} &   20.66 \\
+			{} & {} & {} & \checkmark & \textcolor{pos}{(+3.28)} {\textbf{23.94}} \\
+			\hline
+			\multirow{2}{*}{{X3D + super-events \cite{piergiovanni2018learning}}} & \multirow{2}{*}{R} & \checkmark & {} & {21.79}  \\
+			{} & {} & {} & \checkmark & \textcolor{pos}{(+2.13)} {\textbf{23.92}} \\
+			\hline
+			\multirow{2}{*}{{X3D + TGM + super-events \cite{piergiovanni2019temporal}}} & \multirow{2}{*}{R} & \checkmark & {} & {23.84}  \\
+			{} & {} & {} & \checkmark & \textcolor{pos}{(+1.66)} {\textbf{25.50}} \\
+			\hline
+			\multirow{2}{*}{SlowFast$_{\text{det}}$ (w/ X3D) \cite{feichtenhofer2019slowfast}} & \multirow{2}{*}{R} & \checkmark & {} & 22.80  \\
+			{} & {} & {} & \checkmark & \textcolor{pos}{(+2.52)} {\textbf{25.32}} \\
+			\hline
+			\multirow{2}{*}{{Coarse-Fine \cite{kahatapitiya2021coarse}}} & \multirow{2}{*}{R} & \checkmark & {} & 25.10 \\
+			{} & {} & {} & \checkmark & \textcolor{pos}{(+1.85)} {\underline{\textbf{26.95}}} \\
+			
+			
+	\end{tabular}}
+	\vspace{-2mm}
+	\caption{\textbf{Comparison with the state-of-the-art methods for activity detection on Charades} \cite{sigurdsson2016hollywood}. We report the performance (mAP), input modalities used (R: RGB, F: optical flow or O: object), and the pretraining method: classification (cls.) or the proposed self-supervised detection (det.). These results correspond to the original Charades localization evaluation setting (i.e., evaluated on evenly-sampled 25 frames from each validation clip). Model ensembles trained with our detection pretraining significantly outperform their counterparts, consistently. Coarse-Fine \cite{kahatapitiya2021coarse} achieves a new state-of-the-art performance of $26.95\%$ mAP even with RGB modality only, when pretrained with our proposed method. Improved results from our pretraining are in \textbf{bold} with relative improvements in \textcolor{pos}{green}, while the best performance from each pretraining strategy is \underline{underlined}.}
+	\vspace{-4mm}
+	\label{tab:charades}
+\end{table}
+
+
+
+\begin{table*}[t!]\centering
+	\vspace{-5mm}
+	\captionsetup[subfloat]{captionskip=2pt}
+	\captionsetup[subffloat]{justification=centering}
+	
+	\subfloat[\textbf{Volume Freeze} with a single or two separate frozen segments. Multiple frozen segments does not give a considerable benefit. --- X3D \cite{feichtenhofer2020x3d}
+	\label{tab:ablation:vol_freeze}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|r}
+			\multicolumn{1}{l|}{Volume Freeze}  & mAP (\%) \\
+			\shline
+			Baseline (cls.) & {17.28} \\ \hline
+			Single segment & {18.79} \\
+			Two segments & {\underline{18.83}} \\
+			\multicolumn{2}{c}{} \\ %
+	\end{tabular}}\hspace{3mm}
+	\subfloat[\textbf{Volume MixUp} with hard or seamless (soft) boundaries (i.e., changing alpha values). Seamless boundaries preserve temporal consistency and works better. Manifold MixUp \cite{verma2019manifold} does not give a considerable benefit. --- X3D \cite{feichtenhofer2020x3d}
+	\label{tab:ablation:vol_mixup}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|r}
+			\multicolumn{1}{l|}{Volume MixUp}  & mAP (\%) \\
+			\shline
+			Baseline (cls.) & {17.28} \\ \hline
+			Hard boundaries & {18.86} \\
+			Seamless & {19.18} \\ \hline
+			Seamless (manifold) & {\underline{19.24}} \\
+	\end{tabular}}\hspace{3mm}
+	\subfloat[\textbf{Volume CutMix} with transient windows or transient views (with a constant window for each clip). Transient views show a slightly better performance. --- X3D \cite{feichtenhofer2020x3d}
+	\label{tab:ablation:vol_cutmix}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|r}
+			\multicolumn{1}{l|}{Volume CutMix}  & mAP (\%) \\
+			\shline
+			Baseline (cls.) & {17.28} \\ \hline
+			Transient window & {18.89} \\ 
+			Transient view & \multirow{2}{*}{\underline{18.99}} \\
+			(w/ Constant window) & \\ %
+	\end{tabular}}\hspace{3mm}
+	\subfloat[\textbf{Combining Augmentations} with joint-training or as an ensemble of separately-trained models. Joint-training can create confusing inputs with multiple augmentations. Avoiding such, ensembling can obtain the best of each method. --- X3D \cite{feichtenhofer2020x3d}
+	\label{tab:ablation:combining_aug}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|r}
+			\multicolumn{1}{c|}{Method} & mAP (\%) \\
+			\shline
+			Baseline (cls.) & {17.28} \\ \hline
+			Joint train (VF/VM/VC) & {19.11} \\
+			Ensemble (VF/VM/VC) & {\underline{20.50}} \\
+			\multicolumn{2}{c}{} \\ %
+	\end{tabular}}\hspace{3mm} \vspace{-2mm}
+	
+	
+	\subfloat[\textbf{Statistics from the validation set}, which show the improvement for single vs. multi-action frames, and action boundary vs. non-boundary regions (for a boundary considered with a dilation of 3). We see a consistently larger improvement in multi-action frames compared to single-action frames, as our pretraining introduces multi-action frames. However, improvement from introducing boundaries in pretraining has a subtle impact in the downstream detection. --- X3D \cite{feichtenhofer2020x3d} \label{tab:ablation:stat}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|r|r|r|r}
+			\multicolumn{1}{c|}{\multirow{2}{*}{Pretraining}}  & \multicolumn{2}{c|}{Act. per frame} & \multicolumn{2}{c}{Boundary} \\
+			& \multicolumn{1}{c|}{=1} & \multicolumn{1}{c|}{>1} & \multicolumn{1}{c|}{False} & \multicolumn{1}{c}{True} \\
+			\shline
+			cls. & {8.63} & {18.72} & {17.34} & {16.18} \\ \hline
+			
+			det. (VF) & {\textcolor{neg}{(-0.14)} 8.39} & {\textcolor{pos}{(\underline{+1.85})} 20.57} & {\textcolor{pos}{(+1.41)} 18.75} & {\textcolor{pos}{(\underline{+1.49})} 17.67}\\
+			
+			det. (VM) & {\textcolor{pos}{(+1.30)} 9.93} & {\textcolor{pos}{(\underline{+2.06})} 20.78} & {\textcolor{pos}{(+1.87)} 19.18} & {\textcolor{pos}{(\underline{+1.94})} 17.96} \\
+			
+			det. (VC) & {\textcolor{pos}{(+1.16)} 9.79} & {\textcolor{pos}{(\underline{+1.86})} 20.58} & {\textcolor{pos}{(+1.68)} 19.02} & {\textcolor{pos}{(\underline{+1.85})} 18.03}\\
+			\multicolumn{5}{c}{} \\ %
+			\multicolumn{5}{c}{} \\ %
+			\multicolumn{5}{c}{} \\ %
+			\multicolumn{5}{c}{} \\ %
+	\end{tabular}} \hspace{3mm}        
+	\subfloat[\textbf{Performance of multi-stream architectures} with streams pretrained with different methods. Here, we see an interesting observation: even though detection pretrained models are consistently better as single-stream networks (eg: either Coarse/Slow or Fine/Fast), when combined as multi-stream networks, performance varies. We further investigate why this happens in \tref{tab:ablation:downsampling} and \tref{tab:ablation:feat-agg}. Model ensembles however, gives consistent improvements as expected.  --- SlowFast$_{\text{det}}$ \cite{feichtenhofer2019slowfast}/ Coarse-Fine \cite{kahatapitiya2021coarse}
+	\label{tab:ablation:coarse-fine}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|c|c|r}
+			\multicolumn{4}{c}{} \\ %
+			\multicolumn{1}{c|}{Model} & Coarse/Slow & Fine/Fast & Two-stream \\
+			\shline
+			Slow$_{\text{det}}$ (cls.) - Fast$_{\text{det}}$ (cls.) & {17.49} & {17.28} & {20.31} \\
+			Slow$_{\text{det}}$ (VC) - Fast$_{\text{det}}$ (VC) & {18.60} & {18.99} & \textcolor{pos}{(\underline{+0.91})} {21.22} \\ \hline
+			Coarse (cls.) - Fine (cls.) & {18.13} & {17.28} & {23.29} \\
+			Coarse (VC) - Fine (VC) & {18.85} & {18.99} & \textcolor{neg}{(-0.46)} {22.83} \\ 
+			Coarse (VC) - Fine (cls.) & {18.85} & {17.28} & {\textcolor{pos}{(+0.28)} 23.57} \\ \hline
+			Coarse (VF/VM/VC) - Fine (cls.) & {-} & {-} & {24.29} \\ 
+			Coarse (VF/VM/VC) - Fine (cls.) & \multirow{2}{*}{{-}} & \multirow{2}{*}{{-}} & \multirow{2}{*}{{\underline{24.61}}} \\
+			w/ Fine(VF/VM/VC) & {} & {} & {} \\
+	\end{tabular}}\hspace{3mm} \vspace{-2mm}
+	
+	\subfloat[\textbf{At lower temporal resolutions} (< pretrained resolution), detection pretrained models are not improved as much as classification pretrained ones, by comparing the Coarse/Slow stream vs. Fine/Fast stream. Classification captures an overview of a clip which can be better generalized to different temporal resolutions. However, detection pretrained models still consistently outperform others. --- SlowFast$_{\text{det}}$ \cite{feichtenhofer2019slowfast}/ Coarse-Fine \cite{kahatapitiya2021coarse} \label{tab:ablation:downsampling}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|c|c|r}
+			\multicolumn{1}{c|}{Pretraining}  & Fine/Fast& Coarse & \multicolumn{1}{c}{Slow} \\
+			\shline
+			cls. & {17.28} & {\textcolor{pos}{(\underline{+0.85})} 18.13} & {\textcolor{smpos}{(\underline{+0.21})} 17.49} \\ \hline
+			det. (VF) & {18.79} & {\textcolor{neg}{(-0.27)} 18.52} & {\textcolor{neg}{(-0.27)} 18.52} \\
+			det. (VM) & {19.18} & {\textcolor{smpos}{(+0.12)} 19.30} & {\textcolor{neg}{(-0.01)} 19.17} \\
+			det. (VC) & {18.99} & {\textcolor{neg}{(-0.14)} 18.85} & {\textcolor{neg}{(-0.39)} 18.60} \\
+	\end{tabular}} \hspace{3mm}
+	\subfloat[\textbf{In temporal aggregation}, classification pretrained models perform better. We show this with the fusion module in Coarse-Fine \cite{kahatapitiya2021coarse}, which aggregates Fine features with Gaussians at a given standard deviation. Here, if we increase the standard deviation, we temporally aggregate (dilate) more. Classification pretrained features show consistently higher improvement with such aggregation. --- Coarse-Fine \cite{kahatapitiya2021coarse} \label{tab:ablation:feat-agg}]{
+		\tablestyle{2pt}{1.05}
+		\begin{tabular}{l|c|c|r}
+			\multicolumn{1}{c|}{Coarse-Fine}  & sd$=T/32$ & sd$=T/16$ & \multicolumn{1}{c}{sd$=T/8$} \\
+			\shline
+			cls. & {22.80} & {\textcolor{pos}{(\underline{+0.68})} 23.48} & {\textcolor{pos}{(\underline{+0.49})} 23.29} \\ \hline
+			det. (VC) & {22.84} & {\textcolor{smpos}{(+0.14)} 22.98} & {\textcolor{neg}{(-0.01)} 22.83} \\
+			\multicolumn{4}{c}{} \\ %
+			\multicolumn{4}{c}{} \\ %
+	\end{tabular}} \hspace{3mm} \vspace{-3mm}
+	
+	
+	\vspace{1mm}
+	\caption{\textbf{Ablations on Charades} \cite{sigurdsson2016hollywood} \textbf{activity detection}, evaluating our design choices and showing when our detection pretrained models can be most beneficial (i.e., relative improvement from detection pretrained models are not as much as their counterparts at different temporal resolutions (\tref{tab:ablation:downsampling}) or strong temporal aggregation (\tref{tab:ablation:feat-agg})). Here, We show the performance in mean Average Precision (mAP) for fine-grained predictions (i.e., making decisions per every frame rather than evenly-sampled 25 frames from each validation clip). Relative changes of \textcolor{neg}{negative}, \textcolor{smpos}{postive-but-small} and \textcolor{pos}{postive} are shown in corresponding color, whereas the best performances that we highlight are \underline{underlined}. The specific model/models used for evaluation in each table is mentioned at the end of each caption.}
+	\label{tab:ablations}
+	\vspace{-6mm}
+\end{table*}
+
+We report the performance of state-of-the-art methods comparing their pretraining strategy in \tref{tab:charades}. These numbers are for the Charades standard evaluation protocol \cite{sigurdsson2016hollywood}. We see a clear improvement from the model ensembles pretrained with the proposed detection task across multiple methods. The vanilla X3D \cite{feichtenhofer2020x3d} backbone without any additional modeling achieves the biggest relative improvement of $+3.28\%$ mAP. Detection pretraining also helps any lightweight temporal modeling on top of pre-extracted features as in super-events \cite{piergiovanni2018learning} with a $+2.13\%$ mAP and in TGM \cite{piergiovanni2019temporal} with a $+1.66\%$ mAP improvement. Finally, we see the benefits in fully end-to-end trained multi-stream networks such as SlowFast$_\text{det}$ ($+2.52\%$ mAP) and Coarse-Fine Networks \cite{kahatapitiya2021coarse} ($+1.85\%$ mAP). Note that SlowFast$_\text{det}$ here is a variant of original SlowFast \cite{feichtenhofer2019slowfast}, which is adopted with X3D \cite{feichtenhofer2020x3d} for detection in \cite{kahatapitiya2021coarse}. We further show the performance vs. compute evaluation for these methods in \fref{fig:improvement}. Our models, even without ensembling, achieves significant gains. Our model ensembles increase the compute requirement compared to classification pretrained single models, however, these are still more than an order of magnitude efficient compared to the previous best performing model PDAN \cite{dai2021pdan}.
+
+\vspace{-1mm}
+\subsection{Ablations on Charades}
+\label{subsubsec:ablations}
+
+This section presents multiple ablations evaluating our design decisions and provides recommendations on when to use our detection pretrained models. Note that, in these experiments, we report the performance evaluated for every frame on Charades \cite{sigurdsson2016hollywood} (in contrast to the standard evaluation protocol of evaluating only on 25 frames per clip), which is measured using mAP (without class weights). This is similar to the original setting, but provides more robust and fine-grained performance metrics.
+
+\vspace{-1mm}
+\paragraph{Number of frozen segments in Volume Freeze:} As shown in \tref{tab:ablation:vol_freeze}, Volume Freezing provides a relative improvement of $+1.51\%$ mAP over classification pretrained X3D \cite{feichtenhofer2020x3d}. In general, we consider a single random frozen segment in a given clip. Having multiple such frozen segments does not give a considerable boost (only  $+0.04\%$ mAP).
+
+\vspace{-1mm}
+\paragraph{Variations of Volume MixUp:} We consider Volume MixUp of two clips with hard or smooth (having seamlessly changing temporal alpha masks) boundaries. Among these, smooth boundaries preserve the temporal consistency better, giving a $+0.32\%$ mAP boost over the former, as shown in \tref{tab:ablation:vol_mixup}. Volume MixUp applied in a random feature-level as in \cite{verma2019manifold} is not much better (only  $+0.06\%$ mAP) than the same augmentation applied always at the input level.
+
+\vspace{-1mm}
+\paragraph{Windowing strategies in Volume CutMix:} Among the windowing methods of Volume CutMix discussed earlier, transient view performs slightly better ($+0.10\%$ mAP) than transient window as shown in \tref{tab:ablation:vol_cutmix}.
+
+\vspace{-1mm}
+\paragraph{Combining augmentations:} As illustrated in \tref{tab:ablation:combining_aug}, when combining the three volume augmentation methods, an ensemble of models pretrained separately works considerably better ($+1.39\%$ mAP) than a single model jointly-trained with all augmentations. The problem with combining multiple augmentations in a single input instance is that, it may result in a confusing/cluttered input to the network. In contrast, each model in an ensemble can avoid such clutter by training separately, while complementing other models within the ensemble at inference.
+
+\vspace{-1.0mm}
+\paragraph{Statistics showing the points of improvement:} \tref{tab:ablation:stat} shows the performance boosts of each augmentation, measured under different settings to highlight what happens (1) in multi-action frames and (2) around action boundaries. Our augmentations significantly improve the mAP in a multi-action setting, as we introduce multi-action frames in pretraining. Even though we introduce action boundaries during pretraining, it does not show a contrasting change between boundary and non-boundary regions in the downstream.
+
+\vspace{-1.0mm}
+\paragraph{Multi-stream methods and ensembling:} We see some interesting results when combining multiple streams of detection pretrained models. As shown in \tref{tab:ablation:coarse-fine}, SlowFast$_\text{det}$ \cite{feichtenhofer2019slowfast}, shows a clear improvement ($+0.91\%$ mAP) with two detection pretrained streams, whereas Coarse-Fine \cite{kahatapitiya2021coarse} does not ($-0.46\%$ mAP). However, when a classification pretrained model is used as the Fine stream, it works better ($+0.28\%$ mAP) than the original. This gives a intriguing observations on detection models (1) at different temporal resolutions and, (2) in temporal aggregation, which are further explored in \tref{tab:ablation:downsampling} and \tref{tab:ablation:feat-agg}, respectively. When considering model ensembles, in Coarse-Fine, a classification pretrained Fine stream fused with detection pretrained Coarse stream ensembles (VF/VM/VC) gives a $+0.72\%$ mAP improvement over a single Coarse-Fine network. If we further include, Fine stream ensembles (VF/VM/VC), it gives an additional boost of $+0.32\%$ mAP.
+
+\vspace{-1.0mm}
+\paragraph{At different temporal resolutions:} In \tref{tab:ablation:downsampling}, we consider classification and detection pretrained models at a different ($\times 4$ lower) temporal resolution, by comparing the coarse/slow stream vs. the fine/fast stream. Classification pretrained models consistently give a better relative change than the detection pretrained models (the consistent gain of Coarse/Slow w.r.t. Fine/Fast). This is because, when pretrained with classification, models can capture an overview of an input clip, allowing it to better generalize for different temporal resolutions. However, the absolute performance metrics are always better in detection counterparts.
+
+\vspace{-1.0mm}
+\paragraph{In temporal aggregation:} In Coarse-Fine \cite{kahatapitiya2021coarse}, fusion module aggregates Fine features with Gaussians (at defined standard deviation). As in \tref{tab:ablation:feat-agg}, by evaluating at different standard deviations (different aggregation scales), we see that classification pretrained features give a better temporal aggregation compared to detection counterparts. This is due to the same reason mentioned above: classification features capture an overview, hence better generalize across scales.
+
+
+\subsection{MultiTHUMOS Evaluation}
+\label{subsec:multithumos}
+
+\begin{table}[t!]
+	\centering
+	\tablestyle{1.8pt}{1.}
+	\resizebox{1.\linewidth}{!}{
+		\begin{tabular}{l|c|c|c|r}
+			\multicolumn{1}{c|}{\multirow{2}{*}{Model}}  & \multicolumn{1}{c|}{\multirow{2}{*}{Modality}} & \multicolumn{2}{c|}{ $\;$Pretraining$\;$}  & \multirow{2}{*}{$\;$mAP (\%)} \\
+			{} & {} & $\;\;$cls.$\;$ & det. & {} \\
+			\shline
+			{Two-stream I3D \cite{carreira2017quo}} & R+F & \checkmark & {} & 36.40 \\
+			{I3D + TGM + super-events \cite{piergiovanni2019temporal}} & R+F & \checkmark & {} & 46.40 \\
+			{I3D + PDAN \cite{dai2021pdan}} & R+F & \checkmark & {} & \underline{47.60} \\
+			
+			\hline
+			\multirow{2}{*}{{X3D \cite{feichtenhofer2020x3d}}} & \multirow{2}{*}{R} & \checkmark & {} &   37.17 \\
+			{} & {} & {} & \checkmark & {\textcolor{pos}{(+3.71)} \textbf{40.88}} \\
+			\hline
+			\multirow{2}{*}{{X3D + TGM + super-events \cite{piergiovanni2019temporal}}} & \multirow{2}{*}{R} & \checkmark & {} & {39.16}  \\
+			{} & {} & {} & \checkmark & {\textcolor{pos}{(+3.99)} \textbf{43.15}} \\
+			\hline
+			\multirow{2}{*}{{X3D + PDAN \cite{dai2021pdan}}} & \multirow{2}{*}{R} & \checkmark & {} & {39.20}  \\
+			{} & {} & {} & \checkmark & {\textcolor{pos}{(+5.15)} \textbf{\underline{44.35}}} \\
+			
+			
+	\end{tabular}}
+	\vspace{-1mm}
+	\caption{\textbf{Comparison with the state-of-the-art methods for activity detection on MultiTHUMOS} \cite{yeung2018every}. We report the performance (mAP), input modalities used (R: RGB or F: optical flow), and the pretraining method: classification (cls.) or the proposed self-supervised detection (det.). Model ensembling trained with our detection pretraining significantly outperform their counterparts consistently, and shows overall competitive results even with RGB modality only. Improved results from our pretraining are in \textbf{bold} with relative improvements in \textcolor{pos}{green}, while the best performance from each pretraining strategy is \underline{underlined}.}
+	\vspace{-4mm}
+	\label{tab:thumos}
+\end{table}
+
+
+
+\paragraph{Dataset:} MultiTHUMOS \cite{yeung2018every} is a small-scale dataset which contains a subset of THUMOS \cite{jiang2014thumos} untrimmed videos densely annotated for 65 different action classes. It provides action segment annotations for 413 videos, split as 200 for training and 213 for validation. On average, it contains 1.5 labels per frame and 10.5 action classes per video. When compared to Charades \cite{sigurdsson2016hollywood}, this has a significantly smaller number of videos, but each clip is longer in duration.
+
+\vspace{-1.5mm}
+\paragraph{Training and Inference:} We follow the same training recipe as in Charades, starting with a checkpoint pretrained for our detection. At inference, we make predictions for every frame and report mean Average Precision (mAP).
+\vspace{-3pt}
+\paragraph{Results:}
+\label{subsubsec:main_results_thumos}
+
+In \tref{tab:thumos}, we present the performance of state-of-the-art models pretrained with either classification task or the proposed detection task. Detection pretrained models consistently outperform classification pretrained ones, in vanilla backbones such as X3D \cite{feichtenhofer2020x3d} ($+3.71\%$ mAP), and with temporal modeling on-top of pre-extracted features as in TGM \cite{piergiovanni2019temporal} ($+3.99\%$ mAP) or PDAN \cite{dai2021pdan} ($+5.15\%$ mAP). PDAN, with our pretraining, significantly efficient X3D backbone and only RGB modality achieves competitive performance compared to multi-modal I3D \cite{carreira2017quo} counterparts.
+
+\vspace{-2mm}
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+\vspace{-2mm}
+
+This work introduced a new self-supervised pretraining strategy for temporal activity detection, only using classification labels. We defined a self-supervised pretraining detection task with frame-level pseudo labels and three volume augmentation techniques, introducing multi-action frames and action segments to the single-action classification data. Our experiments confirmed the benefits of the proposed method across multiple models and benchmarks. As takeaways, we further provide recommendations on when to use such pretrained models based on our observations.
+
+
+
+
+
+
+\newcount\cvprrulercount
+\appendix
+
+\section{Appendix}
+\label{sec:appendix}
+
+\renewcommand{\thesubsection}{A.\arabic{subsection}}
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+
+\begin{figure*}[]
+	\centering
+	\includegraphics[width=1.\textwidth]{label_weight.pdf}
+	\vspace{-4mm}
+	\caption{\textbf{Detailed view of masks} used in Volume MixUp (left) and Volume CutMix (right). In Volume MixUp, a temporal alpha mask ($\alpha[t]$) is defined, which is further visualized above (left) for both scenarios. When $n_2+r\geq n_1$ (Scenario 1), $\alpha[t]$ is defined so that the augmented clip transit from Clip$_1\rightarrow\;$Clip$_2$. Otherwise, transition happens as Clip$_1\rightarrow\;$Clip$_2\rightarrow\;$Clip$_1$. A truncation operation ($\mathsf{T}_{[0,1]}$) is applied to clip the mask value into the range of $[0,1]$. Here, the labels (one-hot) of each clip are summed with weights $\alpha[t]$ and ($1-\alpha[t]$) to create soft-labels. In Volume CutMix above (right), a spatial mask ($\mathbf{M}[t]$) is defined for each frame at time $t$, creating two windows in the overlapping region (split by a vertical plane). In Transient Window setting, the location of the vertical plane ($w_t$) depends on $\alpha[t]$ (same one as in Volume MixUp), and in Transient View (Constant Window), $w_t$ is half of the frame-width ($W$). A small spatial region of $2\delta$ is defined between widows to have a smooth spatial transition. 
+		The labels (one-hot) of each clip are summed with weights $|\mathbf{M}[t]|$ and $(1-|\mathbf{M}[t]|)$ to create soft-labels.  Given a matrix, $|\cdot|$ computes its ``area'' as an average of all its elements. %
+	}
+	\vspace{0mm}
+	\label{fig:app}
+\end{figure*}
+
+\subsection{On the Truncation Operator $\mathsf{T}_{[0,1]}$}
+\label{app:a}
+
+As shown on \fref{fig:app} (left), the truncation operator $\mathsf{T}_{[0,1]}$ makes sure that the alpha mask ($\alpha[t]$) is within the range of [0,1], even in the non-overlapping region. It can be defined as,
+{\small
+	\begin{equation*}
+		\label{eq:alpha}
+		\mathsf{T}_{[0,1]}(x)=
+		\begin{dcases}
+			1 &\text{if}\;\; x\geq 1,\\
+			0 &\text{if}\;\;  x< 0,\\
+			x & \text{otherwise},\\
+		\end{dcases}  
+	\end{equation*}
+}%
+where any value $x\geq1$ or $x<0$ is capped at either 1 or 0 respectively. Based on this, alpha mask $\alpha[t]$ is deifined so that the augmented clips have a smooth transition as Clip$_1\rightarrow\;$Clip$_2$ (in Scenario 1), or as Clip$_1\rightarrow\;$Clip$_2\rightarrow\;$Clip$_1$ (in Scenario 2).
+
+\subsection{On the Spatial Mask $\mathbf{M}_t$}
+\label{app:b}
+
+Spatial mask $\mathbf{M}$ defines a vertical plane to split each frame within the overlapping region into two windows (see \fref{fig:app} (right)). The location of this vertical plane ($w_t$) can either depend on $\alpha[t]$ (in Transient Window) or be constant (in Transient View). This can be given as,
+{\small
+	\begin{equation*}
+		\label{eq:alpha}
+		\mathbf{M}[t][:,j]=
+		\begin{dcases}
+			1 &\text{if}\;\; j < w_t-\delta,\\
+			0 &\text{if}\;\; j \geq w_t+\delta ,\\
+			\frac{w_t+\delta-j}{2\delta} & \text{otherwise},\\
+		\end{dcases}  
+	\end{equation*}
+}%
+and,
+{\small
+	\begin{equation*}
+		\label{eq:alpha}
+		w_t=
+		\begin{dcases}
+			\round{W\alpha[t]} &\text{if Transient Window,}\\
+			\round{W/2} &\text{if Transient View,}\\
+		\end{dcases}  
+	\end{equation*}
+}%
+where $W$ is the width of the frame, and $\delta$ is a small value defining the smooth spatial transition between windows. $\round{\cdot}$ will round the operand to the nearest integer.
+
+{\small
+\balance
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+
+\end{document}

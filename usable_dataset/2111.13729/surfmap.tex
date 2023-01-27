@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{arxiv2c}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+
+\input{commands}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+
+\pagenumbering{arabic}
+
+\title{\mytitle}
+\author{%
+	Anbang Wu \\
+	Department of Computer Science\\
+	University of California, Santa Barbara \\
+	\texttt{anbang@ucsb.edu} \\
+	\And
+	Gushu Li \\
+	Department of Electrical \& Computer Engineering\\
+	University of California, Santa Barbara \\
+	\texttt{gushuli@ece.ucsb.edu} \\
+	\AND
+	Hezi Zhang \\
+	Department of Computer Science \\
+	University of California, Santa Barbara \\
+	\texttt{hezi@ucsb.edu} \\
+	\AND
+	Gian Giacomo Guerreschi \\
+	Intel Labs \\
+	Santa Clara, California \\
+	\texttt{gian.giacomo.guerreschi@intel.com}
+	\AND
+	Yufei Ding \\
+	Department of Computer Science\\
+	University of California, Santa Barbara \\
+	\texttt{yufeiding@cs.ucsb.edu} \\
+	\AND
+	Yuan Xie \\
+	Department of Electrical \& Computer Engineering\\
+	University of California, Santa Barbara \\
+	\texttt{yuanxie@ucsb.edu} \\
+} 
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
+
+
+\input{01_abstract}
+\twocolumn
+\input{02_introduction}
+\input{03_related_work}
+\input{04_motivation}
+\input{05_algorithm_design}
+\input{07_evaluation}
+\input{08_conclusion}
+
+
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,55 @@
+\usepackage{amsthm}
+\usepackage{color}
+\usepackage{proof}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{thmtools}
+\usepackage{tikz}
+\usepackage{thm-restate}
+\newcommand{\qstate}[1]{\ensuremath{\vert #1 \rangle}}
+\newcommand{\vsep}{\ensuremath{\ \vert\ }}
+
+\newcommand{\myFrameworkName}{\textit{QECV}}
+\newcommand{\langname}{\textit{QECV-Lang}}
+\newcommand{\assnname}{\textit{QECV-Assn}}
+
+\newcommand{\svar}{\ensuremath{\mathcal{s}}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{program}{Program}[section]
+\newtheorem{assume}{Assumption}[]
+\newtheorem*{remark}{Remark}
+
+\newcounter{cnt}
+\newcommand\showcnt{\addtocounter{cnt}{1}\thecnt}
+\newcommand{\conf}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\denot}[1]{\ensuremath{[\![ #1 ]\!]}}
+\newcommand{\ket}[1]{\ensuremath{\vert #1 \rangle}}
+\newcommand{\bra}[1]{\ensuremath{\langle #1 \vert}}
+\newcommand{\braket}[2]{\ensuremath{\langle #1 \vert #2 \rangle}}
+\newcommand{\qif}[3]{\ensuremath{\textbf{if}\ M[#1]\ \textbf{then}\ #2\ \textbf{else}\ #3\ \textbf{end}}}
+\newcommand{\stabnum}{\ensuremath{w}}
+\newcommand{\qwhilelang}{quantum \textbf{while}-language}
+\newcommand{\postpone}[1]{{Details are postponed to Appendix~{#1}}}
+\newcommand{\myquad}{{\color{white}-}}
+\newcommand{\qifn}[3]{\ensuremath{\textbf{if}\ M[#1]\ \textbf{then}\\\myquad #2\ \\\textbf{else}\\\myquad#3\ \\\textbf{end}}}
+
+\newcommand{\prog}{\text{Prog}}
+\newcommand{\projector}{P}
+
+\usepackage{syntax}
+\setlength{\grammarparsep}{15pt plus 1pt minus 1pt} %
+\setlength{\grammarindent}{4em} %
+\usepackage[many]{tcolorbox}
+\newcommand{\myfontsize}{9pt}
+\newcommand{\mylinesize}{9pt}
+\newcommand{\myproof}[1]{{\noindent\textit{Proof}. #1 \hfill \qed}}
+\newcommand{\nothmskip}{}
+\newcommand{\rulesep}{\unskip\ \vrule\ }

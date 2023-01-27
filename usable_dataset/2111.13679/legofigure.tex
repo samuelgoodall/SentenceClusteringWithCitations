@@ -1,0 +1,58 @@
+
+\newcommand{\imwidth}{.25\columnwidth}
+
+
+\newcommand{\textimage}[2]{
+	\begin{overpic}[width=\imwidth]{figures/lego_noise_v2/#1}
+	\put (67,2) {\footnotesize \sethlcolor{white}\hl{$#2$}}
+    \end{overpic}
+}
+
+\begin{figure}[]
+    \centering
+\resizebox{\linewidth}{!}{
+    
+    \begin{tabular}{@{}c@{\,}c@{\,}c@{\,}c@{\,}c@{}}
+    & \multicolumn{4}{c}{Simulated shutter speed (seconds)} \\
+    & $\infty$ & $1/15$ & $1/60$ & $1/240$ 
+    \\
+    \rotatebox[origin=l]{90}{\,\,\,Test image}
+    &
+    {
+	\begin{overpic}[width=\imwidth]{figures/lego_noise_v2/0_0.png}
+	\put (67,2) { \phantom{\footnotesize $19.55$}}
+    \end{overpic}
+    }  & 
+    \textimage{0_2.png}{19.55}  & 
+    \textimage{0_4.png}{12.38}  & 
+    \textimage{0_6.png}{\phantom{3}7.09}  \\ 
+    
+    \rotatebox[origin=l]{90}{\,\,\,LDR NeRF}
+         & 
+    {
+	\begin{overpic}[width=\imwidth]{figures/lego_noise_v2/1_0.png}
+	\put (67,2) {\footnotesize \sethlcolor{white}\hl{$31.71$}}
+    \end{overpic}
+} &
+    \textimage{1_2.png}{28.76}  & 
+    \textimage{1_4.png}{21.73}  & 
+    \textimage{1_6.png}{14.51}  \\ 
+    
+    \rotatebox[origin=l]{90}{\,\,\,RawNeRF}
+         & 
+    {
+	\begin{overpic}[width=\imwidth]{figures/lego_noise_v2/2_0.png}
+	\put (67,2) {\footnotesize \sethlcolor{white}\hl{$30.40$}}
+    \end{overpic}
+} &
+    \textimage{2_2.png}{29.76}  & 
+    \textimage{2_4.png}{28.73}  & 
+    \textimage{2_6.png}{24.64}  \\ 
+    \end{tabular}
+    
+    }
+    \caption{Example patches from the synthetic scene used in Table~\ref{tab:synthlego}, annotated with sRGB PSNR for each inset. 
+    With perfectly clean inputs, training on LDR images is superior, but with any nonzero amount of noise, it is more beneficial to optimize NeRF in raw space, where the noise distribution remains unbiased.
+    }
+    \label{fig:synthlego}
+\end{figure}

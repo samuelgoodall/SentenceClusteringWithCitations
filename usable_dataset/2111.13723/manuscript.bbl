@@ -1,0 +1,268 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{Abdulmajeed:2020}
+Abdulmajeed, K., Adeleke, M., Popoola, L.: Online forecasting of {COVID-19}
+  cases in {Nigeria} using limited data.
+\newblock Data in {Brief} \textbf{30} (2020).
+\newblock Https://doi.org/10.1016/j.dib.2020.105683
+
+\bibitem{Adams:2021}
+Adams, K.: States ranked by percentage of population fully vaccinated: {Nov.} 3
+  (2021).
+\newblock {Backer's Hospital Review}. Accessed November 3, 2021,
+  https://www.beckershospitalreview.com/public-health/states-ranked-by-percentage-of-population-vaccinated-march-15.html
+
+\bibitem{ShannonCounty}
+Ban, C.: Shannon {County, S.D.} to be renamed {Oglala Lakota County} (2014).
+\newblock {Shannon County, S.D.} Accessed March 2, 2021,
+  https://www.naco.org/articles/shannon-county-sd-be-renamed-oglala-lakota-county
+
+\bibitem{BC:2021}
+{Broomfield County}: {History of Broomfield} (2021).
+\newblock City and county of {Broomfield}. Accessed October 29, 2021,
+  https://www.broomfield.org/386/History-of-Broomfield
+
+\bibitem{CDC:2020}
+{Center for Disease Control and Prevention}: {FAQ}: {COVID-19} data and
+  surveillance (2020).
+\newblock CDC. Accessed October 25, 2021,
+  https://www.cdc.gov/coronavirus/2019-ncov/covid-data/faq-surveillance.html
+
+\bibitem{Chen}
+Chen, Y.C., Lu, P.E., Chang, C.S., Liu, T.H.: A time-dependent {SIR} model for
+  {COVID-19} with undetectable infected persons.
+\newblock IEEE Transactions on Network Science and Engineering \textbf{7}(4),
+  3279--3294 (2020)
+
+\bibitem{Frost:2020}
+Frost, J.: Guidelines for removing and handling outliers in data (2020).
+\newblock Statistics by Jim. Accessed Oct 25, 2021,
+  https://statisticsbyjim.com/basics/remove-outliers/
+
+\bibitem{Gallagher:2021}
+Gallagher, J.: Covid immunity: {Can} you catch it twice? (2021).
+\newblock BBC News. Accessed Oct 18, 2021,
+  https://www.bbc.com/news/health-52446965
+
+\bibitem{Guo:2012}
+Guo, Z., Wong, W., Li, M.: Sparsely connected neural network-based time series
+  forecasting.
+\newblock Information Sciences \textbf{193}, 54--71 (2012)
+
+\bibitem{Agent-BasedTransportationModels}
+Hackl, J., Dubernet, T.: Epidemic spreading in urban areas using agent-based
+  transportation models.
+\newblock Future Internet \textbf{11}(4) (2019).
+\newblock Https://doi.org/10.3390/fi11040092
+
+\bibitem{HALLETT1986125}
+Hallett, A.H.: Prediction and regulation by linear least-square methods: Peter
+  whittle, (blackwell, oxford, 1983) second revised ed.
+\newblock International Journal of Forecasting \textbf{2}(1), 125--127 (1986).
+\newblock \doi{https://doi.org/10.1016/0169-2070(86)90043-9}.
+\newblock
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/0169207086900439}
+
+\bibitem{Hoehl:2020}
+Hoehl, S., Rabenau, H., Berger, A., Kortenbusch, M., Cinatl, J., Bojkova, D.,
+  Behrens, P., Böddinghaus, B., Götsch, U., Naujoks, F.: Evidence of
+  {SARS-CoV-2} infection in returning travelers from {Wuhan, China}.
+\newblock New England Journal of Medicine \textbf{382}(13), 1278--1280 (2020)
+
+\bibitem{Hou:2020}
+Hou, C., Chen, J., Zhou, Y., Hua, L., Yuan, J., He, S., Guo, Y., Zhang, S.,
+  Jia, Q., Zhao, C., Zhang, J., Xu, G., Jia, E.: The effectiveness of
+  quarantine of {Wuhan} city against the coronavirus disease 2019 ({COVID-19}):
+  A well-mixed {SEIR} model analysis.
+\newblock Journal of {Medical} {Virology} \textbf{92}(7), 841--848 (2020)
+
+\bibitem{Hyndman:2018}
+Hyndman, R., Athanasopoulos, G.: Forecasting:\ principles and practice (2018).
+\newblock {h}ttps://otexts.com/fpp2/
+
+\bibitem{hyndman2006another}
+Hyndman, R.J., et~al.: Another look at forecast-accuracy metrics for
+  intermittent demand.
+\newblock Foresight: The International Journal of Applied Forecasting
+  \textbf{4}(4), 43--46 (2006)
+
+\bibitem{Johnson:2021}
+Johnson, G.: {Cell Phone Data Makes Traffic Analysis and Transportation
+  Planning Easier} (2021).
+\newblock {Short Elliot Hendrickson Inc}. Accessed November 9, 2021,
+  https://www.sehinc.com/news/cell-phone-data-makes-traffic-analysis-and-transportation-planning-easier
+
+\bibitem{Kermack:1991}
+Kermack W.O. amd~McKendrick, A.: Contributions to the mathematical theory of
+  epidemics—i.
+\newblock Bulletin of Mathematical Biology \textbf{53}(1) (1991).
+\newblock Https://doi.org/10.1007/BF02464423
+
+\bibitem{GNARreference}
+Knight, M., Leeming, K., Nason, G., Nunes, M.: Generalized network
+  autoregressive processes and the {GNAR} package.
+\newblock Journal of Statistical Software, Articles \textbf{96}(5), 1--36
+  (2020)
+
+\bibitem{Kotu:2014}
+Kotu, V., Deshpande, B.: Predictive Analytics and Data Mining: Concepts and
+  Practice with RapidMiner.
+\newblock Elsevier Science and Technology, San Francisco (2014)
+
+\bibitem{GNARCRAN}
+Leeming, K., Nason, G., Nunes, M., Knight, M.: Package {‘GNAR’} (2020).
+\newblock {CRAN}. Accessed December 20, 2020,
+  https://cran.r-project.org/web/packages/GNAR/GNAR.pdf
+
+\bibitem{Lewis:1982}
+Lewis, C.: Industrial and Business Forecasting Methods: A Practical Guide to
+  Exponential Smoothing and Curve Fitting.
+\newblock Butterworth-Heinemann, Oxford, United Kingdom (1982)
+
+\bibitem{10.2307/2630927}
+Makridakis, S., Winkler, R.L.: Averages of forecasts: Some empirical results.
+\newblock Management Science \textbf{29}(9), 987--996 (1983).
+\newblock \urlprefix\url{http://www.jstor.org/stable/2630927}
+
+\bibitem{musselwhite2020editorial}
+Musselwhite, C., Avineri, E., Susilo, Y.: Editorial jth 16--the coronavirus
+  disease covid-19 and implications for transport and health.
+\newblock Journal of Transport \& Health \textbf{16}, 100853 (2020)
+
+\bibitem{newmanbarabasi}
+Newman, M., Barabasi, A.L., Watts, D.J.: The Structure and Dynamics of
+  Networks: (Princeton Studies in Complexity).
+\newblock Princeton University Press, Princeton, New Jersey (2006)
+
+\bibitem{Nguemdjo:2020}
+Nguemdjo, U., Meno, F., Dongfack, A., Ventelou, B.: Simulating the progression
+  of the {COVID-19} disease in {Cameroon} using {SIR} models. plos one (2020).
+\newblock Accessed October 18, 2021,
+  https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0237832
+
+\bibitem{Panda:2020}
+Panda, M.: Application of arima and holt-winters forecasting model to predict
+  the spreading of covid-19 for india and its states (2020).
+\newblock Research Gate. Accessed Oct 14, 2021,
+  https://www.researchgate.net/publication/343000522\_Application\_of\_ARIMA\_and\_Holt-
+  Winters\_forecasting\_model\_to\_predict\_the\_spreading\_of\_COVID-19\_for\_India\_and\_its\_states
+
+\bibitem{Patil:2020}
+Patil, D., Kotwal, S.: Advice guideline: {Clinical} information for the
+  effective management, prevention, and counseling of {COVID-19} patients.
+\newblock Journal of Current Pharma Research \textbf{10}(4), 3894--3906 (2020)
+
+\bibitem{rodrigues2016application}
+Rodrigues, H.S.: Application of {SIR} epidemiological model: new trends.
+\newblock International Journal of Applied Mathematics and Informatics
+  \textbf{10}, 92--97 (2016)
+
+\bibitem{CDCspread}
+Sanche, S., Lin, Y.T., Xu, C., Romero-Severson, E., Hengartner, N., Ke, R.:
+  High contagiousness and rapid spread of severe acute respiratory syndrome
+  coronavirus 2 {SARS-CoV-2}.
+\newblock Emerging Infectious Diseases \textbf{26}(7), 1470--1477 (2020)
+
+\bibitem{Sanjuan}
+Sanju'a, R., Nebot, M.R., Chirico, N., Mansky, L.M., Belshaw, R.: Viral
+  mutation rates.
+\newblock Journal of Virology \textbf{84}(19), 9733--9748 (2010)
+
+\bibitem{SILVA2020110088}
+Silva, P.C., Batista, P.V., Lima, H.S., Alves, M.A., Guimarães, F.G., Silva,
+  R.C.: Covid-abs: An agent-based model of {COVID-19} epidemic to simulate
+  health and economic effects of social distancing interventions.
+\newblock Chaos, Solitons \& Fractals \textbf{139} (2020).
+\newblock Https://doi.org/10.1016/j.chaos.2020.110088
+
+\bibitem{Singh:2020}
+Singh, D., Alanazi, S., Kamruzzaman, M., Alruwaili, M., Alshammari, N.,
+  Alqahtani, S., Karime, A.: Measuring and preventing {COVID-19} using the
+  {SIR} model and machine learning in smart health care.
+\newblock Journal of Healthcare Engineering  (2020).
+\newblock Https://doi.org/10.1155/2020/8857346
+
+\bibitem{SS:2021}
+{Statistics Solutions}: Time series analysis (2021).
+\newblock Statistics Solutions. Accessed October 25, 2021,
+  https://www.statisticssolutions.com/time-series-analysis/
+
+\bibitem{Sulasikin:EtAl:2020}
+Sulasikin, A., Nugraha, Y., Kanggrawan, J., Suherman, A.: Forecasting for a
+  data-driven policy using time series methods in handling {COVID-19} pandemic
+  in {Jakarta}.
+\newblock In: 2020 IEEE International Smart Cities Conference (ISC2), pp. 1--6.
+  Piscataway, New Jersey (2020).
+\newblock Https://doi.org/10.1109/ISC251055.2020.9239072
+
+\bibitem{Tandon:2020}
+Tandon, H., Ranjan, P., Chakraborty, T., Suhag, V.: Coronavirus (covid-19):
+  Arima based time-series analysis to forecast near future (2020).
+\newblock Research Gate. Accessed Oct 14, 2021,
+  https://www.researchgate.net/publication/340776075\_Coronavirus\_COVID-
+  19\_ARIMA\_based\_time-series\_analysis\_to\_forecast\_near\_future
+
+\bibitem{Teles:2020}
+Teles, P.: A time-dependent {SEIR} model to analyse the evolution of the
+  {SARS-CoV-2} epidemic outbreak in {Portugal} (2020).
+\newblock Research Gate. Accessed Oct 18, 2021,
+  https://arxiv.org/abs/2004.04735
+
+\bibitem{TFI:2021}
+{The Fact File}: List of {U.S.} states and number of counties in each (2021).
+\newblock Accessed October 27, 2021,
+  https://thefactfile.org/us-states-counties/
+
+\bibitem{USCB:2019}
+{United States Census Bureau}: County transportation profiles {\textbar} bureau
+  of transportation statistics (2019).
+\newblock Accessed July 30, 2021,
+  https://www.census.gov/topics/employment/commuting/guidance/flows.html
+
+\bibitem{USCB:2020a}
+{United States Census Bureau}: 2019 {FIPS} codes (2020).
+\newblock Accessed October 27, 2021,
+  https://www.census.gov/geographies/reference-
+  files/2019/demo/popest/2019-fips.html
+
+\bibitem{USCB:2020b}
+{United States Census Bureau}: 2020 census data (2020).
+\newblock Accessed October 27, 2021, https://www.census.gov/programs-
+  surveys/popest/technical-documentation/file-layouts.html
+
+\bibitem{USPS:2021}
+{United States Postal Service}: 42,000 {ZIP} codes (2021).
+\newblock {U.S.} Postal Facts. Accessed November 9, 2021,
+  https://facts.usps.com/42000-zip-codes/
+
+\bibitem{AboutUSA15}
+{USAFacts}: About {USAFacts} (2020).
+\newblock USAFacts. Accessed February, 15, 2021,
+  https://usafacts.org/about-usafacts/
+
+\bibitem{USAFacts:2021a}
+{USAFacts}: {US} {COVID}-19 cases and deaths by state (2021a).
+\newblock Accessed July 31, 2021,
+  https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
+
+\bibitem{Impactof55:online}
+{World Health Organization}: Impact of {COVID-19} on people's livelihoods,
+  their health and our food systems (2020).
+\newblock World Health Organization. Accessed February 19, 2021,
+  https://www.who.int/news/item/13-10-2020-impact-of-COVID-19-on-people's-livelihoods-their-health-and-our-food-systems
+
+\bibitem{Yang2021.06.21.21259268}
+Yang, W., Shaman, J.: Covid-19 pandemic dynamics in india and impact of the
+  sars-cov-2 delta (b.1.617.2) variant.
+\newblock medRxiv  (2021).
+\newblock \doi{10.1101/2021.06.21.21259268}.
+\newblock
+  \urlprefix\url{https://www.medrxiv.org/content/early/2021/06/25/2021.06.21.21259268}
+
+\end{thebibliography}

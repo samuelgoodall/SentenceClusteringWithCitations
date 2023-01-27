@@ -1,0 +1,109 @@
+
+\subsubsection{General Sparse Spanner Oracles}\label{subsec:oracle-intro}
+
+Next, we introduce the notion of a general sparse spanner oracle ($\gsso$), and show that by feeding the $\gsso$ to our framework in \Cref{lm:framework}, we can obtain light spanners from $\gsso$. 
+Our $\gsso$ for stretch $t = (1+\eps)$ coincides with a notion called {\em spanner oracle}, introduced by Le~\cite{LS20}. Our focus in this paper is to optimize the $\eps$-dependence, and to do so while considering a much wider regime of the stretch parameter $t$, which could also depend on $n$. 
+As mentioned, $\gsso$ is basically an abstraction layer over the $\sso$, which we use to derive most but not all of the results in this paper;
+in particular, to achieve our results for minor-free graphs, we need to work directly on the $\sso$.
+
+\begin{definition}[General Sparse Spanner Oracle]\label{def:oracle} Let $G$ be  an edge-weighted graph and let $t > 1$ be a stretch parameter. A general sparse spanner oracle ($\gsso$) of $G$ for a given stretch $t$ is an algorithm that, given a subset of vertices  $T\subseteq V(G)$ and a distance parameter $L > 0$, outputs in \emph{polynomial time} a subgraph $S$ of $G$ such that for every pair of vertices $x,y \in T, x\not= y$ with $L \leq d_G(x,y) < 2L$:
+	\begin{equation}
+		d_{S}(x,y)\leq t\cdot d_G(x,y).
+	\end{equation}	
+	We denote a $\gsso$ of $G$ with stretch $t$ by  $\mathcal{O}_{G,t}$, and its output subgraph is denoted by $\mathcal{O}_{G,t}(T,L)$, given two parameters $T\subseteq V(G)$ and $L >0$.
+\end{definition}
+
+
+\begin{definition}[Sparsity]\label{def:sparsity} Given a $\gsso$ $\mathcal{O}_{G,t}$ of a graph $G$, we define weak sparsity and strong sparsity of $\mathcal{O}_{G,t}$, denoted by $\wsp_{\mathcal{O}_{G,t}}$ and $\ssp_{\mathcal{O}_{G,t}}$ respectively, as follows:
+	\begin{equation}\label{eq:wsp-ssp}
+		\begin{split}
+			\wsp_{\mathcal{O}_{G,t}} &= \sup_{T\subseteq V, L \in \real^+}\frac{w\left(\mathcal{O}_{G,t}(T,L)\right)}{|T|L}\\
+			\ssp_{\mathcal{O}_{G,t}} &=  \sup_{T\subseteq V, L \in \real^+} \frac{|E\left( \mathcal{O}_{G,t}(T,L)\right)|}{|T|}
+		\end{split}
+	\end{equation}	
+\end{definition}
+\noindent We observe that:
+\begin{equation}\label{wsp-vs-ssp}
+	\wsp_{\mathcal{O}_{G,t}} \leq t\cdot \ssp_{\mathcal{O}_{G,t}},
+\end{equation}
+since every edge $E\left( \mathcal{O}_{G,t}(T,L)\right)$ must have weight at most $t\cdot L$; indeed, otherwise we can remove it from $ \mathcal{O}_{G,t}(T,L)$ without affecting the stretch.  Thus, when $t$ is a constant, strong sparsity implies weak sparsity; note, however, that this is not necessarily the case when $t$ is super-constant. 
+
+
+We first show that for stretch $t\geq 2$, we can construct a light spanner with lightness bound roughly $O(\frac{1}{\eps})$ times the sparsity of the spanner oracle. 
+
+
+
+\begin{restatable}{theorem}{GeneralStretchT}
+	\label{thm:general-stretch-2} Let $G$ be an arbitrary edge-weighted graph that admits a $\gsso$ $\mathcal{O}_{G,t}$ of weak sparsity $\wsp_{\mathcal{O}_{G,t}}$ for $t\geq 2$. Then for any $\eps > 0$, we can construct in polynomial time a $t(1+\epsilon)$-spanner for $G$ with lightness $\tilde{O}_{\epsilon}\left(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon}\right)$
+\end{restatable}
+
+
+For stretch $t = 1+\eps$, we can construct a light spanner with lightness bound roughly $O(\frac{1}{\eps})$ times the sparsity of the spanner oracle plus \emph{an additive factor $1/\eps^2$}. It turns out that the additive factor $+1/\eps^2$ is unavoidable.
+
+\begin{restatable}{theorem}{GeneralStretchE}
+	\label{thm:general-stretch-1eps} Let $G$ be an arbitrary edge-weighted graph  that admits a $\gsso$ $\mathcal{O}_{G,1+\eps}$ of weak sparsity $\wsp_{\mathcal{O}_{G,1+\eps}}$  for any $\eps > 0$. Then there exists an $(1+O(\epsilon))$-spanner for $G$ with lightness $\tilde{O}_{\epsilon}\left(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon} + \frac{1}{\epsilon^2}\right)$.
+\end{restatable}
+
+In both \Cref{thm:general-stretch-2} and~\Cref{thm:general-stretch-1eps}, $\tilde{O}_{\epsilon}(.)$ hides a factor $\log \frac{1}{\epsilon}$.
+
+The bound in \Cref{thm:general-stretch-1eps} improves over the lightness bound due to Le~\cite{Le20} by a $\frac{1}{\epsilon^2}$ factor. The stretch of $S$ in \Cref{thm:general-stretch-1eps} is $1+O(\epsilon)$, but we can scale it down to $(1+\eps)$ while increasing the lightness by a constant factor. 
+Moreover, this bound is optimal, as we shall assert next.
+First, the additive factor $\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon}$ is unavoidable: the authors showed in~\cite{LS19} that there exists a set of $n$ points in $\mathbb R^d$ such that any $(1+\epsilon)$-spanner for it must have lightness $\Omega(\epsilon^{-d})$, while Le~\cite{Le20} showed that point sets in $\mathbb R^d$ have $\gsso$es with weak sparsity $O(\epsilon^{1-d})$. 
+Second, the additive factor $\frac{1}{\epsilon^2}$ is tight by the following theorem.
+
+\begin{theorem}\label{thm:lb-oracle-1eps}  
+	For any $\epsilon < 1$  and $n \geq (\frac{1}{\epsilon})^{\Theta(\frac{1}{\epsilon})}$, there is an $n$-vertex graph $G$  admitting a  $\gsso$ of stretch $(1+\eps)$ with weak sparsity $O(1)$ such that any $(1+\epsilon)$-spanner of $G$ must have lightness $\Omega(\frac{1}{\epsilon^2})$.  
+\end{theorem}
+
+Consequently, there is an inherent difference between the dependence on $\eps$ in the lightness of spanners with stretch at least $2$ and those with stretch $(1+\epsilon)$. 
+Again, the exponential dependence on $1/\epsilon$ in the lower bound on $n$ in \Cref{thm:lb-oracle-1eps} is unavoidable, since it is possible to construct a $(1+\epsilon)$-spanner with lightness $O(\log n \cdot \frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})$ using standard techniques.
+
+
+To demonstrate that our framework is unified and applicable, we prove the following theorem, which shows that several graph families admit $\gsso$es, and as a result also light spanners. 
+
+\begin{theorem}\label{thm:graph-oracles}The following $\gsso$es exist.
+	\begin{enumerate}[noitemsep]
+		\item For any weighted graph $G$ and any $k\geq 2$, $\wsp_{\mathcal{O}_{G,2k-1}} = O(n^{1/k})$.
+		\item For the complete weighted graph $G$ corresponding to any Euclidean space (in any dimension) and for any $t\geq 1$, $\wsp_{\mathcal{O}_{G,O(t)}} = O(tn^{\frac{1}{t^2}}\log n)$.
+		\item For the complete weighted graph $G$ corresponding to any finite $\ell_p$ normed space for $p \in (1,2]$  and for any $t \ge 1$,  $\wsp_{\mathcal{O}_{G,O(t)}} = O(tn^{\frac{\log t}{t^p}}\log n)$.
+	\end{enumerate}
+\end{theorem}
+
+\Cref{thm:light-general-spanner} follows directly from \Cref{thm:general-stretch-2} and Item (1) of \Cref{thm:graph-oracles}; \Cref{thm:Euclidean-high} (respectively,~\Cref{thm:Lp-high}) follows directly from \Cref{thm:general-stretch-2} and Item (2) (resp., (3)) of \Cref{thm:graph-oracles} with  $\epsilon = 1/2$; any constant $\epsilon < 1$ works.
+
+
+To prove \Cref{thm:light-Steiner}, we also use $\gsso$es with stretch $t = 1+\epsilon$, but we do that in a more intricate way. If we work with the complete weighted graph $G$ corresponding to a Euclidean point set $P\in \mathbb{R}^d$ as in \Cref{thm:graph-oracles} and simply construct a light spanner from $\gsso$es for $G$, the resulting spanner will be non-Steiner---hence we cannot hope to obtain the lightness bound of \Cref{thm:light-Steiner} due to a lower bound of $\Omega(\epsilon^{-d})$ by~\cite{LS19}. Our key insight here is to allow the oracle to include Steiner points, i.e., points in $\mathbb{R}^d\setminus P$. Formally, a $\gsso$ with Steiner points, given a subset of points $T\subseteq P$ and a distance parameter $L > 0$,  outputs a Euclidean graph $S(V_S,E_S)$ with $T\subseteq V_S$ such that $d_S(x,y) \le (1+\epsilon) ||x,y||$ for any $x\not=y$ in $T$,\footnote{$||x,y||$ is the Euclidean distance between two points $x,y\in \mathbb{R}^d$.}  where $||x,y||\in [L,2L]$. We denote the oracle by $\mathcal{O}_{P,1+\epsilon}$. We show that  Euclidean spaces admit a $\gsso$ with Steiner points that has sparsity $ \tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2})$. Our construction of the $\gsso$ with Steiner points uses the sparse Steiner $(1+\epsilon)$-spanner from our previous work~\cite{LS19} as a black-box.
+
+\begin{theorem}\label{thm:Euclidean-oracle} Any point set $P$ in $\mathbb{R}^d$ admits a $\gsso$ with Steiner points that has  weak sparsity $\wsp_{\mathcal{O}_{P,t+\epsilon}} = \tilde{O}_{\epsilon}(\epsilon^{-(d-1)/2})$.
+\end{theorem}
+
+\Cref{thm:general-stretch-1eps} remains true even when the output of the oracle is not a subgraph of $G$. In this case the resulting spanner may contain vertices not in $G$. For point sets in $\mathbb{R}^d$, the resulting spanner is a \emph{Steiner} spanner, i.e., \Cref{thm:light-Steiner} follows directly from ~\Cref{thm:general-stretch-1eps} and~\Cref{thm:Euclidean-oracle}.
+
+
+
+
+\subsection{Glossary}
+
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{| l | l|} 
+	\hline
+	\textbf{Notation} & \textbf{Meaning} \\ \hline
+	$t,\eps$ & Stretch parameters, $t\geq 1, \eps \ll 1$.\\ \hline 
+	$\nor2{p,q}$ & Euclidean distance between two points $p,q\in \mathbb{R}^d$.\\ \hline 
+	$H_{<L}$ & A subgraph of $G$ in the definition of $(L,\eps,\beta)$-cluster graph (\Cref{def:ClusterGraph-Param}).\\ \hline 
+	$L,\beta$ & Parameters in $(L,\eps,\beta)$-cluster graph. \\ \hline 
+	$\mg = (\mv,\me,\omega)$ &  The $(L,\eps,\beta)$-cluster graph;  $L \leq \omega(\varphi_{C_1},\varphi_{C_2}) < (1+\epsi)L$  $\forall (\varphi_{C_1},\varphi_{C_2})\in \me$. \\ \hline 
+	$\varphi_C$ &  The node in $\mg$ corresponding to a cluster $C$.\\ \hline 
+	$\sso$ & The \hyperlink{SPHigh}{sparse spanner oracle}.\\ \hline 
+	$\chi$ & The  \hyperlink{Sparsity}{sparsity} parameter of $\sso$.\\ \hline 
+	$s_{\sso}$ & The  \hyperlink{Stretch}{stretch} function of $\sso$.\\ \hline 
+	$F$ &  The set of edges of $G$ returned by $\sso$.\\ \hline 
+	$\gsso$ & The \hyperlink{SPHigh}{general sparse spanner oracle}.\\ \hline 
+	$\mathcal{O}_{G,t}$ & $\gsso$ of $G$ with stretch $t$.\\ \hline 
+	$\wsp_{\mathcal{O}_{G,t}}$ & The weak sparsity of the $\gsso$ $\mathcal{O}_{G,t}$.\\ \hline 
+	$\ssp_{\mathcal{O}_{G,t}}$ & The strong sparsity of the $\gsso$ $\mathcal{O}_{G,t}$.\\ \hline 
+	\caption{Notation introduced in \Cref{sec:intro}.}
+	\label{table:glossray}
+\end{longtable}
+\renewcommand{\arraystretch}{1}
+

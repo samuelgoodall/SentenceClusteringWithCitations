@@ -1,0 +1,1445 @@
+
+%% bare_jrnl_compsoc.tex
+%% V1.4b
+%% 2015/08/26
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
+%% Computer Society journal paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/pkg/ieeetran
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall the IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%*************************************************************************
+
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. The IEEE's font choices and paper sizes can   ***
+% *** trigger bugs that do not appear when using other class files.       ***                          ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+\documentclass[10pt,journal,compsoc]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/pkg/ifpdf
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{subfigure}
+
+% *** CITATION PACKAGES ***
+%
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of the IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 5.0 (2009-03-20) and later if using hyperref.sty.
+% The latest version can be obtained at:
+% http://www.ctan.org/pkg/cite
+% The documentation is contained in the cite.sty file itself.
+%
+% Note that some packages require special options to format as the Computer
+% Society requires. In particular, Computer Society  papers do not use
+% compressed citation ranges as is done in typical IEEE papers
+% (e.g., [1]-[4]). Instead, they list every citation separately in order
+% (e.g., [1], [2], [3], [4]). To get the latter we need to load the cite
+% package with the nocompress option which is supported by cite.sty v4.0
+% and later. Note also the use of a CLASSOPTION conditional provided by
+% IEEEtran.cls V1.7 and later.
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/pkg/graphicx
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/pkg/epslatex
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). The IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics.
+%
+% Note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/amsmath
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as the IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/pkg/algorithms
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/pkg/algorithmicx
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/array
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\ifCLASSOPTIONcompsoc
+%  \usepackage[caption=false,font=footnotesize,labelfont=sf,textfont=sf]{subfig}
+%\else
+%  \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a sans serif font rather
+% than the serif font used in traditional IEEE formatting and thus the need
+% to invoke different subfig.sty package options depending on whether
+% compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/pkg/subfig
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure.
+% Be aware that LaTeX2e kernels dated 2015 and later have fixltx2e.sty's
+% corrections already built into the system in which case a warning will
+% be issued if an attempt is made to load fixltx2e.sty as it is no longer
+% needed.
+% The latest version and documentation can be found at:
+% http://www.ctan.org/pkg/fixltx2e
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/stfloats
+% Do not use the stfloats baselinefloat ability as the IEEE does not allow
+% \baselineskip to stretch. Authors submitting work to the IEEE should note
+% that the IEEE rarely uses double column equations and that authors should try
+% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
+% packages (also by Sigitas Tolusis) as the IEEE does not format its papers in
+% such ways.
+% Do not attempt to use stfloats with fixltx2e as they are incompatible.
+% Instead, use Morten Hogholm'a dblfloatfix which combines the features
+% of both fixltx2e and stfloats:
+%
+% \usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/pkg/dblfloatfix
+
+
+
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley, Jeff Goldberg and 
+% Axel Sommerfeldt. This package may be useful when used in conjunction with 
+% IEEEtran.cls'  captionsoff option. Some IEEE journals/societies require that
+% submissions have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.4.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/pkg/endfloat
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version and documentation can be obtained at:
+% http://www.ctan.org/pkg/url
+% Basically, \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Spatio-Temporal Joint Graph Convolutional Networks for Traffic Forecasting}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+%
+%\IEEEcompsocitemizethanks is a special \thanks that produces the bulleted
+% lists the Computer Society journals use for "first footnote" author
+% affiliations. Use \IEEEcompsocthanksitem which works much like \item
+% for each affiliation group. When not in compsoc mode,
+% \IEEEcompsocitemizethanks becomes like \thanks and
+% \IEEEcompsocthanksitem becomes a line break with idention. This
+% facilitates dual compilation, although admittedly the differences in the
+% desired content of \author between the different types of papers makes a
+% one-size-fits-all approach a daunting prospect. For instance, compsoc 
+% journal papers have the author affiliations above the "Manuscript
+% received ..."  text while in non-compsoc journals this is reversed. Sigh.
+
+\author{Chuanpan Zheng,
+        Xiaoliang Fan,~\IEEEmembership{Senior Member,~IEEE,}
+        Shirui Pan,~\IEEEmembership{Member,~IEEE,} 
+        Zonghan Wu, \\
+        Cheng Wang,~\IEEEmembership{Senior Member,~IEEE,} 
+        and~Philip S. Yu,~\IEEEmembership{Fellow,~IEEE,} % <-this % stops a space
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem C. Zheng, X. Fan, and C. Wang are with Fujian Key Laboratory of Sensing and Computing for Smart Cities, Digital Fujian Institute of Urban Traffic Big Data Research, and School of Informatics, Xiamen University, Xiamen, 361005, China.\protect\\
+% note need leading \protect in front of \\ to get a newline within \thanks as
+% \\ is fragile and will error, could use \hfil\break instead.
+E-mail: zhengchuanpan@stu.xmu.edu.cn; fanxiaoliang@xmu.edu.cn; cwang@xmu.edu.cn
+%\IEEEcompsocthanksitem J. Doe and J. Doe are with Anonymous University.}% <-this % stops an unwanted space
+%\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}
+\IEEEcompsocthanksitem S. Pan is with Department of Data Science and AI, Faculty of Information Technology, Monash University, Australia.\protect\\
+E-mail: shirui.pan@monash.edu
+\IEEEcompsocthanksitem Z. Wu is with Centre for Artificial Intelligence, FEIT, University of Technology Sydney, Australia.\protect\\
+% note need leading \protect in front of \\ to get a newline within \thanks as
+% \\ is fragile and will error, could use \hfil\break instead.
+E-mail: zonghan.wu-3@student.uts.edu.au
+\IEEEcompsocthanksitem P. S. Yu is with the Department of Computer Science, University of Illinois at Chicago, Chicago, IL 60607 USA.\protect\\
+% note need leading \protect in front of \\ to get a newline within \thanks as
+% \\ is fragile and will error, could use \hfil\break instead.
+E-mail: psyu@cs.uic.edu.}
+\thanks{(Corresponding author: Xiaoliang Fan)}}
+
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+
+% The paper headers
+\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Computer Society Journals}
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+% 
+% *** Note that you probably will NOT want to include the author's ***
+% *** name in the headers of peer review papers.                   ***
+% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% you desire.
+
+
+
+% The publisher's ID mark at the bottom of the page is less important with
+% Computer Society journal papers as those publications place the marks
+% outside of the main text columns and, therefore, unlike regular IEEE
+% journals, the available text space is not reduced by their presence.
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2015 IEEE}
+% or like this to get the Computer Society new two part style.
+%\IEEEpubid{\makebox[\columnwidth]{\hfill 0000--0000/00/\$00.00~\copyright~2015 IEEE}%
+%\hspace{\columnsep}\makebox[\columnwidth]{Published by the IEEE Computer Society\hfill}}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark (Computer Society jorunal
+% papers don't need this extra clearance.)
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+% for Computer Society papers, we must declare the abstract and index terms
+% PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
+% command as these need to go into the title area created by \maketitle.
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\IEEEtitleabstractindextext{%
+\begin{abstract}
+	Recent studies focus on formulating the traffic forecasting as a spatio-temporal graph modeling problem. They typically construct a static spatial graph at each time step and then connect each node with itself between adjacent time steps to construct the spatio-temporal graph. In such a graph, the correlations between different nodes at different time steps are not explicitly reflected, which may restrict the learning ability of graph neural networks. Meanwhile, those models ignore the dynamic spatio-temporal correlations among nodes as they use the same adjacency matrix at different time steps. To overcome these limitations, we propose a \textit{Spatio-Temporal Joint Graph Convolutional Networks} (STJGCN) for traffic forecasting over several time steps ahead on a road network. Specifically, we construct both pre-defined and adaptive \textit{spatio-temporal joint graphs} (STJGs) between any two time steps, which represent comprehensive and dynamic spatio-temporal correlations. We further design dilated causal \textit{spatio-temporal joint graph convolution} layers on STJG to capture the spatio-temporal dependencies from distinct perspectives with multiple ranges. A multi-range attention mechanism is proposed to aggregate the information of different ranges. Experiments on four public traffic datasets demonstrate that STJGCN is computationally efficient and outperforms 11 state-of-the-art baseline methods.
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Spatio-temporal, graph convolutional network, traffic forecasting.
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+
+% To allow for easy dual compilation without having to reenter the
+% abstract/keywords data, the \IEEEtitleabstractindextext text will
+% not be used in maketitle, but will appear (i.e., to be "transported")
+% here as \IEEEdisplaynontitleabstractindextext when the compsoc 
+% or transmag modes are not selected <OR> if conference mode is selected 
+% - because all conference papers position the abstract like regular
+% papers do.
+\IEEEdisplaynontitleabstractindextext
+% \IEEEdisplaynontitleabstractindextext has no effect when using
+% compsoc or transmag under a non-conference mode.
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\IEEEraisesectionheading{\section{Introduction} \label{Introduction}}
+% Computer Society journal (but not conference!) papers do something unusual
+% with the very first section heading (almost always called "Introduction").
+% They place it ABOVE the main text! IEEEtran.cls does not automatically do
+% this for you, but you can achieve this effect with the provided
+% \IEEEraisesectionheading{} command. Note the need to keep any \label that
+% is to refer to the section immediately after \section in the above as
+% \IEEEraisesectionheading puts \section within a raised box.
+
+
+
+
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps (small caps for compsoc).
+% 
+% form to use if the first word consists of a single letter:
+% \IEEEPARstart{A}{demo} file is ....
+% 
+% form to use if you need the single drop letter followed by
+% normal text (unknown if ever used by the IEEE):
+% \IEEEPARstart{A}{}demo file is ....
+% 
+% Some journals put the first two words in caps:
+% \IEEEPARstart{T}{his demo} file is ....
+% 
+% Here we have the typical use of a "T" for an initial drop letter
+% and "HIS" in caps to complete the first word.
+
+\IEEEPARstart{S}{patio-temporal} data forecasting has received increasing attention from the deep learning community in recent years~\cite{Wang-et-al:TKDE2020,Tedjopurnomo-et-al:TKDE2020,Zheng-et-al:TITS2021}. It plays a vital role in a wide range of applications, such as traffic speed prediction~\cite{Li-et-al:ICLR2018} and air quality inference~\cite{Cheng-et-al:AAAI2018}. In this paper, we study the problem of forecasting the future traffic conditions given historical observations on a road network.
+
+Recent studies formulate traffic forecasting as a spatio-temporal graph modeling problem~\cite{Li-et-al:ICLR2018,Yu-et-al:IJCAI2018,Wu-et-al:IJCAI2019,Guo-et-al:AAAI2019,Song-et-al:AAAI2020,Bai-et-al:NIPS2020, Chen-et-al:ICML2021}. The basic assumption is that the state of each node is conditioned on its neighboring node information. Based on this, they construct a spatial graph with a pre-defined~\cite{Li-et-al:ICLR2018} or data-adaptive~\cite{Wu-et-al:IJCAI2019} adjacency matrix. In such a graph, each node corresponds to a location of interest (e.g., traffic sensor). The graph neural network~\cite{Wu-et-al:TNNLS2021} is applied on that graph to model the correlations among spatial neighboring nodes at each time step. To leverage the information from temporal neighboring nodes, they further connect each node with itself between adjacent time steps, which results in a spatio-temporal graph, as shown in Figure~\ref{fig1(a)}. The 1D convolutional neural network~\cite{Yu-et-al:IJCAI2018} or recurrent neural network~\cite{Li-et-al:ICLR2018} is commonly used to model the correlations at each node between different time steps. By combining the spatial and temporal features, they are able to update the state of each node. 
+
+However, those spatio-temporal graphs do not explicitly reflect the correlations between different nodes at different time steps (e.g., the red dash lines in Figure~\ref{fig1(b)}). In such a graph, the information of spatial and temporal neighborhoods is captured through the spatial and temporal connections respectively, while the information of neighboring nodes across both spatial and temporal dimensions are not considered, which may restrict the learning ability of graph neural networks. For example, a traffic jam occurred at an intersection may affect not only current nearby roads (spatial neighborhoods) and its local future traffic condition (temporal neighborhoods), but also the downstream roads in next few hours (spatio-temporal neighborhoods). Thus, we argue that it is necessary to model the comprehensive correlations in the spatio-temporal data.
+
+\begin{figure*}
+	\centering
+	\subfigure[]{
+		\label{fig1(a)} 
+		\includegraphics[width = 0.25 \textwidth]{fig1a.pdf}}
+		\hspace{10pt}		
+	\subfigure[]{
+		\label{fig1(b)} 
+		\includegraphics[width = 0.25 \textwidth]{fig1b.pdf}}
+		\hspace{10pt}
+	\subfigure[]{
+		\label{fig1(c)} 
+		\includegraphics[width = 0.25 \textwidth]{fig1c.pdf}}
+	\subfigure{
+		\includegraphics[width = 0.60 \textwidth]{fig1d.pdf}}
+	\caption{The comprehensive and dynamic connections among nodes in graph-structured spatio-temporal data. There are three common scenarios: (a) The node 2 at time step $ t $ can be influenced by nodes 1 and 3 at time step $ t $ through spatial connections, and node 2 at time step $ t-1 $ through the temporal connection. (b) The node 2 at time step $ t $ may also be affected by nodes 1 and 3 at time step $ t-1 $ through spatio-temporal connections. (c) Compared with time step $ t-1 $, the connections among nodes 1, 2 and 3 exhibit strong dynamic characteristics at the time step $ t $. For instance, the connection between nodes 1 and 3 gets weakened, while the connection between nodes 2 and 3 becomes stronger. Both (b) and (c) scenarios have not been comprehensively explored in existing studies.}
+	\label{fig1}
+\end{figure*}
+
+Another limitation of previous works is that they ignore the dynamic correlations among nodes at different time steps, as shown in Figure~\ref{fig1(c)}. The road network distances among sensors (nodes) are commonly used to define the spatial graph~\cite{Li-et-al:ICLR2018,Yu-et-al:IJCAI2018}. This pre-defined graph is usually static. Some researchers~\cite{Wu-et-al:IJCAI2019,Bai-et-al:NIPS2020} propose to learn a data-adaptive adjacency matrix, which is also unchanged over time steps. However, the traffic data exhibits strong dynamic correlations in the spatial and temporal dimensions, those static graphs are unable to reflect the dynamic characteristics of correlations among nodes. For example, the residence region is highly correlated to the office area during workday morning rush hours, while the correlation would be relatively weakened in the evening because some people might prefer to dining out before going home. Thus, it is crucial to model the dynamic spatio-temporal correlations for traffic forecasting.   
+
+This paper addresses these limitations from the following perspectives. First, besides the spatial and temporal connections, we further add the spatio-temporal connections between two time steps according to the spatio-temporal distances to define the \textit{spatio-temporal joint graph} (STJG). In this way, the pre-defined STJG preserves comprehensive spatio-temporal correlations between any two time steps. Second, in order to adapt to the dynamic correlations among nodes, we suggest to explore an adaptive STJG, which is time-variant by encoding the time features. The adjacency matrix in this adaptive STJG is dynamic, changing over time steps. By constructing both the pre-defined and adaptive STJGs, we are able to preserve comprehensive and dynamic spatio-temporal correlations.
+
+On these basis, we then develop the~\textit{spatio-temporal joint graph convolution} (STJGC) operations on both pre-defined and adaptive STJGs to simultaneously capture the spatio-temporal dependencies in a unified operation. We further design the dilated causal STJGC layers to extract multiple spatio-temporal ranges of information. Next, a multi-range attention mechanism is proposed to aggregate the information of different ranges. Finally, we apply independent fully-connected layers to produce the multi-step ahead prediction results. The whole framework is named as \textit{spatio-temporal joint graph convolutional networks} (STJGCN), which can be learned end-to-end. To evaluate the efficiency and effectiveness of STJGCN, we conduct extensive experiments on four public traffic datasets. The experimental results demonstrate that our STJGCN is computationally efficient and achieves the best performance against 11 state-of-the-art baseline methods. Our main contributions are summarized as follows.
+
+\begin{itemize}
+	\item We construct both pre-defined and adaptive spatio-temporal joint graphs (STJGs), which reflect comprehensive and dynamic spatio-temporal correlations. 
+	\item We design dilated causal spatio-temporal joint graph convolution layers on both types of STJG to model multiple ranges of spatio-temporal correlations.
+	\item We propose a multi-range attention mechanism to aggregate the information of different ranges. 
+	\item We evaluate our model on four public traffic datasets, and experimental results demonstrate that STJGCN has high computation efficiency and outperforms 11 state-of-the-art baseline methods.
+\end{itemize}
+
+The rest of this paper is organized as follows. Section~\ref{Related Work} reviews the related work. Section~\ref{Preliminary} presents the preliminary of this work. Section~\ref{Methodology} details the method of STJGCN. Section~\ref{Experiments} compares STJGCN with state-of-the-art methods on four datasets. Finally, section~\ref{Conclusion} concludes this paper and draws future work.
+
+\section{Related Work} \label{Related Work}
+
+\subsection{Graph Convolutional Networks} 
+
+Graph convolutional networks (GCNs) are successfully applied on various tasks (e.g., node classification~\cite{Kipf-and-Welling:ICLR2017}, link prediction~\cite{Zhang-et-al:NIPS2018}) due to their superior abilities of handling graph-structured data~\cite{Wu-et-al:TNNLS2021}. There are mainly two types of GCN~\cite{Bronstein-et-al:SPM2017}: spatial GCN and spectral GCN. The spatial GCN performs convolution filters on neighborhoods of each node. Researchers in~\cite{Niepert-et-al:ICML2016} propose a heuristic linear method for neighborhood selecting. GraphSAGE~\cite{Hamilton-et-al:NIPS2017} samples a fixed number of neighbors for each node and aggregates their features. GAT~\cite{Velickovic-et-al:ICLR2018} learns the weights among nodes via attention mechanisms. The spectral GCN defines the convolution in the spectral domain~\cite{Li-et-al:AAAI2020}, which is firstly introduced in~\cite{Bruna-et-al:ICLR2014}. ChebNet~\cite{Defferrard-et-al:NIPS2016} reduces the computational complexity with fast localized convolution filters. In~\cite{Kipf-and-Welling:ICLR2017}, researchers further simplify the ChebNet to a simpler form and achieve state-of-the-art performances on various tasks. Recently, a range of studies apply the GCN on time-series data and construct spatio-temporal graphs for traffic forecasting~\cite{Li-et-al:ICLR2018,Zhang-et-al:TITS2021}, human action recognition~\cite{Yan-et-al:AAAI2018,Shi-et-al:CVPR2019}, etc. 
+
+\subsection{Spatio-Temporal Forecasting} 
+
+Spatio-temporal forecasting is an important research topic, which has been extensively studied for decades~\cite{Yin-et-al:arXiv2020,Sun-et-al:TKDE2020,Gu-et-al:TKDE2020,Jiang-et-al:TKDE2021,Guo-et-al:TKDE2021}. Recurrent neural networks (RNNs), especially the long short-term memory (LSTM) and gated recurrent unit (GRU) are successfully applied for modeling temporal correlations~\cite{Ma-et-al:TRC2015}. To capture the spatial dependencies, convolutional neural networks (CNNs) are introduced, which are restricted to process regular grid structures~\cite{Zhang-et-al:AAAI2017,Yao-et-al:AAAI2018,Yao-et-al:AAAI2019,Zheng-et-al:TITS2020,Zhang-et-al:TKDE2020}. Recently, researchers apply graph neural networks to model the non-Euclidean spatial correlations~\cite{Ye-et-al:arXiv2020}. DCRNN~\cite{Li-et-al:ICLR2018} employs diffusion convolution to capture the spatial dependency and applies GRU to model the temporal dependency. STGCN~\cite{Yu-et-al:IJCAI2018} uses graph convolution and 1D convolution to model the spatial and temporal dependencies, respectively. Several works~\cite{Guo-et-al:AAAI2019,Zheng-et-al:AAAI2020,Wang-et-al:WWW2020} introduce the attention mechanisms~\cite{Vaswani-et-al:NIPS2017} into the spatio-temporal graph modeling to improve the prediction accuracy. Some studies consider more kinds of connections (e.g., semantic connection~\cite{Wang-et-al:KDD2019}, edge interaction patterns~\cite{Chen-et-al:AAAI2020}) to construct the spatial graph. The adjacency matrices in these models are usually pre-defined according to some prior knowledge (e.g., distances among nodes). Some researchers~\cite{Wu-et-al:IJCAI2019,Bai-et-al:NIPS2020} argue that the pre-defined adjacency matrix does not necessarily reflect the underlying dependencies among nodes, and propose to learn an adaptive adjacency matrix for graph modeling. However, both the pre-defined and adaptive adjacency matrices assume static correlations among nodes, which cannot adapt to the evolving systems (e.g., traffic networks). Moreover, these graph-based methods do not explicitly model the correlations between different nodes at different time steps, which may restrict the learning ability of graph neural networks.  
+
+\section{Preliminary} \label{Preliminary}
+
+\textit{Problem definition.} Suppose there are $ N $ sensors (nodes) on a road network, and each sensor records $ C $ traffic measurements (e.g., volume, speed) at each time step. Thus, the traffic conditions at time step $ t $ can be represented as $ X_{t} \in \mathbb{R}^{N \times C} $.  The traffic forecasting problem aims to learn a function $ f $ that maps the traffic conditions of historical $ P $ time steps to next $ Q $ time steps:
+%
+\begin{equation}
+[X_{t-P+1},X_{t-P+2},\cdots,X_{t}]\stackrel{f}{\longrightarrow}[X_{t+1},X_{t+2},\cdots,X_{t+Q}].
+\label{eq1}
+\end{equation}
+%
+
+\section{Methodology} \label{Methodology}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width = 0.7 \textwidth]{fig2.pdf}
+	\caption{The framework of \textit{Spatio-Temporal Joint Graph Convolutional Networks} (STJGCN). It consists of three modules: (i) the \textit{STJG construction module} (detailed in section~\ref{STJG Construction Module}) constructs both pre-defined and adaptive \textit{spatio-temporal joint graphs} (STJGs); (ii) the \textit{dilated causal STJGC module} (detailed in section~\ref{Dilated Causal STJGC Module}) stacks dilated causal \textit{spatio-temporal joint graph convolution} (STJGC) layers to capture multiple ranges of spatio-temporal dependencies; (iii) the \textit{prediction module} (detailed in section~\ref{Prediction Module}) aggregates the information of different ranges via a multi-range attention mechanism and produces the prediction results using fully-connected layers.}
+	\label{fig2}
+\end{figure*}
+
+\subsection{Framework Overview} 
+
+Figure~\ref{fig2} depicts the framework of our proposed Spatio-Temporal Joint Graph Convolutional Networks (STJGCN), which includes three modules. First, previous graph-based methods generally ignore the spatio-temporal connections and the dynamic correlations among nodes, we thus propose the \textit{spatio-temporal joint graph (STJG) construction module} to construct both pre-defined and adaptive STJGs, which preserve comprehensive and dynamic spatio-temporal correlations. Second, as the standard graph convolution operation models spatial correlations only, we propose the \textit{spatio-temporal joint graph convolution} (STJGC) operation on both types of STJG to model the comprehensive and dynamic spatio-temporal correlations in a unified operation. Based on the STJGC, we further propose the \textit{dilated casual STJGC module} to capture spatio-temporal dependencies within multiple neighborhood and time ranges. Finally, in the \textit{prediction module}, we propose a multi-range attention mechanism to aggregate the information of different ranges, and apply fully-connected layers to produce the prediction results. We detail each module in the following subsections.
+
+\subsection{STJG Construction Module} \label{STJG Construction Module}
+
+In this module, we first pre-define the \textit{spatio-temporal joint graph} (STJG) according to the spatio-temporal distances among nodes. While, the pre-defined graph may not reflect the underlying correlations among nodes~\cite{Wu-et-al:IJCAI2019,Bai-et-al:NIPS2020}, we further propose to learn adaptive STJG. By constructing both types of STJG, we are able to represent comprehensive and dynamic spatio-temporal correlations among nodes.
+
+\subsubsection{Pre-defined Spatio-Temporal Joint Graph}
+
+Previous studies~\cite{Li-et-al:ICLR2018,Yu-et-al:IJCAI2018} for traffic forecasting on graphs usually define the spatial adjacency matrix based on pair-wise road network distances:
+%
+\begin{equation}
+A_{i,j}=\exp(-\frac{{dist(v_{i},v_{j})}^2}{\sigma^2})
+\label{eq2},
+\end{equation}
+%
+where $ dist(v_{i},v_{j}) $ represents the road network distance from node $ v_{i} $ to node $ v_{j} $, $ \sigma $ is the standard deviation of distances, and $ A_{i,j} $ denotes the edge weight between node $ v_i $ and node $ v_j $. They construct the spatial graph at each time step, and then connect each node with itself between adjacent time steps to define the spatio-temporal graph. In such a graph, the connections between different nodes at different time steps are not incorporated, which may restrict its representation ability. 
+
+We propose to construct a \textit{spatio-temporal joint graph} (STJG), which preserves comprehensive spatio-temporal correlations. The intuitive idea is to further connect different nodes between two time steps, as shown in Figure~\ref{fig1(b)}. Thus, we modify Equation~\ref{eq2} to be the STJG adjacency matrix, as:
+%
+\begin{equation}
+A_{i,t-k;j,t}=\exp(-\frac{{((k + 1) \cdot dist(v_{i},v_{j}))}^2}{\sigma^2})
+\label{eq3},
+\end{equation}
+%
+where $ k $ is the time difference between two time steps. $ A_{i,t-k;j,t} $ defines the edge weight between node $ v_i $ at time step $ t-k $ and node $ v_j $ at time step $ t $, which decreases with the increase of spatio-temporal distance. When $ k=0 $, Equation~\ref{eq3} degenerates to Equation~\ref{eq2}, which represents the spatial connections. If $ i=j $, the STJG adjacency matrix defines the temporal connections at each node between two time steps. Otherwise, it represents the spatio-temporal connections between different nodes at different time steps. Thus, we are able to define a comprehensive spatio-temporal graph according to~Equation~\ref{eq3}. Note that the STJG could be constructed between any two time steps, which makes it flexible to reveal multiple time-ranges of spatio-temporal correlations. 
+
+We filter the values smaller than a threshold $ \delta_{pdf} $ in the STJG adjacency matrix to eliminate weak connections and control the sparsity. As this adjacency matrix is conditioned on the time difference $ k $, but irrelevant to a specific time step, we denote it as $ A^{(k)} \in \mathbb{R}^{N \times N} $ in following discussions. 
+
+\subsubsection{Adaptive Spatio-Temporal Joint Graph}
+
+Previous studies~\cite{Wu-et-al:IJCAI2019,Bai-et-al:NIPS2020} demonstrate that the pre-defined adjacency matrix may not reflect the underlying correlations among nodes, and propose adaptive ones. However, they only define the spatial graph, and it is unchanged over time steps. We propose to learn adaptive STJG adjacency matrices that could represent comprehensive and dynamic spatio-temporal correlations based on the latent space modeling algorithm~\cite{Deng-et-al:KDD2016}.
+
+\paragraph{\textit{Latent space modeling}} Given a graph, we assume each node resides in a latent space with various attributes. The attributes of nodes and how these attributes interact with each other jointly determine the underlying relations among nodes. The nodes which are close to each other in the latent space are more likely to form a link. Mathematically, we aim to learn two matrices $ U $ and $ B $. Here, $ U \in \mathbb{R}^{N \times d} $ denotes the $ d $ latent attributes of the $ N $ nodes, and $ B \in \mathbb{R}^{d \times d} $ represents the attributes interaction patterns, which could be an asymmetric matrix for directed graph or symmetric matrix for undirected graph. The product of $ UBU^\top $ could represent the connections among nodes. 
+
+\paragraph{\textit{Spatio-temporal embedding}} We propose a spatio-temporal embedding to form the latent node attributes. We first randomly initialize a spatial embedding for each of the $ N $ nodes, and then transform it to $ d $ dimensions via fully-connected layers. To obtain time-varying node attributes, we further encode the time information as the temporal embedding. At each time step, we consider two time features, i.e., time-of-day and day-of-week, which are encoded by one-hot coding and then be projected to $ d $ dimensions using fully-connected layers. We then add the spatial and temporal embeddings together to generate the spatio-temporal embedding at each time step $ t $, represented as $ U_t \in \mathbb{R}^{N \times d} $, which can be updated during the training stage. The spatio-temporal embedding encodes both the node-specific and time-related information, and it has the potential to take periodic patterns into account through the time features.  
+
+\paragraph{\textbf{\textit{Adaptive STJG adjacency matrix}}} Based on the spatio-temporal embedding, we define the STJG adjacency matrix at time step $ t $ according to the latent space modeling algorithm, as:
+%
+\begin{equation}
+\tilde{L}_{t}=softmax(\psi(U_tBU_t^\top)) 
+\label{eq4},
+\end{equation}
+%
+with
+%
+\begin{equation}
+\psi(x) = \left\{ 
+\begin{array}{lr}
+x,~~~~if~~x \ge \delta_{adt} \\
+0,~~~~otherwise 
+\end{array}
+\label{eq5},
+\right.
+\end{equation}
+%
+where $ U_t \in \mathbb{R}^{N \times d} $ is the spatio-temporal embedding of $ N $ nodes at time step $ t $, $ \psi(x) $ is used to eliminate the weights smaller than a threshold $ \delta_{adt} $, and the softmax function is applied for normalization. $ \tilde{L}_{t} \in \mathbb{R}^{N \times N} $ defines the spatial connections among $ N $ nodes at time step $ t $, which is dynamic, changing over time steps. In order to construct the connections between different time steps, we modify Equation~\ref{eq4} as:
+%
+\begin{equation}
+\tilde{L}_{t-k;t}=softmax(\psi(U_{t-k}BU_t^\top))
+\label{eq6},
+\end{equation}
+%   
+where $ \tilde{L}_{t-k;t} \in \mathbb{R}^{N \times N} $ is the normalized STJG adjacency matrix between time steps $ t-k $ and $ t $. When $ k=0 $, Equation~\ref{eq6} degenerates to Equation~\ref{eq4}, which describes the spatial graph at time step $ t $. Thus, Equation~\ref{eq6} is able to define the spatio-temporal joint graph between time steps $ t-k $ and $ t $ with comprehensive and dynamic spatio-temporal connections.
+
+\subsection{Dilated Causal STJGC Module} \label{Dilated Causal STJGC Module}
+
+The standard graph convolution performs on spatial graphs to model spatial correlations only, we thus propose the \textit{spatio-temporal joint graph convolution} (STJGC) on both types of STJG to model spatio-temporal correlations in a unified operation. We further design dilated causal STJGC layers to capture multiple ranges of spatio-temporal dependencies, as shown in Figure~\ref{fig2}. In the following discussion, we first describe the STJGC operation in section~\ref{Spatio-Temporal Joint Graph Convolution (STJGC)}, and then introduce the dilated causal STJGC layers in section~\ref{Dilated Causal STJGC Layers}.  
+
+\subsubsection{Spatio-Temporal Joint Graph Convolution (STJGC)} \label{Spatio-Temporal Joint Graph Convolution (STJGC)}
+
+Graph convolution is an effective operation for learning node information from spatial neighborhoods according to the graph structure, while the standard graph convolution performs on the spatial graph to model the spatial correlations only. In order to model the comprehensive and dynamic spatio-temporal correlations on the STJG, we propose the spatio-temporal joint graph convolution (STJGC) operations on both types of STJG.
+
+\paragraph{\textit{Graph Convolution}} The graph convolution is defined as~\cite{Kipf-and-Welling:ICLR2017}:
+%
+\begin{equation}
+Z=\phi(\tilde{A}XW+b).
+\label{eq7}
+\end{equation}
+%   
+Here, $ X \in \mathbb{R}^{N \times d_1} $ and $ Z \in \mathbb{R}^{N \times d_2} $ denote the input and output graph signals, $ W \in \mathbb{R}^{d_1 \times d_2} $ and $ b \in \mathbb{R}^{d_2} $ are learnable parameters, $ \phi(\cdot) $ is an activation function (e.g., ReLU~\cite{Nair-and-Hinton:ICML2010}), $ \tilde{A}=D^{-1/2}AD^{-1/2} \in \mathbb{R}^{N \times N} $ is the normalized adjacency matrix, where $ A $ is the adjacency matrix with self-loops, and $ D=\sum_{j}A_{i, j} $ is the degree matrix.
+
+\paragraph{\textbf{\textit{STJGC on pre-defined STJG}}}
+
+Consider the STJG between time steps $ t-k $ and $ t $, the information of each node at time step $ t $ comes from its spatial, temporal, and spatio-temporal neighborhoods:
+%
+\begin{equation}
+Z_t^{pdf}=\phi(\tilde{A}^{(k)}X_{t-k}W_1^{pdf}+\tilde{A}^{(0)}X_tW_2^{pdf}+b^{pdf}),
+\label{eq8}
+\end{equation}
+%
+where $ \tilde{A}^{(k)} $ is the normalized pre-defined STJG adjacency matrix between time steps $ t-k $ and $ t $ (see Equation~\ref{eq3}). In Equation~\ref{eq8}, $ \tilde{A}^{(k)}X_{t-k}W_1^{pdf} $ means we aggregate neighborhoods (both temporal and spatio-temporal) information from time step $ t-k $, and $ \tilde{A}^{(0)}X_tW_2^{pdf} $ means we aggregate the information from spatial neighborhoods at time step $ t $. Thus, by performing Equation~\ref{eq8}, we are able to model comprehensive spatio-temporal correlations between two time steps.
+
+Furthermore, at time step $ t $, we propose to incorporate $ K $ (denoted as kernel size) time step information (e.g., $ t,t-1,\cdots,t-K+1 $) to update the node features. Specifically, we modify Equation~\ref{eq8} as: 
+%
+\begin{equation}
+Z_t^{pdf}=\sum_{k=0}^{K-1}\phi(\tilde{A}^{(k)}X_{t-k}W_k^{pdf}+b^{pdf}).
+\label{eq9}
+\end{equation}
+%
+
+In the case of a directed graph, we consider two directions of information propagation (i.e., forward and backward), corresponding to two normalized adjacency matrices: $ \tilde{A}_{fw}^{(k)}={D_{O}^{(k)}}^{-1/2}A^{(k)}{D_{O}^{(k)}}^{-1/2} $ and $ \tilde{A}_{bw}^{(k)}={D_{I}^{(k)}}^{-1/2}{A^{(k)}}^\top{D_{I}^{(k)}}^{-1/2} $, where $ D_O^{(k)}= \sum_{j}A_{i,j}^{(k)} $ and $ D_I^{(k)}= \sum_{i}A_{i,j}^{(k)} $ represent the out-degree and in-degree matrices, respectively. Thus, we transform Equation~\ref{eq9} to:
+%
+\begin{equation}
+Z_t^{pdf}=\sum_{k=0}^{K-1}\phi(\tilde{A}_{fw}^{(k)}X_{t-k}W_{k,1}^{pdf}+\tilde{A}_{bw}^{(k)}X_{t-k}W_{k,2}^{pdf}+b^{pdf}),
+\label{eq10}
+\end{equation}
+%
+where $ X_{t-k} \in \mathbb{R}^{N \times d} $ and $ X_{t} \in \mathbb{R}^{N \times d} $ are the input graph signals at time steps $ t-k $ and $ t $ respectively, $ Z_t^{pdf} $ denotes the updated feature at time step $ t $, $ W_{k,1}^{pdf} \in \mathbb{R}^{d \times d} $, $ W_{k,2}^{pdf} \in \mathbb{R}^{d \times d} $, and $ b^{pdf} \in \mathbb{R}^{d} $ are learnable parameters.
+
+By this design, our STJGC simultaneously models the information propagation from three kinds of connections (i.e., spatial, temporal, and spatio-temporal) in a unified operation. 
+
+\paragraph{\textbf{\textit{STJGC on adaptive STJG}}} As the pre-defined STJG may not reflect the underlying correlations among nodes, we further propose STJGC on adaptive STJG. The computation is similar as that on pre-defined STJG:
+%
+\begin{equation}
+Z_t^{adt}=\sum_{k=0}^{K-1}\phi(\tilde{L}_{t-k;t}X_{t-k}W_k^{adt}+b^{adt})
+\label{eq11},
+\end{equation}
+% 
+where $ \tilde{L}_{t-k;t} $ is the normalized adaptive STJG adjacency matrix between time steps $ t-k $ and $ t $ (defined in Equation~\ref{eq6}). Inspired by the bi-directional RNN~\cite{Schuster-and-Paliwal:TSP1997}, we consider both time directions of the information flow. Specifically, we compute two adaptive STJG adjacency matrices: $ \tilde{L}_{t-k;t} $ and $ \tilde{L}_{t;t-k} $, and modify Equation~\ref{eq11} accordingly, as:
+%
+\begin{equation}
+Z_t^{adt}=\sum_{k=0}^{K-1}\phi(\tilde{L}_{t-k;t}X_{t-k}W_{k,1}^{adt}+\tilde{L}_{t;t-k}X_{t-k}W_{k,2}^{adt}+b^{adt}),
+\label{eq12}
+\end{equation}
+%
+where $ Z_t^{adt} $ is the updated feature at time step $ t $, which encodes the comprehensive and dynamic spatio-temporal correlations, $ W_{k,1}^{adt} \in \mathbb{R}^{d \times d} $, $ W_{k,2}^{adt} \in \mathbb{R}^{d \times d} $, and $ b^{pdf} \in \mathbb{R}^{d} $ are learnable parameters.
+ 
+\paragraph{\textbf{\textit{Gating fusion}}} \label{Gating fusion}
+
+The pre-defined and adaptive STJGs represent the spatio-temporal correlations from distinct perspectives. To enhance the representation ability, we use a gating mechanism to fuse the features extracted on two types of STJG. Specifically, we define a gate to control the importance of two features as:
+%
+\begin{equation}
+G=sigmoid(W^g[Z_t^{pdf},Z_t^{adt}]+b^g)
+\label{eq13},
+\end{equation}
+%
+where $ [\cdot,\cdot] $ denotes the concatenation operation, the sigmoid function is used to control the output lies in range $ [0,1] $, $ W^g \in \mathbb{R}^{2d \times d} $ and $ b^g \in \mathbb{R}^{d} $ are learnable parameters. The gate $ G \in \mathbb{R}^{N \times d} $ controls the information flow between pre-defined and adaptive STJGs in both node-wise and channel-wise. Based on the gate, we fuse two features as: 
+%
+\begin{equation}
+Z_t=G \odot Z_t^{pdf} + (1-G) \odot Z_t^{adt}
+\label{eq14},
+\end{equation}
+%
+where $ \odot $ denotes the element-wise product. As a result, $ Z_t \in \mathbb{R}^{N \times d} $ represents the updated representation of $ N $ nodes at time step $ t $, which aggregates the information from their spatial, temporal, and spatio-temporal neighborhoods on both types of STJG.
+
+\subsubsection{Dilated Causal STJGC Layers} \label{Dilated Causal STJGC Layers}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width = 1.00 \textwidth]{fig3.pdf}
+	\caption{The illustration of the \textit{dilated causal STJGC module} (middle part in the figure) and the \textit{prediction module} (right part in the figure) in STJGCN. In the dilated csusal STJGC module, the inputs are first transformed by fully-connected layers and then be passed to the dilated causal STJGC layers, which pick inputs every $ \gamma $ (dilation factor, $ \gamma=\{2,4,4,4\} $ for each STJGC layer in the figure) step and apply STJGC (left part in the figure) to the selected inputs. The prediction module first aggregates the outputs of each STJGC layer via the multi-range attention mechanism and then uses fully-connected layers to produce the prediction results.}
+	\label{fig3}
+\end{figure*}
+
+The STJGC operation is able to model the correlations in different time ranges by controlling the time difference $ k $. In addition, different STJGC layers aggregate information within diverse neighborhood ranges. This makes it flexible to model the spatio-temporal correlations in multiple neighborhood and time ranges. The information in different ranges reveals distinct traffic properties. A small range uncovers the local dependency and a large range indicates the global dependency. Inspired by the dilated causal convolution~\cite{Oord-et-al:arXiv2016,Bai-et-al:arXiv2018}, which is able to capture diverse time-ranges of dependencies in different layers, we propose dilated causal STJGC layers to capture multiple ranges of spatio-temporal dependencies. 
+
+\paragraph{\textit{Dilated causal convolution}} 
+
+The dilated causal convolution operation slides over the input sequence by skipping elements with a certain time step (i.e., dilation factor $ \gamma $), and it involves only historical information at each time step to satisfy the causal constraint. In this way, it models diverse time-ranges of dependencies in different layers. 
+
+\paragraph{\textit{\textbf{Dilated causal STJGC}}} 
+
+As illustrated in Figure~\ref{fig3}, we first transform the inputs into $ d $ dimension space using fully-connected layers. Then we stack a couple of STJGC layers upon it in the dilated causal way. Different to the standard dilated causal convolution using 1D CNN, we use the STJGC in each layer to model the dynamic and comprehensive spatio-temporal correlations. Suppose the length of input graph signals is $ P = 12 $, we could stack four STJGC layers with kernel size $ K = 2 $ and dilation factor $ \gamma = \{2, 4, 4, 4\} $ in each layer, respectively. The residual connections~\cite{He-et-al:CVPR2016} are also applied in each STJGC layer at the corresponding output time steps. The number of STJGC layers, dilation factors and kernel size could be re-designed according to the length of input graph signals, in order to ensure that the output of the last STJGC layer covers the information from all input time steps. 
+
+In these dilated causal STJGC layers, each STJGC layer captures different ranges of spatio-temporal dependencies. For example, as shown in Figure~\ref{fig3}, in the first STJGC layer, the hidden state at time step $ t $ aggregates information from 1-hop neighborhoods at time steps $ t - 1 $ and $ t $. With the layer goes deeper, it could extract features from higher order neighborhoods at longer time-ranges. In particular, in the last STJGC layer, each node at time step $ t $ captures the information within 4-hop neighborhoods from total $ P $ time steps. 
+
+\subsection{Prediction Module} \label{Prediction Module}
+
+In this module, we first propose a multi-range attention mechanism to aggregate the information of different ranges extracted by the dilated causal STJGC layers, and then apply independent fully-connected layers to produce the multi-step ahead prediction results.
+
+\subsubsection{Multi-Range Attention} 
+
+As introduced in section~\ref{Dilated Causal STJGC Layers}, each STJGC layer captures different spatio-temporal ranges of dependencies. A small range uncovers the local dependency and a large range indicates the global dependency, e.g., the correlations between distant nodes at distant time steps. Thus, It is essential to combine the multi-range information. In addition, the importance of different ranges could be diverse. We propose a multi-range attention mechanism to aggregate the information of different ranges. Mathematically, we denote the hidden state of node $ v_i $ at time step $ t $ in $ m $-th STJGC layer as $ z_i^{(m)} \in \mathbb{R}^{d} $, the attention score is computed as:
+%
+\begin{equation}
+s_i^{m}=\mathrm{v}^\top tanh(W^az_i^{(m)}+b^a)
+\label{eq15},
+\end{equation}
+%
+\begin{equation}
+\alpha_i^m=\frac{\exp(s_i^m)}{\sum_{m=1}^{M}\exp(s_i^{m})}
+\label{eq16},
+\end{equation}
+% 
+where $ W^a \in \mathbb{R}^{d \times d} $, $ b^a \in \mathbb{R}^{d} $, and $ \mathrm{v} \in \mathbb{R}^{d} $ are learnable parameters, $ M $ is the number of STJGC layers, and $ \alpha_i^m $ is the attention score, indicating the importance of $ z_i^{(m)} $. Based on the attention scores, the multi-range information can be aggregated as:
+%
+\begin{equation}
+y_i=\sum\nolimits_{m=1}^{M}\alpha_i^mz_i^{(m)}
+\label{eq17},
+\end{equation}
+% 
+where $ y_i $ is the updated feature of node $ v_i $, which aggregates the information from multiple spatio-temporal ranges. The attention mechanism is conducted on all of the $ N $ nodes in parallel with shared learnable parameters, and produces an output as $ Y \in \mathbb{R}^{N \times d} $. 
+
+\subsubsection{Independent Fully-Connected Layers} 
+
+As the traffic of different time steps may exhibit different properties, it would be better to use different networks to generate the predictions at different forecasting horizons. We thus apply $ Q $ independent two-fully-connected layers upon $ Y $ to produce the $ Q $ time steps ahead prediction results:
+%
+\begin{equation}
+\hat{X}_{t+i} = \phi(YW_1^i+b_1^i)W_2^i+b_2^i
+\label{eq18},
+\end{equation}
+% 
+where $ \hat{X}_{t+i} $ denotes the prediction result of time step $ t + i $ ($ i=1,2,\cdots,Q $), $ W_1^i \in \mathbb{R}^{d \times d} $, $ b_1^i \in \mathbb{R}^{d} $, $ W_2^i \in \mathbb{R}^{d \times 1} $, and $ b_2^i \in \mathbb{R} $ are the corresponding learnable parameters, $ \phi(\cdot) $ is an activation function.
+
+\subsubsection{Loss Function} 
+
+The mean absolute error (MAE) loss is commonly used in the traffic forecasting problem~\cite{Li-et-al:ICLR2018,Wu-et-al:IJCAI2019,Zheng-et-al:AAAI2020}. In practice, the MAE loss optimizes all prediction values equally regardless of the value size, which leads to relatively non-ideal predictions for small values compared to the predictions of large values. The mean absolute percentage error (MAPE) loss is more relevant to the predictions of small values. Thus, we propose to combine the MAE loss and MAPE loss as our loss function:  
+%
+\begin{equation}
+\mathcal{L}(\hat{X}_{t+i};\Theta) = \frac{1}{Q}(\sum_{i=1}^{Q}(|\hat{X}_{t+i}-X_{t+i}| + \beta \cdot \frac{|\hat{X}_{t+i}-X_{t+i}|}{X_{t+i}} \cdot 100))
+\label{eq19},
+\end{equation}
+%
+where $ \beta $ is used to balance MAE loss and MAPE loss, $ \Theta $ denotes all learnable parameters in STJGCN. 
+
+\subsection{Complexity Analysis}
+
+\begin{table*}
+	\centering
+	\caption{Time complexity analysis.}
+		\begin{tabular}{cccc}
+			\toprule
+			Module			& STJG construction module	& Dilated casual STJGC module	& Prediction module	\\
+			\midrule
+			Time complexity	& $ O(Nd^2+N^2d) $			& $ O(K(|\mathcal{E}|d+Nd^2)) $ & $ O(N(Md+Qd^2)) $	\\
+			\bottomrule
+	\end{tabular}
+	\label{table1}
+\end{table*}
+
+We further analyze the time complexity of the main components in each module in our STJGCN, which is summarized in Table~\ref{table1}. 
+
+In the \textit{STJG construction module}, the computation mainly comes from the learning of adaptive STJG adjacency matrix (Equation~\ref{eq6}). The time complexity is $ O(Nd^2+N^2d) $, where $ N $ denotes the number of nodes, $ d $ is the dimension of the spatio-temporal embedding. Regarding $ d $ as a constant, the time complexity turns to $ O(N^2) $, which is attributed to the pairwise computation of the $ N $ nodes' embeddings. 
+
+In the \textit{dilated casual STJGC module}, the time complexity mainly depends on the computation of each STJGC operation (Equations~\ref{eq10} and~\ref{eq12}), which incurs $ O(K(|\mathcal{E}|d+Nd^2)) $ time complexity. Here, $ K $ is the kernel size, $ |\mathcal{E}| $ denotes the number of edges in the graph, and $ d $ is the dimension of hidden states. The time complexity of STJGC mainly depends on $ |\mathcal{E}| $, as each node aggregates information from its neighborhoods, whose number is equal to the edge number. 
+
+In the \textit{prediction module}, the time complexities of multi-range attention mechanism (Equations~\ref{eq15},~\ref{eq16}, and~\ref{eq17}) and independent fully-connected layers (Equation~\ref{eq18}) are $ O(N(Md+d^2)) $ and $ O(QNd^2) $, respectively. Thus, the total time complexity of the prediction module is $ O(N(Md+Qd^2)) $, where $ M $ is the number of STJGC layers and $ Q $ is the number of time steps to be predicted. The time complexity is highly related to $ Q $, as we use $ Q $ independent fully-connected layers to produce the multi-step prediction results.   
+
+\section{Experiments} \label{Experiments}
+
+\subsection{Datasets}
+
+\begin{table}
+	\caption{Summary statistics of four datasets.}
+	\label{table2}
+	\centering
+	\resizebox{1.00 \columnwidth}{!}{
+		\begin{tabular}{lccc}
+			\toprule
+			Dataset	& Time range 				& Time interval	& \# Nodes	\\
+			\midrule
+			PeMSD3	& 1/Sep/2018 - 30/Nov/2018	& 5-minute		& 358		\\
+			PeMSD4	& 1/Jan/2018 - 28/Feb/2018	& 5-minute		& 307 		\\
+			PeMSD7	& 1/May/2017 - 31/Aug/2017	& 5-minute		& 883		\\
+			PeMSD8	& 1/Jul/2016 - 31/Aug/2016	& 5-minute		& 170		\\
+			\bottomrule
+		\end{tabular}}
+\end{table}
+
+We evaluate our STJGCN on four highway traffic datasets: PeMSD3, PeMSD4, PeMSD7, and PeMSD8, which are released in~\cite{Guo-et-al:AAAI2019,Song-et-al:AAAI2020}. These datasets are collected by the Caltrans Performance Measurement System (PeMS) from 4 districts in real time every 30 seconds. The raw traffic data is aggregated into 5-minute time interval. There are three kinds of traffic measurements in PeMSD4 and PeMSD8 datasets, including total flow, average speed, and average occupancy. In PeMSD3 and PeMSD7 datasets, only the traffic flow is recorded. Following previous studies~\cite{Bai-et-al:NIPS2020,Chen-et-al:ICML2021}, we predict the traffic flow in all datasets. The summary statistics of four datasets are presented in Table~\ref{table2}.
+
+All datasets are normalized using the Z-Score method, and be split in chronological order with 60\% for training, 20\% for validation, and 20\% for testing. The pair-wise road network distances are provided in the datasets, and we use them to construct the pre-defined STJG according to Equation~\ref{eq3}. 
+
+\subsection{Experimental Setup} 
+
+\subsubsection{Evaluation Metrics}
+
+We adopt three widely used metrics for evaluation, i.e., mean absolute error (MAE), root mean squared error (RMSE), and mean absolute percentage error (MAPE), which are defined as: 
+%
+\begin{equation}
+MAE = \frac{1}{NQ}\sum_{i=1}^{N}\sum_{j=1}^{Q}|\hat{X}_{i,t+j}-X_{i,t+j}|
+\label{eq20},
+\end{equation}
+%
+\begin{equation}
+RMSE = \sqrt{\frac{1}{NQ}\sum_{i=1}^{N}\sum_{j=1}^{Q}(\hat{X}_{i,t+j}-X_{i,t+j})^2}
+\label{eq21},
+\end{equation}
+%
+\begin{equation}
+MAPE = \frac{1}{NQ}\sum_{i=1}^{N}\sum_{j=1}^{Q}\frac{|\hat{X}_{i,t+j}-X_{i,t+j}|}{X_{i,t+j}}
+\label{eq22},
+\end{equation}
+%
+where $ \hat{X}_{i,t+j} $ and $ X_{i,t+j} $ denote the prediction result and ground truth of node $ v_i $ at time step $ t + j $, respectively, $ N $ is the number of nodes, and $ Q $ is the number of time steps to be predicted.
+
+\subsubsection{Experimental Settings} 
+
+\begin{table}
+	\centering
+	\caption{Hyperparameter settings of STJGCN on four datasets.}
+	\begin{tabular}{lccccc}
+		\toprule
+		Dataset	& $ \delta_{pdf} $	& $ \delta_{adt} $ 	& $ d $	& $ K $	& $ \beta $	\\
+		\midrule
+		PeMSD3	& 0.5				& 0.5				& 64	& 2 	& 0.1		\\
+		PeMSD4	& 0.5				& 0.5				& 64	& 3 	& 1.0		\\
+		PeMSD7	& 0.9				& 0.7				& 64	& 2		& 0.5		\\
+		PeMSD8	& 0.5				& 0.3				& 64	& 2		& 1.5		\\
+		\bottomrule
+	\end{tabular}
+	\label{table3}
+\end{table}
+
+The PeMSD3 and PeMSD7 datasets contain one traffic measurement (i.e., traffic flow). Thus, the dimensions of the input and output are $ C=1 $ and 1, respectively. The PeMSD4 and PeMSD8 datasets contain three traffic measurements (i.e., traffic flow, average speed, and average occupancy), and only the traffic flow is predicted in the experiments~\cite{Bai-et-al:NIPS2020,Chen-et-al:ICML2021}. Thus, the dimensions of the input and output are $ C=3 $ and 1, respectively. Following previous studies~\cite{Bai-et-al:NIPS2020,Chen-et-al:ICML2021}, we use the traffic data of historical 12 time steps ($ P = 12 $) to forecast the next 12 time steps ($ Q = 12 $). 
+
+The core hyperparameters in STJGCN include the thresholds $ \delta_{pdf} $ and $ \delta_{adt} $ in pre-defined and adaptive STJG adjacency matrices respectively, the dimension $ d $ of hidden states, the kernel size $ K $ of each STJGC layer, and the threshold $ \beta $ in the loss function. We tune these hyperparameters on the validation set that achieve the best validation performance. We provide a parameter study in section~\ref{Parameter Study}. The detailed hyperparameter settings of STJGCN on four datasets are presented in Table~\ref{table3}.  
+
+The nonlinear activation function $ \phi(\cdot) $ in our STJGCN refers to the ReLU activation~\cite{Nair-and-Hinton:ICML2010}, and we also add a Batch Normalization~\cite{Ioffe-and-Szegedy:NIPS2016} layer before each ReLU activation function. 
+
+We train our model using the Adam optimizer~\cite{Kingma-and-Ba:ICLR2015} with an initial learning rate 0.001 and batch size 64 on a NVIDIA Tesla V100 GPU card. We run the experiments for 200 epochs and save the best model that evaluated on the validation set. We run each experiment 5 times, and report the mean errors and standard deviations.
+
+\subsubsection{Baseline Methods}
+
+We compare STJGCN with 11 baseline methods, which could be divided into two categories. The first category is the time-series prediction models, including:
+
+\begin{itemize}
+	\item VAR~\cite{VAR:1994}: Vector Auto-Regressive is a traditional time-series model, which can capture pairwise relationships among all traffic series.
+	\item FC-LSTM~\cite{Sutskever-et-al:NIPS2014}: an encoder-decoder framework using long short-term memory (LSTM) with peephole for multi-step time-series prediction.
+	\item SVR~\cite{Drucker-et-al:NIPS1997}: Support Vector Regression utilizes a linear support vector machine to perform regression.
+\end{itemize}
+
+The second category refers to the spatio-temporal graph neural networks, which are detailed as follows:
+
+\begin{itemize}
+	\item DCRNN~\cite{Li-et-al:ICLR2018}: Diffusion Convolutional Recurrent Neural Network, which models the traffic as a diffusion process, and integrates diffusion convolution with recurrent neural network (RNN) into the encoder-decoder architecture. 
+	\item STGCN~\cite{Yu-et-al:IJCAI2018}: Spatio-Temporal Graph Convolutional Network, which employs graph convolutional network (GCN) to capture spatial dependencies and 1D convolutional neural network (CNN) for temporal correlations modeling.
+	\item ASTGCN~\cite{Guo-et-al:AAAI2019}: Attention based Spatio-Temporal Graph Convolutional Network that designs spatial and temporal attention mechanisms to capture spatial and temporal patterns, respectively. 
+	\item Graph WaveNet~\cite{Wu-et-al:IJCAI2019}: a graph neural network that performs diffusion convolution with both pre-defined and self-adaptive adjacency matrices to capture spatial dependencies, and applies 1D dilated causal convolution to capture temporal dependencies.
+	\item STSGCN~\cite{Song-et-al:AAAI2020}: Spatio-Temporal Synchronous Graph Convolutional Network that designs spatio-temporal synchronous modeling mechanism to capture localized spatio-temporal correlations.
+	\item AGCRN~\cite{Bai-et-al:NIPS2020}: Adaptive Graph Convolutional Recurrent Network that learns data-adaptive adjacency matrix for graph convolution to model spatial correlations and uses gated recurrent unit (GRU) to model temporal correlations.   
+	\item GMAN~\cite{Zheng-et-al:AAAI2020}: Graph Multi-Attention Network is an encoder-decoder framework, which designs multiple spatial and temporal attention mechanisms in the encoder and decoder to model spatio-temporal correlations, and a transform attention mechanism to transform information from encoder to decoder.
+	\item Z-GCNETs~\cite{Chen-et-al:ICML2021}: Time Zigzags at Graph Convolutional Networks that introduce the concept of zigzag persistence~\cite{Carlsson-and-Silva:2010} into the graph convolutional networks for modeling the spatial correlations and use the GRU networks to capture the temporal dependencies.
+\end{itemize}
+
+\begin{table*}
+	\caption{Forecasting performance comparison of different models on four datasets.}
+	\label{table4}
+	\centering
+	\resizebox{1.00 \textwidth}{!}{
+	\begin{tabular}{llccccccccccc|c}
+		\toprule
+		Dataset					&Metrics   &VAR   &SVR   &FC-LSTM 		 &DCRNN          &STGCN          &ASTGCN         &Graph WaveNet  &STSGCN 		 &AGCRN  		 &GMAN			 &Z-GCNETs       &STJGCN \\
+		\midrule
+		\multirow{3}{*}{PeMSD3} &MAE	   &19.72 &19.77 &19.56$\pm$0.32 &17.62$\pm$0.13 &19.76$\pm$0.67 &18.67$\pm$0.42 &15.67$\pm$0.06 &15.74$\pm$0.09 &16.10$\pm$0.16 &15.52$\pm$0.09 &15.90$\pm$0.77 &\textbf{14.92$\pm$0.10} \\
+								&RMSE      &32.38 &32.78 &33.38$\pm$0.46 &29.86$\pm$0.47 &33.87$\pm$1.18 &30.71$\pm$1.02 &26.42$\pm$0.14 &26.39$\pm$0.36 &28.55$\pm$0.28 &26.53$\pm$0.19 &27.90$\pm$0.86 &\textbf{25.70$\pm$0.41} \\
+								&MAPE (\%) &20.50 &23.04 &19.56$\pm$0.51 &16.83$\pm$0.13 &17.33$\pm$0.94 &19.85$\pm$1.06 &15.72$\pm$0.23 &15.40$\pm$0.07 &15.02$\pm$0.26 &15.19$\pm$0.25 &15.51$\pm$1.67 &\textbf{14.81$\pm$0.16} \\
+		\midrule
+		\multirow{3}{*}{PeMSD4} &MAE       &24.44 &26.18 &23.60$\pm$0.52 &24.42$\pm$0.06 &23.90$\pm$0.17 &22.90$\pm$0.20 &19.91$\pm$0.10 &19.62$\pm$0.16 &19.74$\pm$0.09 &19.25$\pm$0.06 &19.54$\pm$0.07 &\textbf{18.81$\pm$0.06} \\
+								&RMSE	   &37.76 &38.91 &37.11$\pm$0.50 &37.48$\pm$0.10 &36.43$\pm$0.22 &35.59$\pm$0.35 &31.06$\pm$0.17 &31.02$\pm$0.29 &32.01$\pm$0.17 &30.85$\pm$0.21 &31.33$\pm$0.11 &\textbf{30.35$\pm$0.09} \\
+								&MAPE (\%) &17.27 &22.84 &16.17$\pm$0.13 &16.86$\pm$0.09 &13.67$\pm$0.14 &16.75$\pm$0.59 &13.62$\pm$0.22 &13.13$\pm$0.11 &12.98$\pm$0.21 &13.00$\pm$0.26 &12.87$\pm$0.05 &\textbf{11.92$\pm$0.04} \\
+		\midrule
+		\multirow{3}{*}{PeMSD7} &MAE       &27.96 &28.45 &34.05$\pm$0.51 &24.45$\pm$0.85 &26.22$\pm$0.37 &28.13$\pm$0.70 &20.83$\pm$0.18 &21.64$\pm$0.11 &21.22$\pm$0.17 &20.68$\pm$0.08 &21.26$\pm$0.28 &\textbf{19.95$\pm$0.04} \\
+								&RMSE      &41.31 &42.67 &55.70$\pm$0.60 &37.61$\pm$1.18 &39.18$\pm$0.42 &43.67$\pm$1.33 &33.64$\pm$0.22 &34.87$\pm$0.27 &35.05$\pm$0.13 &33.56$\pm$0.12 &34.53$\pm$0.28 &\textbf{33.01$\pm$0.07} \\
+								&MAPE (\%) &12.11 &14.00 &15.31$\pm$0.31 &10.67$\pm$0.53 &10.74$\pm$0.16 &13.31$\pm$0.55 &9.10$\pm$0.27  &9.09$\pm$0.05  &9.00$\pm$0.12  &9.31$\pm$0.12  &9.04$\pm$0.11  &\textbf{8.31$\pm$0.11} \\
+		\midrule
+		\multirow{3}{*}{PeMSD8} &MAE       &19.83 &20.92 &21.18$\pm$0.27 &18.49$\pm$0.16 &18.79$\pm$0.49 &18.72$\pm$0.16 &15.57$\pm$0.12 &16.12$\pm$0.25 &15.92$\pm$0.19 &14.87$\pm$0.15 &16.12$\pm$0.08 &\textbf{14.53$\pm$0.17} \\
+								&RMSE      &29.24 &31.23 &31.88$\pm$0.43 &27.30$\pm$0.22 &28.23$\pm$0.36 &28.99$\pm$0.11 &24.32$\pm$0.21 &24.89$\pm$0.52 &25.31$\pm$0.25 &24.06$\pm$0.16 &25.74$\pm$0.13 &\textbf{23.74$\pm$0.20} \\
+								&MAPE (\%) &13.08 &14.24 &13.72$\pm$0.27 &11.69$\pm$0.06 &10.55$\pm$0.30 &12.53$\pm$0.48 &10.32$\pm$0.79 &10.50$\pm$0.22 &10.30$\pm$0.13 &9.77$\pm$0.07  &10.35$\pm$0.09 &\textbf{9.15$\pm$0.09} \\
+		\bottomrule
+	\end{tabular}}
+\end{table*}
+
+\subsection{Experimental Results}
+
+\subsubsection{Overall Comparison}
+
+Table~\ref{table4} presents the forecasting performance comparison of our STJGCN with 11 baseline methods. We observe that: (1) the time-series prediction models, including traditional approach (i.e., VAR), machine learning based method (i.e., SVR), and deep neural network (i.e., FC-LSTM) perform poorly as they only consider the temporal correlations. (2) Spatio-temporal graph neural networks generally achieve better performances as they further model the spatial correlations using graph neural networks. (3) Our STJGCN performs the best in terms of all metrics on all datasets (1.4\%\textasciitilde7.7\% improvement against the second best results). Compared with other graph-based methods, the advantages of our STJGCN are three-fold. First, STJGCN models comprehensive spatio-temporal correlations. Second, STJGCN is able to capture dynamic dependencies at different time steps. Third, STJGCN leverages the information of multiple spatio-temporal ranges. 
+
+\subsubsection{Ablation Study}
+
+\begin{table*}
+	\caption{Effect of spatio-temporal connections, dynamic graph modeling, multi-range information, and independent fully-connected layers.}
+	\label{table5}
+	\centering
+	\resizebox{1.00 \textwidth}{!}{
+		\begin{tabular}{llcccccccc}
+			\toprule
+			Dataset					& Metrics	& STJGCN				  & w/o STC-pdf	   & w/o STC-adt	& w/o STC		 & w/o dgm		  & w/o mr		   & w/o att		& w/o idp 		 \\
+			\midrule
+			\multirow{3}{*}{PeMSD4} & MAE       & \textbf{18.81$\pm$0.06} & 18.99$\pm$0.14 & 19.07$\pm$0.10	& 19.36$\pm$0.09 & 19.70$\pm$0.06 & 19.03$\pm$0.04 & 18.97$\pm$0.09 & 18.89$\pm$0.08 \\
+									& RMSE  	& \textbf{30.35$\pm$0.09} & 30.63$\pm$0.23 & 30.71$\pm$0.13	& 30.80$\pm$0.10 & 31.47$\pm$0.05 & 30.79$\pm$0.08 & 30.56$\pm$0.12 & 30.46$\pm$0.10 \\
+									& MAPE (\%)	& \textbf{11.92$\pm$0.04} & 12.00$\pm$0.07 & 12.07$\pm$0.06	& 12.27$\pm$0.08 & 12.39$\pm$0.07 & 11.98$\pm$0.03 & 11.96$\pm$0.02 & 11.95$\pm$0.02 \\
+			\midrule
+			\multirow{3}{*}{PeMSD8} & MAE       & \textbf{14.53$\pm$0.17} & 14.63$\pm$0.23 & 14.82$\pm$0.09	& 15.07$\pm$0.07 & 15.49$\pm$0.22 & 15.11$\pm$0.57 & 14.67$\pm$0.11	& 14.60$\pm$0.11 \\
+									& RMSE  	& \textbf{23.74$\pm$0.20} & 24.01$\pm$0.22 & 24.11$\pm$0.14	& 24.22$\pm$0.14 & 24.49$\pm$0.23 & 24.49$\pm$0.55 & 24.03$\pm$0.30	& 23.96$\pm$0.21 \\
+									& MAPE (\%)	& \textbf{9.15$\pm$0.09}  & 9.18$\pm$0.19  &  9.26$\pm$0.08	&  9.48$\pm$0.06 &  9.55$\pm$0.16 &  9.39$\pm$0.22 & 9.16$\pm$0.09	& 9.16$\pm$0.12  \\	
+			\bottomrule
+	\end{tabular}}
+\end{table*}
+
+To better understand the effectiveness of different components in STJGCN, we conduct ablation studies on PeMSD4 and PeMSD8 datasets.  
+
+\paragraph{\textit{Effect of spatio-temporal connections}} 
+
+One difference between our STJG with normal spatio-temporal graph is that we explicitly add the spatio-temporal connections between different nodes at different time steps. To evaluate the effectiveness of this approach, we drop them separately/simultaneously from the pre-defined or/and adaptive STJG. These three variants of STJGCN are named as ``w/o STC-pdf'' (drop in pre-defined STJG), ``w/o STC-adt'' (drop in adaptive STJG), and ``w/o STC'' (drop in both types of STJG), respectively. The results in Table~\ref{table5} demonstrate that the introduction of spatio-temporal connections improves the performance as it helps the model to explicitly capture comprehensive spatio-temporal correlations. 
+
+\paragraph{\textit{Effect of dynamic graph modeling}} 
+
+To evaluate the effect of dynamic graph modeling, we conduct experiments of learning static adjacency matrices. Specifically, we design a variant of STJGCN (i.e., ``w/o dgm'') that only uses the node embedding to generate the adaptive STJG adjacency matrix without using the time feature. The results in Table~\ref{table5} validate the effectiveness of modeling dynamic correlations among nodes at different time steps. 
+
+\paragraph{\textit{Effect of multi-range information}} 
+
+To verify the effect of multi-range information, we design a variant of STJGCN, namely ``w/o mr'', in which we do not combine multiple ranges of information but directly use the output of the last STJGC layer to produce the predictions. The results in Table~\ref{table5} indicate the necessity of leveraging multi-range information. We further design a variant ``w/o att'' that directly adds the outputs of each STJGC layer together without using the multi-range attention mechanism, and it performs worse than STJGCN, showing that it is beneficial to distinguish the importance of different ranges of information.  
+
+\paragraph{\textit{Effect of independent fully-connected layers}} 
+
+In the prediction module, we use $ Q $ independent fully-connected layers to produce the multi-step predictions. To evaluate the effectiveness of this, we conduct experiments of using shared fully-connected layers with $ Q $ units in the output layer to produce the $ Q $ time steps predictions. We name this variant of STJGCN as ``w/o idp'', and present the experimental results in Table~\ref{table5}.  We observe that STJGCN improves the performances by introducing independent learning parameters for multi-step prediction. A potential reason is that the traffic of different time steps may exhibit different properties, and using different networks to generate the predictions at different forecasting horizons could be beneficial. 
+
+\paragraph{\textit{Effect of different STJG adjacency matrix configurations}}
+
+We further conduct experiments of using different STJG adjacency matrix configurations to evaluate their effectiveness. As shown in Table~\ref{table6}, the models with only pre-defined STJG adjacency matrices (lines 3-4) achieve poor performances as they do not capture the underlying dependencies in the data. We observe that the models with only adaptive STJG adjacency matrices (lines 5-6) could realize promising performances, which indicates that our model can also be used even if the graph structure is unavailable. By using both pre-defined and adaptive STJG adjacency matrices (line 7), we could achieve better results. We further apply a gating fusion approach (section~\ref{Gating fusion}) in STJGCN (line 8) and observe consistent improvement of the predictive performances, as the gate is able to control the information flow between pre-defined and adaptive STJGs.    
+
+\begin{table*}
+	\caption{Effect of different STJG adjacency matrix configurations. The term ``gf'' in the last line denotes the gating fusion approach.}
+	\label{table6}
+	\centering
+	\begin{tabular}{lcccccr}
+		\toprule
+		\multirow{2}{*}{STJG adjacency matrix configuration}										& \multicolumn{3}{c}{PeMSD4}														& \multicolumn{3}{c}{PeMSD8}														\\
+		\cmidrule(r){2-4}\cmidrule(r){5-7}
+		& MAE						& RMSE						& MAPE (\%)					& MAE						& RMSE						& MAPE (\%)					\\
+		\midrule	
+		$ [ A_{fw}^{(k)} ] $																& 24.64$\pm$0.05			& 38.21$\pm$0.02			& 15.70$\pm$0.08			& 18.52$\pm$0.10			& 29.24$\pm$0.18			& 11.35$\pm$0.08			\\
+		$ [ A_{fw}^{(k)},A_{bw}^{(k)} ] $													& 24.40$\pm$0.06			& 38.03$\pm$0.23			& 15.47$\pm$0.03			& 18.12$\pm$0.07			& 28.49$\pm$0.16			& 11.19$\pm$0.11			\\
+		$ [ \tilde{L}_{t-k;t} ] $															& 19.39$\pm$0.12			& 31.60$\pm$0.23			& 12.38$\pm$0.08			& 15.93$\pm$0.15			& 25.87$\pm$0.23			& 9.98$\pm$0.07				\\
+		$ [ \tilde{L}_{t-k;t},\tilde{L}_{t;t-k} ] $     									& 19.35$\pm$0.13			& 31.47$\pm$0.16			& 12.34$\pm$0.14			& 15.42$\pm$0.15			& 24.80$\pm$0.32			& 9.85$\pm$0.14				\\
+		$ [ A_{fw}^{(k)},A_{bw}^{(k)},\tilde{L}_{t-k;t},\tilde{L}_{t;t-k} ] $				& 18.93$\pm$0.09			& 30.48$\pm$0.13			& 11.97$\pm$0.04 			& 14.65$\pm$0.08			& 23.93$\pm$0.14			& 9.23$\pm$0.08				\\
+		\midrule	
+		$ [ A_{fw}^{(k)},A_{bw}^{(k)},\tilde{L}_{t-k;t},\tilde{L}_{t;t-k} ] $ + gf (ours)	& \textbf{18.81$\pm$0.06}	& \textbf{30.35$\pm$0.09}	& \textbf{11.92$\pm$0.04}	& \textbf{14.53$\pm$0.17}	& \textbf{23.74$\pm$0.20}	& \textbf{9.15$\pm$0.09}	\\	
+		\bottomrule
+	\end{tabular}
+\end{table*} 
+
+\subsubsection{Parameter Study} \label{Parameter Study}
+
+\begin{figure*}
+	\centering
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(a)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4a.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(b)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4b.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(c)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4c.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(d)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4d.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(e)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4e.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(f)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4f.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig4(g)} 
+			\includegraphics[width = 0.95 \textwidth]{fig4g.pdf}
+	\end{minipage}}
+	\caption{Parameter study on the PeMSD4 dataset.}
+	\label{fig4}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(a)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5a.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(b)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5b.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(c)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5c.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(d)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5d.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(e)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5e.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(f)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5f.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.23 \textwidth}
+			\label{fig5(g)} 
+			\includegraphics[width = 0.95 \textwidth]{fig5g.pdf}
+	\end{minipage}}
+	\caption{Parameter study on the PeMSD8 dataset.}
+	\label{fig5}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig6(a)} 
+			\includegraphics[width = 0.95 \textwidth]{fig6a.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig6(b)} 
+			\includegraphics[width = 0.95 \textwidth]{fig6b.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig6(c)} 
+			\includegraphics[width = 0.95 \textwidth]{fig6c.pdf}
+	\end{minipage}}
+	\caption{Forecasting performance comparison at each horizon on the PeMSD4 dataset.}
+	\label{fig6}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig7(a)} 
+			\includegraphics[width = 0.95 \textwidth]{fig7a.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig7(b)} 
+			\includegraphics[width = 0.95 \textwidth]{fig7b.pdf}
+	\end{minipage}}
+	\subfigure[]{
+		\begin{minipage}{0.28 \textwidth}
+			\label{fig7(c)} 
+			\includegraphics[width = 0.95 \textwidth]{fig7c.pdf}
+	\end{minipage}}
+	\caption{Forecasting performance comparison at each horizon on the PeMSD8 dataset.}
+	\label{fig7}
+\end{figure*}
+
+\begin{table*}
+	\centering
+	\caption{Comparisons of parameter number and computation time. The training time is the time cost per epoch in the training phase, and the inference time is the total time cost on the validation set.}
+	\resizebox{1.00 \textwidth}{!}{
+	\begin{tabular}{llccccccccc}
+		\toprule
+		Dataset					& 							& DCRNN	& STGCN	& Graph WaveNet	& ASTGCN	& STSGCN	& AGCRN		& GMAN		& Z-GCNETs	& STJGCN	\\
+		\midrule
+		\multirow{3}{*}{PeMSD3} & \# Parameter (M)			& 0.37	& 0.42	& 0.31 			& 0.59		& 3.50		& 0.75 		& 0.57		& 0.52		& 0.32		\\
+								& Training time (s/epoch)  	& 118.06& 12.20	& 59.73	   	 	& 78.69     & 127.86	& 55.45		& 168.77	& 208.55	& 49.82		\\
+								& Inference time (s)		& 18.70	& 19.10	& 5.16	    	& 26.80		& 15.41		& 8.44		& 17.45		& 25.79		& 5.22		\\
+		\midrule
+		\multirow{3}{*}{PeMSD4} & \# Parameter (M)			& 0.37	& 0.38	& 0.31 			& 0.45		& 2.87		& 0.75		& 0.57		& 0.52		& 0.31		\\
+								& Training time (s/epoch)  	& 69.55	& 6.54	& 32.40	   	 	& 53.51     & 56.18		& 37.05		& 82.40		& 88.41		& 25.64		\\
+								& Inference time (s)		& 11.97	& 13.44	& 2.60	    	& 14.67		& 6.03		& 5.55		& 9.16		& 11.84		& 2.87		\\
+		\midrule
+		\multirow{3}{*}{PeMSD7} & \# Parameter (M)			& 0.37	& 0.75	& 0.31 			& 3.24		& 15.36		& 0.75 		& 0.57		& 0.52		& 0.36		\\
+								& Training time (s/epoch)  	& 306.66& 33.59	& 173.85   	 	& 213.30    & 465.12	& 189.48	& 779.12	& 624.32	& 158.64	\\
+								& Inference time (s)		& 45.13	& 71.17	& 16.17	    	& 64.81		& 54.60		& 26.31		& 83.2		& 89.99		& 16.30		\\
+		\midrule
+		\multirow{3}{*}{PeMSD8} & \# Parameter (M)			& 0.37	& 0.30	& 0.31 			& 0.18		& 1.66		& 0.75		& 0.57		& 0.52		& 0.31		\\
+								& Training time (s/epoch)  	& 46.41	& 4.24	& 20.48	    	& 47.07     & 31.23		& 21.74		& 32.27		& 52.51		& 17.60		\\
+								& Inference time (s)		& 8.81	& 9.37	& 1.72	    	& 14.01		& 3.09		& 3.04		& 4.06		& 7.36		& 1.67		\\			
+		\bottomrule
+	\end{tabular}}
+	\label{table7}
+\end{table*}
+
+We conduct a parameter study on five core hyperparameters in STJGCN on the PeMSD4 and PeMSD8 datasets, including the thresholds $ \delta_{pdf} $ and $ \delta_{adt} $ in the pre-defined and adaptive STJG adjacency matrices, respectively, the dimension $ d $ of hidden states, the kernel size $ K $ in the STJGC operation, and the threshold $ \beta $ in the loss function. We change the parameter under investigation and fix other parameters in each experiment. Figures~\ref{fig4} and~\ref{fig5} show the experimental results on the PeMSD4 and PeMSD8 datasets, respectively.
+
+As shown in Figures~\ref{fig4(a)},~\ref{fig4(b)},~\ref{fig5(a)}, and~\ref{fig5(b)}, the performance is not strongly sensitive to the sparsity of the STJG adjacency matrices, which we think is because the adaptive STJG adjacency matrix could adjust itself for aggregating the neighboring information during the training stage. While, in general, a more sparse adjacency matrix is beneficial to select the most related nodes for each node, and leads to better results. However, a too sparse graph may lose the connections between interrelated nodes, and thus degrades the performances. According to the validation loss, we set $ \delta_{pdf}=\delta_{adt}=0.5 $ in the PeMSD4 dataset, and $ \delta_{pdf}=0.5 $, $ \delta_{adt}=0.3 $ in the PeMSD8 dataset.
+
+As shown in Figures~\ref{fig4(c)} and~\ref{fig5(c)}, increasing the number of hidden units could enhance the model's expressive capacity. However, when it is larger than 64, the performance degrades significantly, as the model needs to learn more parameters and may suffer from the over-fitting problem.
+
+Figures~\ref{fig4(d)} and~\ref{fig5(d)} show that the model performs poorly when the kernel size equals to 1, as it captures only the spatial dependencies and does not consider the correlations in the temporal dimension. We can further observe that it is enough to aggregate the information from neighboring 2 or 3 time steps at each time step. When $ K=4 $, the model's performance degrades. It is possibly because that a node's information at a time step may only correlated to the nodes at a limited number of neighboring time steps, and a large $ K $ would introduce noises into the model. Thus, according to the validation loss, we set $ K=3 $ and $ K=2 $ on the PeMSD4 and PeMSD8 datasets, respectively.
+
+In the parameter study of the threshold $ \beta $ in the loss function, we report the validation MAE, RMSE, and MAPE instead of reporting the loss value, as the size of $ \beta $ directly impacts the size of the loss value. As shown in Figures~\ref{fig4(e)},~\ref{fig4(g)},~\ref{fig5(e)}, and~\ref{fig5(g)}, a larger $ \beta $ means the model optimizes more on the MAPE loss and less on the MAE loss, and thus leads to smaller MAPE and larger MAE. The RMSE can also be influenced, as shown in Figures~\ref{fig4(f)} and~\ref{fig5(f)}. Through a comprehensive consideration of the validation MAE, RMSE, MAPE and their standard deviations, we choose to use $ \beta=1.0 $ and $ \beta=1.5 $ in the PeMSD4 and PeMSD8 datasets, respectively.
+
+\subsubsection{Performance Comparison at Each Horizon}
+
+Figures~\ref{fig6} and~\ref{fig7} present the forecasting performance comparison of our STJGCN with five representative baseline methods (i.e., Graph WaveNet, STSGCN, AGCRN, GMAN, and Z-GCNETs) at each prediction time step on the PeMSD4 and PeMSD8 datasets, respectively. We exclude other baseline methods due to their poorer performances, as shown in Table~\ref{table4}. We can observe that Graph WaveNet performs well in the short-term (one or two time steps ahead) prediction. However, its performance degrades quickly with the increase of the forecasting horizon. The performance of GMAN degrades slowly when the predictions are made further into the future, and it performs well in the long-term (e.g., 12 time steps ahead) prediction, while still worse than STJGCN. In general, our model achieves the best performances at almost all horizons in terms of all three metrics on both datasets. 
+
+\subsubsection{Model Size and Computation Time} \label{section4.3.5}
+
+We present the comparison of model size and computation time of our STJGCN with graph-based baseline methods in Table~\ref{table7}. The results demonstrate the high computation efficiency of our model. In terms of the model size, STJGCN has fewer parameters than most of the baseline models. In the training phase, our model runs faster than other methods except for STGCN. In the inference stage, STGCN runs very slowly as it adopts an iterative way to generate multi-step predictions, while STJGCN and Graph WaveNet are the most efficient. By further considering the prediction accuracy (see Table~\ref{table4}), our model shows superior ability in balancing predictive performances and time consumption as well as parameter settings.
+
+\section{Conclusion} \label{Conclusion}
+
+We proposed STJGCN, which models comprehensive and dynamic spatio-temporal correlations and aggregates multiple ranges of information to forecast the traffic conditions over several time steps ahead on a road network. When evaluated on four public traffic datasets, STJGCN showed high computation efficiency and outperformed 11 state-of-the-art baseline methods. Our model could be potentially applied to other spatio-temporal data forecasting tasks, such as air quality inference and taxi demand prediction. We plan to investigate this in future work. 
+
+\section*{Acknowledgment}
+
+The research is supported by Natural Science Foundation of China (61872306), Xiamen Science and Technology Bureau (3502Z20193017) and Fundamental Research Funds for the Central Universities (20720200031).
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that the IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+% However, the Computer Society has been known to put floats at the bottom.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command,
+% and the \label for the overall figure must come after \caption.
+% \hfil is used as a separator to get equal spacing.
+% Watch out that the combined width of all the subfigures on a 
+% line do not exceed the text width or a line break will occur.
+%
+%\begin{figure*}[!t]
+%\centering
+%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
+%\label{fig_second_case}}
+%\caption{Simulation results for the network.}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat[]), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
+% labels, the optional argument to \subfloat must be present. If a
+% subcaption is not desired, just leave its contents blank,
+% e.g., \subfloat[].
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table and, given that table
+% captions serve much like titles, are usually capitalized except for words
+% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
+% and up, which are usually not capitalized unless they are the first or
+% last word of the caption. Table text will default to \footnotesize as
+% the IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that the IEEE does not put floats in the very first column
+% - or typically anywhere on the first page for that matter. Also,
+% in-text middle ("here") positioning is typically not used, but it
+% is allowed and encouraged for Computer Society conferences (but
+% not Computer Society journals). Most IEEE journals/conferences use
+% top floats exclusively. 
+% Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the
+% \fnbelowfloat command of the stfloats package.
+
+
+
+
+
+% if have a single appendix:
+%\appendix[Proof of the Zonklar Equations]
+% or
+%\appendix  % for no appendix heading
+% do not use \section anymore after \appendix, only \section*
+% is possibly needed
+
+% use appendices with more than one appendix
+% then use \section to start each appendix
+% you must declare a \section before using any
+% \subsection or using \label (\appendices by itself
+% starts a section numbered zero.)
+%
+
+
+
+% use section* for acknowledgment
+%\ifCLASSOPTIONcompsoc
+  % The Computer Society usually uses the plural form
+%  \section*{Acknowledgments}
+%\else
+  % regular IEEE prefers the singular form
+%  \section*{Acknowledgment}
+%\fi
+
+
+%The authors would like to thank...
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+\bibliographystyle{IEEEtran}
+\bibliography{STJGCN}
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+%\begin{thebibliography}{1}
+
+%\bibitem{IEEEhowto:kopka}
+%H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+%\end{thebibliography}
+
+% biography section
+% 
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+%\vspace{-30pt}
+%\vspace{-30pt}
+%\vspace{-30pt}
+%\vspace{-30pt}
+%\vspace{-30pt}
+%\vspace{-30pt}
+% if you will not have a photo at all:
+
+% insert where needed to balance the two columns on the last page with
+% biographies
+%\newpage
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+%\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+
+
+% that's all folks
+\end{document}
+
+

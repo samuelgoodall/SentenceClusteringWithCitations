@@ -1,0 +1,157 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% semantics
+
+% ------------------------------------------------ modularity and hiding
+% joint predicate and function symbols set
+\newcommand{\FS}{\textsf{FS}}
+% module symbols
+\newcommand{\MS}{\textsf{MS}}
+
+% symbols defined in a module
+\newcommand{\defs}[1]{\ensuremath{\mathsf{def}(#1)}}
+% definition of an atom
+\newcommand{\cls}[1]{\ensuremath{\mathsf{cls}(#1)}}
+
+% relations of imported and exported predicates of a module #1
+\newcommand{\exps}[1]{\ensuremath{\mathsf{exp}(#1)}}
+\newcommand{\imps}[1]{\ensuremath{\mathsf{imp}(#1)}}
+
+% The module of a symbol (mapping)
+\newcommand{\mods}[1]{\ensuremath{\mathsf{mod}(#1)}}
+
+% Escaping terms
+\newcommand{\esc}[2]{\ensuremath{\mathsf{esc}_{#1}(#2)}}
+% visible terms
+\newcommand{\vis}[2]{\ensuremath{\mathsf{vis}_{#1}(#2)}}
+% User terms
+\newcommand{\usr}[1]{\ensuremath{\mathsf{usr}(#1)}}
+
+% Variables of a literal
+\newcommand{\vars}[1]{\ensuremath{\mathsf{Vars}_{#1}}}
+
+% ------------------------------------------------ assertions and states
+
+% short and extended states
+\newcommand{\gd}[0]{\mid}
+\newcommand{\state}[2]{\ensuremath{\langle #1 \gd{} #2 \rangle}}
+\newcommand{\stateErr}[1]{\state{\error}{#1}}
+
+% The empty goal
+\newcommand{\emptyGoal}{\ensuremath{\square}}
+
+% state reduction
+\newcommand{\reduction}[2]{\ensuremath{#1 \leadsto #2}}
+% \newcommand{\reductionRtc}[2]{\ensuremath{#1
+%                               \underset{\textsf{rtc}}{\leadsto} #2}}
+\newcommand{\reductionRtc}[2]{\ensuremath{#1 \leadsto_{\mathsf{rtc}} #2}}
+
+% Error-erase
+\newcommand{\errorErase}[1]{\ensuremath{#1^{\circ}}}
+
+% Set of all assertions in the program
+\newcommand{\A}{\ensuremath{{\cal A}}}
+% Set of all assertion conditions in the program
+\newcommand{\AC}{\ensuremath{{\cal A}_{C}}}
+
+% The calls assertion
+\newcommand{\callsAsr}[2]{\ensuremath{\textsf{calls}(#1, #2)}}
+% The success assertion
+\newcommand{\successAsr}[3]{\ensuremath{\textsf{success}(#1, #2, #3)}}
+
+% Assertion condition instances identifiers
+\newcommand{\asrId}[1]{\ensuremath{c_{#1}}}
+
+% clause end literal
+\newcommand{\ret}[1]{\ensuremath{\textsf{ret}(#1)}}
+\newcommand{\retchk}[2]{\ensuremath{\textsf{ret}(#1,#2)}}
+
+% error literal for an assertion identifier
+\newcommand{\err}[1]{\ensuremath{\textsf{err}(#1)}}
+\newcommand{\errchk}[1]{\ensuremath{\textsf{err}(\asrId{#1})}}
+
+% labeled assertion conditions
+\newcommand{\labCallsAsr}[3]{\ensuremath{\textsf{\asrId{#1}.calls}(#2, #3)}}
+\newcommand{\labSuccessAsr}[4]{\ensuremath{\textsf{\asrId{#1}.success}(#2,#3,#4)}}
+
+% Answers
+\newcommand{\answers}[1]{\ensuremath{\textsf{answers}(#1)}}
+
+% Set of all queries in the program
+\newcommand{\Q}{\ensuremath{{\cal Q}}}
+
+% For \reduction
+\newcommand{\derivations}[1]{\ensuremath{\textsf{derivs}(#1)}}
+% For \reductionRtc
+\newcommand{\derivationsRtc}[1]{\ensuremath{\textsf{rtc-derivs}(#1)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% margin notes
+
+\newcommand{\selfnote}[1]
+  {\marginpar{\scriptsize \textcolor{red}{$\bullet$ \textsf{#1}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% formatting
+
+% tt-like font
+\newcommand{\kbd}[1]{\mbox{\tt #1}}
+
+% custom paragraph style
+\newcommand{\myparagraph}[1]{\medskip\noindent\textbf{#1. }}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% environemnts
+
+% \newtheorem{definition}{Definition}
+% \newtheorem{example}{Example}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{corollary}{Corollary}[theorem]
+% \newtheorem{lemma}[theorem]{Lemma}
+
+\newcounter{myexamplecounter}
+\newenvironment{myexample}{%
+  \refstepcounter{myexamplecounter}%
+  \smallskip
+  \noindent
+  \emph{Example \arabic{myexamplecounter}. \ }%
+  % \quad
+}{%
+%
+}
+
+\newcounter{parentnumber}
+\makeatletter
+\newenvironment{subtheorem}[1]{%
+  \def\subtheoremcounter{#1}%
+  \refstepcounter{#1}%
+  \protected@edef\theparentnumber{\csname the#1\endcsname}%
+  \setcounter{parentnumber}{\value{#1}}%
+  \setcounter{#1}{0}%
+  \expandafter\def\csname the#1\endcsname{\theparentnumber.\Alph{#1}}%
+  \ignorespaces
+}{%
+  \setcounter{\subtheoremcounter}{\value{parentnumber}}%
+  \ignorespacesafterend
+}
+\makeatother
+
+% lists with all space around items reduced
+\newenvironment{shortitemize}
+{ \setlength{\itemsep}{0pt}   % space between successive items
+  \setlength{\parskip}{1pt}   % gap between paragraphs
+  \setlength{\parsep}{0pt}
+  \setlength{\topsep}{0pt}    % space between first item and preceding paragraph.
+  \setlength{\partopsep}{0pt} % extra space added to \topsep when environment starts a new paragraph.
+  \begin{itemize} }
+{ \end{itemize}   }
+%
+\newenvironment{shortenumerate}
+{ \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{1pt}
+  \setlength{\parsep}{0pt}
+  \setlength{\topsep}{0pt}
+  \setlength{\partopsep}{0pt}
+  \begin{enumerate} }
+{ \end{enumerate}   }
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "l "
+%%% End:

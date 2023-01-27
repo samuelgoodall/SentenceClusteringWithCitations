@@ -1,0 +1,20 @@
+
+
+
+\begin{table}[]
+    \centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}{@{}l|ccccccc@{}}
+\multicolumn{1}{c|}{} & \multicolumn{7}{c}{Simulated shutter speed (seconds)} \\
+Method & $\infty$ &  $1/7   $ & $1/15  $ & $1/30  $ & $1/60  $ & $1/120 $ & $1/240 $ \\ \hline
+Noisy input  &   -   & 20.16 & 16.90 & 13.81 & 10.83 &  8.06 &  5.95 \\
+LDR NeRF     & \textbf{38.06} & 24.66 & 21.39 & 18.27 & 15.31 & 12.47 & 10.13 \\
+RawNeRF      & 36.85 & \textbf{36.82} & \textbf{36.65} & \textbf{36.27} & \textbf{35.62} & \textbf{34.33} & \textbf{32.37} \\
+    \end{tabular}
+    }
+    
+    \caption{
+    Unmasked LDR sRGB PSNRs for the ablation study on our synthetic \emph{Lego} scene data.
+    }
+    \label{tab:synthlegounmasked}
+\end{table}

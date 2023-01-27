@@ -1,0 +1,723 @@
+
+\section{Optimal Light Spanners for Stretch $t\geq 2$}\label{sec:unified}
+
+
+
+In this section, we present a construction of light spanners from sparse spanner oracles with stretch $t \geq 2$. Here we focus more on achieving on optimizing for the dependency on $\epsilon$. 
+
+\begin{theorem}\label{thm:cluster-opt-t2}
+	Let $\psi = 1$ and $\zeta = 1/250$. There is an algorithm that can find a subgraph $\mathcal{H}_i\subseteq \tilde{G}$ and construct clusters in $\mathcal{C}_{i+1}$  such that:
+	\begin{equation*}
+	w(H_i) = O( \frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon}) \Delta^i_{L} +  O(L_i)
+	\end{equation*}
+and that $d_{H_{\leq i}}(u,v) \leq t(1+\epsilon)d_G(u,v)$ for every edge $(u,v)\in E_i$. 
+\end{theorem}
+
+The value of $\zeta $ in Theorem~\ref{thm:cluster-opt-t2} is somewhat arbitrary; any value sufficiently smaller than $1$ works. We first show that Theorem~\ref{thm:cluster-opt-t2} implies Theorem~\ref{thm:general-stretch-2}. 
+
+\begin{proof}[Proof of Theorem~\ref{thm:general-stretch-2}] Observe that Theorem~\ref{thm:cluster-opt-t2} implies Lemma~\ref{lm:potential-reduction} with $\lambda = O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})$ and $a_i = O(L_i)$.  We observe that: 
+	\begin{equation}\label{eq:A-bound-stretch-2}
+	\begin{split}
+	A &= \sum_{i=1}^{I}a_i =\sum_{i=1}^{I}O(L_i)=  O(1) \sum_{i=1}^{I} \frac{L_I}{\epsilon^{I-i}} = O(\frac{L_I}{1-\epsilon}) = O(1) w(\mst) 
+	\end{split}
+	\end{equation}
+	since $L_i\leq w(\mst)$ and $\epsilon\leq \frac{1}{2}$. Thus, we can construct a $t(1+\epsilon)$-spanner with lightness:
+	\begin{equation}
+	O(\frac{1}{\psi}(\frac{ \wsp_{\mathcal{O}_{G,t}}}{\epsilon} +  1)\log\frac{1}{\epsilon}) = \tilde{O}_{\epsilon}(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})
+	\end{equation}
+	since $\psi = 1$; this completes Theorem~\ref{thm:general-stretch-2}.\qed
+\end{proof}
+
+\subsection{High Level Ideas}\label{subsec:highLevel-t2}
+
+In this section, we describe high-level ideas of the construction in Theorem~\ref{thm:cluster-opt-t2}. While it is not required to read the cluster construction in Section~\ref{sec:fast-general} to understand the construction in this section, we recommend the readers to do so for two reasons. First, it is much simpler. (However, the dependency on $\epsilon$ is $\frac{1}{\epsilon^4}$.) Second, it is a starting point for us to reduce the dependency on $\epsilon$, from $\frac{1}{\epsilon^4}$ all the way down to $\frac{1}{\epsilon}$. We observe that one $\frac{1}{\epsilon}$ factor is due to $\psi = \epsilon$.  Thus, by chosing $\psi = 1$ in Theorem~\ref{thm:cluster-opt-t2}, we already reduce the dependency on $\epsilon$ from $\frac{1}{\epsilon^4}$ to $\frac{1}{\epsilon^3}$.
+
+The construction has five steps (instead of four steps as in Section~\ref{sec:fast-general}). The intuition for each step remains the same: superclusters are constructed in a way that the local potential reduction is as large as possible. We again distinguish between \emph{heavy clusters} and \emph{light clusters}: heavy clusters are incident to at least $\frac{2g}{\epsilon}$ edges in $\me_i$ while light clusters are incident to less than $\frac{2g}{\epsilon}$ edges.  
+
+In Step 1, we group all heavy clusters into superclusters. It can be shown that (see Lemma~\ref{lm:Step1Weight}) each Step-1 supercluster $\mx$ has local potential reduction $\Delta^i_{L}(\mx) = \Omega(|\mv(\mx)|\epsilon L_i)$. If one calls the sparse spanner oracles  on \emph{heavy} nodes and  take all edges incident to light nodes clustered in Step 1 to $H_i$, the total weight will be $O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon} + \frac{1}{\eps^2})$  times the total potential reduction. This means that the final lightness must depend at least quadratically on $\frac{1}{\epsilon}$ while we want a linear dependency on $\frac{1}{\epsilon}$. 
+
+Observe that the additive $+\frac{1}{\epsilon^2}$ is due to the fact that each light node is incident up to $\Omega(\frac{1}{\epsilon})$ level-$i$ edges of weight  $\Theta(L_i)$ each, while it only has $O(\epsilon L_i)$ unit of  potential reduction (if we evenly distribute the potential reduction of $\mx$ to every node in $\mx$). Thus, we need to somehow reduce the number of incident edges of lightness to $O(1)$. 
+
+Our key idea is to not restrict the construction of sparse spanner oracles to only heavy nodes. Instead,  we will select a \emph{subset of light nodes} and construct the oracle on both heavy nodes and the selected subset of light nodes. We then can show that for remaining light nodes, while the worst-case bound on the number of incident edges remains $\Theta(\frac{1}{\epsilon})$, the average number of incident edges is just $O(1)$. To identify the subset of light nodes in Step 5, we rely on the structures of superclusters  in previous steps. As a result, the construction of sparse spanner oracles will be delayed until Step 5. 
+
+In Step 2, we group (a subset of) \emph{branching} nodes, whose degree in the spanning tree $\widetilde{\mst}_i$ is at least $3$, into superclusters (which are subtrees of $\widetilde{\mst}_i$).  The main observation is that any supercluster that is a subtree of $\widetilde{\mst}_i$ with at least \emph{one} branching node will have positive potential reduction --  this is because at least one neighbor of a branching node will not belong to the diameter path. More precisely, if $\mx$ is such a cluster, then $\Delta^i_{L}(\mx) \geq \Omega(|\mv(\mx)|\epsilon^2 L_i )$, as shown in Lemma~\ref{lm:Step2Cluster}. However, this would incur lightness $O(\frac{1}{\epsilon^2})$, assuming that light nodes incident to $O(1)$ edges by applying ideas sketched in the previous paragraph. 
+
+Our idea is to boost the potential reduction to $\Omega(|\mv(\mx)|\epsilon L_i )$ by clustering branching nodes into small superclusters, those of augmented diameter at most $2\zeta L_i$ in such a way that small clusters with an augmented diameter at least $\zeta L_i$ will have $\Omega(\frac{1}{\epsilon})$ nodes that do not belong to the diameter path. We use the tree clustering procedure given in our prior work~\cite{LS19} in the analysis of the greedy algorithm for \emph{geometric spanners} to accomplish this.
+
+In Step 3, we cluster edges in $\me_i$ whose endpoints are far from each other. The construction is similar to Step 3 in Section~\ref{sec:fast-general}; each supercluster $\mx$ has $\Omega(|\mv(\mx)|\epsilon L_i)$  amount  potential reduction.   In Step 4, we break long paths into smaller subpaths and form superclusters from these subpaths. Superclusters in Step 4 may have zero potential reduction, and the key idea is to show that potential reduction of superclusters in previous steps can bound the total weight of edges incident to Step-4 superclusters. 
+
+In Step 5, we re-group superclusters formed in previous steps into bigger superclusters. The idea, as discussed in Step 1, is to identify a subset of light nodes on which, together with heavy nodes, we construct a sparse spanner oracle. For remaining light nodes, we are able to show that, on average, they are incident to only $O(1)$ edges. Thus, the total weight of them is at most $O(\frac{1}{\epsilon})$ time the total potential reduction, which incurs lightness $O(\frac{1}{\epsilon})$. We are now ready to give the full details of the construction.
+
+
+\subsection{Proof of Theorem~\ref{thm:cluster-opt-t2}}
+
+
+
+
+Recall that $\mg_i(\mv_i, \me_i \cup \widetilde{\mst}_i,\omega)$ is a cluster graph with edges in $\widetilde{\mst}_i$ is a spanning tree of $\mg$ (see Lemma~\ref{lm:spanning-Gi}). We will construct a set of superclusters $\mx$, which are subgraphs of $\mg_i$; $\varphi(\mx)$ will then be a level-$(i+1)$ clusters. 
+
+
+  Let $\mathcal{K}_i (\mathcal{V}_i, \mathcal{E}_i)$ be the spanning subgraph of $\mg_i$ induced by $\me_i$.    For each node $\nu$, we denote by $\mathcal{E}_i(\nu)$ the set of edges incident to $\nu$ in $\mathcal{K}_i$. We call a node $\nu$ of $\mathcal{K}_i$ \emph{heavy} if $|\mathcal{E}_i(\nu)| \geq \frac{2g}{\zeta\epsilon}$ and \emph{light} otherwise\footnote{We have an additional $\zeta$ factor in the definition of heavy nodes compared to the definition in Subsection~\ref{subsec:fast-clustering}.}. Let $\mathcal{V}_{hv}$ ($\mathcal{V}_{li}$)  be the set of heavy (light) nodes. Let $\mathcal{V}^+_{hv} = \mathcal{V}_{hv} \cup N_{\mathcal{K}_i}[\mathcal{V}_{hv}]$ and $\mathcal{V}^-_{li} = \mathcal{V}_i \setminus \mathcal{V}^+_{hv}$.
+
+
+\paragraph{Step 1.~} In the first step, we group all nodes in $\mathcal{V}^+_{hv}$ into  superclusters. We use the same construction in Steps 1A and 1B in  Section~\ref{subsec:fast-clustering}, that we reproduce here for completeness.
+
+
+
+\begin{itemize}
+	\item \textbf{Step 1A.~} This step has two mini-steps. (See Figure~\ref{fig:K-graph}.)
+	
+	\begin{itemize}
+		\item (Step 1A(i).~)  Let $\mathcal{I}\subseteq \mathcal{V}_{hv}$ be a maximal 2-hop independent set over the nodes of $\mathcal{V}_{hv}$, which in particular guarantees that $\nu,\mu \in \mathcal{I}$, $N_{\mathcal{K}_i}[\nu] \cap N_{\mathcal{K}_i}[\mu] = \emptyset$.  For each node $\nu \in \mathcal{I}$, form a supercluster $\mx$ from $\nu$, $\nu$'s neighbors and incident edges, and add to $H_i$ the edge set $\mathcal{E}_i(v)$\footnote{To be precise, we add to $H_i$ the sources of edges in $\mathcal{E}_i(v)$.}. We then designate any node in $\mx$ as its representative.
+		\item (Step 1A(ii).~) We iterate over the nodes of $\mathcal{V}_{hv}\setminus \mathcal{I}$ that are not grouped yet to any supercluster. For each such node  $\mu \in \mathcal{V}_{hv}\setminus \mathcal{I}$, there must be a neighbor $\mu'$ that is already grouped to a supercluster, say $\mx$; if there are multiple such vertices, we pick one of them arbitrarily. We add $\mu$ and edge $(\mu,\mu')$ to $\mathcal{X}$, and add $(\mu,\mu')$ to $H_i$. Observe that every heavy node is grouped at the end of this step.
+	\end{itemize}
+	
+	\item  \textbf{Step 1B.~} For each node $\nu$ in $\mathcal{V}^+_{hv}$ that is not grouped in Step 1, there must be at least one neighbor, say $\mu$, of $\nu$ grouped in Step 1; if there are multiple such nodes, we pick one of them arbitrarily. We add $\mu$ and the edge $(\nu,\mu)$ to the supercluster containing $\nu$. We then add edge $(\nu,\mu)$ to $H_i$.
+\end{itemize}
+
+
+\noindent Superclusters in Step 1 have the following property; the proof is the same as the proof of Lemma~\ref{lm:3-steps}.
+
+
+\begin{lemma}\label{lm:Step1-Diam-Oracle} Every supercluster  $\mx$ formed  in Step 1   has: (a) $\varphi(\mx)\subseteq H_{\leq i}$, (b) $L_{i}\leq \adm(\mx)\leq 13L_{i}$  and (c) at least $\frac{2g}{\epsilon} $ nodes.
+\end{lemma}
+\begin{proof}[Sketch] Property (a) follows from induction and the fact that  every level-$i$ edge in $\mx$ is added to $H_i$. Property (c) follows from that every Step 1 supercluster contains a heavy node and \emph{all of its neighbors} by the construction in Step 1A. Property (b) follows from two facts: (i) every node has weight at most $g\epsilon L_i$  and (ii) $\mx$ has hop diameter at most $6$ (see Figure~\ref{fig:K-graph}).  In bounding $\adm(\mx)$, we assume that $\epsilon \ll \frac{1}{g}$. \qed
+\end{proof}
+
+	\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-25pt}
+	\begin{center}
+		\includegraphics[width=0.35\textwidth]{K-graph}
+	\end{center}
+	\caption{\footnotesize{Superclusters formed in Step 1. Yellow nodes are heavy nodes. The green-shaded superclusters are formed in Step 1A(i); superclusters enclosed by purple dashed curves are formed in Step 1A(ii); superclusters enclosed by blue dashed curves, which become level-$1$ superclusters, are formed in Step 1B. }}
+	\vspace{-20pt}
+	\label{fig:K-graph}
+\end{wrapfigure}
+
+\paragraph{Required definitions/preparations for Step 2.~} Recall by Lemma~\ref{lm:spanning-Gi} that $\widetilde{\mst}_i$ induces a spanning tree of $\mathcal{G}_i$. Let $\mathcal{F}_1$ be the forest of level-$i$ clusters after Step 1 -- nodes of $\mathcal{F}_1$ are unclustered light nodes of $\mathcal{K}_i$, and edges of $\mathcal{F}_1$ are edges in $\widetilde{\mst}_i$. We call a node  \emph{$\mt$-branching} if it has at least degree 3 in  a tree $\mt$. We will simply say a node \emph{branching} when the tree is clear from the context. 
+
+
+Our goal in this step is to cluster nodes in such a way that each supercluster has a large potential reduction. To this end, we make use of the following construction (Lemma~\ref{lm:tree-clustering} below) in~\cite{LS19} as a preprocessing. 
+
+For each node $\alpha\in \mf_1$, let $B_{\mf_1}(\alpha, r)$ be the subtree of $\mf_1$ induced by \emph{all nodes} of augmented distance at most $r$ from $\alpha$. 
+
+
+\begin{lemma}[Section 6.3.2 in~\cite{LS19}]\label{lm:tree-clustering} Let $\mt$ be a tree with vertex weight and edge weight. Let $L, \eta, \gamma$ be three parameters where $\eta \ll \gamma \ll 1$. Suppose that for any vertex $v\in \mt$ and any edge $e\in \mt$, $w(e) \leq w(v) \leq \eta L$. There is a polynomial-time algorithm that finds a collection of vertex-disjoint subtrees $\mathbb{U} = \{\mt_1,\ldots, \mt_k\}$ of $\mt$ such that:
+	\begin{enumerate}
+		\item[(1)] $\adm(\mt_i) \leq 2\gamma L$ for any $1\leq i \leq k$.
+		\item[(2)] Every branching node is contained in some tree in $\mathbb{U}$. 
+		\item[(3)] Each tree $\mt_i$ contains a $\mt_i$-branching node $\beta_i$ and three node-disjoint paths $\mp_1,\mp_2, \mp_3$ that have $\beta_i$ as the same endpoint, such that $\adm(\mp_1\cup \mp_2) = \adm(\mt_i)$ and $\adm(\mp_3 \setminus \{\beta_i\})= \Omega(\adm(\mt_i))$. We call $\beta_i$ the \emph{center} of $\mt_i$.
+		\item[(4)] Let $\overline{\mt}$ be obtained by contracting each subtree of $\mathbb{U}$ into a single node. Then each $\overline{\mt}$-branching node corresponds to a sub-tree  of augmented diameter at least $\gamma L$.
+	\end{enumerate}
+\end{lemma}
+
+	\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-20pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{T-clustering}
+	\end{center}
+	\caption{\footnotesize{(a) A collection $\mathbb{U} = \{\mt_1,\mt_2,\mt_3\}$ of a tree $\mt$ as in Lemma~\ref{lm:tree-clustering}. Yellow nodes are $\mt$-branching nodes. Big yellow nodes are the centers of their corresponding subtrees in $\mathbb{U}$. (b)  The shaded node in $\overline{\mt}$ is a $\overline{\mt}$-branching node and has an augmented diameter of at least $\gamma L$.}}
+	\vspace{-40pt}
+	\label{fig:T-clustering}
+\end{wrapfigure}
+
+
+\noindent See an illustration of Lemma~\ref{lm:tree-clustering}  in Figure~\ref{fig:T-clustering}. We are now ready to describe Step 2.
+
+
+\begin{itemize}
+	\item \textbf{Step 2} For every tree $\mathcal{T}\in \mathcal{F}_1$ of augmented diameter at least $\zeta L_i$,   we construct a collection of subtree $\mathbb{U}_\mathcal{T} = \{\mathcal{T}_1, \ldots, \mathcal{T}_k\}$ of $\mathcal{T}$ using Lemma~\ref{lm:tree-clustering} with $\eta = g\epsilon$ and $\gamma = \zeta$. For each subtree $\mathcal{T}_j \in \mathbb{U}_{\mathcal{T}}$ where $j\in [1,k]$, if $\adm(\mathcal{T}_j)\geq \zeta L_i$, we make $\mathcal{T}_j$ a supercluster. (See Figure~\ref{fig:Step2-opt}(a).) 
+\end{itemize}
+
+
+The key property of superclusters in Step 2 is that each supercluster $\mx$ has a local pontential reduction $\Delta_{L}^i(\mx) = \Omega(|\mv(\mx)|\epsilon L_i)$ (see Lemma~\ref{lm:Step2ClusterOracle}).
+
+\begin{lemma}\label{lm:Step2-Oracle-Diameter} 
+	Every supercluster $\mx$ formed in Step 2 has: (a) $\varphi(\mx)\subseteq H_{\leq i}$, (b) $\zeta L_i \leq \adm(\mx)\leq 2\zeta L_i$  and (c) $|\mv(\mx)| = \Omega(\frac{1}{\epsilon})$ when $\epsilon \ll \frac{1}{g}$.
+\end{lemma}
+\begin{proof}
+	 Observe that $\mx$ is a subtree of $\widetilde{\mst}_i$ and by induction, every node $\nu \in \mx$ has $\varphi(\nu) \subseteq H_{\leq i-1}$. Thus, $\varphi(\mx)\subseteq H_{\leq i-1}\subseteq H_{\leq i}$. The lower bound on the augmented diameter follows directly from the construction  and the upper bound follows from  Item (1) of Lemma~\ref{lm:tree-clustering}. 
+	
+		Let $\md$ be the diameter path of $\mx$; $\adm(\md)\geq \zeta L_i$ by construction. Since every edge has a weight at most $\bar{w} \leq L_{i-1}$ and each node has a weight in $[L_{i-1},g\epsilon L_{i-1}]$, $\md$ has at least $\frac{\adm(\md)}{2g\epsilon L_{i-1}} = \Omega(\frac{1}{\epsilon})$ nodes. This implies $|\mv(\mx)| = \Omega(\frac{1}{\epsilon})$. \qed
+\end{proof}
+
+
+
+
+\begin{figure}[hbt]
+	\centering
+	%\vspace{-20pt}
+	\includegraphics[scale = 0.9]{Step2-opt}
+	\caption{ \footnotesize{(a) Forest $\mf_1$. Yellow nodes are branching nodes. Nodes enclosed in dashed red curves are subtrees obtained by applying Lemma~\ref{lm:tree-clustering} to $\mf_1$. Shaded subtrees have augmented diameter at least $\zeta L_i$. (b) Forest $\overline{\mf}_2$. Big nodes are non-trivial supernodes. }}
+	\label{fig:Step2-opt}
+\end{figure}
+
+\paragraph{Required definitions/preparations for Step 3.~} Let $\overline{\mathcal{F}_2}$ be the forest obtained from $\mathcal{F}_1$ as follows. For each tree $\mathcal{T} \in \mathcal{F}_1$, let $\bar{\mathbb{U}}_{\mathcal{T}}\subseteq \mathbb{U}_{\mathcal{T}}$ be the set of subtrees that are unclustered in Step 2. Let $\bar{\mathbb{U}}_{\mathcal{F}_1} = \cup_{\mathcal{T} \in \mathcal{F}_1}\bar{\mathbb{U}}_{\mathcal{T}}$. $\overline{\mathcal{F}_2}$ is obtained from $\mathcal{F}_1$ by (1) removing every clustered node in Step 2 from $\mathcal{F}_1$ and (2) contracting each subtree $\mathcal{T}' \in \bar{\mathbb{U}}_{\mathcal{F}_1}$ into a single node, called \emph{non-trivial supernode}.  We refer to the remaining nodes in $\overline{\mathcal{F}_2}$, which are nodes in $\mf_1$, as \emph{trivial supernodes}.  (See Figure~\ref{fig:Step2-opt}(b).)
+
+For each supernode $\bar{\nu}\in \overline{\mf_2}$, we denote the subtree of $\mf_1$ corresponding to $\bar{\nu}$ by $\mt_{\bar{\nu}}$; if $\bar{\nu}$ is trivial, then $\mt_{\bar{\nu}}$ contains a single node $\nu$. We assign weight to each supernode as follows:
+\begin{quote}
+	\textbf{Supernode weight:} each supernode $\bar{\nu}$ is assigned a weight $\omega(\bar{\nu}) = \adm(\mt_{\bar{\nu}})$.
+\end{quote}
+
+The augmented diameter of each tree in $\overline{\mathcal{F}_2}$ is measured w.r.t edge and supernode weights.  
+
+\begin{claim}\label{clm:BarF2-structure} Every tree in $\overline{\mathcal{F}_2}$ of augmented diameter at least $\zeta L_i$ is a path.
+\end{claim}
+\begin{proof}
+	Let $\overline{\mathcal{T}}$ be a tree of $\overline{\mathcal{F}_2}$ of augmented diameter at least $\zeta L_i$. Suppose that $\overline{\mathcal{T}}$ has a branching node, say $\bar{\nu}$. By Item (2) in Lemma~\ref{lm:tree-clustering}, $\bar{\nu}$ must be node contracted from some tree in $\bar{\mathbb{U}}_{\mf_1}$. By Item (4) in Lemma~\ref{lm:tree-clustering}, the augmented diameter of  $\mathcal{T}_{\bar{\nu}}$ must be at least $\zeta L_i$. However, by the construction of Step 2, $\mathcal{T}_{\bar{\nu}}$ will be clustered and hence removed in the construction of $\overline{\mathcal{F}_2}$; this contradicts that $\bar{\nu}$ is in $\overline{\mathcal{F}_2}$.\qed
+\end{proof}
+
+
+Step 3 is applied to $\overline{\mathcal{F}_2}$.  We call  paths in $\overline{\mathcal{F}_2}$ of augmented diameter  at least $\zeta L_i$ \emph{long paths}.  For each long path $\overline{\mathcal{P}} \in \mathcal{F}_2$, we color their supernodes red or blue:  a supernode has an augmented distance at most $L_i$ from at least one of the endpoints of $\overline{\mathcal{P}}$ has a blue color and otherwise, it has  a red color. It could be that every node in $\overline{\mathcal{P}}$ is colored red.
+
+For each blue supernode $\bar{\nu}$ of $\overline{\mathcal{P}}$, we assign a subpath $\overline{\mathcal{I}}(\bar{\nu})$ of $\overline{\mathcal{P}}$,
+called the \emph{interval of $\bar{\nu}$}, which contains \emph{all supernodes} within augmented distance (in $\overline{\mathcal{P}}$) at most $L_i$ from $\bar\nu$. 
+\begin{claim}\label{clm:Interval-node-unified}
+	For any blue supernode $\bar\nu$, $ (2 - (3\zeta+2\epsilon))L_i  \leq  \adm(\overline{\mathcal{I}}(\bar\nu))\leq 2L_i $.
+\end{claim}
+\begin{proof} The proof is similar to that of Claim~\ref{clm:Interval-node}; we sketch the argument here. The upper bound on the augmented diameter of $\bar{\mi}(\bar{\nu})$ follows directly from the construction. For the lower bound, observe that supernodes  adjacent to the endpoints of $\bar{\mi}(\bar{\nu})$  are in augmented distance at least $L_i$ from $\bar{\nu}$. Excluding the weight of these supernodes (each of weight at most $\zeta L_i$) and the weight of two $\widetilde{\mst}_i$ edges (each of weight at most $\epsilon L_i$)  connecting them to the endpoints of $\bar{\nu}$, we have: 
+\begin{equation*}
+\adm(\bar{\mi}(\bar{\nu})) \geq 2(1- (\zeta + \epsilon) L_i)  - \omega(\bar\nu) \geq 2-(3\zeta+2\epsilon)L_i,
+\end{equation*}
+as desired.\qed 	
+\end{proof}
+
+We define the following two sets of edges with both blue endpoints (see Figure~\ref{fig:Step3-opt}):
+\begin{equation}\label{eq:Bfar-Bclose}
+\begin{split}
+\mathcal{B}_{far} &= \{(\bnu,\bmu) \in \mathcal{E}_i \setminus H_i~|~ color(\bnu) = color({\bmu}) = blue  \mbox{ and } \overline{\mathcal{I}}(\bnu)\cap \mathcal{I}(\bmu) = \emptyset\}\\
+\mathcal{B}_{close} &= \{(\bnu,\bmu) \in \mathcal{E}_i \setminus H_i~|~ color(\bnu) = color({\bmu}) = blue  \mbox{ and }\overline{\mathcal{I}}(\bnu)\cap \overline{\mathcal{I}}(\bmu) \not= \emptyset\}\\
+\end{split}
+\end{equation}
+
+	\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-25pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{Step3-opt}
+	\end{center}
+	\caption{\footnotesize{Triangular nodes are non-trivial supernodes. The dashed red edge is in $\mb_{close}$ and the solid red edge is in $\mb_{far}$. $\overline{\mx}$ is the green-shaded region.}}
+	\vspace{-25pt}
+	\label{fig:Step3-opt}
+\end{wrapfigure}
+
+\begin{itemize}
+	\item \textbf{Step 3.~}Pick an edge $ (\bar\nu,\bar\mu) \in \mathcal{B}_{far}$
+	and form a supercluster $\bar{\mx} = \{(\bnu,\bmu)\cup \overline{\mathcal{I}}(\bnu) \cup \overline{\mathcal{I}}(\bmu)\}$.  We then add  $(\bar\nu,\bar\mu)$ to $H_i$. Let $\mx$ be obtained from $\bar{\mx}$ by uncontracting supernodes; we then regard $\mx$ as a Step-3 supercluster. Finally, we remove  all supernodes in  $\overline{\mathcal{I}}(\bnu) \cup \overline{\mathcal{I}}(\bmu)$ from the path or two paths containing $\bar\nu$ and $\bmu$; update the color of  supernodes in the new paths,  the edge sets $\mathcal{B}_{far}$ and  $\mathcal{B}_{close}$; and repeat this step until it no longer applies. (See Figure~\ref{fig:Step3-opt}.)
+\end{itemize}
+
+
+\begin{lemma}\label{lm:Step3-Diam-Oracle}
+	Every supercluster $\mx$ formed in Step 3 has: (a) $\varphi(\mx)\subseteq H_{\leq i}$, (b) $L_i/2 \leq \adm(\mx)\leq 5L_i$  and (c) $|\mv(\mx)| = \Omega(\frac{1}{\epsilon})$ when $\epsilon \ll \frac{1}{g}$.
+\end{lemma}
+\begin{proof}
+	Let $\bar{\mx}$ be the supercluster of supernodes corresponding to $\mx$.  By induction, each supernode $\bar{\nu}$ of $\bar{\mx}$ has $\varphi(\bar{\nu}) \subseteq H_{\leq i-1}$. Since we add edge $(\bar{\nu},\bar{\mu})$ to $H_i$ by construction, we have $\varphi(\mx)\subseteq H_{\leq i}$. 
+	
+	Observe by Claim~\ref{clm:Interval-node}  that $\bar{\mi}(\bar{\nu})$ has augmented diameter at most $2L_i$ and hence the uncontracted counterpart $\mi(\nu)$ obtained from $\bar{\mi}(\bar{\nu})$ by uncontracting nontrivial supernode has $\adm(\mi(\nu)) \leq \adm(\bar{\mi}(\bar{\nu}))\leq 2L_i$. Thus, $\adm(\mx) \leq \omega(\bnu,\bmu) + 2\cdot 2L_i \leq 5L_i$.	For the lower bound, we observe that $\adm(\mx)\geq \omega(\bnu,\bmu) \geq L_i/2$. 
+	
+By the same argument in the proof of Lemma~\ref{lm:Step2-Oracle-Diameter}, $|\mv(\mi(\nu))|  = \Omega(\frac{1}{\epsilon})$. Thus, $|\mv(\mx)| = \Omega(\frac{1}{\epsilon})$.	\qed
+\end{proof}
+
+
+\paragraph{Required definitions/preparations for Step 4.~}   Let $\overline{\mathcal{F}_3}$ be $\overline{\mathcal{F}_2}$ after Step 3; this step is similar to the construction of Step 4 in Subsection~\ref{subsec:fast-clustering}. There are two mini-steps: in Step 4A, we augment trees of low augmented diameter to existing superclusters, while in Step 4B, we break long paths into short subpaths, each of which becomes a supercluster.
+
+
+\begin{itemize}
+	\item \textbf{Step 4.~}  First, we discard all edges in $\mb_{close}$ and never consider them again in the following construction. 	Let $\overline{\mathcal{T}}$ be a tree of $\overline{\mathcal{F}_3}$; observe that there must be an $\widetilde{\mst}_i$ edge connecting $\overline{\mathcal{T}}$ to a supernode clustered in previous steps since $\widetilde{\mst}_i$ is a spanning tree. Let $\mt$ be the tree obtained from $\overline{\mathcal{T}}$  by uncontracting non-trivial supernodes; we call $\mt$ the \emph{uncontracted counterpart} of $\overline{\mt}$.
+\begin{itemize}
+	\item (Step 4A)  If $\adm(\mt)\leq \zeta L_i$, let $e$ be an $\widetilde{\mst}_i$ edge connecting $\mt$  and a node in a supercluster $\mx$. We add both $e$ and $\mt$ to $\mx$. 
+	\item (Step 4B) 	Otherwise,  the augmented diameter of $\overline{\mathcal{T}}$ is at least $\zeta L_i$ and hence, it must be a path by Claim~\ref{clm:BarF2-structure}. In this case, we greedily break $\overline{\mathcal{T}}$ into a collection of subpaths, say $\overline{\mathbb{P}} = \{\overline{\mp}_1, \ldots, \overline{\mp}_t\}$ of augmented diameter at least $5\zeta L_i$ and at most $12\zeta L_i$ as follows. 
+	\begin{itemize}
+		\item[] 	Initially $\overline{\mathbb{P}}$ is empty. Let $\overline{\mathcal{T}}' = \overline{\mt}\setminus \overline{\mathbb{P}}$. If the uncontracted counterpart $\mt'$  has $\adm(\mt') \leq \zeta L_i$, we merge $\overline{\mathcal{T}}'$ with the last path added to $\overline{\mathbb{P}}$; otherwise, we add to $\overline{\mathbb{P}}$ the \emph{ minimal suffix}, say $\overline{\mp}'$, of $\overline{\mathcal{T}}'$ whose  uncontracted counterpart $\mp'$ has $\adm(\mp')\geq \zeta L_i$.  
+	\end{itemize}	
+   If any subpath, say $\overline{\mathcal{P}}_j \in \overline{\mathbb{P}}$ for some $j\in [1,t]$, is connected to a node in supercluster $\mx$ via an $\widetilde{\mst}_i$ edge $e$, then we add its uncontracted counterpart $\mathcal{P}_j$ and $e$ to $\mx$. Each of the remaining subpaths becomes a supercluster. (See Figure~\ref{fig:Step4-opt}.)
+\end{itemize}
+\end{itemize}
+
+
+Note that in Step 4B, we cannot simply break the long path $\overline{\mt}$ into subpaths of augmented diameter at least $\zeta L_i$ (and at most $5\zeta L_i$) is because, for any subpath $\overline{\mp}$ of $\overline{\mt}$, $\adm(\mp) $ could be smaller than $\overline{\mp}$ by a super-constant factor; here $\mp$ is the uncontracted counterpart of $\overline{\mp}$.
+
+
+%\noindent Note that constants chosen in Step 4 are somewhat arbitrary. The main point is to have subpaths of $\overline{\mathcal{T}}$ with an augmented diameter at least $5\zeta L_i$ so that we can show a lower bound $\zeta L_i$ on the agumented diameter of Step-4 superclusters (see Lemma~\ref{lm:Step4-Diameter-Lowerbound}).
+
+
+\begin{lemma}\label{lm:Step4-Diam-Oracle}
+		Every supercluster $\mx$ formed in Step 4 has: (a) $\varphi(\mx)\subseteq H_{\leq i}$, (b) $\zeta L_i \leq \adm(\mx)\leq 5\zeta L_i$  and (c) $|\mv(\mx)| = \Omega(\frac{1}{\epsilon})$ when $\epsilon \ll \frac{1}{g}$.
+\end{lemma}
+\begin{proof}
+Let $\bar{\mx}$ be the subpath of a path $\overline{\mathcal{T}}$ formed in Step 4 that corresponds to $\mx$; $\mx$ is obtained from $\bar{\mx}$  by uncontracting supernode. Observe that $\mx$ is a subtree of $\widetilde{\mst}_i$ and hence $\varphi(\mx)\subseteq H_{\leq i-1} \subseteq H_{\leq i}$. Clearly $\adm(\mx)\geq \zeta L_i$ by construction. It remains to show the upper bound of $\adm(\mx)$.
+
+Let $\overline{\mp} \in \overline{\mathbb{P}}$ be a subpath formed in Step 4B corresponding to $\mx$. Then by minimality of $\overline{\mp}$, $\adm(\mp)\leq  3\zeta L_i$ since each edge and node has weight at most $\zeta L_i$. If $\overline{\mp}$ is the last path added to $ \overline{\mathbb{P}}$, it could be merged with $\overline{\mt}'$. Since $\adm(\mt')\leq \zeta L_i$ and the $\widetilde{\mst}_i$ edge connecting $\mt'$ and $\mp$ has weight at most $\zeta L_i$, $\adm(\mp) \leq 5\zeta L_i$.
+
+ The lower bound on the size of $\mv(\mx)$ follows from the same argument in Lemma~\ref{lm:Step2-Oracle-Diameter}.  \qed
+
+% Additionally, $\adm(\mx)\leq \adm(\bar{\mx})$ by the way we assign weights to supernodes. Thus, $\adm(\mx)\leq 12\zeta L_i$. The lower bound on the size follows from the same argument in Lemma~\ref{lm:Step2-Oracle-Diameter}. \qed
+\end{proof}
+
+%We remark that proving lower bound on $\adm(\mx)$ is non-trivial; this is because for a supernode $\bar{\nu}$ in $\bar{\mx}$, $\adm(\md\cap \mathcal{T}_{\bar{\nu}})$ could be much smaller than $\omega(\bar{\nu})$. Here $\md$ is the diameter path of $\mx$. See Lemma~\ref{lm:Step4-Diameter-Lowerbound} for a detailed analysis.
+
+
+After Step 4, all level-$i$ clusters are grouped into level-$(i+1)$ clusters. However, we have not done yet. In Step 5 below, we post-process superclusters. The goal is (i) to identify a subset of light nodes on which, together with heavy nodes, we construct a sparse spanner oracle, and (ii)  to show that, for each remaining light node, it is incident to only $O(1)$ edges on average.
+
+\paragraph{Required definitions/preparations for Step 5.~} Let $\mx$ be a supercluster formed in previous steps.  Let $\doverline{\mathcal{K}_i}$ be a \emph{simple} cluster graph where $V(\doverline{\mathcal{K}_i})$ corresponds to superclusters, and there is an edge between two vertices if there is at least one level-$i$ edge between two corresponding superclusters. Note that there could be more than one edges between two candidate clusters, but we only keep (arbitrary) one of them in $\doverline{\mathcal{K}_i}$. We refer to vertices of $\doverline{\mathcal{K}_i}$  as \emph{meganodes}. For each meganode $\doverline{\nu}$, we denoted by $\mx_{\doverline{\nu}}$ the corresponding supercluster. 
+
+
+
+We call a meganode $\doverline{\nu}$ a \emph{heavy} menganode if (a) $\mx_{\doverline{\nu}}$ contains at least $\frac{2g}{\zeta\epsilon}$ nodes -- in particular, $\doverline{\nu}$ is heavy if $\mx_{\doverline{\nu}}$ is formed in Step 1 -- or (b) it is incident to at least $\frac{2g}{\zeta\epsilon}$ edges in $\doverline{\mk_i}$. Otherwise, we call $\doverline{\nu}$ a \emph{light} meganode. Let $\doverline{\mathcal{V}}_{hv}$ be the set of heavy meganodes and $\doverline{\mathcal{V}}^+_{hv} = \doverline{\mathcal{V}}_{hv} \cup N_{\doverline{\mathcal{K}_i}}[\doverline{\mathcal{V}}_{hv}]$. It is possible that some heavy meganodes  --  those correspond to Step 1 superclusters -- are isolated vertices of $\mk_i$. 
+
+
+Step 5 has three mini-steps, where in Step 5A, we will group all heavy meganodes and their neighbors into superclusters using the construction in Steps 1A and 1B. In Step 5B, we select a set of edges incident to light meganodes that do not have good stretch to $H_i$. In Step 5C, we add to $H_i$ edges of a sparse spanner oracle. Note that new superclusters are formed in Step 5A only.
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-25pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{Step4-opt}
+	\end{center}
+	\caption{\footnotesize{A long path is broken into a set $\mathbb{P} = \{\overline{\mp}_1, \overline{\mp}_2,\overline{\mp}_3\}$ in Step 4B. $\overline{\mp}_2$ has an $\widetilde{\mst}_i$ edge to a supercluster $\mx$ formed in Steps 1-3 and hence it will be augmented to $\mx$ by construction.}}
+	\vspace{-35pt}
+	\label{fig:Step4-opt}
+\end{wrapfigure}
+
+\begin{itemize}
+	\item \textbf{Step 5.~} This step has three mini steps.
+	\begin{itemize}
+		\item (Step 5A) We apply the same construction in Steps 1A and 1B to construct a collection of node-disjoint subtrees of $\doverline{\mathcal{K}_i}$, denoted by $\{\doverline{\mathcal{T}_1}, \ldots, \doverline{\mathcal{T}_k}\}$, where  each tree $\doverline{\mathcal{T}_j}$ has hop-diameter at most 6, and  $\cup_{j\in [k]}V(\doverline{\mathcal{T}_j}) = \doverline{\mathcal{V}}^+_{hv}$. For each tree  $\doverline{\mathcal{T}_j}$ with $j\in [k]$, we do the following: (i) make each tree $\doverline{\mathcal{T}_j}$ a supercluster by replacing each meganode by its corresponding supercluster and  (ii)  add level-$i$ edges of $\doverline{\mathcal{T}_j}$ to $H_i$.
+		
+		\item (Step 5B) For each supercluster $\mx$ corresponding to a light meganode in  $V(\doverline{\mathcal{H}_i})\setminus \doverline{\mathcal{V}}^+_{hv}$, we consider the set of level-$i$ edges incident to at least one node in $\mx$ in an arbitrary linear order. For each edge $e = (u,v)$ in the order, if $t\cdot w(e)\leq d_{H_{\leq i}}(u,v)$ we add $e$ to $H_i$.	
+		
+		\item (Step 5C) Let $\my$ be the set of nodes (of $\mg_i$) which are contained in superclusters formed in Step 5A.  For each node $\alpha\in \my$, we pick an arbitrary (real) vertex in $\varphi(\alpha)$; let $T$ be the set of picked vertices. We then update $H_i$ as:
+		\begin{equation}\label{eq:add-oracle-refined}
+		H_i\leftarrow H_i\cup E(\mathcal{O}_{G,t}(T,2L_i))
+		\end{equation}
+	\end{itemize}
+	This completes our construction.
+\end{itemize}
+
+
+To complete the proof of Theorem~\ref{thm:cluster-opt-t2}, we need to (a) show that level-$(i+1)$ clusters satisfy all cluster properties (P1)-(P5),  (b) bound the stretch of edges in $E_i$ and (c) bound the weight of edges in $H_i$.  We prove (a) in Subsection~\ref{subsec:ClusterPropOracle}, (b) in Subsection~\ref{subsec:StretchOracle} and (c) in Subsection~\ref{subsec:HiWeightOracle}.
+
+
+\subsubsection{Cluster Properties}\label{subsec:ClusterPropOracle}
+
+
+In this section, we show that level-$(i+1)$ clusters satisfy all cluster properties. We say a supercluster $\mx$ is a Step-$j$ supercluster if it is formed in Step $j$ and become a level-$(i+1)$ cluster. First, we bound the augmented diameter of superclusters. 
+
+\begin{lemma}\label{lm:Diameter-Up} $\varphi(\mx)\subseteq H_{\leq i}$ and $\zeta L_i \leq \adm(\mx) \leq  125L_i$ for any supercluster $\mx$. 
+\end{lemma}
+\begin{proof}
+	If $\mx$ is formed in Steps 1-4, $\varphi(\mx)\subseteq H_{\leq i}$ by 
+	Lemmas~\ref{lm:Step1-Diam-Oracle},~\ref{lm:Step2-Oracle-Diameter},~\ref{lm:Step3-Diam-Oracle}, and~\ref{lm:Step4-Diam-Oracle}. This also means that for any supercluster $\my$ corresponding to a meganode in Step 5, $\varphi(\my)\subseteq H_{\leq i}$. Since every edge of tree $\doverline{\mt}_j$ in Step 5A is added to $H_i$, the supercluster $\mx$ corresponding to  $\doverline{\mt}_j$ has $\varphi(\mx)\subseteq H_{\leq i}$. 
+	
+	It remains to bound $\adm(\mx)$. The lower bound follows directly from the construction.	 If $\mx$ is formed in Step 4B and becomes an independent supercluster,  then $\adm(\mx)~\leq~ 5\zeta L_i < L_i$ by Lemma~\ref{lm:Step4-Diam-Oracle}. Otherwise, excluding any augmentations to $\mx$ due to Step 4, Lemmas~\ref{lm:Step1-Diam-Oracle},~\ref{lm:Step2-Oracle-Diameter}, and~\ref{lm:Step3-Diam-Oracle} yield $\adm(\mx) \leq 13L_i$. We then may augment $\mx$ with trees of diameter at most $5\zeta L_i < L_i$ (Steps 4A and 4B). A crucial observation is that any augmented tree or subpath is connected by an $\widetilde{\mst}_i$ edge to a node that was clustered to $\mx$ at a previous step (Steps 1-3), hence all the augmented trees and subpaths are added to $\mx$ in a star-like way via $\widetilde{\mst}_i$ edges. If we denote the resulting supercluster by $\mx'$, then 
+	\begin{equation*}
+	\adm(\mx') \leq \adm(\mx) + 2\bar{w} + 2\cdot L_i \leq \adm(\mx) + 4L_i  \leq 17L_i, \end{equation*}
+	
+	
+	If $\mx$ is formed in Step 5A, then by construction, it is formed by replacing each meganode $\doverline{\nu}$ of some subtree $\doverline{\mt}_j\subseteq \doverline{\mt}$ with the corresponding supercluster $\mx_{\doverline{\nu}}$ created in Steps 1-4. Since $\adm(\mx_{\doverline{\nu}})\leq 17 L_i$ and $\doverline{\mt}_j$ has hop diameter at most $6$, we have:
+	\begin{equation*}
+	\adm(\mx)\leq 6L_i + 7\cdot 17L_i = 125 L_i,
+	\end{equation*}
+	as desired.	\qed
+\end{proof}
+
+We are now ready to show that all cluster properties are satisfied. 
+
+\begin{lemma} Level-$(i+1)$ clusters satisfy all cluster properties (P1)-P(5) with $g = 125$.
+\end{lemma}
+\begin{proof}
+	Observe that property (P4) follows directly from the construction. Also by construction, superclusters are vertex-disjoint subgraphs of $\mg_i$. Thus, their source graphs, $\varphi(\mx)$ of each supercluster $\mx$, are vertex-disjoint.  This, with Lemma~\ref{lm:Diameter-Up}, implies property (P1). 	
+	
+	By Lemmas~\ref{lm:Step1-Diam-Oracle},~\ref{lm:Step2-Oracle-Diameter},~\ref{lm:Step3-Diam-Oracle} and~\ref{lm:Step4-Diam-Oracle}, each supercluster contains $\Omega(\frac{1}{\epsilon})$ nodes; this implies property (P2). Note that (P5) implies (P3) by Observation~\ref{obs:dm-vs-adm}, and (P5) follows directly from Lemma~\ref{lm:Diameter-Up}. \qed
+\end{proof}
+
+\subsubsection{Stretch}\label{subsec:StretchOracle}
+
+
+
+In this section, we prove the stretch in $H_{\leq i}$ of edges in $E_i$ is at most $t(1+O(\epsilon))$. By setting $\epsilon \leftarrow \epsilon/c$ where $c$ is the constant behinds the big-O, we achieve a stretch of $t(1+\epsilon)$ by increasing the lightness by a   constant factor.  
+
+%Let $e = (u,v)$ be an edge in $E_i$, let $\mbe$ be an edge of $\mathcal{K}_i$ corresponding to $e$ and let $\nu$ and $\mu$ be $\mbe$'s endpoints in $\mathcal{K}_i$. 
+
+We observe that Claim~\ref{clm:e-not-inEi} remains true in this case, that we restate below.
+
+\begin{claim}\label{clm:e-not-inEi-Oracle} If every edge in $\mathcal{E}_i$ has stretch $t\geq 1$ in $H_{\leq i}$, then every edge in $E_i$ has a stretch at most $t(1+O(\epsilon))$.
+\end{claim}
+
+Note that $\me_i$ is a subset of $E_i$ since we make $\mg_i(\mv_i,\me_i\cup\widetilde{\mst}_i,\omega)$ simple by removing parallel edges.
+
+By Claim~\ref{clm:e-not-inEi-Oracle}, it remains to consider edges in $\mathcal{E}_i$. Let $e$ be such an edge. There are three cases: (1) $e \in \mathcal{B}_{close}$, (2) two endpoints of $e$ are nodes in $\mathcal{Y}$ in Step 5C,  or (3) $e$ is not selected in Step 5B. For Case (3), the stretch of $e$ is at most $t$ by construction. Thus, it remains to consider Case (1) and Case (2).
+
+\begin{itemize}
+	\item \text{Case 1:} $e \in \mb_{close}$. Let $\bar{\nu}$ and $\bar{\mu}$ be its endpoints.  Then  $\bar{\mi}(\bar{\nu})\cap \bar{\mi}(\bar{\mu}) \not=\emptyset$, hence there is a path $\overline{\mathcal{P}}$ of $\overline{\mathcal{F}}_2$ of weight at most $2L_i$ between $e$'s endpoint.  Since $\varphi(\overline{\mathcal{P}}[\bar{\nu},\bar{\mu}]) \subseteq H_{\leq i-1}$, it follows that there is a path of weight at most $2L_i$ between  $e$'s endpoints, say $u$ and $v$, in $H_{\leq i-1}$. Thus, for any $t\geq 2$, we have
+	\begin{equation}
+	d_{H_{\leq i}}(u,v) ~\leq~  2L_i \leq 2(1+\epsilon)\omega(e) < t(1+\epsilon)\omega(e) .
+	\end{equation}
+	
+	\item \text{Case 2:} Two endpoints of $e$ are nodes in $\mathcal{Y}$ in Step 5C. Let $t_{\nu}, t_{\mu}$ be vertices chosen to $T$ in Step 5C.   By the triangle inequality, we have:
+	\begin{equation}\label{eq:dist-terminals}
+	\begin{split}
+	d_G(t_{\mu}, t_{\mu}) &\leq \omega(e) + 2g\epsilon L_i \leq (1+2g\epsilon) L_i \leq 2L_i\\
+	d_G(t_{\mu}, t_{\mu}) &\geq \omega(e) - 2g\epsilon L_i \geq (1-2g\epsilon) L_i \geq L_i/2
+	\end{split}
+	\end{equation}
+	(Here we assume that $e$ is a shortest path between its endpoints; otherwise, we can remove all such edge $e$ at the outset of the algorithm in polynomial time.)  By Definition~\ref{def:oracle}, there is a path, say $P$, between $t_{\nu}, t_{\mu}$ in $\mathcal{O}_{G,t}(T, 2L_i)$ with $w(P)\leq t\cdot d_G(t_{\mu}, t_{\mu})$. This implies that:
+	\begin{equation}\label{eq:stretch-heavy}
+	\begin{split}
+	d_{H_{\leq i}}(u,v) &\leq d_{\varphi(\mu)}(u,t_{\mu}) + d_{\mathcal{O}_{G,t}(T, 2L_i)}(t_{\mu}, t_{\nu}) + d_{\varphi(\nu)}(t_{\nu},v)\\
+	&\leq g\epsilon L_i + t d_G(t_{\mu}, t_{\nu}) + g\epsilon L_i \\
+	&\leq g\epsilon L_i + t \left(\omega(e) + 2g\epsilon L_i \right) + g\epsilon L_i \\
+	&\leq t \omega(e) + t 3g\epsilon L_i \leq t(1 + 6g\epsilon) \omega(e).
+	\end{split}
+	\end{equation}
+	Thus, the stretch of  $e$ in any case is $t(1+O(\epsilon))$. \qed
+\end{itemize}
+
+\subsubsection{Bounding $w(H_i)$}\label{subsec:HiWeightOracle}
+
+
+We now show that the total weight of edges added to $H_i$ is bounded by local potential reduction (see Equation~\eqref{eq:LocalPotential} and Lemma~\ref{lm:GlobalToLocalPotential}).  First, we observe that:
+
+\begin{claim}\label{clm:ADM-vs-Size}
+	For any path $\mp$ of $\mg_i(\mv_i,\me_i\cup \widetilde{\mst}_i,\omega)$, $\adm(\mp) = \Omega(|\mv(\mx)| \epsilon L_i)$.
+\end{claim}
+\begin{proof}
+	By definition of augmented diameter,
+	\begin{equation*}
+	\begin{split}
+	\adm(\mp) &= \sum_{\alpha \in \mv(\mp)}\omega(\alpha) + \sum_{e\in \me(\mp)}\omega(e)  \geq \sum_{\alpha \in \mv(\mp)}\omega(\alpha) \stackrel{\mbox{\tiny{P(5)}}}{\geq}  \sum_{\alpha \in \mv(\mp)}\zeta L_{i-1}= \Omega(|\mv(\mp)| \epsilon L_i),
+	\end{split}
+	\end{equation*}
+as desired.
+\qed
+\end{proof}
+For each $j \in [1,5]$, let $\mathbb{X}_j$ be the set of superclusters that are initially formed in Step $j$ and could possibly be augmented in Step 4A. (Clearly, superclusters in Step 5A are not augmented in Step 4A.) We start with superclusters formed in Step 1 and 5.
+
+\begin{lemma}\label{lm:Step15WeightOracle}
+	Let $\mx \in \mathbb{X}_1 \cup \mathbb{X}_5$ be a supercluster formed in  Steps 1 or 5, then:
+	\begin{equation*}
+	\Delta^i_{L}(\mx) = \Omega(|\mv(\mx)|\epsilon L_i)  
+	\end{equation*}
+\end{lemma}
+\begin{proof} Let $\mx \in \mathbb{X}_1$ be a supercluster formed in Step 1 or 5.	By construction, $\mx$ has at least $\frac{2g}{\zeta \epsilon}$ nodes. Thus,  by definition of local potential reduction (Equation~\eqref{eq:LocalPotential}), we have:
+	\begin{equation}
+	\begin{split}
+	\Delta^i_L(\mx) &\geq \sum_{\alpha \in \mx}w(\alpha)  - \adm(\mx) \stackrel{(P5)}{\geq} \sum_{\alpha \in \mx}\zeta L_{i-1} - gL_i  = \frac{|\mv(\mx)| \zeta L_{i-1}}{2} + \underbrace{(\frac{|\mv(\mx)| \zeta L_{i-1}}{2} - gL_i)}_{\geq 0 \mbox{ since }|\mv(\mx)|\geq (2g)/(\zeta \epsilon)}\\
+	&\geq  \frac{|\mv(\mx)| \zeta L_{i-1}}{2}  = \Omega(|\mv(\mx)|\epsilon L_{i}),
+	\end{split}
+	\end{equation}
+	as desired. \qed 
+\end{proof}
+
+
+We now bound the local potential reduction of superclusters in Step 2. To show that Step-2 superclusters have a large potential reduction, we rely on the fact that they have three internally vertex disjoint paths of augmented weight proportional to the augmented diameter of the supercluster-- Item (4) in Lemma~\ref{lm:tree-clustering}.
+
+Let $\mz$ be a subgraph of $\mg_i(\mv_i,\me_i\cup \widetilde{\mst}_i,\omega)$. We define the potential of $\mz$ by:
+\begin{equation}\label{eq:mz}
+\Phi(\mz) = \sum_{\alpha \in \mv(\mz)}\omega(\alpha) + \sum_{e \in \widetilde{\mst}_i\cap \me(\mz)} \omega(e)
+\end{equation}
+Since $\omega(e)\leq \omega(\alpha) \leq g\epsilon L_i$ for every $e \in \widetilde{\mst}_i\cap \me(\mz)$, we have:
+\begin{equation}\label{eq:Potential-vs-Size}
+\Phi(\mz) = \Omega(|\mv(\mz)|\epsilon L_i)
+\end{equation}
+
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+	\vspace{-25pt}
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{Step2-opt-potential}
+	\end{center}
+	\caption{\footnotesize{Diameter path $\md$ is marked by the dashed purple curve. Subtrees enclosed by dash red curves are augmented to $\mx$ in Step 4.}}
+	\vspace{-10pt}
+	\label{fig:Step2-opt-potential}
+\end{wrapfigure}
+
+
+\begin{lemma}\label{lm:Step2ClusterOracle}
+	Let $\mx \in \mathbb{X}_2 $ be a supercluster formed in  Step 2, then:
+	\begin{equation*}
+	\Delta^i_{L}(\mx) = \Omega(|\mv(\mx)|\epsilon L_i)  
+	\end{equation*}
+\end{lemma}
+\begin{proof} 	Let $\mathcal{T}\subseteq \mathcal{F}_1$ be the part of $\mx$ formed in Step 2;  $\mx$ is obtained from $\mathcal{T}$ by (possible) augmentation in Step 4A. By Item (2) of Lemma~\ref{lm:tree-clustering}, there is a $\mathcal{T}$-branching node $\nu$ and three paths $\mathcal{P}_1,\mathcal{P}_2,\mathcal{P}_3$ sharing $\nu$ as the same endpoints such that $\adm(\mathcal{P}_j\setminus \{\nu\}) = \Omega(\adm(\mathcal{T}))) = \Omega(\zeta L_i)$ for $j \in [3]$.
+	
+	For each tree $\overline{\ma}$ in Step 4A that is augmented to $\mt$, by uncontracting supernodes in $\overline{\ma}$, we obtain a subtree $\ma$ of $\mathcal{F}_1$ of augmented diameter at most $12\zeta L_i$. Thus, $\mx$ remains to be a subtree of $\mathcal{F}_1$ after the augmentation in Step 4A since each tree is augmented to $\mathcal{T}$ via $\widetilde{\mst}_i$ edges. 
+	
+	Let $\mathcal{D}\subseteq \mathcal{F}_1$ be the diameter path of $\mx$. Then by definition of augmented diameter, 
+	\begin{equation*}
+	\adm(\mx)  = \sum_{\alpha \in \md}\omega(\alpha) + \sum_{\tilde{e \in \me(\md) }} \omega(e)
+	\end{equation*}
+	
+	Let $\my = \mx\setminus \md$. Since $\nu$ is $\mathcal{T}$-branching, there must exist $j \in [3]$ such that $\md\cap \mathcal{P}_j \subseteq \{\nu\}$. Since $\omega(\nu)\leq g L_{i-1} = g\epsilon L_i$ by property (P5) and the $\widetilde{\mst}_i$ incident to $\nu$ in $\mp_j$ has length at most $L_{i-1} = \epsilon L_i$, we have:
+	\begin{equation*}
+	\adm(\mathcal{P}_j\setminus \{\nu\}) \geq \adm(\mp_j) - (g+1)\epsilon L_i = \Omega(\zeta L_i) = \Omega(L_i)
+	\end{equation*}
+	when $\epsilon \ll \frac{1}{g}$. Thus, $\Phi(\my)\geq \adm(\mathcal{P}_j) = \Omega(L_i)$, and hence:
+	\begin{equation}\label{eq:PhiY-sizeD}
+	\Phi(\my)/2 = \Omega(L_i) = \Omega(\adm(\md)) = \Omega(|\mv(\md)|\epsilon L_i) \qquad \mbox{by Claim~\ref{clm:ADM-vs-Size}}
+	\end{equation}
+	In Equation~\eqref{eq:PhiY-sizeD}, we use the fact that $\adm(\md) \leq gL_i =  O(L_i)$ by property (P5). We have:
+	\begin{equation*}
+	\begin{split}
+	\Delta^i_L(\mx) &=  \sum_{\alpha \in \md}\omega(\alpha) + \sum_{\tilde{e} \in \me(\mx)} \omega(e) - \adm(\mx)\\
+	&\geq \Phi(\my)  =  \frac{\Phi(\my)}{2} +\Omega(|\mv(\md)|\epsilon L_i) \qquad \mbox{by Equation~\eqref{eq:PhiY-sizeD} }\\
+	&\geq  \frac{|\my| \zeta L_{i-1}}{2} +\Omega(|\mv(\md)|\epsilon L_i)\\
+	&= \Omega(|\my| \epsilon L_i) +\Omega(|\mv(\md)|\epsilon L_i) = \Omega(|\mv(\mx)|\epsilon L_i),
+	\end{split}
+	\end{equation*} 
+	as desired.\qed
+\end{proof}
+
+When comparing potential reduction of Step-2 superclusters in Lemma~\ref{lm:Step2ClusterOracle} and Lemma~\ref{lm:Step2Cluster}, the amount of potential in this construction is about $\frac{1}{\epsilon}$ times bigger the amount of potential in the previous construction. This is one of the key properties to reduce the dependency on $\epsilon$ of lightness to linear in $\frac{1}{\epsilon}$.
+
+\noindent We now turn to Step-3 superclusters. Similar to Lemma~\ref{lm:Step3Cluster}, we can show large potential reduction of superclusters in this step.
+
+ \begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-35pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{Step3-opt-dm}
+	\end{center}
+	\caption{\footnotesize{(a) $\md$ does not contain $e$ and (b) $\md$ contains $e$. Nodes enclosed by dashed red curves are added to $\mx$ in Step 4.}}
+	\vspace{-10pt}
+	\label{fig:Step3-opt-dm}
+\end{wrapfigure}
+
+\begin{lemma}\label{lm:Step3ClusterOracle}
+	Let $\mx \in \mathbb{X}_3 $ be a supercluster formed in  Step 3, then:
+	\begin{equation*}
+	\Delta^i_{L}(\mx) = \Omega(|\mv(\mx)|\epsilon L_i)  
+	\end{equation*}
+\end{lemma}
+\begin{proof} Let $\md$ be a diameter path of $\mx$, and $\my = \mx \setminus \mv(\md)$.	Let $\overline{P}$ be a path of $\overline{\mf}_2$ where $\overline{\mf}_2$ is the forest formed at the beginning of Step 3. We observe that:
+\begin{observation}\label{obs:path-to-forest} Let $\mt$ be the tree obtained from $\overline{\mp}$ by uncontracting supernodes. Then $\Phi(\mt)\geq \adm(\overline{\mp})$.
+\end{observation}	
+\begin{proof}
+	For each node $\bar{\nu}\in \overline{\mp}$, the corresponding tree $\mt_{\bar{\nu}}$ obtained by uncontracting $\bar{\nu}$ has $\Phi(\mt_{\bar{\nu}})\geq \adm(\mt_{\bar{\nu}}) = \omega(\bar{\nu})$. Thus, 
+	
+	\begin{equation*}
+	\begin{split}
+		\Phi(\mt) \geq \sum_{\bar{\nu}\in \mv(\overline{\mp})}\Phi(\mt_{\bar{\nu}}) + \sum_{e\in E(\overline{\mp})} \omega(e)
+		 \geq   \sum_{\bar{\nu}\in \mv(\overline{\mp})}\omega(\bar\nu) + \sum_{e\in E(\overline{\mp})} \omega(e) = \adm(\overline{\mp}),
+	\end{split}
+	\end{equation*}
+as desired. \qed
+\end{proof}
+	
+	 Let $\bar{\mi}(\bar\nu)$ and $\bar\mi(\bar\mu)$ be two intervals  in the construction on Step 3 that are connected by an edge $\mbe = (\nu,\mu)$.
+	 
+	
+	\begin{claim}\label{clm:PotentialY-boundOracle} $\Phi(\my)=  \frac{5L_{i} }{4}+ \Omega(|\mv(\my)|\epsilon L_i)$.
+	\end{claim}
+	\begin{proof} We consider two cases:
+		\begin{itemize}
+			\item \emph{Case 1: $\md$ does not contain the edge $(\nu,\mu)$.} See Figure~\ref{fig:Step3-opt-dm}(a). In this case, $\md \subseteq  \widetilde{\mst}_i$, and  that $\bar\mi(\bar\nu)\cap\md =\emptyset$ or $\bar\mi(\bar\mu)\cap \md = \emptyset$ since $\bar\mi(\bar\nu)$ and $\bar\mi(\bar\mu)$ are connected only by $e$. We assume w.l.o.g. that  $\bar\mi(\bar\nu)\cap\md =\emptyset$.  Then, by Observation~\ref{obs:path-to-forest} and Claim~\ref{clm:Interval-node-unified}, it holds that:
+			\begin{equation*}
+			\Phi(\my)\geq \adm(\overline{\mathcal{I}}(\bar\nu)) \geq (2-(3\zeta+2)\epsilon) L_i\geq \frac{5L_i}{3}
+			\end{equation*}
+		    when $\epsilon \ll \zeta$.
+		    
+			\item  \emph{Case 2: $D$ contains the edge $(\nu,\mu)$.} See Figure~\ref{fig:Step3-diam}(b). In this case at least two sub-intervals, say $\bar\mi_1,\bar\mi_2$,  of four intervals $\{\bar\mi(\bar\nu)\setminus \bar\nu, \bar{\mi}(\bar\mu)\setminus \bar\mu\}$ are disjoint from $\md$. By minimality of  $\bar\mi(\bar\nu)$ and $\bar\mi(\bar\mu)$, $\adm(\bar\mi_j)\geq L_i - 2(\zeta L_i + \epsilon L_i) ~=~ L_i - 2(\zeta+\epsilon) L_i$, where $g\epsilon L_i$  is the upper bound on the node weight and $\epsilon L_i$ is the upper bound on the weight of $\widetilde{\mst}_i$ edge.   By Observation~\ref{obs:path-to-forest}, it holds that:
+			\begin{equation*}
+			\Phi(\my)\geq \Phi(\mb)\geq \adm(\overline{\mi}_1) + \adm(\overline{\mi}_2) 	\geq (2- 4(\zeta + \epsilon) L_i \geq \frac{5L_i}{3}
+			\end{equation*}
+			when $\epsilon \ll \zeta$.
+		\end{itemize}	
+		Thus, in both cases, $\Phi(\my) \geq \frac{5L_i}{3}$. This implies:
+		\begin{equation*}
+		\begin{split}
+		\Phi(\my) &= \frac{3 \Phi(\my)}{4}  + \frac{\Phi(\my)}{4} \geq \frac{3}{4}\frac{5}{3} L_i + \frac{\Phi(\my)}{4} \\
+		&\geq \frac{5 L_i}{4} +  \frac{\Phi(\my)}{4}  = \frac{5 L_i}{4}  +  \Omega(|\mv(\my)|\epsilon L_i) \qquad \mbox{by Equation~\eqref{eq:Potential-vs-Size}},		
+		\end{split}
+		\end{equation*} 
+		as desired \qed. 
+	\end{proof}
+
+
+We now bound $\Delta^i_{L}(\mx)$. By definition of local potential reduction, we have:
+\begin{equation*}
+\begin{split}
+	\Delta_{L}^i(\mx)  &= \Phi(\md) + \Phi(\my) - \adm(\mx)\\
+&= \Phi(\my) - \omega(\mbe) \geq  \frac{L_i}{4}  +  \Omega(|\mv(\my)|\epsilon L_i) \quad \mbox{by Claim~\ref{clm:PotentialY-boundOracle}}\\
+&= \Omega(|\mv(\md)|\epsilon L_i) +  \Omega(|\mv(\my)|\epsilon L_i) \quad \mbox{by Claim~\ref{clm:ADM-vs-Size}}\\
+&= \Omega(|\mv(\mx)|\epsilon L_i), 
+\end{split}
+\end{equation*}
+as desired. \qed
+	\end{proof}
+
+
+We are now ready to bound $w(H_i)$. Recall that by construction, we only add edges to $H_i$ in Step 1, Step 3, and Step 5. 
+
+\begin{lemma}\label{lm:H5A} Let $H^{\leq 5A}_i$ be edges added to $H_i$ in  Steps 1, 3 and 5A. Then $w(H^{\leq 5A}_i) = O(\frac{1}{\epsilon}) \Delta^i_{L}$.
+\end{lemma}
+\begin{proof}
+Observe by construction that for every supercluster $\mx$ formed in Steps 1, 3 or 5A, the number of level-$i$ edges added to $H_i$ during the construction of $\mx$ is at most $|\mv(\mx)|$ since $\mx$ is a tree; this implies:
+\begin{equation*}
+w(H^{\leq 5A}_i)  \leq \sum_{\mx \in \mathbb{X}_1\cup \mathbb{X}_3\cup \mathbb{X}_5} |\mv(\mx)| L_i
+\end{equation*}
+By Lemma~\ref{lm:Step15WeightOracle} and Lemma~\ref{lm:Step3ClusterOracle}, $|\mv(\mx)| L_i = O(\frac{1}{\epsilon})\Delta^i_{L}(\mx)$. Thus, it holds that:
+\begin{equation*}
+w(H^{\leq 5A}_i)   = O(\frac{1}{\epsilon}) \sum_{\mx \in \mathbb{X}_1\cup \mathbb{X}_3\cup \mathbb{X}_5} \Delta^i_{L}(\mx) = O(\frac{1}{\epsilon}) \Delta^i_{L}
+\end{equation*}
+by Lemma~\ref{lm:GlobalToLocalPotential}.\qed
+\end{proof}
+
+It remains to bound the total weight of edges added to $H_i$ in Steps 5B and 5C. We start with edges added in Step 5C.
+
+\begin{lemma}\label{lm:H5C}
+	Let $H_i^{5C}$ be the set of edges added to $H_i$ in Step 5C. Then $w(H_i^{5C}) = O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})\Delta^i_{L}$.
+\end{lemma}
+\begin{proof} Recall that all nodes in the set $\my$ in the construction of Step 5C are in Step-5A supercluters. Note that  $w(E(\mathcal{O}_{G,t}(T,2L_i))) = O(\wsp_{\mathcal{O}_{G,t}} |T| L_i)$ by Definition~\ref{def:oracle}, and that $|T| = \sum_{\mx\in \mathbb{X}_5}|\mv(\mx)|$. Thus, with Lemma~\ref{lm:Step15WeightOracle}, we have:
+	\begin{equation*}
+	\begin{split}
+		w(H_i^{5C}) &= w(E(\mathcal{O}_{G,t}(T,2L_i)))   = O(\wsp_{\mathcal{O}_{G,t}})  \sum_{\mx\in \mathbb{X}_5}|\mv(\mx)| L_i\\
+		 &= O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon}) \sum_{\mx\in \mathbb{X}_5} \Delta^i_{L}(\mx) \leq O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon}) \Delta^i_{L},
+	\end{split}
+\end{equation*}
+as desired. \qed	
+\end{proof}
+
+
+We now focus on bounding edges of $\me_{i}$ added to $H_i$ in Step 5B.  Let $\mx$ a supercluster corresponding to light meganode. By definition of light meganodes, there are $O(\frac{1}{\epsilon})$ edges incident to $\mx$ in $\doverline{\mk}_i$. We can show that $\mx$ has $\Omega(\frac{1}{\epsilon})$ nodes, and hence, on average, each node is incident to $O(1)$ edges. One may conclude that the total weight of these edges is only at most $O(\frac{1}{\epsilon})$ times potential reduction of $\mx$. However, there remain two issues: (1) between two superclusters, there could be more than one edge; we deliberately remove all but one in the construction of $\doverline{\mk}_i$, and (2) there could be many edges between two nodes in the same supercluster $\mx$. Our key insight is that, between any two superclusters, the construction in Step 5C only keeps at most $O(1)$ level-$i$ edges; the same holds for level-$i$ edges between nodes in the same supercluster. 
+
+
+\begin{lemma}\label{lm:key-incident}
+	Let $\mx$ be a light supercluster corresponding to a meganode in the construction of Step 5C. Then, the number of level-$i$ edges added to $H_i$ with \emph{both endpoints} in $\mx$ is $O(1)$. Similarly,  for any supercluster $\mx' \not = \mx$, there are at most $O(1)$ level-$i$ edges added to $H_i$ between $\mx'$ and $\mx$.
+\end{lemma}
+\begin{proof} When we say two light superclusters are adjacent in $\doverline{\mathcal{K}_i}$, we mean their corresponding meganodes are adjacent in $\doverline{\mathcal{K}_i}$.  First, we observe that any supercluster adjacent to $\mx$ in $\doverline{\mathcal{K}_i}$ is light since every neighbor of a heavy meganode is grouped in Step 5A. This implies that $\mx$ is not formed in Step 1  by the definition of a heavy meganode.
+	
+	We consider the following decomposition $\mathbb{D}_\mx$ of $\mx$ into \emph{small superclusters}:
+	\begin{itemize}
+		\item  If $\mx$ is formed in Steps 2 or 4, then $\mathbb{D}_\mx = \{\mx\}$.
+		\item  Otherwise, $\mx$ is formed in Step 3. By construction, it has  two intervals $\bar\mi_{\bnu}$ and $ \bar{\mathcal{I}}_{\bmu}$ connected by a level-$i$ edge $(\bnu,\bmu)$, and a set of trees $\mathbb{U}= \{\overline{\mathcal{T}_1}, \overline{\mathcal{T}_2}, \ldots, \overline{\mathcal{T}_p}\}$  each of augmented diameter at most $\zeta L_i$ which are connected to nodes in $\bar{\mathcal{I}}_{\bnu}\cup \bar{\mathcal{I}}_{\bmu}$ via $\widetilde{\mst}_i$ edges due to the augmentation in Step 4. 
+
+		We greedily partition each interval, say $\bar{\mathcal{I}}_{\bnu}$, into node-disjoint, subintervals of augmented diameter at most $3\zeta L_i$ and at least $\zeta L_i$; let $\{\bar{\ma}_1, \ldots, \bar{\ma}_{q}\}$ be the set of all the subintervals. Let $\ma_j$, $j\in [q]$, be obtained from $\bar{\ma}_j$ by uncontracting non-trivial supernodes. 
+		We extend each $\mathcal{A}_j$ to include all trees in $\mathbb{U}$ that are connected to nodes in $\mathcal{A}_j$ by $\widetilde{\mst}_i$ edges. We denote the extension of $\mathcal{A}_j$ by $\mathcal{A}_j^{+}$. We then add all trees in  $\{\mathcal{A}_1^{+}, \ldots, \mathcal{A}_q^{+}\}$ to $\mathbb{D}_\mx$. (See Figure~\ref{fig:Iv-partition}.)
+	\end{itemize}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\vspace{-35pt}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{Iv-partition}
+	\end{center}
+	\caption{\footnotesize{$\overline{\ma}_j$ is inclosed by green-shaded region, and $\ma_j^+$ is enclosed by a dashed blue curve for every $j\in [1,4]$.}}
+	\vspace{-10pt}
+	\label{fig:Iv-partition}
+\end{wrapfigure}
+	\begin{claim}\label{clm:Size-DC}$\mathbb{D}_\mx$ has the following properties:
+		\begin{enumerate}
+			\item $|\mathbb{D}_\mx| = O(1)$
+			\item For any $\ma \in\mathbb{D}_\mx$,  $\adm(\ma) \leq 29\zeta L_i$ when $\epsilon < \zeta$.
+			\item  There is at most one level-$i$ edge, if any, in $H_i$ connecting two different small superclusters in $\mathbb{D}_\mx$.
+		\end{enumerate}
+	\end{claim}
+	\begin{proof}
+		By Claim~\ref{clm:Interval-node-unified}, $\bar{\mathcal{I}}_{\nu}$ has augmented diameter at most $2L_i$. This implies
+		\begin{equation}
+		|\mathbb{D}_\mx| \leq 2\times\frac{2L_i}{\zeta L_i} = O(1)
+		\end{equation}
+		
+		Since the extension of each $\ma_j$ is via $\widetilde{\mst}_i$ edges in a star-like way, $\adm(\mathcal{A}_j^{+})~\leq~ \adm(\mathcal{A}_j) + 2\bar{w} + 2\cdot \zeta L_i \leq 5\zeta L_i + 2\epsilon L_i \leq 7\zeta L_i$.
+		
+		For the third item, assume that  in Step 5B the algorithm takes to $H_i$ two edges $(u,v), (u',v')$ between two small superclusters $\ma,\ma'$ in $\mathbb{D}_\mx$ where $\{u,u'\}\subseteq \varphi(\ma),  \{v,v'\}\subseteq \varphi(\ma')$.~W.l.o.g, we assume that $(u',v')$ is considered before $(u,v)$. Let $P_{uv}$ be a shortest path between $u$ and $v$ before $(u,v)$ is added.  Then, by the triangle inequality,
+		\begin{equation}
+		\begin{split}
+		w(P_{uv})&\leq w(u',v') + \adm(\ma) + \adm(\ma') \leq  w(u',v') + 14\zeta L_i \\
+		w(u',v')&\leq w(u,v) + \adm(\ma) + \adm(\ma') \leq  w(u,v) + 14\zeta L_i
+		\end{split}
+		\end{equation}
+		Thus  $w(P_{uv}) \leq w(u,v) + 28\zeta L_i ~\stackrel{w(u,v)\geq L_i/2}{\leq}~ (1+56\zeta) w(u,v)  ~<~ t\cdot w(u,v)$ since $\zeta = \frac{1}{250}$ and $t\geq 2$. Thus, edge $(u,v)$ will not be added to $H_i$ in Step 5B;  a contradiction.\qed
+	\end{proof}
+	Items (1) and (3) in Claim~\ref{clm:Size-DC} immediately imply the first claim in Lemma~\ref{lm:key-incident}.  For the second claim, observe that for any two small superclusters in $\mathbb{D}_\mx$ and $\mathbb{D}_{\mx'}$, by the same proof of Item (3) in Claim~\ref{clm:Size-DC}, there is at most one level-$i$ edge in $H_i$ between them. Thus, by Item (1), there are at most $O(1)$ level-$i$ edges connecting $\mx$ and $\mx'$.
+	\qed
+\end{proof}
+
+A simple corollary of Lemma~\ref{lm:key-incident} is the following.
+
+\begin{corollary}\label{cor:deg-C-5B}
+	For any light supercluster $\mx$ considered in  Step 5B, there are $O(\frac{1}{\epsilon})$ level-$i$ edges incident to nodes in $\mx$ that are added to $H_i$ in Step 5B.
+\end{corollary}
+\begin{proof}
+	By construction, $\mx$ is a light supercluster: it has at most $\frac{2g}{\zeta\epsilon} = O(\frac{1}{\epsilon})$ neighbors in $\doverline{\mathcal{K}_i}$.  For each neighbor $\mx'$ of $\mx$, by Lemma~\ref{lm:key-incident}, there are $O(1)$ level-$i$ edges between $\mx$ and $\mx'$ added $H_i$. Thus, there are $O(\frac{1}{\epsilon})$ level-$i$ edges in $H_i$ such that each has exactly one endpoint in $\mx$. Also by Lemma~\ref{lm:key-incident}, there are at most $O(1)$ level-$i$ edges with both endpoints in $\mx$; this implies the corollary.\qed
+\end{proof}
+
+We are now ready to bound the total weight of edges added to $H_i$ in Step 5C.
+
+	\begin{figure}[hbt]
+	\centering
+	%\vspace{-20pt}
+	\includegraphics[scale = 0.9]{longpath-opt}
+	\caption{\footnotesize{A set of paths $\overline{\mathbb{P}} = \{\overline{\mp}_1,\ldots,\overline{\mp}_9\}$ broken from a long path $\overline{\mp}$. Subpath $\overline{\mp}_5$ is augmented to a supercluster $\my$ formed in Steps 1-3. Red paths of $\overline{\mp}$ are enclosed in dashed red curves; other paths are blue paths.   Red edges are level-$i$ edges taken to $H_i$; there is no red edge between any two blue paths. Non-trivial supernodes are triangular shaded regions. }}
+	\label{fig:longpath-opt}
+\end{figure}
+
+\begin{lemma}\label{lm:H5B} Let $H^{5B}_{i}$ be the set of edges added to $H_i$ in Step 5B. If there is at least one supercluster formed in Steps 1-3, then $w(H^{5B}_i) = O(\frac{1}{\epsilon}) \Delta^i_{L}$.
+\end{lemma}
+\begin{proof}	Let $\mx$ be a light supercluster considered in Step 5B. By the construction in Step 5A and definition of heavy superclusters, $\mx$ must be formed in Steps 2-4. Let $H^{5B}_i(\mx)$ be the set of edges in $H^{5B}_i$ that are incident to nodes in $\mx$.	We consider two cases:
+	
+\noindent \textbf{Case 1.~} $\mx$ is formed in Steps 2 or 3. Then by Corollary~\ref{cor:deg-C-5B}, $w(H^{5B}_i(\mx)) = O(\frac{L_i}{\epsilon}) = O(|\mv(\mx)|L_i)$ since $\mx$ has at least $\Omega(\frac{1}{\epsilon})$ nodes by property (P2). By Lemmas~\ref{lm:Step2ClusterOracle} and~\ref{lm:Step3ClusterOracle}, we have:
+	\begin{equation}\label{eq:H5B1}
+	\sum_{\mx\in \mathbb{X}_2\cup \mathbb{X}_3} w(H^{5B}_i(\mx)) = O(\frac{1}{\epsilon}) \sum_{\mx\in \mathbb{X}_2\cup \mathbb{X}_3} \Delta^i_{L}(\mx) \leq  O(\frac{1}{\epsilon}) \Delta^i_{L}
+	\end{equation}
+
+
+\noindent \textbf{Case 2.~} $\mx$  is formed in Step 4; in particular, $\mx$ is formed in Step 4C. Then $\mx$ is the uncontracted counterpart of a subpath $\overline{\mp}_a$ of a long path, say $\overline{\mathcal{P}}$, in $\overline{\mathcal{F}_3}$. That is, $\mx$ is obtained from $\overline{\mp}_a$ by uncontracting non-trivial supernodes. (See Figure~\ref{fig:longpath-opt}.) By construction in Step 4B, $\overline{\mp}$ is broken into a set of subpaths $\overline{\mathbb{P}} = \{\overline{\mp}_1, \ldots, \overline{\mp}_t\}$; $\mp_j$ is the uncontracted counterpart of $\overline{\mp}_j$.
+
+Since $\widetilde{\mst}_i$ is a spanning tree of $\mg_i$ by  Lemma~\ref{lm:spanning-Gi}, there must be an $\widetilde{\mst}_i$ edge connecting a node in $\mp$ to a node clustered in Steps 1-3. Thus, by construction in Step 4B, there must a subpath $\overline{\mp}_j \in \overline{\mathbb{P}}$ for some $j \in [1,t]$ that is added to a supercluster, say $\my$, formed in Steps 1-3  ($\my$ may be grouped to a bigger supercluster in Step 5A). Note that $\my$ exists by the assumption that there is at least one supercluster formed in Steps 1-3. 
+
+Recall that in Step 3, nodes in augmented distance at most $L_i$ from at least one of the endpoints of $\overline{\mp}$ are colored red, and other nodes are colored blue. We call a path $\overline{\mp}_b \in \overline{\mathbb{P}}$, $b\in [1,t]$, a \emph{red path} if it contains \emph{at least one red node}; otherwise, we call $\overline{\mp}_b$ a blue path.
+
+We have two claims:
+\begin{itemize}
+	\item \textit{Claim A: the number of red paths in $\overline{\mathbb{P}}$ is $O(1)$}.   Observe that each red path $\overline{\mp}_b \in \overline{\mathbb{P}}$ has $\adm(\overline{\mp}_b)\geq \adm(\mp_b) \geq \zeta L_i$. Since red nodes are in the prefix and suffix of $\overline{\mp}$ of augmented diameter at most $L_i$ each, the number of red paths is at most $\frac{2L_i}{\zeta L_i} = O(1)$ as claimed.
+	\item \textit{Claim B: there is no level-$i$ edge added $H_i$  between two blue paths}. Suppose there is such an edge, say $\mbe$, then either $\mbe \in \mb_{far}$ or $\mbe \in \mb_{close}$ (see Equation~\eqref{eq:Bfar-Bclose}). $\mbe$ cannot be in $\mb_{far}$ since such an edge will be handled in Step 3, and $\mbe$ cannot be in $\mb_{close}$ since we discard every in $\mb_{close}$ in Step 4. Thus, there is no such edge $\mbe$. 
+\end{itemize}
+
+%$\adm(\mx)\leq 5\zeta L_i$ by Lemma~\ref{lm:Step4-Diam-Oracle}. 
+ We consider two subcases:
+
+\begin{itemize}
+	\item 	 \emph{Case 2A: $\overline{P}_a$ is a red path of $\overline{\mathbb{P}}$.~}  By Lemmas~\ref{lm:Step15WeightOracle},~\ref{lm:Step2ClusterOracle}, and~\ref{lm:Step3ClusterOracle}, by redistributing the potential reduction of the supercluster containing $\my$ to its nodes evenly, each node gets $\Omega(\epsilon L_i)$ unit.  
+	
+	Recall $\mp_j$ is the uncontracted counterpart of $\overline{\mp}_j$ (obtained by uncontracting non-trivial supernodes). ($\overline{\mp}_j$ is $\overline{\mp}_5$ in Figure~\ref{fig:longpath-opt}.) Then, $\Phi(\mp_j)\geq \adm(\mp_j) \geq \zeta L_i$ by Lemma~\ref{lm:Step4-Diam-Oracle}. Since every edge has weight at most $L_{i-1} =\epsilon L_i$ and every node has weight at most $gL_{i-1} = g\epsilon L_i$ by property (P5), we have:
+	\begin{equation*}
+	|\mv(\mp_j)| \geq \frac{\Phi(\mp_j)}{g\epsilon L_i} \geq \frac{\zeta}{\epsilon g} = \Omega(\frac{1}{\epsilon})
+	\end{equation*}
+	
+	Thus, nodes in $\mp_j$ get at least $\Delta\Phi(\mp_j) \stackrel{\mbox{\tiny{def.}}}{=} |\mv(\mt_j)|\Omega(\epsilon L_i) ~=~ \Omega(L_i)$ unit of potential distributed from $\my$.	We use the potential of $\mp_j$ to bound the total weight of edges in $H_i$ incident to nodes in \emph{all red paths} in $\overline{\mathbb{P}}$; there are $O(\frac{1}{\epsilon})$ such edges by Claim A and Corollary~\ref{cor:deg-C-5B}. The total weight of these edges is $O(\frac{1}{\epsilon})\Delta\Phi(\mp_j)$. This implies that the total weight of edges incident to superclusters considered in this case is:
+	\begin{equation}\label{eq:H5B3}
+	O(\frac{1}{\epsilon})\left(\sum_{\my \in \mathbb{X}_1 \cup \mathbb{X}_2 \cup \mathbb{X}_3\cup \mathbb{X}_5}\Delta^i_{L}(\my)\right) = O(\frac{1}{\epsilon})\Delta^i_{L}
+	\end{equation}
+	
+	\item \emph{Case 2B: $\overline{\mp}_a$ is a blue path of $\overline{\mathbb{P}}$.~} There is no level-$i$ edge with both endpoints in $\mx$ since any such edge would have length at most $\adm(\mx)\leq 5\zeta L_i  < L_i/2$ while a level-$i$ edge has length at least $L_i/2$. Let $\mbe$ be an edge with exactly one endpoint ni $\mx$. If $\mbe$ is incident to a \emph{red subpath} broken from a long path, then $\mbe$ is already handled in Case 2a. $\mbe$ cannot be incident to another blue subpath in Step 4B by Claim B. Thus, it remains to consider the case where $\mbe$ is to another light supercluster $\my'$; $\my'$ may be grouped to a bigger supercluster in Step 5A. (Such an edge $\mbe$ is highlighted red in Figure~\ref{fig:longpath-opt}.) If $\my'$ is a supercluster in $\mathbb{X}_2\cup \mathbb{X}_3$, then the weight of $\mbe$ is already bounded in \textbf{Case 1 } above. If $\my'$ belongs to a supercluster $\mz$ in $\mathbb{X}_5$, we use the potential reduction of superclusters in $\mathbb{X}_5$ to bound the weight of edges  incident to \emph{all} superclusters considered in this case as follows.
+	
+	By Lemma~\ref{lm:Step15WeightOracle}, if we evenly distribute the potential reduction of every Step-5A clusters to their nodes, each gets $\Omega(\epsilon L_i)$ unit of potential. Thus, $\my'$ has $\Delta^i_{L}(\my') = \Omega(|\mv(\my')|
+	\epsilon L_i)$ unit of potential reduction from $\mz$. By the same argument in \textbf{Case 1}, the weight of level-$i$ edges incident to  $\my'$ taken to $H_i$ is  $O(\frac{L_i}{\epsilon}) = O(|\mv(\my')|L_i)$ as $|\mv(\my')| = \Omega(\frac{1}{\epsilon})$. That is, the total weight of edges between blue paths in Step 4B and superclusters in Step 5A is at most:
+	
+	\begin{equation}\label{eq:H5B2}
+	O(\frac{1}{\epsilon}) \sum_{\mz \in \mathbb{X}_5}\Delta^i_{L}(\mz) = O(\frac{1}{\epsilon})\Delta^i_{L} 	
+	\end{equation}
+\end{itemize}
+
+
+	
+Finally, the lemma follows directly from Equations~\eqref{eq:H5B1},~\eqref{eq:H5B2}, and~\eqref{eq:H5B3}.  \qed
+\end{proof}
+
+We now  deal with the special case where no cluster is formed in Steps 1-3.
+\begin{lemma}\label{lm:pay-5B-exception}  If there is not supercluster formed in Steps 1-3, then $w(H_i) = O(L_i)$.
+\end{lemma}
+\begin{proof} Since no supercluster is formed in Step 1, $\mv(\mathcal{F}_1) = \mv_i$.
+	Since no supercluster is formed in Step 2  $\overline{\mathcal{F}}_2$, 
+	  is a  single (long) path $\overline{\mp}$, $\mathcal{B}_{far} = \emptyset$, and hence $\overline{\mf_3} = \overline{\mp}$. Step 4A will not happen and in Step 4B, $\overline{\mp}$ will be broken into subpaths of augmented diameter at least $5\zeta L_i$ and at most $12\zeta L_i$. Since $\mathcal{B}_{far} = \emptyset$ and edges in $\mathcal{B}_{close}$ are not added to $H_i$, any edge $e\in H_i$ (added in Step 5B) must be incident to a red node.  
+	
+	The augmented distance from any red node to at least one endpoint of $\overline{\mp}$ is at most $L_i$ by definition, and hence there are at most $2(\frac{L_i}{5\zeta  L_i}) = O(1)$ superclusters in Step 4B that are incident to level-$i$ edges. By  Corollary~\ref{cor:deg-C-5B}, there are $O(1)$ edges between any two superclusters. Thus, the total  weight of all edges added to $H_i$ is
+	\begin{equation*}
+	w(H_i) = O(1) L_i = O(L_i),
+	\end{equation*}
+	as claimed.\qed
+\end{proof}
+
+If there is no supercluster formed in Steps 1-3, then by Lemma~\ref{lm:pay-5B-exception}, $w(H) = O(L_i)$; clearly $\Delta^i_{L}\geq 0$. Otherwise, by Lemmas~\ref{lm:H5A},~\ref{lm:H5B} and~\ref{lm:H5C}, $w(H_i) =  (\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})\Delta^i_{L}$. Thus, in both cases, we conclude that:
+\begin{equation*}
+w(H_i) = O(\frac{\wsp_{\mathcal{O}_{G,t}}}{\epsilon})\Delta^i_{L} + O(L_i),
+\end{equation*}
+as claimed in Theorem~\ref{thm:cluster-opt-t2}.

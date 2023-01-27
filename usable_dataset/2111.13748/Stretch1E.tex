@@ -1,0 +1,273 @@
+
+\section{Clustering for Stretch $t = 1+ \eps$}\label{sec:stretch1E}
+
+In this section, we prove \Cref{lm:ConstructClusterHi} when the stretch $t = 1+\eps$. The key technical idea is the following clustering lemma, which is analogous to \Cref{lm:Clustering} in \Cref{sec:stretch2}; the highlighted texts below are the major differences.  Recall that $H_{< L_{i-1}} = \cup_{j=0}^{i-1} H_{j}$. 
+
+
+
+\begin{restatable}{lemma}{ClusteringE}
+	\label{lm:ClusteringE} Let $\mg_i = (\mv_i,\me_i)$ be the cluster graph. We can construct in polynomial time  (i) a collection $\mathbb{X}$ of subgraphs of $\mg_i$ and its partition into  two sets $\{\mathbb{X}^{+}, \mathbb{X}^{-}\}$ and (ii) a partition of $\me_i$ into three sets $\{\me_i^{\take}, \me_i^{\reduce}, \me_i^{\redunt}\}$ such that:
+	\begin{enumerate}
+		\item[(1)] For every subgraph $\mx \in \mathbb{X}$,  \hl{$\deg_{\mg^{\take}_i}(\mv(\mx)) = O(|\mv(\mx)|/\eps)$}  where $\mg^{\take}_i = (\mv_i,\me_i^{\take})$, and $\me(\mx)\cap \me_i \subseteq \me^{\take}$. Furthermore, if $\mx \in \mathbb{X}^{-}$, there is no edge in $\me_i^{\reduce}$ incident to a node in $\mx$.
+		
+		\item[(2)] Let $H_{< L_i}^{-}$ be a subgraph obtained by adding corresponding edges of $\me_i^{\take}$ to $H_{< L_{i-1}}$.  Then for every edge $(u,v)$ that corresponds to an edge in $\me^{\redunt}$, $d_{H_{< L_i}^{-}}(u,v)\leq(1+6g\eps)2d_G(u,v)$. 
+		
+		\item[(3)] Let $\Delta_{i+1}^+(\mx) = \Delta(\mx) + \sum_{\mbe \in \msttilde_i\cap \me(\mx)}w(\mbe)$ be the \emph{corrected potential change} of $\mx$. Then, $\Delta_{i+1}^+(\mx) \geq 0$ for every $\mx \in \mathbb{X}$ and 
+		\begin{equation}\label{eq:averagePotential-t1E}
+			\sum_{\mx \in \mathbb{X}^{+}} \Delta_{i+1}^+(\mx) = \sum_{\mx \in \mathbb{X}^{+}} \Omega(|\mv(\mx)|\eps L_i). 
+		\end{equation}
+		\item[(4)] \hl{There exists an orientation of edges in $\me_i^{\take}$ such that for every subgraph $\mx \in \mathbb{X}^{-}$, if $\mx$ has $t$ out-going edges for some $t\geq 0$, then $\Delta^+_{i+1}(\mx) =\Omega(|\mv(\mx)|t\eps^2 L_i)$}, unless a \emph{degenerate case} happens, in which  $\me^{\reduce}_i = \emptyset$ and  
+		\begin{center}
+			\hl{$\omega(\me_i^{\take}) = O(\frac{1}{\eps^2})(\sum_{\mx \in \mathbb{X}} \Delta_{i+1}^+(\mx) + L_i).$}
+		\end{center}
+ 		\item[(5)] For every subgraph $\mx \in \mathbb{X}$, $\mx$ satisfies the three properties (\hyperlink{P1'}{P1'})-(\hyperlink{P3'}{P3'}) with constant $g=31$. 
+	\end{enumerate}	
+\end{restatable}
+
+
+
+The total node degree of $\mx$ in $\mg_i^{\take}$ in \Cref{lm:ClusteringE} is worst than the total node degree of $\mx$  in \Cref{lm:Clustering} by a factor of $1/\eps$.  Furthermore, Item (4) of \Cref{lm:ClusteringE} is qualitatively different from  Item (4) of \Cref{lm:Clustering} and we no longer can bound the size of $\me_i^{\take}$ in the degenerate case. All of these are due to the fact that the stretch $t = 1+\eps < 2$ when $\eps < 1$. 
+
+
+
+Next we show to construct $H_i$ given that we can construct a set of subgraphs $\mathbb{X}$ as claimed in \Cref{lm:ClusteringE}. The proof of \Cref{lm:ClusteringE} is deferred to \Cref{subsec:clusteringTE}.
+
+\subsection{Constructing $H_i$: Proof of \Cref{lm:ConstructClusterHi} for $t = 1+\eps$.} \label{subsec:ConstructHiTE}
+
+
+Let $\msttilde^{in}_i(\mx) = \me(\mx)\cap \msttilde_i$ for each $\mx \in \mathbb{X}$. Let $\msttilde^{in}_i = \cup_{\mx \in \mathbb{X}}(\me(\mx)\cap \msttilde_i)$ be the set of $\msttilde_i$ edges that are contained in subgraphs in $\mathbb{X}$.   The construction of $H_i$ is exactly the same as the construction of $H_i$ in \Cref{subsec:ConstructHiT2}: first, add every edge of $\me_i^{\take}$ to $H_i$, and then apply \hyperlink{SPHigh}{$\sso$} on the subgraph of $\mg_i$ induced by $\me_i^{\reduce}$. Furthermore, \Cref{clm:Ki-clustergraph} and \Cref{obs:supportingPropHiT2} hold here.  
+
+We now bound the stretch of $F^\sigma_{i}$. Recall that $F^\sigma_{i}$ is the set of edges in $E^{\sigma}_i$ that correspond to $\mathcal{E}_i$.
+
+\begin{lemma}\label{lm:Hi-StretchT1E} For every edge $(u,v) \in F^\sigma_{i}$, $d_{H_{< L_i}}(u,v) \leq t(1+ \max\{s_{\sso}(2g),6g\}\eps)w(u,v)$.
+\end{lemma}
+\begin{proof}
+	By construction, edges in $F^{\sigma}_i$ that correspond to $\me_i^{\take}$ are added to $H_i$ and hence have stretch $1$. By Item (2) of \Cref{lm:ClusteringE}, edges in $F^{\sigma}_i$ that correspond to $\me_i^{\redunt}$ have stretch $ (1+6g\eps)\leq t(1+6g\eps)$ in $H_{< L_i}$ since $t\geq 1$. Thus, it remains to focus on edges corresponding to $\me_i^{\reduce}$. Let $(\varphi_{C_u},\varphi_{C_v}) \in \me^{\reduce}_i$ be the edge corresponding to an edge $(u,v \in F^{\sigma}_i$.  	Since we add all edges of $F$ to $H_i$, by property (2) of \hyperlink{SPHigh}{$\sso$}, the stretch of edge $(u,v)$ in $H_{< L_i}$ is at most $t(1+s_{\sso}(\beta)\eps) = t(1+s_{\sso}(2g)\eps)$ since $\beta  = 2g$ by \Cref{clm:Ki-clustergraph}.\qed
+\end{proof}
+
+
+Next, we bound the total weight of $H_i$.  
+
+
+
+\begin{lemma}\label{lm:Hi-WeightTE}  $w(H_i) \leq \lambda \Delta_{i+1} + a_i$ for $\lambda = O(\chi \eps^{-1}  + \eps^{-2})$  and $a_i =   O(\chi \eps^{-1} +\eps^{-2})w(\msttilde^{in}_i) + O(L_i/\eps^2)$.  
+\end{lemma}
+\begin{proof}  First, we consider the non-degenerate case. Note that edges in $\me^{\redunt}_i$ are not added to $H_i$. Let $\mv_i^{+} = \cup_{\mx \in \mathbb{X}^{+}}\mv(\mx)$ and  $\mv_i^{-} = \cup_{\mx \in \mathbb{X}^{-}}\mv(\mx)$. %By Item (4) of \Cref{lm:ClusteringE}, any edge in $\me^{\take}_i$ incident to a node in $\mv_i^{-}$ is also incident to a node in $\mv_i^{+}$.  
+	Let $F^{(a)}_i$ be the set of edges added to $H_i$ in the construction in Step $a$, $a\in \{1,2\}$. 
+	
+By the construction in Step 1, $F^{(1)}_i$ includes edges in $\me_i^{\take}$. 	Let $A^{(1)}\subseteq F^{(1)}_i$  be the set of edges incident to at least one node in $\mv_i^{+}$ and $A^{(2)}=F^{(1)}_i\setminus A^{(1)}$.  By Item (1) in \Cref{lm:ClusteringE}, the total weight of the edges added to $H_i$ in Step 1 is:
+	\begin{equation}\label{eq:A1TE}
+		\begin{split}
+			w(A^{(1)}_i)  &=  \sum_{\mx \in \mathbb{X}^{+}} O(|\mv(\mx)|/\eps) L_i \stackrel{\mbox{\tiny{\cref{eq:averagePotential-t1E}}}}{=}  O(\frac{1}{\eps^2})\sum_{\mx \in \mathbb{X}^{+}} \Delta^+_{i+1}(\mx)\\
+			&= O(\frac{1}{\eps^2})\sum_{\mx \in\mathbb{X}} \Delta^+_{i+1}(\mx)  \qquad \mbox{(since $\Delta^+_{i+1}(\mx)\geq 0 \quad \forall \mx \in \mathbb{X}$  by Item (3) in \Cref{lm:ClusteringE})} \\
+			&= O(\frac{1}{\eps^2})(\Delta_{i+1} + w(\msttilde^{in}_i)) \qquad \mbox{(by Item (1) of \Cref{obs:supportingPropHiT2})}~.
+		\end{split}
+	\end{equation}   
+By definition 	$A^{(2)}$ is the set of edges with both endpoints in subgraphs of $\mv_i^{-}$. Consider the orientation of $\me^{\take}_i$ as in \Cref{lm:ClusteringE}. Then, every edge of $A^{(2)}$ is an out-going edge from some node in a  graph in $\mathbb{X}^{-}$. For each graph $\mx \in \mathbb{X}^{-}$, by Item (4) of \Cref{lm:ClusteringE}, the total weight of incoming edges of $\mx$ is $O(t L_i) = O(1/\eps^2)\Delta^{+}_{i+1}(\mx)$. Thus,  we have:
+\begin{equation}\label{eq:A2TE}
+	\begin{split}
+		w(A^{(2)}_i)  &= O(\frac{1}{\eps^2})\sum_{\mx \in\mathbb{X}} \Delta^+_{i+1}(\mx)  \qquad \mbox{(since $\Delta^+_{i+1}(\mx)\geq 0 \quad \forall \mx \in \mathbb{X}$  by Item (3) in \Cref{lm:ClusteringE})} \\
+		&= O(\frac{1}{\eps^2})(\Delta_{i+1} + w(\msttilde^{in}_i)) \qquad \mbox{(by Item (1) of \Cref{obs:supportingPropHiT2})}~.
+	\end{split}
+\end{equation}  
+ Thus, by \Cref{eq:A1TE,eq:A2TE}, we have $w(F^{(1)}) = O(\frac{1}{\eps^2})(\Delta_{i+1} + w(\msttilde^{in}_i))$. By the exactly the same argument in \Cref{lm:Hi-WeightTE}, we have that $w(F^{(2)}) =O(\chi/\eps)(\Delta_{i+1} + w(\msttilde^{in}_i)) $. This gives: 
+\begin{equation}\label{eq:Hi-nondegenT1E}
+		\begin{split}
+			w(H_i) &=  O(\chi/\eps + 1/\eps^2) (\Delta_{i+1} + w(\msttilde^{in}_i)) \leq \lambda(\Delta_{i+1} + w(\msttilde^{in}_i))
+		\end{split}
+	\end{equation} 
+	for some $\lambda =  O(\chi/\eps + 1/\eps^2) $.
+	
+	
+	It remains to consider the degenerate case, and in which case, we only add to $H_i$ edges corresponding to $\me^{\take}_i$. Thus, by Item (4) of \Cref{lm:ClusteringE}, we have:
+	\begin{equation}\label{eq:Hi-degenT1E}
+		w(H_i) = O(\frac{L_i}{\eps^2}) \leq  \lambda\cdot (\Delta_{i+1} + w(\msttilde^{in}_i)) + O(\frac{L_i}{\eps^2}), 
+	\end{equation} 
+	since $\Delta_{i+1} + w(\msttilde^{in}_i) = \sum_{\mx\in \mathbb{X}}\Delta^+_{i+1}(\mx)$ by Item (1) in \Cref{obs:supportingPropHiT2}. Thus, the lemma follows from \Cref{eq:Hi-degenT1E,eq:Hi-nondegenT1E}. \qed
+\end{proof}
+
+We are now ready to prove \Cref{lm:ConstructClusterHi} for the case $t = 1+\eps$, which we restate below.
+
+\HiConstruction*
+\begin{proof} The fact that subgraphs in $\mathbb{X}$ satisfy the three properties (\hyperlink{P1'}{P1'})-(\hyperlink{P3'}{P3'}) with constant $g=223$ follows from Item (5) of \Cref{lm:ClusteringE}.  The stretch in $H_{< L_i}$ of edges in $F^{\sigma}_{i}$ follows from \Cref{lm:Hi-StretchT1E}.
+
+	By  \Cref{lm:Hi-WeightTE}, $w(H_i) \leq \lambda \Delta_{i+1} + a_i$ where  $\lambda = O(\chi \eps^{-1} +\eps^{-2})$  and $a_i =   O(\chi \eps^{-1} + \eps^{-2})w(\msttilde^{in}_i) + O(L_i/\eps^2)$. It remains to show that $A = \sum_{i\in \mathbb{N}^+}a_i = O(\chi \eps^{-1} + \eps^{-2})$.  Observe that
+	\begin{equation*}
+		\sum_{i\in \mathbb{N}^+}O(\frac{L_i}{\eps^2}) ~=~  O(\frac{1}{\epsilon^2}) \sum_{i=1}^{i_{\max}} \frac{L_{i_{\max}}}{\epsilon^{i_{\max}-i}} ~=~ O(\frac{L_{i_{\max}}}{\epsilon^2(1-\epsilon)}) ~=~ O(\frac{1}{\epsilon^2}) w(\mst)~;
+	\end{equation*}
+	here $i_{\max}$ is the maximum level. The last equation is due to that $\eps \leq 1/2$  and every edge has weight at most $w(\mst)$ since the weight of every is the shortest distance between its endpoints. By Item (2) of \Cref{obs:supportingPropHiT2},  $\sum_{i\in \mathbb{N}^+} \msttilde^{in}_i\leq w(\mst)$.  Thus, $A = O(\chi/\eps^2) + O(1/\eps^2)$ as desired.   \qed
+\end{proof}
+
+
+\subsection{Clustering} \label{subsec:clusteringTE}
+
+In this section, we prove \Cref{lm:ClusteringE}. The construction of $\mathbb{X}$ has 5 steps. The first four steps are exactly the same as the first four steps in the construction in \Cref{sec:stretch2}. In Step 5, we construct $\mathbb{X}^{\internal}_5$ differently, taking into account of edges in $\bar{\me}_i^{close}$ in \Cref{eq:Ebar-farclose}. Recall that when the stretch parameter $t\geq 2$, we show that edges in $\me_i$ corresponding to $\bar{\me}_i^{close}$ are added to $\me_i^{\redunt}$ (implicitly in \Cref{lm:Item4-Nonde}). However, when $t = 1+\eps$, we could not afford to do so, and the construction in Step 5 will take care of these edges.
+
+\paragraph{Steps 1-4.~} The construction of Steps 1 to 4 are exactly the same as Steps 1-4 in \Cref{subsec:clusteringT2} to obtain three sets of clusters $\mathbb{X}_1,\mathbb{X}_2$ and $\mathbb{X}_4$ whose properties are described in \Cref{lm:Clustering-Step1T2,lm:Clustering-Step2T2,lm:Clustering-Step3,lm:Clustering-Step4}. After the four steps, we obtain the forest $\Fbar^{(5)}_i$, where every tree is a path. In particular, \Cref{remark:Clustering-Step4} applies: for every edge $(\bmu,\bnu)\in \bar{\me}_i$ with both endpoints in $\Fbar^{(5)}_i$, either (i) the edge is in $ \bar{\me}^{close}_i(\Fbar^{(5)}_i)$, or (ii) at least one of the endpoints must belong to a low-diameter tree of $\Fbar^{(5)}_i$ or (iii) in a (red) suffix of a long path in $\Fbar^{(5)}_i$  of augmented diameter at most $L_i$.
+
+Before moving on to Step 5, we need a preprocessing step in which we find all edges in $\me^{\redunt}_i$. The construction of Step 5 relies on edges that are not in  $\me^{\redunt}_i$. 
+
+\paragraph{Constructing $\me_i^{\redunt}$ and $\me_i^{\take-}$.~} Let $\Ftilde^{(5)}_i$ be obtained from $\Fbar^{(5)}_i$ by uncontracting the contracted nodes.  We apply the greedy algorithm. Initially, both $\me_i^{\redunt}$ and $\me_i^{\take-}$ are empty sets.  We construct a graph $\mh_i = (\mv_i, \msttilde_{i}\cup \me_i^{\take-}, \omega)$, which initially only include edges in $\msttilde_{i}$. We then consider every edge $\mbe = (\nu\cup \mu) \in \me_i$, where both endpoints are in $\mv(\Ftilde^{(5)}_i)$, in the non-decreasing order of the weight. If:
+\begin{equation}\label{eq:greedy-HiE}
+	d_{\mh_i }(\nu,\mu) \leq (1+6g\eps) \omega(\mbe)~,
+\end{equation}
+then we add $\mbe$ to $\me_i^{\redunt}$. Otherwise, we add $\mbe$ to $\me_i^{\take-}$ (and hence to $\mh_i$).  Note that the distance in $\mh_i$ in \Cref{eq:greedy-HiE} is the augmented distance.  We have the following observation which follows directly from the greedy algorithm.
+
+\begin{observation}\label{obs:greedy-HiE} For every edge $\mbe = (\nu,\mu)  \in \me_i^{\take-}$, $d_{\mh_i }(\nu,\mu) \geq (1+6g\eps) \omega(\mbe)$.
+\end{observation}
+
+
+
+
+
+\paragraph{Step 5.~}  
+Let $\Pbar$ be  a path in  $\Fbar^{(5)}_i$ obtained by Item (5) of \Cref{lm:Clustering-Step4}. We construct two sets of subgraphs, denoted by $\mathbb{X}^{\internal}_5$ and $\mathbb{X}^{\prefix}_5$, of $\mg_i$. The construction is broken into two steps. Step 5A is only applicable when $\mathbb{X}_1 \cup \mathbb{X}_2\cup \mathbb{X}_4 \not= \emptyset$. In Step 5B, we need a more involved construction by ~\cite{LS19}, as described in \Cref{lm:Clustering-Step5B1E}. 
+
+\begin{itemize}
+	\item (Step 5A)\hypertarget{5A}{}  If $\Pbar$ has augmented diameter at most $6L_i$, let $\mbe$ be an $\widetilde{\mst}_i$ edge connecting $\Ptilde^{\uncontract}$  and a node in some subgraph $\mx \in \mathbb{X}_1\cup \mathbb{X}_2 \cup \mathbb{X}_4$; $\mbe$ exists by \Cref{lm:Clustering-Step4}. We add both $\mbe$ and $\Ptilde^{\uncontract}$ to $\mx$.
+	\item (Step 5B)\hypertarget{5B}{} 	Otherwise,  the augmented diameter of $\Pbar$ is at least $6L_i$.  Let $\{\Qbar_1, \Qbar_2\}$ be the suffix and prefix of $\Pbar$ such that $\Qbar^{\uncontract}_1$ and $\Qbar^{\uncontract}_2$ have augmented diameter at least $L_i$ and at most $2L_i$. If $\Qbar_j$, $j\in \{1,2\}$ is connected to a node in a subgraph $\mx \in \mathbb{X}_1 \cup \mathbb{X}_2\cup \mathbb{X}_4$ via an  edge $e\in \msttilde_{i}$, we add $\tilde{Q}^{\uncontract}_j$ and $e$ to $\mx$. 	If $\Qbar_j$ contains an endpoint of $\Pbar$, we add $\Qtilde_j^{\uncontract}$ to $\mathbb{X}^{\prefix}_5$. 
+	
+	Next, denote by $\Pbar^{'}$ the path obtained by removing $\Qbar_1, \Qbar_2$  from $\Pbar$. We then apply the construction in \Cref{lm:Clustering-Step5B1E} to $\Pbar^{'}$ to obtain a set of subgraphs $\mathbb{C}_5(\Pbar^{'})$ and an orientation of edges in  $\me^{\take-}_i(\Pbar')$, the set edges of $\me^{\take-}_i$	with both endpoints in  the uncontraction of $\Pbar^{'}$. We add all edges of  $\me^{\take-}_i(\Pbar')$ to a set $\me^{(5B)}_{i}$ (which is initially empty).  We then add all subgraphs in $\mathbb{C}_5(\Pbar^{'})$ to  $\mathbb{X}^{\internal}_5$.
+\end{itemize}
+
+
+The construction of Step 5B is described in the following lemma, which is a slight adaption of Lemma 6.17 in~\cite{LS19}. See \Cref{fig:5B} for an illustration. The construction crucially exploit the fact that  	$d_{\mh_i }(\nu,\mu) \leq (1+6g\eps) \omega(\mbe)$.  For completeness, we include the proof in \Cref{app:Clustering-5BProofE}.
+
+
+\begin{lemma}[Step 5B]\label{lm:Clustering-Step5B1E} Let $\Pbar$ be a path in $\Fbar^{(5)}_i$.  
+	Let  $\me^{\take-}_i(\Pbar)$ be the edges of $\me^{\take-}_i$
+	with both endpoints in $\Ptilde^{\uncontract}$. We can construct a set of subgraphs $\mathbb{C}_5(\Pbar)$ such that: 	
+	\begin{enumerate}
+		\item[(1)]  Subgraphs in $\mathbb{C}_5(\Pbar)$ contain every node in $\Ptilde^{\uncontract}$.
+		\item[(2)] For every subgraph $\mx\in \mathbb{C}_4(\Pbar)$, $\zeta L_i \leq \adm(\mx)\leq 5L_i$. Furthermore, $\mx$ is a subtree of $\Ptilde^{\uncontract}$ and some edges in  $\me^{\take-}_i(\Pbar)$  whose both endpoints are in $\mx$.
+		\item[(3)]  There is an orientation of edges in $\me^{\take-}_i(\Pbar)$  
+		such that, for any subgraph $\mx \in  \mathbb{C}_5(\Pbar)$,  if the total number of out-going edges incident to nodes in $\mx$ is $t$ for any $t\geq 0$, then:
+		\begin{equation}\label{eq:Step5Bpotential}
+			\Delta^+_{i+1}(\mx) =  \Omega(t\epsilon^2) L_i
+		\end{equation}
+	\end{enumerate}
+\end{lemma}
+
+
+\begin{figure}[!htb]
+	\center{\includegraphics[width=0.9\textwidth]{figs/Type-4}}
+	\caption{A path $\Pbar$, a cluster $\mx$, and a set of (blue) edges in $\me^{\take-}_i(\Pbar)$.
+		 White nodes are uncontracted nodes and black nodes are those in contracted nodes (triangular shapes). $\Delta^+_{i+1}(\mx) $ is proportional to the number of out-going edges from nodes in $\mx$, which is 3 in this case; there could be edges with both endpoints in $\mx$.}
+	\label{fig:5B}
+\end{figure} 
+
+We observe the following from the construction.
+\begin{observation}\label{obs:MEiTakeMinus} For every edge $\mbe \in \mathcal{E}_i^{\take-}$, either at least one endpoint of $\mbe$ is in a subgraph in $\mathbb{X}_5^{\prefix}$, or both endpoints of $\mbe$ are in $\me_i^{(5B)}$.
+\end{observation}
+
+
+The following lemma, which is analogous to \Cref{lm:Clustering-Step5}, describes properties of subgraphs in Step 5.
+
+\begin{lemma}\label{lm:Clustering-Step51E}  Every subgraph $\mx \in \mathbb{X}_5^{\internal} \cup \mathbb{X}_5^{\prefix}$ satisfies:
+	\begin{enumerate}[noitemsep]
+		\item[(1)] $\mx$ is a subtree of $\msttilde_{i}$ if $\mx\in \mathbb{X}_5^{\prefix}$.
+		\item[(2)] $\zeta L_i \leq \adm(\mx)\leq 20 L_i$.
+		\item[(3)] $|\mv(\mx)| = \Omega(1/\eps)$.
+	\end{enumerate}
+	Furthermore, if $\mx \in \mathbb{X}_5^{\prefix}$, then $\mx$ the uncontraction of a prefix/suffix subpath $\Qbar$ of a long path $\Pbar$, and additionally, the (uncontraction of) other suffix $\Qbar'$ of   $\Pbar$ is augmented to a subgraph in $\mathbb{X}_1 \cup \mathbb{X}_2\cup \mathbb{X}_4$, unless $\mathbb{X}_1 \cup \mathbb{X}_2\cup \mathbb{X}_4 = \emptyset$.
+\end{lemma}
+\begin{proof} Observe that if $\mx\in \mathbb{X}_5^{\prefix}$, then $\mx$ is a subtree of  $\msttilde_{i}$. Item (2) follows from the construction and Item (2) of \Cref{lm:Clustering-Step5B1E}.    Item (3) follows  from \Cref{lm:size-MSTsubree}, and the last claim about subgraphs in  $\mathbb{X}_5^{\prefix}$ follows from \Cref{lm:Clustering-Step4}.
+	\qed
+\end{proof}
+
+
+
+In the next section, we prove \Cref{lm:ClusteringE}. 
+
+
+\subsubsection{Constructing $\mathbb{X}$ and the partition of $\me_i$:  Proof of \Cref{lm:ClusteringE}}\label{subsec:X-T1E}
+  We distinguish two cases:
+ 
+ \paragraph{Degenerate Case.~} The degenerate case is the case where   $\mathbb{X}_1\cup \mathbb{X}_2\cup \mathbb{X}_4 =  \emptyset$. In this case, we set $\mathbb{X} = \mathbb{X}^{-} =  \mathbb{X}_5^{\internal} \cup \mathbb{X}_5^{\prefix}$, and $	\mathbb{X}^{+} = 	 \emptyset$. 
+ 
+ \paragraph{Non-degenerate case.~} We define:
+ \begin{equation}\label{eq:MathbbX1E}
+ 	\begin{split}
+ 		\mathbb{X}^{+} &=    \mathbb{X}_1\cup \mathbb{X}_2\cup \mathbb{X}_4 \cup \mathbb{X}_5^{\prefix}, \quad
+ 		\mathbb{X}^{-} = \mathbb{X}_5^{\internal}\\
+ 		\mathbb{X} &= 	\mathbb{X}^{+}\cup \mathbb{X}^{-} 
+ 	\end{split}
+ \end{equation}
+
+ 
+ Next, we construct the partition of $\{\me^{\take}_i, \me^{\redunt}_i, \me_i^{\reduce}\}$ of $\me_i$. Recall that we constructed two edge sets $\me_i^{\redunt}$  and $\me^{\take-}_i$ above (\Cref{eq:greedy-HiE}). We then construct $\me_i^{\take}$ as described below. It follows that $\me^{\reduce}_i = \me_i\setminus (\me_i^{\take}\cup \me_i^{\redunt})$.
+ 
+ \begin{tcolorbox}
+ 	\hypertarget{EiPartition1E}{}
+ 	\textbf{Constructing $\me_i^{\take}$:} Let $\mv_i^{+} = \cup_{\mx\in \mathbb{X}^{+}}\mv(\mx)$ and $\mv_i^{-} = \cup_{\mx\in \mathbb{X}^{-}}\mv(\mx)$. 	First, we add all edges in  $\me^{\take-}_i$ to $\me^{\take}_i$. Next, we add $ (\cup_{\mx\in \mathbb{X}}\me(\mx)\cap \me_i)$ to $\me_i^{\take}$. Finally, for every edge $\mbe \in \me_i\setminus \me_i^{\redunt}$ such that $\mbe$ is incident to at least one node in $\mv_i^{-}$, we add $\mbe$ to   $\me_i^{\take}$.
+ \end{tcolorbox}
+ 
+  
+In the analysis below, we only explicitly  distinguish the degenerate case from the non-degenerate case when it is necessary, i.e, in the proof Item (4) of \Cref{lm:ClusteringE}. Otherwise, which case we are in is either implicit from the context, or does not matter.
+
+We observe that Item (2) in \Cref{lm:ClusteringE} follows directly from the construction of $\me_i^{\redunt}$. Henceforth, we focus on proving other items of \Cref{lm:ClusteringE}.  We first show Item (5).
+
+
+\begin{lemma}\label{lm:XProp1E} Let $\mathbb{X}$ be the subgraph as defined in \Cref{eq:MathbbX1E}. For every subgraph $\mx \in \mathbb{X}$, $\mx$ satisfies the three properties (\hyperlink{P1'}{P1'})-(\hyperlink{P3'}{P3'}) with $g = 31$. Consequently, Item (5) of \Cref{lm:ClusteringE} holds.
+\end{lemma}
+\begin{proof} 	We observe that property \hyperlink{P1'}{(P1')} follows directly from the construction.  Property \hyperlink{P2'}{(P2')} follows directly from \Cref{lm:Clustering-Step1T2,lm:Clustering-Step2T2,lm:Clustering-Step4,lm:Clustering-Step51E}. We now bound  $\adm(\mx)$. The lower bound on $\adm(\mx)$ follows directly from Item (3) of \Cref{lm:Clustering-Step1T2}, Items (2) of \Cref{lm:Clustering-Step2T2,lm:Clustering-Step4,lm:Clustering-Step51E}. For the upper bound, by the same argument in \Cref{lm:XProp}, if $\mx$ is initially formed in Steps 1-4, then $\adm(\mx)\leq 31L_i$. Otherwise, by \Cref{lm:Clustering-Step51E}, $\adm(\mx) \leq 5L_i$, which implies  property \hyperlink{P3'}{(P3')} with $g= 31$. \qed %The fact that $\me(\mx)\cap \me_i =  \emptyset$ follows from Item (1) of \Cref{lm:Clustering-Step5B1E}. Thus, Item (5) of \Cref{lm:Clustering} holds. \qed
+\end{proof}
+
+
+
+ We observe that \Cref{lm:manynodes} and  \Cref{lm:Item3Clustering} holds for $\mathbb{X}^{+}$, which we restate below in \Cref{lm:manynodes1E} and \Cref{lm:Item3Clustering1EHigh}, respectively. In particular,  \Cref{lm:Item3Clustering1EHigh} implies Item (3) of \Cref{lm:ClusteringE}.
+
+
+\begin{lemma}\label{lm:manynodes1E} For any subgraph $\mx \in \mathbb{X}$ such that $|\mv(\mx)|\geq \frac{2g}{\zeta\eps}$ or $\Delta^+_{i+1}(\mx) = \Omega(L_i)$, then $\Delta^+_{i+1}(\mx) = \Omega(\eps L_i |\mv(\mx)|)$.
+\end{lemma}
+
+\begin{lemma}\label{lm:Item3Clustering1EHigh}   $\Delta_{i+1}^+(\mx) \geq 0$ for every $\mx \in \mathbb{X}$ and 
+	\begin{equation*}
+		\sum_{\mx \in \mathbb{X}^{+}} \Delta_{i+1}^+(\mx) = \sum_{\mx \in\mathbb{X}^{+}} \Omega(|\mv(\mx)|\eps L_i). 
+	\end{equation*}
+\end{lemma}
+
+
+We now prove Item (1) of \Cref{lm:ClusteringE}, which we restate here for convenience.
+
+
+\begin{lemma}\label{lm:Item1Clustering1E} For every subgraph $\mx \in \mathbb{X}$,  $\deg_{\mg^{\take}_i}(\mv(\mx)) = O(|\mv(\mx)|/\eps)$  where $\mg^{\take}_i = (\mv_i,\me_i^{\take})$, and $\me(\mx)\cap \me_i \subseteq \me^{\take}$. Furthermore, if $\mx \in \mathbb{X}^{-}$, there is no edge in $\me_i^{\reduce}$ incident to a node in $\mx$.
+\end{lemma}
+\begin{proof} 	Let $\mv^{\highp}_i = \cup_{\mx\in \mathbb{X}_1}\mx$. Note by the construction in Step 1 (\Cref{lm:Clustering-Step1T2}), nodes in $\mv_i\setminus \mv^{\highp}_i$ have degree $O(\frac{1}{\eps})$. Let $\me_i^{(1)}$  be the set of edges in $\me_i^{\take}$ with both endpoints in $\mv^{\highp}_i$ and $\me_i^{2} =\me_i^{\take}\setminus \me_i^{(1)}$. Also by the construction in Step 1 (\Cref{lm:Clustering-Step1T2}), both endpoints of every edge in $\me_i^{2}$ have degree $O(1/\eps)$. Thus, for any $\mx\in \mathbb{X}$, the number of edges in $\me_i^{(2)}$ incident to nodes in $\mx$ is $O(|\mv(\mx)|/\eps)$. 
+	
+	Next, we consider  $\me_i^{(1)}$. Observe by the construction of $\me_i^{\take}$ that there is no edge in  $\me_i^{(1)}$  with two endpoints in two \emph{different graphs} of $\mathbb{X}_1$. Furthermore, since $\mx$ is a tree for every subgraph $\mx\in \mathbb{X}_1$, the number of edges in  $\me_i^{(1)}$   incident to nodes in $\mx$ is $O(|\mv(\mx)|)$. This bound also holds for every subgraph $\mx$ not in $\mathbb{X}_1$ since the number of incident edges in $\me_i^{(1)}$ is 0; this implies the claimed bound on $\deg_{\mg^{\take}_i}(\mv(\mx))$.
+	
+	For the last claim, we observe that nodes in subgraphs of  $\mathbb{X}^{-}$ are in $\mv_i^{-}$. Thus, by the construction of $\me_i^{\take}$, every edge incident to a node of  $\mx \in \mathbb{X}^{-}$ is either in $\me_i^{\take}$ or $\me_i^{\redunt}$.\qed
+\end{proof}
+
+
+We now focus on proving Item (4) of \Cref{lm:ClusteringE} which we restate below.
+
+
+\begin{lemma}\label{lm:Item4Clustering1E}  There exists an orientation of edges in $\me_i^{\take}$ such that for every subgraph $\mx \in \mathbb{X}^{-}$, if $\mx$ has $t$ out-going edges for some $t\geq 0$, then $\Delta^+_{i+1}(\mx) =\Omega(|\mv(\mx)|t\eps^2 L_i)$, unless a \emph{degenerate case} happens, in which  $\me^{\reduce}_i = \emptyset$ and  $$\omega(\me_i^{\take}) = O(\frac{1}{\eps^2})(\sum_{\mx \in \mathbb{X}} \Delta_{i+1}^+(\mx) + L_i).$$
+\end{lemma}
+\begin{proof} First, we consider the non-degenerate case. Recall that $\{\mv^+_i,\mv^-_i\}$ is a partition of $\mv_i$ in the \hyperlink{EiPartition1E}{construction of $\me_i^{\take}$}. We orient edges of $\me_i^{\take}$ as follows.
+	
+	First, for any $\mbe = (\mu,\nu)\in \me_i^{\take}$ such that at least one endpoint, say $\mu \in \mv_i^+$, we orient $\mbe$ as out-going from $\mu$. (If both $\mu,\nu$ are in $\mv_i^+$, we orient $\mbe$ arbitrarily).  Remaining  edges are subsets  of $\me_i^{(5B)}$ by \Cref{obs:MEiTakeMinus}. We orient edges in  $\me_i^{(5B)}$ as in the construction of Step 5B.	For every subgraph  $\mx \in \mathbb{X}^{-}$, by construction, out-going edges incident to nodes in $\mx$ are in $\me_i^{(5B)}$. By Item (3) of \Cref{lm:Clustering-Step5B1E}, $\Delta^+_{i+1}(\mx) =\Omega(|\mv(\mx)|t\eps^2 L_i)$.
+	
+	
+	It remains to consider the degenerate case. In this case,  by the same argument in \Cref{lm:degenerate}, 	$\Fbar^{(5)}_i = \Fbar^{(4)}_i = \Fbar^{(3)}_i$, and $\Fbar^{(5)}_i$  is a single (long) path. Furthermore, $\me_i^{\take} = \me_i^{\take-}$, and $|\mathbb{X}_5^{\prefix}| = 2$.  We orient edges in  $\me_i^{(5B)}$ as in the construction of Step 5B, and other edges of $\me_i^{\take}$, which must be incident to nodes in subgraphs of $\mathbb{X}_5^{\prefix}$, are oriented as out-going from subgraphs in  $\mathbb{X}_5^{\prefix}$. 	By Item (3) of \Cref{lm:ClusteringE}, for any subgraph $\mx \in \mathbb{X}^{\internal}_5$ that has $t$ out-going edges, the total weight of the out-going edges is at  most $tL_i = O(1/\eps) \Delta^+_{i+1}(\mx)$. Thus, $\omega(\me_i^{(5B)}) =  O(1/\eps) \sum_{\mx \in \mathbb{X}^{\internal}_5}\Delta^+_{i+1}(\mx) = O(1/\eps^2)\sum_{\mx \in \mathbb{X}}\Delta^+_{i+1}(\mx) $.
+	
+	It remains to consider edges incident to at leas one node in a subgraph in $\mathbb{X}_5^{\prefix}$ by \Cref{obs:MEiTakeMinus}. Let $\mx \in \mathbb{X}_5^{\prefix}$. Observe that if $|\mv(\mx)|\geq \frac{2g}{\zeta\eps}$, then
+	\begin{equation*}
+		\begin{split}
+			\Delta_{i+1}^+(\mx) &= O(|\mv(\mx)|\eps L_i)  \qquad \mbox{(by \Cref{lm:manynodes1E})}\\
+			& =  O(|\deg_{\mg_i^{\take}}(\mx)|\eps^2 L_i)   \qquad \mbox{(by Item (1) of \Cref{lm:ClusteringE})}
+		\end{split}
+	\end{equation*}
+	Otherwise, $|\mv(\mx)| \leq \frac{2g}{\zeta\eps}$, and hence $|\deg_{\mg_i^{\take}}(\mx)| = O(1/\eps^2)$ by Item (1) of \Cref{lm:ClusteringE}. This implies that the total weight of edges incident to $\mx$ is at most $|\deg_{\mg_i^{\take}}(\mx)| L_i = O(1/\eps^2) (\Delta_{i+1}^+(\mx) + L_i)$. Since $|\mathbb{X}_5^{\prefix}| = 2$ and $\Delta^+_{i+1}(\mx)\geq 0$ for every $\mx \in \mathbb{X}$ by Item (3) of \Cref{lm:ClusteringE}, we have that the total weight of edges ncident to at leas one node in a subgraph in $\mathbb{X}_5^{\prefix}$ is $O(\frac{1}{\eps^2})(\sum_{\mx \in \mathbb{X}} \Delta_{i+1}^+(\mx) + L_i)$. The lemma now follows.  \qed
+\end{proof}
+
+
+
+
+
+
+
+
+

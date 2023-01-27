@@ -1,0 +1,132 @@
+\section{Introduction}
+
+
+Quantum error correcting (QEC) codes~\cite{Fowler2012SurfaceCT, Chamberland2020BuildingAF, Chamberland2020TopologicalAS} are vital for implementing fault-tolerant quantum computation and overcoming the noise present in quantum hardware~\cite{Preskill2018QuantumCI, Holmes2020NISQBQ}. Quantum device vendors are exploring various quantum error correction codes to boost the error tolerance of quantum computation. For example, Google exploits the repetition code~\cite{nielsen2002quantum} to suppress errors in their Sycamore device~\cite{google50296}, IBM extends the surface code~\cite{Fowler2012SurfaceCT} to their low-degree superconducting quantum computers~\cite{Chamberland2020}, and Amazon utilizes the concatenated cat code~\cite{Chamberland2020BuildingAF} to build a fault-tolerant qubit.
+
+
+
+A central concept in QEC code design is that of a ``stabilizer''~\cite{Gottesman1997StabilizerCA}. The term refers to a quantum operator which expresses the correlations present among the physical qubits forming the logical qubit. Operations to encode logical states or detect and correct errors can be derived once the stabilizers of the QEC code are provided.
+In a stabilizer code, these primitive operations over logical qubits consist of quantum programs, one for each primitive.
+As an example, Fowler et al.~\cite{Fowler2012SurfaceCT} developed a series of programs on the surface code to implement the primitive operations (e.g., a logical X gate, H gate, and CNOT gate) necessary for universal fault-tolerant quantum computation.
+While executing these primitives, any stabilizer code implementation requires frequent measurements of the physical qubits to detect possible hardware errors and, thus, apply the appropriate correction operation.
+
+
+
+
+When analyzing the correctness of a stabilizer code, there are two key aspects that need to be considered:
+1) \textit{the correctness of the logical operation:} The stabilizer code must implement the desired logical operation over the logical qubits by applying several physical operations over the consituent physical qubits. %
+2) \textit{the capability of error correction:} 
+When hardware errors happen, there exist protocols for error decoding and correction which are based on the information extracted by measurements in QEC codes. %
+
+
+
+To the best of our knowledge, there is no formal verification framework for QEC codes yet.
+Previous works on quantum error correction~\cite{Fowler2012SurfaceCT, Chamberland2020TopologicalAS, Lao2020FaulttolerantQE, Chao2019FlagFE, Noh2020FaulttolerantBQ} demonstrate the correctness of the proposed QEC protocol by numerical simulation on QEC programs. 
+However, this approach does not provide formal proof for the correctness of QEC codes.
+We asked ourselves the question:
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{center}
+    \textit{Can one formally verify QEC codes}\\
+    \textit{using existing verification frameworks}\\
+    \textit{for general quantum programs since QEC codes} \\
+	\textit{are effectively a kind of quantum program?}
+\end{center}
+
+
+In this vein, one well-developed method for quantum program verification~\cite{ Wu2019FullstateQC,Zhou2019AnAQ, Li2020ProjectionbasedRA} is to use dynamic techniques such as quantum simulation. 
+This category of methods can accurately characterize the quantum state evolution of small quantum programs but can not scale up to large quantum programs with more than 50 qubits due to the exponential computation overhead~\cite{Wu2019FullstateQC}.
+This poor scalability of dynamic methods makes it inefficient for the verification of QEC codes since  
+a reasonably fault-tolerant logical qubit would inevitably involve many physical qubits~\cite{Fowler2012SurfaceCT}.
+
+Another type of verification works~\cite{Ying2012FloydhoareLF, Ying2018ReasoningAP, Unruh2019QuantumHL, DHondt2006QuantumWP,Selinger2004TowardsAQ, Feng2020QuantumHL, Feng2021VerificationOD}, exploits static analysis techniques to reason about quantum programs. 
+These works all naturally incur exponential computation overhead since they need to track the evolution of some Hermitian matrices, which are of dimension $O(4^n)$ for a $n$-qubit system. 
+Yu and Palsberg~\cite{Yu2021QuantumAI} recently proposed a computationally efficient quantum abstract interpretation technique to reason about the correctness for certain kinds of assertions.
+Yet, trading in accuracy is not suitable for the verification of QEC codes which requires exact correctness.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thus, our answer to the question above is:
+
+\begin{center}
+    \textit{No, adopting general verification frameworks }\\
+    \textit{sacrifices either scalability or accuracy. } 
+\end{center}
+%
+
+To this end, we build a formal verification framework crafted for quantum stabilizer codes to squeeze out the best verification efficiency without compromising accuracy.
+Our approach rests on a central idea: while realizing scalable verification for a general quantum program is hard, it might be possible 
+to efficiently verify the QEC codes
+with a delicate separation between the hard and easy parts in the verification process.    
+We observe
+that most parts in verifying QEC codes turn out to fall into the easy region 
+because they can be efficiently processed by preserving the high-level stabilizer information. 
+In particular, stabilizers provide a compact description for QEC codes~\cite{Gottesman1997StabilizerCA}. Major components in QEC codes, e.g., error channels, Clifford gates, and parity measurements can all be described within the stabilizer formalism. Besides, it only takes $O(n^2)$ complexity to emulate Clifford operations on stabilizers~\cite{nielsen2002quantum}. Using stabilizers as predicates, we can potentially avoid unnecessary exponential computation overhead  in general quantum program reasoning. 
+
+
+
+
+
+
+
+We first propose a concise QEC programming language, {\langname}, where stabilizers are treated as first-class objects. 
+This allows {\langname} to represent in an intuitive and compact form different operations in the QEC implementation, ranging from encoding to decoding and to error correction.
+We develop operational semantics and denotational semantics for {\langname}, which lays the foundation for building up the syntax-directed verification system. 
+One key enabler for our semantics design is the separation between quantum states of the physical qubits and the information captured by the stabilizers. 
+It describes the former with partial density matrices and treats the latter as a classic program state. 
+It significantly simplifies the computations associated with the stabilizers by avoiding the direct description of how the stabilizers are measured and instead focusing on how the high-level information is used in the decoding stage.
+
+We further develop a new assertion language, named {\assnname}, in which the predicates are defined by stabilizers.
+To enhance the logical expressive power, we introduce not only the standalone stabilizers, but also the arithmetic and logical expressions of them for expressing assertions.
+The key insight behind such a design is to form a universal state space for verification, as a standalone stabilizer could not represent the whole state space. 
+We also remark that, despite our {\langname} and {\assnname} are crafted for QEC codes, their design allows for broader applicability. Any quantum programs and quantum predicates that could be expressed in the {\qwhilelang}~\cite{Ying2012FloydhoareLF} and Hermitian-based predicates~\cite{DHondt2006QuantumWP} can also be %
+expressed in our languages. With such an elegant property, our languages could potentially serve as the common foundation of both general quantum programs and QEC designs. It will therefore avoid the dilemma of choosing
+between a general but less effective language or a domain-specific but more effective language. 
+
+
+Together with {\langname} and {\assnname}, we further establish a sound quantum Hoare logic for QEC programs. 
+This proof system can demonstrate exponential time and space saving for most QEC operations (e.g., state preparation, Pauli gates, and error detection) when, in a real QEC program, the predicate formulae is commutable with the stabilizer variable in our quantum Hoare logic.
+Even for the most challenging verification of the logical T gate implementation, our proof system may still have this strong advantage, depending on the actual T gate implementation of the target QEC code.
+
+
+
+
+
+
+We give both theoretical analysis and detailed case studies for evaluating the proposed framework. 
+We first compare {\myFrameworkName} with the vanilla quantum Hoare logic~\cite{Ying2012FloydhoareLF} and quantum \textbf{while}-language~\cite{Ying2012FloydhoareLF} in terms of the complexity when describing and verifying the quantum stabilizer codes. 
+We then give very detailed, step-by-step case studies of two well-known QEC codes. This allows the reader to familiarize the concepts behind our framework and its usage for verifying the correctness of quantum stabilizer codes.
+
+
+To summarize, our major contributions are as follows:
+\begin{itemize}
+    \item We propose {\langname}, a concise  programming language for QEC codes and give a full specification of its syntax and operational/denotational semantics. 
+    \item We formulate a new assertion language {\assnname}. It is the first effort that exploits stabilizers for building universal assertions on quantum states.
+    \item We develop a sound quantum Hoare logic framework based on {\assnname} and {\langname} with a set of inference rules to verify the correctness of QEC programs. 
+    \item  We demonstrate the effectiveness of our framework with both theoretical complexity analysis and in-depth case studies of two well-known stabilizer QEC codes.
+\end{itemize}
+
+
+
