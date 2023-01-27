@@ -16,7 +16,22 @@ def create_connection(db_file):
     except Error as e:
         print(e)
 
-def create_table(conn,create_table_sql):
+def create_table(conn):
+    create_table_sql = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
+                                               entry_id INTEGER PRIMARY KEY,
+                                               paper_id text ,
+                                               submitter text ,
+                                               authors text ,
+                                               title text ,
+                                               comments text ,
+                                               journal_ref text,
+                                               doi text,
+                                               report_no text,
+                                               categories text,
+                                               license text,
+                                               abstract text,
+                                               update_date text
+                                           ); """
     try:
         c = conn.cursor()
         c.execute(create_table_sql)
@@ -90,23 +105,8 @@ if __name__ == '__main__':
     unzip_meta_dataset(dataset_zipped_file_name)
     
     conn = create_connection(database_name)
-    sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS meta_data_entrys (
-                                            entry_id INTEGER PRIMARY KEY,
-                                            paper_id text ,
-                                            submitter text ,
-                                            authors text ,
-                                            title text ,
-                                            comments text ,
-                                            journal_ref text,
-                                            doi text,
-                                            report_no text,
-                                            categories text,
-                                            license text,
-                                            abstract text,
-                                            update_date text
-                                        ); """
 
-    create_table(conn,sql_create_projects_table)
+    create_table(conn)
 
     count = count_entries_in_json(file_path)
 

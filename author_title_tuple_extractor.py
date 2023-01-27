@@ -12,7 +12,9 @@ from bibitem_parsing.bibitem_parser import BibitemParser
 """
 Skript for going over the extracted Dataset and extracting the Author title tuples does so with utilizing multiple threads
 """
-class ExtractedParserBot:
+
+
+class AuthorTitleTuplesExtractor:
     def __init__(self, dataset_folder_path, paper_to_start: str = None) -> None:
         self.paper_to_start = paper_to_start
         self.dataset_folder_path = dataset_folder_path
@@ -73,6 +75,6 @@ class ExtractedParserBot:
 
 
 if __name__ == "__main__":
-    parser = ExtractedParserBot("usable_dataset/")
+    parser = AuthorTitleTuplesExtractor("usable_dataset/")
     print("Parser started")
     parser.run()

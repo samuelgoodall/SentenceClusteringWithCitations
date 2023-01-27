@@ -179,7 +179,6 @@ class BibitemParser():
         except IsADirectoryError:
             data = tex_input_file + "could not be read"
             sys.stderr.write("Error message: Is a directory. \n")
-            pass
         return data
 
     def convert_texfile_2_author_title_tuples(self, tex_input_file: bytes, algorithm: Algorithm):
@@ -211,7 +210,6 @@ class BibitemParser():
             except UnicodeDecodeError:
                 result_string: str = ""
                 sys.stderr.write("Error message: Contains none unicode characters.\n")
-                pass
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
 
@@ -231,7 +229,6 @@ class BibitemParser():
             return zipped_list
         except UnicodeDecodeError:
             sys.stderr.write("Error message: Contains none unicode characters.\n")
-            pass
         return []
 
     def _convert_neural_parscit_output_too_author_title_tuple(self, labels, input_text):
@@ -262,17 +259,3 @@ class BibitemParser():
                 failed_author_title_tuples.append(author_title_tuple)
 
         return accepted, all_count, cleaned_author_title_tuples, failed_author_title_tuples
-
-
-if __name__ == "__main__":
-    tex_input_file = 'symperC.bbl'  # '/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/tex2bib-master/example-cites.tex'
-
-    bibitemparser = BibitemParser()
-
-    author_title_tuples = bibitemparser.convert_texfile_2_author_title_tuples(tex_input_file=tex_input_file,
-                                                                              algorithm=Algorithm.NeuralParcite)
-    for at in author_title_tuples:
-        print("Author:", at[0][0])
-        print("Title:", at[0][1])
-        print("\n")
-    print(bibitemparser.check_how_many_titles_are_usable(author_title_tuples))
