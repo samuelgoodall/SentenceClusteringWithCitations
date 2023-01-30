@@ -1,3 +1,4 @@
+import csv
 import os
 import re
 import sys
@@ -6,16 +7,15 @@ import uuid
 import pybtex.errors
 from pybtex.database.input import bibtex
 
+from bibitem_parsing.bibitem_parser import BibitemParser
 from texparser.information_extractor import InformationExtractor
 from texparser.SentenceListGenerator import SentenceListGenerator
 
 
 class QualitativeInformationExtractor(InformationExtractor):
-    
 
     _cite_symbols = ["\cite{", "\citet{", "\citep{", "\citet*{", "\citep*{", "\citeauthor{", "\citeyear{"]
 
-    sentence_dataset = []
     
     def get_related_work_beginning(self, complete_file_string: str) -> int:
         related_work_symbol_position = -1
@@ -79,10 +79,6 @@ class QualitativeInformationExtractor(InformationExtractor):
         return clean_sentence_list                     
     
     def clean_sentence(self, sentence:str):
-        #one paper writes headings in bold, good enough reason to exclude those?
-        #bold, italic, itemize,... list for formatting commands?
-        #everything in this format: \jsah{kjt}, that is not cite or sections?
-        #inside of bracket usually shows up, but sometimes a little different, but after slash not
         command_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{.*?})|\s)")
         text_in_command_as_group_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{(.*?)})|\s)")
         command_list = re.findall(command_regex, sentence)
@@ -105,23 +101,22 @@ class QualitativeInformationExtractor(InformationExtractor):
                     citation_list.append(single_citation)
                 citation_list.remove(citation)
         return citation_list
-    #necessary to remove duplicates?
     
     def check_bibliography_type(self, paper_folder_path: str) -> str:
         file_endings = ['.bib', '.bbl']
         bib_file_found = False
         bibliography_path = ""
-        for file_name in os.listdir(paper_folder_path):
+        for file_name in os.listdir(str(paper_folder_path)):
             if file_name.endswith(file_endings[0]):
                 bibliography_path = os.path.join(paper_folder_path, file_name)
                 bib_file_found = True
                 break
         if not bib_file_found:
-            for file_name in os.listdir(paper_folder_path):
+            for file_name in os.listdir(str(paper_folder_path)):
                 if file_name.endswith(file_endings[1]):
                     bibliography_path = os.path.join(paper_folder_path, file_name)
                     break
-        return bibliography_path #maybe this function is unnecessary, make it different!!
+        return bibliography_path
     
     def find_titel_for_citation_bib(self, citation_keyword: str, bib_file: str):
         parser = bibtex.Parser()
@@ -154,49 +149,63 @@ class QualitativeInformationExtractor(InformationExtractor):
         bibitem = sliced_bibliography[:end_bibitem]
         return bibitem
     
-    def fill_data_set(self, paper_folder_path: str):
-        for file_name in os.listdir(paper_folder_path):
+    def fill_data_set(self, paper_folder_path: str, output_file: str):
+        sentence_dataset = []
+        for file_name in os.listdir(str(paper_folder_path)):
             if file_name.endswith(".tex"):
                 absolute_paper_path = os.path.join(paper_folder_path, file_name)
-                with open(absolute_paper_path, 'r', encoding="utf-8") as file:
-                    try:
-                        complete_file_string = file.read()
-                        paper_ID = uuid.uuid3(uuid.NAMESPACE_DNS, complete_file_string).urn
-                        if self.get_related_work_beginning(complete_file_string) != -1:
-                            related_work_string = self.get_related_work(complete_file_string)
-                            paragraphs = self.get_paragraphs(related_work_string)
-                            for index, paragraph in enumerate(paragraphs):
-                                paragraph_ID = uuid.uuid3(uuid.NAMESPACE_DNS, paragraph).urn
-                                citation_paragraph_end = self.find_citations_paragraph_end(paragraph)
-                                paragraphs[index] = self.delete_citation_paragraph_end(paragraph, citation_paragraph_end)
-                                sentences = self.get_sentences(paragraphs[index])
-                                for index, sentence in enumerate(sentences):
-                                    sentences[index] = self.put_citation_paragraph_end_in_sentence(sentence, citation_paragraph_end)
-                                clean_sentences = self.delete_without_citations(sentences)
-                                for count, sentence in enumerate(clean_sentences):
-                                    sentence_ID = uuid.uuid3(uuid.NAMESPACE_DNS, sentence).urn
-                                    citations_list = self.get_citation_keywords(sentence)
-                                    clean_sentences[count] = self.clean_sentence(sentence)
-                                    citation_titel_list = []
-                                    citation_author_list = []
-                                    none_titel = 0
-                                    bibliography_path = self.check_bibliography_type(paper_folder_path)
-                                    if bibliography_path.endswith(".bib"):
-                                        for citation in citations_list:
-                                            titel, author = self.find_titel_for_citation_bib(citation, bibliography_path)
-                                            if titel is None:
-                                                none_titel = none_titel + 1
-                                                break
-                                            citation_titel_list.append(titel)
-                                            citation_author_list.append(author)
-                                    elif bibliography_path.endswith(".bbl"):
-                                        for citation in citations_list:
-                                            bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
-                                            #titel = function to parse bibitem!!
-                                            titel = bibitem #just for now to test
-                                            citation_titel_list.append(titel)
-                                    if len(citations_list) > none_titel:
-                                        self.sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})
-                    except UnicodeDecodeError:
-                        sys.stderr.write("Error message: Contains none unicode characters.\n")           
-                        
+                try:
+                    with open(absolute_paper_path, 'r', encoding="utf-8") as file:
+                        try:
+                            complete_file_string = file.read()
+                            paper_ID = uuid.uuid3(uuid.NAMESPACE_DNS, complete_file_string).urn
+                            if self.get_related_work_beginning(complete_file_string) != -1:
+                                related_work_string = self.get_related_work(complete_file_string)
+                                paragraphs = self.get_paragraphs(related_work_string)
+                                for index, paragraph in enumerate(paragraphs):
+                                    paragraph_ID = uuid.uuid3(uuid.NAMESPACE_DNS, paragraph).urn
+                                    citation_paragraph_end = self.find_citations_paragraph_end(paragraph)
+                                    paragraphs[index] = self.delete_citation_paragraph_end(paragraph, citation_paragraph_end)
+                                    sentences = self.get_sentences(paragraphs[index])
+                                    for index, sentence in enumerate(sentences):
+                                        sentences[index] = self.put_citation_paragraph_end_in_sentence(sentence, citation_paragraph_end)
+                                    clean_sentences = self.delete_without_citations(sentences)
+                                    for count, sentence in enumerate(clean_sentences):
+                                        sentence_ID = uuid.uuid3(uuid.NAMESPACE_DNS, sentence).urn
+                                        citations_list = self.get_citation_keywords(sentence)
+                                        clean_sentences[count] = self.clean_sentence(sentence)
+                                        citation_titel_list = []
+                                        citation_author_list = []
+                                        none_titel = 0
+                                        bibliography_path = self.check_bibliography_type(paper_folder_path)
+                                        if bibliography_path.endswith(".bib"):
+                                            for citation in citations_list:
+                                                titel, author = self.find_titel_for_citation_bib(citation, bibliography_path)
+                                                if titel is None:
+                                                    none_titel = none_titel + 1
+                                                    break
+                                                citation_titel_list.append(titel)
+                                                citation_author_list.append(author)
+                                        elif bibliography_path.endswith(".bbl"):
+                                            for citation in citations_list:
+                                                bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
+                                                #titel = function to parse bibitem!!
+                                                author, titel = convert_single_bib_item_string_2_author_title_tuple
+                                                citation_titel_list.append(titel)
+                                        if len(citations_list) > none_titel:
+                                            sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})
+                            file_exists = os.path.isfile(output_file)
+                            with open(output_file, 'w', newline='') as f:
+                                writer = csv.DictWriter(f, fieldnames=["sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID"])
+                                if not file_exists:
+                                    writer.writeheader()
+                                for row in sentence_dataset:
+                                    writer.writerow(row)
+                        except UnicodeDecodeError:
+                            sys.stderr.write("Error message: Contains none unicode characters.\n")           
+                except FileNotFoundError:
+                    sys.stderr.write("Error message: File does not exist.\n")
+                except PermissionError:
+                    sys.stderr.write("Error message: Access denied.\n")
+                except IsADirectoryError:
+                    sys.stderr.write("Error message: Is a directory. \n")
