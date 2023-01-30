@@ -3,7 +3,8 @@ import sys
 import unittest
 
 sys.path.append(".")
-from database.database import Citation, Sentence, engine, session_factory
+from database.database import (Citation, Paragraph, Sentence, engine,
+                               session_factory)
 
 
 class DatabaseTest(unittest.TestCase):
@@ -32,6 +33,14 @@ class DatabaseTest(unittest.TestCase):
         loaded_sentence = self.session.query(Sentence).first()
         self.assertEqual(loaded_sentence, saved_sentence, "sentence citation relation not saved in database")
         
+    def test_sentence_paragraph_relation(self) -> None:
+        saved_sentence = Sentence("Sentence")
+        saved_sentence.paragraph = Paragraph()
+        self.session.add(saved_sentence)
+        self.session.commit()
+        loaded_sentence = self.session.query(Sentence).first()
+        self.assertEqual(loaded_sentence, saved_sentence, "sentence paragraph relation not saved in database")
+
     def tearDown(self) -> None:
         engine.dispose()
         os.remove("student.db")
