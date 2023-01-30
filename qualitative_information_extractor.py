@@ -46,21 +46,21 @@ class QualitativeInformationExtractor(InformationExtractor):
     
     def split_on_empty_lines(self, s: str) -> list:
         # greedily match 2 or more new-lines, but not inside quote
-        blank_line_regex = r"(?:\r?\n){2,}(?=(?:[^'\"]|'[^']*'|\"[^\"]*\")*$)" 
+        blank_line_regex = r"(?:\r?\n){2,}(?=(?:[^\"]|\"[^\"]*\")*$)" 
         return re.split(blank_line_regex, s.strip())
     
     def get_paragraphs(self, related_work:str) -> list:
-        subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{(?:\S+(?:\S+,\s?\S+)*)})*|(?:\[.*?\])"
+        subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{.*?})*|(?:\[.*?\])"
         related_work = re.sub(subsection_regex, "\n\n", related_work)
         return self.split_on_empty_lines(related_work)
     
     def find_citations_paragraph_end(self, paragraph: str):
-        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)})$"
-        citation_paragraph_end = re.search(citation_paragraph_end_regex, paragraph)
+        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{.*?})$"
+        citation_paragraph_end = re.search(citation_paragraph_end_regex, paragraph) #
         return citation_paragraph_end
     
     def delete_citation_paragraph_end(self, paragraph:str, citation_paragraph_end):
-        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)})$"
+        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{.*?})$"
         if citation_paragraph_end is not None:
             paragraph = re.sub(citation_paragraph_end_regex, "", paragraph)
         return paragraph   
@@ -97,7 +97,7 @@ class QualitativeInformationExtractor(InformationExtractor):
     
     def get_citation_keywords(self, sentence):
         citation_regex = r"~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}"
-        citation_list = re.findall(citation_regex, sentence) 
+        citation_list = re.findall(citation_regex, sentence) ##
         for citation in citation_list:
             if citation.find(",") != -1:
                 multiple_citations = [clean_citation.strip() for clean_citation in citation.split(",")]
@@ -193,14 +193,14 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         elif bibliography_path.endswith(".bbl"):
                                             for citation in citations_list:
                                                 bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
-                                                #titel = function to parse bibitem!!
-                                                author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                # author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                titel = bibitem
                                                 citation_titel_list.append(titel)
-                                                citation_author_list.append(author)
+                                                #citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
                                             sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})            
                             file_exists = os.path.isfile(output_file)
-                            with open(output_file, 'w', newline='') as f:
+                            with open(output_file, 'a', newline='') as f:
                                 writer = csv.DictWriter(f, fieldnames=["sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID"])
                                 if not file_exists:
                                     writer.writeheader()
