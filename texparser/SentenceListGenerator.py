@@ -30,7 +30,7 @@ class SentenceListGenerator:
 
             abbreviations = abbreviations.replace(".", '\.').splitlines(keepends=False)
             abbrev_regex = ")(?<!\s".join(abbreviations)
-            quote_regex = "(?=(?:[^'\"]|'[^']*'|\"[^\"]*\")*$)" #add to not split sentences inside quotes
+            quote_regex = "(?=(?:[^\"]|\"[^\"]*\")*$)" #add to not split sentences inside quotes
             self._sentence_split_regex_ = re.compile(fr"(?<!\w\.\w.)(?<!\s{abbrev_regex})(?<![A-Z][a-z]\.)(?<=[.?!])\s{quote_regex}")
             
             logging.info(f"{self.get_name()}: Successfully created regex {self._sentence_split_regex_}")
