@@ -4,12 +4,11 @@ import string
 import subprocess
 import sys
 
-from bibitem_parsing.algorithmEnum import Algorithm
+from algorithmEnum import Algorithm
 
 
-#import torch
-#from sciwing.models.neural_parscit import NeuralParscit
-
+# import torch
+# from sciwing.models.neural_parscit import NeuralParscit
 
 
 class BibitemParser():
@@ -201,7 +200,7 @@ class BibitemParser():
             try:
                 result = subprocess.run(
                     ['php', self.php_convertion_script_file,
-                    tex_input_file],  # program and arguments
+                     tex_input_file],  # program and arguments
                     text=True,
                     capture_output=True,
                     check=True  # raise exception if program fails
@@ -210,6 +209,7 @@ class BibitemParser():
             except UnicodeDecodeError:
                 result_string: str = ""
                 sys.stderr.write("Error message: Contains none unicode characters.\n")
+
             citation_entry_strings = result_string.split("\n\n")
             author_title_tuples = list(map(self._convert_bibtexstring_2_author_title_tuple, citation_entry_strings))
 
@@ -230,6 +230,22 @@ class BibitemParser():
         except UnicodeDecodeError:
             sys.stderr.write("Error message: Contains none unicode characters.\n")
         return []
+
+    def convert_single_bib_item_string_2_author_title_tuple(self, bib_item_str: str):
+        try:
+            result = subprocess.run(
+                ['php', self.php_convertion_script_file, "",
+                 bib_item_str],  # program and arguments
+                text=True,
+                capture_output=True,
+                check=True  # raise exception if program fails
+            )
+            result_string: string = result.stdout
+            author_title_tuple = self._convert_bibtexstring_2_author_title_tuple(result_string)
+            print("result_string", author_title_tuple)
+        except UnicodeDecodeError:
+            result_string: str = ""
+            sys.stderr.write("Error message: Contains none unicode characters.\n")
 
     def _convert_neural_parscit_output_too_author_title_tuple(self, labels, input_text):
         tuplelist = list(zip(labels.split(), input_text.split()))
@@ -259,3 +275,9 @@ class BibitemParser():
                 failed_author_title_tuples.append(author_title_tuple)
 
         return accepted, all_count, cleaned_author_title_tuples, failed_author_title_tuples
+
+
+if __name__ == "__main__":
+    bib_item_str = "\\bibitem{abnar2021exploring}\nSamira Abnar, Mostafa Dehghani, Behnam Neyshabur, and Hanie Sedghi.\n\\newblock {Exploring the Limits of Large Scale Pre-training}.\n\\newblock {\\em arXiv preprint arXiv:2110.02095}, 2021."
+    bib_item_parser = BibitemParser()
+    bib_item_parser.convert_single_bib_item_string_2_author_title_tuple(bib_item_str)
