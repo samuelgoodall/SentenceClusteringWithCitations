@@ -242,7 +242,7 @@ class BibitemParser():
             )
             result_string: string = result.stdout
             author_title_tuple = self._convert_bibtexstring_2_author_title_tuple(result_string)
-            print("result_string", author_title_tuple)
+            return author_title_tuple
         except UnicodeDecodeError:
             result_string: str = ""
             sys.stderr.write("Error message: Contains none unicode characters.\n")
