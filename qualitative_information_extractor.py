@@ -139,6 +139,9 @@ class QualitativeInformationExtractor(InformationExtractor):
         except UnicodeDecodeError:
             titel = None
             author = None
+        except:
+            titel = None
+            author = None
         return titel, author
     
     def find_bibitem_for_citation_bbl(self, citation_keyword: str, bib_file: str):
