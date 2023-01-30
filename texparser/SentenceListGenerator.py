@@ -22,8 +22,8 @@ class SentenceListGenerator:
 
         Creates a new regex based on the abbreviations list. Uses simpler regex if this fails.
         """
-        self._comment_regex_ = re.compile(r"^(.*[^\\])?%.*")  # used to filter comments
-
+        #self._comment_regex_ = re.compile(r"^(.*[^\\])?%.*")  # used to filter comments
+        self._comment_regex_ = re.compile(r"(?<!\\)%.*")
         try:
             with open("texparser/SentenceListAbbreviations.txt") as abbrev:
                 abbreviations = abbrev.read()
@@ -55,22 +55,16 @@ class SentenceListGenerator:
         #text = task.latex_text
         #text_content = str(task.latex_soup.document)
 
-        # to remove hashtags:
-        for match in self._comment_regex_.finditer(text_content):
-            text_content = text_content.replace(match[0], "")
+        # to remove comments:
+        for matches in self._comment_regex_.findall(text_content):
+            for match in matches:
+                text_content = text_content.replace(match[0], "")
 
         text_content = re.sub(r"\s", " ", text_content)
 
         parsed = re.split(self._sentence_split_regex_, text_content)
-        print(parsed)
-        length_sum = 0
-        positions = []
-        for idx, sentence in enumerate(parsed):
-            length = len(sentence)
-            positions.append(length_sum + idx)
-            length_sum += length
 
-        return list(zip(parsed, positions))
+        return list(parsed)
 
     def get_name(self) -> str:
         return "Sentence List Generator"
