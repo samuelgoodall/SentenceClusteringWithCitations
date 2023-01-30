@@ -56,7 +56,7 @@ class QualitativeInformationExtractor(InformationExtractor):
     
     def find_citations_paragraph_end(self, paragraph: str):
         citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{.*?})$"
-        citation_paragraph_end = re.search(citation_paragraph_end_regex, paragraph) #
+        citation_paragraph_end = re.search(citation_paragraph_end_regex, paragraph) 
         return citation_paragraph_end
     
     def delete_citation_paragraph_end(self, paragraph:str, citation_paragraph_end):
@@ -97,7 +97,7 @@ class QualitativeInformationExtractor(InformationExtractor):
     
     def get_citation_keywords(self, sentence):
         citation_regex = r"~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}"
-        citation_list = re.findall(citation_regex, sentence) ##
+        citation_list = re.findall(citation_regex, sentence)
         for citation in citation_list:
             if citation.find(",") != -1:
                 multiple_citations = [clean_citation.strip() for clean_citation in citation.split(",")]
@@ -125,15 +125,19 @@ class QualitativeInformationExtractor(InformationExtractor):
     def find_titel_for_citation_bib(self, citation_keyword: str, bib_file: str):
         parser = bibtex.Parser()
         pybtex.errors.set_strict_mode(False)
-        bib_data = parser.parse_file(bib_file)
-        bib_data.entries.keys()
         try:
-            titel = bib_data.entries[citation_keyword].fields['title']
-        except KeyError:
+            bib_data = parser.parse_file(bib_file)
+            bib_data.entries.keys()
+            try:
+                titel = bib_data.entries[citation_keyword].fields['title']
+            except KeyError:
+                titel = None
+            try:
+                author = bib_data.entries[citation_keyword].fields['author']
+            except KeyError:
+                author = None
+        except UnicodeDecodeError:
             titel = None
-        try:
-            author = bib_data.entries[citation_keyword].fields['author']
-        except KeyError:
             author = None
         return titel, author
     
