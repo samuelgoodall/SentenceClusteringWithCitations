@@ -4,7 +4,8 @@ import shutil
 
 from tqdm import tqdm
 
-from texparser.information_extractor import InformationExtractor
+from texparser.quantitative_information_extractor import \
+    QuantitativeInformationExtractor
 from texparser.tar_extractor import TarExtractor
 
 
@@ -15,7 +16,7 @@ class ParserBot:
         self.extract_folder_path = extract_folder_path
         self.tarExtractor = TarExtractor(
             self.dataset_folder_path, self.extract_folder_path)
-        self.informationExtractor = InformationExtractor()
+        self.informationExtractor = QuantitativeInformationExtractor()
 
     def run(self):
         self.tarExtractor.create_extract_folder_path()
@@ -54,7 +55,7 @@ class ParserBot:
                 backup_file.writelines(json.dumps(data, indent=7))
 
 
-if __name__ == "__main__":
-    parser = ParserBot("arXiv_src_1705_015.tar", "content/", "extract/")
-    print("Parser started")
-    parser.run()
+# if __name__ == "__main__":
+#     parser = ParserBot("arXiv_src_1505_016.tar", "content/", "extract/")
+#     print("Parser started")
+#     parser.run()
