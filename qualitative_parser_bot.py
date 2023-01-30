@@ -23,14 +23,15 @@ class QualitativeParserBot:
     def run(self):
         foldernames = os.listdir(self.dataset_folder_path)
         paper_folder_paths = list(map(lambda foldername: os.path.join(self.dataset_folder_path, foldername), foldernames))
-        split_of_paper_folder_path_list = np.array_split(np.array(paper_folder_paths), 8)        
-        processes = []
-        for i in range(8):
-            processes.append(Process(target = self.function_for_process, args = (split_of_paper_folder_path_list[i], os.path.join(self.output_folder, "data" + str(i) + ".csv"))))
-        for p in processes:
-            p.start()
-        for p in processes:
-            p.join()
+        self.function_for_process(paper_folder_paths, os.path.join(self.output_folder, "data" + ".csv"))
+        # split_of_paper_folder_path_list = np.array_split(np.array(paper_folder_paths), 1)        
+        # processes = []
+        # for i in range(1):
+        #     processes.append(Process(target = self.function_for_process, args = (split_of_paper_folder_path_list[i], os.path.join(self.output_folder, "data" + str(i) + ".csv"))))
+        # for p in processes:
+        #     p.start()
+        # for p in processes:
+        #     p.join()
         
     def log_progress(self, last_folder: str, count: int) -> None:
         if count % 20 == 0:
@@ -41,6 +42,7 @@ class QualitativeParserBot:
 
 
 if __name__ == "__main__":
+    
     qualitative_parser = QualitativeParserBot("usable_dataset/", "output/")
     print("Parser started")
     qualitative_parser.run()
