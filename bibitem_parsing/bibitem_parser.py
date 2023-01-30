@@ -275,9 +275,3 @@ class BibitemParser():
                 failed_author_title_tuples.append(author_title_tuple)
 
         return accepted, all_count, cleaned_author_title_tuples, failed_author_title_tuples
-
-
-if __name__ == "__main__":
-    bib_item_str = "\\bibitem{abnar2021exploring}\nSamira Abnar, Mostafa Dehghani, Behnam Neyshabur, and Hanie Sedghi.\n\\newblock {Exploring the Limits of Large Scale Pre-training}.\n\\newblock {\\em arXiv preprint arXiv:2110.02095}, 2021."
-    bib_item_parser = BibitemParser()
-    bib_item_parser.convert_single_bib_item_string_2_author_title_tuple(bib_item_str)
