@@ -8,8 +8,7 @@ class BibitemParserTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(BibitemParserTest, self).__init__(*args, **kwargs)
         # TODO make it read from a configuration file
-        self.bibitem_parser = BibitemParser(
-            php_convertion_script_file='/mnt/c/Users/sgoodall/Desktop/archive/NLPProjekt/bibitem_parsing/php_script_tex2bib/index.php')
+        self.bibitem_parser = BibitemParser()
         self.test_bib_item_with_newblock = "\bibitem{ahsan2019video}\nUnaiza Ahsan, Rishi Madhok, and Irfan Essa.\n\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}.\n\newblock In {\em WACV}, pages 179--189. IEEE, 2019."
 
     def setUp(self) -> None:
@@ -18,13 +17,13 @@ class BibitemParserTest(unittest.TestCase):
     def test_strip_special_chars__stringInput_cleanedString(self):
         # arrange
         test_input = "\\newblock {Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}"
-        asserted_output = "{Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for\n Video Action Recognition}"
+        asserted_output = "{Video Jigsaw: Unsupervised Learning of Spatiotemporal Context for Video Action Recognition}"
 
         # act
         output = self.bibitem_parser._strip_special_chars(test_input)
 
         # assert
-        self.assertTrue(output == asserted_output)
+        self.assertEqual(output, asserted_output)
 
     def test_strip_special_chars__emptyStringInput_returnStringInput(self):
         # arrange
@@ -87,6 +86,16 @@ class BibitemParserTest(unittest.TestCase):
         # act&assert
         with self.assertRaises(AssertionError) as context:
             self.bibitem_parser._strip_letter_encasing(testinput)
+
+
+    def test_convert_bibtexstring_2_author_title_tuple__StringInput1_returnCorrectStringInput(self):
+        # arrange
+        testinput = "@book{zsllwd20,\nauthor = {Xizhou Zhu and Weijie Su and Lewei Lu and Bin Li and Xiaogang Wang and Jifeng Dai.},\ntitle = {Sequence to sequence learning with\n  neural networks,},\nyear = {2020},\naddress = {},\npublisher = {ICLR}  \end{thebibliography},}"
+        asserted_output = "Sequence to sequence learning with neural networks"
+        # act
+        author, output = self.bibitem_parser._convert_bibtexstring_2_author_title_tuple(testinput)
+        # assert
+        self.assertEqual(asserted_output, output)
 
     def test_clean_string__noneStringInput_AssertionError(self):
         # arrange
