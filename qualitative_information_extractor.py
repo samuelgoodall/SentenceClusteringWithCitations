@@ -13,6 +13,10 @@ from texparser.SentenceListGenerator import SentenceListGenerator
 
 
 class QualitativeInformationExtractor(InformationExtractor):
+    
+    def __init__(self):
+        super().__init__()
+        self.bibitem_parser = BibitemParser()
 
     _cite_symbols = ["\cite{", "\citet{", "\citep{", "\citet*{", "\citep*{", "\citeauthor{", "\citeyear{"]
 
@@ -190,10 +194,11 @@ class QualitativeInformationExtractor(InformationExtractor):
                                             for citation in citations_list:
                                                 bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
                                                 #titel = function to parse bibitem!!
-                                                author, titel = convert_single_bib_item_string_2_author_title_tuple
+                                                author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
                                                 citation_titel_list.append(titel)
+                                                citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
-                                            sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})
+                                            sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})            
                             file_exists = os.path.isfile(output_file)
                             with open(output_file, 'w', newline='') as f:
                                 writer = csv.DictWriter(f, fieldnames=["sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID"])
