@@ -55,12 +55,12 @@ class QualitativeInformationExtractor(InformationExtractor):
         return self.split_on_empty_lines(related_work)
     
     def find_citations_paragraph_end(self, paragraph: str):
-        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{.*?})$"
+        citation_paragraph_end_regex = r"~?\\cite(?:.*?)(?:\[.*?\])*{(.+?)}$"
         citation_paragraph_end = re.search(citation_paragraph_end_regex, paragraph) 
         return citation_paragraph_end
     
     def delete_citation_paragraph_end(self, paragraph:str, citation_paragraph_end):
-        citation_paragraph_end_regex = r"~?(?:\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{.*?})$"
+        citation_paragraph_end_regex = r"~?\\cite(?:.*?)(?:\[.*?\])*{(.+?)}$"
         if citation_paragraph_end is not None:
             paragraph = re.sub(citation_paragraph_end_regex, "", paragraph)
         return paragraph   
@@ -96,7 +96,8 @@ class QualitativeInformationExtractor(InformationExtractor):
         return sentence
     
     def get_citation_keywords(self, sentence):
-        citation_regex = r"~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}"
+        #~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}
+        citation_regex = r"~?\\cite(?:.*?)(?:\[.*?\])*{(.+?)}"
         citation_list = re.findall(citation_regex, sentence)
         for citation in citation_list:
             if citation.find(",") != -1:
@@ -200,10 +201,9 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         elif bibliography_path.endswith(".bbl"):
                                             for citation in citations_list:
                                                 bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
-                                                # author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
-                                                titel = bibitem
+                                                author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
                                                 citation_titel_list.append(titel)
-                                                #citation_author_list.append(author)
+                                                citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
                                             sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})            
                             file_exists = os.path.isfile(output_file)
