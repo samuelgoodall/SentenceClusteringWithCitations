@@ -4,7 +4,7 @@ import string
 import subprocess
 import sys
 
-from algorithmEnum import Algorithm
+from .algorithmEnum import Algorithm
 
 
 # import torch
