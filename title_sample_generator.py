@@ -13,6 +13,7 @@ def main(dataset_folder_path: str):
     abs_paper_paths = list(map(lambda paper_folder: os.path.join(os.path.abspath(dataset_folder_path), paper_folder),
                                paper_paths))
 
+    print(len(abs_paper_paths))
     # get all papers with bbl files
     bbl_paper_paths = []
     for paper_path in abs_paper_paths:
