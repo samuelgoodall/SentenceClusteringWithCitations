@@ -17,10 +17,8 @@ def main(dataset_folder_path: str):
     # get all papers with bbl files
     bbl_paper_paths = []
     for paper_path in abs_paper_paths:
-        print("paper_path:", paper_path)
         for filename in (os.listdir(str(paper_path))):
             if filename.endswith(".bbl"):
-                print(".bblFOUND")
                 bbl_paper_paths.append(paper_path)
 
     print(len(bbl_paper_paths))
@@ -28,9 +26,7 @@ def main(dataset_folder_path: str):
     paper_sample = rand.sample(bbl_paper_paths, 100)
     title_examples = []
     for paper_path in paper_sample:
-        print("PAPER", paper_path)
         for filename in (os.listdir(str(paper_path))):
-            print("FILE:", filename)
             if filename.endswith(".bbl"):
                 bbl_paper_paths.append(paper_path)
                 abs_file_path = os.path.join(paper_path, filename)
@@ -45,4 +41,4 @@ def main(dataset_folder_path: str):
 
 
 if __name__ == "__main__":
-    main("usable_dataset/")
+    main("usable_dataset/usable_dataset/")
