@@ -18,9 +18,7 @@ def main(dataset_folder_path: str):
     # get all papers with bbl files
     bbl_paper_paths = []
     for paper_path in abs_paper_paths:
-        print("PAPER", paper_path)
         for filename in (os.listdir(str(paper_path))):
-            print("FILE:", filename)
             if filename.endswith(".bbl"):
                 bbl_paper_paths.append(paper_path)
 
@@ -34,12 +32,10 @@ def main(dataset_folder_path: str):
             if filename.endswith(".bbl"):
                 bbl_paper_paths.append(paper_path)
                 abs_file_path = os.path.join(paper_path, filename)
-                print("absfilepath", abs_file_path)
                 author_title_tuples = bibitem_parser.convert_texfile_2_author_title_tuples(abs_file_path,
                                                                                            Algorithm.Bib2Tex)
                 title_tuples = list(map(lambda tuple: (tuple[0][1], tuple[1]), author_title_tuples))
                 title_examples += title_tuples
-                print("AuthorTitleTUplesLen:", len(author_title_tuples))
 
     results = rand.sample(title_examples, 100)
     with open("results.json", "w") as author_title_tuples_json:
