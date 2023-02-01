@@ -18,6 +18,7 @@ def main(dataset_folder_path: str):
     for paper_path in abs_paper_paths:
         for filename in (os.listdir(str(paper_path))):
             if filename.endswith(".bbl"):
+                print(".bblFOUND")
                 bbl_paper_paths.append(paper_path)
 
     print(len(bbl_paper_paths))
