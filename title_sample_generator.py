@@ -2,8 +2,6 @@ import json
 import os
 import random as rand
 
-import numpy as np
-
 from bibitem_parsing.algorithmEnum import Algorithm
 from bibitem_parsing.bibitem_parser import BibitemParser
 
@@ -23,7 +21,8 @@ def main(dataset_folder_path: str):
                 bbl_paper_paths.append(paper_path)
 
     print(len(bbl_paper_paths))
-    paper_sample = np.random.choice(bbl_paper_paths, size=100, replace=False)
+    # paper_sample = np.random.choice(bbl_paper_paths, size=100, replace=False)
+    paper_sample = rand.sample(bbl_paper_paths, 100)
     title_examples = []
     for paper_path in paper_sample:
         print("PAPER", paper_path)
