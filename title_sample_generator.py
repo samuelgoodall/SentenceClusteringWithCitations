@@ -16,6 +16,7 @@ def main(dataset_folder_path: str):
     # get all papers with bbl files
     bbl_paper_paths = []
     for paper_path in abs_paper_paths:
+        print("paper_path:", paper_path)
         for filename in (os.listdir(str(paper_path))):
             if filename.endswith(".bbl"):
                 print(".bblFOUND")
