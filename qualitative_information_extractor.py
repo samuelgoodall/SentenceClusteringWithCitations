@@ -3,6 +3,7 @@ import os
 import re
 import sys
 import uuid
+import warnings
 
 import pybtex.errors
 from pybtex.database.input import bibtex
@@ -140,7 +141,8 @@ class QualitativeInformationExtractor(InformationExtractor):
         except UnicodeDecodeError:
             titel = None
             author = None
-        except:
+        except Exception as e:
+            warnings.warn("Caught error: {}.\nOriginal error message: {}".format(bib_file, e))
             titel = None
             author = None
         return titel, author
@@ -205,10 +207,12 @@ class QualitativeInformationExtractor(InformationExtractor):
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
-                                            sentence_dataset.append({'sentenceID': sentence_ID, 'sentence': clean_sentences[count], 'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 'PaperID': paper_ID, 'ParagraphID': paragraph_ID})            
+                                            sentence_dataset.append({'Foldername': paper_folder_path, 'sentenceID': sentence_ID, 'sentence': clean_sentences[count],
+                                                                     'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 
+                                                                     'PaperID': paper_ID, 'ParagraphID': paragraph_ID, 'Bibliography used': bibliography_path})            
                             file_exists = os.path.isfile(output_file)
                             with open(output_file, 'a', newline='') as f:
-                                writer = csv.DictWriter(f, fieldnames=["sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID"])
+                                writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID", "Bibliography used"])
                                 if not file_exists:
                                     writer.writeheader()
                                 for row in sentence_dataset:
