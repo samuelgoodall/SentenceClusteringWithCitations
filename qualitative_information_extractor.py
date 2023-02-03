@@ -83,18 +83,10 @@ class QualitativeInformationExtractor(InformationExtractor):
                 clean_sentence_list.append(sentence)     
         return clean_sentence_list                     
     
-    def clean_sentence(self, sentence:str):
-        command_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{.*?})|\s)")
-        text_in_command_as_group_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{(.*?)})|\s)")
-        command_list = re.findall(command_regex, sentence)
-        text_list = re.findall(text_in_command_as_group_regex, sentence)
-        for count, command in enumerate(command_list):
-            if (text_list[count] != "itemize"):
-                sentence = sentence.replace(command, text_list[count])
-            else:
-                sentence = sentence.replace(command, "")
-        sentence = re.sub(r"(?<!\\)\$.*?\$", "", sentence)
-        return sentence
+    def compile_latex_to_text(self, sentence: str):
+        sentence = re.sub(r"(?<!\\)\$[^\\]*?\$", "", sentence)
+        plain_text  = LatexNodes2Text().latex_to_text(sentence)
+        return plain_text
     
     def get_citation_keywords(self, sentence):
         #~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}
