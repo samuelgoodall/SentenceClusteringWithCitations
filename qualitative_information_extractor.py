@@ -84,7 +84,16 @@ class QualitativeInformationExtractor(InformationExtractor):
     
     def compile_latex_to_text(self, sentence: str):
         sentence = re.sub(r"(?<!\\)\$[^\\]*?\$", "", sentence)
-        plain_text  = LatexNodes2Text().latex_to_text(sentence)
+        try:
+            plain_text  = LatexNodes2Text().latex_to_text(sentence)
+        except Exception:
+            #do cleaning yourself
+            command_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{.*?})|\s)")
+            command_list = re.findall(command_regex, sentence)
+            for command in command_list:
+                sentence = sentence.replace(command, "")
+            plain_text = sentence
+        #delete <cit.> and <ref>?
         return plain_text
     
     def get_citation_keywords(self, sentence):
@@ -121,6 +130,8 @@ class QualitativeInformationExtractor(InformationExtractor):
             pybtex.errors.set_strict_mode(False)
             bib_data = parser.parse_file(bib_file)
         except UnicodeDecodeError:
+            bib_data = None
+        except Exception:
             bib_data = None
         return bib_data
     
@@ -197,7 +208,8 @@ class QualitativeInformationExtractor(InformationExtractor):
                                             for citation in citations_list:
                                                 bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
                                                 try:
-                                                    author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                    author, titel = "", ""
+                                                    #author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
                                                 except TypeError:
                                                     author, titel = "", ""
                                                 citation_titel_list.append(titel)
