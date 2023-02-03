@@ -3,10 +3,10 @@ import os
 import re
 import sys
 import uuid
-import warnings
 
 import pybtex.errors
 from pybtex.database.input import bibtex
+from pylatexenc.latex2text import LatexNodes2Text
 
 from bibitem_parsing.bibitem_parser import BibitemParser
 from texparser.information_extractor import InformationExtractor
@@ -31,8 +31,7 @@ class QualitativeInformationExtractor(InformationExtractor):
                 length = len(related_work_symbol)
                 break
         return related_work_symbol_position + length
-    
-                
+          
     def get_related_work_end(self, complete_file_string:str) -> int:
         related_work_symbol_position = self.get_related_work_beginning(complete_file_string)
         related_work_length = self.length_related_work(complete_file_string, related_work_symbol_position)
@@ -116,12 +115,17 @@ class QualitativeInformationExtractor(InformationExtractor):
                     break
         return bibliography_path
     
-    def find_titel_for_citation_bib(self, citation_keyword: str, bib_file: str):
-        parser = bibtex.Parser()
-        pybtex.errors.set_strict_mode(False)
+    def initialize_bib_parser(self, bib_file: str):
         try:
+            parser = bibtex.Parser()
+            pybtex.errors.set_strict_mode(False)
             bib_data = parser.parse_file(bib_file)
-            bib_data.entries.keys()
+        except UnicodeDecodeError:
+            bib_data = None
+        return bib_data
+    
+    def find_titel_for_citation_bib(self, citation_keyword: str, bib_data):
+        if bib_data is not None:
             try:
                 titel = bib_data.entries[citation_keyword].fields['title']
             except KeyError:
@@ -130,13 +134,8 @@ class QualitativeInformationExtractor(InformationExtractor):
                 author = bib_data.entries[citation_keyword].fields['author']
             except KeyError:
                 author = None
-        except UnicodeDecodeError:
-            titel = None
-            author = None
-        except Exception as e:
-            warnings.warn("Caught error: {}.\nOriginal error message: {}".format(bib_file, e))
-            titel = None
-            author = None
+        else:
+            titel, author = "", ""
         return titel, author
     
     def find_bibitem_for_citation_bbl(self, citation_keyword: str, bib_file: str):
@@ -166,6 +165,9 @@ class QualitativeInformationExtractor(InformationExtractor):
                             complete_file_string = file.read()
                             paper_ID = uuid.uuid3(uuid.NAMESPACE_DNS, complete_file_string).urn
                             if self.get_related_work_beginning(complete_file_string) != -1:
+                                bibliography_path = self.check_bibliography_type(paper_folder_path)
+                                if bibliography_path.endswith(".bib"):
+                                    bib_data = self.initialize_bib_parser(bibliography_path)
                                 related_work_string = self.get_related_work(complete_file_string)
                                 paragraphs = self.get_paragraphs(related_work_string)
                                 for index, paragraph in enumerate(paragraphs):
@@ -179,14 +181,13 @@ class QualitativeInformationExtractor(InformationExtractor):
                                     for count, sentence in enumerate(clean_sentences):
                                         sentence_ID = uuid.uuid3(uuid.NAMESPACE_DNS, sentence).urn
                                         citations_list = self.get_citation_keywords(sentence)
-                                        clean_sentences[count] = self.clean_sentence(sentence)
+                                        clean_sentences[count] = self.compile_latex_to_text(sentence)
                                         citation_titel_list = []
                                         citation_author_list = []
                                         none_titel = 0
-                                        bibliography_path = self.check_bibliography_type(paper_folder_path)
                                         if bibliography_path.endswith(".bib"):
                                             for citation in citations_list:
-                                                titel, author = self.find_titel_for_citation_bib(citation, bibliography_path)
+                                                titel, author = self.find_titel_for_citation_bib(citation, bib_data)
                                                 if titel is None:
                                                     none_titel = none_titel + 1
                                                     break
@@ -195,25 +196,28 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         elif bibliography_path.endswith(".bbl"):
                                             for citation in citations_list:
                                                 bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
-                                                author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                try:
+                                                    author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                except TypeError:
+                                                    author, titel = "", ""
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
                                             sentence_dataset.append({'Foldername': paper_folder_path, 'sentenceID': sentence_ID, 'sentence': clean_sentences[count],
                                                                      'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 
                                                                      'PaperID': paper_ID, 'ParagraphID': paragraph_ID, 'Bibliography used': bibliography_path})            
-                            file_exists = os.path.isfile(output_file)
-                            with open(output_file, 'a', newline='') as f:
-                                writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID", "Bibliography used"])
-                                if not file_exists:
-                                    writer.writeheader()
-                                for row in sentence_dataset:
-                                    writer.writerow(row)
                         except UnicodeDecodeError:
-                            sys.stderr.write("Error message: Contains none unicode characters.\n")           
+                            sys.stderr.write("Error message: Contains none unicode characters.\n")     
                 except FileNotFoundError:
                     sys.stderr.write("Error message: File does not exist.\n")
                 except PermissionError:
                     sys.stderr.write("Error message: Access denied.\n")
                 except IsADirectoryError:
                     sys.stderr.write("Error message: Is a directory. \n")
+        file_exists = os.path.isfile(output_file)
+        with open(output_file, 'a', newline='', encoding = 'utf8') as f:
+            writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID", "Bibliography used"])
+            if not file_exists:
+                writer.writeheader()
+            for row in sentence_dataset:
+                writer.writerow(row)
