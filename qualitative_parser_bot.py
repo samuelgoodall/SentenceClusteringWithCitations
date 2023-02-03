@@ -15,34 +15,33 @@ class QualitativeParserBot:
         self.informationExtractor = QualitativeInformationExtractor()
         self.output_folder = output_folder
     
-    def function_for_process(self, paper_folder_paths: list, output_file: str):
+    def function_for_process(self, paper_folder_paths: list, output_file: str, backup_file: str):
         for count, foldername in enumerate(tqdm(paper_folder_paths)):
+            self.log_progress(foldername, backup_file)
             self.informationExtractor.fill_data_set(foldername, output_file)
-            self.log_progress(foldername, count)
     
     def run(self):
         foldernames = os.listdir(self.dataset_folder_path)
         paper_folder_paths = list(map(lambda foldername: os.path.join(self.dataset_folder_path, foldername), foldernames))
-        self.function_for_process(paper_folder_paths, os.path.join(self.output_folder, "data" + ".csv"))
-        # split_of_paper_folder_path_list = np.array_split(np.array(paper_folder_paths), 1)        
-        # processes = []
-        # for i in range(1):
-        #     processes.append(Process(target = self.function_for_process, args = (split_of_paper_folder_path_list[i], os.path.join(self.output_folder, "data" + str(i) + ".csv"))))
-        # for p in processes:
-        #     p.start()
-        # for p in processes:
-        #     p.join()
+        #self.function_for_process(paper_folder_paths, os.path.join(self.output_folder, "data" + ".csv"))
+        split_of_paper_folder_path_list = np.array_split(np.array(paper_folder_paths), 8)        
+        processes = []
+        for i in range(8):
+            processes.append(Process(target = self.function_for_process, args = (split_of_paper_folder_path_list[i], os.path.join(self.output_folder, "data" + str(i) + ".csv"), os.path.join(self.output_folder, "backup" + str(i) + ".txt"))))
+        for p in processes:
+            p.start()
+        for p in processes:
+            p.join()
         
-    def log_progress(self, last_folder: str, count: int) -> None:
-        if count % 20 == 0:
-            with open("backup.json", "a") as backup_file:
-                backup_file.writelines(json.dumps(last_folder, indent=7))
-            with open("save.json", "w") as backup_file:
-                backup_file.writelines(json.dumps(last_folder, indent=7))
+    def log_progress(self, last_folder: str, output_file) -> None:
+        with open(output_file, "a") as backup_file:
+            backup_file.write(last_folder + "\n")
+            #backup_file.writelines(json.dumps(last_folder + "\n", indent=7))
+        with open("save.json", "w") as backup_file:
+            backup_file.writelines(json.dumps(last_folder, indent=7))
 
 
 if __name__ == "__main__":
-    
     qualitative_parser = QualitativeParserBot("usable_dataset/", "output/")
     print("Parser started")
     qualitative_parser.run()
