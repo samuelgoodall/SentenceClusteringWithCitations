@@ -56,15 +56,17 @@ class SentenceListGenerator:
         #text_content = str(task.latex_soup.document)
 
         # to remove comments:
-        for match in self._comment_regex_.findall(text_content):
-                text_content = text_content.replace(match, "")
+        while True:
+            text_content, count = re.subn(self._comment_regex_, " ", text_content)
+            if count == 0:
+                break
         # for match in self._comment_regex_.finditer(text_content):
         #      text_content = text_content.replace(match[0], " "*len(match[0]))
 
         text_content = re.sub(r"\s", " ", text_content)
-
+        
         parsed = re.split(self._sentence_split_regex_, text_content)
-
+        
         return list(parsed)
 
     def get_name(self) -> str:
