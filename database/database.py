@@ -34,7 +34,9 @@ class Sentence(Base):
     __tablename__ = 'sentence'
     id = Column(Integer, primary_key=True)
     content = Column(String)
-    citations = relationship(Citation, secondary="sentence_citation_relation")
+    citations = relationship("Citation", secondary="sentence_citation_relation")
+    paragraph = relationship("Paragraph", back_populates="sentences")
+    paragraph_id = Column(Integer, ForeignKey('paragraph.id'))
     
     def __init__(self, content:str):
         """ Initialize the Sentence class.
@@ -42,7 +44,7 @@ class Sentence(Base):
             content (str): Letter of the sentence.
         """
         self.content = content
-        
+
 class SentenceCitationRelation(Base):
     """SentenceCitationRelation class to save the n to m relationship between sentence and citation."""
     __tablename__ = 'sentence_citation_relation'   
@@ -63,3 +65,5 @@ class Paragraph(Base):
     """Paragraph class to save paragraph information."""
     __tablename__ = 'paragraph'
     id = Column(Integer, primary_key=True)
+    sentences = relationship("Sentence", back_populates="paragraph")
+    
