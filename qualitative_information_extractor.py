@@ -79,13 +79,13 @@ class QualitativeInformationExtractor(InformationExtractor):
         for sentence in sentence_list:
             cite_symbol_position = sentence.find(self._cite_symbol)
             if cite_symbol_position != -1:
-                clean_sentence_list.append(sentence)     
+                clean_sentence_list.append(sentence)  
         return clean_sentence_list                     
     
     def compile_latex_to_text(self, sentence: str):
-        sentence = re.sub(r"(?<!\\)\$[^\\]*?\$", "", sentence)
+        #sentence = re.sub(r"(?<!\\)\$.*?(?<!\\)\$", "", sentence)
         try:
-            plain_text  = LatexNodes2Text().latex_to_text(sentence)
+            plain_text  = LatexNodes2Text(math_mode = 'remove').latex_to_text(sentence)
         except Exception:
             #do cleaning yourself
             command_regex = re.compile(r"\\(?!cite).*?(?:\[.*?\])?(?:(?:{.*?})|\s)")
@@ -94,6 +94,10 @@ class QualitativeInformationExtractor(InformationExtractor):
                 sentence = sentence.replace(command, "")
             plain_text = sentence
         #delete <cit.> and <ref>?
+        plain_text = re.sub(r"<cit\.>", "", plain_text)
+        plain_text = re.sub(r"<ref>", "", plain_text)
+        plain_text = re.sub(r"\n", "", plain_text)
+        plain_text = plain_text.strip()
         return plain_text
     
     def get_citation_keywords(self, sentence):
@@ -138,13 +142,13 @@ class QualitativeInformationExtractor(InformationExtractor):
     def find_titel_for_citation_bib(self, citation_keyword: str, bib_data):
         if bib_data is not None:
             try:
+                author = bib_data.entries[citation_keyword].persons['author']
+            except KeyError:
+                author = None
+            try:
                 titel = bib_data.entries[citation_keyword].fields['title']
             except KeyError:
                 titel = None
-            try:
-                author = bib_data.entries[citation_keyword].fields['author']
-            except KeyError:
-                author = None
         else:
             titel, author = "", ""
         return titel, author
@@ -212,6 +216,8 @@ class QualitativeInformationExtractor(InformationExtractor):
                                                     #author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
                                                 except TypeError:
                                                     author, titel = "", ""
+                                                if len(titel) < 10:
+                                                    none_titel += 1
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
                                         if len(citations_list) > none_titel:
@@ -227,7 +233,7 @@ class QualitativeInformationExtractor(InformationExtractor):
                 except IsADirectoryError:
                     sys.stderr.write("Error message: Is a directory. \n")
         file_exists = os.path.isfile(output_file)
-        with open(output_file, 'a', newline='', encoding = 'utf8') as f:
+        with open(output_file, 'a', newline = '', encoding = 'utf8') as f:
             writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID", "Bibliography used"])
             if not file_exists:
                 writer.writeheader()
