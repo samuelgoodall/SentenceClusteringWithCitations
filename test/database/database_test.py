@@ -33,6 +33,13 @@ class DatabaseTest(unittest.TestCase):
         loaded_sentence = self.session.query(Sentence).first()
         self.assertEqual(loaded_sentence, saved_sentence, "sentence citation relation not saved in database")
         
+    def test_paragraph_saving(self) -> None:
+        saved_paragraph = Paragraph()
+        self.session.add(saved_paragraph)
+        self.session.commit()
+        loaded_paragraph = self.session.query(Paragraph).first()
+        self.assertEqual(loaded_paragraph, saved_paragraph, "Paragraph not saved in database")
+        
     def test_sentence_paragraph_relation(self) -> None:
         saved_sentence = Sentence("Sentence")
         saved_sentence.paragraph = Paragraph()
