@@ -18,7 +18,7 @@ class QualitativeParserBot:
     def function_for_process(self, paper_folder_paths: list, output_file: str, backup_file: str):
         for count, foldername in enumerate(tqdm(paper_folder_paths)):
             self.log_progress(foldername, backup_file)
-            self.informationExtractor.fill_data_set(foldername, output_file)
+            self.informationExtractor.fill_data_set(foldername, output_file, False)
     
     def run(self):
         foldernames = os.listdir(self.dataset_folder_path)
