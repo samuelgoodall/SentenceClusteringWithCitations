@@ -169,7 +169,11 @@ class QualitativeInformationExtractor(InformationExtractor):
         bibitem = sliced_bibliography[:end_bibitem]
         return bibitem
     
-    def fill_data_set(self, paper_folder_path: str, output_file: str):
+    def clean_titel(self, titel: str):
+        titel = titel.replace("{", "").replace("}", "")
+        return titel
+    
+    def fill_data_set(self, paper_folder_path: str, output_file: str, include_bbl: bool):
         sentence_dataset = []
         for file_name in os.listdir(str(paper_folder_path)):
             if file_name.endswith(".tex"):
@@ -183,6 +187,8 @@ class QualitativeInformationExtractor(InformationExtractor):
                                 bibliography_path = self.check_bibliography_type(paper_folder_path)
                                 if bibliography_path.endswith(".bib"):
                                     bib_data = self.initialize_bib_parser(bibliography_path)
+                                elif include_bbl is False:
+                                    break
                                 related_work_string = self.get_related_work(complete_file_string)
                                 paragraphs = self.get_paragraphs(related_work_string)
                                 for index, paragraph in enumerate(paragraphs):
@@ -203,24 +209,27 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         if bibliography_path.endswith(".bib"):
                                             for citation in citations_list:
                                                 titel, author = self.find_titel_for_citation_bib(citation, bib_data)
+                                                if titel is not None:
+                                                    titel = self.clean_titel(titel)
                                                 if titel is None:
                                                     none_titel = none_titel + 1
                                                     break
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
                                         elif bibliography_path.endswith(".bbl"):
-                                            for citation in citations_list:
-                                                bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
-                                                try:
-                                                    author, titel = "", ""
-                                                    #author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
-                                                except TypeError:
-                                                    author, titel = "", ""
-                                                if len(titel) < 10:
-                                                    none_titel += 1
-                                                citation_titel_list.append(titel)
-                                                citation_author_list.append(author)
-                                        if len(citations_list) > none_titel:
+                                            if include_bbl is True:
+                                                for citation in citations_list:
+                                                    bibitem = self.find_bibitem_for_citation_bbl(citation, bibliography_path)
+                                                    try:
+                                                        #author, titel = "", ""
+                                                        author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(self.bibitem_parser, bibitem)
+                                                    except TypeError:
+                                                        author, titel = "", ""
+                                                    if len(titel) < 10:
+                                                        none_titel += 1
+                                                    citation_titel_list.append(titel)
+                                                    citation_author_list.append(author)
+                                        if len(citation_titel_list) > none_titel:
                                             sentence_dataset.append({'Foldername': paper_folder_path, 'sentenceID': sentence_ID, 'sentence': clean_sentences[count],
                                                                      'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 
                                                                      'PaperID': paper_ID, 'ParagraphID': paragraph_ID, 'Bibliography used': bibliography_path})            
