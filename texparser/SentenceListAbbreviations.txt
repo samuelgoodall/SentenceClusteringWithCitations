@@ -62,6 +62,7 @@ Affect.
 Afr.
 Agric.
 agst.
+al.
 Alch.
 Alg.
 Alleg.
