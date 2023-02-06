@@ -36,7 +36,6 @@ class QualitativeParserBot:
     def log_progress(self, last_folder: str, output_file) -> None:
         with open(output_file, "a") as backup_file:
             backup_file.write(last_folder + "\n")
-            #backup_file.writelines(json.dumps(last_folder + "\n", indent=7))
         with open("save.json", "w") as backup_file:
             backup_file.writelines(json.dumps(last_folder, indent=7))
 
