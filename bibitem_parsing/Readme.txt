@@ -1,0 +1,99 @@
+citations with newblock: \neblock is in the title has to be cleaned
+
+%\cite{Kwan:1978zh}
+\bibitem{Kwan:1978zh}
+  Y.~R.~Kwan and F.~Tabakin,
+  %``Hadronic Atoms in Momentum Space,''
+  Phys.\ Rev.\ C {\bf 18}, 932 (1978).
+  %doi:10.1103/PhysRevC.18.932
+  %%CITATION = doi:10.1103/PhysRevC.18.932;%%
+  %67 citations counted in INSPIRE as of 01 Mar 2017
+
+ \end{thebibliography}
+cant deal with those!
+
+\bibitem{anpr} J.D. Barrow and K. Yamamoto. Phys. Rev. D \textbf{82}, 063516
+(2010) J.D. Barrow and C. Ganguly, Class. Quantum Grav. \textbf{33},125004
+(2016)
+\end{thebibliography}
+cant deal with this#cant deal with
+#no Title here!
+\bibitem{anpr} J.D. Barrow and K. Yamamoto. Phys. Rev. D \textbf{82}, 063516
+(2010) J.D. Barrow and C. Ganguly, Class. Quantum Grav. \textbf{33},125004
+(2016)
+\end{thebibliography}
+
+#no title here!->but can find link to title:D
+\bibitem{Gisin3}
+N. Walenta, A. Burg, D. Caselunghe, J. Constantin, N. Gisin, O. Guinnard, R. Houlmann, P. Junod, B. Korzh, N. Kulesza, M. Legr\'e,
+C.C.W. Lim, T. Lunghi, L. Monat, C. Portmann, M. Soucarros, P. Trinkler, G. Trolliet, F. Vannel, and H. Zbinden,
+{\href{https://dx.doi.org/10.1088/1367-2630/16/1/013047}{New J. Phys. {\bf 16} 013047 (2014)}}.
+
+#cant deal with it yet->can be easily appended to work!
+\bibitem [{\citenamefont {Cohen-Tannoudji}\ \emph {et~al.}(1992)\citenamefont
+  {Cohen-Tannoudji}, \citenamefont {Dupont-Roc}, \citenamefont {Grynberg},\
+  and\ \citenamefont {Thickstun}}]{cohenbook92a}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Cohen-Tannoudji}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Dupont-Roc}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Grynberg}}, \ and\ \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Thickstun}},\ }\href@noop {} {\emph {\bibinfo {title} {Atom-photon
+  interactions: basic processes and applications}}}\ (\bibinfo  {publisher}
+  {Wiley Online Library},\ \bibinfo {year} {1992})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lehmberg}(1970{\natexlab{a}})}]{lehmberg70a}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~H.}\ \bibnamefont
+  {Lehmberg}},\ }\href {\doibase 10.1103/PhysRevA.2.883} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {2}},\
+  \bibinfo {pages} {883} (\bibinfo {year} {1970}{\natexlab{a}})}\BibitemShut
+  {NoStop}%
+
+#cant deal with it!
+\bibitem{shalm2015strong}
+L.~K. Shalm, E.~Meyer-Scott, B.~G. Christensen, P.~Bierhorst, M.~A. Wayne,
+  M.~J. Stevens, T.~Gerrits, S.~Glancy, D.~R. Hamel, M.~S. Allman, K.~J.
+  Coakley, S.~D. Dyer, C.~Hodge, A.~E. Lita, V.~B. Verma, C.~Lambrocco,
+  E.~Tortorici, A.~L. Migdall, Y.~Zhang, D.~R. Kumor, W.~H. Farr, F.~Marsili,
+  M.~D. Shaw, J.~A. Stern, C.~Abell\'an, W.~Amaya, V.~Pruneri, T.~Jennewein,
+  M.~W. Mitchell, P.~G. Kwiat, J.~C. Bienfang, R.~P. Mirin, E.~Knill, and S.~W.
+  Nam, \enquote{Strong loophole-free test of local realism,} Phys. Rev. Lett.
+  \textbf{115}, 250402 (2015).
+
+#can deal with it but needs to additionally parse unidentified field
+\bibitem{hermenegildo11:ciao-design-tplp-shorter}
+Hermenegildo, M., Bueno, F., Carro, M., L\'{o}pez, P., Mera, E., Morales, J.,
+  Puebla, G.:
+\newblock {A}n {O}verview of {C}iao and its {D}esign {P}hilosophy.
+\newblock TPLP \textbf{12}(1--2) (2012)  219--252
+
+
+#Can deal with but cleanup necessary
+#cleanup of enclosing \newblock{} necessary
+\bibitem{DIT}
+F.~Dress, H.~Iwaniec, and G.~Tenenbaum.
+\newblock {Sur une somme liee a la fonction de Mobius}.
+\newblock {\em J. Reine Angew. Math.}, 340:53--58, 1983.
+
+#cleanup of \enquote{
+\bibitem{shalm2015strong}
+L.~K. Shalm, E.~Meyer-Scott, B.~G. Christensen, P.~Bierhorst, M.~A. Wayne,
+  M.~J. Stevens, T.~Gerrits, S.~Glancy, D.~R. Hamel, M.~S. Allman, K.~J.
+  Coakley, S.~D. Dyer, C.~Hodge, A.~E. Lita, V.~B. Verma, C.~Lambrocco,
+  E.~Tortorici, A.~L. Migdall, Y.~Zhang, D.~R. Kumor, W.~H. Farr, F.~Marsili,
+  M.~D. Shaw, J.~A. Stern, C.~Abell\'an, W.~Amaya, V.~Pruneri, T.~Jennewein,
+  M.~W. Mitchell, P.~G. Kwiat, J.~C. Bienfang, R.~P. Mirin, E.~Knill, and S.~W.
+  Nam, \enquote{Strong loophole-free test of local realism,} Phys. Rev. Lett.
+  \textbf{115}, 250402 (2015).
+
+#Can deal with
+\bibitem{Hestenes.2002}
+D.~Hestenes, \emph{New Foundations for Classical Mechanics}, 2nd~ed., ser.
+  Fundamental theories of physics.\hskip 1em plus 0.5em minus 0.4em\relax
+  Dordrecht: {Springer Netherlands}, 2002, vol.~99.
+
+\bibitem{Dorst.2009}
+L.~Dorst, D.~Fontijne, and S.~Manning, \emph{Geometric algebra for computer
+  science: An object-oriented approach to geometry}, 2nd~ed., ser. The Morgan
+  Kaufmann series in computer graphics.\hskip 1em plus 0.5em minus 0.4em\relax
+  Amsterdam [u.a.]: {Morgan Kaufmann/Elsevier}, 2009.
