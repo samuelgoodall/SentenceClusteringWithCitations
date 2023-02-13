@@ -1,9 +1,10 @@
 from sentence_transformers import SentenceTransformer
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader, Dataset
+
 from MockDataset import MockDataset
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
-sentences = MockDataset()
+sentences = MockDataset("output/data0.csv")
 dataloader = DataLoader(dataset=sentences, batch_size=10, shuffle=True)
 
 train_embeddings = next(iter(dataloader))
