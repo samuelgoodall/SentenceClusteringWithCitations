@@ -1,0 +1,901 @@
+	%%% ====================================================================
+%%%  BibTeX-file{
+%%%     author          = "Gerry Murray",
+%%%     version         = "1.2",
+%%%     date            = "2 April 2012",
+%%%     filename        = "acmsmall-sample-bibfile.bib",
+%%%     address         = "ACM, NY",
+%%%     email           = "murray at hq.acm.org",
+%%%     codetable       = "ISO/ASCII",
+%%%     keywords        = "ACM Reference Format, bibliography, citation, references",
+%%%     supported       = "yes",
+%%%     docstring       = "This BibTeX database file contains 'bibdata' entries
+%%%                        that 'match' the examples provided in the Specifications Document
+%%%                        AND, also, 'legacy'-type bibs. It should assist authors in
+%%%                        choosing the 'correct' at-bibtype and necessary bib-fields
+%%%                        so as to obtain the appropriate ACM Reference Format output.
+%%%                        It also contains many 'Standard Abbreviations'. "
+%%%  }
+%%% ====================================================================
+
+% Journals
+
+% First the Full Name is given, then the abbreviation used in the AMS Math
+% Reviews, with an indication if it could not be found there.
+% Note the 2nd overwrites the 1st, so swap them if you want the full name.
+
+ %{AMS}
+ @String{AMSTrans = "American Mathematical Society Translations" }
+ @String{AMSTrans = "Amer. Math. Soc. Transl." }
+ @String{BullAMS = "Bulletin of the American Mathematical Society" }
+ @String{BullAMS = "Bull. Amer. Math. Soc." }
+ @String{ProcAMS = "Proceedings of the American Mathematical Society" }
+ @String{ProcAMS = "Proc. Amer. Math. Soc." }
+ @String{TransAMS = "Transactions of the American Mathematical Society" }
+ @String{TransAMS = "Trans. Amer. Math. Soc." }
+
+ %ACM
+ @String{CACM = "Communications of the {ACM}" }
+ @String{CACM = "Commun. {ACM}" }
+ @String{CompServ = "Comput. Surveys" }
+ @String{JACM = "J. ACM" }
+ @String{ACMMathSoft = "{ACM} Transactions on Mathematical Software" }
+ @String{ACMMathSoft = "{ACM} Trans. Math. Software" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newsletter" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newslett." }
+
+ @String{AmerSocio = "American Journal of Sociology" }
+ @String{AmerStatAssoc = "Journal of the American Statistical Association" }
+ @String{AmerStatAssoc = "J. Amer. Statist. Assoc." }
+ @String{ApplMathComp = "Applied Mathematics and Computation" }
+ @String{ApplMathComp = "Appl. Math. Comput." }
+ @String{AmerMathMonthly = "American Mathematical Monthly" }
+ @String{AmerMathMonthly = "Amer. Math. Monthly" }
+ @String{BIT = "{BIT}" }
+ @String{BritStatPsych = "British Journal of Mathematical and Statistical
+          Psychology" }
+ @String{BritStatPsych = "Brit. J. Math. Statist. Psych." }
+ @String{CanMathBull = "Canadian Mathematical Bulletin" }
+ @String{CanMathBull = "Canad. Math. Bull." }
+ @String{CompApplMath = "Journal of Computational and Applied Mathematics" }
+ @String{CompApplMath = "J. Comput. Appl. Math." }
+ @String{CompPhys = "Journal of Computational Physics" }
+ @String{CompPhys = "J. Comput. Phys." }
+ @String{CompStruct = "Computers and Structures" }
+ @String{CompStruct = "Comput. \& Structures" }
+ @String{CompJour = "The Computer Journal" }
+ @String{CompJour = "Comput. J." }
+ @String{CompSysSci = "Journal of Computer and System Sciences" }
+ @String{CompSysSci = "J. Comput. System Sci." }
+ @String{Computing = "Computing" }
+ @String{ContempMath = "Contemporary Mathematics" }
+ @String{ContempMath = "Contemp. Math." }
+ @String{Crelle = "Crelle's Journal" }
+ @String{GiornaleMath = "Giornale di Mathematiche" }
+ @String{GiornaleMath = "Giorn. Mat." } % didn't find in AMS MR., ibid.
+
+ %IEEE
+ @String{Computer = "{IEEE} Computer" }
+ @String{IEEETransComp = "{IEEE} Transactions on Computers" }
+ @String{IEEETransComp = "{IEEE} Trans. Comput." }
+ @String{IEEETransAC = "{IEEE} Transactions on Automatic Control" }
+ @String{IEEETransAC = "{IEEE} Trans. Automat. Control" }
+ @String{IEEESpec = "{IEEE} Spectrum" } % didn't find in AMS MR
+ @String{ProcIEEE = "Proceedings of the {IEEE}" }
+ @String{ProcIEEE = "Proc. {IEEE}" } % didn't find in AMS MR
+ @String{IEEETransAeroElec = "{IEEE} Transactions on Aerospace and Electronic
+     Systems" }
+ @String{IEEETransAeroElec = "{IEEE} Trans. Aerospace Electron. Systems" }
+
+ @String{IMANumerAna = "{IMA} Journal of Numerical Analysis" }
+ @String{IMANumerAna = "{IMA} J. Numer. Anal." }
+ @String{InfProcLet = "Information Processing Letters" }
+ @String{InfProcLet = "Inform. Process. Lett." }
+ @String{InstMathApp = "Journal of the Institute of Mathematics and
+     its Applications" }
+ @String{InstMathApp = "J. Inst. Math. Appl." }
+ @String{IntControl = "International Journal of Control" }
+ @String{IntControl = "Internat. J. Control" }
+ @String{IntNumerEng = "International Journal for Numerical Methods in
+     Engineering" }
+ @String{IntNumerEng = "Internat. J. Numer. Methods Engrg." }
+ @String{IntSuper = "International Journal of Supercomputing Applications" }
+ @String{IntSuper = "Internat. J. Supercomputing Applic." } % didn't find
+%% in AMS MR
+ @String{Kibernetika = "Kibernetika" }
+ @String{JResNatBurStand = "Journal of Research of the National Bureau
+     of Standards" }
+ @String{JResNatBurStand = "J. Res. Nat. Bur. Standards" }
+ @String{LinAlgApp = "Linear Algebra and its Applications" }
+ @String{LinAlgApp = "Linear Algebra Appl." }
+ @String{MathAnaAppl = "Journal of Mathematical Analysis and Applications" }
+ @String{MathAnaAppl = "J. Math. Anal. Appl." }
+ @String{MathAnnalen = "Mathematische Annalen" }
+ @String{MathAnnalen = "Math. Ann." }
+ @String{MathPhys = "Journal of Mathematical Physics" }
+ @String{MathPhys = "J. Math. Phys." }
+ @String{MathComp = "Mathematics of Computation" }
+ @String{MathComp = "Math. Comp." }
+ @String{MathScand = "Mathematica Scandinavica" }
+ @String{MathScand = "Math. Scand." }
+ @String{TablesAidsComp = "Mathematical Tables and Other Aids to Computation" }
+ @String{TablesAidsComp = "Math. Tables Aids Comput." }
+ @String{NumerMath = "Numerische Mathematik" }
+ @String{NumerMath = "Numer. Math." }
+ @String{PacificMath = "Pacific Journal of Mathematics" }
+ @String{PacificMath = "Pacific J. Math." }
+ @String{ParDistComp = "Journal of Parallel and Distributed Computing" }
+ @String{ParDistComp = "J. Parallel and Distrib. Comput." } % didn't find
+%% in AMS MR
+ @String{ParComputing = "Parallel Computing" }
+ @String{ParComputing = "Parallel Comput." }
+ @String{PhilMag = "Philosophical Magazine" }
+ @String{PhilMag = "Philos. Mag." }
+ @String{ProcNAS = "Proceedings of the National Academy of Sciences
+                    of the USA" }
+ @String{ProcNAS = "Proc. Nat. Acad. Sci. U. S. A." }
+ @String{Psychometrika = "Psychometrika" }
+ @String{QuartMath = "Quarterly Journal of Mathematics, Oxford, Series (2)" }
+ @String{QuartMath = "Quart. J. Math. Oxford Ser. (2)" }
+ @String{QuartApplMath = "Quarterly of Applied Mathematics" }
+ @String{QuartApplMath = "Quart. Appl. Math." }
+ @String{RevueInstStat = "Review of the International Statisical Institute" }
+ @String{RevueInstStat = "Rev. Inst. Internat. Statist." }
+
+ %SIAM
+ @String{JSIAM = "Journal of the Society for Industrial and Applied
+     Mathematics" }
+ @String{JSIAM = "J. Soc. Indust. Appl. Math." }
+ @String{JSIAMB = "Journal of the Society for Industrial and Applied
+     Mathematics, Series B, Numerical Analysis" }
+ @String{JSIAMB = "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." }
+ @String{SIAMAlgMeth = "{SIAM} Journal on Algebraic and Discrete Methods" }
+ @String{SIAMAlgMeth = "{SIAM} J. Algebraic Discrete Methods" }
+ @String{SIAMAppMath = "{SIAM} Journal on Applied Mathematics" }
+ @String{SIAMAppMath = "{SIAM} J. Appl. Math." }
+ @String{SIAMComp = "{SIAM} Journal on Computing" }
+ @String{SIAMComp = "{SIAM} J. Comput." }
+ @String{SIAMMatrix = "{SIAM} Journal on Matrix Analysis and Applications" }
+ @String{SIAMMatrix = "{SIAM} J. Matrix Anal. Appl." }
+ @String{SIAMNumAnal = "{SIAM} Journal on Numerical Analysis" }
+ @String{SIAMNumAnal = "{SIAM} J. Numer. Anal." }
+ @String{SIAMReview = "{SIAM} Review" }
+ @String{SIAMReview = "{SIAM} Rev." }
+ @String{SIAMSciStat = "{SIAM} Journal on Scientific and Statistical
+     Computing" }
+ @String{SIAMSciStat = "{SIAM} J. Sci. Statist. Comput." }
+
+ @String{SoftPracExp = "Software Practice and Experience" }
+ @String{SoftPracExp = "Software Prac. Experience" } % didn't find in AMS MR
+ @String{StatScience = "Statistical Science" }
+ @String{StatScience = "Statist. Sci." }
+ @String{Techno = "Technometrics" }
+ @String{USSRCompMathPhys = "{USSR} Computational Mathematics and Mathematical
+     Physics" }
+ @String{USSRCompMathPhys = "{U. S. S. R.} Comput. Math. and Math. Phys." }
+ @String{VLSICompSys = "Journal of {VLSI} and Computer Systems" }
+ @String{VLSICompSys = "J. {VLSI} Comput. Syst." }
+ @String{ZAngewMathMech = "Zeitschrift fur Angewandte Mathematik und
+     Mechanik" }
+ @String{ZAngewMathMech = "Z. Angew. Math. Mech." }
+ @String{ZAngewMathPhys = "Zeitschrift fur Angewandte Mathematik und Physik" }
+ @String{ZAngewMathPhys = "Z. Angew. Math. Phys." }
+
+% Publishers % ================================================= |
+
+ @String{Academic = "Academic Press" }
+ @String{ACMPress = "{ACM} Press" }
+ @String{AdamHilger = "Adam Hilger" }
+ @String{AddisonWesley = "Addison-Wesley" }
+ @String{AllynBacon = "Allyn and Bacon" }
+ @String{AMS = "American Mathematical Society" }
+ @String{Birkhauser = "Birkha{\"u}ser" }
+ @String{CambridgePress = "Cambridge University Press" }
+ @String{Chelsea = "Chelsea" }
+ @String{ClaredonPress = "Claredon Press" }
+ @String{DoverPub = "Dover Publications" }
+ @String{Eyolles = "Eyolles" }
+ @String{HoltRinehartWinston = "Holt, Rinehart and Winston" }
+ @String{Interscience = "Interscience" }
+ @String{JohnsHopkinsPress = "The Johns Hopkins University Press" }
+ @String{JohnWileySons = "John Wiley and Sons" }
+ @String{Macmillan = "Macmillan" }
+ @String{MathWorks = "The Math Works Inc." }
+ @String{McGrawHill = "McGraw-Hill" }
+ @String{NatBurStd = "National Bureau of Standards" }
+ @String{NorthHolland = "North-Holland" }
+ @String{OxfordPress = "Oxford University Press" }  %address Oxford or London?
+ @String{PergamonPress = "Pergamon Press" }
+ @String{PlenumPress = "Plenum Press" }
+ @String{PrenticeHall = "Prentice-Hall" }
+ @String{SIAMPub = "{SIAM} Publications" }
+ @String{Springer = "Springer-Verlag" }
+ @String{TexasPress = "University of Texas Press" }
+ @String{VanNostrand = "Van Nostrand" }
+ @String{WHFreeman = "W. H. Freeman and Co." }
+
+%Entries
+
+@InProceedings{pachilakis2019headerbidding,
+	author={Pachilakis, Michalis and Papadopoulos, Panagiotis and Markatos, Evangelos P. and Kourtellis, Nicolas},
+	title={{No More Chasing Waterfalls: A Measurement Study of the Header Bidding Ad-Ecosystem}},
+	booktitle={Proceedings of the Internet Measurement Conference},
+	year={2019},
+	pages={280-293},
+	publisher={ACM}
+}
+
+@InProceedings{solomos2019cdt,
+	author={Solomos, Konstantinos and Ilia, Panagiotis and Ioannidis, Sotiris and Kourtellis, Nicolas},
+	title={{Talon: An Automated Framework for Cross-Device Tracking Detection}},
+	booktitle={International Symposium on Research in Attacks, Intrusions and Defenses (RAID)},
+	year={2019},
+	pages={227-241}
+}
+
+@misc{openwpm-code,
+	title={OpenWPM Framework},
+	howpublished={\url{https://github.com/mozilla/OpenWPM}},
+	year={2020},
+}
+
+@misc{itp,
+	title={Intelligent Tracking Prevention 2.3},
+	howpublished={\url{https://webkit.org/blog/9521/intelligent-tracking-prevention-2-3/}},
+	year={2019},
+	author={John Wilander},
+}
+
+@article{jernigan2009gaydar,
+	title={Gaydar: Facebook friendships expose sexual orientation},
+	author={Jernigan, Carter and Mistree, Behram FT},
+	journal={First Monday},
+	volume={14},
+	number={10},
+	year={2009}
+}
+
+@misc{nsaCookies,
+	howpublished={\url{https://www.eff.org/deeplinks/2013/12/nsa-turns-cookies-and-more-surveillance-beacons}},
+	title={NSA Turns Cookies (And More) Into Surveillance Beacons},
+	author={Adi Kamdar, Rainey Reitman, Seth Schoen},
+	year={2013}
+}
+
+@misc{toysmart,
+	howpublished={\url{https://www.ftc.gov/news-events/press-releases/2000/07/ftc-sues-failed-website-toysmartcom-deceptively-offering-sale}},
+	year={2000},
+	author={{The Federal Trade Commission}},
+	title={FTC Sues Failed Website, Toysmart.com, for Deceptively Offering for Sale Personal Information of Website Visitors}
+}
+
+@misc{sop,
+	\howpublished={\url{https://www.w3.org/Security/wiki/Same_Origin_Policy}},
+	title={Same Origin Policy},
+	year={2010},
+	author={{World Wide Web Consortium (W3C)}}
+}
+
+@inproceedings{Nikiforakis:2013:CME:2497621.2498133,
+	author = {Nikiforakis, Nick and Kapravelos, Alexandros and Joosen, Wouter and Kruegel, Christopher and Piessens, Frank and Vigna, Giovanni},
+	title = {Cookieless Monster: Exploring the Ecosystem of Web-Based Device Fingerprinting},
+	booktitle = {Proceedings of the Symposium on Security and Privacy},
+	year = {2013},
+	pages = {541--555},
+	numpages = {15},
+	publisher = {IEEE Computer Society}
+} 
+
+@article{vickrey1961counterspeculation,
+	title={Counterspeculation, auctions, and competitive sealed tenders},
+	author={Vickrey, William},
+	journal={The Journal of finance},
+	year={1961},
+}
+
+@article{lawrence2010self,
+    title={Self-segregation or deliberation? Blog readership, participation, and polarization in American politics},
+    author={Lawrence, Eric and Sides, John and Farrell, Henry},
+    journal={Perspectives on Politics},
+    volume={8},
+    number={1},
+    pages={141--157},
+    year={2010},
+    publisher={Cambridge University Press}
+}
+
+@misc{CATrump,
+	author = { Paul Lewis, Paul Hilder },
+	title = {Leaked: Cambridge Analytica's blueprint for Trump victory},
+	year = {2018},
+	howpublished={\url{https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory}},
+}
+
+@misc{CABrexit,
+	howpublished={\url{https://www.opendemocracy.net/uk/brexitinc/peter-geoghegan-jenna-corderoy/revealed-arron-banks-brexit-campaign-had-more-meetings-w}},
+	title={Revealed: Arron Banks Brexit campaign's secret meetings with Cambridge Analytica},
+	author = {Peter Geoghegan and Jenna Corderoy},
+	year={2018},
+}
+	
+@misc{RussiaFB,
+		howpublished={\url{https://www.bloomberg.com/opinion/articles/2018-12-18/yes-russia-abused-facebook-but-did-it-work}},
+		title={Yes, Russia Abused Facebook. But Did It Work?},
+		author = {Leonid Bershidsky},
+		year={2018},
+}
+	
+@misc{CACruz,
+	howpublished={\url{https://www.texastribune.org/2018/03/20/ted-cruz-campaign-cambridge-analytica/}},
+	title={Ted Cruz says Cambridge Analytica told his presidential campaign its data use was legal},
+	author = {Patrick Svitek and Haley Samsel},
+	year={2018}
+}
+
+@inproceedings{papadopoulos2017if,
+	title={If you are not paying for it, you are the product: How much do advertisers pay to reach you?},
+	author={Papadopoulos, Panagiotis and Kourtellis, Nicolas and Rodriguez, Pablo Rodriguez and Laoutaris, Nikolaos},
+	booktitle={Proceedings of the Internet Measurement Conference},
+	pages={142--156},
+	year={2017},
+	organization={ACM}
+}
+
+@inproceedings{englehardt2015cookies,
+	title={Cookies that give you away: The surveillance implications of web tracking},
+	author={Englehardt, Steven and Reisman, Dillon and Eubank, Christian and Zimmerman, Peter and Mayer, Jonathan and Narayanan, Arvind and Felten, Edward W},
+	booktitle={Proceedings of the 24th International Conference on World Wide Web},
+	pages={289--299},
+	year={2015}
+}
+
+@inproceedings{costOfAds,
+	author = {Papadopoulos, Panagiotis and Kourtellis, Nicolas and Markatos, Evangelos P.},
+	title = {The Cost of Digital Advertisement: Comparing User and Advertiser Views},
+	booktitle = {Proceedings of the World Wide Web Conference},
+	year = {2018},
+	location = {Lyon, France},
+	pages = {1479--1489}
+} 
+
+
+
+@inproceedings{englehardt2016online,
+	title={Online tracking: A 1-million-site measurement and analysis},
+	author={Englehardt, Steven and Narayanan, Arvind},
+	booktitle={Proceedings of the SIGSAC Conference on Computer and Communications Security},
+	pages={1388--1401},
+	year={2016},
+	organization={ACM}
+}
+
+@article{karaj2018whotracks,
+	title={WhoTracks.Me: Monitoring the online tracking landscape at scale},
+	author={Karaj, Arjaldo and Macbeth, Sam and Berson, R{\'e}mi and Pujol, Josep M},
+	journal={arXiv preprint arXiv:1804.08959},
+	year={2018}
+}
+
+@inproceedings{devFingerprinting,
+	author = {Papadopoulos, Elias P. and Diamantaris, Michalis and Papadopoulos, Panagiotis and Petsas, Thanasis and Ioannidis, Sotiris and Markatos, Evangelos P.},
+	title = {The Long-Standing Privacy Debate: Mobile Websites vs Mobile Apps},
+	booktitle = {Proceedings of the 26th International Conference on World Wide Web},
+	year = {2017},
+	location = {Perth, Australia},
+	pages = {153--162}
+} 
+
+
+
+@article{zhang2017targeted,
+	title={Targeted Advertising Based on Browsing History},
+	author={Zhang, Yong and Zhou, Hongming and Tan, Nganmeng and Bagheri, Saeed and Er, Meng Joo},
+	journal={arXiv preprint arXiv:1711.04498},
+	year={2017}
+}
+
+
+@inproceedings{franken2018left,
+	title={Who left open the cookie jar? a comprehensive evaluation of third-party cookie policies},
+	author={Franken, Gertjan and Van Goethem, Tom and Joosen, Wouter},
+	booktitle={{27th USENIX Security Symposium}},
+	pages={151--168},
+	year={2018}
+}
+
+@article{datta2015automated,
+	title={Automated experiments on ad privacy settings},
+	author={Datta, Amit and Tschantz, Michael Carl and Datta, Anupam},
+	journal={Proceedings on Privacy Enhancing Technologies},
+	volume={2015},
+	number={1},
+	pages={92--112},
+	year={2015},
+	publisher={De Gruyter Open}
+} 
+
+@inproceedings{cui2011bid,
+    title={Bid landscape forecasting in online ad exchange marketplace},
+    author={Cui, Ying and Zhang, Ruofei and Li, Wei and Mao, Jianchang},
+    booktitle={Proceedings of the 17th ACM SIGKDD international conference on Knowledge discovery and data mining},
+    pages={265--273},
+    year={2011},
+    organization={ACM}
+}
+
+@inproceedings{le2019measuring,
+	title={Measuring Political Personalization of Google News Search},
+	author={Le, Huyen and Maragh, Raven and Ekdale, Brian and High, Andrew and Havens, Timothy and Shafiq, Zubair},
+	year={2019},
+	booktitle = {Proceedings of the 28th International Conference on World Wide Web},
+	series = {WWW '19},
+}
+
+
+@article{robertson2018auditing,
+	title={Auditing partisan audience bias within google search},
+	author={Robertson, Ronald E and Jiang, Shan and Joseph, Kenneth and Friedland, Lisa and Lazer, David and Wilson, Christo},
+	journal={Proceedings of the ACM on Human-Computer Interaction},
+	volume={2},
+	number={CSCW},
+	pages={148},
+	year={2018},
+	publisher={ACM}
+}
+
+
+@inproceedings{castelluccia2014selling,
+	title={Selling off privacy at auction},
+	author={Olejnik, Lukasz and Minh-Dung, Tran and Castelluccia, Claude}, 
+	booktitle={Network and Distributed System Security Symposium (NDSS)},
+	year={2014}
+}
+
+@Article{Spiekermann2015,
+	author="Spiekermann, Sarah
+	and B{\"o}hme, Rainer
+	and Acquisti, Alessandro
+	and Hui, Kai-Lung",
+	title="Personal data markets",
+	journal="Electronic Markets",
+	year="2015",
+	month="Jun",
+	day="01",
+	volume="25",
+	number="2",
+	pages="91--93",
+	issn="1422-8890"
+}
+
+
+@inproceedings {180596,
+author = {Franziska Roesner and Tadayoshi Kohno and David Wetherall},
+title = {Detecting and Defending Against Third-Party Tracking on the Web},
+booktitle = {Presented as part of the 9th {USENIX} Symposium on Networked Systems Design and Implementation ({NSDI} 12)},
+year = {2012},
+isbn = {978-931971-92-8},
+address = {San Jose, CA},
+pages = {155--168},
+url = {https://www.usenix.org/conference/nsdi12/technical-sessions/presentation/roesner},
+publisher = {{USENIX}},
+}
+
+
+@inproceedings{acar2014web,
+  title={The web never forgets: Persistent tracking mechanisms in the wild},
+  author={Acar, Gunes and Eubank, Christian and Englehardt, Steven and Juarez, Marc and Narayanan, Arvind and Diaz, Claudia},
+  booktitle={Proceedings of the SIGSAC Conference on Computer and Communications Security},
+  pages={674--689},
+  year={2014},
+  organization={ACM}
+}
+
+
+@inproceedings{exclusiveCSync,
+	author = {Papadopoulos, Panagiotis and Kourtellis, Nicolas and Markatos, Evangelos P.},
+	title = {Exclusive: How the (Synced) Cookie Monster Breached My Encrypted VPN Session},
+	booktitle = {Proceedings of the 11th European Workshop on Systems Security},
+	series = {EuroSec'18},
+	year = {2018},
+	location = {Porto, Portugal},
+	pages = {6:1--6:6}
+} 
+
+ @article{elmeleegy2013overview,
+title={Overview of turn data management platform for digital advertising},
+author={Elmeleegy, Hazem and Li, Yinan and Qi, Yan and Wilmot, Peter and Wu, Mingxi and Kolay, Santanu and Dasdan, Ali and Chen, Songting}, journal={Proceedings of the VLDB Endowment},
+volume={6},
+number={11},
+pages={1138--1149},
+year={2013},
+publisher={VLDB Endowment}
+}
+
+@misc{error2004efficient,
+    title={Efficient click-stream data collection},
+    author={Error, Brett and Error, Chris},
+    year={2004},
+    publisher={Google Patents},
+    note={US Patent App. 10/608,515}
+}
+
+
+@misc{nadig2010user,
+    title={User tracking for browser activities},
+    author={Nadig, Deepak Seetharam and Madan, Anil and George, Sheeba Ann and Sakowski, Aaron Wesley and Ramakumar, Sanjeev},
+    year={2010},
+    publisher={Google Patents},
+    note={US Patent App. 12/327,492}
+}
+
+@inproceedings{speicher2018potential,
+  title={Potential for Discrimination in Online Targeted Advertising},
+  author={Speicher, Till and Ali, Muhammad and Venkatadri, Giridhari and Ribeiro, Filipe Nunes and Arvanitakis, George and Benevenuto, Fabr{\'\i}cio and Gummadi, Krishna P and Loiseau, Patrick and Mislove, Alan},
+  booktitle={Conference on Fairness, Accountability and Transparency},
+  pages={5--19},
+  year={2018}
+}
+
+
+@misc{wiredUX,
+	howpublished={\url{https://www.wired.com/insights/2014/07/youve-wrong-privacy-part-user-experience/}},
+	title={You've Been Doing It Wrong. Privacy Is Part of User Experience},
+	author={Satyender Mahajan},
+	year={2014}
+}
+
+
+@inproceedings{bhatt2018illuminating,
+	title={Illuminating an ecosystem of partisan websites},
+	author={Bhatt, Shweta and Joglekar, Sagar and Bano, Shehar and Sastry, Nishanth},
+	booktitle={{Companion of The Web Conference}},
+	pages={545--554},
+	year={2018}
+}
+
+
+@inproceedings{zannettou2017web,
+	title={The web centipede: understanding how web communities influence each other through the lens of mainstream and alternative news sources},
+	author={Zannettou, Savvas and Caulfield, Tristan and De Cristofaro, Emiliano and Kourtellis, Nicolas and Leontiadis, Ilias and Sirivianos, Michael and Stringhini, Gianluca and Blackburn, Jeremy},
+	booktitle={Proceedings of the 2017 Internet Measurement Conference},
+	pages={405--417},
+	year={2017},
+	organization={ACM}
+}
+
+
+@inproceedings{eckersley2010unique,
+	title={How unique is your web browser?},
+	author={Eckersley, Peter},
+	booktitle={International Symposium on Privacy Enhancing Technologies Symposium},
+	pages={1--18},
+	year={2010},
+	organization={Springer}
+}
+
+
+@inproceedings{lahoti2018joint,
+	title={Joint non-negative matrix factorization for learning ideological leaning on Twitter},
+	author={Lahoti, Preethi and Garimella, Kiran and Gionis, Aristides},
+	booktitle={Proceedings of the 11th International Conference on Web Search and Data Mining},
+	pages={351--359},
+	year={2018},
+	organization={ACM}
+}
+
+@article{bakker2012aggregation,
+	title={Aggregation, content farms and Huffinization: The rise of low-pay and no-pay journalism},
+	author={Bakker, Piet},
+	journal={Journalism Practice},
+	volume={6},
+	number={5-6},
+	pages={627--637},
+	year={2012},
+	publisher={Taylor \& Francis}
+}
+
+@article{messing2014selective,
+	title={Selective exposure in the age of social media: Endorsements trump partisan source affiliation when selecting news online},
+	author={Messing, Solomon and Westwood, Sean J},
+	journal={Communication Research},
+	volume={41},
+	number={8},
+	pages={1042--1063},
+	year={2014},
+	publisher={Sage Publications Sage CA: Los Angeles, CA}
+}
+
+@article{thurman2012future,
+	title={The future of personalization at news websites: lessons from a longitudinal study},
+	author={Thurman, Neil and Schifferes, Steve},
+	journal={Journalism Studies},
+	volume={13},
+	number={5-6},
+	pages={775--790},
+	year={2012},
+	publisher={Taylor \& Francis}
+}
+
+
+@article{ballard2016campaigning,
+	title={Campaigning online: Web display ads in the 2012 presidential campaign},
+	author={Ballard, Andrew O and Hillygus, D Sunshine and Konitzer, Tobias},
+	journal={PS: Political Science \& Politics},
+	volume={49},
+	number={3},
+	pages={414--419},
+	year={2016},
+	publisher={Cambridge University Press}
+}
+@inproceedings{pla2014political,
+	title={Political tendency identification in twitter using sentiment analysis techniques},
+	author={Pla, Ferran and Hurtado, Llu{\'\i}s-F},
+	booktitle={Proceedings of COLING 2014, the 25th international conference on computational linguistics: Technical Papers},
+	pages={183--192},
+	year={2014}
+}
+
+@inproceedings{pennacchiotti2011democrats,
+	title={Democrats, republicans and starbucks afficionados: user classification in twitter},
+	author={Pennacchiotti, Marco and Popescu, Ana-Maria},
+	booktitle={Proceedings of the 17th SIGKDD International Conference on Knowledge Discovery and Data mining},
+	pages={430--438},
+	year={2011},
+	organization={ACM}
+}
+
+@article{kim2018stealth,
+	title={The stealth media? Groups and targets behind divisive issue campaigns on Facebook},
+	author={Kim, Young Mie and Hsu, Jordan and Neiman, David and Kou, Colin and Bankston, Levi and Kim, Soo Yun and Heinrich, Richard and Baragwanath, Robyn and Raskutti, Garvesh},
+	journal={Political Communication},
+	pages={1--27},
+	year={2018},
+	publisher={Taylor \& Francis}
+}
+
+@article{chand2017dark,
+	title={Dark Money and Dirty Politics: Are anonymous ads more negative?},
+	author={Chand, Daniel E},
+	journal={Business and Politics},
+	volume={19},
+	number={3},
+	pages={454--481},
+	year={2017},
+	publisher={Cambridge University Press}
+}
+
+
+@inproceedings{lecuyer2015sunlight,
+	title={Sunlight: Fine-grained targeting detection at scale with statistical confidence},
+	author={Lecuyer, Mathias and Spahn, Riley and Spiliopolous, Yannis and Chaintreau, Augustin and Geambasu, Roxana and Hsu, Daniel},
+	booktitle={Proceedings of the 22nd SIGSAC Conference on Computer and Communications Security},
+	pages={554--566},
+	year={2015},
+	organization={ACM}
+}
+
+@inproceedings{krishnamurthy2011privacy,
+	title={Privacy leakage vs. protection measures: the growing disconnect},
+	author={Krishnamurthy, Balachander and Naryshkin, Konstantin and Wills, Craig},
+	booktitle={Proceedings of the Web},
+	volume={2},
+	number={2011},
+	pages={1--10},
+	year={2011}
+}
+
+@misc{personalizedContent,
+	howpublished={\url{https://www.smartinsights.com/ecommerce/web-personalisation/web-personalization-software/}},
+	year={2019},
+	author={Dave Chaffey},
+	title={30 website personalization and recommendations software tools},
+}
+
+
+@inproceedings{Carrascosa:2015:IAF:2716281.2836098,
+	author = {Carrascosa, Juan Miguel and Mikians, Jakub and Cuevas, Ruben and Erramilli, Vijay and Laoutaris, Nikolaos},
+	title = {I Always Feel Like Somebody's Watching Me: Measuring Online Behavioural Advertising},
+	booktitle = {Proceedings of the 11th ACM Conference on Emerging Networking Experiments and Technologies},
+	series = {CoNEXT '15},
+	year = {2015},
+	isbn = {978-1-4503-3412-9},
+	location = {Heidelberg, Germany},
+	pages = {13:1--13:13},
+	articleno = {13},
+	numpages = {13},
+	acmid = {2836098},
+	publisher = {ACM},
+	address = {New York, NY, USA},
+	keywords = {advertising, measurement, privacy, web transparency},
+} 
+
+
+
+@Misc{Buzzfeed,
+	author = {Silverman, Criag and Lytvynenko, Jane and Thuy Vo, Lam  and Singer-Vine, Jeremy },
+	title = {Inside The Partisan Fight For Your News Feed},
+	Year={2017},
+	note = {https://www.buzzfeednews.com/article/craigsilverman/inside-the-partisan-fight-for-your-news-feed}
+}
+
+@Misc{BuzzfeedGithub,
+	author = {Silverman, Criag and Lytvynenko, Jane and Thuy Vo, Lam  and Singer-Vine, Jeremy },
+	title = {Data, analytic code, and findings related to the BuzzFeed News article},
+	Year={2017},
+	note = {https://github.com/BuzzFeedNews/2017-08-partisan-sites-and-facebook-pages}
+}
+
+
+@Misc{disconnectme,
+	author = {Disconnect.me},
+	title = {Disconnect tracking protection},
+	Year={2019},
+	note = {https://github.com/disconnectme/disconnect-tracking-protection/blob/master/services.json}
+}
+
+@Misc{whotracksme,
+	author = {whotracks.me by Cliqz and Ghostery},
+	title = {Bringing Transparency to online tracking.},
+	Year={2019},
+	note = {https://github.com/cliqz-oss/whotracks.me/tree/master/whotracksme/data/assets}
+}
+
+@Misc{coppa,
+	author = {Federal Trade Commission},
+	title = {Children's Online Privacy Protection Rule (COPPA)},
+	Year={1998},
+	note = {https://www.ftc.gov/enforcement/rules/rulemaking-regulatory-reform-proceedings/childrens-online-privacy-protection-rule}
+}
+
+
+
+@inproceedings{carrascosa2015,
+	author = {Carrascosa, Juan Miguel and Mikians, Jakub and Cuevas, Ruben and Erramilli, Vijay and Laoutaris, Nikolaos},
+	title = {I Always Feel Like Somebody's Watching Me: Measuring Online Behavioural Advertising},
+	booktitle = {Proceedings of the 11th ACM Conference on Emerging Networking Experiments and Technologies},
+	year = {2015},
+	series = {CoNEXT '15}
+}
+
+@inproceedings{bashir2016,
+	author = {Bashir, Muhammad Ahmad and Arshad, Sajjad and Robertson, William and Wilson, Christo},
+	title = {Tracing Information Flows Between Ad Exchanges Using Retargeted Ads},
+	booktitle={{25th USENIX Security Symposium}},
+	year = {2016},
+}
+
+
+@article{harding2001cookies,
+	title={Cookies and Web bugs: What they are and how they work together},
+	author={Harding, William T and Reed, Anita J and Gray, Robert L},
+	journal={Information Systems Management},
+	volume={18},
+	number={3},
+	pages={17--24},
+	year={2001},
+	publisher={Taylor \& Francis}
+}
+
+@inproceedings{panpap_www2019,
+	author = {Panagiotis Papadopoulos and Nicolas Kourtellis and Evangelos P. Markatos},
+	title = {Cookie Synchronization: Everything You Always Wanted to Know But Were Afraid to Ask},
+	booktitle={Proceedings of the 28th International Conference on World Wide Web},
+	year={2019}
+}
+
+
+@Misc{Alexa,
+	author = {Alexa},
+	title = {Alexa Internet. Keyword Research, Competitor Analysis, and Website Ranking},
+	Year={2018},
+	note = {Available at 
+	https://www.alexa.com}
+}
+
+@misc{RTB,
+	title={What is Real Time Bidding},
+	year={2014},
+	author={Jack Marshall},
+	howpublished={https://digiday.com/media/what-is-real-time-bidding/}
+}
+
+@misc{RTBspendings,
+	howpublished={https://www.statista.com/statistics/377658/rtb-digital-display-ad-spend-selected-countries/},
+	author={{Statista}},
+	year={2019},
+	title={Real time bidding digital display advertising spending in selected countries in 2014 and 2018},
+}
+
+@misc{programmaticAd,
+	author = {{Adext Corp}},
+	title = {How Programmatic Advertising Has Changed The Online Advertising Landscape},
+	year={2019},
+	howpublished = {https://blog.adext.com/programmatic-ads-changed-online-advertising/},
+}
+
+@article{lee1999learning,
+	title={Learning the parts of objects by non-negative matrix factorization},
+	author={Lee, Daniel D and Seung, H Sebastian},
+	journal={Nature},
+	volume={401},
+	number={6755},
+	pages={788},
+	year={1999},
+	publisher={Nature Publishing Group}
+}
+
+@inproceedings{beigi2019protecting,
+	title={Protecting user privacy: An approach for untraceable web browsing history and unambiguous user profiles},
+	author={Beigi, Ghazaleh and Guo, Ruocheng and Nou, Alexander and Zhang, Yanchao and Liu, Huan},
+	booktitle={Proceedings of the Twelfth ACM International Conference on Web Search and Data Mining},
+	pages={213--221},
+	year={2019},
+	organization={ACM}
+}
+
+@inproceedings{Zhu:2007:CCL:1277741.1277825,
+	author = {Zhu, Shenghuo and Yu, Kai and Chi, Yun and Gong, Yihong},
+	title = {Combining Content and Link for Classification Using Matrix Factorization},
+	booktitle = {Proceedings of the 30th SIGIR Conference on Research and Development in Information Retrieval},
+	year = {2007},
+	location = {Amsterdam, The Netherlands},
+	pages = {487--494},
+	publisher = {ACM}
+}
+
+@article{brunet2004metagenes,
+	title={Metagenes and molecular pattern discovery using matrix factorization},
+	author={Brunet, Jean-Philippe and Tamayo, Pablo and Golub, Todd R and Mesirov, Jill P},
+	journal={Proceedings of the National Academy of Sciences},
+	volume={101},
+	number={12},
+	pages={4164--4169},
+	year={2004},
+}
+
+@article{hutchins2008position,
+	title={Position-dependent motif characterization using non-negative matrix factorization},
+	author={Hutchins, Lucie N and Murphy, Sean M and Singh, Priyam and Graber, Joel H},
+	journal={Bioinformatics},
+	volume={24},
+	number={23},
+	pages={2684--2690},
+	year={2008},
+	publisher={Oxford University Press}
+}
+
+
+@misc{europeanDataRules2018,
+	author = {{European Commission}},
+	title = {Rules for the protection of personal data inside and outside the EU},
+	year={2018},
+	howpublished ={https://ec.europa.eu/info/law/law-topic/data-protection\_en/}}
+
+@inproceedings{hu2019characterising,
+	title={Characterising Third Party Cookie Usage in the EU after GDPR},
+	author={Hu, Xuehui and Sastry, Nishanth},
+	booktitle={Proceedings of the 10th ACM Conference on Web Science},
+	pages={137--141},
+	year={2019}
+}
+
+
+@inproceedings{agarwal2019tweeting,
+	title={Tweeting MPs: Digital Engagement between Citizens and Members of Parliament in the UK},
+	author={Agarwal, Pushkal and Sastry, Nishanth and Wood, Edward},
+	booktitle={Proceedings of the International AAAI Conference on Web and Social Media},
+	volume={13},
+	number={01},
+	pages={26--37},
+	year={2019}
+}
+@article{mccarthy2006experience,
+	title={The experience of enchantment in human--computer interaction},
+	author={McCarthy, John and Wright, Peter and Wallace, Jayne and Dearden, Andy},
+	journal={Personal and ubiquitous computing},
+	volume={10},
+	number={6},
+	pages={369--378},
+	year={2006},
+	publisher={Springer}
+}

@@ -1,0 +1,74 @@
+In previous sections we considered graphs that are entropic with respect to the specific function $f(x) = \exp(x)$.
+Here we show that there are infinitely many functions $f(x)$ for which $f$-entropic graphs exist.
+More precisely, we show that for any analytic function that is entropic with respect to at least one graph, $G$, there is an infinite family of graph-function pairs such that the graph is entropic with respect to the function.
+We construct these graphs using the graph tensor product $G \otimes H$, observing that it
+satisfies $\mA_{G} \otimes \mA_{H} = \mA_{G \otimes H}$.
+
+Given an $h$-entropic graph $G$ and walk-regular graph $H$, we will construct a function $f$ that is entropic on $G \otimes H$ under conditions described below.
+We begin by proving some necessary lemmas.
+\begin{lemma}\label{lem:walk-reg-triangle}
+  Let $H$ be walk-regular and contain at least one triangle.
+  Then $(H^k)_{jj} > 0$ for each $j$ and integers $k \geq 2$.
+\end{lemma}
+\begin{proof}
+  Because $H$ contains a triangle, there exists a node $j \in H$ such that $(H^3)_{jj} > 0$.
+  This implies $(H^3)_{ii} > 0$ for all nodes $i \in H$ by walk-regularity,
+  and so each node is incident to at least one triangle.
+  Thus, every node in $H$ has at least at one neighbor, and so $(H^2)_{ii} > 0$ for each $i$.
+
+  Consider any integer $k\geq 4$.
+  If $k$ is even, then each node $i$ must be incident to a closed $k$-walk: for example, take the walk from node $i$ to any of its neighbors and back to $i$, repeating until the length is $k$.
+  If instead $k$ is odd, then it is at least 5. Consider the walk starting at $i$, traversing the triangle that must be incident to $i$ (as proved above), and then proceeding to a neighbor of $i$ and back to $i$ until the length is $k$.
+  This proves that $(H^k)_{ii}$ is positive for each $i$ for $k \geq 4$.
+\end{proof}
+
+\begin{lemma}\label{lem:tensor-constant-diagonal-lemma}
+  Given an $h$-entropic graph $G$ and a walk-regular graph $H$ that contains at least one triangle, we can construct a positive sequence $c_k > 0$ so that for the function $f(x) = \sum_{k=0}^{\infty} c_k x^k$,
+   $f(\mA_{G \otimes H})$ is constant diagonal.
+\end{lemma}
+\begin{proof}
+    To construct $f$ so that $f(\mA_{G \otimes H})$ is constant diagonal, consider an arbitrary diagonal entry $f( \mA_{G \otimes H})_{\ell \ell}$ for some $\ell$.
+    Then $f(\mA_{G \otimes H})_{\ell \ell} =
+    (\ve_i\otimes\ve_j)^Tf(\mA_{G\otimes H})(\ve_i\otimes\ve_j)$ for some $i$ and $j$.
+    Using the fact $\mA_{G \otimes H} = \mA_{G} \otimes \mA_H$ and expanding the power series of $f$, we can write
+    \begin{equation}
+        f(\mA_{G \otimes H})_{\ell \ell}
+        \hspace{3pt} = \hspace{3pt}
+        \sum_{k=0}^{\infty} c_k  (\ve_i \otimes \ve_j)^T (\mA_{G} \otimes \mA_H)^k (\ve_i \otimes \ve_j)
+        \hspace{3pt} = \hspace{3pt}
+        \sum_{k=0}^{\infty} c_k (\mA_{G}^k)_{ii} (\mA_H^k)_{jj}. \label{eqn:tensor-decomp}
+    \end{equation}
+    By assumption, the graph $H$ is walk-regular, and so for each $k$ there is a constant $C_H(k)$ such that $(\mA_H^k)_{jj} = C_H(k)$ for all $j$.
+    Moreover, since $H$ contains at least one triangle, $C_H(k)$ is positive for $k \geq 2$ by Lemma~\ref{lem:walk-reg-triangle}.
+    Thus, we can choose $c_k$ as follows.
+    By assumption $G$ is $h$-entropic, so we know there exists a PPSC function $h$ such that $h(\mA) = \sum_{k=0}^{\infty} h_k (\mA_G^k)$ is constant diagonal.
+    Thus, we set $c_k = h_k / C_H(k)$ for $k\geq 2$, since $C_H(k)$ is positive there, and $c_0 = h_0, c_1 = h_1$.
+    Substituting $c_k$ into Equation~\eqref{eqn:tensor-decomp} and simplifying, we get
+    $f(\mA_{G\otimes H})_{\ell \ell} = \sum_{k=0}^{\infty} h_k (\mA_{G}^k)_{ii}$.
+
+    The expression $\sum_{k=0}^{\infty}h_k \mA_G^k$ is constant diagonal by choice of the sequence $h_k$, and so for each $k$ there is a constant $C_G(k)$ such that $(\mA_{G}^k)_{ii} = C_G(k)$ for all $i$.
+    Hence, for each $\ell$ we know $f(\mA_{G\otimes H})_{\ell \ell}$ equals the constant $\sum_{k=0}^{\infty} h_k C_G(k)$.
+\end{proof}
+\begin{theorem}\label{thm:tensor-entropic}
+      Let $G$ be $h$-entropic, and let $H$ be walk-regular, connected, and contain at least one triangle.
+      Then $G \otimes H$ is $f$-entropic for some PPSC function $f$.
+\end{theorem}
+\begin{proof}
+    By Lemma~\ref{lem:tensor-constant-diagonal-lemma},
+    we can construct a PPSC function $f$ so that $f(\mA_{G \otimes H})$ is constant-diagonal.
+    Since $G$ is $h$-entropic, by definition it is not walk-regular,
+    and so $G\otimes H$ is not walk-regular.
+    To see this, note that $\mA_G^k$ must be not constant-diagonal for some power $k$, and so $(\mA_{G\otimes H})^k = (\mA_G^k)\otimes(\mA_{H}^k)$ is not constant-diagonal.
+    Thus, to conclude that $G \otimes H$ is \emph{entropic} we need only show that $G \otimes H$ is connected.
+    A result of Weichsel~(\cite{weichsel1962kronecker}, Theorem 1) states that a tensor graph $G_1 \otimes G_2$ is connected if and only if both $G_1$ and $G_2$ are connected and at least one of them contains a cycle of odd length.
+    Since $H$ contains a triangle by assumption, we are done.
+\end{proof}
+
+For an entropic graph $G$, by induction we have that $G \otimes \left( \bigotimes_{j=1}^N H_j \right)$ is entropic for any set of connected, walk-regular graphs $H_j$ that each contain a triangle.
+Moreover, letting $C_{\ell}$ denote the cycle graph on $\ell$ nodes,
+we observe that for any connected, walk-regular graph $F$,
+the graph $F \Box C_3$ is connected, walk-regular, and contains a triangle, where we again use
+the result of Chiue and Shieh to prove connectedness.
+To see that for any graph $H$, $H \Box C_3$ contains a triangle, note that the diagonal of $(\mA_{H \Box C_3})^3$ has positive entries.
+Thus, $G \otimes (F \Box C_3)$ gives a distinct entropic graph for each connected, walk-regular graph $F$.
+Finally, we note that since $G(4,5)$ is entropic and every cycle graph $C_k$ is connected and walk-regular, by Theorem~\ref{thm:tensor-entropic} each graph $G(4,5) \otimes (C_k \Box C_3)$ is $f_k$-entropic for some function $f_k$, yielding an infinite family of entropic functions $f_k$.

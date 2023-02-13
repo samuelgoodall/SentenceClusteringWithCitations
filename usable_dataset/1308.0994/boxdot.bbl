@@ -1,0 +1,35 @@
+ \providecommand\gobble[1]{} {\catcode`\/=13
+  \gdef/{\string/\futurelet\nexttoken\finishslash}
+  \gdef\finishslash{\ifx\nexttoken/\else\penalty\relpenalty\fi}}
+  \providecommand\url{\begingroup\catcode`\~=12 \catcode`\/=13 \finishurl}
+  \def\finishurl#1{\texttt{#1}\endgroup}
+  \providecommand\dotminus{\mathbin{\setbox0\hbox{$-$}\setbox2\hbox
+  to\wd0{\hss$^{\mkern1mu\cdot}$\hss}\wd2=0pt\box2\box0}}
+\providecommand{\bysame}{\leavevmode\hbox to5em{\hrulefill}\thinspace}
+\providecommand\bibliographyhook{}
+\begin{thebibliography}{1}
+\bibliographyhook
+
+\bibitem{brv}
+Patrick Blackburn, Maarten de~Rijke, and Yde Venema, \emph{Modal logic},
+  Cambridge Tracts in Theoretical Computer Science vol.~53, Cambridge
+  University Press, 2001.
+
+\bibitem{cha-zax}
+Alexander~V. Chagrov and Michael Zakharyaschev, \emph{Modal logic}, Oxford
+  Logic Guides vol.~35, Oxford University Press, 1997.
+
+\bibitem{fine:ff}
+Kit Fine, \emph{An ascending chain of {$S4$} logics}, Theoria 40 (1974), no.~2,
+  pp.~110--116.
+
+\bibitem{fr-hum}
+Rohan French and Lloyd Humberstone, \emph{Partial confirmation of a conjecture
+  on the boxdot translation in modal logic}, Australasian Journal of Logic 7
+  (2009), pp.~56--61.
+
+\bibitem{steinsv}
+Christopher Steinsvold, \emph{The boxdot conjecture and the language of essence
+  and accident}, Australasian Journal of Logic 10 (2011), pp.~18--35.
+
+\end{thebibliography}

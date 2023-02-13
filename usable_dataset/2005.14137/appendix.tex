@@ -1,0 +1,130 @@
+% \section{Why Direct Gradient Estimation is Inefficient}
+% Eqn.\ref{eqn:grad-est} provides a way to estimate gradients via decision-based black-box access to the model. However, this estimation may not be accurate enough by noticing that $\widetilde{\nabla S}$ is a linear combination of $B$ vectors in $\mathbb{R}^m$. In practice, $m$ may be very large (e.g. $3\times224\times224$ in most pretrained models on ImageNet) while $B$ is chosen to be small (e.g. 100). Therefore, even in the best case the approximation is only the projection of the gradient $\nabla S$ onto the subspace spanned by $u_1,\ldots,u_B$. Considering that $u$'s are randomly chosen, the approximation may not be good. In particular, we have the following theorem on the expected quality of the estimated gradient:
+
+\section{Proof of Theorem \ref{tho:dimred}}
+\label{sec:tho-proof}
+We first prove a lemma of the gradient estimation quality which samples from the entire subspace:
+% The gradient vector estimated by Eqn. \ref{eqn:grad-est} is a linear combination of $B$ vectors $u_1,\ldots,u_B \in \mathbb{R}^m$.  The best estimated gradient we can possibly get is the projection of the actual gradient onto the subspace spanned by the $B$ vectors. In practice, $m$ is large (for example, $3\times224\times224$ on ImageNet) while $B$ is chosen to be small (e.g., 100). The following theorem shows the expectation of the gradient approximation in a randomly sampled subspace. 
+\begin{lemma}
+\label{lemma:cos}
+For a boundary point $x$, suppose that $S(x)$ has $L$-Lipschitz gradients in a neighborhood of $x$, and that ${\bf u}_1, \ldots, {\bf u}_B$ are sampled from the unit ball in $\mathbb{R}^m$ and orthogonal to each other. Then the expected cosine similarity between $\widetilde{\nabla S}$ and $\nabla S$ can be bounded by:
+\begin{align}
+    & \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla S||_2})^2\bigg)^{\frac{m-1}{2}} - 1 \bigg)c_m\sqrt{\frac B m}\\
+    \leq & \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]\\
+    \leq & c_m\sqrt{\frac B m}
+\end{align}
+% \begin{align}
+%     \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla S||_2})^2\bigg)^{\frac{m-1}{2}} - 1 \bigg)c_m\sqrt{\frac B m}
+%     & \leq \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]\\
+%     \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big] &\leq c_m\sqrt{\frac B m}
+% \end{align}
+where $c_m$ is a constant related with $m$ and can be bounded by $c_m \in (2/\pi, 1)$. In particular, we have:
+\begin{align}
+    \label{eqn:grad-est-qual}
+    \lim_{\delta\rightarrow 0}\mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big] = c_m\sqrt{\frac B m}.
+\end{align}
+\end{lemma}
+
+\label{sec:proof}
+\begin{proof}
+Let ${\bf u}_1, \ldots, {\bf u}_B$ be the random orthonormal vectors sampled from $\mathbb{R}^m$. We expand the vectors to an orthonormal basis in $\mathbb{R}^m$: ${\bf q}_1={\bf u}_1, \ldots, {\bf q}_B={\bf u}_B, {\bf q}_{B+1}, \ldots, {\bf q}_m$. Hence, the gradient direction can be written as:
+\begin{equation}
+    \label{eqn:proof-gt}
+    \frac{\nabla S}{||\nabla S||_2} = \sum_{i=1}^m a_i{\bf q}_i
+\end{equation}
+where $a_i=\langle \frac{\nabla S}{||\nabla S||_2}, {\bf q}_i \rangle$ and its distribution is equivalent to the distribution of one coordinate of an $(m-1)$-sphere. Then each $a_i$ follows the probability distribution function:
+\begin{equation}
+    p_a(x) = \frac{(1-x^2)^{\frac{m-3}2}}{\mathcal{B}(\frac{m-1}2, \frac12)},~x\in(-1,1)
+\end{equation}
+where $\mathcal{B}$ is the beta function. According to the conclusion in the proof of Theorem 1 in \cite{chen2019hopskipjumpattack}, if we let $w=\frac{L\delta}{2||\nabla S||_2}$, then it always holds true that $\phi({\bf x}+\delta{\bf u_i})=1$ when $a_i>w$, -1 when $a_i<-w$ regardless of $u_i$ and the decision boundary shape. Hence, we can rewrite $\phi_i$ in term of $a_i$:
+\begin{equation}
+    \phi_i = \phi({\bf x}+\delta{\bf u_i}) =
+    \begin{cases}
+    1, & \text{if } a_i \in [w, 1)\\
+    -1, & \text{if } a_i \in (-1, -w]\\
+    \text{undetermined}, & \text{otherwise}
+    \end{cases}
+\end{equation}
+Therefore, the estimated gradient can be rewritten as:
+\begin{equation}
+    \label{eqn:proof-est}
+    \widetilde{\nabla S}=\frac1B\sum_{i=1}^B \phi_i{\bf u}_i
+\end{equation}
+Combining Eqn. \ref{eqn:proof-gt} and \ref{eqn:proof-est}, we can calculate the cosine similarity:
+\begin{align}
+    \mathop{\mathbb{E}}\big[ \cos (\widetilde{\nabla S}, \nabla S)\big] &= \mathop{\mathbb{E}}_{a_1, \ldots,a_B}\frac{\sum_{i=1}^Ba_i\phi_i}{\sqrt{B}}\\
+    &= \sqrt{B}\cdot \mathop{\mathbb{E}}_{a_1} \big[ a_1\phi_1 \big]
+\end{align}
+In the best case, $\phi_1$ has the same sign with $a_1$ everywhere on $(-1,1)$; in the worst case, $\phi_1$ has different sign with $a_1$ on $(-w,w)$. In addition, $p_a(x)$ is symmetric on $(-1, 1)$. Therefore, the expectation is bounded by:
+\begin{align}
+    &2\int_{w}^{1} p_a(x)\cdot xdx - 2\int_0^w p_a(x)\cdot xdx\\
+    \leq& \mathop{\mathbb{E}}_{a_1} \big[ a_1\phi_1 \big]\\
+    \leq& 2\int_0^1 p_a(x)\cdot xdx
+\end{align}
+By calculating the integration, we have:
+\begin{align}
+&\bigg( 2\bigg(1-w^2\bigg)^{\frac{m-1}{2}} - 1 \bigg) \cdot \frac{2\sqrt{B}}{\mathcal{B}(\frac{m-1}2, \frac12)\cdot(m-1)}\\
+\leq& \mathop{\mathbb{E}}\big[ \cos (\widetilde{\nabla S}, \nabla S)\big]\\
+\leq& \frac{2\sqrt{B}}{\mathcal{B}(\frac{m-1}2, \frac12)\cdot(m-1)}
+\end{align}
+The only problem is to calculate $\mathcal{B}(\frac{m-1}2, \frac12)\cdot(m-1)$. It is easy to prove by scaling that $\mathcal{B}(\frac{m-1}2, \frac12)\cdot(m-1) \in (2\sqrt{m}, \pi \sqrt{m})$. Hence we can get the conclusion in the theorem.
+\end{proof}
+
+Having Lemma \ref{lemma:cos}, Theorem \ref{tho:dimred} follows by noticing that $\mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]=\rho\mathbb{E}\big[\cos (\widetilde{\nabla S}, \text{proj}_{\text{span}(W)}(\nabla S)) \big]$.
+
+% \subsection{Model and Goal}
+% Let ${\bf x}\in\mathbb{R}^m$ be the input. For simplicity, we consider the binary classification problem $y = f({\bf x}) \in \mathbb{R}$. For each query ${\bf x}$ we will get the model decision $\phi({\bf x}) = 2\times\mathbbm{1} \{f({\bf x}) > 0\}-1$. We would like to estimate $\nabla_x y = \frac{\partial y}{\partial {\bf x}}$ using only $\phi(x)$. For simplicity we use $\nabla y$ to denote $\nabla_x y$.
+
+% \subsection{Approach in BAPP and analysis}
+% In BAPP they estimate the gradient by sampling $B$ Gaussian vectors ${\bf u}_1, \ldots, {\bf u}_B \in \mathbb{R}^m$ where $||{\bf u}_i||_2 = 1$, and calculate the estimated gradient $\widetilde{\nabla y}$ as:
+% \begin{equation}
+%     \widetilde{\nabla y} = \frac1B \sum_{b=1}^B \phi({\bf x} + \delta {\bf u}_b){\bf u}_b
+% \end{equation}
+% The expected quality of the estimated gradient is in the following theorem:
+% \begin{theorem}
+% For a boundary point $x$, suppose that $f(x)$ has $L$-Lipschitz gradients in a neighborhood of $x$, and that the sampled ${\bf u}_1, \ldots, {\bf u}_B$ are orthogonal to each other. Then the expected cosine simliarity between $\widetilde{\nabla y}$ and $\nabla y$ can be bounded by:
+% \begin{equation}
+%     \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla y||_2})^2\bigg)^{\frac{m-1}{2}} - 1 \bigg)c_m\sqrt{\frac B m} \leq \mathbb{E}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] \leq c_m\sqrt{\frac B m}
+% \end{equation}
+% where $c_m$ is a coefficient related with $m$ and can be bounded by $c_m \in (2/\pi, 1)$. In particular, we have:
+% \begin{equation}
+%     \lim_{\delta\rightarrow 0}\mathbb{E}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] = c_m\sqrt{\frac B m}.
+% \end{equation}
+% In addition, the variance is bounded by:
+% \begin{equation}
+%     \lim_{\delta\rightarrow 0}\text{Var}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] = \Theta(\frac B m)
+% \end{equation}
+% \end{theorem}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.9\linewidth]{figs/stimulated.pdf}
+%     \caption{Stimulation experiments on the theoretical bound.}
+%     \label{fig:stimulate}
+% \end{figure}
+
+% We verify the theorem by stimulating 100 times with $m=3\times 224 \times 224$, $B=100$ and $w=0.001$. As shown in Figure \ref{fig:stimulate}, the simulated values fit well with the calculated expectation upper and lower bound.
+
+% \newpage
+
+% \subsection{Dimension Reduction Technique}
+% We consider to generate random vectors on a lower dimensional space. Consider a linear mapping $A({\bf v}) = W{\bf v}$ where $n<m$, ${\bf v} \in \mathbb{R}^n$ and $W \in \mathbb{R}^{m\times n}$. Let $S_w=\text{span}(W^\intercal) \subseteq \mathbb{R}^m$ denote the subspace spanned by row vectors of $W$. Hence, by sampling Gaussian vectors ${\bf v}_1, \ldots, {\bf v}_B \in \mathbb{R}^n$ and letting ${\bf u}_i = A({\bf v}_i) \in \mathbb{R}^m$, we are actually randomly sampling from an $n$-dimensional subspace from $ \mathbb{R}^m$:
+% \begin{equation}
+%     \widetilde{\nabla_w y} = \frac1B \sum_{b=1}^B \phi({\bf x} + \delta A({\bf v}_b)) A({\bf v}_b)
+% \end{equation}
+% Then the expected quality of estimated gradient is in the following theorem:
+% \begin{theorem}
+% For a boundary point $x$, suppose that 1) $f(x)$ has $L$-Lipschitz gradients in a neighborhood of $x$, 2) the sampled ${\bf v}_1, \ldots, {\bf v}_B$ are orthogonal to each other, 3) $W^\intercal W = I$. Let constant $\rho = \frac{||\text{proj}_{S_w}(\nabla y)||_2}{||\nabla y||_2}$ indicate how much proportion of $\nabla y$ lies on the subspace from which we are sampling from. Then the expected cosine simliarity between $\widetilde{\nabla y}$ and $\nabla y$ can be bounded by:
+% \begin{equation}
+%     \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla y||_2})^2\bigg)^{\frac{n-1}{2}} - 1 \bigg)c_n\rho\sqrt{\frac B n} \leq \mathbb{E}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] \leq c_n\rho\sqrt{\frac B n}
+% \end{equation}
+% where $c_n$ is a coefficient related with $n$ and can be bounded by $c_n \in (2/\pi, 1)$. In particular, we have:
+% \begin{equation}
+%     \lim_{\delta\rightarrow 0}\mathbb{E}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] = c_n\rho 
+%     \sqrt{\frac B n}.
+% \end{equation}
+% In addition, the variance is bounded by:
+% \begin{equation}
+%     \lim_{\delta\rightarrow 0}\text{Var}\big[\cos (\widetilde{\nabla y}, \nabla y) \big] = \Theta(\rho^2 \frac B n).
+% \end{equation}
+% \end{theorem}

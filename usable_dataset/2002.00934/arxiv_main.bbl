@@ -1,0 +1,367 @@
+\begin{thebibliography}{10}
+
+\bibitem{costOfAds}
+Panagiotis Papadopoulos, Nicolas Kourtellis, and Evangelos~P. Markatos.
+\newblock The cost of digital advertisement: Comparing user and advertiser
+  views.
+\newblock In {\em Proceedings of the World Wide Web Conference}, pages
+  1479--1489, 2018.
+
+\bibitem{panpap_www2019}
+Panagiotis Papadopoulos, Nicolas Kourtellis, and Evangelos~P. Markatos.
+\newblock Cookie synchronization: Everything you always wanted to know but were
+  afraid to ask.
+\newblock In {\em Proceedings of the 28th International Conference on World
+  Wide Web}, 2019.
+
+\bibitem{papadopoulos2017if}
+Panagiotis Papadopoulos, Nicolas Kourtellis, Pablo~Rodriguez Rodriguez, and
+  Nikolaos Laoutaris.
+\newblock If you are not paying for it, you are the product: How much do
+  advertisers pay to reach you?
+\newblock In {\em Proceedings of the Internet Measurement Conference}, pages
+  142--156. ACM, 2017.
+
+\bibitem{pachilakis2019headerbidding}
+Michalis Pachilakis, Panagiotis Papadopoulos, Evangelos~P. Markatos, and
+  Nicolas Kourtellis.
+\newblock {No More Chasing Waterfalls: A Measurement Study of the Header
+  Bidding Ad-Ecosystem}.
+\newblock In {\em Proceedings of the Internet Measurement Conference}, pages
+  280--293. ACM, 2019.
+
+\bibitem{castelluccia2014selling}
+Lukasz Olejnik, Tran Minh-Dung, and Claude Castelluccia.
+\newblock Selling off privacy at auction.
+\newblock In {\em Network and Distributed System Security Symposium (NDSS)},
+  2014.
+
+\bibitem{acar2014web}
+Gunes Acar, Christian Eubank, Steven Englehardt, Marc Juarez, Arvind Narayanan,
+  and Claudia Diaz.
+\newblock The web never forgets: Persistent tracking mechanisms in the wild.
+\newblock In {\em Proceedings of the SIGSAC Conference on Computer and
+  Communications Security}, pages 674--689. ACM, 2014.
+
+\bibitem{Nikiforakis:2013:CME:2497621.2498133}
+Nick Nikiforakis, Alexandros Kapravelos, Wouter Joosen, Christopher Kruegel,
+  Frank Piessens, and Giovanni Vigna.
+\newblock Cookieless monster: Exploring the ecosystem of web-based device
+  fingerprinting.
+\newblock In {\em Proceedings of the Symposium on Security and Privacy}, pages
+  541--555. IEEE Computer Society, 2013.
+
+\bibitem{devFingerprinting}
+Elias~P. Papadopoulos, Michalis Diamantaris, Panagiotis Papadopoulos, Thanasis
+  Petsas, Sotiris Ioannidis, and Evangelos~P. Markatos.
+\newblock The long-standing privacy debate: Mobile websites vs mobile apps.
+\newblock In {\em Proceedings of the 26th International Conference on World
+  Wide Web}, pages 153--162, 2017.
+
+\bibitem{CATrump}
+Paul~Hilder Paul~Lewis.
+\newblock Leaked: Cambridge analytica's blueprint for trump victory.
+\newblock
+  \url{https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory},
+  2018.
+
+\bibitem{CACruz}
+Patrick Svitek and Haley Samsel.
+\newblock Ted cruz says cambridge analytica told his presidential campaign its
+  data use was legal.
+\newblock
+  \url{https://www.texastribune.org/2018/03/20/ted-cruz-campaign-cambridge-analytica/},
+  2018.
+
+\bibitem{CABrexit}
+Peter Geoghegan and Jenna Corderoy.
+\newblock Revealed: Arron banks brexit campaign's secret meetings with
+  cambridge analytica.
+\newblock
+  \url{https://www.opendemocracy.net/uk/brexitinc/peter-geoghegan-jenna-corderoy/revealed-arron-banks-brexit-campaign-had-more-meetings-w},
+  2018.
+
+\bibitem{RussiaFB}
+Leonid Bershidsky.
+\newblock Yes, russia abused facebook. but did it work?
+\newblock
+  \url{https://www.bloomberg.com/opinion/articles/2018-12-18/yes-russia-abused-facebook-but-did-it-work},
+  2018.
+
+\bibitem{bhatt2018illuminating}
+Shweta Bhatt, Sagar Joglekar, Shehar Bano, and Nishanth Sastry.
+\newblock Illuminating an ecosystem of partisan websites.
+\newblock In {\em {Companion of The Web Conference}}, pages 545--554, 2018.
+
+\bibitem{lee1999learning}
+Daniel~D Lee and H~Sebastian Seung.
+\newblock Learning the parts of objects by non-negative matrix factorization.
+\newblock {\em Nature}, 401(6755):788, 1999.
+
+\bibitem{lahoti2018joint}
+Preethi Lahoti, Kiran Garimella, and Aristides Gionis.
+\newblock Joint non-negative matrix factorization for learning ideological
+  leaning on twitter.
+\newblock In {\em Proceedings of the 11th International Conference on Web
+  Search and Data Mining}, pages 351--359. ACM, 2018.
+
+\bibitem{Zhu:2007:CCL:1277741.1277825}
+Shenghuo Zhu, Kai Yu, Yun Chi, and Yihong Gong.
+\newblock Combining content and link for classification using matrix
+  factorization.
+\newblock In {\em Proceedings of the 30th SIGIR Conference on Research and
+  Development in Information Retrieval}, pages 487--494. ACM, 2007.
+
+\bibitem{itp}
+John Wilander.
+\newblock Intelligent tracking prevention 2.3.
+\newblock
+  \url{https://webkit.org/blog/9521/intelligent-tracking-prevention-2-3/},
+  2019.
+
+\bibitem{sop}
+{World Wide Web Consortium (W3C)}.
+\newblock Same origin policy, 2010.
+
+\bibitem{bashir2016}
+Muhammad~Ahmad Bashir, Sajjad Arshad, William Robertson, and Christo Wilson.
+\newblock Tracing information flows between ad exchanges using retargeted ads.
+\newblock In {\em {25th USENIX Security Symposium}}, 2016.
+
+\bibitem{harding2001cookies}
+William~T Harding, Anita~J Reed, and Robert~L Gray.
+\newblock Cookies and web bugs: What they are and how they work together.
+\newblock {\em Information Systems Management}, 18(3):17--24, 2001.
+
+\bibitem{solomos2019cdt}
+Konstantinos Solomos, Panagiotis Ilia, Sotiris Ioannidis, and Nicolas
+  Kourtellis.
+\newblock {Talon: An Automated Framework for Cross-Device Tracking Detection}.
+\newblock In {\em International Symposium on Research in Attacks, Intrusions
+  and Defenses (RAID)}, pages 227--241, 2019.
+
+\bibitem{jernigan2009gaydar}
+Carter Jernigan and Behram~FT Mistree.
+\newblock Gaydar: Facebook friendships expose sexual orientation.
+\newblock {\em First Monday}, 14(10), 2009.
+
+\bibitem{toysmart}
+{The Federal Trade Commission}.
+\newblock Ftc sues failed website, toysmart.com, for deceptively offering for
+  sale personal information of website visitors.
+\newblock
+  \url{https://www.ftc.gov/news-events/press-releases/2000/07/ftc-sues-failed-website-toysmartcom-deceptively-offering-sale},
+  2000.
+
+\bibitem{nsaCookies}
+Seth~Schoen Adi~Kamdar, Rainey~Reitman.
+\newblock Nsa turns cookies (and more) into surveillance beacons.
+\newblock
+  \url{https://www.eff.org/deeplinks/2013/12/nsa-turns-cookies-and-more-surveillance-beacons},
+  2013.
+
+\bibitem{Buzzfeed}
+Criag Silverman, Jane Lytvynenko, Lam Thuy~Vo, and Jeremy Singer-Vine.
+\newblock Inside the partisan fight for your news feed, 2017.
+\newblock
+  https://www.buzzfeednews.com/article/craigsilverman/inside-the-partisan-fight-for-your-news-feed.
+
+\bibitem{BuzzfeedGithub}
+Criag Silverman, Jane Lytvynenko, Lam Thuy~Vo, and Jeremy Singer-Vine.
+\newblock Data, analytic code, and findings related to the buzzfeed news
+  article, 2017.
+\newblock
+  https://github.com/BuzzFeedNews/2017-08-partisan-sites-and-facebook-pages.
+
+\bibitem{carrascosa2015}
+Juan~Miguel Carrascosa, Jakub Mikians, Ruben Cuevas, Vijay Erramilli, and
+  Nikolaos Laoutaris.
+\newblock I always feel like somebody's watching me: Measuring online
+  behavioural advertising.
+\newblock In {\em Proceedings of the 11th ACM Conference on Emerging Networking
+  Experiments and Technologies}, CoNEXT '15, 2015.
+
+\bibitem{programmaticAd}
+{Adext Corp}.
+\newblock How programmatic advertising has changed the online advertising
+  landscape.
+\newblock https://blog.adext.com/programmatic-ads-changed-online-advertising/,
+  2019.
+
+\bibitem{ballard2016campaigning}
+Andrew~O Ballard, D~Sunshine Hillygus, and Tobias Konitzer.
+\newblock Campaigning online: Web display ads in the 2012 presidential
+  campaign.
+\newblock {\em PS: Political Science \& Politics}, 49(3):414--419, 2016.
+
+\bibitem{englehardt2016online}
+Steven Englehardt and Arvind Narayanan.
+\newblock Online tracking: A 1-million-site measurement and analysis.
+\newblock In {\em Proceedings of the SIGSAC Conference on Computer and
+  Communications Security}, pages 1388--1401. ACM, 2016.
+
+\bibitem{coppa}
+Federal~Trade Commission.
+\newblock Children's online privacy protection rule (coppa), 1998.
+\newblock
+  https://www.ftc.gov/enforcement/rules/rulemaking-regulatory-reform-proceedings/childrens-online-privacy-protection-rule.
+
+\bibitem{lecuyer2015sunlight}
+Mathias Lecuyer, Riley Spahn, Yannis Spiliopolous, Augustin Chaintreau, Roxana
+  Geambasu, and Daniel Hsu.
+\newblock Sunlight: Fine-grained targeting detection at scale with statistical
+  confidence.
+\newblock In {\em Proceedings of the 22nd SIGSAC Conference on Computer and
+  Communications Security}, pages 554--566. ACM, 2015.
+
+\bibitem{openwpm-code}
+Openwpm framework.
+\newblock \url{https://github.com/mozilla/OpenWPM}, 2020.
+
+\bibitem{disconnectme}
+Disconnect.me.
+\newblock Disconnect tracking protection, 2019.
+\newblock
+  https://github.com/disconnectme/disconnect-tracking-protection/blob/master/services.json.
+
+\bibitem{whotracksme}
+whotracks.me~by Cliqz and Ghostery.
+\newblock Bringing transparency to online tracking., 2019.
+\newblock
+  https://github.com/cliqz-oss/whotracks.me/tree/master/whotracksme/data/assets.
+
+\bibitem{brunet2004metagenes}
+Jean-Philippe Brunet, Pablo Tamayo, Todd~R Golub, and Jill~P Mesirov.
+\newblock Metagenes and molecular pattern discovery using matrix factorization.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  101(12):4164--4169, 2004.
+
+\bibitem{hutchins2008position}
+Lucie~N Hutchins, Sean~M Murphy, Priyam Singh, and Joel~H Graber.
+\newblock Position-dependent motif characterization using non-negative matrix
+  factorization.
+\newblock {\em Bioinformatics}, 24(23):2684--2690, 2008.
+
+\bibitem{Spiekermann2015}
+Sarah Spiekermann, Rainer B{\"o}hme, Alessandro Acquisti, and Kai-Lung Hui.
+\newblock Personal data markets.
+\newblock {\em Electronic Markets}, 25(2):91--93, Jun 2015.
+
+\bibitem{elmeleegy2013overview}
+Hazem Elmeleegy, Yinan Li, Yan Qi, Peter Wilmot, Mingxi Wu, Santanu Kolay, Ali
+  Dasdan, and Songting Chen.
+\newblock Overview of turn data management platform for digital advertising.
+\newblock {\em Proceedings of the VLDB Endowment}, 6(11):1138--1149, 2013.
+
+\bibitem{vickrey1961counterspeculation}
+William Vickrey.
+\newblock Counterspeculation, auctions, and competitive sealed tenders.
+\newblock {\em The Journal of finance}, 1961.
+
+\bibitem{RTB}
+Jack Marshall.
+\newblock What is real time bidding.
+\newblock https://digiday.com/media/what-is-real-time-bidding/, 2014.
+
+\bibitem{mccarthy2006experience}
+John McCarthy, Peter Wright, Jayne Wallace, and Andy Dearden.
+\newblock The experience of enchantment in human--computer interaction.
+\newblock {\em Personal and ubiquitous computing}, 10(6):369--378, 2006.
+
+\bibitem{agarwal2019tweeting}
+Pushkal Agarwal, Nishanth Sastry, and Edward Wood.
+\newblock Tweeting mps: Digital engagement between citizens and members of
+  parliament in the uk.
+\newblock In {\em Proceedings of the International AAAI Conference on Web and
+  Social Media}, volume~13, pages 26--37, 2019.
+
+\bibitem{messing2014selective}
+Solomon Messing and Sean~J Westwood.
+\newblock Selective exposure in the age of social media: Endorsements trump
+  partisan source affiliation when selecting news online.
+\newblock {\em Communication Research}, 41(8):1042--1063, 2014.
+
+\bibitem{thurman2012future}
+Neil Thurman and Steve Schifferes.
+\newblock The future of personalization at news websites: lessons from a
+  longitudinal study.
+\newblock {\em Journalism Studies}, 13(5-6):775--790, 2012.
+
+\bibitem{chand2017dark}
+Daniel~E Chand.
+\newblock Dark money and dirty politics: Are anonymous ads more negative?
+\newblock {\em Business and Politics}, 19(3):454--481, 2017.
+
+\bibitem{zannettou2017web}
+Savvas Zannettou, Tristan Caulfield, Emiliano De~Cristofaro, Nicolas
+  Kourtellis, Ilias Leontiadis, Michael Sirivianos, Gianluca Stringhini, and
+  Jeremy Blackburn.
+\newblock The web centipede: understanding how web communities influence each
+  other through the lens of mainstream and alternative news sources.
+\newblock In {\em Proceedings of the 2017 Internet Measurement Conference},
+  pages 405--417. ACM, 2017.
+
+\bibitem{pla2014political}
+Ferran Pla and Llu{\'\i}s-F Hurtado.
+\newblock Political tendency identification in twitter using sentiment analysis
+  techniques.
+\newblock In {\em Proceedings of COLING 2014, the 25th international conference
+  on computational linguistics: Technical Papers}, pages 183--192, 2014.
+
+\bibitem{pennacchiotti2011democrats}
+Marco Pennacchiotti and Ana-Maria Popescu.
+\newblock Democrats, republicans and starbucks afficionados: user
+  classification in twitter.
+\newblock In {\em Proceedings of the 17th SIGKDD International Conference on
+  Knowledge Discovery and Data mining}, pages 430--438. ACM, 2011.
+
+\bibitem{karaj2018whotracks}
+Arjaldo Karaj, Sam Macbeth, R{\'e}mi Berson, and Josep~M Pujol.
+\newblock Whotracks.me: Monitoring the online tracking landscape at scale.
+\newblock {\em arXiv preprint arXiv:1804.08959}, 2018.
+
+\bibitem{hu2019characterising}
+Xuehui Hu and Nishanth Sastry.
+\newblock Characterising third party cookie usage in the eu after gdpr.
+\newblock In {\em Proceedings of the 10th ACM Conference on Web Science}, pages
+  137--141, 2019.
+
+\bibitem{europeanDataRules2018}
+{European Commission}.
+\newblock Rules for the protection of personal data inside and outside the eu.
+\newblock https://ec.europa.eu/info/law/law-topic/data-protection\_en/, 2018.
+
+\bibitem{exclusiveCSync}
+Panagiotis Papadopoulos, Nicolas Kourtellis, and Evangelos~P. Markatos.
+\newblock Exclusive: How the (synced) cookie monster breached my encrypted vpn
+  session.
+\newblock In {\em Proceedings of the 11th European Workshop on Systems
+  Security}, EuroSec'18, pages 6:1--6:6, 2018.
+
+\bibitem{englehardt2015cookies}
+Steven Englehardt, Dillon Reisman, Christian Eubank, Peter Zimmerman, Jonathan
+  Mayer, Arvind Narayanan, and Edward~W Felten.
+\newblock Cookies that give you away: The surveillance implications of web
+  tracking.
+\newblock In {\em Proceedings of the 24th International Conference on World
+  Wide Web}, pages 289--299, 2015.
+
+\bibitem{zhang2017targeted}
+Yong Zhang, Hongming Zhou, Nganmeng Tan, Saeed Bagheri, and Meng~Joo Er.
+\newblock Targeted advertising based on browsing history.
+\newblock {\em arXiv preprint arXiv:1711.04498}, 2017.
+
+\bibitem{datta2015automated}
+Amit Datta, Michael~Carl Tschantz, and Anupam Datta.
+\newblock Automated experiments on ad privacy settings.
+\newblock {\em Proceedings on Privacy Enhancing Technologies}, 2015(1):92--112,
+  2015.
+
+\bibitem{kim2018stealth}
+Young~Mie Kim, Jordan Hsu, David Neiman, Colin Kou, Levi Bankston, Soo~Yun Kim,
+  Richard Heinrich, Robyn Baragwanath, and Garvesh Raskutti.
+\newblock The stealth media? groups and targets behind divisive issue campaigns
+  on facebook.
+\newblock {\em Political Communication}, pages 1--27, 2018.
+
+\end{thebibliography}

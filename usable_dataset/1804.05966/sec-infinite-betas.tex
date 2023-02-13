@@ -1,0 +1,163 @@
+
+We now consider the set of all entropic values.
+By a result of Kloster et al.~(~\cite{Kloster2018115}, Theorem~3), this set is at most countable; one important question is whether it is actually finite.
+Although Corollary~\ref{cor:cartesian-infinite} exhibits an infinite family of entropic graphs, they all share the same two entropic values. The distribution of entropic values is also of interest; in particular, we ask whether there are intervals where no values are entropic; we say an interval $(a,b) \subset \mathbb{R}$ is a \emph{sub-entropic interval} if no $\beta \in (a,b)$ is entropic for any graph.
+Since subgraph centrality rankings converge to degree-rankings as $\beta$ converges to 0~\cite{benzi2015limiting}, walk-classes with different node degrees are distinguishable;
+this naturally leads to the question of whether there is a sub-entropic interval near zero.
+
+In this section, we construct an infinite sequence of entropic $\beta$ that has 0 as a limit point,
+showing that no interval of the form $(0, \eps)$ is sub-entropic;
+This result is the first to show that there are infinitely many entropic values, although it leaves open the question of whether the set of entropic values is dense anywhere on the number line, and whether a sub-entropic interval might exist away from 0.
+
+\subsection{Entropic values accumulate at zero}\label{sec:infinite-betas}
+Here we prove that no $\eps > 0$ exists such that $(0,\eps)$ is a sub-entropic interval for $\exp(\beta x)$.
+We proceed by constructing a sequence of entropic values $\beta_j$ that converges to 0.
+Our sequence depends on a family of graphs which generalizes the 24-node graph in~\cite{Kloster2018115}.
+In the remainder of this section, we describe the graph family, derive its eigendecomposition, and use the eigendecomposition to construct the sequence of entropic values.
+
+\subsubsection*{The graph class $G(c,m)$}
+We define the graph $G(c,m)$ as follows. Given $m$ cliques of size $c$ and an independent set of size $c$, create a perfect matching from the independent set to each clique.
+This results in a graph with $c(m+1)$ nodes and two distinct walk-classes---one formed by the nodes in the independent set, the other by the nodes in the cliques.
+The 24-node graph in~\cite{Kloster2018115} is $G(4,5)$.
+See Figure~\ref{fig:generalized-kral} for a visualization of $G(c,m)$ and its adjacency matrix.
+
+\begin{figure}
+      \centering
+      \resizebox{0.7\linewidth}{!}{\input{./figures/kks_graph.tex}}%
+      \vspace{10pt}
+      \scalebox{0.85}{
+          $ \mA_{G(c,m)} = \left(
+                                  \begin{array}{cccccc}
+                                      0 & \mIs{c} & \hdots &  \mIs{c} \\
+                                      \mIs{c} & \mA_{K_c} & 0 & 0 \\
+                                      \vdots & 0 & \ddots & 0  \\
+                                      \mIs{c} & 0 & 0 & \mA_{K_c} \\
+                                  \end{array}
+                            \right)
+                        = \left(
+                            \begin{array}{cc}
+                                0 & \vvk{e}{m}^T \otimes \mIs{c} \\
+                                \vvk{e}{m} \otimes \mIs{c} & \mIs{m} \otimes \mA_{K_c}
+                            \end{array}
+                          \right)$
+      }%
+    \caption{\label{fig:generalized-kral}
+        \emph{(Top)} The graph $G(c,m)$ is composed of $m$ copies of the complete graph $K_c$ (indicated by the labels $C_j$). Each clique is connected by a perfect matching to the independent set of size $c$ indicated by the gray nodes at the bottom.
+        \emph{(Bottom)} The adjacency matrix for the graph $G(c,m)$. Expressing $\mA_{G(c,m)}$ in terms of Kronecker products with $\ve$ and $\mA_{K_c}$ makes it easier to verify that the vectors in Table~\ref{tab:eigenvectors} are eigenvectors of $\mA_{G(c,m)}$.
+    }
+\end{figure}
+
+The proof of our main result relies on having an explicit eigendecomposition $(\lambda_k, \vv_k)$ and applying the identity
+\[
+    \exp(\beta \mA) = \sum_{k=1}^n \exp( \beta \lambda_k ) \vv_k \vv_k^T,
+\]
+so next we derive an eigendecomposition for $\mA_{G(c,m)}$.
+As a first step, it will be convenient to look at the eigendecomposition of a related matrix.
+
+\paragraph{Eigendecomposition of a clique}
+Since $\mA_{K_c} = \vvk{e}{c}\vvk{e}{c}^T - \mIs{c}$,
+$\mA_{K_c}$ has the same eigendecomposition as $\vvk{e}{c}\vvk{e}{c}^T$ but with eigenvalues shifted by $-1$.
+Next we explicitly derive an orthonormal basis for the nullspace of $\ve\ve^T$.
+
+Let $\mmk{H}{c}$ be the $c \times c$ Householder reflector matrix that maps the vector $\ve$ to $\sqrt{c}\hspace{1pt} \ve_1$.
+The standard construction of a Householder reflector matrix gives $\mmk{H}{c} = \mmk{I}{c} - \tfrac{\vu\vu^T}{c - \sqrt{c}}$ where $\vu = \sqrt{c}\hspace{1pt}\ve_1 - \vvk{e}{c}$.
+Note that $\ve$ is orthogonal to the bottom $c-1$ rows of $\mmk{H}{c}$; since $\mmk{H}{c}$ is itself an orthogonal matrix, this implies the lower $c-1$ rows of $\mmk{H}{c}$ are an orthonormal basis for the nullspace of $\ve$.
+Thus, an orthonormal basis for the eigenspace of $\mA_{K_c}$ with eigenvalue $-1$ is given by the set of vectors $\{n_j\}_{j=1}^{c}$, where
+\[
+    \vn_j = \ve_j + \left(\tfrac{1}{c - \sqrt{c}}\right)( \sqrt{c}\hspace{1pt}\ve_1 - \ve).
+\]
+By setting $\mnk{c} = [\vn_2, \cdots, \vn_c ]$, we have that
+ $[ \tfrac{1}{\sqrt{c}} \vvk{e}{c},  \mnk{c} ]$ is a $c\times c$ orthogonal matrix and gives the useful identity
+\begin{align}\label{eqn:N-property}
+    \mnk{c}\mnk{c}^T &= \mmk{I}{c} - \tfrac{1}{c} \vvk{e}{c}\vvk{e}{c}^T.
+\end{align}
+Thus, $\mA_{K_c}$ has eigendecomposition as follows:
+  $\lambda_1 = (c-1)$ with multiplicity 1 and eigenvector $\vv_1 = \tfrac{1}{\sqrt{c}} \ve$, and
+  $\lambda_j = -1$ with multiplicity $(c-1)$ and eigenvector $\vv_j = \vn_j$.
+
+\paragraph{Eigenvectors of $\mA_{G(c,m)}$}
+Each eigenvector $\vv$ for $\mA_{G(c,m)}$ is a length $c(m+1)$ vector which we divide into a block of size $c$ and a block of size $cm$:
+\[
+    \mA_{G(c,m)} =
+    \left(
+        \begin{array}{cc}
+            0 & \vvk{e}{m}^T \otimes \mIs{c} \\
+            \vvk{e}{m} \otimes \mIs{c} & \mIs{m} \otimes \mA_{K_c}
+        \end{array}
+    \right), \quad
+    \vv = \bmat{ \vvk{y}{c} \\ \vvk{w}{m} \otimes \vvk{x}{c} }.
+\]
+The length $c$ subvector $\vvk{y}{c}$ of each eigenvector corresponds to the independent set of $G(c,m)$; each $\vvk{x}{c}$ corresponds to one of the $K_c$ subgraphs.
+We summarize the eigendecomposition of $\mA_{G(c,m)}$ in Table~\ref{tab:eigenvectors} and present an ordered list of the eigenvalues with their multiplicities in Table~\ref{tab:eigenvalues}.
+
+\begin{table}
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{lXr}
+      eigenvalue & eigenvector & eigenspace dim\\
+      \toprule
+      \vspace{5pt}
+      $\lambda = \left(\tfrac{1}{2}\right)\left( (c-1) \pm \sqrt{(c-1)^2 + 4m} \right)$ &   $\bmat{
+                            \vvk{e}{c} \\
+                            \tfrac{1}{\lambda - (c-1)} \vvk{e}{m} \otimes \vvk{e}{c}
+                          }  \cdot  \left( \frac{(\lambda - \lambda_2)^2}{c ( (\lambda - \lambda_2)^2 + m )} \right)^{\tfrac{1}{2}}$
+              & 1, each   \\
+      \vspace{5pt}
+      $\lambda = \left(\tfrac{1}{2}\right)\left( -1 \pm \sqrt{1 + 4m} \right)$  & $\bmat{
+                \mnk{c} \\
+                \tfrac{1}{\lambda + 1} \vvk{e}{m}\otimes\mnk{c}
+              }  \cdot  \left( \frac{(\lambda + 1)^2}{(\lambda + 1)^2 + m} \right)^{\tfrac{1}{2}}$
+              & $c-1$, each\\
+      \vspace{5pt}
+      $\lambda = (c-1)$ & $\bmat{ 0 \\ \mnk{m} \otimes \vvk{e}{c} }  \cdot  \left( \frac{1}{c} \right)^{\tfrac{1}{2}}$
+      &  $m-1$ \\
+      \vspace{5pt}
+      $\lambda = -1$ & $\bmat{ 0 \\ \mnk{m} \otimes \mnk{c} } $ & $(c-1)(m-1)$ \\
+    \end{tabularx}
+    \caption{\label{tab:eigenvectors}
+        Complete, orthonormal set of eigenvectors for $\mA_{G(c,m)}$. Each vector is length $c(m+1)$ and is divided into two subvectors: a top component of length $c$ whose entries correspond to the independent set of $G(c,m)$, and a bottom component of length $cm$ corresponding to the nodes in the cliques.
+    }
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabularx}{0.80\textwidth}{lrXr}
+      eigenvalue & value & & multiplicity \\
+      \toprule
+      $\lambda_1$  &  $\left(\tfrac{1}{2}\right)\left( (c-1) + \sqrt{(c-1)^2 + 4m} \right)$ & & 1 \\
+      $\lambda_2$  &  $c-1$  &  & $(m-1)$  \\
+      $\lambda_3$  &  $\left(\tfrac{1}{2}\right)\left( -1 + \sqrt{1 + 4m} \right)$  &  & $(c-1)$  \\
+      $\lambda_4$  &  $-1$  &  & $(m-1)(c-1)$  \\
+      $\lambda_5$  &  $\left(\tfrac{1}{2}\right)\left( (c-1) - \sqrt{(c-1)^2 + 4m} \right)$  &  & 1  \\
+      $\lambda_6$  &  $\left(\tfrac{1}{2}\right)\left( -1 - \sqrt{1 + 4m} \right)$  &  & $(c-1)$    \\
+    \end{tabularx}
+    \caption{\label{tab:eigenvalues}
+        Ordered list of eigenvalues of $G(c,m)$ for $c, m \in \mathbb{N}^+$.
+        The particular ordering
+        $\lambda_1 > \lambda_2$ is guaranteed to hold because $c, m > 0$.
+        The ordering $\lambda_2 > \lambda_3$ holds as long as $m < c^2 - c$,
+        $\lambda_3 > \lambda_4$ always holds because $m > 0$,
+        $\lambda_4 > \lambda_5$ holds as long as $c < m$,
+        and finally $\lambda_5 > \lambda_6$ always holds because $c,m > 0$.
+    }
+\end{table}
+
+\subsubsection*{Entropic sub-family of $G(c,m)$}
+
+We now establish that an infinite sub-family of the graph class $G(c,m)$ is
+entropic with respect to the matrix exponential and discuss its implications for
+intervals of sub-entropic parameter values.
+The proof of Theorem~\ref{thm:entropic-kks-general} is technical, and we defer it to the Appendix.
+
+\begin{theorem}\label{thm:entropic-kks-general}
+    \input{./repeated-lemmas/thm-kks-generalize.tex}
+\end{theorem}
+\begin{corollary}\label{cor:entropic-kks-general}
+  There exists some $C \in \mathbb{N}^+$ such that for each $c \geq C$
+  there exists at least one value $\beta \in (0, \tfrac{1}{c-2})$ for which the graph $G(c,c+1)$ has maximum walk-entropy, i.e., $G(c,c+1)$ is entropic.
+\end{corollary}
+
+Since Corollary~\ref{cor:entropic-kks-general} exhibits a sequence of entropic values $\beta$ that converges to zero, we can rule out sub-entropic intervals near zero.
+\begin{corollary}
+    There is no $\eps > 0$ such that $(0,\eps)$ is a sub-entropic interval for subgraph centrality.
+\end{corollary}

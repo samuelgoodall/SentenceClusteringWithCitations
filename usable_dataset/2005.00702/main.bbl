@@ -1,0 +1,244 @@
+\begin{thebibliography}{35}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{PAN(2018)}]{PAN@CLEF}
+ 2018.
+\newblock {PAN @ CLEF 2018 - Author Obfuscation}.
+\newblock \url{https://pan.webis.de/clef18/pan18-web/author-obfuscation.html}.
+
+\bibitem[{Abbasi and Chen(2008)}]{abbasi2008writeprints}
+Ahmed Abbasi and Hsinchun Chen. 2008.
+\newblock {Writeprints: A stylometric approach to identity-level identification
+  and similarity detection in cyberspace}.
+\newblock \emph{ACM Transactions on Information Systems (TOIS)}, 26(2):7.
+
+\bibitem[{Afroz et~al.(2012)Afroz, Brennan, and
+  Greenstadt}]{afroz2012detecting}
+Sadia Afroz, Michael Brennan, and Rachel Greenstadt. 2012.
+\newblock Detecting hoaxes, frauds, and deception in writing style online.
+\newblock In \emph{2012 IEEE Symposium on Security and Privacy}, pages
+  461--475. IEEE.
+
+\bibitem[{Almishari et~al.(2014)Almishari, Oguz, and
+  Tsudik}]{almishari2014cosn}
+Mishari Almishari, Ekin Oguz, and Gene Tsudik. 2014.
+\newblock {Fighting Authorship Linkability with Crowdsourcing}.
+\newblock In \emph{ACM Conference on Online Social Networks (COSN)}.
+
+\bibitem[{Anonymous(2018)}]{amazon18employeeletter}
+Anonymous. 2018.
+\newblock {I'm an Amazon Employee. My Company Shouldn't Sell Facial Recognition
+  Tech to Police}.
+
+\bibitem[{Bakhtin et~al.(2019)Bakhtin, Gross, Ott, Deng, Ranzato, and
+  Szlam}]{bakhtin2019real}
+Anton Bakhtin, Sam Gross, Myle Ott, Yuntian Deng, Marc'Aurelio Ranzato, and
+  Arthur Szlam. 2019.
+\newblock {Real or Fake? Learning to Discriminate Machine from Human Generated
+  Text}.
+\newblock \emph{arXiv preprint arXiv:1906.03351}.
+
+\bibitem[{Bevendorff et~al.(2019)Bevendorff, Potthast, Hagen, and
+  Stein}]{bevendorff2019heuristic}
+Janek Bevendorff, Martin Potthast, Matthias Hagen, and Benno Stein. 2019.
+\newblock {Heuristic Authorship Obfuscation}.
+\newblock In \emph{Proceedings of the 57th Conference of the Association for
+  Computational Linguistics}, pages 1098--1108.
+
+\bibitem[{Brennan et~al.(2012)Brennan, Afroz, and
+  Greenstadt}]{brennan2012adversarial}
+Michael Brennan, Sadia Afroz, and Rachel Greenstadt. 2012.
+\newblock {Adversarial stylometry: Circumventing authorship recognition to
+  preserve privacy and anonymity}.
+\newblock \emph{ACM Transactions on Information and System Security (TISSEC)},
+  15(3):12.
+
+\bibitem[{Castro-Castro et~al.(2017)Castro-Castro, Bueno, and
+  Munoz}]{dcastrocastro2017case}
+Daniel Castro-Castro, Reynier~Ortega Bueno, and Rafael Munoz. 2017.
+\newblock {Author Masking by Sentence Transformation}.
+\newblock In \emph{Notebook for PAN at CLEF}.
+
+\bibitem[{Devlin et~al.(2018)Devlin, Chang, Lee, and
+  Toutanova}]{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock \emph{arXiv preprint arXiv:1810.04805}.
+
+\bibitem[{Emmery et~al.(2018)Emmery, Manjavacas, and
+  Chrupa{\l}a}]{emmery2018style}
+Chris Emmery, Enrique Manjavacas, and Grzegorz Chrupa{\l}a. 2018.
+\newblock {Style Obfuscation by Invariance}.
+\newblock \emph{27th International Conference on Computational Linguistics}.
+
+\bibitem[{Gehrmann et~al.(2019)Gehrmann, Strobelt, and Rush}]{gehrmann2019gltr}
+Sebastian Gehrmann, Hendrik Strobelt, and Alexander Rush. 2019.
+\newblock \href {https://doi.org/10.18653/v1/P19-3019} {{GLTR}: Statistical
+  detection and visualization of generated text}.
+\newblock pages 111--116.
+
+\bibitem[{Hershey et~al.(2017)Hershey, Chaudhuri, Ellis, Gemmeke, Jansen,
+  Moore, Plakal, Platt, Saurous, Seybold et~al.}]{hershey2017cnn}
+Shawn Hershey, Sourish Chaudhuri, Daniel~PW Ellis, Jort~F Gemmeke, Aren Jansen,
+  R~Channing Moore, Manoj Plakal, Devin Platt, Rif~A Saurous, Bryan Seybold,
+  et~al. 2017.
+\newblock {CNN architectures for large-scale audio classification}.
+\newblock In \emph{2017 IEEE international conference on acoustics, speech and
+  signal processing (icassp)}, pages 131--135. IEEE.
+
+\bibitem[{Juola(2012)}]{juola2012detecting}
+Patrick Juola. 2012.
+\newblock Detecting stylistic deception.
+\newblock In \emph{Proceedings of the Workshop on Computational Approaches to
+  Deception Detection}, pages 91--96. Association for Computational
+  Linguistics.
+
+\bibitem[{Karadzhov et~al.(2017)Karadzhov, Mihaylova, Kiprov, Georgiev,
+  Koychev, and Nakov}]{karadzhov2017case}
+Georgi Karadzhov, Tsvetomila Mihaylova, Yasen Kiprov, Georgi Georgiev, Ivan
+  Koychev, and Preslav Nakov. 2017.
+\newblock {The case for being average: A mediocrity approach to style masking
+  and author obfuscation}.
+\newblock In \emph{International Conference of the Cross-Language Evaluation
+  Forum for European Languages}, pages 173--185. Springer.
+
+\bibitem[{Keswani et~al.(2016)Keswani, Trivedi, Mehta, and
+  Majumder}]{keswani2016author}
+Yashwant Keswani, Harsh Trivedi, Parth Mehta, and Prasenjit Majumder. 2016.
+\newblock {Author Masking through Translation}.
+\newblock In \emph{Notebook for PAN at CLEF 2016}, pages 890--894.
+
+\bibitem[{Krzywinski and Altman(2014)}]{krzywinski2014points}
+Martin Krzywinski and Naomi Altman. 2014.
+\newblock Points of significance: visualizing samples with box plots.
+
+\bibitem[{Mahmood et~al.(2019)Mahmood, Ahmad, Shafiq, Srinivasan, and
+  Zaffar}]{mahmood2019girl}
+Asad Mahmood, Faizan Ahmad, Zubair Shafiq, Padmini Srinivasan, and Fareed
+  Zaffar. 2019.
+\newblock {A Girl Has No Name: Automated Authorship Obfuscation using
+  Mutant-X}.
+\newblock \emph{Proceedings on Privacy Enhancing Technologies}, 2019(4):54--71.
+
+\bibitem[{Mansoorizadeh et~al.(2016)Mansoorizadeh, Rahgooy, Aminiyan, and
+  Eskandari}]{mansoorizadeh2016author}
+Muharram Mansoorizadeh, Taher Rahgooy, Mohammad Aminiyan, and Mahdy Eskandari.
+  2016.
+\newblock {Author obfuscation using WordNet and language models}.
+\newblock In \emph{Notebook for PAN at CLEF 2016}.
+
+\bibitem[{McDonald et~al.(2012)McDonald, Afroz, Caliskan, Stolerman, and
+  Greenstadt}]{mcdonald2012use}
+Andrew~WE McDonald, Sadia Afroz, Aylin Caliskan, Ariel Stolerman, and Rachel
+  Greenstadt. 2012.
+\newblock {Use fewer instances of the letter “i”: Toward writing style
+  anonymization}.
+\newblock In \emph{International Symposium on Privacy Enhancing Technologies
+  Symposium}, pages 299--318. Springer.
+
+\bibitem[{McDonald et~al.(2013)McDonald, Ulman, Barrowclift, and
+  Greenstadt}]{mcdonald2013anonymouth}
+Andrew~W.E. McDonald, Jeffrey Ulman, Marc Barrowclift, and Rachel Greenstadt.
+  2013.
+\newblock {Anonymouth Revamped: Getting Closer to Stylometric Anonymity}.
+\newblock In \emph{PETools: Workshop on Privacy Enhancing Tools}, volume~20.
+
+\bibitem[{Narayanan et~al.(2012)Narayanan, Paskov, Gong, Bethencourt, Stefanov,
+  Shin, and Song}]{narayanan2012feasibility}
+Arvind Narayanan, Hristo Paskov, Neil~Zhenqiang Gong, John Bethencourt, Emil
+  Stefanov, Eui Chul~Richard Shin, and Dawn Song. 2012.
+\newblock On the feasibility of internet-scale author identification.
+\newblock In \emph{2012 IEEE Symposium on Security and Privacy}, pages
+  300--314. IEEE.
+
+\bibitem[{Overdorf and Greenstadt(2016)}]{overdorf2016blogs}
+Rebekah Overdorf and Rachel Greenstadt. 2016.
+\newblock Blogs, twitter feeds, and reddit comments: Cross-domain authorship
+  attribution.
+\newblock \emph{Proceedings on Privacy Enhancing Technologies},
+  2016(3):155--171.
+
+\bibitem[{Potthast et~al.(2018)Potthast, Schremmer, Hagen, and
+  Stein}]{potthast2018overview}
+Martin Potthast, Felix Schremmer, Matthias Hagen, and Benno Stein. 2018.
+\newblock Overview of the author obfuscation task at pan 2018: A new approach
+  to measuring safety.
+\newblock In \emph{CLEF (Working Notes)}.
+
+\bibitem[{Potthast and Hagen(2018)}]{PAN2018overview}
+Schremmer Potthast and Stein Hagen. 2018.
+\newblock {Overview of the Author Obfuscation Task at PAN 2018: A New Approach
+  to Measuring Safety}.
+\newblock In \emph{Notebook for PAN at CLEF 2018}.
+
+\bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
+  Sutskever}]{radford2019language}
+Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya
+  Sutskever. 2019.
+\newblock Language models are unsupervised multitask learners.
+\newblock \emph{OpenAI Blog}, 1(8).
+
+\bibitem[{Ruder et~al.(2016)Ruder, Ghaffari, and Breslin}]{ruder2016character}
+Sebastian Ruder, Parsa Ghaffari, and John~G Breslin. 2016.
+\newblock {Character-level and multi-channel convolutional neural networks for
+  large-scale authorship attribution}.
+\newblock \emph{arXiv preprint arXiv:1609.06686}.
+
+\bibitem[{Schler et~al.(2006)Schler, Koppel, Argamon, and
+  Pennebaker}]{schler2006effects}
+Jonathan Schler, Moshe Koppel, Shlomo Argamon, and James~W Pennebaker. 2006.
+\newblock Effects of age and gender on blogging.
+\newblock In \emph{AAAI spring symposium: Computational approaches to analyzing
+  weblogs}, volume~6, pages 199--205.
+
+\bibitem[{Shahid et~al.(2017)Shahid, Farooqi, Ahmad, Shafiq, Srinivasan, and
+  Zaffar}]{shahid2017accurate}
+Usman Shahid, Shehroze Farooqi, Raza Ahmad, Zubair Shafiq, Padmini Srinivasan,
+  and Fareed Zaffar. 2017.
+\newblock Accurate detection of automatically spun content via stylometric
+  analysis.
+\newblock In \emph{2017 IEEE International Conference on Data Mining (ICDM)},
+  pages 425--434. IEEE.
+
+\bibitem[{Shetty et~al.(2018)Shetty, Schiele, and Fritz}]{shetty2018a4nt}
+Rakshith Shetty, Bernt Schiele, and Mario Fritz. 2018.
+\newblock {A4NT: author attribute anonymity by adversarial training of neural
+  machine translation}.
+\newblock In \emph{27th {USENIX} Security Symposium ({USENIX} Security 18)},
+  pages 1633--1650.
+
+\bibitem[{Simonyan and Zisserman(2014)}]{simonyan2014very}
+Karen Simonyan and Andrew Zisserman. 2014.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock \emph{arXiv preprint arXiv:1409.1556}.
+
+\bibitem[{Times(2018)}]{times2018part}
+NY~Times. 2018.
+\newblock I am part of the resistance inside the trump administration.
+\newblock \emph{NY Times. Retrieved from https://www. nytimes.
+  com/2018/09/05/.../trump-white-house-anonymous-resistance. html}.
+
+\bibitem[{Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones,
+  Gomez, Kaiser, and Polosukhin}]{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin. 2017.
+\newblock Attention is all you need.
+\newblock In \emph{Advances in neural information processing systems}, pages
+  5998--6008.
+
+\bibitem[{Yu et~al.(2017)Yu, Wang, Lai, and Zhang}]{yu2017refining}
+Liang-Chih Yu, Jin Wang, K~Robert Lai, and Xuejie Zhang. 2017.
+\newblock {Refining word embeddings using intensity scores for sentiment
+  analysis}.
+\newblock \emph{IEEE/ACM Transactions on Audio, Speech, and Language
+  Processing}, 26(3):671--681.
+
+\bibitem[{Zellers et~al.(2019)Zellers, Holtzman, Rashkin, Bisk, Farhadi,
+  Roesner, and Choi}]{zellers2019defending}
+Rowan Zellers, Ari Holtzman, Hannah Rashkin, Yonatan Bisk, Ali Farhadi,
+  Franziska Roesner, and Yejin Choi. 2019.
+\newblock Defending against neural fake news.
+\newblock \emph{Conference on Neural Information Processing Systems (NeurIPS)}.
+
+\end{thebibliography}

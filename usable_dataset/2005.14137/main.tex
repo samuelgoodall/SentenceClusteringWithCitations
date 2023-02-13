@@ -1,0 +1,164 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+\usepackage{algorithm,algorithmic}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{makecell}
+
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{threeparttable}
+
+% subfigure
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\newtheorem{theorem}{Theorem}
+% \newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+% notations
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\xadv}[1]{{\bf x}_{adv}^{(#1)}}
+
+\newcommand{\sourceimage}{{source-image}\xspace}
+\newcommand{\Sourceimage}{{Source-image}\xspace}
+\newcommand{\targetimage}{{target-image}\xspace}
+\newcommand{\Targetimage}{{Target-image}\xspace}
+\newcommand{\advimage}{{adv-image}\xspace}
+\newcommand{\Advimage}{{Adv-image}\xspace}
+
+% TODO: remove the below commands.
+\newcommand{\queryimage}{{\it query image}\xspace}
+\newcommand{\Queryimage}{{\it Query image}\xspace}
+\newcommand{\queryimages}{{\it query image}s\xspace}
+\newcommand{\Queryimages}{{\it Query image}s\xspace}
+
+
+\newcommand{\boundaryimage}{{\it boundary-image}\xspace}
+\newcommand{\Boundaryimage}{{\it Boundary-image}\xspace}
+
+\newcommand{\benignclass}{{\it benign-class}\xspace}
+\newcommand{\Benignclass}{{\it Benign-class}\xspace}
+
+\newcommand{\maliciousclass}{{\it malicious-class}\xspace}
+\newcommand{\Maliciousclass}{{\it Malicious-class}\xspace}
+
+\newcommand{\decisionlabel}{{\it decision-label}\xspace}
+\newcommand{\Decisionlabel}{{\it Decision-label}\xspace}
+
+\newcommand{\expertlabel}{{expert-label}\xspace}
+\newcommand{\Expertlabel}{{Expert-label}\xspace}
+
+\newcommand{\name}{{QEBA}\xspace}
+
+
+% Comments Section----------------------------------------
+\newcount\Comments  % 1 suppresses notes to selves in text
+\Comments=1   % TODO: set to 1 for final version
+\usepackage{color}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\definecolor{purple}{rgb}{1,0,1}
+\newcommand{\kibitz}[2]{\ifnum\Comments=0\textcolor{#1}{#2}\fi}
+\newcommand{\Huichen}[1]{\kibitz{blue}      {[HL: #1]}}
+\newcommand{\Xiaojun}[1]{\kibitz{purple}         {[XX: #1]}}
+\newcommand{\Xiaolu}[1]{\kibitz{green}         {[#1]}}
+\newcommand{\bo}[1]{\kibitz{darkblue}{Bo: #1}}
+
+%----------------------------------------------------------
+
+% \newcommand{\CameraReady}[1]{{\textcolor{red}{#1}}}
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{9582} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{QEBA: Query-Efficient Boundary-Based Blackbox Attack}
+\author{Huichen Li$^{1*}$\quad Xiaojun Xu$^{1}$
+\thanks{The first two authors contribute equally. This work was done while they were interns at Ant Financial. To appear at CVPR 2020. The code is available at \url{https://github.com/AI-secure/QEBA}} % last sentences added for arxiv version
+\quad Xiaolu Zhang$^{2}$\quad Shuang Yang$^{2}$\quad Bo Li$^{1}$
+\\
+$^{1}$University of Illinois at Urbana-Champaign\quad $^{2}$ Ant Financial
+}
+
+% \author{First Author\\
+% Institution1\\
+% Institution1 address\\
+% {\tt\small firstauthor@i1.org}
+% % For a paper whose authors are all at the same institution,
+% % omit the following lines up until the closing ``}''.
+% % Additional authors and addresses can be added with ``\and'',
+% % just like the second author.
+% % To save space, use either the email address or home page, not both
+% \and
+% Second Author\\
+% Institution2\\
+% First line of institution2 address\\
+% {\tt\small secondauthor@i2.org}
+% }
+\maketitle
+\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   Machine learning (ML), especially deep neural networks (DNNs) have been widely used in various applications, including several safety-critical ones (e.g. autonomous driving). As a result, recent research about \emph{adversarial examples} has raised great concerns. Such adversarial attacks can be achieved by adding a small magnitude of perturbation to the input to mislead model prediction. While several whitebox attacks have demonstrated their effectiveness, which assume that the attackers have full access to the machine learning models; blackbox attacks are more realistic in practice. 
+%   In this paper, we propose a Query-Efficient Boundary-based Blackbox Attack (\name) to estimate model decision boundary given classification output by leveraging the intrinsic dimensionalities of inputs.
+In this paper,  we propose a Query-Efficient Boundary-based blackbox Attack (\name) based only on model's final prediction labels.
+%   We theoretically show why estimating model gradient is not efficient in terms of blackbox attack, and provide the optimality analysis for our dimension reduced decision boundary estimation.
+We theoretically show why previous boundary-based attack with gradient estimation on the whole gradient space is not efficient in terms of query numbers, and provide optimality analysis for our dimension reduction-based gradient estimation.
+   On the other hand, we conducted extensive experiments on ImageNet and CelebA datasets to evaluate \name. We show that compared with the state-of-the-art blackbox attacks, \name is able to use a smaller number of queries to achieve a lower magnitude of perturbation with 100\% attack success rate. We also show case studies of attacks on real-world APIs including MEGVII Face++ and Microsoft Azure.
+%   \bo{Azure?}.\bo{do I miss any exp results here? if you have numbers want to add, it is also good}
+   
+\end{abstract}
+
+
+%%%%%%%%% BODY TEXT
+\input{introduction.tex}
+
+\input{definition.tex}
+
+\input{method.tex}
+
+\input{dimred.tex}
+
+\input{exp.tex}
+
+\input{related.tex}
+
+\input{conc.tex}
+
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{bibliography}
+}
+
+\clearpage
+\appendix
+\input{appendix.tex}
+\end{document}

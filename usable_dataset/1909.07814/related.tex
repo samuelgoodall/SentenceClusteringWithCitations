@@ -1,0 +1,52 @@
+\section{Related Work}\label{sec:related}
+
+\noindent\textbf{High level languages.} \tool is the first system to compile pre-defined \tensorflow code to secure \mpc protocols. There have been prior works that compile from lower-level, domain-specific languages to \mpc. Examples include Fairplay~\cite{fairplay}, Wysteria~\cite{wysteria}, ObliVM~\cite{oblivm}, CBMC-GC~\cite{cbmcgc}, SMCL~\cite{smcl},~\cite{lambdaps}, Sharemind~\cite{sharemind}, EzPC~\cite{ezpc}, and SPDZ~\cite{spdzcompiler}. Reimplementing large DNNs in the input format of these tools is a formidable task. PySyft~\cite{pysyft} and TF-Encrypted~\cite{tfe} are ongoing efforts that also aim to compile DNNs to \mpc protocols. 
+%easier to write DNNs for secure ML tasks while providing modularity to plug in various MPC backends. 
+In contrast to \tool that compiles standard \tensorflow code, these works require reimplementing the DNNs in a dialect of PyTorch/\tensorflow.
+To the best of our knowledge, these systems have not been evaluated on ImageNet scale tasks.
+%In addition, they don't support various compiler-level optimizations 
+% like ReLU Maxpool switching 
+%that \tool does and haven't been evaluated over large neural networks.
+%In particular, the float-to-fixed compilation must be done manually by a user of these frameworks.
+%Moreover, Tensorflow hides a lot of low-level details from the users. Hence, a user needs to be aware of all vagaries of Tensorflow while performing a faithful translation.
+%Most of these frameworks compile a high level language into exclusively either an arithmetic or a boolean circuit, which is then securely computed using one of the numerous protocols~\cite{yao,gmw}. This is known to provide poor performance even for small real-world benchmarks that mix arithmetic and boolean computation, let alone something as complex as Tensorflow. While EzPC~\cite{ezpc}, SPDZ~\cite{spdzcompiler}, and HyCC~\cite{hycc} provide support for securely computing a mix of both arithmetic and boolean functions (e.g. using the ABY protocol~\cite{aby}). 
+% Thus, prior systems fall short of providing the type of support required to run realistic ML benchmarks without any modifications to their original code. 
+\\\\
+\noindent\textbf{Fixed-point in \mpc.}
+% Athos is the first float-to-fixed converter that has been designed for secure inference.
+Although the use of fixed-point for secure computations is well-known~\cite{valeriaRidge},
+prior works on secure inference have addressed the float-to-fixed problem by either
+generating a fixed-point model by hand~(\cite{secureml,minionn,gazelle,aby3,securenn,delphi,chameleon}),
+or by using non-standard training algorithms that output fixed-point models~(\cite{xonn,nitin}).
+Both of these approaches are unsatisfactory. In particular, 
+some of the challenges that one would face with the latter include: a) the need to train again on the whole training data which is both computationally expensive, and impossible if the training data is unavailable; and
+b)
+% the introduction of new nodes that deal with integers changes the network and can cause the training procedure 
+%(a non-convex optimization problem) to diverge.
+training algorithms that generate integer models  is still an active research area and an overwhelming majority of ML training algorithms still generate floating-point models. 
+Athos alleviates all these problems by working with a trained model and being completely oblivious to the training procedure.
+%Athos takes as input a pretrained floating-point model which can be obtained by standard training algorithms.
+%Hence, we do not need to run training again (which can potentially take days) or modify the training algorithms. 
+The ML users can train their networks in the manner they see fit and then use Athos to get  fixed-point code.
+Finally, even with retraining, \tensorflow-generated binary/integer networks suffer significant accuracy loses~\cite{tflite} whereas
+Athos matches the accuracy of floating-point models.
+\\\\
+\noindent\textbf{Float-to-fixed.}
+The research literature in float-to-fixed for digital signal processors is rich and spans several decades.
+However, it is only recently that these schemes have been adapted to machine learning.
+%For example, SeeDot~\cite{seedot} is a strongly typed intermediate language which can express ML models and can be compiled to fixed-point code. 
+%However, the SeeDot compiler assigns different precision to different parameters of a ML model in the generated fixed-point code.
+%Hence, the generated program leaks private information about the model parameters and is unsuitable for secure machine learning.
+Some recent float-to-fixed schemes~\cite{seedot,qualcom,tflite} show promise by quantizing floating-point models to 8-bit or 16-bit integers. One could potentially use one of these systems in place of our float-to-fixed component -- however, their compatibility with \mpc protocols~\cite{aby3,securenn} is unclear. Additionally, since we use higher bit-width of 64, not surprisingly, the accuracy of \tool is better.  
+%Another approach is to use \tensorflow's ``post-training-quantization"\footnote{\url{https://www.tensorflow.org/lite/performance/post_training_quantization}} support that converts a %floating-point model
+%to a model over 8-bit and 32-bit integers. However, at inference time, to preserve accuracy, all operations are still performed in floating-point arithmetic, which are very slow in \mpc %(Table~\ref{tab:floatvsfixed}).
+%Similarly, the quantized  \squeezenet~\cite{squeezenet} models are stored as integers but are converted to floating-point at inference time.
+% and lose efficiency.
+%\nc{The above two paragraphs could potentially be condensed into one.} 
+\\\\
+\noindent\textbf{Secure Machine Learning.} There has been a flurry of recent results (\cite{sml1,codedprivateml,sml3,sml4,chiron}) in the area of secure machine learning, both in the 2-party~\cite{shafindss,valeriamatrix,cryptonets,minionn,gazelle,delphi,helen}, as well as in the 3-party setting~\cite{chameleon,aby3,securenn,quantizednn}. The most relevant to our work are ABY$^3$~\cite{aby3} and SecureNN~\cite{securenn} that both provide 3-party semi-honest secure computation protocols for a variety of neural network inference and training algorithms, with somewhat similar performance guarantees. Porthos, our 3-party semi-honest protocol, outperforms both these works. We also remark that there have been other recent works~\cite{xonn,codedprivateml,nitin,outsourcingprivateml,chet,nhe,nhe2,leviosa}, that modify the inference or training algorithms in order to obtain performance benefits.  These are applicable only to specialized benchmarks. For example, the works that use fully homomorphic encryption (e.g.,~\cite{chet,nhe,nhe2})  do not support secure evaluation of ReLUs, XONN~\cite{xonn} requires DNNs to have binary weights, etc.
+ On the other hand, we focus on standard inference algorithms and \tool has much wider applicability.
+\\\\
+\noindent\textbf{Hardware-based security.}  Our work is the first to provide experimentally validated malicious secure inference of ML algorithms at the scale of \resnet. As discussed earlier, we achieve this by relying on minimally secure hardware to provide integrity. Prior works that use hardware enclaves for secure computation~\cite{vc3, obliviousmpml, GuptaFC16, BahmaniFC17,gcsgx,ndss1,ndss2,ndss3,slalom,opaque,chiron} assume that the enclave hides all data residing in it from the host. Thus, unlike Aramis, these systems are not secure against an adversary that can observe the SGX state. 
+ The only prior work that assumes a weaker trust assumption from the hardware is that of~\cite{sealedglass}. Similar to our work, they assume that the hardware provides integrity. However, their work is  in the context of zero-knowledge proofs and other fundamentally asymmetric primitives that require only one enclave
+and not interactive protocols between multiple enclaves. %ABY$^3$~\cite{aby3} provides a (purely cryptographic) method to convert their semi-honest secure protocol to a maliciously secure protocol. However, their method is both specialized to their protocol and is also not tested for performance.

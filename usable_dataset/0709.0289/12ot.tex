@@ -1,0 +1,488 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter[\OT in the Bounded-Quantum-Storage Model]
+{\OT in the Bounded-Quantum-Storage Model}\label{chap:12OT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{oblivious transfer!\OT|(}
+In the last chapter, we have shown how to construct \RabinOT securely
+in the \index{bounded-quantum-storage model}bounded-quantum-storage
+model. Although other flavors of \pOT
+can be constructed from \RabinOT using standard reductions, a more
+direct approach gives a better ratio between storage-bound and
+communication-complexity.
+
+In this chapter, we present an efficient protocol for \onetwo\
+Oblivious Transfer secure in the bounded-quantum-storage model. The protocol
+is very close to Wiesner original \index{conjugate coding}''conjugate-coding'' protocol
+\cite{Wiesner83} from the early 70's. The uncertainty relation from
+Section~\ref{sec:morerelation} will be extensively used for proving the
+security. 
+
+The results of this section appeared in~\cite{DFRSS07}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Definition} %\label{sec:obliv-transf}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In \lStringOT, the sender Alice sends two $\ell$-bit strings $S_0,
+S_1$ to the receiver Bob in such a way that Bob can choose which
+string he wants to receive, but does not learn anything about the
+other. Alice does not get to know which string Bob has chosen. As
+explained in Chapter~\ref{chap:ClassicalOT}, the common way to build
+\lStringOT is by constructing a protocol for
+\mbox{(Sender-)}Randomized \lStringOT, which then can easily be
+converted into an ordinary \lStringOT. \RandlStringOT essentially
+coincides with ordinary \lStringOT, except that the two strings $S_0$
+and $S_1$ are not \emph{input} by the sender but generated uniformly
+at random during the protocol and \emph{output} to the sender.
+
+% In this paper, we are considering quantum protocols
+% for\RandlStringOT. This means that while in- and outputs of the
+% honest senders are classical, described by random variables, the
+% protocol may contain quantum computation and quantum communication,
+% and the view of a dishonest player is quantum, and is thus described
+% by a random state.
+
+% Any such (two-party) protocol is specified by a family
+% $\{(\S_n,\R_n)\}_{n>0}$ of pairs of interactive quantum circuits
+% (i.e. interacting through a quantum channel). Each pair is indexed
+% by a security parameter $n>0$, where $\S_n$ and $\R_n$ denote the
+% circuits for sender Alice and receiver Bob, respectively.  In order
+% to simplify the notation, we often omit the index $n$, leaving the
+% dependency on it implicit.
+
+For the formal definition of the security requirements for a quantum
+protocol for \RandlStringOT, we translate the classical
+Definition~\ref{def:RandOT} to the quantum setting using a similar
+notation as for the definition of \RabinOT in
+Section~\ref{sec:def-rabin-obliv-transf}: Let $C$ denote the binary
+random variable describing receiver \R's choice bit, let $S_0, S_1$
+denote the $\ell$-bit long random variables describing sender $\S$'s
+output strings, and let $Y$ denote the $\ell$-bit long random variable
+describing $\R$'s output string (supposed to be $S_C$).  Furthermore,
+for a fixed candidate protocol for \RandlStringOT, and for a fixed
+input distribution for $C$, the overall quantum state in case of a
+dishonest sender $\dS$ is given by the ccq-state $\rho_{C Y \dS}$.
+Analogously, in the case of a dishonest receiver $\dR$, we have the
+ccq-state $\rho_{S_0 S_1 \dR}$.
+
+%% $\rs_{\dS}$ ($\rs_{\dR}$) denote the random state describing $\dS$'s
+%% ($\dR$'s) quantum output of the protocol. Note that for a fixed
+%% candidate protocol for \RandlStringOT, and for a fixed input
+%% distribution for $C$, depending on whether we consider a dishonest
+%% $\dS$ and an honest $\R$, or an honest $\S$ and a dishonest $\dR$, the
+%% corresponding overall quantum system $[\rs_{\dS} Y]$
+%% respectively $[S_0 S_1 \rs_{\dR}]$
+%% % joint distribution $P_{\rs_{\dS}S_C}$ respectively
+%% % $P_{S_0 S_1 \rs_{\dR}}$ 
+%% is uniquely determined.
+
+\begin{definition}[\RandlStringOT] \label{def:Rl12OT}
+  An $\varepsilon$-secure {\em \RandlStringOT} is a quantum protocol
+  between $\S$ and $\R$, with $\R$ having input $C \in \{0,1\}$ while
+  $\S$ has no input, such that for any distribution of $C$, the
+  following holds:
+\begin{description}
+\item[\boldmath$\eps$-Correctness:] If\ \S\ and\ \R\ follow the
+  protocol, then $\S$ gets output strings $S_0,S_1 \in \{0,1\}^{\ell}$ and
+  $\R$ gets $Y = S_C$ except with probability~$\varepsilon$.
+\index{correctness!of quantum \RandlStringOT}
+\item[\boldmath$\varepsilon$-Receiver-security:] If $\R$ is honest, then
+  for any $\dS$, there exist\footnote{Recall from
+    Section~\ref{sec:qit}: Given a cq-state $\rho_{X \regE}$,
+    by saying that there exists a random variable $Y$ such that
+    $\rho_{XY\regE}$ satisfies some condition, we mean that $\rho_{X
+      \regE}$ can be understood as $\rho_{X\regE} =
+    \tr_Y(\rho_{XY\regE})$ for a ccq-state $\rho_{XY\regE}$ that
+    satisfies the required condition.} random variables $S'_0$ and
+  $S'_1$ such that $\Pr\big[Y=S'_C\big] \geq 1-\varepsilon$ and
+$$
+  \dist{ \rho_{C S'_0 S'_1 \dS} , \rho_C \otimes \rho_{S'_0 S'_1 \dS}
+  } \leq \eps \, .
+$$
+\item[\boldmath$\varepsilon$-Sender-security:] If $\S$ is honest, then for
+  any $\dR$, there exists a random variable $D \in \set{0,1}$ such that
+$$
+  \dist{ \rho_{S_{1-D} S_{D} D \dR} , \id \otimes \rho_{S_{D}
+      D \dR} } \leq \eps \, .
+$$
+\end{description}
+\index{sender-security!of quantum \RandlStringOT}
+\index{receiver-security!of quantum \RandlStringOT}
+If any of the above holds for $\varepsilon = 0$, %(for large enough~$n$),
+then the corresponding property is said to hold {\em perfectly}. 
+If one of the properties only holds with respect to a restricted class
+$\mathfrak{S}$ of \dS's respectively $\mathfrak{R}$ of \dR's, then this property
+is said to hold and the protocol is said to be secure {\em against}
+$\mathfrak{S}$ respectively~$\mathfrak{R}$.
+\end{definition}
+
+Receiver-security, as defined here, implies that whatever a dishonest
+sender does is as good as the following: generate the ccq-state
+$\rho_{S_0' S'_1 \dS}$ independently of $C$, let $\R$ know $S'_C$, and
+output $\rho_{\dS}$.  On the other hand, sender-security implies that
+whatever a dishonest receiver does is as good as the following:
+generate the ccq-state $\rho_{S_{D} D \dR}$ arbitrarily, let $\S$
+know $S_{D}$ and an independent uniformly distributed $S_{1-D}$, and
+output $\rho_{\dR}$.  In other words, a protocol satisfying
+Definition~\ref{def:Rl12OT} is a secure implementation of the natural
+\RandlStringOT ideal functionality, except that it allows a dishonest
+sender to influence the distribution of $S_0$ and $S_1$, and the
+dishonest receiver to influence the distribution of the string of his
+choice. This is in particular good enough for constructing a standard
+\lStringOT in the straightforward way.
+
+We would like to point out the importance of requiring the existence
+of $S_0'$ and $S_1'$ in the formulation of receiver-security in a
+quantum setting: requiring only that the sender learns no information
+on $C$, as is sufficient in the classical setting
+(see~e.g.~\cite{CSSW06}), does not prevent a dishonest sender from
+obtaining $S_0,S_1$ by a suitable measurement {\em after} the
+execution of the protocol in such a way that he can choose $S_0 \oplus
+S_1$ at will, and $S_C$ is the string the receiver has obtained in the
+protocol. This would for instance make the straightforward
+construction of a \index{bit commitment}bit commitment
+\footnote{The committer sends two random bits of parity
+  equal to the bit he wants to commit to, the verifier chooses to
+  receive at random one of those bits.} based on
+\OT[2] insecure.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Protocol}\label{sec:otprot12}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We present a quantum protocol for \RandlStringOT that will be shown
+perfectly receiver-secure against any sender and statistically
+sender-secure against any quantum-memory-bounded receiver. The first
+two steps of the protocol are identical to Wiesner's ``conjugate
+coding'' \index{conjugate coding} protocol~\cite{Wiesner83} from circa 1970 for
+\emph{``transmitting two messages either but not both of which may be
+  received''}.
+
+The simple protocol is described in Figure~\ref{fig:Randlqot}.  
+%where we let $\chf{n}$ be a fixed \univ class of
+% hash functions mapping $n$ to $\ell$ bits, where $\ell$ is to be
+% determined later. 
+% Note that we may apply a function $\hf \in \chf{n}$ to a $n'$-bit string $x'$ with $n' < n$, simply by padding $x'$ with zeros. 
+The sender $\S$ sends random \index{BB84 coding scheme}BB84 states to the receiver $\R$, who
+measures all received qubits according to his choice bit $C$. $\S$
+then picks randomly two functions from a fixed 
+\index{two-universal hashing} \univ class of hash
+functions $\chf{n}$ from $\set{0,1}^n$ to $\set{0,1}^{\ell}$, where $\ell$
+is to be determined later, and applies them to the bits encoded in the
+$+$-basis respectively the bits encoded in $\times$-basis to obtain the
+output strings $S_0$ and $S_1$. Note that we may apply a function $\hf
+\in \chf{n}$ to a $n'$-bit string with $n' < n$ by padding it with
+zeros\footnote{Recall the notation for padding $x \pad_I$ introduced
+  in Section~\ref{sec:notation}.}
+(which does not decrease its entropy).
+% \univ hash functions with appropriate
+% input size and applies them to the bits encoded in the $+$
+% respectively the bits encoded in $\times$-basis to obtain her output
+% strings $S_0$ and $S_1$. 
+$\S$ announces the encoding bases and the hash
+functions to the receiver who then can compute $S_C$. Intuitively, a
+dishonest receiver who cannot store all the qubits until the right
+bases are announced will measure some qubits in the wrong basis and thus cannot learn both strings simultaneously.  
+% (In
+% order to avoid aborting, we specify that if a dishonest \dS\ refuses
+% to participate, or sends data in incorrect format, then \R\ samples
+% its output string $S_C$ uniformly at random in $\set{0,1}^\ell$.)
+
+\begin{myfigure}{h}
+\begin{myprotocol}[Let $c$ be $\R$'s choice bit.]{\Randlqot}
+\item $\S$ picks $x \in_R \nbit$ and $\theta \in_R \{+,\times \}^n$ 
+  %and puts $I_b \assign \Set{i}{\theta_i \!=\! [+,\times]_b}$
+  %and $n_b \assign |I_b|$.
+and sends $\ket{x_1}_{\theta_1},
+   \ket{x_2}_{\theta_2}, \ldots, \ket{x_n}_{\theta_n}$ to $\R$. 
+\item $\R$ measures all qubits in basis $[+,\times]_{c}$. % where $c$ is $\R$'s choice bit. 
+Let $x' \in \{0,1\}^n$ be the result.
+\item $\S$ picks two hash functions $\hf_0,\hf_1 \in_R \chf{n}$,
+  announces $\theta$ and $\hf_0, \hf_1$ to $\R$, and outputs $s_0
+  \assign \hf_0(x \pad_{I_0})$ and $s_1 \assign \hf_1(x \pad_{I_1})$ where
+  $I_b \assign \Set{i}{\theta_i \!=\! [+,\times]_b}$. \label{bound12}
+\item $\R$ outputs $s_{c} = \hf_{c}(x' \pad_{I_{c}})$.
+\end{myprotocol}
+\caption{Quantum Protocol for \boldmath\RandlStringOT.}\label{fig:Randlqot}
+\end{myfigure}
+
+We would like to stress that although protocol description and
+analysis are designed for an ideal setting with perfect noiseless
+quantum communication and with perfect sources and detectors, all our
+results can easily be extended to a more realistic noisy setting along the
+same lines as in the previous Chapter~\ref{chap:RabinOT}.
+\index{weak quantum model}
+
+It is clear by the non-interactivity of \Randlqot\ that a
+dishonest sender cannot learn anything about the receiver's choice
+bit. Below, we show \Randlqot\ perfectly receiver-secure
+according to Definition~\ref{def:Rl12OT}.
+\begin{proposition}\label{prop:sec:oblivious}
+\Randlqot\ is perfectly receiver-secure.
+\end{proposition}
+\begin{proof}
+  Recall that the ccq-state $\rho_{C Y \dS}$ is defined by the experiment
+  where $\dS$ interacts with the honest memory-bounded $\R$. We now
+  define (in a new Hilbert space) the ccccq-state $\hat{\rho}_{\hat{C}
+    \hat{Y} \hat{S}'_0 \hat{S}'_1 \dS}$ by a slightly different
+  experiment: We let $\dS$ interact with a receiver with {\em
+    unbounded} quantum memory, which waits to receive $\theta$ and
+  then measures the $i$-th qubit in basis $\theta_i$ for
+  $i=1,\ldots,n$. Let $X$ be the resulting string, and define
+  $\hat{S}'_0 = f_0(X \pad_{I_0})$ and $\hat{S}'_1 = f_1(X
+  \pad_{I_1})$.  Finally, sample $\hat{C}$ according to $P_C$ and set
+  $\hat{Y} = \hat{S}'_C$.  It follows by construction that
+  \smash{$\Pr\!\big[\hat{Y} \!\neq\! \hat{S}'_{\hat{C}}\big] = 0$} and
+  $\hat{\rho}_{\hat{C}}$ is independent of $\hat{\rho}_{\hat{S}'_0
+      \hat{S}'_1 \dS}$.  It remains to argue that $\hat{\rho}_{\hat{C}
+      \hat{Y} \dS} = \rho_{C Y \dS}$, so that corresponding $S'_0$ and
+    $S'_1$ also exist in the original experiment. But this is
+    obviously satisfied since the only difference between the two
+    experiments is when and in what basis the qubits at position $i
+    \in I_{1-C}$ are measured, which, once $C$ is fixed, cannot
+    influence $\rho_{Y \dS}$ respectively $\hat{\rho}_{\hat{Y} \dS}$.
+\end{proof}
+
+%% \subsection{Privacy Amplification is Necessary}
+%% One may ask whether privacy amplification is really required 
+%% for proving the security against quantum memory bounded receivers.
+%% The answer is yes since there exists a receiver $\dR$......... 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Security Against Dishonest Receivers} \label{sec:modeldishonestreceivers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As in Section~\ref{sec:modeldishonestreceiversrabin}, we model
+\index{dishonest receiver!in \Randlqot}dishonest receivers 
+in \Randlqot\ under the assumption that the
+maximum size of their quantum storage is bounded.  Such adversaries
+are only required to have bounded quantum storage when Step
+\ref{bound} in \Randlqot\ is reached. Before and after that, the
+adversary can store and carry out arbitrary quantum computations
+involving any number of qubits. Apart from the restriction on the size
+of the quantum memory available to the adversary, no other assumption
+is made. In particular, the adversary is not assumed to be
+computationally bounded and the size of its classical memory is not
+restricted.
+
+\begin{definition}\label{boundedstorage12}
+  The set $\mathfrak{R}_{\gamma}$ denotes all possible quantum
+  dishonest receivers $\dR$ in \Randlqot\ which
+  have quantum memory of size at most $\gamma n$ when Step~\ref{bound12}
+  is reached.
+\end{definition}
+%
+%% In general, the adversary $\dR$ is allowed to perform any quantum
+%% computation compressing the $n$ qubits
+%% received from $\S$ into a quantum register $M$ of size at most $\gamma n$
+%% when Step \ref{bound} is reached. More precisely, the compression
+%% function is implemented by some unitary transform $C$ acting
+%% upon the quantum state received and an ancilla of arbitrary
+%% size. The compression is performed by a measurement that we
+%% assume in the computational basis without loss of generality.
+%% The measurement can depend arbitrarily upon the classical information
+%% the adversary has at this point. Let $X$ be the register held by 
+%% \S.  
+%% Before starting Step \ref{bound}, the adversary first applies
+%% a unitary transform $C$:
+%% \begin{equation}\label{ee}
+%% \begin{split}
+%% &2^{-n/2}\sum_{x\in\{0,1\}^n}\ket{x}^X\otimes C\ket{x}\ket{0}\\
+%% &\mapsto  2^{-n/2} \sum_{x\in\{0,1\}^n} \ket{x}^X \otimes
+%%  \sum_{y}\alpha_{x,y}\ket{\varphi_{x,y}}^{M}\ket{y}^{Y},
+%% \end{split} 
+%% \end{equation}
+%% where for all $x$, $\sum_y |\alpha_{x,y}|^2=1$.
+%% Then, a measurement in the computational basis is applied
+%% to register $Y$ providing classical outcome $y$. The result
+%% is a quantum state in register $M$ of size $\gamma n$ qubits.
+%% Ignoring the value of $y$ to ease the notation,
+%% %Given the classical outcome $z$, 
+%% the re-normalized state of the system after the measurement
+%% and ignoring $y$ for simplicity is now 
+%% \begin{equation}\label{comp}
+%%  \ket{\psi}= 
+%% \sum_{x\in\{0,1\}^n} \alpha_x \ket{x}^X \otimes\ket{\varphi_{x}}^M,
+%% \end{equation}
+%% where $\sum_{x} |\alpha_x|^2=1$. This is the general form for the state $\S$ and $\dR$ 
+%% are sharing when Step~\ref{bound} is reached in \eprRandlqot.
+
+First, we consider a purified version of \Randlqot, \eprRandlqot\ in
+Figure~\ref{fig:eprRandlqot}, where $\S$ prepares an EPR pair
+\smash{$\ket{\Phi} = \frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$} instead
+of $\ket{x_i}_{\theta_i}$ and sends one part to the receiver while
+keeping the other. Only when Step~\ref{step:afterbound} is reached and $\dR$'s
+quantum memory is bound to $\gamma n$ qubits, $\S$ measures her qubits
+in basis $\theta \in_R \set{+,\times}^n$. It is easy to see that for
+any $\dR$, \eprRandlqot\ is equivalent to the original \Randlqot, and
+it suffices to prove sender-security for the former.  Indeed, $\S$'s
+choices of $\theta$ and $\hf_0,\hf_1$, together with the measurements
+all commute with $\R$'s actions.  Therefore, they can be performed
+right after Step 1 with no change for $\R$'s view. Modifying
+\eprRandlqot\ that way results in \Randlqot.
+
+\begin{myfigure}{h}
+\begin{myprotocol}{\eprRandlqot}
+\item $\S$ prepares $n$ EPR pairs each in state 
+      $\ket{\Omega}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$ 
+and sends one half of each pair to $\R$ and keeps the other
+  halves.
+\item $\R$ measures all qubits in basis $[+,\times]_{c}$. Let $x' \in
+  \{0,1\}^n$ be the result. 
+\item $\S$ picks random $\theta \in_R \{+,\times \}^n$, and she
+  measures the $i$th qubit in basis $\theta_i$. Let $x\in\{0,1\}^n$ be
+  the outcome. $\S$ picks two hash functions $\hf_0, \hf_1 \in_R \chf{n}$,
+  announces $\theta$ and $\hf_0, \hf_1$ to $\R$ and outputs $s_0
+  \assign \hf_0(x \pad_{I_0})$ and $s_1 \assign \hf_1(x \pad_{I_1})$ where
+  $I_b \assign \Set{i}{\theta_i \!=\! [+,\times]_b}$. \label{step:afterbound}
+\item $\R$ outputs $s_{c} = \hf_{c}(x' \pad_{I_{c}})$.
+\end{myprotocol}
+\caption{Protocol for EPR-based \boldmath\RandlStringOT.}\label{fig:eprRandlqot}
+\end{myfigure}
+
+
+\begin{theorem}\label{thm:OT}
+  \Randqot$^{\ell}$ is $\varepsilon$-secure against
+  $\mathfrak{R_\gamma}$ for a negligible (in $n$) $\varepsilon$ if
+  there exists $\delta>0$ such that $\gamma n \leq n/4 - 2 \ell - \delta n$.
+\end{theorem}
+The proof has the same structure as the security-proof for the
+reduction \OTUOT\ described at the end of Section~\ref{sec:UOT}. The
+\index{uncertainty relation}uncertainty relation
+ from Section~\ref{sec:morerelation} lower bounds
+the dishonest receiver's (smooth) min-entropy about the sender's $X$.
+Hence, we have an (imperfect) \UOT{\infty}{\frac{n}{2}}{\set{0,1}^n}
+from which we get an ordinary \RandlStringOT via the 
+\index{min-entropy splitting lemma} min-entropy
+splitting lemma and \index{privacy amplification}privacy amplification
+ against quantum adversaries.
+\begin{proof}
+  Consider the ccq-state $\rho_{X \Theta \dR}$ in \eprRandlqot\ after
+  $\dR$ has measured all but $\gamma n$ of his qubits, where $X$
+  describes the outcome of the sender measuring her part of the state
+  in random basis $\Theta$. Also, let $\Hf_0$ and $\Hf_1$ be the
+  random variables that describe the random and independent choices of
+  $\hf_0,\hf_1 \in \chf{n}$.  Finally, let $X_b$ be $X_b =
+  X\pad_{\Set{i}{\Theta_i = [+,\times]_b}}$ (padded with zeros so it
+  makes sense to apply $\Hf_b$).
+  
+  Choose $\lambda, \kappa$ all positive, but small enough
+  such that (for large enough $n$) $$\gamma n \leq (1/4 - \lambda - \lambda' - \kappa) n -
+  1 -2\ell .$$ From the uncertainty relation
+  (Corollary~\ref{cor:uncertainty}), we know that
+  $\hie{\eps}{X_0 X_1 | \Theta} \geq (1/2 - 2\lambda )n$ for $\eps$ exponentially small in $n$.
+  Therefore, by the Min-Entropy Splitting Lemma~\ref{lemma:ESL}, there
+  exists a binary random variable $D$ such that
+\[\hie{\eps}{X_{1-D} D | \Theta} \geq (1/4 - \lambda)n 
+%\geq (1/4 -\lambda - \lambda')n 
+.\] We denote by the
+random variables $F_0,F_1$ Alice's choices of hash functions. It is
+clear that we can condition (for free) on the independent $F_{D}$. We
+write $S_{D} = F_{D}(X_{D})$, set $\eps'=2^{-\lambda' n}$, and use the
+chain rule (Lemma~\ref{lem:chain}) to condition on $D,S_D$ as well.
+\begin{align*}
+  \hie{\eps+\eps'}{X_{1-D} &| \Theta F_D D S_{D}}\\
+  & \geq \hie{\eps}{X_{1-D} D S_{D} | \Theta F_{D} } -
+  \hmax(D S_{D} | \Theta F_{D} ) - \lambda'n \\
+&\geq (1/4 -\lambda - \lambda')n - 1 -\ell \\
+&\geq \gamma n +\ell +\kappa n,
+\end{align*}
+by the choice of $\lambda, \lambda', \kappa$.
+
+\hspace{5mm}
+We can now apply \index{privacy amplification}privacy amplification
+ in form of Corollary~\ref{thm:pasmooth}
+to obtain
+\begin{align*}
+\dist{ &\rho_{S_{1-D} F_{1-D}  \Theta F_{D} D S_D \dR}, 
+\id \otimes \rho_{F_{1-D}  \Theta F_{D}  D S_D \dR} } \\
+&\quad \leq \frac12 2^{-\frac12 \left( \hie{\eps+\eps'}{ X_{1-D} |
+ \Theta S_{D} F_{D}D} - \gamma n - \ell \right)} + (\eps+\eps')\\
+&\quad \leq \frac12 2^{-\frac12 \kappa n} + \eps + \eps',
+\end{align*} 
+which is negligible. This shows $\eps$-sender-security according to
+Definition~\ref{def:Rl12OT}.
+\end{proof}
+
+\section{Extensions}
+\subsection{\lStringOT with Longer Strings}
+It is possible to extend recent techniques by Wullschleger
+\cite{Wullschleger07} described in Section~\ref{sec:comparison} to the
+quantum case and hence, the security of \Randqot$^{\ell}$ can be
+proven against $\mathfrak{R_\gamma}$ if there exists $\delta>0$ such
+that $\gamma n \leq n/4 - \ell -\delta n$.
+
+\subsection{Weakening the Assumptions} \label{sec:weakmodel12ot}
+As described in Section~\ref{sec:weakass} for \RabinOT, we can extend
+protocol \Randqot to work in the $(\phi,\eta)$-weak quantum model.
+\index{weak quantum model} \index{error correction} To enable the
+receiver to recover from errors in the transmission, the sender \S\ 
+additionally sends error-correcting information in
+Step~\ref{step:afterbound}. The players agree beforehand on an
+efficiently decodable error-correcting code of length $n/2$ with
+syndrome length $s$ roughly $h(\phi)n/2$ as in
+Section~\ref{sec:weakass}. Then, \S\ sends along the two syndromes of
+$S(x|_{I_0})$ and $S(x|_{I_1})$ (where the $x|_{I_b}$ are padded with
+0s or truncated to length $n/2$). It can be argued as for \RabinOT
+that this will reduce the min-entropy by the length $s$ of the
+syndrome and hence, we can show 
+\index{sender-security!of quantum \Randqot} sender-security
+ of this protocol
+against the class of receivers $\mathfrak{R_\gamma}$ with $\gamma$
+such that there exists $\delta >0$ with
+\[ \gamma n \leq \left( \frac{1-\eta}{4} - \frac{h(\phi)}{2} \right)n - 2 \ell -
+\delta n \, .
+\]
+
+
+\subsection{Reversing the Quantum Communication}
+In order to illustrate the versatility of our security analysis, we
+show that the proofs carry easily over to a protocol where the
+direction of the quantum communication is reversed. In the protocol
+described in Figure~\ref{fig:RandlqotReversed}, the receiver \R\ of
+the \RandOT sends $n$ qubits, encoded in the basis determined by his
+choice bit.  The sender of the \RandOT $\S$ measures them in a random
+basis.  The players then proceed as in \Randqot.
+\begin{myfigure}{h}
+\begin{myprotocol}[Let $c$ be $\R$'s choice bit.]{\Randlqot}
+\item $\R$ picks $x' \in \set{0,1}^n$ at random and sends
+  $\ket{x'}_{\theta'}$ to $\R$ where $\theta'=[+,\times]_{c}$.
+\item $\S$ picks $\theta \in_R \{+,\times \}^n$ 
+  %and puts $I_b \assign \Set{i}{\theta_i \!=\! [+,\times]_b}$
+  %and $n_b \assign |I_b|$.
+and measures the received qubits in basis $\theta$. Let $x \in
+\set{0,1}^n$ be the result.
+\item $\S$ picks two hash functions $\hf_0,\hf_1 \in_R \chf{n}$,
+  announces $\theta$ and $\hf_0, \hf_1$ to $\R$, and outputs $s_0
+  \assign \hf_0(x \pad_{I_0})$ and $s_1 \assign \hf_1(x \pad_{I_1})$ where
+  $I_b \assign \Set{i}{\theta_i \!=\! [+,\times]_b}$. 
+\item $\R$ outputs $s_{c} = \hf_{c}(x' \pad_{I_{c}})$.
+\end{myprotocol}
+\caption{\Randlqot\ with Reversed Quantum Communication.}\label{fig:RandlqotReversed}
+\end{myfigure}
+
+It is clear by construction that the protocol is perfectly
+correct. $\eps$-Sender-security against dishonest receivers in $\mathfrak{R}_\gamma$ can
+be argued as in Theorem~\ref{thm:OT} above by observing that the
+uncertainty relation applies to any $n$-qubit state of the honest
+sender which is measured in a random basis and about which the
+dishonest receiver holds at most $\gamma n$ qubits of information.
+
+For the security of an honest receiver against a dishonest sender, we
+can show the existence of the two input strings as in
+Proposition~\ref{prop:sec:oblivious} above by letting the sender
+interact with an unbounded receiver. In an error-free model, it
+further holds that the sender cannot infer the basis in which the
+qubits are encoded and therefore does not learn any information about
+the receiver's choice bit. However, in a more realistic setting with
+multi-pulse emissions, this coding scheme with reversed communication
+is highly insecure, as a malicious sender can determine the encoding
+basis from a multi-pulse qubit. The same problem occurred for the
+\RabinOT-protocol \qot\ from the last chapter.
+\index{weak quantum model} \index{reversed quantum communication}
+\index{multi-qubit emission}
+
+\index{oblivious transfer!\OT|)}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

@@ -1,0 +1,133 @@
+\documentclass[12pt]{article}
+\usepackage{a4,amsthm,amsmath,amsfonts,amssymb,cite}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% Packages and macros go here
+\usepackage{amsfonts,graphicx,epsfig,epstopdf,algorithmic}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+% Add a serial/Oxford comma by default.
+\newcommand{\creflastconjunction}{, and~}
+
+
+%%% FOR tikz
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, automata, positioning, fit, shadows, decorations.pathmorphing}
+\usetikzlibrary{calc, backgrounds}
+
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tabularx,xspace,booktabs}
+
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+
+\providecommand{\mIs}[1]{\mI_{(#1)}}
+\providecommand{\mnk}[1]{\mN_{(#1)}}
+\providecommand{\mmk}[2]{\matbld{#1}_{(#2)}}
+\providecommand{\vvk}[2]{\vecn{#1}_{(#2)}}
+\providecommand{\vvd}[1]{\vecn{d}^{(#1)}}
+\providecommand{\hvf}{\hvv{f}}
+
+\providecommand{\subscore}[4]{\textrm{#1}(#2,#3,#4)}
+
+\providecommand{\dmax}{d_{\max}}
+\providecommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+
+\DeclareMathOperator*{\realp}{Re}
+
+\usepackage{xcolor}
+\newcommand{\XXX}{\textcolor{blue}{\textbf{XXX}}}
+
+\newcommand{\fncclassname}{graph-positive}
+
+\newcommand{\fclassname}{PPSIF\xspace} % positive-power-series information functionals
+\newcommand{\infoF}[1]{\ensuremath{F_{[#1]}(\beta)}}
+\newcommand{\infoT}{\ensuremath{T_{f}(\beta)}}
+\newcommand{\gentropy}[1]{\ensuremath{I_{f}(G, #1)}}
+
+\DeclareMathOperator*{\avg}{avg}
+
+\newcommand{\scexp}[2]{\ensuremath{\mathrm{SC}(#1,#2)}}
+\newcommand{\scf}[2]{\ensuremath{\mathrm{SC}_{f}(#1,#2)}}
+\newcommand{\pscf}[2]{\ensuremath{p_{f}(#1,#2)}}
+
+\newcommand{\ourparag}[1]{\textbf{#1}.}
+
+\input{preamble.tex}
+
+% figure paths
+\graphicspath{{.}{./figures/}}
+
+%% The lineno packages adds line numbers.
+% \usepackage{lineno}
+% \linenumbers
+\usepackage{csquotes}
+
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+\title{Subgraph centrality and walk-regularity\thanks{The work of these authors was supported in part by the Gordon \& Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4560 to Blair D.~Sullivan.}}
+
+% Authors: full names plus addresses.
+\author{
+    Eric Horton
+    \thanks{Department of Computer Science, North Carolina State University, Raleigh, NC 27695, USA. Email:
+    \texttt{ewhorton,kakloste,blair\_sullivan@ncsu.edu}.
+}
+\and Kyle Kloster\footnotemark[2]
+\and Blair D. Sullivan\footnotemark[2]}
+
+\usepackage{amsopn}
+
+\begin{document}
+
+\maketitle
+
+% REQUIRED
+\begin{abstract}
+  \input{sec-abstract.tex}
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+\input{sec-intro.tex}
+
+\section{Background}\label{sec:prelims}\label{sec:notation}
+\input{sec-prelims.tex}
+
+\section{An infinite family of entropic graphs}\label{sec:cartesian-graph}
+\input{sec-infinite-cartesian.tex}
+
+\section{The distribution of entropic values}\label{sec:beta-distribution}
+\input{sec-infinite-betas.tex}
+
+\section{Infinite families of $f$-entropic graphs}\label{sec:infinite-tensor}
+\input{sec-infinite-tensor.tex}
+
+\section{Centrality collisions: when distinct walk-classes have identical centrality}\label{sec:constructing-entropic}
+\input{sec-sufficient-conditions.tex}
+
+\section{Conclusions}\label{sec:conclusions}
+\input{sec-conclusions.tex}
+
+\section*{Acknowledgments}
+
+This work supported in part by the Gordon $\&$ Betty Moore Foundations Data-Driven Discovery
+Initiative through Grant GBMF4560 to Blair D. Sullivan.
+The authors thank Michele Benzi for bringing walk-regular graphs to their attention.
+
+\bibliographystyle{siamplain}
+\bibliography{all-bibliography}
+
+\appendix
+\input{sec-appendix.tex}
+
+\end{document}

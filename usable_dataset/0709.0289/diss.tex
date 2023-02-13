@@ -1,0 +1,1900 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Dissertation: Cryptography in the Bounded-Quantum-Storage Model
+%%
+%% based on DAIMI/BRICS PhD Thesis Skeleton 
+%%
+%% Christian Schaffner, chris@brics.dk, January 2007
+%%
+%% Version for arXiv: July 2007 (waiting for full version of CRYPTO 2007 paper)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass[final,twoside,11pt,openright,a4paper]{report}
+\documentclass[final,11pt,a4paper]{report}
+%\documentclass[11pt]{report} %%
+
+%\usepackage[latin1]{inputenc}
+%\usepackage[american]{babel}
+\usepackage{a4}       % paper size
+\usepackage{latexsym} % symbols
+\usepackage{amssymb}  % symbols
+\usepackage{amsmath}  % symbols
+
+\usepackage{float}    % allows precise positioning of floating object
+\usepackage{framed}   % boxes
+\usepackage{graphics} % include graphics
+\usepackage{graphicx} % better include graphics
+\usepackage{calc}     % do calculations
+% \usepackage{cite}     % better spacing with citations
+\usepackage{qip}      % quantum stuff
+
+\usepackage{bbm}      % only for the identity \mathbbm{1} as this doesn't
+                      % exist in AMSmath
+\usepackage{tabularx} % ??
+\usepackage{xspace}   % correct spacing
+
+% \usepackage[active]{srcltx} % for backwards search
+
+%% \usepackage[final,pagebackref,colorlinks=false, pdftitle={Cryptography
+%%   in the Bounded-Quantum-Storage Model}, pdfauthor={Christian Schaffner},pdfsubject={PhD
+%%   Dissertation},pdfkeywords={dissertation, quantum cryptography,
+%%   bounded-quantum-storage model, oblivious transfer, bit commitment,
+%%   quantum key distribution}]{hyperref} % hyperlinks
+
+\usepackage[final,pagebackref,colorlinks=false, pdftitle={Cryptography
+  in the Bounded-Quantum-Storage Model}, pdfauthor={Christian
+  Schaffner},pdfsubject={PhD Dissertation},pdfkeywords={dissertation,
+  quantum cryptography, bounded-quantum-storage model, oblivious
+  transfer, bit commitment, quantum key
+  distribution}]{hyperref} % hyperlinks
+
+
+\usepackage{myjeffe}
+
+\hyphenation{di-men-sion-al in-for-ma-tion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Which files to include? out of: 
+% frontpages, intro, ndlf, rabinot, 12ot, commit, rest
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\includeonly{intro}
+% \includeonly{intro, ndlf, uncert, rabinot, 12ot, commit, rest}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% make an index
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{makeidx}  % index
+\makeindex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Back-References in the bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand*{\backref}[1]{
+  % default interface
+  % #1: backref list
+  %
+  % We want to use the alternative interface,
+  % therefore the definition is empty here.
+}
+\renewcommand*{\backrefalt}[4]{%
+  % alternative interface
+  % #1: number of distinct back references
+  % #2: backref list with distinct entries
+  % #3: number of back references including duplicates
+  % #4: backref list including duplicates
+  \par
+  \ifnum#1=1 %
+    cited on page %
+  \else
+    cited on pages %
+  \fi
+  #2.\par
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% My DRAFT heading ... uncomment until final version
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \makeatletter
+%% \renewcommand*{\ps@plain}{%
+%%  \renewcommand*{\@oddhead}{\hfil\fbox{DRAFT --- \today}\hfil}%
+%%  \renewcommand*{\@evenhead}{\@oddhead}%
+%%  \renewcommand*{\@oddfoot}{\hfil\thepage\hfil}%
+%%  \renewcommand*{\@evenfoot}{\@oddfoot}}
+%% \makeatother
+%% \pagestyle{plain}
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %% Changing chapter headings (copied from report.cls)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \makeatletter
+%% \def\@makechapterhead#1{%
+%%   \vspace*{50\p@}%
+%%   {\parindent \z@ \raggedright \normalfont
+%%     \ifnum \c@secnumdepth >\m@ne
+%%     \Huge\bfseries \@chapapp\space \thechapter
+%%     \par\nobreak
+%%     \vskip 20\p@
+%%     \fi
+%%     \interlinepenalty\@M
+%%     \LARGE \normalfont \bfseries #1\par\nobreak
+%%     \vskip 40\p@
+%%     }}
+%% \makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% New environments and theorems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{publist}[1]%
+{\begin{list}{}{\renewcommand*{\makelabel}[1]{\hfil##1\hspace{.1em}}%
+    \settowidth{\labelwidth}{#1\hspace{.1em}}%
+    \setlength{\leftmargin}{\labelwidth+\labelsep}}}%
+{\end{list}}
+
+\newenvironment{myabstract}
+{\small\begin{center}\bf\abstractname\vspace{-0.5em}\end{center}\quotation}
+{\endquotation}
+
+%% \newcommand*{\qed}{\hspace{\fill}$\Box$\vspace{0.3cm}}
+%% \newenvironment{proof}[1][] {\linebreak[3] \noindent\emph{\bf Proof#1.}\hspace{0.5em}}
+%% {\qed}
+
+%% \newenvironment{sketch}[1][] {\noindent\emph{\bf Proof Sketch#1.}\hspace{0.5em}}
+%% {\qed}
+
+% \newtheorem{problem}{Problem}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%protocol environments%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\columnwidth}{\textwidth}
+
+%% \newenvironment{mybox}
+%%          {\begin{minipage}{0.97\columnwidth} \begin{framed}\hspace{0ex} 
+%% \begin{minipage}{0.99\columnwidth} }
+%%          {\vspace{-1.5ex} \end{minipage} \end{framed} 
+%% \end{minipage}\vspace{-1ex}}
+
+%% \newenvironment{myfigure}[1]
+%%         {\begin{figure}[#1] \centering \vspace{-3ex}}
+%%         {\vspace{-3ex} \end{figure} }
+    
+\newcounter{itm}
+\newenvironment{myprotocol}[2][]
+  {\begin{minipage}{\columnwidth} 
+    \begin{framed}\hspace{0ex} 
+     \begin{minipage}{0.99\columnwidth}
+       {{\bf #2:} #1}
+       \setcounter{itm}{1}
+       \begin{list}{\arabic{itm}.}{\usecounter{itm}}}
+%%          \setlength{\itemsep}{0mm}
+%%          \setlength{\leftmargin}{\labelwidth}
+%%          \setlength{\topsep}{\parsep}}}           
+   {    \end{list}
+       \vspace{-1.5ex} 
+       \end{minipage} 
+     \end{framed} 
+    \end{minipage}\vspace{-0.6ex}}
+
+\newenvironment{myfigure}[1]    
+         {\begin{figure}[#1] \centering}
+         { \end{figure}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% New commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\todo}[1]
+{\marginpar{\baselineskip0ex\rule{2,5cm}{0.5pt}\\[0ex]{\tiny\textsf{#1}}}}
+
+\newcommand*{\comment}[1]{\textsf{[#1]}}
+\newcommand*{\remove}[1]{}
+
+%% \newcommand{\mytitle}[3]{
+%%   {\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%%     \vspace*{2\baselineskip}
+%%     \begin{center}
+%%       {\LARGE #1}\par\vskip2em
+%%       {\large\lineskip.5em\begin{tabular}[t]{c}#2\end{tabular}}
+%%     \end{center}
+%%     \vskip1.5em #3}}
+
+\newcommand*{\mycitation}[2]{
+  {\begin{flushright}
+      \emph{#1} \\ 
+      \textrm{--- #2}
+    \end{flushright}}}
+
+\newcommand*{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\newcommand*{\shortpage}{\enlargethispage{-\baselineskip}}
+\newcommand*{\longpage}{\enlargethispage{\baselineskip}}
+\newcommand*{\compresspage}{\enlargethispage*{0\baselineskip}}
+\renewcommand*{\topfraction}{1}
+\renewcommand*{\floatpagefraction}{1}
+
+% Players
+                                % conflict Sender <--> von Neumann entropy
+\renewcommand*{\S}{\ensuremath{{\sf S}}} % honest sender Alice   %%%
+\renewcommand*{\R}{\ensuremath{{\sf R}}} % honest receiver Bob
+\newcommand*{\dS}{\ensuremath{\tilde{\sf S}}} % malicious Alice
+\newcommand*{\dR}{\ensuremath{\tilde{\sf R}}} % malicious Bob
+
+\newcommand*{\A}{\ensuremath{{\sf S}}} % Alice
+\newcommand*{\B}{\ensuremath{{\sf R}}} % Bob
+\newcommand*{\dA}{\ensuremath{\tilde{\sf S}}} % malicious Alice
+\newcommand*{\dB}{\ensuremath{\tilde{\sf R}}} % malicious Bob
+\newcommand*{\V}{\ensuremath{{\sf V}}} % Verifier
+\renewcommand*{\C}{\ensuremath{{\sf C}}} % Committer
+\newcommand*{\dV}{\ensuremath{\tilde{\sf V}}} % malicious Verifier
+\newcommand*{\dC}{\ensuremath{\tilde{\sf C}}} % malicious Committer
+
+% Protocol names
+\newcommand*{\qot}{{\sc qot}}
+\newcommand*{\epr}{{\sc epr}}
+\newcommand*{\eprqot}{\epr-\qot}
+\newcommand*{\comm}{{\sc comm}}
+\newcommand*{\eprcomm}{{\sc epr-comm}}
+\newcommand*{\BBqot}{{\sc bb84-qot}}
+\newcommand*{\BBeprqot}{{\sc bb84-epr-qot}}
+\newcommand*{\OTUOT}{{\sf \textsl{OT2UOT}}}      % OT protocol
+
+\newcommand*{\onetwo}[1][2]{\mbox{\textsl{1\hspace{-0.1ex}-#1}}}
+\newcommand*{\onen}{\mbox{\textsl{1\hspace{-0.1ex}-\hspace{-0.1ex}n}}}
+\newcommand*{\onethree}{\mbox{\textsl{1\hspace{-0.1ex}-\hspace{-0.1ex}3}}}
+
+\newcommand*{\pOT}{\index{oblivious transfer}\textsl{OT}\xspace}                    % plain OT
+\newcommand*{\OT}[1][2]{\index{oblivious transfer!one-out-of-two}\textsl{\onetwo[#1]\:OT}\xspace}               % 1-2-OT
+\newcommand*{\StringOT}{\index{oblivious transfer!one-out-of-two}\textsl{\onetwo\:String\:OT\xspace}}    % 1-2-String-OT
+\newcommand*{\lStringOT}[1][2]{\textsl{\onetwo[#1]\:OT\,$^{\ell}$}\xspace}    % 1-2-String-OT
+\newcommand*{\onenOT}{\index{oblivious transfer!one-out-of-$n$}\textsl{\onen\:OT}\xspace}             % 1-n-OT
+\newcommand*{\onenlStringOT}{\textsl{\onen\:OT\,$^{\ell}$}\xspace}    % 1-n-OT^l
+\newcommand*{\onethreeOT}{\textsl{\onethree\:OT}\xspace}               % 1-3-OT
+
+\newcommand*{\Rand}{\textsl{Rand}}                 % Rand 
+\newcommand*{\RandOT}{\Rand\:\OT}                  % Rand 1-2-OT
+\newcommand*{\RandStringOT}{\Rand\:\StringOT}      % 1-2-String-OT
+\newcommand*{\RandlStringOT}[1][2]{\Rand\:\lStringOT[#1]}    % 1-2-String-OT
+\newcommand*{\onenRandOT}{\Rand\:\onenOT}                  % Rand 1-n-OT
+\newcommand*{\onenRandlStringOT}{\Rand\:\onenlStringOT}    % Rand 1-n-OT^l
+
+\newcommand*{\Randqot}[1][2]{{\small \sc Rand 1\hspace{-0.1ex}-\hspace{-0.1ex}#1 QOT}\,}
+\newcommand*{\Randlqot}[1][2]{{\small \sc Rand 1\hspace{-0.1ex}-\hspace{-0.1ex}#1 QOT}\,$^{\ell}$}
+\newcommand*{\eprRandlqot}[1][2]{{\small\sc EPR Rand 1\hspace{-0.1ex}-\hspace{-0.1ex}#1 QOT}\,$^{\ell}$}
+\newcommand*{\RabinOT}{\index{oblivious transfer!Rabin}\textsl{Rabin\:OT}\xspace}            % Rabin-OT
+\newcommand*{\RabinlStringOT}{\index{oblivious transfer!Rabin}\textsl{Rabin\:OT\,$^{\ell}$}\xspace}      % Rabin-String-OT
+\newcommand*{\XOT}{\index{oblivious transfer!XOR}\textsl{\onetwo\:XOT}\xspace}             % 1-2-XOT
+\newcommand*{\GOT}{\index{oblivious transfer!generalized}\textsl{\onetwo\:GOT}\xspace}             % 1-2-GOT
+\newcommand*{\BUOT}{\index{oblivious transfer!universal}\textsl{\onetwo\:UOT}\xspace}            % 1-2-UOT
+\newcommand*{\pUOT}{\index{oblivious transfer!universal}\textsl{UOT}\xspace}                     % plain UOT
+\newcommand*{\UOT}[3]{\index{oblivious transfer!universal}\textsl{$(#1,#2)$-UOT$(#3)$}\xspace}     % (.,.)-UOT(.)
+
+% \newcommand*{\ROT}{\textsl{ROT}\xspace}  
+\newcommand*{\BC}{\index{bit commitment}\textsl{BC}\xspace}  
+\newcommand*{\QKD}{\index{quantum key distribution}\textsl{QKD}\xspace}  
+
+
+%spacing
+\newcommand*{\q}{\hspace{0.2ex}}
+
+% for a beautiful :=
+\newcommand*{\assign}{\ensuremath{\kern.5ex\raisebox{.1ex}{\mbox{\rm:}}\kern -.3em =}}
+% a squeezed ``=''
+\def\={\hspace{-0.5ex}=\hspace{-0.4ex}}
+
+% parameters
+\renewcommand*{\sp}{\kappa}      % security parameter
+
+% little thingies over letters
+\newcommand*{\ol}[1]{\overline{#1}}
+\newcommand*{\wt}[1]{\widetilde{#1}}
+\newcommand*{\wh}[1]{\widehat{#1}}
+\renewcommand*{\b}[1]{\text{\boldmath${\bf #1}$}}
+
+%changed letters
+\renewcommand*{\id}{\mathbbm{1}}   % identity
+\newcommand*{\cB}{\mathcal{B}}
+\newcommand*{\cE}{\mathcal{E}}    % quantum operation
+\newcommand*{\cH}{\mathcal{H}}
+\newcommand*{\cU}{\mathcal{U}}
+\newcommand*{\cX}{\mathcal{X}}
+\newcommand*{\cY}{\mathcal{Y}}
+\newcommand*{\cZ}{\mathcal{Z}}
+\newcommand*{\bs}{\b{s}}           % bold s
+\renewcommand*{\zero}{\b{o}}       % bold 0
+\newcommand*{\Sone}[1][s]{{\cal S}_1(\b{#1})}  % complicated sets S1
+\newcommand*{\Stwo}[1][s]{{\cal S}_2(\b{#1})}  % complicated sets S2
+
+% abbreviations
+\newcommand*{\negl}[1]{\mathit{negl}({#1})}
+\newcommand*{\unif}{\mbox{\sc unif}}
+\newcommand*{\nbit}{\set{0,1}^n}
+\newcommand*{\bal}{\beta}              % balanced function
+\newcommand*{\ip}[1]{\langle#1\rangle} % inner product
+\newcommand*{\set}[1]{\{#1\}}          % set
+\newcommand*{\Set}[2]{\{#1:\,#2\}}     % set with description
+\newcommand*{\card}[1]{\big|#1\big|}   % cardinality
+\newcommand*{\bset}{\mathcal{S}}       % set of bases
+\newcommand*{\pad}{|^{\circ}}          % substring padded with zeros
+
+\newcommand*{\code}{\mathcal{C}}     % Code
+
+\newcommand*{\Qp}{Q^{+}}
+\newcommand*{\Qt}{Q^{\times}}
+\newcommand*{\qp}{q^{+}}
+\newcommand*{\qt}{q^{\times}}
+
+\newcommand*{\ball}[1]{{\mathrm{B}}^{#1}}  % ball with radius
+
+\newcommand*{\Ba}[1]{\ensuremath{\mathcal{B}^{#1}}}  % basis with superscript
+\renewcommand*{\I}{\mathbbm{1}}
+
+\newcommand*{\dens}[1]{\mathcal{P}(#1)}  % density matrices
+
+% error parameters
+\newcommand*{\phix}{\phi_{\mbox{\scriptsize{\sc x}}}}
+\newcommand*{\phidc}{\phi_{\mbox{\scriptsize{\sc dc}}}}
+\newcommand*{\etamq}{\eta_{\mbox{\scriptsize{\sc mq}}}}
+\newcommand*{\etaab}{\eta_{\mbox{\scriptsize{\sc ab}}}}
+
+
+
+\newcommand*{\prei}[2][i-1]{#2^{#1}} % to denote the prefix of
+% the variables up to i-1
+
+%% Probability, Entropy and Distance
+\renewcommand*{\H}{\operatorname{H}}   % Entropy
+% \newcommand*{\Hb}{\H_{\mathrm{bin}}}   % binary Entropy
+% \newcommand*{\Sentr}{\operatorname{S}}   % quantum Entropy 
+\newcommand*{\hmin}{\ensuremath{\H_{\infty}}}
+\newcommand*{\hmax}{\ensuremath{\H_{0}}}
+\newcommand*{\hie}[2]{\ensuremath{\hmin^{#1}(#2)}}
+\newcommand*{\hiee}[1]{\hie{\varepsilon}{#1}}
+\newcommand*{\hmaxe}[2]{\ensuremath{\hmax^{#1}(#2)}}
+\newcommand*{\hmaxee}[1]{\hmaxe{\varepsilon}{#1}}
+\newcommand*{\qhmin}{\ensuremath{\H_{\rm min}}}  % for quantum
+\newcommand*{\qhmax}{\ensuremath{\H_{\rm max}}}  % max-entropy for quantum
+\newcommand*{\hminee}{\qhmin^{\varepsilon}} % for quantum
+\newcommand*{\tH}{\tilde{\H}}         % average conditional Renyi entropy
+
+%\newcommand*{\dist}{\operatorname{d}}   % distance from uniform
+\newcommand*{\dist}[1]{\delta\big(#1\big)}  % distance
+\newcommand*{\eps}{\varepsilon}
+\newcommand*{\epsclose}{\approx_{\varepsilon}}
+\newcommand*{\Epsclose}[3]{#1\epsclose#2\;\,\big|#3}
+\newcommand*{\close}[1]{\approx_{#1}}
+
+\renewcommand*{\P}{P}            % Probability
+\newcommand*{\E}{\mathbb{E}}   % Expected value: already
+\newcommand*{\ev}{\ensuremath{\mathcal{E}}\xspace} % event
+
+% quantum registers
+\newcommand*{\regE}{E}
+\newcommand*{\rs}{\regE}
+% \newcommand*{\rs}{\ensuremath{\boldsymbol{Q}}}
+
+
+%% symbol for 2-universal hash function
+\newcommand*{\univ}{two-universal\xspace}
+\newcommand*{\hf}{f}             % hash function
+\newcommand*{\Hf}{F}             % hash function (as random variable)
+\newcommand*{\chf}[1]{\ensuremath{\mathcal{F}_{#1}}} % class of hashing functions
+
+\newcommand*{\UH}{{\cal F}}      % u2 class
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\pagestyle{empty} 
+\pagenumbering{roman} 
+\setcounter{secnumdepth}{-1}
+
+\include{frontpages}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table of contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\setcounter{secnumdepth}{2}
+
+\pagestyle{myheadings}
+\renewcommand*{\chaptermark}[1]{\markboth{\textsc{\chaptername\
+      \thechapter. #1}}{}} 
+\renewcommand*{\sectionmark}[1]{\markright{\textsc{\thesection. #1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{intro}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearemptydoublepage
+\chapter{Preliminaries}   \label{chap:prelim}
+%% \mycitation
+%% {This was their finest hour}
+%% {Winston S.\ Churchill, House of Commons, June~18, 1940.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this chapter, we introduce notation and basic concepts used
+throughout the rest of the thesis. In addition, most of the following
+chapters have an individual preliminary section introducing concepts
+that are exclusively used in those specific chapters.
+
+This chapter does \emph{not} give a thorough introduction to
+probability theory, information theory and quantum information
+processing, but we rather assume the reader familiar with the basic
+concepts from the standard literature like \cite{CT91, NC00}.
+Instead, we give a specific overview of the concepts which are
+required for understanding this thesis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Notation and Basic Tools} \label{sec:notation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For a sequence of variables $x_1,\ldots, x_n$, we use the abbreviation
+$\prei[i]{x} \assign x_1,\ldots,x_i$ for the collection of variables
+up to index $i$, and we define \mbox{$\prei[0]{x} \assign \emptyset$} to
+be the empty string.
+
+For a set $I=\{i_1, i_2, \ldots, i_{\ell} \} \subseteq \{1, \ldots,
+n\}$ and a $n$-bit string $x \in \nbit$, we define $x|_I \assign
+x_{i_1} x_{i_2} \cdots x_{i_{\ell}}$. It is sometimes convenient that
+all \index{substring}substrings of this form have the same length, irrespective of the
+actual size $\ell$ of the index set $I$. Therefore, we define the
+$n$-bit string $x \pad_I \assign x_{i_1} x_{i_2} \cdots
+x_{i_{\ell}} 0 \cdots 0$ to be the original substring padded with $n-
+\ell$ zeros.
+
+Most logarithms in this thesis are with respect to base 2 and denoted
+by \index{log@$\log(\cdot)$}$\log(\cdot)$. However, when needed,
+\index{ln@$\ln(\cdot)$}$\ln(\cdot)$ denotes the natural logarithm to base
+$e$.
+
+We write $\ball{\delta n}(x)$ for the ball of all $n$-bit strings at
+\index{Hamming distance}Hamming distance at most $\delta n$ from $x$. Note that the number of
+elements in $\ball{\delta n}(x)$ is the same for all $x$, we denote it
+by $\ball{\delta n} \assign |\ball{\delta n}(x)|$. It is well known
+that $\ball{\delta n} \leq 2^{n h(\delta)}$, where
+\[h(p)\assign -\big(p\cdot\log{p} + (1-p)\cdot\log{(1-p)}\big)\]
+is the \index{binary entropy function}binary entropy function.
+
+We denote by \index{negl@$\negl{n}$}$\negl{n}$ any function of $n$
+smaller than the inverse of any polynomial provided $n$ is
+sufficiently large.
+
+If we want to choose two symbols $+$ or $\times$ according to the bit
+$b \in \{0,1\}$, we write $[ +, \times ]_b$. The \index{Kronecker
+delta}Kronecker delta function is defined as
+\[
+\delta_{i,j}= \left\{ \begin{array}{r@{\quad \mbox{if} \quad}l} 1 & i=j, \\ 0 & i
+    \neq j. \end{array} \right.
+\]
+The \index{indicator random variable}indicator random variable
+$\id_\ev$ equals 1, if the event $\ev$ occurs and $0$ else.
+
+\index{convex function}\index{concave function}
+\begin{definition}[convex/concave function] \label{def:convexfunction}
+A function $f: \reals \rightarrow \reals$ is \emph{convex} on the
+interval $[a,b]$, if for any two points $x,y \in [a,b]$ and
+$0 \leq s \leq 1$, it holds that
+\[
+f(s x + (1-s) y) \leq s f(x) + (1-s) f(y).
+\]
+Analogously, the function is \emph{concave} on $[a,b]$, if 
+\[
+f(s x + (1-s) y) \geq s f(x) + (1-s) f(y).
+\]
+\end{definition}
+
+\index{Jensen's inequality}
+\begin{lemma}[Jensen's inequality] \label{lem:jensen}
+Let $f: \reals \rightarrow \reals$ be a convex function on $\reals$ and let $x_1,
+\ldots, x_n \in \reals$. Let $p_1, \ldots, p_n \in [0,1]$ be such that
+$\sum_i p_i=1$. Then,
+\[ f\left(\sum_{i=1}^n p_i x_i \right) \leq \sum_{i=1}^n p_i f(x_i) \,
+.
+\]
+For $x_1=x_2=\ldots=x_n$, equality holds.
+\end{lemma}
+
+\index{Cauchy-Schwarz inequality}
+\begin{lemma}[Cauchy-Schwarz inquality] \label{lem:cauchyschwarz}
+For real numbers $x_1,\ldots,x_n$ and $y_1,\ldots,y_n$, the following holds
+\[ \left(\sum_{i=1}^n x_i \cdot y_i \right)^2 \leq \left(\sum_{i=1}^n x_i^2\right)
+\cdot \left(\sum_{i=1}^n y_i^2\right) \, .
+\]
+\end{lemma}
+\begin{proof}
+Note that $\sum_{i=1}^n (x_i \cdot z + y_i)^2$ is a quadratic
+polynomial $a \cdot z^2 + b z +c$ without real roots unless all
+$x_i/y_i$ are equal. Therefore, its discriminant $b^2 - 4ac$ is non-positive:
+\[ 4 \left(\sum_{i=1}^n x_i \cdot y_i \right)^2 - 4 \left(\sum_{i=1}^n
+  x_i^2 \right) \cdot \left(\sum_{i=1}^n y_i^2 \right) \leq 0 \, .
+\]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Probability Theory}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For a discrete probability space $(\Omega,P)$, we write $P[\ev]$ for
+the probability of the \index{event $\ev$}event $\ev \subset \Omega$,
+and we write $P_X$ for the \index{probability distribution!of random
+variable}distribution of the random variable $X:\Omega\to\cX$ taking
+values in the finite set $\cX$. As is common practice, we do not refer
+to the probability space $(\Omega,P)$ but leave it implicitly defined
+by the joint probabilities of all considered events and random
+variables. For two random variables $X$ and $Y$ with joint
+distribution $P_{XY}$ over $\cX \times \cY$, the \index{probability
+distribution!conditional}conditional
+probability distribution of \emph{$X$ given $Y$} is defined as $P_{X |
+  Y}(x|y) \assign \frac{P_{XY}(x,y)}{P_Y(y)}$ for all $x \in \cX$ and
+$y \in \cY$ with $P_Y(y)>0$.  For a probability distribution $Q$ over
+$\cal X$, we abbreviate the (overall) probability of a set $L
+\subseteq \cal X$ with $Q(L) \assign \sum_{x \in L} Q(x)$.
+
+
+Let $P$ and $Q$ be two probability distributions over the same finite
+domain $\cX$. The {\em \index{variational distance}variational distance}\footnote{also called
+\emph{statistical} or \emph{Kolmogorov} distance} $\dist{P,Q}$ between $P$ and $Q$
+is defined as $$\dist{P,Q} \assign \frac{1}{2} \sum_{x \in \cX}
+\big|P(x)-Q(x)\big| \, .$$  Note that this definition makes sense also for
+{\em non-normalized} distributions, and indeed we define and use
+$\dist{P,Q}$ for arbitrary positive-valued functions $P$ and $Q$ with
+common domain.  In case $\cX$ is of the form $\cX = {\cal U} \times
+{\cal V}$, we can expand $\dist{P,Q}$ to $\dist{P,Q} = \sum_u
+\dist{P(u,\cdot),Q(u,\cdot)} = \sum_v \dist{P(\cdot,v),Q(\cdot,v)}$.
+We write \smash{$P \epsclose Q$} to denote that $P$ and $Q$ are
+\index{$\varepsilon$-close}$\varepsilon$-close, i.e., that $\dist{P,Q} \leq \varepsilon$.
+
+%% For a random variable $X$ it is common to denote its distribution by
+%% $P_X$. We adopt this notation. Alternatively, we also write $[X]$ for
+%% the distribution $P_X$ of $X$.
+%% For two random variables $X$ and $Y$, $[X \q Y]$
+%% denotes the joint distribution $P_{XY}$ whereas $[X] \q [Y]$ 
+%% denotes the ``disentangled" distribution $Q_{XY} = P_X P_Y$, and $[X|Y\=y]$ stands for the conditional distribution $P_{X|Y=y}$.  Using this notation, $X$ and $Y$ are (close to) {\em
+%%   independent} if and only if $[X \q Y] = [X] \q [Y]$ (respectively
+%% $[X \q Y] \epsclose [X] \q [Y]$).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Furthermore, it is straightforward to verify that 
+%$\dist{[X Y],[X] [Y]} = \dist{[X Y|\E],[X] [Y|\E]} \, P[\E] 
+% + \dist{[X Y|\bar{\E}],[X] [Y|\bar{\E}]} \, P[\bar{\E}]$ 
+%for any event $\E$ with complement $\bar{\E}$. 
+%% We feel that this notation is sometimes easier to read as it refrains from putting the crucial information into the subscript. %(in contrast to $P_{XY} = P_X P_Y$). 
+
+%% We have to deal with {\em \index{conditional independence}conditional independence}. Two random
+%% variables $X$ and $Y$ are independent conditioned on a third, $Z$, if
+%% $P_{XY|Z} = P_{X|Z} \cdot P_{Y|Z}$, in other words, if $X \!\leftrightarrow\! Z \!\leftrightarrow\! Y$ forms a \index{Markov chain}Markov chain.\footnote{Functional equalities like $P_{XY|Z} = P_{X|Z} P_{Y|Z}$ %and similar 
+%%   are to be understood pointwise: $P_{XY|Z}(x,y|z) = P_{X|Z}(x|z)
+%%   P_{Y|Z}(y|z)$ for all $x,y,z$ (for which $P_Z(z)>0$); it should
+%%   always be clear from the context how the arguments, here $x,y,z$,
+%%   are to be distributed among the functions/distributions.}  After
+%% multiplying both sides with $P_{Z}^2$, the condition reads $P_{XYZ}
+%% P_Z = P_{X Z} P_{Y Z}$.
+%% %More generally, for random variables $X,Y,Z$ and $W$ we have to
+%% %express, that --- conditioned on $Z$ --- $X$ and $Y$ are independent
+%% %and $X$ is distributed like $W$: $P_{XY|Z} = P_{W|Z} P_{Y|Z}$, or
+%% %equivalently $P_{XYZ} P_Z = P_{W Z} P_{Y Z}$.  
+%% We measure closeness to this ideal situation by 
+%% %% $\dist{[X \q Y \q Z]\q[Z],[X \q Z]\q[Y \q Z]}$, and we write
+%% %% $\Epsclose{[X \q Y]}{[X] \q [Y]}{Z}$ to express that $\dist{[X \q Y \q
+%% %%   Z]\q[Z],[X \q Z]\q[Y \q Z]} \leq \varepsilon$.
+%% \begin{equation} \label{eq:defconditionaldistance}
+%% \begin{split}
+%% \dist{ P_{XY|Z}, P_{X|Z} \cdot P_{Y|Z} } &\assign \dist{ P_{X Y Z}
+%%   P_{Z},P_{X Z} P_{YZ}}\\ &= \sum_{x,y,z} |P_{XYZ}(x,y,z)P_Z(z) -
+%%   P_{XZ}(x,z) P_{YZ}(y,z) | .
+%% \end{split}
+%% \end{equation}
+%% %% , and we write
+%% %% $\Epsclose{[X \q Y]}{[X] \q [Y]}{Z}$ 
+%% %% to express that $\dist{[X \q Y \q
+%% %%   Z]\q[Z],[X \q Z]\q[Y \q Z]} \leq \varepsilon$.
+%% Note that ``multiplying out'' $Z$ %, as we do, 
+%% has the effect that no special care needs to be taken if $P_Z(z)$ vanishes or is small. %Also note that if $W$ and $Z$ are independent, then $\dist{[X \q Y \q Z]\q[Z],[W \q Z]\q[Y \q Z]} = \dist{[X \q Y \q Z],[W]\q[Y \q Z]}$. 
+
+By \index{unif@$\unif$}$\unif$ we denote a uniformly distributed binary random variable
+independent of anything else, such that $P_{\unif}(b) = \frac12$ for
+both $b \in \set{0,1}$, and $\unif^{\ell}$ stands for $\ell$
+independent copies of $\unif$.
+
+For a random variable $R$ over the reals $\reals$, its \index{expected
+value}expected value is denoted by $\E[R]$. \index{$\E[\cdot]$|see
+{expected value}}
+
+\index{Markov's inequality}
+\begin{lemma}[Markov's inequality] \label{lem:markov}
+For a non-negative real random variable $X$ and $\eps>0$, we have
+\[ \Pr\left[ X \geq \frac{\E[X]}{\eps} \right] \leq \eps \, .\]
+\end{lemma}
+\begin{proof}
+For the indicator function $\id_{\ev}$ which equals 1 if the
+event $\ev$ occurs and 0 else, we observe that
+\[ \frac{\E[X]}{\eps} \cdot \id_{\left\{ X \geq \frac{\E[X]}{\eps}
+  \right\} } \leq X \, .
+\]
+Taking the expected values on both sides, using linearity of the
+expectation and rearranging the terms yields the claim.
+\end{proof}
+
+\index{Chernoff's inequality}
+\begin{lemma}[Chernoff's inequality] \label{lem:chernoff}
+  Let $X_1,\ldots,X_n$ be identically and independently distributed
+  random variables with Bernoulli distribution, i.e. $X_i=1$ with
+  probability $p$ and $X_i=0$ with probability $1-p$. Then $S \assign
+  \sum_{i=1}^n X_i$ has binomial distribution with parameters $(n,p)$
+  and it holds that
+\[ P\left[ \: |S - pn| > \eps n \: \right] \leq 2 e^{- 2 \eps^2 n} \, .
+\]
+\end{lemma}
+See \cite{AS00} or \cite{MR95} for a proof.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quantum Information Theory} \label{sec:qit}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section, we give a very brief introduction to the quantum
+notions we use in this thesis, we refer to \cite{NC00, Renner05} for
+further explanations.
+
+For any positive integer $d \in \naturals$, $\cH_d$ stands for the
+complex \index{Hilbert space}Hilbert space of dimension $d$.
+Sometimes, we omit the dimension and simply write $\cH$. The state of
+a quantum-mechanical system in $\cH$ is described by a
+\emph{\index{density operator}density operator} $\rho$. A density
+operator $\rho$ is normalized with respect to the trace norm
+($\trace{\rho}=1$), \index{Hermitian}Hermitian ($\rho^*=\rho$) and has
+non-negative eigenvalues. \index{$\dens{\cH}$ (set of density
+operators)}$\dens{\cH}$ denotes the set of all \emph{density
+operators} acting on $\cH$. \index{$\I$ (fully mixed state)}$\I$
+denotes the identity matrix (describing the fully mixed state)
+renormalized by the appropriate dimension.
+
+A quantum state $\rho \in \dens{\cH}$ is called \emph{\index{pure state}pure} if it is of the form
+$\rho=\proj{\varphi}$ for a (normalized) vector $\ket{\varphi} \in \cH$.
+
+A \emph{\index{positive operator-valued measurement}positive
+  operator-valued measurement (POVM)} is a family $M = \set{E_x}_{x
+  \in \cX}$ of non-negative operators such that $\sum_{x \in \cX} E_x$ equals the identity matrix.
+The probability distribution $P_X$ obtained when
+applying the POVM $M$ to the quantum state $\rho$ is defined as
+$P_X(x) \assign \trace{E_x \rho}$.
+
+The general evolution (like unitary transforms, measurements, applying
+noise etc.) of a quantum system in state $\rho$ can be described by a
+\emph{\index{quantum operation}quantum operation} \index{$\cE(\rho)$
+  quantum operation}$\cE(\rho)$, which is a completely positive
+and trace-preserving map, i.e. $\cE$ is linear and maps non-negative
+normalized operators $\rho \in \dens{\cH}$ into non-negative
+normalized operators $\cE(\rho) \in \dens{\cH}$.
+
+The notion of (variational) distance of two random variables can be
+naturally extended to the \emph{\index{trace distance}trace distance} between two density
+operators $\rho, \sigma \in \dens{\cH}$ defined by
+$\dist{\rho,\sigma} \assign \frac12 \trace{|\rho-\sigma|}$, where we
+define $|A| \assign \sqrt{A^* A}$ to be the positive square-root of
+$A$. As in the classical case, we write $\rho \approx_{\eps} \sigma$
+to denote that $\rho$ and $\sigma$ are $\eps$-close, i.e.
+$\dist{\rho,\sigma} \leq \eps$. The trace distance has an operational
+meaning in that the value $\frac12 + \frac12 \dist{\rho,\sigma}$ is
+the average success probability when distinguishing $\rho$ from
+$\sigma$ via a measurement. In fact, the relation to the classical
+variational distance becomes evident in $\dist{\rho,\sigma} = \max_M
+\dist{M(\rho),M(\sigma)}$ where the maximization is over all POVMs
+$M$ and $M(\rho)$ refers to the probability distribution obtained when
+measuring $\rho$ using $M$.  Ruskai~\cite{Ruskai94} showed that the trace distance
+does not increase under (trace-preserving) quantum operations,
+formally $\dist{ \rho,\sigma } \leq \dist{ \cE(\rho),\cE(\sigma) }$ for
+any quantum operation $\cE$.
+
+\index{basis!rectilinear|see{basis}}
+The pair $\{\ket{0},\ket{1}\}$ denotes the \index{basis!computational}computational or
+rectilinear or ``$+$'' basis for the $2$-dimensional Hilbert space
+${\mathcal H}_2$.  The \index{basis!diagonal}diagonal or ``$\times$'' basis is defined as
+$\{\ket{0}_\times,\ket{1}_{\times}\}$ where
+\smash{$\ket{0}_{\times}=(\ket{0}+\ket{1})/\sqrt2$} and
+\smash{$\ket{1}_{\times}=(\ket{0}-\ket{1})/\sqrt2$}. The \index{basis!circular}circular or
+``$\circlearrowleft$'' basis consists of vectors \smash{$(\ket{0}+i
+  \ket{1})/\sqrt2$} and \mbox{$(\ket{0} - i \ket{1})/\sqrt2$}.
+Measuring a qubit in the $+\,$-basis (resp.\ $\times$-basis) means
+applying the measurement described by projectors $\proj{0}$ and
+$\proj{1}$ (resp.  projectors $\ket{0}_\times \bra{0}_\times$ and
+$\ket{1}_{\times}\bra{1}_\times$).  When the context requires it, we
+write $\ket{0}_+$ and $\ket{1}_+$ instead of $\ket{0}$ respectively
+$\ket{1}$. For a $n$-bit string $x \in \nbit$, $\ket{x}_+$ stands for
+the state $\bigotimes_{i=1}^n \ket{x_i}_+ \in \cH_{2^n}$ and analogous for
+  $\ket{x}_{\times}$.
+
+
+%% e denote classical random variables with capital
+%% letters $X,U,\Theta,\ldots$, and reserve the letter $\rs$ for a
+%% \emph{random states}. A random state is a random variable with
+%% distribution $P_{\rs}$ on the set of density operators $\dens{{\cal
+%% H}}$ on a fixed Hilbert space $\cH$. The quantum system
+%% described by $\rs$ is uniquely determined by its density operator
+%% $[\rs] \assign \sum_{\rho} P_{\rs}(\rho) \rho$. The analogue for a
+%% classical random variable $X$, is the state representation of its
+%% distribution $[X] = \sum_x P_X(x) \proj{x}$.
+
+%% If $\rs$ depends on a classical random variable $X$ with joint
+%% distribution $P_{X \rs}$, the joint quantum system is then given by
+%% $[X \rs] = \sum_x P_X(x) \,\proj{x} \otimes \rho_x$, where
+%% $\rho_x \assign \sum_{\rho} P_{\rs|X=x}(\rho) \rho$. Clearly,
+%% $[X \rs] = [X] \otimes [\rs]$ holds, if and only if the two parts of the
+%% system are not entangled, which in particular implies that
+%% no information on $X$ can be learned by observing only $\rs$.
+
+As mentioned above, the behavior of a quantum state in a register
+$\regE$ is fully described by its density matrix~$\rho_\regE$. We
+often consider cases where a quantum state may depend on some
+classical random variable $X$, in that it is described by the density
+matrix $\rho_\regE^x$ if and only if $X = x$. For an observer who has
+only access to the register $\regE$ but not to $X$, the behavior of
+the state is determined by the density matrix $\sum_x P_X(x)
+\rho_\regE^x$. The joint state, consisting of the \emph{c}lassical $X$ and
+the \emph{q}uantum register $\regE$ and therefore called 
+\emph{\index{cq-state}cq-state}, is
+described by the density matrix $\sum_x P_X(x) \proj{x} \otimes
+\rho_\regE^x$.  In order to have more compact expressions, we use the
+following notation. We write
+$$
+\rho_{X\regE} = \sum_x P_X(x) \proj{x} \otimes \rho_\regE^x 
+\qquad\text{and}\qquad
+\rho_\regE = \tr_X(\rho_{X\regE}) = \sum_x P_X(x)\rho_\regE^x \, .
+$$
+More general, for any event $\ev$, we write $$
+\rho_{X\regE|\ev} = \sum_x P_{X|\ev}(x) \proj{x} \otimes \rho_\regE^x
+\quad\text{and}\quad
+\rho_{\regE|\ev} = \tr_X(\rho_{X\regE|\ev}) = \sum_x P_{X|\ev}(x)\rho_\regE^x \, .
+$$
+We also write $\rho_X = \sum_x P_X(x) \proj{x}$ for the quantum
+representation of the classical random variable $X$ (and similarly for
+$\rho_{X|\ev}$).
+%We call such a state $\rho_{X\regE}$, consisting of a classical and a quantum part, a {\em cq-state}, and for any cq-state $\rho_{X\regE}$ we understand $X$ to be the random variable and $P_X$ the distribution defined by the classical part of $\rho_{X\regE}$. 
+This notation extends naturally to quantum states that depend on
+several classical random variables (i.e. to ccq-states, cccq-states etc.).
+%% Given $X$ and $\regE$ as above, by saying that there exists a random
+%% variable $Y$ such that $\rho_{XY\regE}$ satisfies some condition, we
+%% understand that there exists $\tilde{\rho}_{XY\regE}$ (with classical
+%% $X$ and $Y$) such that $\tr_Y(\tilde{\rho}_{XY\regE}) = \rho_{X\regE}$
+%% and $\tilde{\rho}_{XY\regE}$ satisfies the required condition.
+Given a cq-state $\rho_{X \regE}$ as above, by saying that there
+exists a random variable $Y$ such that $\rho_{XY\regE}$ satisfies some
+condition, we mean that $\rho_{X \regE}$ can be understood as
+$\rho_{X\regE} = \tr_Y(\rho_{XY\regE})$ for a ccq-state
+$\rho_{XY\regE}$ that satisfies the required condition.
+
+% understand that there exists a ccq-state $\rho_{XY\regE}$ (with classical
+% $X$ and $Y$) such that $\tr_Y(\tilde{\rho}_{XY\regE}) = \rho_{X\regE}$
+% and $\tilde{\rho}_{XY\regE}$ satisfies the required condition.
+
+Obviously, $\rho_{X\regE} = \rho_X \otimes \rho_\regE$ holds if and only if
+the quantum part is independent of $X$ (in that $\rho_\regE^x = \rho_\regE$ for
+any $x$), where the latter in particular implies that no information
+on $X$ can be learned by observing only $\rho_{\regE}$.  Furthermore, if
+$\rho_{X\regE}$ and $\rho_X \otimes \rho_\regE$ are
+$\varepsilon$-close in terms of their trace distance
+$\dist{ \rho,\sigma } = \frac{1}{2} \tr(|\rho-\sigma|)$, then the real
+system $\rho_{X\regE}$ ``behaves'' as the ideal system $\rho_X \otimes
+\rho_\regE$ except with probability~$\varepsilon$ (as explained by
+Renner and K\"onig in~\cite{RK05}) in that
+for any evolution of the system no observer can distinguish the real
+from the ideal one with advantage greater than $\varepsilon$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Entropies}\label{sec:entropies}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{entropy!classical R\'enyi}
+\subsection{Classical R\'enyi Entropy} \label{app:Renyi}
+\begin{definition} \label{def:ordersum}
+  Let $P$ be a probability distribution over the finite set $\cX$
+  and $\alpha \in [0,\infty]$. The \index{$\alpha$-order sum}\emph{$\alpha$-order sum} of the
+  probability distribution~$P$ is defined as $\pi_\alpha(P) \assign
+  \sum_{x \in \cX} P(x)^\alpha$.
+\end{definition}
+
+In the limits $\alpha \rightarrow \infty$ and $\alpha \rightarrow 0$,
+we set $\pi_\infty(P) \assign \max_{x \in \cX} P(x)$ and $\pi_0(P) \assign
+|\Set{x \in \cX}{P(x)>0}$.
+
+\begin{definition}[R\'enyi entropy~\cite{Renyi61}] \label{def:renyi}
+  Let $P$ be a probability distribution over the finite set $\cX$ and
+  $\alpha \in [0,\infty]$. The {\em R\'enyi entropy of order $\alpha$}
+  is defined as
+$$
+\H_{\alpha}(P) \assign \frac{1}{1-\alpha} \, \log \left(
+  \pi_{\alpha}(P) \right) = - \log \Big( \big(\sum_{x \in \cX}
+P(x)^{\alpha})^{\frac{1}{\alpha-1}} \Big) \, .
+$$
+\end{definition}
+
+In the limit \ \!$\alpha \rightarrow \infty$, we obtain the {\em
+\index{entropy!min-}min-entropy} $\H_{\infty}(P) = - \log \big(\max_{x \in \cX}
+P(x)\big)$ and for $\alpha \rightarrow 0$, we obtain
+\emph{\index{entropy!max-}max-entropy} $\H_0(P) = \log | \Set{x \in \cX}{P(x)>0} |$.
+Another important special case is the case $\alpha = 2$, also known as
+{\em \index{collision probability}collision probability} $\pi_2(P)= \sum_{x \in \cX} P(x)^2$ and
+\index{entropy!collision}\emph{collision entropy} $\H_2(P) = - \log \big(\sum_x P(x)^2\big)$.
+
+For the limit $\alpha \rightarrow 1$, we can use Jensen's inequality
+(Lemma~\ref{lem:jensen}) with $p_x \assign P(x)$ to obtain
+\[
+- \frac{1}{\alpha-1} \log \left(\sum_x p_x P(x)^{\alpha-1} \right) \leq - \sum_x
+p_x \log \left( (P(x)^{\alpha-1})^{\frac{1}{\alpha-1}} \right)  \, .
+\]
+In the limit $\alpha \rightarrow 1$, all $P(x)^{\alpha-1}$ go to 1 and
+therefore, equality holds and we obtain the standard definition of
+\emph{\index{entropy!Shannon}Shannon entropy} $\H(P) \assign - \sum_x P(x) \log P(x)$ as in~\cite{Shannon48}. 
+
+
+For a random variable $X$ with probability distribution $P_X$, we will
+most often slightly abuse notation and use the common shortcut
+$\H_{\alpha}(X)$ instead of $\H_{\alpha}(P_X)$. For a fixed random
+variable $X$ over the finite set $\cX$, $\alpha \mapsto \H_\alpha(X)$ is a decreasing
+function on $[0,\infty]$:
+\[ \log|\cX| \geq H_0(X) \geq \H(X) \geq \H_2(X) \geq H_\infty(X) \, ,
+\]
+with equality if and only if $X$ is uniform over a subset of
+$\cX$. Furthermore, we have that for $\alpha>1$, $\pi_\alpha(X) =
+\sum_x P_X(x)^\alpha \geq \max_x P_X(x)^\alpha$ and therefore,
+\[ \H_\alpha(X) = \frac{1}{1-\alpha} \log \pi_\alpha(X) \leq
+\frac{1}{1-\alpha} \log \max_x P_X(x)^\alpha = \frac{\alpha}{1-\alpha}
+\log \max_x P_X(x) \, , 
+\]
+which implies the following relation between R\'enyi entropies of
+order $\alpha>1$:
+\begin{equation} \label{eq:renyirelation}
+\frac{\alpha-1}{\alpha} \H_\alpha(X) \leq \H_{\infty}(X) \, .
+\end{equation}
+
+\index{entropy!conditional R\'enyi}
+\subsubsection{Conditional R{\'e}nyi entropy} \label{sec:conditionalrenyientropy}
+The R{\'e}nyi entropy $\H_{\alpha}(X|Y\=y)$ of $X$ given the event
+$Y=y$ is naturally defined as $\H_{\alpha}(X|Y\=y) =
+\frac{1}{1-\alpha} \, \log\big(\sum_x P_{X|Y=y}(x)^{\alpha}\big)$. We
+can define the \index{$\alpha$-order sum}\emph{conditional $\alpha$-order sum of $X$ given $Y$}
+and \emph{conditional R{\'e}nyi entropy} by
+\begin{align*}
+\pi_\alpha(X|Y) &\assign \max_y \sum_{x} P_{X|Y=y}(x)^{\alpha} \quad\mbox{and}\quad  \H_\alpha(X|Y) \assign \frac{1}{1-\alpha} \log(\pi_\alpha(X|Y)) \, . 
+\end{align*}
+In the limits we have, $\pi_\infty(X|Y)=\max_{x,y} P_{X|Y=y}(x)$,
+$\pi_0(X|Y) = \max_y |\Set{x \in \cX}{P_{X|Y=y}(x)>0}|$. For the
+conditional min-, collision- and max-entropy, we get
+\begin{align*}
+\H_{\infty}(X|Y) &\assign \min_y \H_{\infty}(X|Y=y) = \min_{x,y} -\log
+P_{X|Y=y}(x), \\
+\H_2(X|Y) &\assign \min_y \H_2(X|Y=y) = \min_y -\log \left( \sum_x
+  P_{X|Y=y}(x)^2 \right) \, ,\\
+\H_0(X|Y) &\assign \max_y \H_0(X|Y=y) = \max_y \, \log | \Set{x \in
+  \cX}{P_{X|Y=y}(x)>0} | .
+\end{align*}
+In the limit $\alpha \downarrow 1$, we get $\H_{\downarrow 1}(X|Y) =
+\min_y \H(X|Y=y)$ and for $\alpha \uparrow 1$, we get $\H_{\uparrow
+  1}(X|Y) = \max_y \H(X|Y=y)$ which might be different. However, the
+standard definition of conditional \index{entropy!Shannon}Shannon entropy is neither of
+those, but ``in between'':
+\[
+\H(X|Y) \assign \sum_y P_Y(y) \H(X|Y=y) = \sum_{x,y} P_{XY}(x,y) \log
+P_{X|Y=y}(y) \, .
+\]
+
+We note that in the literature, $\H_{\alpha}(X|Y)$ is sometimes
+defined as average over $Y$, $\sum_y P_Y(y) \, \H_{\alpha}(X|Y\=y)$,
+like for Shannon entropy.  However, we define the more natural
+following notion. For $1 < \alpha < \infty$, we define the {\em
+  average conditional} R{\'e}nyi \index{entropy!average conditional
+R\'enyi}entropy $\tH_{\alpha}(X|Y)$ as
+$$
+\tH_{\alpha}(X|Y) \assign - \log \Big( \sum_y P_Y(y) \big(\sum_x
+P_{X|Y}(x|y)^{\alpha})^{\frac{1}{\alpha-1}} \Big) \, ,
+$$
+and as $\tH_{\infty}(X|Y) = -\log \big(\sum_y P_Y(y) \max_x
+P_{X|Y}(x|y)\big)$ for $\alpha = \infty$. This notion is useful in
+particular because it has the property that if the {\em average}
+conditional R{\'e}nyi entropy is large, then the conditional R{\'e}nyi
+entropy is large with high probability:
+\begin{lemma}\label{lemma:average}
+  Let $\alpha > 1$ (allowing $\alpha = \infty$) and $t \geq 0$. Then
+  with probability at least $1 - 2^{-\sp}$ (over the choice of $y$)
+  $\H_{\alpha}(X|Y=y) \geq \tH_{\alpha}(X|Y) - \sp$.
+\end{lemma}
+\begin{proof}
+By definition of average conditional R\'enyi entropy, we have
+\[ 2^{-\tH_{\alpha}(X|Y)} = \E_y\left[
+  (\pi_{\alpha}(X|Y=y))^\frac{1}{\alpha-1} \right] \, .
+\]
+By the \index{Markov's inequality}Markov's inequality (Lemma~\ref{lem:markov}), we get that 
+\[ \Pr_y \left[ \pi_\alpha(X|Y=y)^{\frac{1}{\alpha-1}} \geq
+  2^{-\tH_\alpha(X|Y) + \sp} \right] \leq 2^{-\kappa} \,
+\]
+and therefore, the probability (over $y$) that $\H_\alpha(X|Y=y)
+\leq \tH_\alpha(X|Y) - \sp$ is at most $2^{-\sp}$.
+\end{proof}
+
+As long as $\alpha>1$, the minimization (or average) over $y$ is the
+same for all orders of R\'enyi entropy hence,
+Equation~\eqref{eq:renyirelation} translates to (average) conditional
+R{\'e}nyi entropy:
+\begin{lemma}\label{lemma:bounds}
+  For any $1 < \alpha < \infty$, we have
+\begin{align*}
+\H_2(X|Y) &\geq \H_{\infty}(X|Y) \geq \frac{\alpha-1}{\alpha}
+\H_{\alpha}(X|Y) \\
+\tH_2(X|Y) &\geq \tH_{\infty}(X|Y) \geq \frac{\alpha-1}{\alpha}
+\tH_{\alpha}(X|Y) .
+\end{align*}
+\end{lemma}
+
+
+
+\subsubsection{Concavity}
+\begin{lemma} \label{lem:concavity}
+  For $0 \leq \alpha \leq 1$, R\'enyi Entropy is a \emph{concave
+    \index{entropic functional}entropic functional}, i.e., for $0 \leq s \leq 1$ and
+  distributions $P,Q$, we have
+\[ \H_\alpha(sP+(1-s)Q) \geq s
+  \H_\alpha(P) + (1-s) \H_\alpha(Q) \, . \]
+\end{lemma}
+For the case of Shannon entropy, note that the function $f(p)\assign
+-p \log{p}$ has derivatives $f'(p)=-1-\log p$ and $f''(p)=-1/p$ and
+$f''(p) \leq 0$ for $0\leq p \leq 1$. Therefore, $f(p)$ is concave and
+we have 
+\begin{align*}
+\H(sP+(1-s)Q) &= \sum_x f(sP(x)+(1-s)Q(x)) \geq \sum_x
+sf(P(x)) + (1-s)f(Q(x))\\ 
+&= s \sum_x f(P(x)) + (1-s) \sum_x f(Q(x)) = s \H(P) + (1-s) \H(Q).
+\end{align*}
+
+Higher-order R\'enyi entropy is not necessarily concave as the
+following example illustrates. Consider the distributions
+$P(x)=\delta_{x,0}$ and $Q(x)=2^{-n}$ over $\set{0,1}^n$ with
+$\H_2(P)=0$ and $\H_2(Q)=n$. For the equal mixture of these
+distributions holds $\H_2((P+Q)/2) = -\log(1/4)+O(2^{-n}) \approx 2 <
+n/2 = (\H_2(P)+\H_2(Q))/2$ for $n>5$.
+
+\subsubsection{Fano's Inequality}
+\index{Fano's inequality}
+\begin{lemma}[Fano's Inequality] \label{lem:fano}
+Let $X \!\leftrightarrow\! Y \!\leftrightarrow\! X'$ be a \index{Markov
+chain}Markov
+chain\footnote{Think of $X'$ as guess of $X$ based only on
+  $Y$.}. Then, for the error probability $p_e \assign P[X \neq X']$,
+it holds
+\[ \H(X|Y) \leq h(p_e) + p_e \cdot \log(|\cX|-1) \, .
+\]
+\end{lemma}
+\begin{proof}
+We denote by $E \assign \id_{\set{X \neq X'}}$ the indicator random
+variable  of the event $\set{X \neq X'}$ that the guess was not successful. By
+the chain rule for Shannon entropy, we can write
+\[ \H(XE|Y) = \H(X|Y)+\H(E|XY) = \H(E|Y) + \H(X|EY) \]
+We observe that $H(E|Y) \leq h(p_e)$, $\H(E|XY)\geq 0$ and 
+\[ \H(X|EY) = (1-p_e) \H(X| \set{X=X'} Y) + p_e \H(X|\set{X \neq X'} Y) = p_e
+\log(|\cX|-1) \]
+and the claim follows by rearranging the terms.
+\end{proof}
+
+\subsection{Smooth R\'enyi Entropy} \label{sec:defsmoothrenyientropy}
+\index{entropy!smooth}Smooth min- and max-entropies were introduced by Renner and Wolf in~\cite{Renner05,RW05}\footnote{The notion of \emph{smoothing a
+    probability distribution} was already used in~\cite{ILL89}.
+  Furthermore, a different kind of \emph{smooth R\'enyi entropy} (not
+  equivalent to the ones used here) was introduced by Cachin~\cite{Cachin97}.}. They are families of entropy measures
+parametrized by non-negative real numbers $\varepsilon$, called the
+{\em smoothness}. It is a generalization of the notions of
+conditional min- and max-entropy defined in the last section.
+\begin{align*}
+\hiee{X|Y} &\assign \max_{\ev} \min_{x,y} - \log
+\left(\frac{P_{XY\ev}(x,y)}{P_Y(y)} \right) \, ,\\
+\hmaxee{X|Y} &\assign \min_{\ev} \max_{y} \log
+|\Set{x \in \cX}{\frac{P_{XY\ev}(x,y)}{P_Y(y)} > 0}| \,
+\end{align*}
+where the maximum/minimum ranges over all events $\ev$ with
+probability $\Pr[\ev] \geq 1-\eps$.  $P_{XY\ev}(x,y)$ is the
+probability that $\ev$ occurs and $X,Y$ take values $x,y$. Hence, the
+``distribution'' $P_{XY\ev}$ is not normalized.
+
+For a given distribution $P_{XY}$, it is easy to compute its smooth
+min-entropy (max-entropy), simply by cutting a maximum mass of
+$\eps$ off the largest (smallest) probabilities.
+
+Informally, the statement $\hiee{X} = r$ can be understood that the
+standard min-entropy of $X$ is close to $r$, except with probability
+$\varepsilon$. As $\varepsilon$ can be interpreted as an error
+probability, we typically require $\varepsilon$ to be negligible in
+the security parameter. 
+
+The reason why we only define the min- and max-versions of smooth
+R\'enyi entropy is that it is shown in \cite{RW05} that for example
+smooth R\'enyi entropy of order $\alpha>1$ obeys
+\[ \hie{\eps+\eps'}{X|Y} + \frac{\log(1/\eps')}{\alpha-1} \geq
+\H_{\alpha}^{\eps}(X|Y) \geq \hiee{X|Y} \, .
+\]
+and hence is equivalent to smooth min-entropy up to an additive term
+which depends on $\alpha$ and the smoothness $\eps'$. An analogue
+statement holds for $\alpha<1$ and smooth max-entropy. As pointed out
+in \cite{RW05}, for $\eps=0$ the relation above shows for example that
+$\H_2(X)$ cannot be larger than $\hiee{X} + \log(1/\eps)$ whereas for
+the non-smooth versions, we only know from
+Equation~(\ref{eq:renyirelation}) that $\H_2(X) \leq 2 \hmin(X)$.
+
+Most importantly, smooth min- and max-entropy have an
+\emph{operational meaning} as they provide the answer to two
+fundamental information-theoretic problems: 
+\begin{itemize} 
+\item $\hiee{X|Y}$ is the maximum amount\footnote{up to some small
+    additive error term which depends logarithmically on $\eps$} of
+  randomness that can be extracted from $X$ and an independent random
+  string $R$, such that except with probability $\eps$, the extracted
+  string looks completely uniform to an adversary who knows $Y$ and
+  learns $R$. This falls into the setting of privacy amplification,
+  see Section~\ref{sec:pa} below. \index{randomness extraction}
+\item $\hmaxee{X|Y}$ is the minimal
+  length\addtocounter{footnote}{-1}\footnotemark\ of an encoding
+  computed from $X$ and some additional independent randomness $R$,
+  such that except with probability $\eps$, someone knowing $Y$ and
+  $R$ can reconstruct $X$ from the encoding. This is a
+  data-compression problem which is often called
+  \emph{\index{information reconciliation}information reconciliation}
+  or \emph{\index{error correction}error correction} in cryptographic
+  settings.
+\end{itemize}
+
+In \cite{RW05}, it is shown that smooth min- and max-entropies enjoy
+several Shannon-like properties such as the \index{entropy!chain
+rule}chain rule (see Lemma~\ref{lem:chain} below),
+\index{entropy!sub-additivity}sub-additivity $\hiee{XY} \leq
+\hie{\eps+\eps'}{X} + \hmaxe{\eps'}{Y}$ and
+\index{entropy!monotonicity}monotonicity $\hiee{X} \leq \hiee{XY})$.
+\index{sub-additivity|see{entropy}}
+\index{monotonicity|see{entropy}}
+
+\begin{lemma}[Chain Rule~\cite{RW05}]\label{lem:chain}
+For all $\varepsilon,\varepsilon' > 0$, we have 
+\[\hie{\varepsilon+\varepsilon'}{X | Y} > \hie{\varepsilon}{XY}
+- \hmax(Y) - \log{\left(\frac{1}{\varepsilon'}\right)}. \] 
+\end{lemma}
+
+As a consequence of the asymptotic equipartition property (cf.~\cite{CT91}), smooth R\'enyi entropy is asymptotically equal to
+Shannon entropy in the following sense. 
+\begin{lemma}[\cite{RW05,HR06}] \label{lem:asymptshannon}
+Let $(X_1,Y_1), \ldots, (X_n, Y_n)$ be $n$ independent pairs of random
+variables distributed according to $P_{XY}$. Then, for any
+$\alpha \neq 1$,
+\[ \lim_{\eps \rightarrow 0} \lim_{n \rightarrow \infty}
+\frac{\H_{\alpha}^{\eps}(X^n | Y^n)}{n} = \H(X | Y).
+\]
+\end{lemma} 
+Note that such a lemma does \emph{not} hold at all for non-smooth
+R\'enyi entropies.
+
+To provide some intuition about smooth min-entropy, the following lemma shows how to translate smooth min-entropy
+back to regular conditional min-entropy.
+\begin{lemma}\label{lemma:smooth->ordinary}
+  If $\hiee{X|Y} = r$ then there exists an event $\ev'$ such that
+  $\Pr(\ev') \geq 1-2\varepsilon$ and $\hmin(X|\ev',Y\!=\!y) \geq r-1$
+  for every $y$ with $P_{Y \ev'}(y) > 0$.
+\end{lemma}
+\begin{proof}
+By definition of smooth min-entropy, there exists an event $\ev$ with
+$\Pr(\ev) \geq 1 - \varepsilon$ and such that $\mbox{$\hmin(X\ev|Y\!=\!y)$}
+\geq r$ for all $y$, and thus $P_{X\ev|Y}(x|y)$ $\leq 2^{-r}$ for all
+$x$ and $y$.  Define $\ev'$ by setting for all $x$ and $y$
+$$
+P_{X\ev'|Y}(x|y) \assign \left\{
+\begin{array}{ll}
+P_{X\ev|Y}(x|y) & \text{if $P_{\ev|Y}(y) \geq \frac12$} \\
+0 & \text{else}
+\end{array}
+\right.
+$$
+Then obviously for any $y$ with $P_{Y \ev'}(y) > 0$ and thus
+$P_{\ev'|Y}(y) = P_{\ev|Y}(y) \geq \frac12$,
+$$
+P_{X|\ev'Y}(x|y) = \frac{P_{X\ev'|Y}(x|y)}{P_{\ev'|Y}(y)} \leq
+\frac{2^{-r}}{P_{\ev'|Y}(y)} \leq 2^{-r+1} \, .
+$$
+Furthermore, 
+\begin{align}
+  1 &- \varepsilon \leq \Pr(\ev)  \nonumber \\[0.7ex]
+  &= \Pr(\ev|P_{\ev|Y}(Y)<{\textstyle\frac12})\cdot\Pr(P_{\ev|Y}(Y)<{\textstyle\frac12}) \nonumber \\
+ &\quad\; +
+  \Pr(\ev|P_{\ev|Y}(Y)\geq{\textstyle\frac12})\cdot\Pr(P_{\ev|Y}(Y)\geq{\textstyle\frac12}) \label{eq:events}\\
+  &\leq \frac{1}{2}\Pr(P_{\ev|Y}(Y)<{\textstyle\frac12}) +
+  \Pr(P_{\ev|Y}(Y)\geq{\textstyle\frac12}) \nonumber
+\end{align}
+from which follows that $\Pr(P_{\ev|Y}(Y)<{\textstyle\frac12}) \leq
+2\varepsilon$. Thus we can conclude that
+\begin{align*}
+\Pr(\ev') &\geq \Pr(\ev'|P_{\ev|Y}(Y)\geq{\textstyle\frac12})\cdot\Pr(P_{\ev|Y}(Y)\geq{\textstyle\frac12}) \\ 
+&\geq \Pr(\ev|P_{\ev|Y}(Y)\geq{\textstyle\frac12})\cdot\Pr(P_{\ev|Y}(Y)\geq{\textstyle\frac12}) \\ 
+&\geq 1 - \varepsilon - \frac{1}{2}\Pr(P_{\ev|Y}(Y)<{\textstyle\frac12}) \\
+&\geq 1 - 2\varepsilon
+\end{align*} 
+where the second-last inequality follows from (\ref{eq:events}), and noting (once more) that $\Pr(\ev|P_{\ev|Y}(Y)<{\textstyle\frac12}) < \frac12$. 
+\end{proof}
+
+%% \delete{%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Smooth min- and max-entropies\cite{Renner05,RW05} are families of entropy measures 
+%% parametrized by non-negative real numbers $\varepsilon$, called
+%% the {\em smoothness}. 
+%% Let $X$ be a random variable over alphabet ${\cal X}$ and distributed
+%% according probability distribution $P_X$.
+%% The {\em non-smooth} versions 
+%% $\hmin(X)=-\log{\left(\max_{x\in{\cal X}}{(P_X(x))}\right)}$  and 
+%% $\hmax(X)=\log{|\{x\in{\cal X}:P_X(x)>0\}|}$
+%% for the min- and max-entropies correspond to smoothness
+%% $\varepsilon=0$.  For our purposes, it suffices to restrict
+%% the discussion to the classical case. \hmin\ and \hmax\ are non-smooth
+%% because if $X$ and $X'$ are two random variables {\em close to each
+%% other} then $\hmin(X)$ and $\hmax(X)$ are not necessarily close to 
+%% $\hmin(X')$ and $\hmax(X')$ respectively. 
+
+%% Let $\ev$ be an event defined by $P_{\ev  \mid X=x}$ for all $x\in{\cal
+%%   X}$. 
+%% The joint probability distribution $P_{\ev X}(x) := \Pr{(X=x
+%%   \wedge \ev)} = P_X(x)P_{\ev \mid X=x}$. 
+%% The random event \ev occurs with probability $P_{\ev} = \sum_{x\in{\cal
+%%   X}} P_{\ev X}(x)$.
+%% We abuse the notation by writing 
+%% $X\ev$ to designate random variable $X$ under $\ev$. 
+%% For convenience, we define:
+%% \begin{eqnarray*}
+%%  \rz{X} := \#\{x\in {\cal X} : P_X(x)>0\}, &\mbox{ and }& \ri{X} :=
+%%  \max_{x\in{\cal X}}{P_X(x)} \\
+%%  \rzee{X} :=\inf_{\ev: P_{\ev}\geq 1-\varepsilon}{(\rz{X\ev})},
+%%  &\mbox{ and }& 
+%%  \riee{X} := \inf_{\ev: P_{\ev}\geq 1-\varepsilon}{(\ri{X\ev})}. 
+%% \end{eqnarray*}
+%% The smooth min- and max-entropies are defined as follows:
+%% \begin{eqnarray*}
+%%  \hzee{X} &:=& \log{\rzee{X}},\\
+%%  \hiee{X} &:=& -\log{\riee{X}}.
+%% \end{eqnarray*}
+%% We now extend these definitions to the conditional case. 
+%% Let $P_{XY}$ be a joint probability distribution for random variables
+%% $X$ and $Y$ over alphabet ${\cal X}$ and ${\cal Y}$ respectively. 
+%% We define $\rz{X \mid Y=y}$ and $\ri{X \mid Y=y}$ 
+%% the natural way:
+%% \begin{eqnarray*}
+%% \rzee{X \mid Y} &:=& \inf_{\ev:P_{\ev}\geq 1-\varepsilon} \max_{y\in {\cal
+%%     Y}} \rz{X\ev \mid Y=y},\\ 
+%% \riee{X \mid Y} &:=& \inf_{\ev:P_{\ev}\geq 1-\varepsilon} \max_{y\in {\cal
+%%     Y}} \ri{X\ev \mid Y=y}.
+%% \end{eqnarray*}
+%% Finally, the smooth conditional R\'enyi min- and max-entropies are
+%% defined accordingly: 
+%% \begin{eqnarray*}
+%%  \hzee{X \mid Y} &:=& \log{\rzee{X \mid Y}},\\
+%%  \hiee{X \mid Y} &:=& -\log{\riee{X \mid Y}}.
+%% \end{eqnarray*}
+
+%% Min- and max-entropies capture tightly the efficiency of
+%% error-correction and privacy amplification which are essential in the
+%% security analysis of our protocols. One property of smooth entropies 
+%% that we are going to use
+%% is  the the chain rule:
+%% }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \begin{lemma}\label{lemma:prob}
+%% If $\Pr(P_X(X) \geq 2^{-r}) \leq \varepsilon$ then $\hiee{X} \geq r$. 
+%% \end{lemma}
+
+%% \begin{lemma}[Chain Rule]\label{lem:chain}
+%% For $\varepsilon \geq 0$ and $Y$ uniformly distributed over $\set{0,1}^n$, 
+%% \[
+%% \hie{\varepsilon}{X \mid Y} > \hie{\varepsilon}{XY}
+%% - n.\]
+%% \end{lemma}
+%% \begin{proof}
+%% We define the max2-entropy to be $\hmaxx(X) \assign \max_{x:P_X(x)>0}
+%% \log \frac{1}{P_X(x)}$. For $\varepsilon=0$, we have 
+%% \begin{align*} 
+%% \hmin(X \mid Y) &= \min_{x,y} \log \frac{1}{P_{X \mid Y}(x \mid y)} 
+%% = \min_{x,y} \left[ \log \frac{1}{P_{XY}(x,y)} - \log
+%% \frac{1}{P_Y(y)} \right]\\
+%% &\geq \min_{x,y} \log \frac{1}{P_{XY}(x,y)} - \max_y \log
+%% \frac{1}{P_Y(y)} =\hmin(XY) - \hmaxx(Y).
+%% \end{align*}
+%% Note that this proof also works for non-normalized distributions
+%% $P_{XY\ev}$.
+%% \end{proof}
+
+%% \begin{lemma}[Chain Rule\cite{RW05}]\label{lem:chain}
+%% For positive real numbers $\varepsilon,\varepsilon',\varepsilon''$,
+%% \[
+%% \hie{\varepsilon+\varepsilon'+\varepsilon''}{X \mid Y} > \hie{\varepsilon}{XY}
+%% - \hze{\varepsilon'}{Y} - \log{\left(\frac{1}{\varepsilon''}\right)}.\]
+%% \end{lemma}
+
+%% Note that the privacy amplification theorem~\ref{thm:pasmooth} also
+%% uses entropies of a {\em random state} $\rs$. However, as we only
+%% use a weaker version (\ref{dbound}) expressed in terms of classical
+%% min entropy, we refer the interested reader to~\cite{Renner05} for the
+%% definition of the quantum version. 
+% \comment{can be maybe removed and
+%referred to directly after the pa-theorem}
+
+\subsection{Min-Entropy-Splitting Lemma} \index{min-entropy splitting lemma}
+For proving reductions between variants of oblivious transfer in
+Section~\ref{sec:application} and the security of \OT in the
+bounded-quantum storage in Chapter~\ref{chap:12OT}, we will make use
+of the following min-entropy splitting lemma. Note that if the joint
+entropy of two random variables $X_0$ and $X_1$ is large, then one is
+tempted to conclude that at least one of $X_0$ and $X_1$ must still
+have large entropy, e.g.\ half of the original entropy. Whereas this
+is indeed true for Shannon entropy, it is in general not true for
+min-entropy. The following lemma, though, which first appeared in a
+preliminary version of~\cite{Wullschleger07}, shows that it {\em is}
+true in a randomized sense.
+\begin{lemma}[Min-Entropy-Splitting Lemma]\label{lemma:ESL}
+  Let $\varepsilon \geq 0$, and let $X_0,X_1$ be random variables with
+  \mbox{$\hmin^{\varepsilon}(X_0 X_1) \geq \alpha$} %for some $\varepsilon \geq 0$.  
+Then, there exists a
+  random variable $C \in \set{0,1}$ such that
+  \mbox{$\hmin^{\varepsilon}(X_{1-C} C) \geq \alpha/2$}.
+\end{lemma}
+\begin{proof}
+Below, we give the proof for $\varepsilon = 0$, i.e., for ordinary
+(non-smooth) min-entropy. The general claim for smooth min-entropy
+follows immediately by observing that the same argument also works for
+non-normalized distributions with a total probability smaller than 1.
+
+We extend the probability distribution $P_{X_0 X_1}$ as follows to
+$P_{X_0 X_1 C}$. Let $C=1$ if $P_{X_1}(X_1) \geq 2^{-\alpha/2}$ and
+$C=0$ otherwise.  We have that for all $x_1$, $P_{X_1 C}(x_1,0)$
+either vanishes or is equal to $P_{X_1}(x_1)$. In any case, $P_{X_1
+  C}(x_1,0) < 2^{-\alpha/2}$.
+  
+  On the other hand, for all $x_1$ with $P_{X_1 C}(x_1,1)>0$, we have
+  that $P_{X_1 C}(x_1,1)=P_{X_1}(x_1) \geq 2^{-\alpha/2}$ and
+  therefore, for all $x_0$,
+\begin{equation*} % \label{eq:lemmfirst}
+ P_{X_0 X_1 C}(x_0,x_1,1) \leq 2^{-\alpha} =2^{-\alpha/2} \cdot
+ 2^{-\alpha/2} \leq 2^{-\alpha/2} P_{X_1}(x_1).
+\end{equation*}
+Summing over all $x_1$ with $P_{X_0 X_1 C}(x_0,x_1,1) > 0$, and thus with $P_{X_1 C}(x_1,1) > 0$, results in
+$$
+P_{X_0 C}(x_0,1) \leq \sum_{x_1} 2^{-\alpha/2} P_{X_1}(x_1)
+\leq 2^{-\alpha/2}.
+$$
+This shows that $P_{X_{1-C} C}(x,c) \leq 2^{-\alpha/2}$ for all $x,c$.
+\end{proof}
+
+The corollary below follows rather straightforwardly by noting that
+(for normalized as well as non-normalized distributions) $\hmin(X_0
+X_1| Z) \geq \alpha$ holds exactly if $\hmin(X_0 X_1 | Z\!=\!z)
+\geq \alpha$ for all $z$, applying the Min-Entropy Splitting Lemma,
+and then using the chain rule, Lemma~\ref{lem:chain}.
+
+\begin{corollary}\label{cor:ESL}
+  Let $\eps \geq 0$ be given, and let $X_0,X_1,Z$ be random variables with $\hiee{X_0 X_1 | Z} \geq \alpha$. Then, there exists a binary
+  random variable $C \in \set{0,1}$ such that for $\eps' > 0$,
+\[
+ \hie{\eps+\eps'}{X_{1-C} | Z C} \geq \alpha/2 - 1 - \log(1/\eps').
+\]
+\end{corollary}
+
+
+
+
+\subsection{Entropy of Quantum States}
+As pointed out in \cite{RK05}, R\'enyi entropy $\H_{\alpha}(\rho)$ can
+also be defined for a quantum state $\rho \in \dens{\cH}$. For $\alpha
+\in [0,\infty]$ and $\rho \in \dens{\cH}$, we have
+\[ \H_{\alpha}(\rho) \assign \frac{1}{1-\alpha}
+\log\left(\trace{\rho^{\alpha}} \right). \] 
+In the limit cases $\alpha \rightarrow 0$ and $\alpha \rightarrow
+\infty$, we obtain $\H_0(\rho)=\log(\rank{\rho})$ and
+$\H_{\infty}(\rho) = -\log \left( \lambda_{\max}(\rho) \right)$,
+where $\lambda_{\max}(\rho)$ denotes the maximum eigenvalue of $\rho$.
+For $\alpha=2$, we obtain the \emph{collision entropy} $\H_2(\rho)
+= -\log{\left( \sum_i \lambda_i^2\right)}$, where $\{\lambda_i\}_i$
+are the eigenvalues of $\rho$.
+
+For a classical random variable $X$ encoded in $\rho_X= \sum_x P_X(x)
+\proj{x}$, it holds that that $\H_{\alpha}(\rho_X) = \H_{\alpha}(X)$.
+
+%% and $\Sentr_{\alpha}(\rho_X) \leq \Sentr_{\beta}(\rho_X)$ if $\alpha
+%% \geq \beta$.  The cases that are relevant for us are the classical
+%% {\em min-entropy} $\H_{\infty}(X) = -\log{\left( \max_x
+%%     P_X(x)\right)}$ as well as the quantum versions of the {\em max-}
+%% and {\em collision-entropy} $\Sentr_0(\rho) =
+%% \log{\left(\mbox{rank}(\rho)\right)}$ respectively $\Sentr_2(\rho) =
+%% -\log{\left( \sum_i \lambda_i^2\right)}$, where $\{\lambda_i\}_i$ are
+%% the eigenvalues of $\rho$.
+
+For deriving our version of the privacy-amplification theorem in the
+next section, we need the slightly more involved version of quantum
+conditional min-entropy from \cite{Renner05}.
+\begin{definition}[\cite{Renner05}] \label{def:qminentropy}
+Let $\rho_{AB} \in \dens{\cH_A \otimes \cH_B}$ and $\sigma_B \in
+\dens{\cH_B}$. The min-entropy of $\rho_{AB}$ relative to $\sigma_B$
+is \index{entropy!min-}
+\[ \qhmin(\rho_{AB} | \sigma_B) \assign - \log \lambda
+\]
+where $\lambda$ is the minimum real number such that $\lambda \cdot \id_A
+\otimes \sigma_B - \rho_{AB}$ is non-negative.
+
+The min-entropy of $\rho_{AB}$ given $\cH_B$ is
+\[ \qhmin(\rho_{AB} | B) \assign \sup_{\sigma_B} \qhmin(\rho_{AB} | \sigma_B)
+\]
+where the supremum ranges over all $\sigma_B \in \dens{\cH_B}$.
+\end{definition}
+
+Similar to the classical case, the smooth version can be defined as follows.
+\begin{definition}[\cite{Renner05}] \label{def:qsmoothminentropy}
+Let $\rho_{AB} \in \dens{\cH_A \otimes \cH_B}$, $\sigma_B \in
+\dens{\cH_B}$, and $\eps \geq 0$. The $\eps$-smooth min-entropy of
+$\rho_{AB}$ relative to $\sigma_B$ is \index{entropy!smooth min-}
+\[ \hminee(\rho_{AB} | \sigma_B) \assign \sup_{\ol{\rho}_{AB}} \qhmin(\ol{\rho}_{AB} | \sigma_B)
+\]\
+where the supremum ranges over the set $\cB^{\eps}(\rho_{AB})$
+containing all Hermitian, non-negative operators $\ol{\rho}_{AB}$
+acting on $\cH_A \otimes \cH_B$ such that $\dist{ \ol{\rho}_{AB},
+\rho_{AB} } \leq 2 \eps$ and $\trace{\ol{\rho}_{AB}} \leq 1$.
+
+The $\eps$-smooth min-entropy given $\cH_B$ is
+\[ \hminee(\rho_{AB} | B) \assign \sup_{\sigma_B} \hminee(\rho_{AB} | \sigma_B)
+\]
+where the supremum ranges over all $\sigma_B \in \dens{\cH_B}$.
+\end{definition}
+To compute $\hminee(\rho_{XB} | \sigma_B)$ where $\rho_{XB}$ is a
+cq-state, the supremum can be restricted to states
+$\ol{\rho}_{XB} \in \cB^{\eps}(\rho_{XB})$ which are classical on
+$\cH_X$ as well \cite[Remark~3.2.4]{Renner05}.
+
+There is a chain rule for smooth min-entropy, proven in \cite[Lemma
+3.2.9]{Renner05}.
+\begin{lemma}[\cite{Renner05}] \label{lem:qchainrule}
+  Let $\rho_{XUE} \in \dens{\cH_X \otimes \cH_U \otimes \cH_E}$,
+  $\sigma_U \in \dens{\cH_U}$, and let $\sigma_E \in \dens{\cH_E}$ be
+  the fully mixed state on the image of $\rho_E$, and let $\eps \geq
+  0$. Then
+\[ \hminee(\rho_{XUE} | \sigma_U) - \qhmax(\rho_E) \leq
+  \hminee(\rho_{XUE} | \sigma_U \otimes \sigma_E).
+\]
+\end{lemma}
+
+The following two lemmas state that dropping a quantum register
+cannot increase the (smooth) min-entropy.
+\begin{lemma} \label{lem:dropquantum_notsmooth}
+Let $\rho_{XUQ} \in \dens{\cH_X \otimes \cH_U \otimes {\cal
+    H}_Q}$ be a ccq-state. Then,
+$$\qhmin(\rho_{XUQ} | \rho_U) \geq \qhmin(\rho_{XU} | \rho_U).$$
+\end{lemma}
+\begin{proof}
+For $\lambda \assign 2^{-\qhmin(\rho_{XU} | \rho_U)}$, we have
+by Definition~\ref{def:qminentropy} that $\lambda \cdot \id_X
+\otimes \rho_U - \rho_{XU} \geq 0$. Using that both $X$ and $U$ are
+classical, we derive that for all $x,u$, it holds $\lambda \cdot p_u -
+p_{xu} \geq 0$, where $p_u$ and $p_{xu}$ are shortcuts for the
+probabilities $P_U(u)$ and $P_{XU}(x,u)$.
+Let the normalized conditional operator $\ol{\rho}_Q^{x,u}$ be the
+quantum state conditioned on the event that $X=x$ and $U=u$,
+i.e.
+\[\sum_{x,u} p_{xu} \, \ol{\rho}_Q^{x,u} \otimes \proj{xu}= \rho_{QXU}.\]
+%% defined as in Section~2.1.3 of \cite{Renner05}. 
+Then,
+\[\sum_{x,u} \lambda \cdot p_u \, \ol{\rho}_Q^{x,u} \otimes \proj{xu}
+- p_{xu} \, \ol{\rho}_Q^{x,u} \otimes \proj{xu} \geq 0.\]
+Because of $\ol{\rho}_Q^{x,u} \leq \id_Q$, we get
+\[\sum_{x,u} \lambda \cdot p_u \, \id_Q  \otimes \proj{xu} - p_{xu} \,
+\ol{\rho}_Q^{x,u} \otimes \proj{xu} \geq 0.\]
+Therefore, $\lambda \cdot \id_{QX} \otimes \rho_U - \rho_{QXU} \geq 0$
+holds, from which follows by definition that $\qhmin(\rho_{XUQ} | \rho_U) \geq
+-\log(\lambda)$.
+\end{proof}
+
+\begin{lemma} \label{lem:dropquantum}
+  Let $\rho_{XUQ} \in \dens{\cH_X \otimes \cH_U \otimes {\cal H}_Q}$
+  be a ccq-state and let $\varepsilon \geq 0$. Then
+$$\hminee(\rho_{XUQ} | \rho_U) \geq \hminee(\rho_{XU} | \rho_U).$$
+\end{lemma}
+\begin{proof}
+  After the remark after Definition~\ref{def:qsmoothminentropy} above,
+  there exists $\sigma_{XU} \in \ball{\varepsilon}(\rho_{XU})$
+  classical on $\cH_X \otimes \cH_U$ such that $\hminee(\rho_{XU} |
+  \rho_U) = \qhmin(\sigma_{XU} | \sigma_U)$. Because both $X$
+  and $U$ are classical, we can write $\sigma_{XU} = \sum_{x,u} p_{xu}
+  \proj{xu}$ and extend it to obtain $\sigma_{XUQ} \assign \sum_{x,u}
+  p_{xu} \proj{xu} \otimes \ol{\rho}_Q^{x,u}$.
+  Lemma~\ref{lem:dropquantum_notsmooth} from above yields $\H_{\rm
+    min}(\sigma_{XU} | \sigma_U) \leq \qhmin(\sigma_{XUQ}
+  | \sigma_U)$.  We have by construction that $\dist{ \sigma_{XUQ},
+  \rho_{XUQ} } = \dist{ \sigma_{XU},\rho_{XU} } \leq 2 \varepsilon$.
+  Therefore, $\sigma_{XUQ} \in \ball{\varepsilon}(\rho_{XUQ})$ and
+  $\qhmin(\sigma_{XUQ} | \sigma_U) \leq \hminee(\rho_{XUQ}
+  | \rho_U).$
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Two-Universal Hashing and Privacy Amplification] {Two-Universal Hashing and Privacy Amplification against Quantum Adversaries} \label{sec:pa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{History and Setting of Privacy Amplification}
+\index{privacy amplification|(}
+Assume two parties Alice and Bob share some information $X$ which is
+only partly secure in the sense that an adversary Eve has some partial
+knowledge about it. \emph{Privacy Amplification}, introduced by Bennett,
+Brassard, and Robert \cite{BBR88}, is the art of transforming this
+information $X$ into a highly secure key $K$ by public discussion. The
+honest parties want to end up with an almost uniformly distributed key
+$K$ about which Eve has only negligible information given the
+communication.
+
+A common way to achieve this is to have Alice pick a hash function $f$
+at random from a two-universal class of hashing functions (see next
+section for the definition), apply it to $X$ and announce it to Bob,
+who applies it to $X$ as well. Due to the randomizing properties of a
+two-universal function, the output $f(X)$ is close to uniformly
+distributed from Eve's point of view. As shown in~\cite{BBR88} and by
+Impagliazzo, Levin, Luby~\cite{ILL89} and Bennett, Brassard,
+Cr\'epeau, and Maurer~\cite{BBCM95}, the classical \emph{privacy
+  amplification theorem} or \emph{left-over hash lemma} (see
+Corollary~\ref{thm:classicalpa} below) states that if Eve has some
+classical knowledge $W$ about $X$, a secure key of length roughly the
+uncertainty of Eve about $X$ (measured in terms of
+min-\index{entropy!min-}entropy) can be extracted by
+\index{two-universal hashing}two-universal hashing. It is pointed out
+in \cite{RW05}, that the maximum amount of extractable randomness is
+essentially given by the conditional smooth min-entropy
+$\H_{\infty}^{\eps}(X | W)$. \index{hashing|see {two-universal hashing}}
+
+It is interesting to investigate the case when Eve holds quantum
+information about $X$. This scenario has been considered by K\"onig,
+Maurer, and Renner~\cite{KMR03, RK05, Renner05} and the results
+reproduced below show that two-universal hashing works just as well
+against quantum as against classical adversaries.
+
+We note that unlike in the classical case,
+where many other forms of randomness extractors are known,
+two-universal hashing is essentially the only way to perform privacy
+amplification against quantum adversaries.\footnote{In a recent paper, K\"onig
+and Terhal \cite{KT06} exhibit some extractors which work against
+quantum adversaries, but the parameters are far from the classical
+ones.} This tool is one of the key ingredients in all protocols
+presented in this thesis. It has been widely used in other
+applications as well, for example in security proofs of
+quantum-key-distribution schemes by Christandl, Renner, Ekert,
+Kraus, and Gisin~\cite{CRE04, KGR05, RGK05, Renner05}.
+
+
+
+\subsection{Two-Universal Hashing}
+An important tool we use is \index{two-universal hashing}\univ\ hashing.
+\begin{definition} \label{def:two-universal}
+A class \chf{n} of hashing functions from $\nbit$ to $\set{0,1}^{\ell}$ is 
+called {\em \univ}, if for any pair $x, y\in\{0,1\}^n$ with $x \neq y$,
+and $F$ uniformly chosen from \chf{n}, it holds that
+\[
+\P\bigl[F(x)=F(y)\bigr] \leq \frac{1}{2^{\ell}}.
+\]
+\end{definition}
+We can also define a slightly stronger notion of \index{two-universal
+hashing!strongly}two-universality as follows:
+\begin{definition} \label{def:strongly-two-universal}
+  A class \chf{n} of hashing functions from $\nbit$ to
+  $\set{0,1}^{\ell}$ is called {\em strongly \univ}, if for any pair
+  $x, y\in\{0,1\}^n$ with $x \neq y$, and $F$ uniformly chosen from
+  \chf{n}, the random variables $F(x)$ and $F(y)$ are independent and
+  uniformly distributed over $\set{0,1}^\ell$.
+\end{definition}
+Several \univ\ and strongly \univ\ classes of hashing functions are
+such that evaluating and picking a function uniformly and at random in
+$\chf{n}$ can be done efficiently, as pointed out by Wegman and Carter~\cite{WC77,WC79}.
+
+
+
+
+\subsection{Privacy Amplification against Quantum Adversaries}
+In the following, we consider the situation where a hash function
+is picked randomly from $\chf{n}$ and applied to a classical value $X
+\in \nbit$ which is correlated with a quantum register
+$\cH_E$. Formally, starting with the cq-state $\rho_{XE} = \sum_{x \in
+  \nbit} P_X(x) \, \proj{x} \otimes \rho_E^x$, we obtain
+\begin{equation}  \label{eq:paterm}
+\rho_{F(X) F E} = \sum_{f \in \chf{n}} \sum_{z \in
+  \set{0,1}^{\ell}} \proj{z} \otimes \proj{f} \otimes \!\! \sum_{x \in
+  f^{-1}(z)} \!\! P_X(x)  \, \rho_E^x.
+\end{equation}
+The following privacy-amplification theorem in the
+presence of quantum adversaries was first derived in \cite{RK05}. The
+version below is from \cite[Corollary 5.6.1]{Renner05}\footnote{Note
+  that in \cite{Renner05}, the distance from uniform is defined in
+  terms of the trace-norm distance which is twice the variational
+  distance used in this thesis.}.
+\begin{theorem}[Privacy Amplification~\cite{Renner05}]\label{thm:paoriginal}
+  Let $\rho_{XB} \in \dens{\cH_X \otimes \cH_B}$ be a cq-state, where
+  $X$ takes values in $\nbit$. Let $\chf{n}$ be a two-universal family
+  of hash functions from $\nbit$ to $\set{0,1}^{\ell}$, and let $\eps
+  \geq 0$. Then, for the ccq-state $\rho_{F(X) FB}$ defined by
+  \eqref{eq:paterm}, it holds
+\[ \dist{ \rho_{F(X) FB} , \I \otimes \rho_{FB} } \leq \eps + \frac12
+2^{-\frac12 (\hminee(\rho_{XB} | B) - \ell)}.
+\]
+\end{theorem}
+
+For large parts of this thesis, slightly weaker forms of this theorem
+are used. These are derived in the following.
+\begin{corollary} \label{thm:pasmooth}
+  Let $\rho_{XUE}$ be a ccq-state, where $X$ takes values in $\nbit$, 
+  $U$ in the finite domain $\cU$ and register $E$ contains q qubits.
+  Let $\chf{n}$ be a two-universal family of hash functions from
+  $\nbit$ to $\set{0,1}^{\ell}$, and let $\eps \geq 0$. Then, for the
+  cccq-state $\rho_{F(X) FUE}$ defined analogous to \eqref{eq:paterm}, it holds
+\begin{align}
+  \dist{ \rho_{F(X)FUE} , \I \otimes \rho_{F U E} } &\leq \frac{1}{2} \,
+  2^{-\frac{1}{2}\big(\H_{\infty}^{\varepsilon}
+(X | U)-q-\ell\big)} + \varepsilon. \label{dbound}
+\end{align}
+\end{corollary}
+
+Recall that by the definition of the trace-distance, we have that
+if the rightmost term of (\ref{dbound}) is negligible, i.e.  say
+smaller than $2^{-\lambda n}$, then this situation is $2^{-\lambda
+  n}$-close to the ideal situation where $F(X)$ is perfectly uniform
+and independent of $F, U$ and $\regE$. In particular, replacing $F(X)$
+by an independent and uniformly distributed bit results in a common
+state which essentially cannot be distinguished from the original one.
+% the situations
+% \mbox{$F(X)=0$} and $F(X)=1$ are statistically indistinguishable given $\regE$ and $F$~\cite{FG99}. \comment{Somewhat informal; can we be more precise?}
+
+
+\begin{proof}
+In our case, the quantum register
+$B$ from Theorem~\ref{thm:paoriginal} consists of a classical part $U$ and a
+quantum part $E$. Denoting by $\sigma_E$ the fully mixed state on
+the image of $\rho_E$, we only need to consider the term in the
+exponent to derive Theorem~\ref{thm:pasmooth} as follows
+\begin{align}
+ \hminee(\rho_{XUE} | UE) \nonumber &\geq \hminee(\rho_{XUE} |
+  \rho_{U} \otimes \sigma_E) \nonumber\\
+&\geq \hminee(\rho_{XUE} | \rho_{U}) - \qhmax(\rho_{E}) \label{eq:chainrule}\\
+&\geq \hminee(\rho_{XU} | \rho_U) - \qhmax(\rho_{E}) \label{eq:lemma}\\
+&= \hiee{X | U} - q. \nonumber
+\end{align}
+The first inequality follows by Definition~\ref{def:qsmoothminentropy}
+of $\hminee$ as supremum over all $\sigma_{UE}$. Inequality
+\eqref{eq:chainrule} is the chain rule for smooth min-entropy
+(Lemma~\ref{lem:qchainrule}). Inequality~\eqref{eq:lemma} uses
+that the smooth min-entropy cannot decrease when dropping the quantum
+register which is proven in Lemma~\ref{lem:dropquantum} from the last
+section. The last step follows by assumption about the quantum
+register and observing that the state $\rho_{XU}$
+is classical and the quantum Definition~\ref{def:qsmoothminentropy}
+therefore reduces to classical smooth min-entropy.
+\end{proof}
+
+
+
+%% The first inequality is the original theorem from~\cite{RK05}, and
+%% (\ref{dbound}) follows by observing that $\mbox{$\H_2%^{\varepsilon}
+%% (X \rs)$} \geq \H_2%^{\varepsilon}
+%% (X) \geq \H_{\infty}%^{\varepsilon}
+%% (X)$ and $\H_0%^{\varepsilon}
+%% (\rs) \leq q$. 
+%% %In this
+%% %paper, we only use this weaker version of the theorem.
+%% In combination with Lemma~\ref{lemma:smooth->ordinary}, we immediately
+%% get the following version, which we will be using.
+%% \begin{corollary}\label{cor:pa}
+%% For $X$, $\rs$ and $F$ as above, and for $U$ an additional random variable, 
+%% $$
+%%   \dist(F(X) | U F \rs) 
+%% \leq \frac{1}{2} \,
+%%   2^{-\frac{1}{2}\big(\hie{\varepsilon}{X|U}-q-\ell-1\big)} + 2
+%%   \varepsilon. 
+%% $$
+%% \end{corollary}
+
+
+%% \begin{theorem}[\cite{RK05}]\label{thm:pa}
+%% %Let $X$ be a random variable over $\{0,1\}^n$, and let  $\regE$ be a $q$-qubit state that may depend on $X$. 
+%%   Let $\rho_{X\regE}$ be a cq-state, where $X$ is distributed over
+%%   $\{0,1\}^n$ and register $\regE$ contains $q$ qubits.  Let $F$ be the random
+%%   variable corresponding to the random choice (with uniform
+%%   distribution and independent from $X$) of a member of a \univ\ class
+%%   of hashing functions \chf{n}.  Then
+%% \begin{align}
+%% %  \dist{ [F(X) \otimes F \otimes \rs],[\unif] \otimes [F \otimes
+%% \rs] }
+%% \delta \bigl(\rho_{F(X) F \regE},\I \otimes\rho_{F \regE}\bigr) &\leq \frac{1}{2} \, 2^{-\frac{1}{2}(\Sentr_2(\rho_{X\regE} )-\Sentr_0(\rho_\regE) -1)} \label{moregeneral} \\
+%%   &\leq \frac{1}{2} \, 2^{-\frac{1}{2}({\H_{\infty}(X)-q-1})}.
+%% \end{align}
+%% \end{theorem}
+%% The first inequality~\eqref{moregeneral} is the original theorem
+%% from~\cite{RK05}, and (\ref{dbound}) follows by observing that
+%% $\mbox{$\Sentr_2(\rho_{X\regE})$} \geq \Sentr_2(\rho_X) = \H_2(X) \geq
+%% \H_{\infty}(X)$. In this paper, we %essentially 
+%% only use this weaker version of the theorem.
+
+The following corollary is a direct consequence of
+Corollary~\ref{thm:pasmooth}. % with $\eps=0$ and $U$ a constant random variable.
+In Chapter~\ref{chap:qbc}, this lemma will be useful for proving the
+binding condition of our commitment scheme. Recall that for $X \in
+\nbit$, $\ball{\delta n}(X)$ denotes the set of all $n$-bit strings at
+\index{Hamming distance}Hamming distance at most $\delta n$ from $X$ and $\ball{\delta n}
+\assign |\ball{\delta n}(X)|$ is the number of such strings.
+\begin{corollary}\label{cor:guess}
+  Let $\rho_{X U \regE}$ be a ccq-state, where $X$ takes values in
+  $\nbit$, $U$ in the finite domain $\cU$ and register $\regE$
+  contains $q$ qubits.  Let $\hat{X}$ be a guess for $X$ obtained by
+  learning $U$ and measuring $\regE$, and let $\eps \geq 0$. Then, for
+  all $\delta< \frac{1}{2}$ it holds that
+\[ \P\bigl[ \hat{X} \in \ball{\delta n}(X) \bigr] \leq 2^{-\frac{1}{2}
+  (\hiee{X|U}-q-1) + \log(\ball{\delta n})} + 2\eps \cdot \ball{\delta n}.
+\]
+\end{corollary}
+In other words, given some classical knowledge $U$ and a quantum
+memory of $q$ qubits arbitrarily correlated with a classical random
+variable $X$, the probability to find $\hat{X}$ at Hamming distance at
+most $\delta n$ from $X$ where $nh(\delta)< \frac{1}{2}
+(\hiee{X|U})-q)$ is small.
+\begin{proof}
+  Here is a strategy to try to bias $F(X)$ when given $\hat{X}$ and
+  $F\in_R \chf{n}$: Sample $X' \in_R \ball{\delta n}(\hat{X})$ and
+  output $F(X')$.  Note that, using $p_{\text{succ}}$ as a short hand
+  for the probability $\P\big[ \hat{X} \in \ball{\delta n}(X) \big]$
+  to be bounded,
+\begin{align*}
+\P\bigl[ F(X')=F(X) \bigr]
+&=  \frac{p_{\text{succ}}}{\ball{\delta n}} +  
+  \bigg(1- \frac{p_{\text{succ}}}{\ball{\delta n}} \bigg) \frac{1}{2} \\[1ex]
+&= \frac{1}{2} + \frac{p_{\text{succ}}}{2 \cdot \ball{\delta n}},
+\end{align*}
+where the first equality follows from the fact that if \mbox{$X'\neq
+  X$} then, as $\chf{n}$ is \univ, $\P\left[ F(X)=F(X')
+\right]=\frac{1}{2}$.  Note that, given $F$ and $U$ and being allowed
+to measure $\regE$, the probability of correctly guessing a binary
+$F(X)$ is upper bounded by 
+$\frac{1}{2}+\dist{ \rho_{F(X)F U \regE},\I\otimes\rho_{F U \regE} }$~\cite{FG99}.  In
+combination with Corollary~\ref{thm:pasmooth} (with $\ell=1$) the above results in
+\begin{equation*}
+\frac{1}{2} + \frac{p_{\text{succ}}}{2 \cdot \ball{\delta n}} \leq \frac{1}{2}+ 
+  \frac{1}{2} 2^{-\frac{1}{2}({\hiee{X|U}-q-1}) }+ \eps
+\end{equation*}
+and the claim follows by rearranging the terms. 
+\end{proof}
+
+\subsection{Classical Privacy Amplification}
+The classical privacy-amplification theorem follows as special case
+from the results above. When there is no quantum correlation, we
+(almost) recover the well-known classical \emph{\index{left-over hash lemma}left-over hash lemma}
+\cite{ILL89, BBCM95, HILL99}:
+\begin{corollary}\label{thm:classicalpa}
+  Let $X$ be a random variable over $\nbit$, and let $F$ denote the
+  uniform choice of a hash function in a two-universal family of
+  hash functions $\chf{n}$ mapping from $\nbit$ to $\set{0,1}^{\ell}$. Then
+\[\dist{ P_{F(X) F},P_{\unif^{\ell}} P_{F} } \leq
+  \frac12 2^{-\frac12(\H_2(X) - \ell)} \, .\]
+\end{corollary}
+This corollary (with collision- instead of min-entropy in the exponent
+on the right-hand side) cannot immediately be derived from
+Theorem~\ref{thm:paoriginal} above, but rather from its proof in
+\cite{Renner05}. The reason for this is that the easiest way of
+proving both Theorem~\ref{thm:paoriginal} and
+Corollary~\ref{thm:classicalpa} is by directly considering collision
+\index{entropy!collision}entropy instead of
+min-\index{entropy!min-}entropy. On the other hand, relaxing the
+notion of collision entropy to smooth min-entropy gives the natural
+operative meaning (see Section~\ref{sec:defsmoothrenyientropy}) and
+interestingly, it only looks like we are losing something by doing
+that, but in fact this achieves optimality \cite{RW05}.
+
+\index{privacy amplification|)}
+
+
+
+%% Finally, our notion of average conditional R{\'e}nyi entropy is such that
+%% the privacy amplification theorem of~\cite{BBCM95} still provides a
+%% lower bound on the average conditional collision entropy as we define
+%% it which can easily be seen from the proof given in~\cite{BBCM95}.
+%% However, for us it is convenient to express the smoothness in terms of
+%% variational distance rather than entropy,
+
+%% \section{The Bounded-Quantum-Storage Model}
+%% All our protocols take place in the {\em bounded-quantum-storage model}, which concretely
+%% means the following: the state of  an adversarial player may consist of an arbitrary number
+%% of qubits, and he may perform arbitrary quantum computation. 
+%% At a certain point in time though, we say that {\em the memory bound applies},
+%% which means that a measurement is applied to the system with the restriction 
+%% that the resulting  quantum state can be stored in at most $q$ qubits. The classical
+%% outcome of the measurement can be of arbitrary size and (classically) stored for
+%% later use. 
+%% After this point, the player is again unbounded
+%% in (quantum) memory.
+%% Throughout, the adversary may have unbounded computing power and classical memory. 
+%% We note that our results also apply to some cases where the adversary's
+%% memory is not bounded but is noisy in certain ways, see Section~\ref{sec:noisymem}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Classical Oblivious Transfer and Linear Functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{ndlf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Uncertainty Relations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{uncert}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Rabin OT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{rabinot}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  1-2 OT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{12ot}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Quantum Commitment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{commit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Rest
+%  QKD 
+%  Towards Practice
+%  Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{rest}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Notation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+\markboth{\textsc{Notation}}{\textsc{Notation}}
+\phantomsection
+\addcontentsline{toc}{chapter}{Notation}
+\chapter*{{\Huge Notation}}
+
+\begin{tabular}{ll}
+\multicolumn{2}{l}{\bf General}  \\ \hline
+$\log$ & binary logarithm \index{log@$\log(\cdot)$} \\
+$\ln$  & natural logarithm \index{ln@$\ln(\cdot)$} \\
+$\naturals$ & natural numbers: $1,2,3,\ldots$ \\
+$\reals$   & real numbers \\
+$[a,b]$ & set of real numbers $r$ such that $a \leq r \leq b$ \index{interval}\\
+$(a,b]$ & set of real numbers $r$ such that $a < r \leq b$\\
+$x|_I$  & substring of $x$ consisting of bit positions in index set
+$I$ \index{substring}\\
+$x\pad_I$ & as above, padded with $0$s \\
+$\ball{\delta n}(x)$ & set of $n$-bit strings with Hamming distance at
+most $\delta n$ from $x$ \index{negl@$\negl{n}$}$\negl{n}$\\
+$\negl{n}$ & any function in $n$ smaller than the inverse of any
+polynomial\\
+& for large enough $n$  \\
+$[+, \times]_b$ & $+$ for $b=0$ and $\times$ for $b=1$\\
+$\delta_{i,j}$ & \index{Kronecker delta}Kronecker delta\\ \hline
+\\
+\multicolumn{2}{l}{\bf Classical Information Theory} \\ \hline
+$P_{X|Y}$ & conditional probability distribution of $X$ given $Y$ \\
+$\E[R]$ & expected value of the real random variable $R$
+\index{expected value}\\
+$\delta(P,Q)$ & variational distance between distributions $P$ and
+$Q$ \index{variational distance}\\
+$P \approx_\eps Q$ & $P$ and $Q$ are at variational distance at most
+$\eps$ \\
+$\unif$ & independent and uniformly distributed binary random
+variable\\
+$\unif^\ell$ & $\ell$ copies of it\\
+$\ev$ & \index{event $\ev$}event \\
+$\id_{\ev}$ & \index{indicator random variable}indicator random variable of event $\ev$\\ 
+$X \!\leftrightarrow\! Z \!\leftrightarrow\! Y$ & \index{Markov chain}Markov chain\\ \hline
+\\
+\multicolumn{2}{l}{\bf Quantum Information Theory} \\ \hline
+$\cH_d$ & \index{Hilbert space}Hilbert space of dimension $d$\\
+$\dens{\cH}$ & set of \index{density operator}density operators on $\cH$ \\
+$\rho$ & density operator: normalized, Hermitian, non-negative\\
+$\trace{\rho}$ & \index{trace}trace of $\rho$ \\
+$\id$ & \index{$\I$ (fully mixed state)}fully mixed state\\
+$\delta(\rho,\sigma)$ & \index{trace distance}trace distance between $\rho$ and $\sigma$ \\
+$\ket{b}_{\theta}$ & classical bit $b$ encoded in basis $\theta$\\
+$\rho_{XE}$ & \index{cq-state}cq-state \\ \hline
+\end{tabular}
+
+\begin{tabular}{ll}
+\multicolumn{2}{l}{\bf Entropies} \\ \hline
+$h(\cdot)$ & binary Shannon \index{entropy!Shannon}entropy function \\
+$\pi_\alpha(X|Y)$ & \index{$\alpha$-order sum}$\alpha$-order sum of $X$ given $Y$ with joint
+distribution $P_{XY}$\\
+$\H_\alpha(X|Y)$ &  R\'enyi \index{entropy!classical R\'enyi}entropy of order $\alpha$ of
+$X$ given $Y$\\
+$\H_\infty(X|Y)$ &  \index{entropy!min-}min-entropy of $X$ given $Y$\\
+$\H_2(X|Y)$ &  \index{entropy!collision}collision entropy of $X$ given $Y$\\
+$\H(X|Y)$ &  \index{entropy!Shannon}Shannon entropy of $X$ given $Y$\\
+$\H_0(X|Y)$ &  \index{entropy!max-}max-entropy of $X$ given $Y$\\
+$\tH_\alpha(X|Y)$ & \index{entropy!average conditional R\'enyi}average conditional R\'enyi entropy of order
+$\alpha$\\
+$\H_\alpha^\eps(X|Y)$ &  $\eps$-smooth R\'enyi entropy of order
+$\alpha$ of $X$ given $Y$\\
+$\hiee{X|Y}$ &  \index{entropy!smooth min-}$\eps$-smooth min-entropy of $X$ given $Y$\\
+$\hmaxee{X|Y}$ &  $\eps$-smooth max-entropy of $X$ given $Y$\\
+\\
+$\H_\alpha(\rho)$ & R\'enyi entropy of order $\alpha$ of the state
+$\rho$\\
+$\qhmin(\rho_{AB} | \sigma_B)$ & min-entropy of $\rho_{AB}$
+relative to $\sigma_B$\\
+$\qhmin(\rho_{AB} | B)$ & min-entropy of $\rho_{AB}$
+given $\cH_B$\\
+$\hminee(\rho_{AB} | \sigma_B)$ & $\eps$-smooth min-entropy of $\rho_{AB}$
+relative to $\sigma_B$\\
+$\hminee(\rho_{AB} | B)$ & $\eps$-smooth min-entropy of $\rho_{AB}$
+given $\cH_B$\\ \hline
+
+\end{tabular}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+\markboth{\textsc{Bibliography}}{\textsc{Bibliography}}
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{alpha} 
+\bibliography{qip,crypto,procs} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The Index
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{linear function|see {non-degenerate linear function}}
+\index{NDLF|see {non-degenerate linear function}}
+\index{quantum uncertainty relation|see {uncertainty relation}}
+\index{entropic uncertainty relation|see {uncertainty relation}}
+\index{high-order entropic uncertainty relation|see {uncertainty relation}}
+\index{computational basis|see {basis}}
+\index{diagonal basis|see {basis}}
+\index{basis!mutually unbiased|see {mutually unbiased bases}}
+\index{entropic uncertainty bound|see {average entropic uncertainty
+    bound}}
+\index{uncertainty bound|see {average entropic uncertainty bound}}
+\index{statistical distance|see {variational distance}}
+\index{Kolmogorov distance|see {variational distance}}
+
+\clearemptydoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Index}
+\markboth{\textsc{Index}}{\textsc{Index}}
+\small
+\printindex
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

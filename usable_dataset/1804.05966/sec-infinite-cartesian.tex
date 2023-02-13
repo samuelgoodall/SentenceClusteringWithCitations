@@ -1,0 +1,38 @@
+Here we prove that there are infinitely many entropic graphs.
+We construct the graphs via the Cartesian product.
+The \emph{Cartesian product} of two graphs, $G$ and $H$, is denoted $G \Box H$ and satisfies the algebraic identity $\mA_{G \Box H} = \mA_G \otimes \mI + \mI \otimes \mA_H.$
+\begin{lemma}\label{lem:cartesian-const-diag}
+    Let $G, H$ be graphs and $\beta_0 > 0$ a value such that $\exp( \beta_0 \mA_{G})$ and $\exp( \beta_0 \mA_{H})$ are constant diagonal. Then $\exp(\beta_0 \mA_{G\Box H})$ is constant diagonal.
+\end{lemma}
+\begin{proof}
+  Recall that for any matrices $\mB_1$ and $\mB_2$ that commute, we have $\exp(\mB_1 + \mB_2) = \exp(\mB_1)\exp(\mB_2)$.
+  This allows us to write
+  \[
+    \exp( \beta \mA_{G \Box H}) \hspace{4pt} = \hspace{4pt} \exp( \beta\mA_G \otimes \mI  +  \beta\mI \otimes \mA_{H}) \hspace{4pt} = \hspace{4pt} \exp(\beta \mA_G)\otimes \exp(\beta \mA_H).
+  \]
+  The second equality follows because $\exp(\mB \otimes \mI) = \exp(\mB)\otimes \mI$ holds for any square $\mB$.
+  Thus, if $\exp(\beta \mA_G)$ and $\exp(\beta \mA_H)$ have constant diagonal, so does $\exp( \mA_{G \Box H})$.
+\end{proof}
+\begin{lemma}\label{lem:cart-non-walk-reg}
+  For graphs $G, H$ not both walk-regular, $G\Box H$ is not walk-regular.
+\end{lemma}
+\begin{proof}
+    Without loss of generality, let $G$ be not walk-regular.
+    Then by a result of Benzi (~\cite{benzi2014note},~Theorem~2.1), there exists some $\beta_0 > 0$ such that $\exp(\beta_0 \mA_G)$ is not constant diagonal.
+    Thus, for any graph $H$, we have that $\exp(\beta_0 \mA_G)\otimes\exp(\beta_0 \mA_H)$ is not constant diagonal, which implies $\exp(\beta_0 \mA_{G\Box H})$ is not constant diagonal, so $G \Box H$ is not walk-regular.
+\end{proof}
+\begin{theorem}\label{thm:cartesian-entropic}
+    Let $G, H$ be graphs and $\beta_0 > 0$ such that $\exp( \beta_0 \mA_{G})$ and $\exp( \beta_0 \mA_{H})$ are constant diagonal.
+    If $G$ and $H$ are connected and at least one is entropic, then $G \Box H$ is entropic with respect to $\beta_0$.
+\end{theorem}
+\begin{proof}
+  Since we assume $\exp(\beta_0 \mA_{G})$ and $\exp(\beta_0 \mA_H)$ are both constant diagonal for some $\beta_0 > 0$, then by Lemma~\ref{lem:cartesian-const-diag}, $\exp(\beta_0 \mA_{G\Box H})$ is constant diagonal too. If we show $G \Box H$ is connected and not walk-regular, then the result follows.
+
+  By assumption, at least one of $G, H$ is entropic and therefore not walk-regular, so by Lemma~\ref{lem:cart-non-walk-reg}, $G \Box H$ is not walk-regular.
+  Finally, a result of Chiue and Shieh~(~\cite{chiue1999connectivity}, Lemma 3) implies that $G \Box H$ is connected if and only if both $G$ and $H$ are connected, so we know $G \Box H$ is connected.
+\end{proof}
+\begin{corollary}\label{cor:cartesian-infinite}
+    Let $G$ be a graph entropic with respect to $\beta_0 > 0$, and let $H$ be any connected, walk-regular graph. Then any finite product $H \Box (H \Box ( \cdots (H \Box G)))$ is entropic with respect to $\beta_0$.
+\end{corollary}
+In particular, we observe that the entropic graph $G(4,5)$ gives an infinite family of graphs entropic with respect to two values of $\beta$, for any connected, walk-regular graph $H$.
+We remark that all graphs in this family are entropic with respect to the same two values $\beta$ for which $G(4,5)$ is entropic.

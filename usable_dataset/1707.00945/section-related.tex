@@ -1,0 +1,28 @@
+
+\section{Related Work}
+\label{sec:related-work}
+
+Only a small number of experience reports about SPARK~2014 have been
+published before. A look back at (old) SPARK's history
+and its success, as well as an initial picture of SPARK~2014 is given
+by Chapman and Schanda in~\cite{Chapman2014}. We can report that the
+mentioned difficulties with floating-point numbers are solved in SPARK~2014, 
+and that the goal to make verification more accessible, has been reached.  A small case study with SPARK~2014
+is presented in~\cite{Trojanek2014}, but at that point multi-threading
+(Ravenscar) was not yet supported, and floating point numbers have
+been skipped in the proof. We can add to the conclusion given there,
+that both are easily verified in ``real-world'' code, although
+float proofs require more (computational and mental) effort.  Larger
+case studies are summarized by Dross et al. in \cite{Dross2014}, with
+whom we share the opinion of minor usability issues, and that some
+small amount of developer training is required.  Finally, SPARK~2014
+with Ravenscar has recently been announced to be used in the Lunar
+IceCube~\cite{Brandon2016} satellite, a successor of the successful CubeSat project that was implemented in SPARK 2005. It will be a message-centric software, conceptually similar to NASA's cFE/CFS, but 
+fully verified and striving to become an open source platform for spacecraft software.
+In contrast to all the above publications, this paper is not focused on the application or case studies, but  pointing out typical sources of errors in SPARK programs, which a developer has to
+know in order to get correct verification results.
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

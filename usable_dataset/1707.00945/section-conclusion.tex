@@ -1,0 +1,38 @@
+\section{Conclusion\label{sec:conclusion}}
+Although the verification of SPARK~2014 programs is very close to
+execution semantics and therefore mostly intuitive, we believe that
+developers still need some basic training to avoid common mistakes as
+described in this paper, which otherwise could lead to a false confidence in
+the software being developed. 
+%Unless a software is testified AoRTE, there may be missed
+%error and defect due to the deductive approach. We think this needs an
+%impact analysis and quantification of sort, to not create false
+%confidence in the verification progress and thereby to avoid
+%underestimating the remaining risk that may reside in the software.
+Overall, the language forces developers to address boundary
+cases % here it's "boundary case"
+of a system explicitly, which eventually helps understanding the
+system better, and usually reveals missing requirements for
+boundary cases. As a downside, SPARK~2014 programs are often longer than
+(approximately) equivalent Ada programs, since in the latter case a
+general exception handler can be installed to handle all pathological
+cases at once, without differentiating them. Furthermore, static analysis is ready
+to replace unit tests, but integration tests have still been found
+necessary. 
+
+Regarding the shortcomings of the GNAT dimensionality system, we
+can report that as a consequence of our experiments, a solution for
+generic operations on dimensioned has been found and will be part of future GNAT releases.
+
+Our remaining criticism to SPARK~2014 and its tools is as follows:
+next to some minor tooling enhancements to avoid the mistakes
+mentioned earlier and adding some more knowledge to the analyzer, it
+is necessary to support object-oriented features in a better
+way. All in all, SPARK~2014 raises the bar for formal
+verification and its tools, but developers still have to be aware of
+limitations.
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

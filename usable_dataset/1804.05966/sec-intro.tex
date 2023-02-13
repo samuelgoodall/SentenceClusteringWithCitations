@@ -1,0 +1,39 @@
+Evaluating the relative importance of nodes in a graph is a fundamental operation in network analysis, and the literature is full of well-studied approaches for quantifying node importance (typically called centrality measures)~\cite{estrada2012structure,newman2010networks}.
+Functions of matrices are a natural candidate for such rankings~\cite{estrada2010network}; in particular the matrix resolvent~\cite{gleich2015pagerank,katz1953new,page1999pagerank} (Katz and PageRank centrality) and the matrix exponential~\cite{benzi2013total,benzi2014matrix,chung2007heat,estrada2005subgraph} (heat kernel and subgraph centrality) have been widely studied and used in practice.
+
+Like many approaches to centrality, functions of matrices actually give rise to infinite families of specific centrality measures based on the value of some parameter in the definition.
+For example, the ($\beta$-)\emph{subgraph centrality} of a node $i$ is given by the diagonal entry of the matrix exponential $\exp(\beta \mA)_{ii}$ for non-negative $\beta$~\cite{estrada2005subgraph}.
+In general, there is no consensus on the ``best'' parameter value(s) for a centrality measure, and the effects of specific choices can be hard to characterize.
+Recent work has considered how relative node rankings change as matrix-based centrality
+parameters vary~\cite{benzi2015limiting,paton2017centrality}.
+In this work, we study when subgraph centralities can assign identical scores to nodes that are structurally different in the underlying graph.
+
+The notion of ``structural equivalence'' we consider is based on prior studies of the interplay between the uniformity of subgraph centrality (or \emph{walk entropy}~\cite{benzi2014note,estrada2014walk}) and the \emph{walk-regularity} of a graph.
+To be more precise, consider a graph $G$ with adjacency matrix $\mA$.
+We say $G$ is \emph{walk-regular} if for each $\ell \geq 0$, every node has the same number of closed walks of length $\ell$ (equivalently, $\mA^{\ell}$ has constant diagonal), and we say nodes $i$ and $j$ are in the same \emph{walk class} (structurally equivalent) if $\mA^{\ell}_{ii} = \mA^{\ell}_{jj}$.
+Early studies suggested that walk-regularity might be completely characterized by attaining maximum walk entropy;
+that is, it was conjectured that a graph is walk-regular if and only if there exists at least one $\beta_0$ such that $\exp(\beta_0 \mA)$ gives all nodes the same score (resulting in maximum walk entropy)~\cite{benzi2014note}.
+Recent work~\cite{Kloster2018115} disrupted this line of research by presenting a single graph which is non--walk-regular yet has uniform $\beta$-subgraph centrality for a particular value of $\beta$.
+We call such a non--walk-regular graph \emph{entropic}, and any value $\beta$ for which $G$ attains maximum walk entropy an \emph{entropic value} for $G$.
+
+In this work, we resolve several outstanding questions regarding the interplay between
+walk-regularity and centrality. We begin by exhibiting an infinite family of entropic graphs (Section~\ref{sec:cartesian-graph}).
+Our construction proves that for each entropic value $\beta_0$ there are infinitely many graphs entropic with respect to $\beta_0$.
+Interestingly, this result does not produce any \emph{new} entropic values $\beta_0$;
+however, in Section~\ref{sec:beta-distribution}
+we establish that the set of entropic values is not only infinite, but contains a limit point at 0.
+
+We then consider the more general class of $f$-\emph{subgraph centralities} given by the
+diagonal entries of $f(\beta\mA)$ for a parameter $\beta > 0$ and suitable function $f$ defined on the spectrum of $\mA$.
+If a graph has uniform $f$-subgraph centrality for some parameter $\beta$,
+we say $G$ is \emph{$f$-entropic}, the value $\beta$ is $f$-entropic with respect to $G$, and $f$ is an entropic function.
+In Section~\ref{sec:infinite-tensor} we prove that there are infinitely many functions $f_i$ that are entropic with respect to at least one graph.
+
+Finally, we consider the related question of when a subset of a graph's walk-classes
+have the same $f$-subgraph centrality score for some parameter $\beta$;
+when this occurs, we say the walk classes \emph{collide} at $f$,
+or that $f$ \emph{induces a collision} at the walk-classes.
+Note that a graph is $f$-entropic exactly when $f$ induces a collision at all of the graph's walk-classes.
+We present a sufficient condition for determining that a set of walk-classes collide under some function $f$,
+and a sufficient condition for concluding that a set of walk-classes do not collide under \emph{any} suitable function $f$.
+These sufficient conditions are practical to compute on modest-sized graphs.

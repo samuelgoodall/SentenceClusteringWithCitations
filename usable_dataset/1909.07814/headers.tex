@@ -1,0 +1,274 @@
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{epsfig,endnotes}
+\usepackage{varwidth}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{balance}
+\usepackage{xcolor}
+\usepackage{nicefrac}
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{bigdelim}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{algorithmicx}
+\usepackage{indentfirst}
+\usepackage{booktabs}
+\let\labelindent\relax
+\usepackage{enumitem}
+\usepackage{boxedminipage}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[normalem]{ulem}
+\usepackage{xpatch}
+%\usepackage{MnSymbol}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{mathpartir}
+\usepackage{makecell}
+\usepackage[hyperfootnotes=false]{hyperref}%\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{textcomp}
+\usepackage{framed,mdframed}
+\usepackage{tablefootnote}
+
+\usepackage{flushend}
+
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{amsthm}
+
+%\usepackage[pdftex,bookmarks=true,pdfstartview=FitH,colorlinks,linkcolor=blue,filecolor=blue,citecolor=blue,urlcolor=blue,pagebackref=true]{hyperref}
+   % \urlstyle{sf}
+
+\usepackage{stmaryrd}
+
+\usepackage{tablefootnote}
+
+\newlength{\saveparindent}
+\setlength{\saveparindent}{\parindent}
+\newlength{\saveparskip}
+\setlength{\saveparskip}{\parskip}
+ 
+\newenvironment{tiretnospace}{%
+\begin{list}{\hspace{2pt}\rule[0.5ex]{6pt}{1pt}\hfill}{\labelwidth=15pt%
+\labelsep=5pt \leftmargin=20pt \topsep=3pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{0pt}}}{\end{list}}
+ 
+\newenvironment{tiret}{%
+\begin{list}{\hspace{2pt}\rule[0.5ex]{6pt}{1pt}\hfill}{\labelwidth=15pt%
+\labelsep=5pt \leftmargin=20pt \topsep=3pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{0pt}}}{\end{list}}
+ 
+\newenvironment{enum}{%
+\begin{list}{{\rm (\arabic{ctr})}\hfill}{\usecounter{ctr}\labelwidth=17pt%
+\labelsep=6pt \leftmargin=23pt \topsep=5pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{3pt} }}{\end{list}}
+ 
+\newenvironment{newenum}{%
+\begin{list}{{\rm \arabic{ctr}.}\hfill}{\usecounter{ctr}\labelwidth=17pt%
+\labelsep=6pt \leftmargin=23pt \topsep=.5pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{5pt} }}{\end{list}}
+
+\newcommand{\KwIn}[1]{\textbf{Input: }#1\\}
+\newcommand{\KwOut}[1]{\textbf{Output: }#1\\}
+
+\newcommand{\tensorflow}{{{TensorFlow}}\xspace}
+\newcommand{\tool}{{\textsc{CrypTFlow}}\xspace}
+\newcommand{\minion}{{\textsc{MiniONN}}\xspace}
+\newcommand{\bonsai}{{\textsc{Bonsai}}\xspace}
+\newcommand{\R}{{\mathbb{R}}\xspace}
+\newcommand{\mpc}{{MPC}\xspace}
+
+\newtheorem{problem}{Problem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{remk}[theorem]{Remark}
+\newtheorem{apdxlemma}{Lemma}
+
+
+\newcommand{\namedref}[2]{\hyperref[#2]{#1~\ref*{#2}}\xspace}
+\newcommand{\lemmaref}[1]{\namedref{Lemma}{lem:#1}}
+\newcommand{\propref}[1]{\namedref{Proposition}{prop:#1}}
+\newcommand{\theoremref}[1]{\namedref{Theorem}{theorem:#1}}
+\newcommand{\claimref}[1]{\namedref{Claim}{clm:#1}}
+\newcommand{\corolref}[1]{\namedref{Corollary}{corol:#1}}
+\newcommand{\figureref}[1]{\namedref{Figure}{fig:#1}}
+\newcommand{\tableref}[1]{\namedref{Table}{tbl:#1}}
+\newcommand{\equationref}[1]{\namedref{Equation}{eq:#1}}
+\newcommand{\defref}[1]{\namedref{Definition}{def:#1}}
+\newcommand{\observationref}[1]{\namedref{Observation}{obs:#1}}
+\newcommand{\procedureref}[1]{\namedref{Procedure}{proc:#1}}
+\newcommand{\importedtheoremref}[1]{\namedref{Imported Theorem}{impthm:#1}}
+\newcommand{\informaltheoremref}[1]{\namedref{Informal Theorem}{infthm:#1}}
+
+\newcommand{\sectionref}[1]{\namedref{Section}{sec:#1}}
+\newcommand{\appendixref}[1]{\namedref{Appendix}{app:#1}}
+\newcommand{\propertyref}[1]{\namedref{Property}{prop:#1}}
+
+\newcommand{\algoref}[1]{\namedref{Algorithm}{algo:#1}}
+
+
+
+\newcommand{\TODO}[1]{{{\color{red} TODO: #1}}}
+\newcommand{\dg}[1]{{{\color{blue} dg: #1}}}
+\newcommand{\old}[1]{{{\color{red} OLD: #1}}}
+\newcommand{\cmmt}[1]{{{\color{red} check: #1}}}
+\newcommand{\nc}[1]{{{\color{purple} nc: #1}}}
+\newcommand{\rs}[1]{{{\color{magenta} rs: #1}}}
+
+\definecolor{mypink}{rgb}{1,0.2,0.4}
+\newcommand{\aseem}[1]{{\color{mypink}{[{\footnotesize {\bf Aseem:} { {#1}}}]}}}
+
+\newcommand{\nishant}[1]{{\textcolor{blue}{[{\footnotesize {\bf Nishant:} { {#1}}}]}}}
+%\newcommand{\dg}[1]{{\textcolor{blue}{[{\footnotesize {\bf Nishant:} { {#1}}}]}}}
+\newcommand{\mayank}[1]{{\textcolor{orange}{[{\footnotesize {\bf Mayank:} { {#1}}}]}}}
+
+\newcommand{\adv}{\mathcal{A}}
+\newcommand{\env}{\mathcal{Z}}
+\newcommand{\prot}{\Pi}
+\newcommand{\real}{\mathsf{REAL}}
+\newcommand{\ideal}{\ensuremath{\mathsf{IDEAL}}}
+\newcommand{\simu}{\mathcal{S}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\secparam}{\kappa}
+\newcommand{\matmul}{\cdot}
+\newcommand{\sign}{\mathsf{Sign}}
+
+\newcommand{\mulop}{\times}
+%%circuits syntax
+\newcommand{\gate}{{g}}
+\newcommand{\wire}{w}
+\newcommand{\bval}{\widetilde{r}}
+\newcommand{\val}{\widetilde{v}}
+\newcommand{\crct}{\chi}
+
+\newcommand{\aEnv}{\ensuremath{\kappa}}
+\newcommand{\aP}[1]{%
+	\ifstrempty{#1}{%
+		\ensuremath{\texttt{P}}%
+	}%
+	{%
+		\ensuremath{\texttt{P}_{#1}}%
+	}%
+}
+%\renewcommand{\ttdefault}{cmtt}
+
+\lstset{ % 
+    language=C,
+    backgroundcolor=\color{white},   
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=false,
+    belowskip=-0.3cm,
+    captionpos=b,                    
+    commentstyle=\color{blue}\bfseries,
+    deletekeywords={...}, 
+    escapeinside={\%*}{*)}, 
+    extendedchars=true, 
+    %% frame=single,
+    keepspaces=true,
+    keywordstyle=\color{black},
+    keywordstyle=[2]\color{black},
+    otherkeywords={*,...,uint,input1,input2,output,in},
+    keywords=[2]{private},
+    numbers=left,
+    numbersep=5pt, 
+    numberstyle=\tiny\color{gray}\bfseries, 
+    rulecolor=\color{black},
+    showspaces=false,
+    showstringspaces=false, 
+    showtabs=false, 
+    stepnumber=2, 
+    stringstyle=\color{mymauve},
+    tabsize=2, 
+    title=\lstname
+}
+
+\newcommand{\ls}[1]{{{\ensuremath{{\mathtt{#1}}}}}}
+
+\newcommand{\fmpc}{\F_{\textrm{\tiny{mpc}}}}
+\newcommand{\fattest}{\F_{\textrm{\tiny{attest}}}}
+\newcommand{\fauth}{\F_{\textrm{\tiny{auth}}}}
+\newcommand{\sid}{\mathsf{sid}}
+\newcommand{\ircommit}{\mathsf{IRcommit}}
+\newcommand{\gcommit}{\mathsf{Commit}}
+\newcommand{\reject}{\mathsf{Reject}}
+\newcommand{\compute}{\mathsf{Compute}}
+\newcommand{\ctr}{\mathsf{ctr}}
+\newcommand{\msg}{\mathsf{msg}}
+\newcommand{\st}{\mathsf{state}}
+\newcommand{\transcript}{\mathsf{Transcript}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\sendmsg}{\mathsf{Message}}
+\newcommand{\tee}{{\mathrm{secure~hardware~token}}}
+\newcommand{\pk}{\mathsf{pk}}
+\newcommand{\sk}{\mathsf{sk}}
+\newcommand{\vk}{\mathsf{vk}}
+\newcommand{\sksign}{\mathsf{sk}}
+\newcommand{\protshtom}{\mathsf{Prot}_{\tiny{\mathsf{malicious}}}(P_1,\cdots,P_n)}
+\newcommand{\verify}{\mathsf{Verify}}
+\newcommand{\token}{\mathcal{T}}
+
+\newcommand{\share}[3]{\langle #1\rangle^{#2}_{#3}}
+\newcommand{\shareval}[2]{\langle #1\rangle^{#2}}
+\newcommand{\genshare}[2]{\mathsf{Share}^{#1}(#2)}
+\newcommand{\reconst}[2]{\mathsf{Reconst}^{#1}(#2)}
+\newcommand{\atrand}{\xleftarrow[\text{}]{\$}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\relu}{\mathsf{ReLU}}
+\newcommand{\shareconvert}{\mathsf{ShareConvert}}
+\newcommand{\computemsb}{\mathsf{ComputeMSB}}
+\newcommand{\prm}{p}
+\newcommand{\drelu}{\mathsf{DReLU}}
+\newcommand{\maxpool}{\mathsf{MaxPool}}
+\newcommand{\cryptflow}{\textsc{CrypTFlow}}
+\newcommand{\resnet}{{\textsc{ResNet50}}\xspace}
+\newcommand{\squeezenet}{\textsc{SqueezeNet}}
+\newcommand{\densenet}{{\textsc{DenseNet121}}\xspace}
+\newcommand{\alexnet}{\textsc{AlexNet}}
+\newcommand{\etal}{{\em et al}.}
+
+
+% To control widows and orphans
+% orphans
+%\clubpenalty=9986
+% widows
+%\widowpenalty=9999
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
+
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+
+\newenvironment{tffbox}{
+\begin{figure}[ht!]\small
+}{\end{figure}}
+

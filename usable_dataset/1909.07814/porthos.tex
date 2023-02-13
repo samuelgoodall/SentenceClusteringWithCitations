@@ -1,0 +1,180 @@
+\section{Porthos}\label{sec:porthos}
+
+We now describe Porthos, our improved secure 3PC protocol that
+provides semi-honest security against one corrupted party
+and privacy against one malicious corruption. The notion of privacy
+against malicious corruption (introduced by Araki
+\etal~\cite{maliciousprivacy}) informally guarantees that privacy of
+inputs hold even against malicious party as long as none of the parties participating in the
+protocol learn the output of the computation (this is relevant, for
+example, when computation is offloaded to servers). Porthos builds
+upon SecureNN~\cite{securenn} but makes crucial modifications to
+reduce communication.
+% and computation overheads. %, however we only rely on its full security against one semi-honest corruption here. 
+We first describe our protocols that reduce communication and
+summarize concrete improvements in Table~\ref{tab:protcomplexity}.
+%We describe the compute optimizations of Porthos in Section \ref{subsec:porthoscomp}.
+% In Section \ref{subsec:porthosexperiments}, we show our experimental results illustrating how Porthos outperforms relevant prior works.
+% such as SecureNN~\cite{securenn}, ABY3~\cite{aby3}, EzPC~\cite{ezpc}, and CHET~\cite{chet}.
+
+%\subsection{Reducing Communication}\label{subsec:porthoscomm}
+%\dg{Need to polish this para.}
+We reduce communication for both linear as well as non-linear layers
+of DNNs. Linear layers  include fully connected layers as well as
+convolutional layers.
+We improve the communication for convolutional layers and our optimization gains get better with larger filter sizes.
+%We modify how convolutional layers are computed in SecureNN. Our improvements are more pronounced when the network uses large filters in the convolution. 
+With regards to non-linear layers (ReLU and MaxPool), we modify how
+two of the protocols in SecureNN are used -- ComputeMSB and
+ShareConvert. 
+As we explain below, this directly translates to better communication for both ReLU and MaxPool computations. 
+At a very high level, we trade communication with compute by modifying
+the way certain shares are generated in the protocol.
+\\\\
+\noindent {\bf Convolution.} In SecureNN, secure computation of
+convolutional layers is done by reducing them to a (larger) matrix
+multiplication. As an example,  $2$-dimensional convolution of a
+$3\times 3$ input matrix $X$ (with single input channel and stride 1)
+with a filter $Y$ of size $2 \times 2$ reduces to a matrix
+multiplication as follows:
+%\vspace{-0.19in}
+% \[ 
+%\begin{small}
+\begin{flalign*}
+% \scriptsize{
+&\mathsf{Conv2d}\left(\begin{bmatrix}
+    x_{1}       & x_{2} & x_{3} \\
+    x_{4}       & x_{5} & x_{6} \\
+    x_{7}       & x_{8} & x_{9}
+\end{bmatrix},
+\begin{bmatrix}
+    y_{1}       & y_{2} \\
+    y_{3}       & y_{4}
+\end{bmatrix}\right )
+% }
+= & 
+% \]
+\end{flalign*}
+\[ %\hspace{-0.1cm} 
+% \scriptsize{
+\hspace{100pt}
+\begin{bmatrix}
+    x_{1}       & x_{2} & x_{4} & x_5 \\
+    x_{2}       & x_{3} & x_{5} & x_{6}\\
+    x_{4}       & x_{5} & x_{7} & x_{8}\\
+    x_{5}       & x_{6} & x_{8} & x_{9}\\
+\end{bmatrix}\times
+\begin{bmatrix}
+    y_{1}       \\
+    y_2 \\
+    y_3 \\
+	y_4 \\
+\end{bmatrix}
+% \hfilneg
+% }
+\]
+%\end{small}
+%\vspace{-0.15in}
+In the above matrix multiplication, we call the left matrix (derived from $X$) as the ``reshaped input'' (say, $X'$) and the right matrix (derived from $Y$) as the ``reshaped filter'' (say, $Y'$). 
+%This can be generalized in a similar manner to other dimensions and parameters (such as padding, stride etc.) - see e.g.~\cite{convnotes}. 
+The matrix multiplication  is computed securely using a matrix Beaver triple~\cite{beaver,secureml} based protocol. Later, the output can be reshaped to get the output of convolution in correct shape.
+In this protocol, matrices being multiplied are masked by random matrices of same size and communicated and hence, the communication grows with the size of the matrices. 
+We observe that this is quite wasteful for convolution because the reshaped input image (the first matrix in multiplication) has many duplicated entries (e.g., $x_2$ in row 1 and row 2) that get masked by independent random values. 
+%For instance, value $x_2$ in row 1 and row 2 would be masked by independent random values and communicated
+Let size of $X$ be $m\times m$ and size of $Y$ be $f\times f$. Then, the size of $X'$ is $q^2\times f^2$, where $q = m-f+1$.
+%However, doing this is ``wasteful'' in the number of Beaver triples. To see this, in the above example, when the convolution is expressed as a matrix multiplication on the right side, the variable $x_2$ in row $2$ is treated as a ``new'' variable, different from the variable $x_2$ in row $1$. Hence, a ``fresh'' Beaver triple is utilized when computing the product of this $x_2$ with $k_1$. This can be avoided with the knowledge of the structure of the matrix multiplication. 
+In Porthos, we optimize the size of matrix-based Beaver triples for convolution by exploiting the structure of re-use of elements as the filter moves across the image. 
+At a high level, we pick random matrix of size matching $X$ for masking and communication only grows with size of $X$ (i.e., $m^2$) instead of $X'$ (i.e., $q^2f^2$) in SecureNN.
+
+Before, we describe our optimized protocol, we set up some notation. Let $\share{x}{t}{0}$ and $\share{x}{t}{1}$ denote the two shares of a 2-out-of-2 additive secret sharing of $x$ over $\bbZ_t$ -- in more detail, pick $r \atrand \bbZ_t$, set $\share{x}{t}{0} = r$ and $\share{x}{t}{1} = x-r\ (\mathsf{mod}\ t)$. $\shareval{x}{t}$ denotes a sharing of $x$ over $\bbZ_t$. 
+%The algorithm $\genshare{t}{x}$ generates the two shares of $x$ over $\bbZ_t$ and algorithm $\reconst{t}{x_0, x_1}$ reconstructs a value $x$ using $x_0$ and $x_1$ as the two shares (reconstruction is simply $x_0+x_1$ over $\bbZ_t$). 
+Reconstruction of a value $x$ from its shares $x_0$ and $x_1$ is simply  $x_0+x_1$ over $\bbZ_t$.
+This generalizes to larger dimensions - e.g. for the $m\times n$ matrix $X$, $\share{X}{t}{0}$ and $\share{X}{t}{1}$ denote the matrices that are created by secret sharing the elements of $X$ component-wise (other matrix notation such as $\reconst{t}{X_0,X_1}$ are similarly defined). 
+
+Let $\mathsf{Conv2d}_{m,f}$ denote a convolutional layer with input $m\times m$, $1$ input channel, a filter of size $f\times f$, and $1$ output channel. 
+Our protocol for $\mathsf{Conv2d}_{m,f}$ is described in Algorithm~\ref{algo:conv2d}, where $L = 2^\ell$, $\ell=64$. Algorithms  $\mathsf{ReshapeInput}$, $\mathsf{ReshapeFilter}$ and $\mathsf{ReshapeOutput}$ are used to reshape input, filter and output as described above and are formally described in Appendix \ref{appendix:porthos}. 
+Parties $P_0$ and $P_1$ start with shares of input matrix $X$ and filter $Y$ over $\bbZ_L$ That is, $P_j$ holds $(\share{X}{L}{j}, \share{Y}{L}{j})$ for $j \in \{0,1\}$.
+In SecureNN, $P_0$ first reshapes $\share{X}{L}{0}$ into $\share{X'}{L}{0}$ by running $\mathsf{ReshapeInput}$. Then, it picks a random matrix $\share{A'}{L}{0}$ of same size as $X'$ and sends $\share{E'}{L}{0} = \share{X'}{L}{0} - \share{A'}{L}{0}$ to $P_1$ that requires communicating $q^2f^2$ elements.
+In Porthos, we optimize this as follows: $P_0$ picks a random matrix $\share{A}{L}{0}$ of same size as $X$ (Step 1) and sends $\share{E}{L}{0} = \share{X}{L}{0} - \share{A}{L}{0}$ to $P_1$ (Step 4) that requires communicating $m^2$ elements only. Later, parties can reshape $E$ locally to get $E'$. 
+We reduce the communication by $P_1$ in a symmetric manner.
+Concretely, we reduce communication from $(2q^2f^2+2f^2+q^2)\ell$ in SecureNN to $(2m^2+2f^2+q^2)\ell$.
+This algorithm can  be easily generalized to the setting where there are $i$ input filters, $o$ output filters, and different stride and padding parameters. 
+
+\begin{algorithm}
+\KwIn{$P_0$  holds $(\share{X}{L}{0}, \share{Y}{L}{0})$ and $P_1$ holds $(\share{X}{L}{1}, \share{Y}{L}{1})$, where $X \in \bbZ_L^{m \times m}$, $Y \in \bbZ_L^{f \times f}$.}
+\KwOut{$P_0$ gets $\share{\mathsf{Conv2d}_{m,f}(X,Y)}{L}{0}$ and $P_1$ gets $\share{\mathsf{Conv2d}_{m,f}(X,Y)}{L}{1}$.}
+\textbf{Common Randomness}: $P_0$ \& $P_1$ hold shares 
+%$\share{U}{L}{j}$, $j \in \{0,1\}$, 
+of a zero matrix $U$ of dimension $q \times q$, $q = m-f+1$ . $P_0$ \& $P_2$ hold a common PRF key $k_0$, and $P_1$ \& $P_2$ hold a common PRF key $k_1$.
+\begin{enumerate}
+\item $P_0$ \& $P_2$ use PRF key $k_0$ to generate random matrices 
+%$\share{A}{L}{0}$, $\share{B}{L}{0}$ and $\share{C}{L}{0}$ where 
+$\share{A}{L}{0} \in \bbZ_L^{m \times m}$, $\share{B}{L}{0} \in \bbZ_L^{f \times f}$ and $\share{C}{L}{0} \in \bbZ_L^{q\times q}$.
+\item $P_1$ \& $P_2$ use PRF key $k_1$ to generate random matrices 
+%$\share{A}{L}{1}$ and $\share{B}{L}{1}$ where 
+$\share{A}{L}{1} \in \mathbb{Z}_L^{m \times m}$ and  $\share{B}{L}{1} \in \mathbb{Z}_L^{f \times f}$.
+%\end{itemize}
+\item $P_2$ computes $A = \share{A}{L}{0} + \share{A}{L}{1}$ and $B = \share{B}{L}{0} + \share{B}{L}{1}$. 
+Let
+%\item $P_2$ now computes 
+$A' = \mathsf{ReshapeInput}(A)$ and $B' = \mathsf{ReshapeFilter}(B)$. $P_2$ computes $\share{C}{L}{1} = A' \cdot B' - \share{C}{L}{0}$ and sends it to $P_1$.
+\item For $j \in \{0,1\}$, $P_j$ computes $\share{E}{L}{j} = \share{X}{L}{j} - \share{A}{L}{j}$ and $\share{F}{L}{j} = \share{Y}{L}{j} - \share{B}{L}{j}$ and sends to $P_{j\oplus 1}$.
+\item $P_0$ \& $P_1$ reconstruct $E$ and $F$ using exchanged shares.
+\item For $j \in \{0,1\}$, $P_j$ computes $\share{X'}{L}{j} = \mathsf{ReshapeInput}(\share{X}{L}{j})$, $E' = \mathsf{ReshapeInput}(E)$,  $\share{Y'}{L}{j} = \mathsf{ReshapeFilter}(\share{Y}{L}{j})$, $F' = \mathsf{ReshapeFilter}(F)$.
+%\item For $j \in \{0,1\}$, $P_j$ computes $\share{X'}{L}{j} = \mathsf{ReshapeInput}(\share{X}{L}{j})$ and $\share{Y'}{L}{j} = \mathsf{ReshapeFilter}(\share{Y}{L}{j})$, followed by $E' = \mathsf{ReshapeInput}(E)$ and $F' = \mathsf{ReshapeFilter}(F)$.
+\item For $j \in \{0,1\}$, $P_j$ computes $\share{Z'}{L}{j} = -jE' \cdot F' + \share{X'}{L}{j} \cdot F' + E' \cdot \share{Y'}{L}{j} + \share{C}{L}{j} + \share{U}{L}{j}$.
+\item For $j \in \{0,1\}$, $P_j$ outputs $\share{Z}{L}{j} = \mathsf{ReshapeOutput}(\share{Z'}{L}{j})$.
+\end{enumerate}
+    \caption{{3PC protocol for $\mathsf{Conv2d}_{m,f}$ } \label{algo:conv2d}}
+
+\end{algorithm}
+
+\noindent {\bf Activation Functions.} 
+In SecureNN protocols for computing activations such as ReLU and MaxPool start with parties $P_0$ and $P_1$ having shares of values over $L = 2^{64}$. 
+For both of these, parties run a protocol called $\computemsb$ to evaluate most significant bit (MSB) of secret values. This protocol require shares over $L-1$. So parties run a protocol called $\shareconvert$ to convert shares over $L$ to shares over $L-1$. Both protocols $\computemsb$ and $\shareconvert$ require $P_2$ to send fresh shares of a value to $P_0$ and $P_1$. In SecureNN, both of these shares were picked by $P_2$ and explicitly communicated to $P_0$ and $P_1$.  As mentioned before, shares of a value $x$ are $r$ and $x - r$, where $r$ is a appropriately picked uniformly random value. We observe that since one of the shares is truly random, it can be computed as the output of a shared PRF key between $P_2$ and one of the parties, say $P_0$. This cuts the communication of this step to {\em half}. Moreover, since many activations are computed in parallel, we can carefully ``load-balance'' this optimization between $P_0$ and $P_1$ to reduce the communication to half on the critical path. We implement this load-balance optimization and observe that this reduces the overall communication of $\shareconvert$, $\computemsb$, $\relu$ and $\maxpool$ by $25\%$. 
+
+%When computing activation functions such as $\relu(x)$ and their derivatives, SecureNN goes through a series of protocols where parties $P_0$ and $P_1$ start with additive 2-out-of-2 shares of $x$ over $\bbZ_L$. They move to shares of the same $x$ over $\bbZ_{L-1}$ (with the help of $P_2$) using a protocol called $\shareconvert$, and then convert the problem of computing $\relu$ to computing the LSB of $x$ when $x$ is shared over $\bbZ_{L-1}$, using another protocol called $\computemsb$. In both $\shareconvert$ and $\computemsb$ protocols, $P_2$ must generate fresh shares of a value that is reconstructed in the protocol and send them to $P_0$ and $P_1$. In SecureNN, both these shares were computed by $P_2$ and sent to $P_0$ and $P_1$. We observe that since one of these shares is truly random, they can be computed through a PRF key shared between $P_2$ and (say) $P_0$, and hence only one of these shares must be communicated to (say) $P_1$. This roughly halves the communication of these protocols. Additionally, since these protocols are called in parallel several times, in order to ``load balance'' the communication, we have $P_2$ set the share to be given to $P_0$ as a PRF output in half of the invocations and the share to be given to $P_1$ as a PRF output in the other half of the invocations. 
+
+The revised table with comparison of overall communication complexity of all protocols with improvements over SecureNN are provided in Table \ref{tab:protcomplexity}. 
+%Only protocols whose communication complexity are an improvement over SecureNN are presented. 
+$\mathsf{Conv2d}_{m,i,f,o}$ denotes a convolutional layer with input $m\times m$, $i$ input channels, a filter of size $f\times f$, and $o$ output channels. 
+%$\drelu$ denotes the derivative of $\relu$. 
+$\maxpool_n$ computes the maximum value out of a list of $n$ elements. $\prm$ denotes a prime value strictly larger than $65$ (set to $67$ in SecureNN), with $8$ bits being used to represent elements in $\bbZ_\prm$ (hence $\log \prm = 8$ in the table). %The round complexity of none of the protocols change and remain the same as in SecureNN.
+
+\begin{table}
+  \centering
+  \resizebox{\columnwidth}{!}{
+      \begin{tabular}{|l|l|l|l|}
+    \hline
+    Protocol & Communication (SecureNN) & Communication (Porthos) \\    \hline
+ $\mathsf{Conv2d}_{m,i,f,o}$ & $(2q^2f^2i+2f^2oi+q^2o)\ell$ & $(2m^2i+2f^2oi+q^2o)\ell$\\ \hline
+	$\shareconvert$ & $4\ell\log\prm+6\ell$ & $3\ell\log\prm+5\ell$ \\ \hline
+    $\computemsb$ & $4\ell\log\prm+13\ell$ & $3\ell\log\prm+9\ell$ \\ \hline
+   
+    
+$\relu$ & $8\ell\log\prm+24\ell$ & $6\ell\log\prm+19\ell$  \\ \hline
+       $\maxpool_n$ & $(8\ell\log\prm+29\ell)(n-1)$ & $(6\ell\log\prm+24\ell)(n-1)$\\ \hline
+ 
+
+\end{tabular}
+}
+ \caption{Communication complexity of protocols; $q = m-f+1$ and $\log \prm = 8$.}
+\label{tab:protcomplexity}
+%\tableup
+	% \vspace{-0.8cm}
+\end{table}
+
+ 
+
+
+\begin{comment}
+\subsection{Optimizing Computation}\label{subsec:porthoscomp}
+
+In this section we describe some of the computation optimizations that are done in Porthos.
+\\\\
+\noindent\textbf{AES computation.} Porthos requires a lot of randomness (sometimes shared between pairs of parties) that are generated through AES NI~\cite{aesni} function calls (used as a pseudorandom function (PRF) with a shared key and counter). In larger networks like \resnet, Porthos requires of the order of a billion AES calls. While each AES NI call only requires tens of nanoseconds to compute, computing these values in a single-thread during the protocol is quite costly. Hence, at the beginning of the protocol, we compute all randomness required and store them in a large array. These values are read as and when required through specific \textsf{memcpy} instructions, so as to derive cache benefits.
+\\\\
+\noindent\textbf{Prime selection.} In SecureNN~\cite{securenn}, one of the main sub-protocols, called PrivateCompare, makes use of a finite field, whose size must be larger than $65$. They choose $\bbZ_{p}$ with $p = 67$ as the finite field. However, for compute efficiency reasons, the elements of $\bbZ_{67}$ are represented as $8-$bit integers (thereby resulting in slightly larger communication). Now, when sampling a random element from $\bbZ_{67}$, a random $8-$bit integer is sampled (using AES as the PRF) and the integer value $\mathrm{mod}~67$ is used if it is $< 3*67$, and discarded otherwise. This is done in order to ``uniformly'' sample from $\bbZ_{67}$. This results in many ``wasted'' AES calls as roughly $20\%$ of the AES calls will result in discarded values. To overcome this problem, we set $p = 127$. By doing this, we can use the value $\mathrm{mod}~127$ whenever the $8-$bit value is $< 254$ and AES values are discarded only with probability roughly $0.7\%$. It is to be noted that this optimization only makes sense on larger networks that require a very large number of AES calls for randomness and where compute also is a bottleneck.
+\\\\
+\noindent\textbf{Refactoring code.} We re-factored the SecureNN codebase~\cite{securenncode} in order to improve its performance in several places. For example, since matrix multiplication is a large cost in bigger benchmarks, we reduce the number of local matrix multiplication calls computed by each party during $\mathsf{MatMul}$ as well as $\mathsf{Convolution}$ protocols by restructuring code and ensuring that each party computes at most $2$ local matrix multiplications. Similarly, in these protocols, by carefully re-ordering operations, we ensure that parties are not idle and waiting for messages from other parties, and that all the local matrix multiplication computations by parties are in parallel.
+\end{comment}

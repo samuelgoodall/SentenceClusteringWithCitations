@@ -1,0 +1,124 @@
+\begin{thebibliography}{}
+
+\bibitem[Angelopoulos et~al., 2020]{JordanCFR}
+Angelopoulos, A.~N., Pathak, R., and Jordan, R. V. M.~I. (2020).
+\newblock On the bias arising from relative time lag in covid-19 casefatality
+  rate estimation.
+
+\bibitem[Bendavid et~al., 2020]{Bendavid2020.04.14.20062463}
+Bendavid, E., Mulaney, B., Sood, N., Shah, S., Ling, E., Bromley-Dulfano, R.,
+  Lai, C., Weissberg, Z., Saavedra, R., Tedrow, J., Tversky, D., Bogan, A.,
+  Kupiec, T., Eichner, D., Gupta, R., Ioannidis, J., and Bhattacharya, J.
+  (2020).
+\newblock Covid-19 antibody seroprevalence in santa clara county, california.
+\newblock {\em medRxiv}.
+
+\bibitem[Ferguson et~al., 2020]{ferguson2020impact}
+Ferguson, N.~M., Laydon, D., Nedjati-Gilani, G., Imai, N., Ainslie, K.,
+  Baguelin, M., Bhatia, S., Boonyasiri, A., Cucunub{\'a}, Z., Cuomo-Dannenburg,
+  G., et~al. (2020).
+\newblock Impact of non-pharmaceutical interventions (npis) to reduce covid-19
+  mortality and healthcare demand.
+\newblock {\em London: Imperial College COVID-19 Response Team, March}, 16.
+
+\bibitem[Flaxman et~al., 2020]{flaxman2020estimating}
+Flaxman, S., Mishra, S., Gandy, A., Unwin, H., Coupland, H., Mellan, T., Zhu,
+  H., Berah, T., Eaton, J., Perez~Guzman, P., et~al. (2020).
+\newblock Estimating the number of infections and the impact of
+  non-pharmaceutical interventions on covid-19 in 11 european countries.
+
+\bibitem[Haario et~al., 2001]{haario2001adaptive}
+Haario, H., Saksman, E., Tamminen, J., et~al. (2001).
+\newblock An adaptive metropolis algorithm.
+\newblock {\em Bernoulli}, 7(2):223--242.
+
+\bibitem[Hethcote, 2000]{hethcote2000mathematics}
+Hethcote, H.~W. (2000).
+\newblock The mathematics of infectious diseases.
+\newblock {\em SIAM review}, 42(4):599--653.
+
+\bibitem[Lauer et~al., 2020]{lauer2020incubation}
+Lauer, S.~A., Grantz, K.~H., Bi, Q., Jones, F.~K., Zheng, Q., Meredith, H.~R.,
+  Azman, A.~S., Reich, N.~G., and Lessler, J. (2020).
+\newblock The incubation period of coronavirus disease 2019 (covid-19) from
+  publicly reported confirmed cases: Estimation and application.
+\newblock {\em Annals of Internal Medicine}.
+
+\bibitem[Lewnard et~al., 2020]{lewnard2020incidence}
+Lewnard, J.~A., Liu, V.~X., Jackson, M.~L., Schmidt, M.~A., Jewell, B.~L.,
+  Flores, J.~P., Jentz, C., Northrup, G.~R., Mahmud, A., Reingold, A.~L.,
+  Petersen, M., Jewell, N.~P., Young, S., and Bellows, J. (2020).
+\newblock Incidence, clinical outcomes, and transmission dynamics of
+  hospitalized 2019 coronavirus disease among 9,596,321 individuals residing in
+  california and washington, united states: a prospective cohort study.
+\newblock {\em medRxiv}.
+
+\bibitem[Li et~al., 2020a]{li2020early}
+Li, Q., Guan, X., Wu, P., Wang, X., Zhou, L., Tong, Y., Ren, R., Leung, K.~S.,
+  Lau, E.~H., Wong, J.~Y., et~al. (2020a).
+\newblock Early transmission dynamics in wuhan, china, of novel
+  coronavirus--infected pneumonia.
+\newblock {\em New England Journal of Medicine}.
+
+\bibitem[Li et~al., 2020b]{li2020substantial}
+Li, R., Pei, S., Chen, B., Song, Y., Zhang, T., Yang, W., and Shaman, J.
+  (2020b).
+\newblock Substantial undocumented infection facilitates the rapid
+  dissemination of novel coronavirus (sars-cov2).
+\newblock {\em Science}.
+
+\bibitem[Murray, 2020]{murrayteam2020forecast}
+Murray, C. (2020).
+\newblock Forecasting covid-19 impact on hospital bed-days, icu-days,
+  ventilator days and deaths by us state in the next 4 months.
+\newblock {\em MedRxiv preprint}.
+
+\bibitem[Perkins et~al., 2020]{perkins2020estimating}
+Perkins, A., Cavany, S.~M., Moore, S.~M., Oidtman, R.~J., Lerch, A., and
+  Poterek, M. (2020).
+\newblock Estimating unobserved sars-cov-2 infections in the united states.
+\newblock {\em medRxiv}.
+
+\bibitem[Prem et~al., 2020]{prem2020effect}
+Prem, K., Liu, Y., Russell, T.~W., Kucharski, A.~J., Eggo, R.~M., Davies, N.,
+  Flasche, S., Clifford, S., Pearson, C.~A., Munday, J.~D., et~al. (2020).
+\newblock The effect of control strategies to reduce social mixing on outcomes
+  of the covid-19 epidemic in wuhan, china: a modelling study.
+\newblock {\em The Lancet Public Health}.
+
+\bibitem[Riou et~al., 2020]{riou2020adjusted}
+Riou, J., Hauser, A., Counotte, M.~J., and Althaus, C.~L. (2020).
+\newblock Adjusted age-specific case fatality ratio during the covid-19
+  epidemic in hubei, china, january and february 2020.
+\newblock {\em medRxiv}.
+
+\bibitem[Russell et~al., 2020]{russell2020estimating}
+Russell, T.~W., Hellewell, J., Jarvis, C.~I., van Zandvoort, K., Abbott, S.,
+  Ratnayake, R., Flasche, S., Eggo, R.~M., Kucharski, A.~J., and nCov~working
+  group, C. (2020).
+\newblock Estimating the infection and case fatality ratio for covid-19 using
+  age-adjusted data from the outbreak on the diamond princess cruise ship.
+\newblock {\em medRxiv}.
+
+\bibitem[Weissman et~al., 2020]{weissman2020locally}
+Weissman, G.~E., Crane-Droesch, A., Chivers, C., Luong, T., Hanish, A., Levy,
+  M.~Z., Lubken, J., Becker, M., Draugelis, M.~E., Anesi, G.~L., et~al. (2020).
+\newblock Locally informed simulation to predict hospital capacity needs during
+  the covid-19 pandemic.
+\newblock {\em Annals of Internal Medicine}.
+
+\bibitem[Wu et~al., 2020]{wu2020estimating}
+Wu, J.~T., Leung, K., Bushman, M., Kishore, N., Niehus, R., de~Salazar, P.~M.,
+  Cowling, B.~J., Lipsitch, M., and Leung, G.~M. (2020).
+\newblock Estimating clinical severity of covid-19 from the transmission
+  dynamics in wuhan, china.
+\newblock {\em Nature medicine}, pages 1--5.
+
+\bibitem[Zhou et~al., 2020]{zhou2020clinical}
+Zhou, F., Yu, T., Du, R., Fan, G., Liu, Y., Liu, Z., Xiang, J., Wang, Y., Song,
+  B., Gu, X., et~al. (2020).
+\newblock Clinical course and risk factors for mortality of adult inpatients
+  with covid-19 in wuhan, china: a retrospective cohort study.
+\newblock {\em The Lancet}.
+
+\end{thebibliography}

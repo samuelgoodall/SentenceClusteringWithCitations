@@ -1,0 +1,100 @@
+We want to understand when nodes with distinct walk structures can be assigned the same score by a centrality measure---we call this occurrence a \emph{centrality collision}, or simply a collision.
+More precisely, let $G$ be a connected, non--walk-regular graph, and let $\{w_j\}$ be any collection of distinct walk-classes in $G$.
+We want to know when we can construct a PPSC function $f(x)$ such that $f(\mA)_{ii}$ is the same for all nodes in the classes $\{w_j\}$;
+we say that the walk-classes $\{w_j\}$ \emph{collide} under $f$, and that $f$ \emph{induces a collision} at $\{w_j\}$.
+Observe that a graph is $f$-entropic precisely when there exists a function $f$ that induces a collision at all of its walk-classes.
+
+In the remainder of the section, we give a sufficient condition for a graph for the existence of a collision-inducing PPSC function on that graph (Corollary~\ref{cor:pos-suff-condition});
+the sufficient condition generalizes to apply to entropic graphs.
+Additionally, this leads to a related sufficient condition for concluding that a graph is not $f$-entropic for any function $f$ (Corollary~\ref{cor:walk-class-lin-sys}).
+Finally, as an application of our theory, in Section~\ref{sec:spider-torus} we present a graph with three walk-classes which we prove is $f$-entropic using Corollary~\ref{cor:pos-suff-condition}.
+This is interesting because previously all known $f$-entropic graphs had only two walk-classes.
+
+\subsection{Sufficient condition for centrality collisions}\label{sec:suff-condition}
+Given a collection $\{w_j\}$ of distinct walk-classes in a graph $G$, we would like an easily computable condition that characterizes whether there exists some PPSC function $f$ that induces a collision at $\{w_j\}$.
+Here we present a practically computable sufficient condition for such a function's existence.
+Interestingly, the condition connects a question about nodes' walk-classes to Farkas's Lemma on nonnegative solutions to linear equations.
+
+\begin{theorem}\label{thm:pos-suff-condition}
+    Let graph $G$ have walk matrix $\mW$ and adjacency matrix $\mA$.
+    Given $\vb > 0$, if there exists $\vx > 0$ such that $\mW\vx = \vb$, then there exists a PPSC function $f(x)$ such that $\diag(f(\mA)) = \vb$.
+\end{theorem}
+\begin{proof}
+    Assume $\vx > 0$ and $\mW\vx =  \vb$.
+    We will construct positive coefficients $\{c_k\}_{k=0}^{\infty}$ such that $f(t) = \sum c_k t^k$ is a convergent power series, and so $f$ is a PPSC function.
+
+    Let $m$ be the degree of the minimal polynomial of $\mA$.
+    For each index $k \geq m$ we can use the minimal polynomial of $\mA$ to produce a set of coefficients $\{ p_{k,j} \}_{j=0}^{m-1}$ such that
+    $\mA^k = \sum_{j=0}^{m-1} p_{k,j} \mA^j$.
+
+    To construct the sequence $c_k$, we begin by defining the terms $c_k$ for $k \geq m$.
+    To do this, we first define a related sequence.
+    For each $j=0, \cdots, m-1$, we want a sequence $\{s_{j,k}\}_{k=m}^{\infty}$ so that $\left(\sum_{k=m}^{\infty} p_{k,j} s_{j,k} \right)$ converges to some positive value.
+    One such sequence is $s_{j,k} = 2^{-k} |p_{k,j}^{-1}|$;
+    if $p_{k,j} = 0$ then instead we set $s_{j,k} = 2^{-k}$.
+    Note that each $s_{j,k}$ is positive.
+    Next, for each $k\geq m$, we set $c_k = \min\{  s_{j,k} | j=0,\cdots,m-1 \} > 0$.
+    For each $j=0,\cdots, m-1$ this guarantees $|p_{k,j} c_k| \leq 2^{-k}$ for all $k$, and so by the limit comparison test
+    $\left( \sum_{k=m}^{\infty} p_{k,j} c_k \right)$ is convergent.
+
+    Finally, for $j=0, \cdots, m-1$, set $c_j = x_j - \left( \sum_{k=m}^{\infty} p_{k,j} c_k \right)$.
+    If any of these $c_j$ is negative, then choose $\{ c_k \}_{k=m}^{\infty}$ smaller so that the values $c_j = x_j - \left( \sum_{k=m}^{\infty} p_{k,j} c_k \right)$ are positive.
+    This is possible because the terms $c_k$ can be chosen as close to 0 as we like, and $x_j > 0$ by assumption.
+    The end result is that any positive solution $\vx$ to $\mW\vx = \vb$ enables us to equate
+    \[
+        \vb \hspace{3pt} = \hspace{3pt} \mW \vx
+         \hspace{3pt} =
+        \hspace{3pt} \diag\left( \sum_{j=0}^{m-1} x_j \mA^j \right)
+            = \hspace{3pt} \diag\left( \sum_{j=0}^{m-1} \left( c_j +  \sum_{k=m}^{\infty} p_{k,j} c_k \right) \mA^j \right).
+    \]
+    Rearranging, we have $\vb = \diag\left( \sum_{j=0}^{m-1} c_j \mA^j +  \sum_{j=0}^{m-1}\sum_{k=m}^{\infty} p_{k,j} c_k \mA^j \right)$.
+    We observe
+    \[
+       \sum_{j=0}^{m-1} \left( \sum_{k=m}^{\infty} p_{k,j} c_k \right) \mA^j
+     \hspace{3pt} = \hspace{3pt}
+       \sum_{k=m}^{\infty} c_k \sum_{j=0}^{m-1} p_{k,j}  \mA^j
+     \hspace{3pt} = \hspace{3pt}
+        \sum_{k=m}^{\infty} c_k \mA^k,
+    \]
+    and thus $\vb$ equals $\diag(f(\mA))$ for a PPSC function $f$.
+\end{proof}
+
+Note that if we restrict to a subset $S$ of rows of the equation $\mW\vx = \ve$ corresponding to a subset of walk-classes,
+then by Theorem~\ref{thm:pos-suff-condition} a positive solution $\vx$ to $\mW_S\vx = \ve$ gives a PPSC function $f$ that induces a collision at the walk-classes contained in $S$.
+
+\begin{corollary}\label{cor:pos-suff-condition}
+  Given a graph $G$ with walk matrix $\mW$ and adjacency matrix $\mA$, fix any subset $W = \{w_j\}$ of walk-classes for $G$ and let $J$ be the set of all row indices of $\mW$ corresponding to nodes in the walk-classes in $W$.
+  If the linear system $\mW_J\vx = \ve$ has a solution $\vx > 0$, then there exists a PPSC function $f$ that induces a collision at all the walk-classes in $W$.
+  That is, there is a constant $c$ such that $f(\mA)_{ii} = c$ for all $i \in w_j \in W$.
+\end{corollary}
+
+The above results show that a solution to a particular linear program guarantees that a collision-inducing function exists.
+On the other hand, the converse---whether the existence of a collision-inducing PPSC function guarantees the existence of a positive solution to $\mW\vx=\ve$---remains an open question.
+Lastly, we remark that the above proof shows that if an entropic function exists for $G$ then $\mW\vx = \ve$ is consistent.
+
+\begin{corollary}\label{cor:walk-class-lin-sys}
+  Given a graph $G$ with walk matrix $\mW$,
+  if the linear system $\mW\vx = \ve$ is inconsistent then $G$ is non--walk-regular and not entropic.
+\end{corollary}
+
+\paragraph{Connection to Farkas's Lemma}
+We remark that for the linear system in Corollary~\ref{cor:pos-suff-condition} to have a positive solution, it is necessary that the system $\mW\vx=\ve$ satisfies the well-known Farkas's Lemma~\cite{Farkas1902}.
+Farkas's Lemma says that a general linear system $\mM\vx = \vb$ has a solution $\vx\geq 0$ if and only if no $\vy$ exists such that $\vy^T\vb < 0$ and $\vy^T\mM \geq0$.
+In our restricted setting, where $\mW$ is nonnegative and the right-hand side is $\ve$, we derive a more specific, necessary condition for Farkas's Lemma to hold---and, therefore, a necessary condition for a positive solution to exist in Corollary~\ref{cor:pos-suff-condition}.
+However, this novel condition does not have an intuitive interpretation in the context of centrality and walk-classes, and so we defer further discussion to the appendix.
+
+
+\subsection{A concrete application}\label{sec:spider-torus}
+
+Figure~\ref{fig:spidertorus} displays an $f$-entropic graph, $ST(4,2,[5,3])$, which we call a ``spider torus'', that has exactly three walk-classes.
+The center nodes from the spider graphs form the first walk-class, the outer/inner nodes of the spider graphs (labelled with subscripts 1/2) form the second/third. We experimentally verified the graph $ST(4,2,[5,3])$ to be $f$-entropic using Corollary~\ref{cor:pos-suff-condition}, as implemented in our software package~\cite{spiderdonuts_v1.0.0}.
+
+\begin{figure}[!ht]
+  \centering
+  \resizebox{0.9\linewidth}{!}{\input{./figures/spidertorus.tex}}
+  \caption{
+      \emph{(Left)} A spider graph of degree 4 and length 2, denoted $S(4,2)$.
+      \emph{(Center)} A ``(4, 2, [3]) spider cycle'', denoted $SC(4,2,[3])$, consists of three copies of $S(4,2)$ such that the three copies of each outer-most node (with label $t_1$ for $t \in \{u,v,w,x\}$)  are connected in a cycle.
+      \emph{(Right)} A ``(4, 2, [5, 3]) spider torus'', denoted $ST(4,2,[5,3])$, consists of five copies of $SC(4,2,[3])$ with cycles connecting each set of five inner nodes of the spider legs (with label $t_2$ for $t \in \{u,v,w,x\}$).  $ST(4,2,[5,3])$ has three walk-classes and can be shown to be $f$-entropic using Corollary~\ref{cor:pos-suff-condition}.
+  }\label{fig:spidertorus}
+\end{figure}

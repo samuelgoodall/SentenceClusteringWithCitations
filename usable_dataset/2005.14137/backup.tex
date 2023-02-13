@@ -1,0 +1,28 @@
+\subsection{Why Direct Gradient Estimation is Inefficient}
+% Eqn.\ref{eqn:grad-est} provides a way to estimate gradients via decision-based black-box access to the model. However, this estimation may not be accurate enough by noticing that $\widetilde{\nabla S}$ is a linear combination of $B$ vectors in $\mathbb{R}^m$. In practice, $m$ may be very large (e.g. $3\times224\times224$ in most pretrained models on ImageNet) while $B$ is chosen to be small (e.g. 100). Therefore, even in the best case the approximation is only the projection of the gradient $\nabla S$ onto the subspace spanned by $u_1,\ldots,u_B$. Considering that $u$'s are randomly chosen, the approximation may not be good. In particular, we have the following theorem on the expected quality of the estimated gradient:
+The gradient vector estimated by Eqn. \ref{eqn:grad-est} is a linear combination of $B$ vectors $u_1,\ldots,u_B \in \mathbb{R}^m$.  The best estimated gradient we can possibly get is the projection of the actual gradient onto the subspace spanned by the $B$ vectors. In practice, $m$ is large (for example, $3\times224\times224$ on ImageNet) while $B$ is chosen to be small (e.g., 100). The following theorem shows the expectation of the gradient approximation in a randomly sampled subspace. 
+\begin{theorem}
+\label{tho:cos}
+For a boundary point $x$, suppose that $S(x)$ has $L$-Lipschitz gradients in a neighborhood of $x$, and that the sampled ${\bf u}_1, \ldots, {\bf u}_B$ are orthogonal to each other. Then the expected cosine simliarity between $\widetilde{\nabla S}$ and $\nabla S$ can be bounded by:
+\begin{align}
+    & \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla S||_2})^2\bigg)^{\frac{m-1}{2}} - 1 \bigg)c_m\sqrt{\frac B m}\\
+    \leq & \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]\\
+    \leq & c_m\sqrt{\frac B m}
+\end{align}
+% \begin{align}
+%     \bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla S||_2})^2\bigg)^{\frac{m-1}{2}} - 1 \bigg)c_m\sqrt{\frac B m}
+%     & \leq \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]\\
+%     \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big] &\leq c_m\sqrt{\frac B m}
+% \end{align}
+where $c_m$ is a constant related with $m$ and can be bounded by $c_m \in (2/\pi, 1)$. In particular, we have:
+\begin{align}
+    \label{eqn:grad-est-qual}
+    \lim_{\delta\rightarrow 0}\mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big] = c_m\sqrt{\frac B m}.
+\end{align}
+\end{theorem}
+The proof of Theorem \ref{tho:cos} is in Appendix \ref{sec:proof}. We see that in the case of $m=3\times224\times224$ and $B=100$, the expected cosine similarity between the estimation and the ground truth gradient is only around 0.02.
+Hence, we claim that direct gradient estimation, i.e. estimating by sampling directly from the entire space, cannot achieve a good gradient estimation.
+% , which means we can estimate only a small portion of the gradient direction.
+% Our observation in the experiments\Xiaojun{add if we have space} matches this conclusion.
+% Hence, we may expect better attack performance if we can produce better gradient estimation using the same number of queries.
+This also suggests that a better approximation can be expected if we can estimate the gradient in a lower-dimensional space. \Huichen{I think the logic in the writing here is a little bit weird, but I don't know how to improve it..}

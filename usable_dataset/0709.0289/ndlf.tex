@@ -1,0 +1,1748 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Classical Oblivious Transfer}  \label{chap:ClassicalOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Most of the results presented in this chapter are published in \cite{DFSS06}.
+
+\index{sender-security!of classical \OT|(}
+%% In this chapter, we give an introduction to Oblivious Transfer.
+%% \begin{itemize}
+%% \item Different flavours: Rabin, 1-2 OT, UOT
+%% \item Characterizing Sender-Security with NDLFs
+%% \item Reduction to UOT (to be reused in 1-2 OT chapter)
+%% \item quantumly? (1. NDLF impossible, 2. UOT reduction possible)
+%% \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction and Outline} \label{sec:introtoNDLF}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As already mentioned in Section~\ref{sec:cryptomodels}, 1-out-of-2
+Oblivious-Transfer, \OT for short, is a two-party primitive which
+allows a sender to send two bits (or, more generally, strings) $B_0$
+and $B_1$ to a receiver, who is allowed to learn one of the two
+according his choice $C$. Informally, it is required that the receiver
+only learns $B_C$ but not $B_{1-C}$ (what we call security for the
+honest sender, hence {\em sender-security}), while at the same time
+the sender does not learn $C$ ({\em \index{receiver-security!of \OT}receiver-security}).
+Interestingly, \OT was introduced by Wiesner around 1970 (but only
+published much later~\cite{Wiesner83}) under the name of
+``multiplexing'' in the context of quantum cryptography, and, inspired
+by~\cite{Rabin81} where a different flavor was introduced, later
+re-discovered by Even, Goldreich and Lempel~\cite{EGL82}.
+
+\OT turned out to be very powerful as Kilian~\cite{Kilian88} showed it
+to be sufficient for secure general two-party computation.  For this
+reason, much effort has been put into reducing \OT to seemingly weaker
+flavors of \pOT, like \RabinOT, \XOT,
+etc.~\cite{Crepeau87,BC97,Cachin98,Wolf00,BCW03,CS06}.
+
+In this chapter, we focus on a slightly modified notion of \OT, which we
+call {\em Randomized} \OT, \RandOT for short, where the bits (or
+strings) $B_0$ and $B_1$ are not {\em in}put by the sender, but
+generated uniformly at random during the \RandOT\ and then {\em
+  out}put to the sender. It is still required that the receiver only
+learns the bit (or string) of his choice, $B_C$, whereas the sender
+does not learn any information on $C$. It is obvious that a \RandOT\ 
+can easily be turned into an ordinary \OT simply by using the
+generated $B_0$ and $B_1$ to mask the actual input bits (or strings).
+Furthermore, all known constructions of unconditionally secure \OT 
+protocols make implicitly the detour via \RandOT.
+
+In a first step, we observe that the sender-security condition of a
+\RandOT\ of {\em bits} is equivalent to requiring the XOR $B_0 \oplus
+B_1$ to be close to uniformly distributed from the receiver's point of
+view. The proof is very simple, and it is kind of surprising that---to
+the best of our knowledge---this has not been realized before. We then
+ask and answer the question whether there is a natural generalization
+of this result to \RandOT\ of {\em strings}. Note that requiring the
+bit wise XOR of the two strings to be uniformly distributed is
+obviously not sufficient. We show that the sender-security for \RandOT\ of
+strings can be characterized in terms of {\em non-degenerate linear
+  functions} (bivariate binary linear functions which non-trivially
+depend on both arguments, as defined in Definition~\ref{def:linear}):
+sender-security holds if and only if the result of applying any
+non-degenerate linear function to the two strings is (close to)
+uniformly distributed from the receiver's point of view.
+
+We then show the usefulness of this new understanding of \OT. We
+demonstrate this on the problem of reducing \OT to weaker primitives.
+Concretely, we show that the reducibility of an ordinary \OT to weaker
+flavors via a non-interactive reduction follows by a trivial argument
+from our characterization of sender-security.  This is in sharp
+contrast to the current literature: The proofs given by Brassard,
+Cr\'epeau and Wolf~\cite{BC97,Wolf00,BCW03} for reducing \OT to
+\XOT, \GOT\ and \BUOT\ (we refer to Section~\ref{sec:application} for
+a description of these flavors of \pOT) are rather complicated and
+tailored to a particular class of privacy-amplifying hash functions;
+whether the reductions also work for a less restricted class is left
+as an open problem~\cite[page~222]{BCW03}. And, the proof given by
+Cachin~\cite{Cachin98} for reducing \OT to one execution of a
+general \pUOT\ is not only complicated, but also incorrect, as we will
+point out.  Thus, our characterization of the condition for
+sender-security allows to simplify existing reducibility proofs and,
+along the way, to solve the open problem posed in~\cite{BCW03}, as
+well as to improve the reduction parameters in most cases, but it also
+allows for new, respectively until now only incorrectly proven
+reductions. In recent work by Wullschleger \cite{Wullschleger07}, the
+analysis of these reductions is further improved.
+
+Furthermore, we extend our result and show how our characterization of
+\RandOT\ in terms of non-degenerate linear functions translates
+to \onenOT. 
+
+\vspace{2mm}
+As historical side note, we note that the original motivation for
+characterizing sender-security with the help of NDLFs was to prove
+sender-security of the quantum protocol for \OT described in
+Chapter~\ref{chap:12OT}. We point out by an example in
+Section~\ref{sec:quantumdoesnotwork} at the end of this
+chapter why this approach does not work.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Defining \OT}\label{sec:Definition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Randomized \OT of Bits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Formally capturing the intuitive understanding of the security of \OT 
+is a non-trivial and subtle task.  For instance requiring the sender's
+view to be independent of the receiver's choice bit $C$ is too strong
+a requirement, since his input might already depend on $C$. The best
+one can hope for is that his view is independent of $C$ {\em
+  conditioned on his input} $B_0,B_1$. Security against a dishonest
+receiver is even more subtle.
+We refer to the security definition by Cr\'epeau, Savvides, Schaffner and
+Wullschleger of~\cite{CSSW06}, where it is argued that this definition
+is the ``right" way to define unconditionally secure \OT. In their
+model, a secure \OT protocol is as good as 
+an ideal \OT functionality.
+
+%% We want to formally capture the intuitive understanding of the
+%% security of unconditionally secure \OT. This is non-trivial. We refer
+%% to~\cite{CSSW06} for all the subtleties that one needs to take care of
+%% (and which were not always taken care of in the literature).
+%% \cite{CSSW06} also argues that the following definition is the
+%% ``right" way to define unconditionally secure \OT: in the model of
+%% \cite{CSSW06}, a protocol secure in our sense is indistinguishable
+%% from an ideal \OT functionality.
+
+
+%The privacy condition appears to be rather straightforward: the sender $\S$'s view $V$ on the protocol should essentially be independent of the receiver $\R$'s choice bit $C$, where, generally, by the {\em view} of an entity executing a protocol we understand the entity's input, his choices for the random coins, and all messages received during the execution of the protocol. 
+%A subtlety (which is often overlooked) is that privacy should hold for {\em any} joint distribution $P_{B_0 B_1 C}$, in particular also if $\S$'s input bits $B_0$ and $B_1$ are {\em dependent} of $C$, so asking $\S$ to have {\em no} information on $C$ is too demanding. In this case, one can only ask $\S$ to have no information on $C$ {\em besides} $B_0$ and $B_1$; formally, that $\S$'s view $V$ and $\R$'s choice bit $C$ are independent conditioned on $B_0$ and $B_1$. 
+
+%Formally, this is captured by $P_{CV|B_0 B_1} \approx P_{C|B_0 B_1} P_{V|B_0 B_1}$, or, when multiplying both sides with $P_{B_0 B_1}^2$, in the (essentially) equivalent expression $P_{B_0 B_1 C V} P_{B_0 B_1} \approx P_{B_0 B_1 C} P_{B_0 B_1 V}$. 
+
+%The obliviousness condition needs even more care. We want to capture that $\R$ is allowed to learn one bit, say $B_d$, but when given this bit, his view $W$ of the protocol should give essentially no information on the other bit $B_{1-d}$ besides $B_d$ and $C$. This is formalized by requiring that for every $\R$ there exists a random variable $D$ with range $\set{0,1}$ such that conditioned on $D$, $B_D$ and $C$, his view $W$ and $B_{1-D}$ are (close to) independent.
+%\footnote{Note that it is too much to require that for every $\R$ there exists a {\em value} $d \in \set{0,1}$ such that $\R$ has not information on $B_{1-d}$, as this would also disqualify a secure protocol executed by a receiver $\R$ which chooses $C$ at random. Even if we consider deterministic dishonest receivers, he still might make his choice of $C$ dependent on the first message received from the sender, while otherwise following the protocol. } 
+%
+%
+%i.e., 
+%$$
+%P_{B_{1-d} W|B_d C D}(\cdot,\cdot|\cdot,\cdot,d) \approx P_{B_{1-d}|B_d C D}(\cdot|\cdot,\cdot,d) P_{W |B_d C D}(\cdot|\cdot,\cdot,d) \, . 
+%$$
+%for either $d \in \set{0,1}$, 
+%respectively, when multiplying both sides with $P_{B_d C D}(\cdot,\cdot,d)^2$,  
+%$$
+%P_{B_d B_{1-d} C W D}(\cdot,\cdot,\cdot,\cdot,d) P_{B_d C D}(\cdot,\cdot,d) \approx P_{B_d B_{1-d} C D}(\cdot,\cdot,\cdot,d) P_{W B_d C D}(\cdot,\cdot,\cdot,d) \
+%$$
+%for both $d \in \set{0,1}$. Note that this ``multiplying out'' has the effect that no special care has to be taken if, say, $P_D(d)$ vanishes or is very small. 
+
+%Another important subtlety, though often overlooked (see e.g. \cite{BCW03}), is that (conditioned on~$C$) $D$ needs to be (close to) independent of $B_0$ and $B_1$. This is for instance to prevent $\R$ from receiving $B_0$ if $B_0 = 0$ and otherwise $B_1$ (which if fact would allow $\R$ to learn $B_0 \cdot B_1$). 
+%This gives the following definition. 
+
+%% \begin{definition}[\OT]\label{def:OT}
+%% An $\varepsilon$-secure {\em \OT} is a protocol between $\S$ and $\R$, with $\S$ having input
+%% $B_0,B_1 \in \{0,1\}$ and $\R$ having input $C \in \{0,1\}$ such that for any distribution of
+%% $B_0,B_1$ and $C$, the following properties hold:\footnote{Be aware
+%%   that there is no consistent naming of these properties in the
+%%   literature. We use the term \emph{receiver-security} for the
+%%   property that protects an honest receiver from a dishonest sender
+%%   and analogously for \emph{sender-security}.}
+%% \begin{description}
+%% \item[\boldmath$\varepsilon$-Correctness:] For honest $\S$ and $\R$, $\R$ outputs
+%%   $B_C$, except with probability~$\varepsilon$.\vspace{1ex}
+%% \index{correctness!of classical \OT}
+%% \item[\boldmath$\varepsilon$-Receiver-security:] For honest $\R$ and any (dishonest)
+%%   $\dS$ with output\footnote{Note that $\S$'s output $V$ may consist
+%%   of $\S$'s complete view on the protocol.}~$V$, %on the protocol, 
+%%   $$\dist{ P_{C V | B_0 B_1} , P_{C | B_0 B_1} \cdot P_{V | B_0 B_1} } \leq \eps.$$
+%% \index{receiver-security!of classical \OT}
+%% \item[\boldmath$\varepsilon$-Sender-security:] For honest $\S$ and any
+%%   (dishonest) $\dR$ with output $W$, there exists a binary random variable 
+%%  $D \in \set{0,1}$ such that
+%% \index{sender-security!of classical \OT}
+%% \begin{align*}
+%% \dist{ P_{D B_0 B_1 | C} , P_{D | C} \cdot P_{B_0 B_1 | C} } &\leq \eps \quad \mbox{and}\\
+%% \dist{ P_{B_{1-D} W | B_D C D} , P_{B_{1-D} | B_D C D} \cdot P_{W |
+%%     B_D C D} } &\leq \eps,
+%% \end{align*}
+%% \end{description}
+%% where the conditional distances are defined in Equation~\eqref{eq:defconditionaldistance}.
+%% \end{definition}
+%% %
+
+In this thesis, we will mainly focus on a slight modification of \OT,
+which we call {\em Randomized \OT} (although {\em sender-}randomized
+\OT would be a more appropriate, but also rather lengthy name). A
+Randomized \OT, or \RandOT\ for short, essentially coincides with an
+ordinary \OT, except that the two bits $B_0$ and $B_1$ are not {\em
+  input} by the sender but generated uniformly at random during the
+protocol and {\em output} to the sender. This is formalized in
+Definition~\ref{def:RandOT} below.
+
+There are two main justifications for focusing on \RandOT. First, an
+ordinary \OT can easily be constructed from a \RandOT: the sender can
+use the randomly generated $B_0$ and $B_1$ to one-time-pad encrypt his
+input bits for the \OT, and send the masked bits to the receiver (as
+first realized by Beaver~\cite{Beaver95}). For a formal proof of this we
+refer to the full version of~\cite{CSSW06}. 
+%We point this out once more in Proposition~\ref{prop:ROT->OT} below. 
+And second, all information-theoretically secure constructions of \OT 
+protocols we are aware of in fact do implicitly build a \RandOT and
+use the above reduction to achieve \OT.
+
+We formalize \RandOT in such a way that it 
+minimizes and simplifies as much as possible the security restraints,
+while at the same time remaining sufficient for \OT.
+
+\begin{definition}[\RandOT]\label{def:RandOT}
+  An $\varepsilon$-secure {\em \RandOT} is a protocol between sender
+  $\S$ and receiver $\R$, with $\R$ having input $C \in \{0,1\}$
+  (while $\S$ has no input), such that for any distribution of $C$,
+  the following properties hold:
+\begin{description}
+\item[\boldmath$\varepsilon$-Correctness:] For honest $\S$ and $\R$, $\S$ has output $B_0,B_1 \in \{0,1\}$ and $\R$ has output
+  $B_C$, except with probability~$\varepsilon$.\vspace{1ex}
+\item[\boldmath$\varepsilon$-Receiver-security:] For honest $\R$ and any
+  (dishonest) $\dS$ with output $V$,
+\[\dist{ P_{C V} , P_{C} \cdot P_{V} } \leq \eps.\] 
+\item[\boldmath$\varepsilon$-Sender-security:] For honest $\S$ and any
+  (dishonest) $\dR$ with output $W$, there exists a binary
+  random variable $D$ such that 
+\[ \dist{ P_{B_{1-D} W B_D D} , P_{\unif} \cdot P_{W B_D D} } \leq \eps.
+\]
+\end{description}
+\end{definition}
+\index{correctness!of classical \RandOT}
+\index{sender-security!of classical \RandOT}
+\index{receiver-security!of classical \RandOT}
+%
+The condition for receiver-security simply says that $\S$ learns no
+information on $C$, and sender-security requires that there exists a
+choice bit $D$, supposed to be $C$, such that when given the choice
+$D$ and the corresponding bit $B_D$, then the other bit, $B_{1-D}$, is
+completely random from $\R$'s point of view.
+
+We would like to point out that the definition of \RandOT
+given in \cite{CSSW06} look syntactically slightly different than
+our Definition~\ref{def:RandOT}.
+However, it is not hard to see that they are actually equivalent. The
+main difference is that the definition in~\cite{CSSW06} involves
+an \index{auxiliary input}auxiliary input $Z$, which is given to the dishonest player, and
+receiver- and sender-security as we define them are required to hold
+{\em conditioned on $Z$} for any $Z$. Considering a {\em constant} $Z$
+immediately proves one direction of the claimed equivalence, and the
+other follows from the observation that if receiver- and
+sender-security as we define them hold for {\em any} distribution
+$P_{B_0 B_1 C}$ (respectively $P_C$), then they also hold for the
+conditional distribution $P_{B_0 B_1 C|Z=z}$ (respectively
+$P_{C|Z=z}$). The other difference is that in~\cite{CSSW06}, in
+the condition for sender-security of \RandOT, $B_{1-D}$ is required to
+be random and independent of $W$, $B_D$, $D$ {\em and $C$}. This of
+course implies our sender-security condition (which is without $C$), but
+it is also implied by our definition as $C$ may be part of the output
+$W$.  We feel that simplifying the definitions as we do, without
+changing their meaning, allows for an easier handling.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Randomized \OT of Strings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In a \onetwo\,{\em String}\:\pOT the sender inputs two {\em strings}
+of the same length, and the receiver is allowed to learn one and only
+one of the two. Formally, for any positive integer $\ell$, \lStringOT
+and \RandlStringOT can be defined along the same lines as \OT and
+\RandOT of {\em bits}: the binary random variables $B_0$ and $B_1$ as
+well as $\unif$ in Definition~\ref{def:RandOT} are simply replaced by
+random variables $S_0$ and $S_1$ and $\unif^{\ell}$ with range
+$\set{0,1}^{\ell}$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Characterizing Sender-Security}\label{sec:Main}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Case of Bit \pOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+It is well known and it follows from sender-security that in a
+(\Rand)\:\OT the receiver $\R$ should in particular learn essentially
+no information on the XOR $B_0 \oplus B_1$ of the two bits. The
+following proposition shows that this is not only necessary for
+sender-security but also {\em sufficient}.
+\begin{theorem}\label{thm:xor}
+  The condition for $\varepsilon$-sender-security for a \RandOT is
+  satisfied for a particular (possibly dishonest) receiver $\dR$ with
+  output $W$ if and only if
+$$
+\dist{ P_{(B_0 \oplus B_1) W} , P_{\unif} \cdot P_{W} } \leq \eps
+\, .
+$$
+\end{theorem}
+
+Before going into the proof which is surprisingly simple, consider
+the following example. Assume a candidate protocol for \RandOT and a
+dishonest receiver $\dR$ which is able to output $W = 0$ if $B_0 = 0 =
+B_1$, $W = 1$ if $B_0 = 1 = B_1$ and $W = 0$ or $1$ with probability
+$1/2$ each in case $B_0 \neq B_1$. Then, it is easy to see that
+conditioned on, say, $W = 0$, $(B_0,B_1)$ is $(0,0)$ with probability
+$\frac12$, and $(0,1)$ and $(1,0)$ each with probability $\frac14$,
+such that the condition on the XOR from Theorem~\ref{thm:xor} is
+satisfied. On the other hand, neither $B_0$ nor $B_1$ is uniformly distributed conditioned on $W = 0$, and 
+it appears as if the receiver has some
+joint information on $B_0$ and $B_1$ which is forbidden by a (\Rand)
+\OT. But that is not so. Indeed, the same view can be obtained when
+attacking an {\em ideal} \RandOT: submit a random bit $C$ to obtain $B_{C}$
+and output $W = B_{C}$. In the light of Definition~\ref{def:RandOT},
+if $W = 0$ we can split the event $(B_0,B_1) = (0,0)$ into two
+disjoint subsets (subevents) ${\cal E}_0$ and ${\cal E}_1$ such that
+each has probability $\frac14$, and we define $D$ by setting $D =
+0$ if ${\cal E}_0$ or $(B_0,B_1) = (0,1)$, and $D = 1$ if ${\cal E}_1$
+or $(B_0,B_1) = (1,0)$. Then, obviously, conditioned on $D = d$, the
+bit $B_{1-d}$ is uniformly distributed, even when given $B_d$. The
+corresponding holds if $W = 1$.
+
+\begin{proof}
+The ``only if'' implication is well-known and straightforward. For the ``if'' implication, we first argue the perfect case where 
+\smash{$P_{(B_0 \oplus B_1) W} = P_{\unif} \cdot P_{W}$}. For any value $w$ with $P_W(w)>0$, the non-normalized distribution $P_{B_0 B_1 W}(\cdot,\cdot,w)$ can be expressed as depicted in the left table of Figure~\ref{fig:xor}, where we write $a$ for $P_{B_0 B_1 W}(0,0,w)$, $b$ for $P_{B_0 B_1 W}(0,1,w)$, $c$ for $P_{B_0 B_1 W}(1,0,w)$ and $d$ for $P_{B_0 B_1 W}(1,1,w)$.
+Note that $a + b + c + d = P_W(w)$ and, by assumption, $a+d = b+c$. 
+Due to symmetry, we may assume that $a \leq b$. We can then define $D$ by
+extending $P_{B_0 B_1 W}(\cdot,\cdot,w)$ to $P_{B_0
+B_1 D W}(\cdot,\cdot,\cdot,w)$ as depicted in the right two tables in
+Figure~\ref{fig:xor}: $P_{B_0 B_1 D W}(0,0,0,w) = P_{B_0 B_1 D
+  W}(0,1,0,w) = a$, $P_{B_0 B_1 D W}(1,0,0,w) = P_{B_0 B_1 D
+  W}(1,1,0,w) = c$ etc. Important to realize is that $P_{B_0 B_1 D W}(\cdot,\cdot,\cdot,w)$ is indeed a valid extension since by assumption $c + (b-a) = d$. 
+
+\begin{myfigure}{H}
+$$
+{
+\begin{array}{|c|c|}
+\hline & \\[-1ex] \;\;\;a\,\;\; & \;\;\;b\,\;\; \\[1ex] \hline & \\[-1ex] c & d \\[1ex] \hline
+\end{array}
+\atop P_{B_0 B_1 W}(\cdot,\cdot,w) }
+\qquad\qquad\qquad
+{
+\begin{array}{|c|c|}
+\hline & \\[-1ex] \;\;\;a\;\;\; & \;\;\;a\;\;\; \\[1ex] \hline & \\[-1ex] c & c \\[1ex] \hline
+\end{array}
+\atop P_{B_0 B_1 D W}(\cdot,\cdot,0,w) }
+\qquad
+{
+\begin{array}{|c|c|}
+\hline & \\[-1ex] \;\;\;0\;\;\; & \,b\!-\!a\, \\[1ex] \hline & \\[-1ex] 0 & b\!-\!a \\[1ex] \hline
+\end{array}
+\atop P_{B_0 B_1 D W}(\cdot,\cdot,1,w) }
+$$
+\vspace{-3ex}
+\caption{Distributions $P_{B_0 B_1 W}(\cdot,\cdot,w)$ and $P_{B_0 B_1 D W}(\cdot,\cdot,\cdot,w)$}\label{fig:xor}
+\end{myfigure}
+
+It is now obvious that $P_{B_0 B_1 D W}(\cdot,\cdot,0,w) = \frac12 P_{B_0 D W}(\cdot,0,w)$ as well as $P_{B_0 B_1 D W}(\cdot,\cdot,1,w) = \frac12 P_{B_1 D W}(\cdot,1,w)$.
+This finishes %the proof for 
+the perfect case. 
+
+Concerning the general case, the idea is the same as above, except
+that one has to take some care in handling the error parameter
+$\varepsilon \geq 0$. As this does not give any new insight, and we
+anyway state and fully prove a more general result in
+Theorem~\ref{thm:main}, we skip this part of the
+proof.\footnote{Although the special case $\ell = 1$ in
+  Theorem~\ref{thm:main} is quantitatively slightly weaker than
+  Theorem~\ref{thm:xor}. } 
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Case of String \pOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The obvious question after the previous section is whether there is a
+natural generalization of Theorem~\ref{thm:xor} to %\StringOT
+\lStringOT for $\ell \geq 2$.  Note that the straightforward
+generalization of the XOR-condition in Theorem~\ref{thm:xor},
+requiring that any receiver has no information on the bit-wise XOR of
+the two strings, is clearly too weak, and does not imply
+sender-security for \RandlStringOT: for instance the receiver could
+know the first half of the first string and the second half of the
+second string.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{The Characterization}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let $\ell$ be an arbitrary positive integer. 
+
+\begin{definition}\label{def:linear}
+A %binary 
+function $\bal:\set{0,1}^{\ell}\times\set{0,1}^{\ell} \rightarrow
+\set{0,1}$ is called a \index{non-degenerate linear
+function}{\em non-degenerate linear function} (NDLF) if it is of the
+form
+$$\bal: (s_0,s_1) \mapsto \ip{a_0,s_0} \oplus \ip{a_1,s_1}$$
+for two non-zero $a_0,a_1 \in \set{0,1}^{\ell}$, i.e.,
+if it is linear and non-trivially depends on both input strings.
+\end{definition}
+%
+Even though this is the main notion we are using, the following more relaxed notion allows to make some of our claims slightly stronger. 
+
+\begin{definition}\label{def:balanced} 
+\index{2-balanced|see {balanced function}}
+  A binary function $\bal:\set{0,1}^{\ell}\times\set{0,1}^{\ell}
+  \rightarrow \set{0,1}$ is called {\em 2-\index{balanced function}balanced} if for any
+  $s_0,s_1 \in \set{0,1}^{\ell}$ the functions $\bal(s_0,\cdot)$ and
+  $\bal(\cdot,s_1)$ are balanced in the usual sense, meaning that
+  $\card{\Set{\sigma_1 \in \set{0,1}^{\ell}}{\bal(s_0,\sigma_1)\=0}} =
+  2^{\ell}/2$ and $\card{\Set{\sigma_0 \in
+      \set{0,1}^{\ell}}{\bal(\sigma_0,s_1)\=0}} = 2^{\ell}/2$.
+%$$
+%\card{\Set{\varsigma_1 \in \set{0,1}^{\ell}}{\bal(s_0,\varsigma_1)\=0}} \,=\, 2^{\ell}/2 
+%\quad\text{ and }\quad
+%\card{\Set{\varsigma_0 \in \set{0,1}^{\ell}}{\bal(\varsigma_0,s_1)\=0}} \,=\, 2^{\ell}/2 \, .
+%$$
+\end{definition}
+%
+The following is easy to see and the proof is omitted. 
+\begin{lemma}
+Every non-degenerate linear function is 2-balanced. 
+\end{lemma}
+%
+In case $\ell = 1$, the XOR is a NDLF and thus 2-balanced, and it is
+the {\em only} NDLF and up to addition of a constant the only
+2-balanced function.  Based on this notion of non-degenerate linear
+functions, sender-security of \RandStringOT can be characterized as
+follows.
+
+\begin{theorem}\label{thm:main} 
+\index{sender-security!characterization of}
+  The condition of $\varepsilon$-sender-security for a \RandlStringOT
+  is satisfied for a particular (possibly dishonest) receiver $\dR$
+  with output $W$ if
+$$
+\dist{ P_{\bal(S_0,S_1) W} , P_{\unif} \cdot P_W } \leq \varepsilon/2^{2\ell+1}
+$$
+for every NDLF $\bal$, and, on the other hand, 
+%it 
+$\varepsilon$-sender-security may be satisfied only if $\dist{ P_{\bal(S_0,S_1) W} , P_{\unif}
+\cdot P_W } \leq \eps$ for every NDLF~$\bal$. 
+\end{theorem}
+%We will argue at the end of Section~\ref{sec:UOT} that the exponential (in $\ell$) overhead in the sufficient condition is unavoidable. 
+The number of \index{non-degenerate linear function} NDLFs is
+exponential in~$\ell$, namely $(2^{\ell}-1)^2$.  Nevertheless, we show
+in Section~\ref{sec:application} that this characterization turns out
+to be very useful. There, we will also argue that an exponential
+overhead in $\ell$ in the sufficient condition is unavoidable. The
+proof of Theorem~\ref{thm:main} also shows that the set of NDLFs forms
+a minimal set of functions among all sets that imply sender-security.
+In this sense, our characterization is tight.
+
+At first glance, Theorem~\ref{thm:main} appears to be related to the
+so-called (information-theoretic) \index{XOR-Lemma}XOR-Lemma, commonly attributed to
+Vazirani~\cite{Vazirani86} and nicely explained by
+Goldreich~\cite{Goldreich95}, which states that a string is close to
+uniform if the XOR of the bits of any non-empty substring are. As far
+as we can see, neither follows Theorem~\ref{thm:main} from the
+XOR-Lemma in an obvious way nor can it be proven by modifying the
+proof of the XOR-Lemma, as given in~\cite{Goldreich95}.
+
+Furthermore, we would like to point out that Theorem 4 in~\cite{BCW03} also
+provides a tool to analyze sender-security of \OT 
+protocols in terms of linear functions; however, the condition that
+needs to be satisfied is much stronger than for our
+Theorem~\ref{thm:main}: it additionally requires that one of the two
+strings is {\em a priori} uniformly distributed from the receiver's
+point of view.\footnote{Concretely, it is additionally required that
+  every non-trivial parity of that string is uniform, but by the
+  XOR-Lemma this is equivalent to the whole string being uniform. }
+This difference is crucial, because showing that one of the
+two strings is uniform (conditioned on the receiver's view) is usually
+technically involved and sometimes not even possible, as the example
+given after Theorem~\ref{thm:xor} shows. This is also demonstrated by
+the fact that the analysis in~\cite{BCW03} of the considered \OT 
+protocol is tailored to one particular class of privacy-amplifying
+hash functions, and it is stated as an open problem how to prove their
+construction secure when a different class of hash functions is used.
+The condition for Theorem~\ref{thm:main}, on the other hand, is
+naturally satisfied for typical constructions of \OT protocols, as we
+shall see in Section~\ref{sec:application}. As a result,
+Theorem~\ref{thm:main} allows for much simpler and more elegant
+security proofs for \OT protocols, and, as a by-product, allows to
+solve the open problem from~\cite{BCW03}. We explain this in detail in
+Section~\ref{sec:application}, and the interested reader may well jump
+ahead and save the proof of Theorem~\ref{thm:main} for later.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Proof of Theorem~\ref{thm:main} (``only if'' part)}
+\label{app:necessary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We start with the proof for the ``only if'' part of
+Theorem~\ref{thm:main}. In fact, a slightly stronger statement is
+shown, namely that $\varepsilon$-sender-security implies
+$\dist{ P_{\bal(S_0,S_1) W} , P_{\unif} \cdot P_W } \leq \eps$ for any
+{\em 2-balanced} function. \index{balanced function}
+
+According to Definition~\ref{def:RandOT}, $\varepsilon$-sender-security for \RandOT is satisfied for a receiver $\R$ with output $W$ if there
+exists a random variable $D$ with range $\{0,1\}$ such that
+$$
+\frac12 \sum_{w,d,s_0,s_1} \big| P_{S_{1-D}S_D D W}(s_{1-d},s_d,d,w) - 2^{-\ell}
+P_{S_D D W}(s_d,d,w) \big| \leq \varepsilon. 
+$$
+In order to upper bound 
+$$
+  \dist{ P_{\beta(S_0,S_1)W},P_{\unif} \cdot P_{W} } = \frac12 \sum_{w,b}
+  \big|P_{\beta(S_0,S_1) W}(b,w) - \frac12 P_W(w) \big| \label{toupperbound}
+$$
+we expand the terms on the right hand side as follows. 
+\begin{align*}                   
+P_{\beta(S_0,S_1) W}(b,w) &= \sum_d P_{\beta(S_0,S_1) D W} (b,d,w)\\
+ &= \sum_d \!\sum_{{s_d,s_{1-d}}\atop{\beta(s_0,s_1)=b}}\!\!\!\!\! P_{S_{1-D}
+  S_D D W} (s_{1-d},s_d,d,w)
+\end{align*}
+and
+$$
+P_{W}(w) = \sum_d \sum_{s_d} P_{S_D D W}(s_d,d,w) 
+= \sum_d 2^{-\ell+1} \cdot \!\!\!\!\!
+\sum_{{s_d,s_{1-d}}\atop{\beta(s_0,s_1)=b}}\!\!\!\!\! P_{S_D D W} (s_d,d,w) 
+$$
+where the last equality holds because there are $2^{\ell-1}$ values for $s_{1-d}$
+such that $\beta(s_0,s_1)=b$, as $\beta$ is a 2-balanced function. 
+Using those two expansions we conclude that
+\begin{align*}
+ \dist{ &P_{\beta(S_0,S_1) W} , P_{\unif} \cdot P_{W} } \\[0.5ex]
+&\leq \frac12 \sum_{w,b} \sum_{d} \!\sum_{{s_d,s_{1-d}}\atop{\beta(s_0,s_1)=b}}\!\! \big| P_{S_{1-D}
+  S_D D W} (s_{1-d},s_d,d,w) - 2^{-\ell} P_{S_D D W} (s_d,d,w)
+\big|  \\
+&= \frac12 \sum_{w,d,s_0,s_1}\! \big| P_{S_{1-D}S_D D W}(s_{1-d},s_d,d,w) - 2^{-\ell}
+P_{S_D D W}(s_d,d,w) \big|  \,\leq\, \varepsilon. 
+\end{align*}
+where the first inequality follows follows from the above expansions and the triangle inequality and the last inequality is our initial assumption. \qed
+
+
+The ``if'' part, which is the interesting direction, is proven below. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{The Case $\ell = 2$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We feel that in order to understand the proof of
+Theorem~\ref{thm:main}, it is useful to first consider the case $\ell
+= 2$. Let us focus on trying to develop a condition that is sufficient
+for {\em perfect} sender-security. Fix an arbitrary output $w$, and
+consider an arbitrary non-normalized probability distribution $P_{S_0
+  S_1 W}(\cdot,\cdot,w)$ of $S_0$ and $S_1$ when $W = w$. This is
+depicted in the left table of Figure~\ref{fig:l=2}, where we write $a$
+for $P_{S_0 S_1 W}(00,00,w)$, $b$ for $P_{S_0 S_1 W}(00,01,w)$, etc.
+We may assume that $a \leq b,c,d$. We now extend this distribution to
+$P_{S_0 S_1 D W}(\cdot,\cdot,\cdot,w)$ similar as in the proof of
+Theorem~\ref{thm:xor}. This is depicted in the two right tables in
+Figure~\ref{fig:l=2}. We verify what conditions $P_{S_0 S_1
+  W}(\cdot,\cdot,w)$ must satisfy such that $P_{S_0 S_1 D W}$ is
+indeed a valid extension, i.e., that $P_{S_0 S_1 D
+  W}(\cdot,\cdot,0,w)+P_{S_0 S_1 D W}(\cdot,\cdot,1,w)=P_{S_0 S_1
+  W}(\cdot,\cdot,w)$.
+
+
+\def\noex#1{\makebox[0ex]{$#1$}}
+\def\m{\! - \!}
+
+\begin{myfigure}{H}
+$$
+{\setlength{\arraycolsep}{2.5ex}
+\begin{array}{|c|c|c|c|} \hline 
+& & & \\[-1ex] 
+\noex a & \noex b & \noex c & \noex d \\[0.5ex] \hline 
+& & & \\[-1ex] 
+\noex e & \noex f & \noex g & \noex h \\[0.5ex] \hline
+& & & \\[-1ex] 
+\noex i & \noex j & \noex k & \noex l \\[0.5ex] \hline
+& & & \\[-1ex] 
+\noex m & \noex n & \noex o & \noex p \\[0.5ex] \hline
+\end{array}
+\atop P_{S_0 S_1 W}(\cdot,\cdot,w) }
+\qquad\qquad
+{\setlength{\arraycolsep}{2.5ex}
+\begin{array}{|c|c|c|c|} \hline 
+& & & \\[-1ex] 
+\noex a & \noex a & \noex a & \noex a \\[0.5ex] \hline 
+& & & \\[-1ex] 
+\noex e & \noex e & \noex e & \noex e \\[0.5ex] \hline
+& & & \\[-1ex] 
+\noex i & \noex i & \noex i & \noex i \\[0.5ex] \hline
+& & & \\[-1ex] 
+\noex m & \noex m & \noex m & \noex m \\[0.5ex] \hline
+\end{array}
+\atop P_{S_0 S_1 D W}(\cdot,\cdot,0,w) }
+\qquad
+{\setlength{\arraycolsep}{2.5ex}
+\begin{array}{|c|c|c|c|} \hline 
+ & & & \\[-1ex] 
+\noex 0 & \noex{b \m a} & \noex{c \m a} & \noex{d \m a} \\[0.5ex] \hline 
+ & & & \\[-1ex] 
+\noex 0 & \noex{b \m a} & \noex{c \m a} & \noex{d \m a} \\[0.5ex] \hline 
+ & & & \\[-1ex] 
+\noex 0 & \noex{b \m a} & \noex{c \m a} & \noex{d \m a} \\[0.5ex] \hline 
+ & & & \\[-1ex] 
+\noex 0 & \noex{b \m a} & \noex{c \m a} & \noex{d \m a} \\[0.5ex] \hline 
+\end{array}
+\atop P_{S_0 S_1 D W}(\cdot,\cdot,1,w) }
+$$
+\vspace{-3ex}
+\caption{Distributions $P_{S_0 S_1 W}(\cdot,\cdot,w)$ and $P_{S_0 S_1
+D W}(\cdot,\cdot,\cdot,w)$}\label{fig:l=2}
+\end{myfigure}
+
+For instance, looking at the second row and second column we get
+equation $e + (b-a) = f$. Altogether, we get the following system of
+equations.
+%
+\begin{align*}
+b+e &= a+f   & b+i &= a+j   & b+m &= a+n \\
+c+e &= a+g   & c+i &= a+k   & c+m &= a+o \\
+d+e &= a+h   & d+i &= a+l   & d+m &= a+p
+\end{align*}
+%
+Note that if all these equations do hold for any $w$, then $P_{S_0
+  S_1DW}(\cdot,\cdot,\cdot,\cdot)$ is well defined and satisfies
+$P_{S_0 S_1 D W}(\cdot,\cdot,0,\cdot) = \frac14 P_{S_0 D
+  W}(\cdot,0,\cdot)$ and $P_{S_0 S_1 D W}(\cdot,\cdot,1,\cdot) =
+\frac14 P_{S_1 D W}(\cdot,1,\cdot)$, in other words, perfect
+sender-security holds.
+
+The idea now is to show that the above equation system is equivalent
+to another equation system, in which every equation expresses that a
+certain \index{non-degenerate linear function} NDLF applied to $S_0$
+and $S_1$ is uniformly distributed when $W=w$, which holds by
+assumption.
+
+For example, by adding all the equations in the original system while
+taking every second equation with negative sign, one gets the equation
+$$
+b+d+e+g+j+l+m+o = a+c+f+h+i+k+n+p \, .
+$$
+Define the function $\bal:\set{0,1}^2 \times \set{0,1}^2 \rightarrow \set{0,1}$ as follows. Let $\bal(s_0,s_1)$ be $0$ if the entry which corresponds to $(s_0,s_1)$ in the left table in Figure~\ref{fig:l=2} appears on the left hand side of the above equation, and else we let $\bal(s_0,s_1)$ be $1$. Then the above equation simply says that $\bal(S_0,S_1) = 0$ with the same probability as $\bal(S_0,S_1) = 1$ (when $W = w$). 
+Note that it is crucial that in the above equation every variable $a$ up to $p$ occurs with multiplicity exactly 1.
+By comparing the function tables, it is now easy to verify that $\bal$
+coincides with the function $(s_0,s_1) \mapsto s_{02} \oplus s_{12}$, where $s_{i2}$ denotes the second coordinate of $s_i \in \set{0,1}^2$, thus is a NDLF.
+
+% $\bal$ is 2-balanced: for every row of the left table in Figure~\ref{fig:l=2}, half of the variables in that row appear on the left hand side of the above equation and the other half appear on the right hand side (always with multiplicity 1). The corresponding holds for every column. 
+
+One can now show (and we are going to do this below for an arbitrary $\ell$) that there are enough such equations, corresponding to NDLFs, such that these equations imply the original ones. This implies that if $\bal(S_0,S_1)$ is distributed uniformly and independently of $W$ for every NDLF $\bal$, then the original equation system is satisfied (for any~$w$), and thus $P_{S_0 S_1 D W}$ is well-defined. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Proof of Theorem~\ref{thm:main} (``if'' part). }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+First, we consider the perfect case: if $P_{\bal(S_0,S_1) W}$ {\em
+  equals} $P_{\unif} \cdot P_{W}$ for every NDLF $\bal$, then
+  sender-security for Rand\ \lStringOT holds perfectly.
+\index{non-degenerate linear function}
+
+\paragraph{\sc The Perfect Case: }
+
+Since the case $\ell = 1$ is already settled, we assume that $\ell
+\geq 2$.  We generalize the idea from the case $\ell = 2$. The main
+issue will be to transform the equations guaranteed by the assumption
+on the linear functions into the ones required for $P_{S_0 S_1 D
+  W}(\cdot,\cdot,0,w)+P_{S_0 S_1 D W}(\cdot,\cdot,1,w)=P_{S_0 S_1
+  W}(\cdot,\cdot,w)$.
+
+Fix an arbitrary output $w$ of the receiver, and consider the
+non-normalized probability distribution $P_{S_0 S_1
+  W}(\cdot,\cdot,w)$.
+%We name $P_{S_0 S_1 W}(s_0,s_1,w)$ by the variable $p_{s_0,s_1}$. 
+We use the variable $p_{s_0,s_1}$ to refer to $P_{S_0 S_1
+  W}(s_0,s_1,w)$, and we write $\zero$ for the all-zero string $(0,\ldots,0)
+\in \set{0,1}^{\ell}$. We assume that $p_{\zero,\zero} \leq
+p_{\zero,s_1}$ for any \mbox{$s_1 \in \set{0,1}^{\ell}$}; we show
+later that we may do so. We extend this distribution to $P_{S_0 S_1 D
+  W}(\cdot,\cdot,\cdot,w)$ by setting
+\begin{equation}\label{eq:extension}
+P_{S_0 S_1 D W}(s_0,s_1,0,w) = p_{s_0,\zero}
+\quad\text{and}\quad
+P_{S_0 S_1 D W}(s_0,s_1,1,w) = p_{\zero,s_1}-p_{\zero,\zero}
+\end{equation}
+for any strings $s_0,s_1 \in \set{0,1}^{\ell}$, and we collect the
+equations resulting from the condition that $P_{S_0 S_1
+  W}(\cdot,\cdot,w) = P_{S_0 S_1 D W}(\cdot,\cdot,0,w)+P_{S_0 S_1 D
+  W}(\cdot,\cdot,1,w)$ needs to be satisfied: for any two $s_0,s_1 \in \set{0,1}^{\ell}
+\setminus \set{\zero}$
+\begin{equation}\label{eq:original}
+p_{s_0,\zero} + p_{\zero,s_1} = p_{\zero,\zero} + p_{s_0,s_1} \, .
+\end{equation}
+If all these equations do hold for any $w$, then as in the case of
+$\ell = 1$ or $\ell = 2$, the random variable $D$ is well defined and
+$P_{S_{1-D} S_D W D} = P_{\unif^{\ell}} \cdot P_{S_D W D}$ holds,
+since $P_{S_0 S_1 D W}(s_0,s_1,0,w)$ does not depend on $s_1$ and
+$P_{S_0 S_1 D W}(s_0,s_1,1,w)$ not on $s_0$.
+
+%Before moving on, we first justify the assumption that
+%$p_{\zero,\zero} \leq p_{\zero,s_1}$ for any $s_1 \in
+%\set{0,1}^{\ell}$. In general, we choose $t \in \set{0,1}^{\ell}$ such
+%that $p_{\zero,t} \leq p_{\zero,s_1}$ for any $s_1 \in
+%\set{0,1}^{\ell}$, and we set $P_{S_0 S_1 D W}(s_0,s_1,0,w) =
+%p_{s_0,t}$ and $P_{S_0 S_1 D W}(s_0,s_1,1,w) =
+%p_{\zero,s_1}-p_{\zero,t}$, resulting in the equations $p_{s_0,t} +
+%p_{\zero,s_1} = p_{\zero,t} + p_{s_0,s_1}$ for $s_0 \in
+%\set{0,1}^{\ell}\setminus\set{\zero}$ and $s_1 \in
+%\set{0,1}^{\ell}\setminus\set{t}$. However, these equations follow
+%from the equations given by (\ref{eq:original}): subtract equation
+%(\ref{eq:original}) with $s_1$ replaced by $t$ from equation
+%(\ref{eq:original}). Therefore, it suffices to focus on the equations
+%given by (\ref{eq:original}).
+
+We proceed by showing that the equations provided by the assumed
+uniformity of $\bal(S_0,S_1)$ for any $\bal$ imply the equations given
+by (\ref{eq:original}). Consider an arbitrary pair $a_0,a_1 \in
+\set{0,1}^{\ell} \setminus{\set{\zero}}$ and let $\beta$ be the
+associated NDLF, i.e., such that $\bal(s_0,s_1) = \ip{a_0,s_0} \oplus
+\ip{a_1,s_1}$.  By assumption, $\bal(S_0,S_1)$ is uniformly
+distributed, independent of $W$. Thus, for any fixed $w$, this can be
+expressed as
+\begin{equation}\label{eq:linear}
+\sum_{\sigma_0,\sigma_1: \atop \ip{a_0,\sigma_0} = \ip{a_1,\sigma_1}}\!\!\!\!\! p_{\sigma_0,\sigma_1}\; = \!\!\!\!\sum_{\sigma_0,\sigma_1: \atop \ip{a_0,\sigma_0} \neq \ip{a_1,\sigma_1}}\!\!\!\!\! p_{\sigma_0,\sigma_1} \, ,
+\end{equation}
+where both summations are over all $\sigma_0,\sigma_1 \in
+\set{0,1}^{\ell}$ subject to the indicated respective properties.
+Recall, that this equality holds for any pair $a_0,a_1 \in
+\set{0,1}^{\ell} \setminus{\set{\zero}}$. Thus, for fixed $s_0,s_1 \in
+\set{0,1}^{\ell} \setminus \set{\zero}$, if we sum over all such
+pairs $a_0,a_1$ subject to $\ip{a_0,s_0} = \ip{a_1,s_1} = 1$, we get
+the equation
+$$
+\sum_{a_0,a_1: \atop \ip{a_0,s_0} = \ip{a_1,s_1} = 1}
+\sum_{\sigma_0,\sigma_1: \atop \ip{a_0,\sigma_0} =
+  \ip{a_1,\sigma_1}}\!\!\!\!\! p_{\sigma_0,\sigma_1}\; =
+\!\!\!\!\sum_{a_0,a_1: \atop \ip{a_0,s_0} = \ip{a_1,s_1} = 1}
+\sum_{\sigma_0,\sigma_1: \atop \ip{a_0,\sigma_0} \neq
+  \ip{a_1,\sigma_1}}\!\!\!\!\! p_{\sigma_0,\sigma_1} \, ,
+$$
+which, after re-arranging the terms of the summations, leads to
+\begin{equation}\label{eq:generated}
+\sum_{\sigma_0,\sigma_1}
+\sum_{a_0,a_1: \atop {\ip{a_0,s_0} = \ip{a_1,s_1} = 1 \atop \ip{a_0,\sigma_0} = \ip{a_1,\sigma_1}}}\!\!\!\!\! p_{\sigma_0,\sigma_1}\; = \;
+\sum_{\sigma_0,\sigma_1}
+\sum_{a_0,a_1: \atop {\ip{a_0,s_0} = \ip{a_1,s_1} = 1 \atop \ip{a_0,\sigma_0} \neq \ip{a_1,\sigma_1}}}\!\!\!\!\! p_{\sigma_0,\sigma_1} \, .
+\end{equation}
+We will now argue that, up to a constant multiplicative
+factor, equation (\ref{eq:generated}) coincides with equation
+(\ref{eq:original}).
+
+First, it is straightforward to verify that the variables
+$p_{\zero,\zero}$ and $p_{s_0,s_1}$ occur only on the left hand side,
+both with multiplicity $2^{2(\ell-1)}$ (the number of pairs $a_0,a_1$
+such that $\ip{a_0,s_0} = \ip{a_1,s_1} = 1$), whereas $p_{s_0,\zero}$
+and $p_{\zero,s_1}$ only occur on the right hand side, with the same
+multiplicity $2^{2(\ell-1)}$.
+
+Now, we argue that any other $p_{\sigma_0,\sigma_1}$ equally often
+appears on the right and on the left hand side, and thus cancel out.
+Note that the set of pairs $a_0,a_1$, over which the summation runs on
+the left respectively the right hand side, can be understood as the
+set of solutions to a binary non-homogeneous linear equations system:
+$$
+\left(
+\begin{array}{cc}
+s_0 & 0 \\
+0   & s_1 \\
+\sigma_0 & \sigma_1 
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+a_0 \\ a_1
+\end{array}
+\right) 
+=
+\left(
+\begin{array}{c}
+1 \\ 1 \\ 0
+\end{array}
+\right)
+\;\text{respectively}\;
+\left(
+\begin{array}{c}
+1 \\ 1 \\ 1
+\end{array}
+\right)\, .
+$$
+Also note that the two linear equation systems consist of three
+equations and involve at least 4 variables, because $a_0,a_1 \in
+\set{0,1}^{\ell}$ and $\ell \geq 2$. Therefore, using basic linear
+algebra, one is tempted to conclude that they both have solutions,
+and, because they have the same homogeneous part, they have the same
+number of solutions, equal to the number of homogeneous solutions.
+However, this is only guaranteed if the matrix defining the
+homogeneous part has full rank. In our situation, this is precisely the case if
+and only if $(\sigma_0,\sigma_1) \not\in
+\set{(\zero,\zero),(s_0,\zero),(\zero,s_1),(s_0,s_1)}$, where those
+four exceptions have already been treated above. It follows that the
+equations (\ref{eq:linear}), which are guaranteed by assumption, imply
+the equations (\ref{eq:original}).
+ 
+It remains to justify the assumption that
+$p_{\zero,\zero} \leq p_{\zero,s_1}$ for any $s_1$. In general, we
+choose $t \in \set{0,1}^{\ell}$ such that $p_{\zero,t} \leq
+p_{\zero,s_1}$ for any $s_1 \in \set{0,1}^{\ell}$, and we set $P_{S_0
+  S_1 D W}(s_0,s_1,0,w) = p_{s_0,t}$ and $P_{S_0 S_1 D W}(s_0,s_1,1,w)
+= p_{\zero,s_1}-p_{\zero,t}$, resulting in the equation $p_{s_0,t} +
+p_{\zero,s_1} = p_{\zero,t} + p_{s_0,s_1}$ that needs to be satisfied
+for $s_0 \in \set{0,1}^{\ell}\setminus\set{\zero}$ and $s_1 \in
+\set{0,1}^{\ell}\setminus\set{t}$. This equality, though, can be
+argued as for equation (\ref{eq:original}), which we did above, simply
+by replacing $p_{\sigma_0,\sigma_1}$ on both sides of
+(\ref{eq:linear}) by $p_{\sigma_0,\sigma_1 \oplus t}$ (where $\oplus$
+is the bit wise XOR). We may safely do so: doing a suitable variable
+substitution and using linearity of the inner product, it is easy to
+see that this modified equation still expresses uniformity of
+$\bal(S_0,S_1)$. This concludes the proof for the perfect case.
+
+
+\paragraph{\sc The General Case: }
+
+Now, we consider the general case where there exists some $\varepsilon
+> 0$ such that $\dist{P_{\bal(S_0,S_1) W}, P_{\unif} \cdot P_{W}} \leq
+2^{-2\ell-1}\varepsilon$ for any NDLF $\bal$. We use the observations
+from the perfect case but additionally keep track of the ``error
+term''.
+\index{non-degenerate linear function}
+
+For any $w$ with $P_W(w) > 0$ and any NDLF $\bal$, set 
+$$
+\varepsilon_{w,\bal} = \dist{P_{\bal(S_0,S_1)
+    W}(\cdot,w),P_{\unif} \cdot P_W(w)}\, .
+$$
+Note that $\sum_w \varepsilon_{w,\bal} =\dist{ P_{\bal(S_0,S_1) W} ,
+P_{\unif} \cdot P_{W} } \leq 2^{-2\ell-1}\varepsilon$, independent of
+$\bal$.  Fix now an arbitrary $w$ with $P_W(w) > 0$. Then,
+(\ref{eq:linear}) only holds up to an error of
+$2\varepsilon_{w,\bal}$, where $\bal$ is the NDLF associated to
+$a_0,a_1$. As a consequence, Equation~\eqref{eq:generated} only holds
+up to an error of $2 \sum_{\bal}\varepsilon_{w,\bal}$ and thus
+(\ref{eq:original}) holds up to an error of $ \delta_{s_0,s_1} =
+\frac{2}{2^{2\ell-2}} \sum_{\bal}\varepsilon_{w,\bal} \, , $ where the
+sum is over the $2^{2\ell-2}$ functions associated to the pairs
+$a_0,a_1$ with $\ip{a_0,s_0} = \ip{a_1,s_1} = 1$.  Note that
+$\delta_{s_0,s_1}$ depends on $w$, but the set of $\bal$'s, over which
+the summation runs, does not.  Adding up over all possible $w$'s gives
+$$
+\sum_w \delta_{s_0,s_1} = \frac{2}{2^{2\ell-2}} \sum_w
+\sum_{\bal}\varepsilon_{w,\bal} = \frac{2}{2^{2\ell-2}} \sum_{\bal}
+\sum_w \varepsilon_{w,\bal} \leq 2^{-2\ell} \varepsilon \, .
+$$
+
+Since (\ref{eq:original}) only holds approximately, $P_{S_0 S_1 D W}$
+as in~(\ref{eq:extension}) is not necessarily a valid extension, but
+close. This can obviously be overcome by instead setting
+\begin{align*}
+P_{S_0 S_1 D W}(s_0,s_1,0,w) &= p_{s_0,\zero} \pm \delta'_{s_0,s_1}
+\quad \text{ and }\\
+P_{S_0 S_1 D W}(s_0,s_1,1,w) &= p_{\zero,s_1}-p_{\zero,\zero} \pm \delta''_{s_0,s_1}
+\end{align*}
+with suitably chosen $\delta'_{s_0,s_1},\delta''_{s_0,s_1} \geq 0$
+with $\delta'_{s_0,s_1}+\delta''_{s_0,s_1} = \delta_{s_0,s_1}$, and
+with suitably chosen signs ``$+$'' or ``$-$''.\footnote{Most of the
+  time, it probably suffices to correct one of the two, say, choose
+  $\delta'_{s_0,s_1} = \delta_{s_0,s_1}$ and $\delta''_{s_0,s_1} = 0$;
+  however, if for instance $p_{s_0,\zero}$ and $p_{\zero,s_1} -
+  p_{\zero,\zero}$ are both positive but $P_{S_0 S_1 W}(s_0,s_1,w) =
+  0$, then one has to correct both. } Using that every $P_{S_0 S_1 D
+  W}(s_0,s_1,0,w)$ differs from $p_{s_0,\zero}$ by at most
+$\delta'_{s_0,s_1}$, it follows from a straightforward computation
+that $ \dist{P_{S_{1-D} S_D D W}(\cdot,\cdot,0,w),P_{\unif} P_{S_D D
+    W}(\cdot,0,w)} \leq \sum_{s_0,s_1} \delta'_{s_0,s_1} \, .  $ The
+corresponding holds for $P_{S_0 S_1 D W}(\cdot,\cdot,1,w)$. It follows
+that
+\begin{align*}
+  \dist{P_{S_{1-D} S_D W D},P_{\unif} P_{S_D W D}} \leq \sum_w
+  \sum_{s_0,s_1} (\delta'_{s_0,s_1} + \delta''_{s_0,s_1}) =
+  \sum_{s_0,s_1} \sum_w \delta_{s_0,s_1} \leq \varepsilon
+\end{align*}  
+which concludes the proof. \qed
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Applications}\label{sec:application}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section we will show the usefulness of Theorem~\ref{thm:main}
+for the construction of \lStringOT, based on weaker primitives like a
+noisy channel or other flavors of \pOT.  In particular, we will show
+that the reducibility of \OT to any weaker flavor of \pOT follows as
+a simple argument using Theorem~\ref{thm:main}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection[Reducing \lStringOT to Repetitions of Weak \OT\!\!s]{Reducing \lStringOT to Independent Repetitions of Weak \OT
+  \!\!s}\label{sec:reductions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Background}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A great deal of effort has been put into constructing protocols for
+\lStringOT based on physical assumptions like various models for noisy
+channels~\cite{CK88,DKS99,DFMS04,CMW04} or a memory bounded
+adversary~\cite{CCM98,Din01,DHRS04}, as well as into reducing
+\lStringOT to (seemingly) weaker flavors of \pOT, like \RabinOT, \XOT,
+\GOT and \BUOT~\cite{Crepeau87,BC97,Cachin98,Wolf00,BCW03,CS06,
+  Wullschleger07}.  Note that the latter three flavors of \pOT are
+weaker than \OT in that the dishonest receiver has more freedom in
+choosing the sort of information he wants to get about the sender's
+input bits $B_0$ and $B_1$: $B_0$, $B_1$ or $B_0 \oplus B_1$ in case
+of \textsl{\onetwo\:XOR-\pOT} (which is abbreviated by \XOT),
+$g(B_0,B_1)$ for an arbitrary one-bit-output function $g$ in case of
+\textsl{\onetwo\: Generalized-\pOT (\GOT)}, and an arbitrary
+probabilistic $Y$ with mutual information $I(B_0 B_1;Y) \leq 1$ in
+case of \textsl{\onetwo\: Universal-\pOT (\BUOT)}.\footnote{As a
+  matter of fact, reducibility has been proven for any bound on $I(B_0
+  B_1;Y)$ strictly smaller than $2$.  Note that there is some
+  confusion in the literature in what a {\em Universal} $\pOT$,
+  $\pUOT$ is: In~\cite{BC97,Wolf00,BCW03}, a $\pUOT$ takes as
+  input two {\em bits} and the receiver is doomed to have at least one
+  bit or any other
+non-trivial amount of {\em Shannon} entropy on them; we denote this %flavor 
+by $\BUOT$. Whereas in~\cite{Cachin98}, a $\pUOT$ takes as input two
+{\em strings} and the receiver is doomed to have some {\em R\'enyi}
+entropy of order $\alpha > 1$ on them. We address this latter notion in more detail in
+Section~\ref{sec:UOT}. }
+
+All these reductions of \OT to weaker versions follow a specific
+construction design, which is also at the core of the \OT protocols
+based on noisy channels or a memory-bounded adversary. By repeated
+independent executions of the underlying primitive, $\S$ transfers a
+randomly chosen bit string $X = (X_0,X_1) \in \set{0,1}^n \times
+\set{0,1}^n$ to $\R$ such that: 
+\vspace{-3mm}
+\begin{enumerate} \addtolength{\itemsep}{-3mm} 
+\item depending on his choice bit $C$, the honest $\R$ knows either
+  $X_0$ or $X_1$,
+\item any $\dS$ has no information on which part of $X$ $\R$ learned,
+  and 
+\item any $\dR$ has some uncertainty in $X$. 
+\end{enumerate}
+
+Then, this is completed to a \RandOT by means of privacy
+amplification (cf. Section~\ref{sec:pa}): $\S$ samples two functions $\hf_0$ and
+$\hf_1$ from a \univ class $\UH$ of hash functions, sends them to
+$\R$, and outputs $S_0 = \hf_0(X_0)$ and $S_1 = \hf_1(X_1)$, and $\R$
+outputs $S_C = \hf_C(X_C)$. Finally, the \RandOT is transformed into
+an ordinary \OT in the obvious way.
+
+Correctness and receiver-security of this construction are clear, they follow
+immediately from 1.\ and 2. How easy or hard it is to prove
+sender-security depends heavily on the underlying primitive. In case of
+\RabinOT it is rather straightforward. In case of \XOT and the other
+weaker versions, this is non-trivial. The problem is that since $\R$
+might know $X_0 \oplus X_1$, it is not possible to argue that there
+exists $d \in \set{0,1}$ such that $\R$'s uncertainty on $X_{1-d}$ is
+large when given $X_d$. This, though, would be necessary in order to
+finish the proof by simply applying the privacy amplification
+theorem (Corollary~\ref{thm:classicalpa}). This difficulty is overcome in
+\cite{BC97,BCW03} by tailoring the proof to a particular \univ class
+of hash functions, namely the class of all {\em linear} hash
+functions. Whether the reduction also works for a less restricted
+class of hash functions is left in~\cite{BC97,BCW03} as an open
+problem, which we solve here as a side result. Using a smaller class of hash functions would allow for instance to reduce the communication complexity of the protocol. 
+
+In \cite{CS06}, the difficulty is overcome by giving up on the
+simplicity of the reduction. The cost of two-way communication
+allowing for \index{interactive hashing}interactive hashing is traded for better reduction
+parameters. We would like to emphasize that these parameters are
+incomparable to ours, because a different reduction is used, whereas
+our approach provides a \emph{better analysis} of the common
+non-interactive reductions.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{The New Approach}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We argue that, independent of the underlying primitive,
+sender-security follows as a simple consequence of
+Theorem~\ref{thm:main}, in combination with a simple observation
+regarding the composition of \index{non-degenerate linear
+function}non-degenerate linear (respectively, more general,
+2-\index{balanced function}balanced) functions with strongly \univ
+hash functions, stated in Proposition~\ref{prop:balanced->u2} below.
+\index{two-universal hashing!strongly} 
+\index{2-universal hashing|see {two-universal hashing}}
+
+Recall Definition~\ref{def:strongly-two-universal} of strong
+two-universality.  A class $\UH$ of hash functions from $\set{0,1}^n$
+to $\set{0,1}^{\ell}$ is {\em strongly \univ}, if for any
+distinct $x,x' \in \set{0,1}^n$ the two random variables $\Hf(x)$ and
+$\Hf(x')$ are independent and uniformly distributed over
+$\set{0,1}^{\ell}$, where the random variable $\Hf$ represents the
+random choice of a function in $\UH$.
+\begin{proposition}\label{prop:balanced->u2}
+  Let $\UH_0$ and $\UH_1$ be two classes of strongly \univ hash
+  functions from $\set{0,1}^{n_0}$ respectively $\set{0,1}^{n_1}$ to
+  $\set{0,1}^{\ell}$, and let
+  $\bal:\set{0,1}^{\ell}\times\set{0,1}^{\ell}\rightarrow\set{0,1}$ be
+  a 2-balanced function. Consider the class $\UH$ of all functions
+  $\hf:\set{0,1}^{n_0}\times\set{0,1}^{n_1}\rightarrow\set{0,1}$ with
+  $\hf(x_0,x_1) = \bal(\hf_0(x_0),\hf_1(x_1))$ where $\hf_0\in \UH_0$
+  and $\hf_1 \in \UH_1$. Then, $\UH$ is strongly \univ.\footnote{It is
+    easy to see that the claim does not hold in general for ordinary
+    (as opposed to strongly) \univ classes: if $n_0 = n_1 = \ell$ and
+    $\UH_0$ and $\UH_1$ both only contain the identity function
+    $id:\set{0,1}^{\ell}\rightarrow\set{0,1}^{\ell}$ and thus are
+    \univ, then $\UH$ consisting of the function $\hf(x_0,x_1) =
+    \bal(id(x_0),id(x_1)) = \bal(x_0,x_1)$ is not \univ. }
+\end{proposition} 
+\begin{proof}
+  Fix distinct $x = (x_0,x_1)$ and $x' = (x'_0,x'_1)$ in
+  $\set{0,1}^{n_0}\times\set{0,1}^{n_1}$. Assume without loss of
+  generality that $x_1 \neq x'_1$. Fix $\hf_0 \in \UH_0$, and set $s_0
+  = \hf_0(x_0)$ and $s'_0 = \hf_0(x'_0)$. By assumption on $\UH_1$,
+  the random variables $\Hf_1(x_1)$ and $\Hf_1(x'_1)$ are independent and
+  uniformly distributed over $\set{0,1}^{\ell}$, where $\Hf_1$
+  represents the random choice for $\hf_1 \in \UH_1$. By the
+  assumption on $\bal$, this implies that
+  $\bal(\hf_0(x_0),\Hf_1(x_1))$ and $\bal(\hf_0(x'_0),\Hf_1(x'_1))$
+  are independent and uniformly distributed over $\set{0,1}$. This holds
+  no matter how $\hf_0$ is chosen, and thus proves the claim.
+\end{proof}
+
+Now, briefly, sender-security for a construction as sketched above can
+be argued as follows: The only restriction is that $\UH$ needs to be
+{\em strongly} \univ. From the independent repetitions of the
+underlying weak \pOT (\RabinOT, \XOT, \GOT or \BUOT) it follows that
+$\dR$ has ``high'' collision entropy in $X$. Hence, for any NDLF
+$\bal$, we can apply the privacy-amplification
+Theorem~\ref{thm:classicalpa} with the strongly \univ\ hash function
+$\bal(\hf_0(\cdot),\hf_1(\cdot))$ and argue that
+$\bal(\hf_0(X_0),\hf_1(X_1))$ is close to uniform for randomly chosen
+$\hf_0$ and $\hf_1$. Sender-security then follows immediately from
+Theorem~\ref{thm:main}.
+
+We save the quantitative analysis (Theorem~\ref{thm:UOT}) for next
+section, where we consider a reduction of \OT to the weakest kind of
+\pOT: to {\em one} execution of a \pUOT.  Based on this, we compare in
+Section~\ref{sec:comparison} the quality of the analysis of the above
+reductions based on Theorem~\ref{thm:main} with the results
+in~\cite{BCW03}. It turns out that our analysis is tighter for \GOT 
+and \BUOT, whereas the analysis in~\cite{BCW03} is tighter for \XOT;
+but in all cases, our analysis is much simpler and, we believe, more
+elegant.
+
+%We would also like to already point out here that the quantitative analysis shows that the $8\cdot 2^{2\ell}$-overhead in Theorem~\ref{thm:main} forces an upper bound upon $\ell$ (linear in the collision entropy of $X$). This confirms that such an overhead is unavoidable, as without it there would be no upper bound on $\ell$; in particular, $\ell$ could be chosen to be larger than the receiver's entropy in $X$, which of course cannot be. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Reducing \lStringOT to One Execution of \pUOT}\label{sec:UOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% We assume the reader to be somewhat familiar with the notion of {\em
+%%   Renyi entropy} $\H_{\alpha}$ of order~$\alpha$. 
+%% \todo{kick out}
+%% Definition and some elementary properties needed in this section are
+%% given in Appendix~\ref{app:Renyi}. We also refer to
+%% Appendix~\ref{app:Renyi} for the slightly non-standard notion of {\em
+%%   average conditional} Renyi entropy $\H_{\alpha}(X|Y)$ we are using.
+In this section, we use the definition and some elementary properties
+of R\'enyi entropy introduced in Section~\ref{sec:conditionalrenyientropy}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Universal Oblivious Transfer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Probably the weakest flavor of \pOT is the {\em Universal} \pOT 
+(\pUOT) as it was introduced by Cachin in~\cite{Cachin98}, in that it gives the
+receiver the most freedom in getting information on the string $X$.
+Formally, for a finite set $\cX$ and parameters $\alpha > 1$
+(allowing $\alpha = \infty$) and $r > 0$, an \UOT{\alpha}{r}{\cX} works
+as follows: the sender inputs $x \in \cX$, and the receiver may choose
+an arbitrary conditional probability distribution $P_{Y|X}$ with the
+only restriction that for a uniformly distributed $X$ it must satisfy
+$\H_{\alpha}(X|Y) \geq r$.
+%% \footnote{This notion of \pUOT is even slightly
+%%   weaker than what is considered in~\cite{Cachin98}, where
+%%   $\H_{\alpha}(X|Y\!=\!y) \geq r$ for all $y$ is required. }
+The receiver then gets as output $y$, sampled according to the
+distribution $P_{Y|X}(\cdot|x)$, whereas the sender gets no
+information on the receiver's choice for $P_{Y|X}$. Note that a \BUOT
+is a limit case of this kind of \pUOT since ``\BUOT =
+\UOT{1}{1}{\set{0,1}^2}''.
+
+The crucial property of such an \pUOT is that the input is not restricted to two bits, but %for instance 
+may be two bit-{\em strings}; this potentially allows to reduce \OT 
+to {\em one} execution of a \pUOT, rather than to many independent
+executions of the same primitive as for the 1-2 flavors of \pOT 
+mentioned above. Indeed, following the design principle discussed in
+Section~\ref{sec:reductions}, it is straightforward to come up with a
+candidate protocol for \lStringOT which uses {\em one} execution
+of a \UOT{\alpha}{r}{\cX} with $\cX = \set{0,1}^n \times \set{0,1}^n$.
+The protocol is given in Figure~\ref{fig:otuot}, where $\UH$ is a
+strongly \univ class of hash functions from $\set{0,1}^n$ to
+$\set{0,1}^{\ell}$.
+
+%  \item $\S$ samples a random $x = (x_0,x_1) \in \cX = \set{0,1}^n \times \set{0,1}^n$.
+\begin{myfigure}{H}
+ \begin{myprotocol}{\OTUOT$(c)$}
+ \item $\S$ and $\R$ run \UOT{\alpha}{r}{\cX}: $\S$ inputs a random $x
+   = (x_0,x_1) \in \cX = \set{0,1}^n \times \set{0,1}^n$, $\R$ inputs
+   $P_{Y|X}$ with $P_{Y|X}(x_c'|(x_0',x_1')) = 1$ for any
+   $(x'_0,x'_1)$, and as a result $\R$ obtains $y = x_c$.
+  \item $\S$ samples independent random $\hf_0,\hf_1 \in \UH$, sends $\hf_0$ and $\hf_1$ to $\R$, and outputs $s_0 = \hf_0(x_0)$ and $s_1 = \hf_1(x_1)$. 
+  \item $\R$ computes and outputs $s_c = \hf_c(y)$. 
+ \end{myprotocol}
+\caption{Protocol \OTUOT\ for %\Rand\StringOT
+\Rand\lStringOT. }\label{fig:otuot}
+\end{myfigure}
+
+In \cite{Cachin98} it is claimed that, for appropriate parameters,
+protocol \OTUOT\ is a secure \Rand\: \lStringOT, respectively, the
+resulting protocol for \OT is secure. However, we argue below that
+the proof given is not correct and it is not obvious how to fix it.
+In Theorem~\ref{thm:UOT} we then show that its security follows easily
+from Theorem~\ref{thm:main}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{A Flaw in the Security Proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In \cite{Cachin98} the security of protocol \OTUOT\ is argued as
+follows.  Using rather complicated {\em spoiling-knowledge
+  techniques}, it is \index{spoiling-knowledge} shown that,
+conditioned on the receiver's output (which we suppress to simplify
+the notation) at least one out of $\H_{\infty}(X_0)$ and
+$\H_{\infty}(X_1|X_0 \= x_0)$ is ``large'' (for any~$x_0$), and,
+similarly, at least one out of $\H_{\infty}(X_1)$ and
+\mbox{$\H_{\infty}(X_0|X_1 \= x_1)$}.  Since collision entropy is
+lower bounded by min-entropy, it then follows from the privacy
+amplification theorem that at least one out of $\H(\Hf_0(X_0)|\Hf_0)$
+and $\H(\Hf_1(X_1)|\Hf_1, X_0 \= x_0)$ is close to $\ell$, and
+similarly,
+%at least 
+one out of $\H(\Hf_1(X_1)|\Hf_1)$ and $\H(\Hf_0(X_0)|\Hf_0, X_1 \=
+x_1)$. It is then claimed that this proves \OTUOT\ secure.
+
+We argue that this very last implication is not correct. Indeed, what
+is proven about the entropy of $\Hf_0(X_0)$ and $\Hf_1(X_1)$ does not
+exclude the possibility that both entropies $\H(\Hf_0(X_0)|\Hf_0)$ and
+$\H(\Hf_1(X_1)|\Hf_1)$ are maximal, but that
+$\H(\Hf_0(X_0)\oplus\Hf_1(X_1)|\Hf_0,\Hf_1) = 0$. This would allow the
+receiver to learn the bit wise XOR $S_0 \oplus S_1$, which is clearly
+forbidden by the condition of sender-security.
+
+Also note that the proof does not use the fact that the two functions
+$\Hf_0$ and $\Hf_1$ are chosen {\em independently}. However, if they
+are chosen to be the same, then the protocol is clearly insecure: if
+the receiver asks for $Y = X_0 \oplus X_1$, and if $\UH$ is a class of
+{\em linear} \univ hash functions, then $\dR$ obviously learns $S_0
+\oplus S_1$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Reducing \lStringOT to \pUOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The following theorem guarantees the security of \OTUOT\ for an
+appropriate choice of the parameters. The only restriction we have to
+make is that $\UH$ needs to be a {\em strongly} \univ class of hash
+function.
+
+\begin{theorem}\label{thm:UOT}
+  Let $\UH$ be a {\em strongly} \univ class of hash functions from
+  $\set{0,1}^n$ to $\set{0,1}^{\ell}$. Then \OTUOT reduces a
+  $2^{-\sp}$-secure \RandlStringOT to a perfect
+  \UOT{2}{r}{\set{0,1}^{2n}} with $n \geq r \geq 4 \ell + 2 \sp + 1$.
+% (i.e., with $n \geq \H_2(X|Y) \geq 4 \ell + 3 \sp + 4$). 
+\end{theorem}
+Using the bounds from Lemma~\ref{lemma:bounds} on the different orders
+of R\'enyi entropy, the reducibility of \lStringOT to
+\UOT{\alpha}{r}{\cX} follows immediately for {\em any} $\alpha > 1$.
+
+Informally, sender-security of the protocol \OTUOT\ is argued as for
+the reduction of \OT to \RabinOT, \XOT etc., discussed in
+Section~\ref{sec:reductions}, simply by using
+Proposition~\ref{prop:balanced->u2} in combination with the privacy
+amplification Theorem~\ref{thm:classicalpa}, and applying
+Theorem~\ref{thm:main}.  The formal proof given below additionally
+keeps track of the error term.
+
+From this proof it also becomes clear that the exponential (in $\ell$)
+overhead in Theorem~\ref{thm:main} is unavoidable. Indeed, a
+sub-exponential overhead would allow $\ell$ in Theorem~\ref{thm:UOT}
+to be super-linear in $n$, which of course is nonsense.
+
+\begin{proof}
+  By the definition of conditional collision entropy, we have that for
+  all~$y$,
+$\H_2(X|Y\=y) \geq r \geq 4 \ell + 2\sp +1$. Fix
+  an arbitrary $y$ and consider any NDLF \index{non-degenerate linear function}
+  $\bal:\set{0,1}^{\ell}\times\set{0,1}^{\ell}\rightarrow\set{0,1}$.
+  Let $\Hf_0$ and $\Hf_1$ be the random variables that represent the
+  random choices of $\hf_0$ and $\hf_1$, and set $B =
+  \bal(\Hf_0(X_0),\Hf_1(X_1))$. In combination with
+  Proposition~\ref{prop:balanced->u2}, privacy amplification
+  (Corollary~\ref{thm:classicalpa}) guarantees that
+$$
+\dist{P_{B \Hf_0 \Hf_1|Y=y}, P_{\unif} P_{\Hf_0 \Hf_1|Y=y}} \leq
+2^{-\frac12(\H_2(X|Y=y)+1)} \leq 2^{-\frac12(4\ell+2\sp+2)} =
+2^{-2\ell-\sp-1}.
+$$
+It now follows that
+\begin{align*}
+  \dist{ P_{\bal(S_0,S_1) W} &, P_{\unif} \cdot P_{W} } = \dist{P_{B \Hf_0 \Hf_1 Y},P_{\unif} P_{\Hf_0 \Hf_1 Y}} \\
+  &= \sum_y \dist{P_{B \Hf_0 \Hf_1|Y=y},P_{\unif} P_{\Hf_0 \Hf_1|Y=y}}
+  P_Y(y) \leq 2^{-\sp} / 2^{2\ell+1} \, .
+\end{align*}
+Sender-security as claimed now follows from Theorem~\ref{thm:main}.
+\end{proof}
+
+The min-entropy splitting Lemma~\ref{lemma:ESL} and a larger (not
+necessarily strongly) two-universal class of hash functions can
+alternatively be used to show the security of the reduction protocol
+\OTUOT\ without the use of \index{non-degenerate linear function}
+NDLFs. We do this here for illustration
+purposes because the same technique is used in the security proof of
+\OT in the bounded-quantum-storage model in Chapter~\ref{chap:12OT}.
+After the execution of a perfect \UOT{\infty}{r}{\set{0,1}^{2n}}, we
+have $\hmin(X_0 X_1|Y) \geq r$ and Lemma~\ref{lemma:ESL} yields the
+existence of a random variable $D \in \set{0,1}$ such that
+$\hmin(X_{1-D} D | Y) \geq r/2$ and therefore also $\hmin(X_{1-D} D
+  S_D | Y) \geq r/2$. By the chain rule (Lemma~\ref{lem:chain}) and
+setting $\eps \assign 2^{-\sp-1}$, we get $\hiee{X_{1-D} | D S_D Y}
+\geq r/2 -1 - \ell - \sp -1$. Hence to get a $2^{-\sp}$-secure
+\RandlStringOT via the privacy amplification theorem
+(Corollary~\ref{thm:pasmooth}), we need $r/2 - \ell - \sp -2 > 2
+\kappa + \ell$ which gives slightly worse parameters than in
+Theorem~\ref{thm:UOT}, namely $n \geq r \geq 4 \ell + 4 \sp +4$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quantitative Comparisons To Related Work}\label{sec:comparison}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{entropy!splitting lemma|see {min-entropy splitting lemma}}
+Subsequent to \cite{DFSS06}, Wullschleger improved the min-entropy
+splitting technique \index{min-entropy splitting lemma} described in
+the last paragraph. In \cite{Wullschleger07}, it is shown that the
+protocol \OTUOT\ reduces a $2^{-\sp}$-secure \RandlStringOT to a
+perfect \UOT{\infty}{r}{\set{0,1}^{2n}} if $n \geq r \geq 2 \ell + 6
+\sp + 6 \log(3)$. So, \RandlStringOT of strings of length $\ell$
+roughly half of the receivers min-entropy $r$ can be obtained, which
+is asymptotically optimal for this reduction-protocol. Technically,
+the result is essentially obtained by using the min-entropy splitting
+approach sketched at the end of last section and a more careful case
+distinction. The random variable $D \in \set{0,1}$ pointing to the
+``known'' string $X_D$ is basically defined as in
+Lemma~\ref{lemma:ESL}, but for the case when both $X_0,X_1$ have high
+min-entropy, a new \emph{distributed} left-over hash lemma is used to show
+that both $S_0$ and $S_1$ are close to uniform and therefore close to
+independent (and hence, the pointer $D$ can be chosen arbitrarily in
+this case).
+
+\vspace{3mm}
+
+\def\cl{c_{\text{len}}}
+\def\ck{c_{\text{sec}}}
+\def\c0{c_{\text{const}}}
+
+In the following, we compare the simple reduction of \lStringOT to $n$
+executions of \XOT, \GOT and \BUOT, respectively, using our analysis
+based on Theorem~\ref{thm:main} together with the quantitative statement
+given in Theorem~\ref{thm:UOT}, with the results achieved
+in~\cite{BCW03}.\footnote{As mentioned earlier, these results are
+  incomparable to the parameters achieved in \cite{CS06}, where
+  \emph{interactive} reductions are used.} The quality of the analysis
+of a reduction is given by the {\em reduction parameters} $\cl$, $\ck$
+and $\c0$ such that the \lStringOT is guaranteed to be
+$2^{-\sp}$-secure as long as $n \geq \cl \cdot \ell + \ck \cdot \sp +
+\c0$. The smaller these constants are, the better is the analysis of
+the reduction. The comparison of these parameters is given in
+Figure~\ref{fig:comparison}. We focus on $\cl$ and $\ck$ since $\c0$
+is not really relevant, unless very large.
+
+\begin{myfigure}{H}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{2ex}
+\begin{tabular}{l|cc|cc|cc|}
+            & \multicolumn{2}{c|}{\XOT} & \multicolumn{2}{c|}{\GOT} & \multicolumn{2}{c|}{\BUOT} \\[-1.5ex]
+            & $\cl$ & $\ck$& $\cl$ & $\ck$& $\cl$ & $\ck$ \\ \hline
+BCW \cite{BCW03}&  2 &  2 & 4.8 & 4.8 & 14.6 & 14.6 \\ 
+this work~\cite{DFSS06}   &  4 &  2 & 4   & 3   & 13.2 & 10.0 \\ 
+subsequent \cite{Wullschleger07} & 2 & 6 & 2 & 7 & 6.7 & 23.3 \\ \hline
+\end{tabular}
+\caption{Comparison of the reduction parameters. }\label{fig:comparison}
+\vspace{2ex}
+\end{myfigure}
+
+The parameters in the first line can easily be extracted from
+Theorems~5,~7 and~9 of~\cite{BCW03}, where in Theorem~9 $p_e \approx
+0.19$. The parameters in the second line corresponding to the
+reduction to \XOT follow immediately from Theorem~\ref{thm:UOT},
+using the fact that in {\em one} execution of a \XOT, the receiver's
+conditional collision entropy on the sender's two input bits is at
+least~$1$.
+
+Determining the parameters of the reductions to \GOT and \BUOT requires
+a little more work. We first determine the \emph{average} conditional
+\index{entropy!average conditional min-}
+min-entropy $\tH_{\infty}(X|Y)$ of one instance of \GOT and \BUOT. In
+the case of \GOT, $\tH_{\infty}(X|Y)$ can easily be seen to be at
+least 1 (for example by inspection of Table 2 in \cite{BCW03}). For
+one execution of \BUOT, the receiver's average Shannon entropy is at
+least $1$. Therefore, it follows from Fano's Inequality
+(Lemma~\ref{lem:fano}) that his average guessing probability is at
+most $1 - p_e$ with $p_e \approx 0.19$ as above, and thus his average
+conditional min-entropy is at least $-\log (1-p_e) \approx
+0.3$.
+
+We use Lemma~\ref{lemma:average} to lower bound the (regular)
+conditional min-entropy $\hmin(X|Y=y)$ except with probability
+$2^{-\sp-1}$ and use Theorem~\ref{thm:UOT} with security parameter
+$2^{-\sp-1}$ which together yields a $2^{-\sp}$ secure \RandlStringOT.
+To apply Theorem~\ref{thm:UOT}, we require $\H_2(X|Y=y) \geq
+\hmin(X|Y=y) \geq 4 \ell + 2 \sp + 3$ and to obtain this by
+Lemma~\ref{lemma:average}, we need $\tH_{\infty}(X|Y) \geq 4 \ell + 3
+\sp + 4$.
+
+This yields $\cl=4, \ck=3$ for \GOT and $\cl \approx 4/0.3$ and $\ck
+\approx 3/0.3$ for \BUOT. The derivation of the parameters for \cite{Wullschleger07} is analogous.
+
+
+
+%% Lemma~\ref{lemma:average} states that except with probability
+%% $2^{-\kappa}/2$ over the choice of $y$, the conditional collision
+%% entropy $\H_2(X|Y=y)$ is larger than
+
+%% By Lemma~\ref{lemma:bounds}, this lower bounds the average collision
+%% entropy as well. Lemma~\ref{lemma:average} states that except with
+%% probability $2^{-\kappa}/2$ over the choice of $y$, the conditional
+%% collision entropy $\H_2(X|Y=y)$ is larger than 
+
+
+%%  and \BUOT, we first determine a lower bound
+%% on the \emph{average} conditional min-entropy $\tH_2(X|Y)$. For
+%% \GOT this can easily be computed to be
+
+%%  (in case of \XOT this is trivial, and in case of
+%% \GOT this can easily be computed). The parameters for \BUOT follow
+%% from Theorem~\ref{thm:UOT} and the following observation. If for one
+%% execution of the \BUOT the receiver's average Shannon entropy is at
+%% least $1$, then it follows from Fano's Inequality that his average
+%% guessing probability is at most $1 - p_e$ with $p_e$ as above, and
+%% thus his average conditional min-entropy, which lower bounds the
+%% collision entropy, is at least $-\log (1-p_e) \approx 0.3$. $\cl$ and
+%% $\ck$ are then computed as $\cl \approx 4/0.3$ and $\ck \approx
+%% 3/0.3$.
+
+
+%% \begin{proof}
+%%   Define the event $\ev = \Set{y}{\H_2(X|Y\=y) \geq \H_2(X|Y) - \sp -
+%%     1}$. By Lemma~\ref{lemma:average} $P[\ev] \geq 1-2^{-\sp-1}$. We
+%%   will show below that conditioned on $\ev$, the obliviousness
+%%   condition of Definition~\ref{def:RandOT} holds with ``error term''
+%%   $2^{-\sp-1}$. It then follows that
+%% \begin{align*}
+%% \dist{&P_{B_{1-D} B_D W D} ,P_{\unif} \cdot P_{B_D W  D} } \\
+%% &\leq \dist{P_{B_{1-D} B_D W D \ev},P_{\unif} P_{B_D W D \ev}} +
+%% \dist{P_{B_{1-D} B_D W D \bar{\ev}},P_{\unif} P_{B_D W D \bar{\ev}}}
+%% \\
+%% \begin{split}
+%% &=\dist{P_{B_{1-D} B_D W D|\ev},P_{\unif} P_{B_D W D|\ev}} P[\ev]\\
+%% &\qquad + \dist{P_{B_{1-D} B_D W D|\bar{\ev}},P_{\unif} P_{B_D W
+%%     D|\bar{\ev}}} P[\bar{\ev}] \end{split} \\
+%% &\leq 2^{-\sp-1} + 2^{-\sp-1} 
+%% \,=\, 2^{-\sp}.
+%% \end{align*}
+%% It remains to prove the claimed obliviousness when conditioning on
+%% $\ev$.  To simplify notation, instead of conditioning on $\ev$ we
+%% consider a distribution $P_{Y|X}$ with $\H_2(X|Y\=y) \geq \H_2(X|Y)
+%% -\sp - 1$ for {\em all} $y$. Note that $\H_2(X|Y) -\sp - 1 \geq 4 \ell
+%% + 2 \sp + 3$.  Fix an arbitrary $y$ and consider any NDLF
+%% $\bal:\set{0,1}^{\ell}\times\set{0,1}^{\ell}\rightarrow\set{0,1}$. Let
+%% $\Hf_0$ and $\Hf_1$ be the random variables that represent the random
+%% choices of $\hf_0$ and $\hf_1$, and set $B =
+%% \bal(\Hf_0(X_0),\Hf_1(X_1))$. In combination with
+%% Proposition~\ref{prop:balanced->u2}, privacy amplification
+%% (Corollary~\ref{thm:classicalpa}) guarantees that
+%% $$
+%% \dist{P_{B \Hf_0 \Hf_1|Y=y}, P_{\unif} P_{\Hf_0 \Hf_1|Y=y}} \leq
+%% 2^{-\frac12(\H_2(X|Y=y)+1)} \leq 2^{-\frac12(4\ell+2\sp+4)} =
+%% 2^{-2\ell-\sp-2}.
+%% $$
+%% It now follows that
+%% \begin{align*}
+%%   \dist{ P_{\bal(S_0,S_1) W} &, P_{\unif} \cdot P_{W} } = \dist{P_{B \Hf_0 \Hf_1 Y},P_{\unif} P_{\Hf_0 \Hf_1 Y}} \\
+%%   &= \sum_y \dist{P_{B \Hf_0 \Hf_1|Y=y},P_{\unif} P_{\Hf_0 \Hf_1|Y=y}}
+%%   P_Y(y) \leq 2^{-2\ell-\sp-2} \, .
+%% \end{align*}
+%% Sender-security as claimed now follows from Theorem~\ref{thm:main}.
+%% \end{proof}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Extension to \onenlStringOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section we extend our characterization of sender-security of
+\RandOT to \onenRandOT.  We use the following notation. For a sequence
+of random variables $S_0,S_1,\ldots,S_{n-1}$ and indices $i,j \in
+\set{0,\ldots,n-1}$, we denote by $\overline{S_{i,j}}$ the sequence of
+variables $\Set{S_k}{k \in \set{0,\ldots,n-1} \setminus \set{i,j}}$
+with all indices except $i$ and $j$. Similarly, $\ol{S_i}$ denotes all
+variables but the $i$th.
+
+\begin{definition}[\onenRandlStringOT]\label{def:onenROT}
+An $\varepsilon$-secure {\em \onenRandOT} is a protocol between $\S$ and $\R$, with $\R$ having
+input $C \in \{0,1,\ldots,n-1\}$  (while $\S$ has no input), such that
+for any distribution of $C$, the following properties hold:
+\begin{description}
+\item[\boldmath$\varepsilon$-Correctness:] For honest $\S$ and $\R$, $\S$
+  has output $S_0,S_1,\ldots,S_{n-1} \in \{0,1\}^{\ell}$ and $\R$ outputs
+  $S_C$, except with probability $\varepsilon$.
+\index{correctness!of classical Rand@of classical \onenRandlStringOT}
+\item[\boldmath$\varepsilon$-Receiver-security:] If $\R$ is honest then for any
+  (possibly dishonest) $\dS$ with output $V$,
+\[ \dist{ P_{CV} , P_C \cdot P_V } \leq \eps . 
+\] 
+\index{receiver-security!of classical Randl@of classical \onenRandlStringOT}
+\item[\boldmath$\varepsilon$-Sender-security:] If $\S$ is honest then for any
+  (possibly dishonest) $\dR$ with output $W$, there exists a random
+  variable $D$ with range $\set{0,1,\ldots,n-1}$ such that
+\[ \dist{ P_{\ol{S_D} W S_D D} , P_{\unif^{\ell}}^{n-1} \cdot P_{W S_D
+  D} } \leq \eps.
+\] 
+\index{sender-security!of classical Randl@of classical \onenRandlStringOT}
+\end{description}
+\end{definition}
+Analogous to the \OT-case we want for sender-security that there exists
+a choice $D$, such that when given the corresponding string (or bit) $S_D$ all the
+other strings (or bits) look completely random from $\R$'s point of view. 
+
+Recall that for the characterization of sender-security in the case of
+\OT, it is sufficient that $P_{\bal(S_0,S_1) W} = P_{\unif} \cdot
+P_{W}$ for every \index{non-degenerate linear function} NDLF $\bal$.
+In a first attempt one might try to characterize the sender-security
+of \onenOT using linear functions $\bal$ that non-trivially depend on
+$n$ arguments. In the case of \onethreeOT of bits, the only linear
+function of this kind is the XOR of the three bits, but it can be
+easily verified that the requirement that $B_0 \oplus B_1 \oplus B_2$
+is uniform does \emph{not} imply sender-security in the sense defined
+above. Instead, as we will see below, sufficient requirements are that
+the XOR of \emph{every pair of bits} is uniform {\em when given the
+  value of the third}.
+
+\index{sender-security!characterization of}
+\begin{theorem}\label{thm:onen}
+  The condition for $\varepsilon$-sender-security  for a \onenRandlStringOT 
+  is satisfied for a particular (possibly dishonest) receiver $\dR$
+  with output $W$, if 
+for all $i\neq j \in \set{0,\ldots,n-1}$ 
+$$
+\dist{ P_{\bal(S_i,S_j) W \ol{S_{i,j}}} , P_{\unif} \cdot P_{W
+    \ol{S_{i,j}}} } \leq \nu 
+$$
+for every NDLF $\bal$, where $\nu = \varepsilon/(2^{2\ell}n(n-1))$. 
+\end{theorem}
+\begin{proof}
+We first consider and prove the perfect case. 
+
+\paragraph{\sc The Perfect Case: }
+
+Like in the proof of Theorem~\ref{thm:main}, we fix an output $w$ of the
+receiver and consider the non-normalized probability distribution
+$P_{S_0 \ldots S_{n-1}W}(\cdot,\ldots,\cdot,w)$. We use the variable
+$p_{s_0,\ldots,s_{n-1}}$ to refer to the value $P_{S_0 \ldots S_{n-1}
+  W}(s_0,\ldots,s_{n-1},w)$ and $\zero$ for the all-zero string
+$(0,\ldots,0) \in \set{0,1}^{\ell}$. We use bold font to
+denote a collection of strings $\bs \assign
+(s_0,s_1,\ldots,s_{n-1}) \in \set{0,1}^{\ell n}$, and we write 
+$\overline{\bs_i}$ for $(s_0,\ldots,s_{i-1},s_{i+1},\ldots,s_{n-1})$, 
+the collection $\bs$ without $s_i$. Finally, for a collection 
+$\b{t} = (t_0,\ldots,t_{k-1}) \in \set{0,1}^{\ell k}$ of arbitrary
+size $k$, we define sets of indices with one (respectively two) non-zero
+substrings:
+\begin{align*}
+  \Sone[\b{t}] &\assign
+  \Set{(\zero,\ldots,\zero,t_i,\zero,\ldots,\zero)}{i \in
+    \set{0,\ldots,k-1}}\\ 
+  \Stwo[\b{t}] &\assign
+  \Set{(\zero,\ldots,\zero,t_i,\zero,\ldots,\zero,t_j,\zero,\ldots,\zero)}{i
+    < j \in \set{0,\ldots,k-1}}
+\end{align*}
+where the $t_i$ (and $t_j$) are at $i$th (and $j$th) position. 
+%
+%For the same symmetry reasons as in the proof of
+As in the proof of Theorem~\ref{thm:main}, we assume for the clarity
+of exposition that for all $i \in \set{0,\ldots,n-1}$ and $s_i \in
+\set{0,1}^{\ell}$, it holds that $p_{\zero,\ldots,\zero} \leq
+p_{\zero,\ldots,\zero,s_i,\zero,\ldots,\zero}$ (where $s_i$ is at
+position~$i$). For symmetry reasons, the general case can be handled
+along the same lines.
+
+We extend the distribution $P_{S_0 \ldots
+  S_{n-1}W}(\cdot,\ldots,\cdot,w)$ similarly to \eqref{eq:extension}:
+for every $\bs \in \set{0,1}^{\ell n}$, we set
+\begin{align*}
+P_{S_0 \ldots S_{n-1}DW}(s_0,\ldots,s_{n-1},0,w) &\assign p_{s_0,\zero,\ldots,\zero}, \\
+P_{S_0 \ldots S_{n-1}DW}(s_0,\ldots,s_{n-1},1,w) &\assign
+p_{\zero,s_1,\zero,\ldots,\zero} - p_{\zero,\ldots,\zero}, \\
+& \;\;\,\vdots \\
+P_{S_0 \ldots S_{n-1}DW}(s_0,\ldots,s_{n-1},n-2,w) &\assign p_{\zero,\ldots,s_{n-2},\zero}- p_{\zero,\ldots,\zero}, \\
+P_{S_0 \ldots S_{n-1}DW}(s_0,\ldots,s_{n-1},n-1,w) &\assign p_{\zero,\ldots,\zero,s_{n-1}}- p_{\zero,\ldots,\zero}.
+\end{align*}
+In order to show that this is a valid extension, we have to show that
+for every $\bs \in \set{0,1}^{\ell n}$
+\begin{equation} \label{eq:ssum}
+p_{\bs}= \sum_{\b{t} \in \Sone} \!\! p_{\b{t}} - (n-1)p_{\zero,\ldots,\zero}.
+\end{equation}
+If this holds, then the random variable $D$ is well defined, and  
+the $\ol{S_D}$ are uniformly distributed given $D,S_D$ and $W$.
+
+We now show that \eqref{eq:ssum} follows from the assumed uniformity
+property that $P_{\bal(S_i,S_j) W | \ol{S_{i,j}} \!=\!\ol{\bs_{i,j}}} =
+P_{\unif} \cdot P_{W | \ol{S_{i,j}}\!=\!\ol{\bs_{i,j}}}$ for every
+non-degenerate linear function $\bal$ and any $i \neq j$. This is done
+by induction on $n$. The case $n = 2$ is covered by the proof of
+Theorem~\ref{thm:main}, and by induction assumption we may assume that
+it also holds for $n-1$.  Let us fix some $\bs \in \set{0,1}^{\ell n}$
+and $i \in \set{0,\ldots,n-1}$. It is easy to see that the assumed
+uniformity property on $S_0,\ldots,S_{n-1},W$ implies the
+corresponding uniformity property on $\overline{S_i},W$ when
+conditioning on $S_i = s_i$, and therefore, by induction assumption
+and ``multiplying out the conditioning",
+\begin{equation}
+p_{\bs} = \sum_{\b{t}} p_{\b{t}} -
+(n-2)p_{\zero,\ldots,\zero,s_i,\zero,\ldots,\zero} \,. \label{eq:texample}
+\end{equation}
+where the sum is over all $\b{t} \in \set{0,1}^{\ell n}$ with $t_i =
+s_i$ and $\overline{\b{t}_i} \in {\cal S}_1(\overline{\b{s}_i})$.
+Summing all the equations over $i \in
+\set{0,\ldots,n-1}$ yields
+\begin{equation} \label{eq:firststep}
+n \cdot p_{\bs} = 2 \!\! \sum_{\b{t} \in \Stwo} \!\! p_{\b{t}} - (n-2) \!\!
+\sum_{\b{t} \in \Sone} \!\! p_{\b{t}} \,.
+\end{equation}
+
+By a similar reasoning we can also derive
+from the case $n=2$ that equations of type \eqref{eq:original} hold
+conditioned on the event that all but two of the $S_i$'s are zero. More
+formally, we have that for all $i < j \in \set{0,\ldots,n-1}$,
+\begin{equation}\label{eq:zeros}
+p_{\zero,\ldots,\zero,s_i,\zero,\ldots,\zero,s_j,\zero,\ldots,\zero} =
+p_{\zero,\ldots,\zero,s_i,\zero,\ldots,\zero} +
+p_{\zero,\ldots,\zero,s_j,\zero,\ldots,\zero} - p_{\zero,\ldots,\zero}.
+\end{equation}
+Summing these equations over all $i < j \in \set{0,\ldots,n-1}$
+yields
+\begin{equation} \label{eq:twocase}
+\sum_{\b{t} \in \Stwo} p_{\b{t}} = (n-1) \!\! \sum_{\b{t} \in \Sone} \!\! p_{\b{t}} - {n \choose 2} p_{\zero,\ldots,\zero}
+\end{equation}
+We conclude by substituting (\ref{eq:twocase}) into
+(\ref{eq:firststep}) as follows
+\begin{align*}
+n \cdot p_{\bs} &= 2 \!\! \sum_{\b{t} \in \Stwo} \!\! p_{\b{t}} - (n-2) \!\! \sum_{\b{t} \in \Sone}
+\!\! p_{\b{t}}\\
+&= 2 \left( (n-1) \!\! \sum_{\b{t} \in \Sone} \!\! p_{\b{t}} - {n \choose 2}
+  p_{\zero,\ldots,\zero} \right) - (n-2) \!\! \sum_{\b{t} \in \Sone} \!\! p_{\b{t}}\\
+&= n \!\! \sum_{\b{t} \in \Sone} \!\! p_{\b{t}} - n (n-1) p_{\zero,\ldots,\zero},
+\end{align*}
+which is equation~(\ref{eq:ssum}) after dividing by $n$, and thus finishes
+the induction step and the claim for $\varepsilon = 0$. 
+
+
+\paragraph{\sc The General Case: }
+
+For the non-zero error case, we follow the above argument, but keep
+track of the error.  For technical reasons, we assume that the $S_i$'s
+are independent and uniformly distributed, and we assume that the
+assumed uniformity property with respect to \index{non-degenerate linear function}
+NDLFs holds conditioned on
+$\overline{S_{i,j}}=\overline{\b{s}_{ij}}$ for {\em any}
+$\overline{\b{s}_{ij}}$, not just on average, i.e., $ \dist{ P_{\bal(S_i,S_j) 
+W | \ol{S_{i,j}} = \ol{\b{s}_{ij}}} , P_{\unif} \cdot P_{W |
+  \ol{S_{i,j}}=\ol{\b{s}_{ij}} } } \leq \nu$ for any
+$\overline{\b{s}_{ij}} \in \set{0,1}^{\ell(n-2)}$.  We show at the end
+of the proof how to argue in general.  Write
+$$
+\delta_{\b{s}} = \big|\sum_{\b{t} \in \Sone} \!\! p_{\b{t}} - (n-1)p_{\zero,\ldots,\zero} - p_{\bs}\big|
+$$ 
+such that~\eqref{eq:ssum} holds up to the error $\delta_{\b{s}}$. Note that $\delta_{\bs}$ depends on $w$; we also write $\delta_{\bs}(w)$ to make this dependency explicit. We will argue, following the induction proof, that 
+$$
+\sum_{w,\bs} \delta_{\bs}(w) \leq n(n-1)\cdot2^{2\ell} \cdot \nu = \varepsilon \, .
+$$ 
+The proof can then be completed analogue to the proof of Theorem~\ref{thm:main} by ``correcting" the values for $P_{S_0 \ldots S_{n-1}DW}$'s appropriately. 
+
+By the proof of Theorem~\ref{thm:main}, the claimed inequality holds in case $n = 2$. For the induction step, note that by induction assumption,~\eqref{eq:texample} holds up to $\delta_{\overline{\b{s}_i}}(w) P_{S_i}(s_i)$ where 
+$$
+\sum_{w,\overline{\b{s}_i}} \delta_{\overline{\b{s}_i}}(w) \leq (n-1)(n-2)\cdot2^{2\ell} \cdot \nu \, .
+$$
+Furthermore, from the case $n=2$ it follows that Equation~\eqref{eq:zeros} holds up to $\delta_{s_i,s_j}(w) P_{\overline{S_{ij}}}(\zero\cdots\zero)$, where 
+$$
+\sum_{w,s_i,s_j} \delta_{s_i,s_j}(w) \leq 2^{2\ell+1}\cdot\nu
+$$ 
+and, by the additional assumption posed on the $S_i$'s, $P_{\overline{S_{ij}}}(\zero\cdots\zero) = 2^{-(n-2)\ell}
+$.
+It follows that~\eqref{eq:ssum} holds up to 
+$$
+\delta_{\bs} = \frac{1}{n}\Big(\sum_i\delta_{\overline{\b{s}_i}}P_{S_i}(s_i)+2\sum_{i<j}\delta_{s_i,s_j}P_{\overline{S_{ij}}}(\zero\cdots\zero)\Big)
+$$ 
+such that 
+\begin{align*}
+\sum_{w,\bs} \delta_{\bs}(w) &= \frac{1}{n}\Big( \sum_i \sum_{w,\overline{\bs_i}}\delta_{\overline{\b{s}_i}}(w) \sum_{s_i}P_{S_i}(s_i) + 2\sum_{i<j} \sum_{\overline{\bs_{ij}}}\sum_{w,s_i,s_j}\delta_{s_i,s_j}(w) P_{\overline{S_{ij}}}(\zero\cdots\zero) \Big) \\
+&\leq (n-1)(n-2)\cdot2^{2\ell} \cdot \nu + (n-1) \cdot 2^{(n-2)\ell} \cdot 2^{2\ell+1} \cdot 2^{-(n-2)\ell} \cdot \nu \\[1ex]
+&= \big( (n-1)(n-2) \cdot2^{2\ell} + 2\cdot (n-1) \cdot 2^{2\ell} \big) \cdot \nu \\[1ex]
+&\leq n(n-1) \cdot 2^{2\ell} \cdot \nu = \varepsilon \, .
+\end{align*}
+
+It remains to argue the case where the $S_i$'s are not independent
+uniformly distributed and/or the assumed uniformity property holds
+only on average over the $\overline{\b{s}_{ij}}$'s.  We first argue
+that we may indeed assume without loss of generality that the $S_i$'s
+are random: We consider $\tilde{S}_0,\ldots,\tilde{S}_{n-1},\tilde{W}$
+defined as $\tilde{S}_i = S_i \oplus R_i$ and $\tilde{W} =
+[W,R_0,\ldots,R_{n-1}]$ for independent and uniformly distributed
+$R_i$'s in $\set{0,1}^{\ell}$.  It is easy to see that the assumed
+uniformity condition with respect to \index{non-degenerate linear function}
+NDLFs on $S_0,\ldots,S_{n-1},W$
+implies the corresponding uniformity condition on
+$\tilde{S}_0,\ldots,\tilde{S}_{n-1},\tilde{W}$ with the same ``error"
+$\nu$, and it is obvious that the $\tilde{S_i}$'s are independent and
+uniformly distributed.  Furthermore, it is easy to see that
+$\varepsilon$-sender-security for
+$\tilde{S}_0,\ldots,\tilde{S}_{n-1},\tilde{W}$ implies
+$\varepsilon$-sender-security for $S_0,\ldots,S_{n-1},W$ with the same
+$\varepsilon$. Thus it suffices to prove the claim for the case of
+random $S_i$'s.
+
+Finally, in order to reason that we may assume that the uniformity
+property holds conditioned on every $\overline{\b{s}_{ij}}$, where we
+now may already assume that the $S_i$'s are random due to the above
+observation, we again consider
+$\tilde{S}_0,\ldots,\tilde{S}_{n-1},\tilde{W}$ defined as above. It is
+not hard to verify that due to this randomization and since the
+$S_i$'s are random, the average near-uniformity of $\bal(S_i,S_j)$
+translates to a ``worst-case" near-uniformity of
+$\bal(\tilde{S}_i,\tilde{S}_j)$ with the same $\nu$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\OT in a Quantum Setting} \label{sec:quantumdoesnotwork}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As briefly mentioned in the introductory
+Section~\ref{sec:introtoNDLF}, the results of this chapter were
+originally motivated by the idea of using them to prove
+sender-security in the bounded-quantum-storage model of the
+\OT-protocol presented later in Chapter~\ref{chap:12OT}.  For this
+protocol, we can use a quantum \index{uncertainty relation}
+uncertainty relation to show a lower bound on the min-entropy of the
+$n$-bit string $X$ transmitted by the sender using a quantum encoding.
+
+If we had a quantum version of Theorem~\ref{thm:main} at hand, we
+could use privacy amplification against quantum adversaries
+(Theorem~\ref{thm:pasmooth}) to prove sender-security against
+quantum-memory-bounded receivers. Unfortunately, the example below
+shows that such a quantum version of Theorem~\ref{thm:main} cannot
+exist.
+
+In the case of a dishonest quantum receiver \dR, the final state of a quantum
+protocol for \RandOT is given by the ccq-state $\rho_{S_0 S_1 \dR}$.
+The condition for $\varepsilon$-sender-security given in
+Definition~\ref{def:Rl12OT} requires the existence of a random
+variable $D \in \set{0,1}$ such that
+$$
+  \dist{ \rho_{S_{1-D} S_D D \dR} , \id \otimes \rho_{S_D
+      D \dR} } \leq \eps \, .
+$$
+This coincides with the classical Definition~\ref{def:RandOT},
+except that the dishonest receiver's output is a quantum state, and
+closeness is measured in terms of the trace-norm distance.
+
+A quantum analogue of Theorem~\ref{thm:main} would state that this
+condition is fulfilled if for every \index{non-degenerate linear function}
+NDLF $\bal$,
+$$
+  \dist{ \rho_{\bal(S_0,S_1) \dR} , \id \otimes \rho_{\dR} } \leq
+  \eps' \, 
+$$
+where $\eps'$ is comparable to the classical parameter $\eps/2^{2
+\ell+1}$.
+
+Consider now the following example for \OT of bits $B_0,B_1$. We define the
+ccq-state $\rho_{B_0 B_1 \dR}$ as follows: Let
+\[ \begin{split}
+\rho_{B_0 B_1 \dR} \assign \frac{1}{4} \bigl( &\proj{00} \otimes
+  \proj{0} \, + \, \proj{11} \otimes \proj{1} \\ 
++ &\proj{01} \otimes \proj{+} \, + \, \proj{10}
+  \otimes \proj{-} \bigr), 
+\end{split} \]
+where $\proj{+}$ and $\proj{-}$ are the projectors onto the states $\ket{+} \assign
+\ket{0}_\times = \frac{\ket{0}+\ket{1}}{\sqrt{2}}$ and $\ket{-}
+\assign \ket{1}_\times= \frac{\ket{0}-\ket{1}}{\sqrt{2}}$.
+
+For this state, it is clear that the XOR $B_0 \oplus B_1$ is perfectly
+hidden from the dishonest receiver holding $\rho_{\dR}$, i.e.
+\[
+\dist{ \rho_{(B_0 \oplus B_1) \dR} , \id \otimes \rho_{\dR} } = 0 \, .
+\]
+On the other hand, $\dR$ can determine the bit of his choice by
+measuring in the Breitbart basis $\set{\cos(\pi/8) \ket{0} +
+  \sin(\pi/8) \ket{1}, \, \sin(\pi/8) \ket{0} - \cos(\pi/8) \ket{1}}$
+if he is interested in the first bit, or by measuring in the Breitbart
+basis rotated by 45 degrees if he wants to obtain the second bit. It
+is easy to see that such a measurement succeeds in yielding the
+correct bit with probability $\cos(\pi/8)^2 \approx 0.85$. This
+precludes the existence of a pointer variable $D \in \set{0,1}$ such
+that perfect sender-security in the sense of
+Definition~\ref{def:Rl12OT} holds.
+
+It is unclear how that difficulty can be overcome, but it is clear
+from the simple example above, that a statement like in
+Theorem~\ref{thm:main} with comparable parameters cannot hold.
+Therefore, the alternative approach via the 
+\index{min-entropy splitting lemma}entropy-splitting
+Lemma~\ref{lemma:ESL} (outlined at the end of Section~\ref{sec:UOT})
+will be taken in Chapter~\ref{chap:12OT} to show sender-security.
+
+\index{sender-security!of classical \OT|)}
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \section{Conclusion}\label{sec:Conclusion}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% We have established a characterization of the obliviousness condition
+%% for a randomized version of \lStringOT 
+%% (Theorem~\ref{thm:main}).  Using this characterization in combination
+%% with a composition result about strongly \univ hash functions
+%% (Proposition~\ref{prop:balanced->u2}), it follows by a very simple
+%% argument that when starting with a $2n$-bit string $X$ with enough
+%% collision entropy, arbitrarily splitting up %the bit positions of 
+%% $X$ into two $n$-bit strings $X_0,X_1$ followed by strongly \univ
+%% hashing yields obliviousness as required by a \lStringOT.  This allows
+%% for easy analyses whenever this design principle is used or can be
+%% applied, like reductions of \lStringOT to weaker flavors or also in
+%% other contexts like in a computational setting when unconditional
+%% obliviousness is required.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

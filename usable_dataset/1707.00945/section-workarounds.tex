@@ -1,0 +1,310 @@
+\section{Problems and Workarounds}
+\label{sec:workarounds}
+In this section, we describe the perils and difficulties that we
+identified during verification of SPARK programs. We use the following nomenclature:
+\begin{itemize}
+\item \textbf{False Positive} denotes a failing check (failed VC) in static analysis % no comma
+  which would not fail in any execution on the target, i.e., a false alarm.
+\item \textbf{False Negative} denotes a successful check (discharged VC) in static
+  analysis which % no comma
+  would fail in at least one execution on the target, i.e., a missed
+  failure.
+\end{itemize}
+
+\subsection{How to Miss Errors}%not bugs. failure=when it shows up, infection=when it deviates from what it should be, defect=where it is created, the code 
+There are a few situations in which static analysis can miss run-time
+exceptions, which in a SPARK program inevitably ends in abnormal
+program termination. Before we show these unwanted situations, we have to
+point out one important property of a deductive verification approach: Proofs
+build on each other. Consider the following example (results of static
+analysis given in comments):
+\begin{lstlisting}[name=proofdep]
+  a := X / Z; -- medium: division check might fail
+  b := Y / Z; -- info: division check proved
+\end{lstlisting}  
+The analyzer reports that the check in line 2 cannot fail, although it
+suffers from the same defect as line 1. However, when the run-time
+check at line 1 fails, then line 2 cannot be reached with the
+offending value of \lstinline$Z$, therefore line 2 is
+not a False Negative, unless exceptions have been wrongfully disabled.
+
+\textbf{Mistake 1: Suppressing False Positives.} When a developer
+comes to the conclusion that the analyzer has generated a False
+Positive (e.g., due to insufficient knowledge on something that is
+relevant for a proof), then it might be justified to suppress the
+failing property. However, we experienced cases where this has generated
+False Negatives which where hiding (critical) failures.  Consider the
+following code related to % the - intentional "Russian bug". Like break must to
+the GPS: % protocol parser:
+%\vspace*{-3mm}
+\begin{lstlisting}[name=missedbug,escapechar=\$]
+function toInt32 (b : Byte_Array) return Int_32 with Pre => b'Length = 4;
+procedure Read_From_Device (d : out Byte_Array) is begin
+  d := (others => 0); -- False Positive
+  pragma Annotate (GNATprove, False_Positive, "length check might fail", ...);
+end Read_From_Device;
+
+procedure Poll_GPS is
+  buf    : Byte_Array(0..91) := (others => 0);
+  alt_mm : Int_32;
+begin
+  Read_From_Device (buf);
+  alt_mm := toInt32(buf(60..64)); -- False Negative, guaranteed exception
+end Poll_GPS;
+\end{lstlisting}
+Static analysis found that the initialization of the array \lstinline$d$
+in line 3 could fail, but this is not possible in this context, and
+thus a False Positive\footnote{This particular case has been fixed in recent versions of GNATprove.}. The developer
+was therefore suppressing this warning with an annotation
+pragma. However, because proofs build on each other, a severe defect
+in line 12 was missed. The array slice has an off-by-one error which
+\emph{guaranteed} failing the precondition check of
+\lstinline$toInt32$.  The reason for this False Negative is that
+everything after the initialization of \lstinline$d$ became virtually
+\emph{unreachable} and that all following VCs consequently have been discharged.  
+In general, a False Positive may exclude some or all execution paths
+for its following statements, and thus
+hide (critical) failure. We therefore recommend to avoid suppressing False Positives, and either
+leave them visible for the developer as warning signs, or even better, rewrite the code in a prover-friendly manner following the tips in Section~\ref{sec:recommendations}.
+
+\textbf{Mistake 2: Inconsistent Contracts.} Function contracts act as
+barriers for propagating proof results (besides inlined
+functions), that is, the result of a VC in one subprogram cannot affect the result of another in a different subprogram. However, these barriers can be broken when function
+contracts are inconsistent, producing False Negatives by our definition. One way to obtain inconsistent contracts, is writing a postcondition which itself contains a failing VC (line 2):
+% in the following code, we cannot write an expression function to save space, since the example does not work anymore, then.
+\begin{lstlisting}[name=postvc]
+function f1 (X : Integer) return Integer 
+  with Post => f1'Result = X + 1 is -- overflow check might fail
+begin 
+  return X;
+end f1;
+
+procedure Caller is
+   X : Integer := Integer'Last;
+begin
+   X := X + 1; -- overflow check proved.
+   X := f1(X);
+end Caller;
+\end{lstlisting}
+Clearly, an overflow must happen at line 10, resulting in
+an exception. The analyzer, however, proves absence of overflows in
+\lstinline$Caller$. The reason is that in the Why3 backend, the
+postcondition of \lstinline$f1$ is used as an axiom in the analysis of
+\lstinline{Caller}. The resulting theory for \lstinline{Caller} is an
+inconsistent axiom set, from which (\emph{principle of explosion})
+anything can be proven, including that false VCs are true. In such
+circumstances, the solver may
+%when not given enough time to decide the goal, 
+also produce a \emph{spurious} counterexample. 
+%Therefore, this is a situation which is not obvious, but can
+%refute results and therefore must be avoided.
+
+In the example above, the developer gets a warning for the
+inconsistent postcondition and can correct for it, thus keep barriers
+intact and ensure that the proofs in the caller are not
+influenced. However, if we change line 4 to \lstinline{return X+1}, then the
+failing VC is now indicated in the body of \lstinline{f1}, and -- since the
+proofs build on each other -- the postcondition is verified and a
+defect easily missed. Therefore, failing VCs within callees may also
+refute proofs in the caller (in contrast to execution semantics) and
+have to be taken into account. Indeed, the textual report of GNATprove (with flag
+\texttt{--assumptions}) indicates that AoRTE in \lstinline{Caller} depends on both
+the body and the postcondition of \lstinline{f1}, and therefore the reports have to be studied with great care to judge the verification output.
+%Not a fix: let GNATprove use 
+%mathematical semantics as overflow mode, which might be more intuitive for
+%some developers and avoids the above problem. The failing VC disappears at all,
+%but the false negative remains.
+Finally, note that the same principle applies for assertions and loop invariants.
+
+\textbf{Mistake 3: Forgetting the RTS.} Despite proven AoRTE, one
+procedure which rotates the frame of reference of the gyroscope
+measurements was sporadically triggering an exception after a
+floating-point multiplication. The situation was eventually captured
+in the debugger as follows:
+\begin{lstlisting}[name=subnormal]
+-- angle = 0.00429, vector (Z) = -2.023e-38
+result(Y) := Sin (angle) * vector(Z);
+-- result(Y) = -8.68468736e-41 => Exception
+\end{lstlisting}
+%The reader who is familiar with floating-point implementations, might
+% notice that 
+Variable \lstinline$result$ was holding a \emph{subnormal} floating-point number,
+roughly speaking, an ``underflow''. GNATprove models floating-point
+computations according to IEEE-754, which requires support for
+subnormals on the target processor. Our processor's FPU indeed
+implements subnormals, but the RTS, part of which describes
+floating-point capabilities of the target processor, was incorrectly
+indicating the opposite\footnote{This also has been fixed in recent
+  versions of the embedded ARM RTS.}. As a result, the language-defined
+float validity check occasionally failed (in our case when the glider
+was resting level and motionless at the ground for a longer period of
+time). 
+%In other words, the RTS was incorrectly
+%  describing the processor capabilities, which created a discrepancy
+%  between what is statically analyzed and what is being executed. 
+  Therefore, the RTS must be carefully configured and checked manually
+  for discrepancies, otherwise proofs can be refuted since static
+  analysis works with an incorrect premise.
+
+% \subsection{Bad Patterns}
+% We now reflect on two situations that may occur when developers try to
+% achieve successful verification with inappropriate methods.
+\textbf{Mistake 4: Bad Patterns.} % good move. Indirectly we miss errors by that.
+\emph{Saturation} may seem like an effective workaround to ensure
+overflows, index checks and so on cannot fail, but it usually hides
+bigger flaws. Consider the following example, also from the GPS protocol parser:
+\begin{lstlisting}[name=saturate]
+subtype Lat_Type is Angle_Type range -90.0 * Degree .. 90.0 * Degree;
+Lat : Lat_Type := Dim_Type (toInt32 (data_rx(28..31))) * 1.0e-7 * Degree;
+\end{lstlisting}
+The four raw bytes in \lstinline$data_rx$ come from the GPS device and represent a scaled float, which could in
+principle carry a value exceeding the latitude range of $[-90,90]$
+Degree. To protect against this sort of error, it is tempting to
+implement a function (even a generic) of the form
+\lstinline$if X > Lat_Type'Last then X := Lat_Type'Last else...$ that limits the value to the available range, and apply it to all
+places where checks could be failing. However, we found that almost every
+case where saturation was applied, was masking a
+boundary case that needs to be addressed. In this example, we needed
+handling for a GPS that yields faulty values. 
+In general, such cases usually indicate a missing software requirement.
+
+% \textbf{Misinterpreting Positives} can lead to wrong counteractions.
+% The analyzer indicated a possible failure in $\sqrt{1-\sin(a)\cos(b)}$
+% when the argument of \texttt{Sqrt} becomes negative. However, this is
+% not possible, since sine and cosine are always $\in[-1,1]$. The solver
+% could only prove that $\sin()\cdot\cos()\in[-2,2]$. The developer has
+% therefore incorrectly assumed that either the solver did not have
+% enough precision, or that indeed a value beyond $[-1,1]$ can be
+% reached due to rounding errors, and fixed it like follows:
+% $\sqrt{1-Sat(\sin(a)\cos(b))}$, where \texttt{Sat} was again
+% saturating to $[-1,1]$ and stating this fact as a postcondition. After
+% this fix, the analyzer could prove AoRTE. But the reason was not
+% imprecision or rounding errors, but not giving the solver enough time.
+% This particular change reduced the complexity for the solver, which is
+% why it could be proven. In summary, the developer was not considering
+% that Positives may be False Positives due to resource limitations, and
+% made unnecessary changes to a working code base, which itself could
+% introduce new problems. A better approach is to query the solver
+% knowledge and add user lemmas to add the missing knowledge or speed up
+% the analysis.
+
+
+\subsection{Design Limitations}
+We now describe some cases where the current version of the SPARK~2014
+\emph{language} -- not the static analysis tool -- imposes limitations.
+
+% class-wide in_out "Driver.Coefficients" must also be a class-wide input of overridden subprogram "read_Measurement" at generic_sensor.ads:53, instance at line 15 (SPARK RM 6.1.6); See: http://docs.adacore.com/spark2014-docs/html/lrm/subprograms.html
+
+\textbf{Access types} (pointers) are forbidden in SPARK, however, low-level
+drivers heavily rely on them. One workaround is to hide those types in
+a package body that is not in SPARK, and only provide a SPARK specification. 
+Naturally, the body cannot be verified, but at least its subprograms 
+can be called from SPARK subprograms. Sometimes it
+is not possible to hide access types, in particular when packages use
+them as interface between each other. This is the case for our SD card
+driver, which is interfaced by an implementation of the FAT filesystem through access types. Both
+are separate packages, but the former one exports restricted types and
+access types which are used by the FAT package, thus requiring that wide parts of the FAT package 
+are written in Ada instead of SPARK.
+
+
+As a consequence, access types are sometimes demanding
+to form larger monolithic packages, here to combine SD card driver and FAT filesystem
+into one (possibly nested) package.
+
+\textbf{Polymorphism} is available in SPARK, but its use is
+limited as a result of the access type restriction. Our message
+queue between flight-critical and mission-critical task was planned to
+hold messages of a polymorphic type. However, without access types the
+only option to handover messages would be to take a deep copy and
+store it in the queue. However, the queue itself 
+is realized with an array and can hold only objects of the
+same type. This means a copy would also be an upcast to the base
+type. This, in turn, would loose the components specific to the derived
+type, and therefore render polymorphism useless. As a workaround, we
+used mutable variant records.
+
+\textbf{Interfaces.} Closely related to polymorphism, we intended to implement sensors as polymorphic types. That is, specify an abstract sensor interface that must be overridden by each sensor implementation. 
+%The idea was that the estimator could start sensor measurements by iterating over a list of sensors without knowing the details of each sensor implementation.
+Towards that, we declared an abstract tagged type %\texttt{Sensor\_Tag} 
+with abstract primitive methods denoting the interface that a specific sensor must implement. %\texttt{start\_Measurement}. 
+However, when we override the method for a sensor implementation, such as the IMU, SPARK requires specifying the global dependencies of the overriding IMU implementation as class-wide global dependencies of the abstract %\texttt{start\_Measurement} 
+method (SPARK RM 6.1.6). This happens even without an explicit \texttt{Global} aspect.
+%
+%\todo{Q: why does it want that? Is it because we have added aspect 'Global' to the abstract type? If yes, than we have a point, because we can say that flow contracts cannot be used in a sensible way with polymorphism, i.e., a conceptual incompatibility in the language. If this happens even without us wanting this, then the language must be questioned for this decision. However, if this comes from the LSP (well...but data flows are not strictly within the scope of LSP...maybe AdaCore went overboard then), then this means we question LSP. And that's probably not a good idea.} This would break the OOP concept of abstraction, since the abstract sensor type would require knowing the details of all possible implementations. 
+As workaround, we decided to avoid polymorphism and used simple inheritance without overriding methods.
+% Wish: For the future, SPARK could automatically detect class-wide dependencies without the need of specifying them explicitly.
+
+\textbf{Dimensioned Types.}
+Using the GNAT dimensionality checking system in SPARK, had revealed two missing features. Firstly, in the current stable version of the GNAT compiler, it is not possible to specify general operations on dimensioned types that are resolved to specific dimensions during compilation.
+% preserve their specific dimensionality.
+% View conversion of types: https://www2.adacore.com/gap-static/GNAT_Book/html/aarm/AA-4-6.html
+%The parameters of subprograms must be specified explicitly 
+%MBe: Something is missing here. Why does it say "class-wide"? 
+% The dimensionality system is not laid out as derived types (they would be incompatible then), therefore class-wide types don't work (I think).
+% If we would re-write everything, then class-wide types would be available, but dispatching the only way I can see to get this working. 
+% Then, however, we would need a separate overriding integrate operation for each new type. 
+For example, we could not write a generic time integrator function for the PID controller that multiplies any dimensioned type with a time value and returns the corresponding unit type. Therefore, we reverted to dimensionless and unconstrained floats within the generic PID controller implementation. 
+% an attempt to rewrite this a bit:
+Secondly, it is not possible to declare vectors and matrices with mixed subtypes, which would be necessary to retain the dimensionality information throughout vector calculations (e.g., in the Kalman Filter). As a consequence, we either have split vectors into their components, or reverted to dimensionless and unconstrained floats. %Computations involving the state vector were split into their individual components to make use of the dimensioned types.\todo{are they verified, then?}
+As a result of these workarounds, %of reverting to dimensionless and unlimited Floats, 
+numerous overflow checks related to PID control and Kalman Filter could not be proven (which explains more than \SI{70}{\percent} of our failed floating-point VCs). %\todo{We could have used limited dimensionless floats.}
+
+
+
+\subsection{Solver Weaknesses}
+We now summarize some frequent problems introduced by the current
+state of the tooling. %Many of them can be mitigated by
+%refactoring, or by providing more information to the solver. 
+%We mention the most frequent here, and how they can be addressed. 
+%A complete list of current tooling limitations is given here:
+%\url{http://docs.adacore.com/spark2014-docs/html/ug/en/appendix/gnatprove_limitations.html}
+
+The \texttt{'Position} attribute of a record allows evaluating the
+position of a component in that record.
+% This is useful for low-level protocols or device drivers. 
+However, GNATprove has no precise information
+about this position, and therefore proofs building on that might fail.
+
+Another feature that is used in driver code, are
+\emph{unions}, which provide different views on the
+same data. GNATprove does
+not know about the overlay and may generate False Positives for
+initialization, as well as for proofs which build on the relation
+between views.
+
+% When \emph{mutable} variant records are copied (e.g., used as
+% replacement for polymorphism), then the target object must also be
+% mutable.  Currently, GNATprove does not infer mutability of the target
+% object, when it is an output parameter of a subprogram call. Instead,
+% a precondition (\lstinline$not msg'Constrained$) has to be added to
+% the subprogram.
+
+We had several False Positives related to possibly uninitialized
+variables.  SPARK follows a strict data initialization policy. Every
+(strict) output of a subprogram must be initialized. In the current version,
+GNATprove only considers initialization of arrays as complete when done in a single
+statement. This generates warnings when an array is initialized in
+multiple steps, e.g., through loops, which we have suppressed.
+
+  % not discussed here: loop invariants.
+  % \item Loop invariants: not used; generated frame conditions seem strong enough
+  %   \begin{itemize}
+  %   \item TODO: inspect all our loops; see if there are failing checks around
+  %   \end{itemize}  
+  
+
+% \subsection{Others }
+%  \textbf{Things to test:}
+%   \begin{itemize}
+%   \item Type invariant: TODO, see if we could have used it. outside of the immediate scope of a type with an invariant, only values of this type are allowed as given by its invariant
+%     \begin{itemize}
+%     \item not used. 
+%     \end{itemize}
+%   \end{itemize}
+
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

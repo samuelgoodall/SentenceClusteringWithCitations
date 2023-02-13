@@ -1,0 +1,323 @@
+\section{Experiments}
+In this section, we introduce our experimental setup and quantitative results of the proposed methods \name-S, \name-F, and \name-I, compared with the HSJA attack\cite{chen2019hopskipjumpattack}, which is the-state-of-the-art boundary-based blackbox attack.
+Here we focus on the strongest baseline HSJA, which outperforms all of other Boundary Attack~\cite{brendel2017decision}, Limited Attack~\cite{ilyas2018black} and Opt Attack~\cite{cheng2018query} by a substantial margin.
+We also show two sets of qualitative results for attacking two real-world APIs with the proposed methods.
+\subsection{Datasets and Experimental Setup}
+\paragraph{Datasets}
+We evaluate the attacks on two offline models on ImageNet\cite{deng2009imagenet} and CelebA\cite{liu2018large} and two online face recognition APIs Face++\cite{facepp-compare-api} and Azure\cite{azure-detect-api}. We use a pretrained ResNet-18 model as the target model for ImageNet and fine-tune a pretrained ResNet-18 model to classify among 100 people in CelebA. We randomly select 50 pairs from the ImageNet/CelebA validation set that are correctly classified by the model as the source and target images. 
+\paragraph{Attack Setup}
+Following the standard setting in \cite{chen2019hopskipjumpattack}, we use $\xi_t=||\xadv{t-1}-{\bf x}_{tgt}||_2/\sqrt{t}$ as the size in each step towards the gradient. We use $\delta_t=\frac1m ||\xadv{t-1}-{\bf x}_{tgt}||_2$ as the perturbation size and $B=100$ queries in the Monte Carlo algorithm to estimate the gradient, where $m=3\times224\times224$ is the input dimension in each Monte Carlo step.
+
+We provide two \textbf{evaluation metrics} to evaluate the attack performance. The first is the average Mean Square Error (MSE) curve between the target image and the adversarial example in each step, indicating the magnitude of perturbation. The smaller the perturbation is, the more similar the adversarial example is with the \targetimage, thus providing better attack quality.
+The second is the attack success rate based on a limited number of queries, where the `success' is defined as reaching certain specific MSE threshold. The less queries we need in order to reach a certain perturbation threshold, the more efficient the attack method is.
+
+% In CIFAR, we use a factor of 2 in resize and DCT, which gives a 768 dimensional subspace. We extract the top 768 major components in PCA.
+As for the dimension-reduced subspace, we use the dimension reduction factor $r=4$ 
+% \bo{define this thing? give a notation maybe? check the statements to be rigrous!!}\Xiaojun{defined this in section 4.1, 4.2}
+in \emph{spatial transformed} and \emph{low frequency} subspace, which gives a 9408 dimensional subspace.
+In order to generate the \emph{Intrinsic Component Subspace}, we first generate a set of image gradient vectors on the space. We average over the gradient of input w.r.t. five different pretrained substitute models - ResNet-50\cite{he2016deep}, DenseNet-121\cite{huang2017densely}, VGG16\cite{simonyan2014very}, WideResNet\cite{zagoruyko2016wide} and GoogleNet\cite{szegedy2015going}. We use part of the ImageNet validation set (280000 images) to generate the gradient vectors. Finally we adopt the scalable approximate PCA algorithm\cite{halko2011finding} to extract the top 9408 major components as the intrinsic component subspace.
+
+% \bo{in this above section, please separately discuss the setting for the three methods. this is an important part.}
+
+% We use the approximate PCA algorithm \Xiaojun{cite} to extract the top 9408 major components to improve efficiency.
+% In order to generate the gradient vectors for PCA, we will average over the gradient of input w.r.t. five different pretrained substitute models - ResNet-50, DenseNet-121, VGG16, WideResNet and GoogleNet\Xiaojun{cite}. We use part of the ImageNet validation set (280000 images) to generate the gradient vectors.
+% Other attack parameter setting is the same as that in \cite{chen2019hopskipjumpattack}.
+
+\subsection{Commercial Online APIs}
+Various companies provide commercial APIs (Application Programming Interfaces) of trained models for different tasks such as face recognition. Developers of downstream tasks can pay for the services and integrate the APIs into their applications. Note that although typical platform APIs provide the developers the confidence score of classes associated with their final predictions, the end-user using the final application would not have access to the scores in most cases. For example, some of Face++'s partners use the face recognition techniques for log-in authentication in mobile phones~\cite{facepp-partner}, where the user only knows the final decision (whether they pass the verification or not).
+
+We choose two representative platforms for our real-world experiments based on only the final prediction. The first is Face++ from MEGVII\cite{facepp-compare-api}, and the second is Microsoft Azure\cite{azure-detect-api}. Face++ offers a `compare' API~\cite{facepp-compare-api} with which we can send an HTTPS request with two images in the form of byte strings, and get a prediction confidence of whether the two images contain the same person. In all the experiments we consider a confidence greater than 50\% meaning the two images are tagged as the same person. Azure has a slightly more complicated interface. To compare two images, each image first needs to pass a `detect' API call~\cite{azure-detect-api} to get a list of detected faces with their landmarks, features, and attributes. Then the features of both images are fed into a `verify' function~\cite{azure-verify-api} to get a final decision of whether they belong to the same person or not. The confidence is also given, but we do not need it for our experiments since we only leverage the binary prediction for practical purpose.
+
+In the experiments, we use the examples in Figure~\ref{fig:src_tgt_imgs} as \sourceimage and \targetimage. More specifically, we use a man-woman face as the source-target pair for the `compare' API Face++, and we use a cat-woman face as the pair for the `detect' API Azure face detection.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{.28\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figs/resized_f6.png}
+  \caption{Person 1}
+  \label{fig:tgt_img}
+\end{subfigure}
+\begin{subfigure}[t]{.28\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figs/resized_m3.png}
+  \caption{Person 2}
+  \label{fig:src_img_facepp}
+\end{subfigure}
+\begin{subfigure}[t]{.28\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figs/resized_n3.png}
+  \caption{No-face}
+  \label{fig:src_img_azure}
+\end{subfigure}
+\caption{
+The source and target images for online API experiments. All images are resized to $3\times 224\times 224$. 
+Image~\ref{fig:tgt_img} is the \targetimage for both APIs. Image~\ref{fig:src_img_facepp} is the \sourceimage for attacking Face++ `compare' API, and \ref{fig:src_img_azure} the \sourceimage for Azure `detect' API. }
+\label{fig:src_tgt_imgs}
+% \vspace{-0.5cm}
+\end{figure}
+
+
+\begin{figure*}[htpb]
+\begin{subfigure}[t]{0.2465\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/multi_imagenet_mean.pdf}
+    \caption{The MSE vs. query number on ImageNet.}
+    \label{fig:result-imagenet}
+\end{subfigure}
+\hspace{1mm}
+\begin{subfigure}[t]{0.231\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/multi_imagenet_success.pdf}
+    \caption{The attack success rate with threshold $10^{-3}$ on ImageNet.}
+    \label{fig:result-imagenet-sr}
+\end{subfigure}
+\hspace{1mm}
+\begin{subfigure}[t]{0.2465\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/multi_celeba_mean.pdf}
+    \caption{The MSE vs. query number on CelebA.}
+    \label{fig:result-celeba}
+\end{subfigure}
+\hspace{1mm}
+\begin{subfigure}[t]{0.235\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/multi_celeba_success.pdf}
+    \caption{The attack success rate with threshold $10^{-5}$ on CelebA.}
+    \label{fig:result-celeba-sr}
+\end{subfigure}
+\caption{The attack results on ImageNet and CelebA datasets.}
+\label{fig:results}
+\end{figure*}
+
+% \subsection{Optimizations for Experiments}
+\paragraph{Discretization Optimization for Attacking APIs}
+The attack against online APIs suffers from the problem of `discretization'. That is, in the attack process we assume the pixel values to be continuous in $[0,1]$, but we need to round it into 8-bit floating point in the uploaded RGB images when querying the online APIs.
+% The pixel values of each channel in RGB images are 8-bit floating point numbers and the pixel array of an image takes the value of $\mathbb{D}^m \in \{0,\frac{1}{255},\ldots,\frac{254}{255},1\}^m$. There are at most $256^3$ colors possible.
+% A typical computer, on the other hand, has 32-bit or 64-bit system. So the querying samples generated by boundary-based attacks with small perturbation around the decision boundary for gradient estimation are likely to contain values that cannot be represented with only 8 bits. We refer to these 32-bit or 64-bit pixel values as `continuous' and the 8-bit images as `discrete' in our discussion for simplicity.
+% This is not a problem for offline experiments, since a local machine learning model for image recognition does not set constraint on the input range and it can work as normal on a `continuous image'.
+% However, the difference between value ranges incurs a problem for attacking online APIs. The commercial platforms require the uploaded images to have valid pixel values, so the perturbed \queryimages have to be rounded.
+This would cause error in the Monte Carlo gradient estimation format in Equation~\ref{eq:MC_gradient_estimation} since the real perturbation between the last \boundaryimage and the new \queryimage after rounding is different from the weighted perturbation vector $\delta {\bf u}_b$. 
+
+In order to mitigate this problem, we perform discretization locally. Let $P_{rd}$ be a projection from a continuous image $\bf x_c$ to a discrete image $\bf x_d = P_{rd}(\bf x_c)$. Let $\delta {\bf u'}_b = P_{rd}(\bf x+\delta {\bf u}_b) - x$, the new gradient estimation format becomes:
+\begin{align}
+    \widetilde{\nabla f} &= \frac1B \sum_{i=1}^B \phi(P_{rd}({\bf x}+\delta {\bf u}_b)) {\bf u'}_b.
+\end{align}
+
+% \bo{this section should be moved to sub of commercial APIs maybe}\Huichen{Ok. Done.}
+
+% One obstacle in applying \Xiaojun{our approach} to attack real-world machine learning system is the problem of \emph{discretization}. That is to say, during our attack process the adversarial examples are considered in the continuous space $\mathbb{R}^m$ (or $[0,1]^m$ if we bound the pixel values), but in reality image pixel values are rounded to an 8-bit float number $\mathbb{D}^m = \{0,\frac{1}{255},\ldots,\frac{254}{255},1\}^m$. 
+% Boundary-based attack relies on querying with small perturbation around the decision boundary to estimate the gradient, so it is sensitive to the problem of discretization.
+
+% In order to mitigate the effect of rounding, we propose a pipeline to discretize the subspace from which we are sampling. In particular, suppose the \advimage at the current step is $\xadv{t}$ and we originally want to sample from the subspace ${\bf u} \sim \text{span}(W)$. In a discretized setting, we will discretize $\text{span}(W)$ into $Discr(\text{span}(W)\big|\xadv{t})$ such that ${\bf u} \sim Discr(\text{span}(W)\big|\xadv{t})$ will satisfy:
+% \begin{align}
+%     \label{eqn:discr}
+%     \xadv{t}+\delta{\bf u} \in \mathbb{D}^m
+% \end{align}
+% The intuition of this approach is that Eqn.\ref{eqn:discr} ensures that our query to the model ($\phi(\xadv{t}+\delta{\bf u}_b$) will not be changed in the rounding process, so we can get a more accurate gradient estimation compared with that when we do not use the discretized subspace.
+
+\subsection{Experimental Results on Offline Models}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{results/multi_cifar_mean.pdf}
+%     \caption{CIFAR}
+%     \label{fig:result-cifar}
+% \end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{results/multi_cifar_success.pdf}
+%     \caption{CIFAR-success rate}
+%     \label{fig:result-cifar-sr}
+% \end{figure}
+
+% \begin{table*}[h]
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         naive/Resize768/DCT768/PCA768train & 0.01 & 0.001 & 0.0001 \\
+%         \hline
+%         5000 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 & 0.94 / 0.60 / 0.68 / 0.94 \\
+%         10000 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 \\
+%         20000 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 \\
+%         \hline
+%     \end{tabular}
+%     \caption{cifar}
+%     \label{tab:result-cifar}
+% \end{table*}
+
+% \begin{table*}[h]
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         naive/Resize9408/DCT9408/PCA9408 & 0.01 & 0.001 & 0.0001 \\
+%         \hline
+%         5000 & 0.76 / 0.86 / 0.86 / 0.86 & 0.16 / 0.40 / 0.42 / 0.36 & 0.02 / 0.08 / 0.06 / 0.04 \\
+%         10000 & 0.98 / 1.00 / 0.96 / 0.98 & 0.50 / 0.74 / 0.76 / 0.74 & 0.06 / 0.32 / 0.30 / 0.20 \\
+%         20000 & 1.00 / 1.00 / 1.00 / 1.00 & 0.84 / 0.98 / 0.96 / 0.98 & 0.28 / 0.70 / 0.66 / 0.68 \\
+%         \hline
+%     \end{tabular}
+%     \caption{imagenet}
+%     \label{tab:result-imagenet}
+% \end{table*}
+% \begin{table*}[h]
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         naive/Resize9408/DCT9408/PCA9408 & 0.01 & 0.001 & 0.0001 \\
+%         \hline
+%         5000 & 0.96 / 1.00 / 1.00 / 0.96 & 0.90 / 1.00 / 1.00 / 0.94 & 0.76 / 0.96 / 0.96 / 0.90 \\
+%         10000 & 1.00 / 1.00 / 1.00 / 1.00 & 0.98 / 1.00 / 1.00 / 1.00 & 0.90 / 1.00 / 1.00 / 1.00 \\
+%         20000 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 & 1.00 / 1.00 / 1.00 / 1.00 \\
+%         \hline
+%     \end{tabular}
+%     \caption{celeba}
+%     \label{tab:result-celeba}
+% \end{table*}
+
+% \begin{table}[!t]
+% 	\centering
+% 	\caption{imagenet}
+%     % \renewcommand\tabcolsep{2.9pt} % adjust the space between each column 
+%     \begin{threeparttable}
+% 	\begin{tabular}{clcccc}
+% 		\toprule
+% 	     & \textbf{MSE} & 0.01 & 0.001 & 0.0001 \\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}5000\end{sideways}} & naive & 0.76  & 0.16 & 0.02 \\
+% 		& Resize9408 & 0.86  & 0.40 & 0.08 \\
+% 		& DCT9408 & 0.86  & 0.42 & 0.06 \\
+% 		& PCA9408 & 0.86  & 0.36 & 0.04\\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}10000\end{sideways}} & naive & 0.98  & 0.50 & 0.06 \\
+% 		& Resize9408 & 1.00  & 0.74 & 0.32 \\
+% 		& DCT9408 & 0.96  & 0.76 & 0.30 \\
+% 		& PCA9408 & 0.98  & 0.74 & 0.20 \\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}20000\end{sideways}} & naive & 1.00 & 0.84 & 0.28 \\
+% 		& Resize9408 & 1.00 & 0.98 & 0.70 \\
+% 		& DCT9408 & 1.00 & 0.96 & 0.66 \\
+% 		& PCA9408 & 1.00 & 0.98 & 0.68 \\
+% 		\bottomrule
+% 	\end{tabular}%
+% 	\end{threeparttable}
+% 	\label{tab:result-imagenet}%
+% \end{table}%
+
+
+% \begin{table}[!t]
+% 	\centering
+% 	\caption{celeba}
+%     % \renewcommand\tabcolsep{2.9pt} % adjust the space between each column 
+%     \begin{threeparttable}
+% 	\begin{tabular}{clcccc}
+% 		\toprule
+% 	     & \textbf{MSE} & 0.01 & 0.001 & 0.0001 \\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}5000\end{sideways}} & naive & 0.96  & 0.90 & 0.76 \\
+% 		& Resize9408 & 1.00  & 1.00 & 0.96 \\
+% 		& DCT9408 & 1.00  & 1.00 & 0.96 \\
+% 		& PCA9408 & 0.96  & 0.94 & 0.90 \\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}10000\end{sideways}} & naive & 1.00  & 0.98 & 0.90 \\
+% 		& Resize9408 & 1.00  & 1.00 & 1.00 \\
+% 		& DCT9408 & 1.00  & 1.00 & 1.00 \\
+% 		& PCA9408 & 1.00  & 1.00 & 1.00 \\
+% 		\midrule
+% 		\multirow{4}[0]{*}{\begin{sideways}20000\end{sideways}} & naive & 1.00 & 1.00 & 1.00 \\
+% 		& Resize9408 & 1.00 & 1.00 & 1.00 \\
+% 		& DCT9408 & 1.00 & 1.00 & 1.00 \\
+% 		& PCA9408 & 1.00 & 1.00 & 1.00 \\
+% 		\bottomrule
+% 	\end{tabular}
+% 	\end{threeparttable}
+% 	\label{tab:result-celeba}
+% \end{table}%
+
+\begin{table*}[ht]
+  \centering
+  \caption{Attack success rate using different number of queries and different MSE thresholds.}
+%   \vspace{-0.2cm}
+    \renewcommand\tabcolsep{5pt} % adjust the space between each column 
+    \begin{threeparttable}
+    \begin{tabular}{l|l|cccc|cccc|cccc}
+    \toprule
+    &  & \multicolumn{4}{c|}{\# Queries = 5000} & \multicolumn{4}{c|}{\# Queries = 10000} & \multicolumn{4}{c}{\# Queries = 20000} \\
+    \cmidrule{2-6} \cmidrule{7-10} \cmidrule{11-14} 
+    & \makecell{MSE\\ threshold} & \makecell{HJSA} & \makecell{\\-S} & \makecell{\name\\-F} & \makecell{\\-I} & \makecell{HJSA} & \makecell{\\-S} & \makecell{\name\\-F} & \makecell{\\-I} & \makecell{HJSA} & \makecell{\\-S} & \makecell{\name\\-F} & \makecell{\\-I} \\ 
+    % \midrule
+    \cmidrule{1-2}\cmidrule{3-6} \cmidrule{7-10} \cmidrule{11-14} 
+%     \multirow{3}[0]{*}{Cifar10} 
+%     & 0.01 & 1.00 & 1.00 & 0.94 & 0.76 & 0.16 & 0.02 & 0.96 & 0.90 & 0.76  \\
+% 	& 0.001 & 1.00 & 1.00 & 0.60 & 0.86 & 0.40 & 0.08 & 1.00 & 1.00 & 0.96\\
+% 	& 0.0001 & 1.00 & 1.00 & 0.68 & 0.86 & 0.42 & 0.06 & 1.00 & 1.00 & 0.96\\
+% 	\midrule
+    \multirow{3}[0]{*}{ImageNet} 
+    & 0.01 & 0.76 & \bf 0.86 & \bf 0.86 & \bf 0.86 & 0.98 & \bf 1.00 & 0.96 & 0.98 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 \\
+	& 0.001 & 0.16 & 0.40 & \bf 0.42 & 0.36 & 0.50 & 0.74 & \bf 0.76 & 0.74 & 0.84 & \bf 0.98 & 0.96 & \bf 0.98 \\
+	& 0.0001 & 0.02 & \bf 0.08 & 0.06 & 0.04 & 0.06 & \bf 0.32 & 0.30 & 0.20 & 0.28 & \bf 0.70 & 0.66 & 0.68\\
+	\midrule
+    \multirow{3}[0]{*}{CelebA} 
+    & 0.01 & 0.96 & \bf 1.00 & \bf 1.00 & 0.96 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 \\
+	& 0.001 & 0.90 & \bf 1.00 & \bf 1.00 & 0.94 & 0.98 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 \\
+	& 0.0001 & 0.76 & \bf 0.96 & \bf 0.96 & 0.90 & 0.90 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 & \bf 1.00 \\
+    \bottomrule
+    \end{tabular}%
+    \end{threeparttable}
+  \label{tab:results}%
+\end{table*}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\linewidth]{results/process.pdf}
+    \caption{An example of attacking ImageNet trained model based on different subspaces.}
+    \label{fig:result-process}
+    \vspace{-0.5cm}
+\end{figure}
+% \Xiaojun{Talk about cifar}CIFAR: Figure\ref{fig:result-cifar}; maybe remove it?
+
+To evaluate the effectiveness of the proposed methods, we first show the average MSE during the attack process of ImageNet and CelebA using different number of queries in Figure~\ref{fig:result-imagenet} and Figure \ref{fig:result-celeba} respectively. 
+We can see that all the three proposed query efficient methods outperform HSJA significantly.
+We also show the attack success rate given different number of queries in Table \ref{tab:results} using different MSE requirement as the threshold. In addition, we provide the attack success rate curve in Figure \ref{fig:result-imagenet-sr} and \ref{fig:result-celeba-sr} using $10^{-3}$ as the threshold for ImageNet and $10^{-5}$ for CelebA to illustrate convergence trend for the proposed \name-S, \name-F, and \name-I, comparing with the baseline HJSA.
+
+We observe that sampling in the optimized subspaces results in a better performance than sampling from the original space. The spatial transforamed subspace and low-frequency subspace show a similar behaviour since both of them rely on the local continuity. The intrinsic component subspace does not perform better than the other two approaches, and the potential reason is that we are only using 280000 cases to find intrinsic components on the 150528-dimensional space. Therefore, the extracted components may not be optimal. We also observe that the face recognition model is much easier to attack than the ImageNet model, since the face recognition model has fewer classes (100) rather than 1000 as of ImageNet. 
+
+A qualitative example process of attacking the ImageNet model using different subspaces is shown in Figure \ref{fig:result-process}. In this example, the MSE (shown as $d$ in the figures) reaches below $1\times10^{-3}$ using around 2K queries when samlping from the subspaces, and it is already hard to tell the adversarial perturbations in the examples. When we further tune the \advimage using 10K queries, it reaches lower MSE.
+
+% The attack result on ImageNet and CelebA is shown in Figure \ref{fig:results} and Table \ref{tab:results}. We see that sampling in all the subspaces results in a better performance than sampling from the entire one. The hyper-pixel subspace and frequency subspace show a similar behaviour since both of them rely on the local continuity. The intrinsic component subspace does not perform better than the other two simpler approaches. We owe it to the reason that we are only using 280000 cases to find intrinsic components on the 150528-dimensional space. Therefore, the used components may not be optimal. An example process of attacking the ImageNet model using different subspaces is shown in Figure \ref{fig:result-process}.
+
+
+\subsection{Results of Attacking Online APIs}
+The results of attacking online APIs Face++ and Azure are shown in Figure~\ref{fig:facepp_atk} and Figure~\ref{fig:azure_atk} respectively.
+% against Face++ and Azure face detection API. 
+The labels on the y-axis indicate the methods. Each column represents successful attack instances with increasing number of API calls. \Huichen{I unify the two (.) and move front}
+% (the perturbation magnitude $d$ is also shown). 
+As is the nature of boundary-based attack, all images are able to produce successful attack. The difference lies in the quality of attack instances. 
+% (perturbation magnitude $d$). 
+
+For attacks on Face++ `compare' API, the \sourceimage is a man and the \targetimage is a woman as shown in Figure~\ref{fig:src_tgt_imgs}. Notice the man's eyes appear in a higher position in the \sourceimage than the woman in the \targetimage because of the pose. 
+% The first column in Figure~\ref{fig:facepp_atk} show the results with a few queries, and we can see all methods produce images with four eyes in them at the beginning.
+All the instances on the first row in Figure~\ref{fig:facepp_atk} based on HJSA attacks contain two pairs of eyes. The MSE scores ($d$ in the figures) also confirm that the distance between the attack instance and the \targetimage does not go down much even with more than 6000 queries. On the other hand, our proposed methods \name- can optimize attack instances with smaller magnitude of perturbation more efficiently. The perturbations are also smoother.
+
+The attack results on Azure `detect' API show similar observations. The \sourceimage is a cat and the \targetimage is the same woman. Sampling from the original high-dimensional space (HJSA) gives us attack instances that presents two cat ear shapes at the back of the human face as shown in the first row in Figure~\ref{fig:azure_atk}. With the proposed query efficient attacks, the perturbations are smoother. The distance metric ($d$) also demonstrates the superiority of the proposed methods.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.91\linewidth]{results/facepp_atk.pdf}
+    % \vspace{-0.1cm}
+    \caption{Comparison of attacks on Face++ `compare' API. Goal: obtain an image that is tagged as `same person' with the \sourceimage person 2 (Figure~\ref{fig:src_img_facepp}) by the API when humans can clearly see person 1 here.}
+    \label{fig:facepp_atk}
+    \vspace{-0.3cm}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.91\linewidth]{results/azure_atk.pdf}
+    % \vspace{-0.1cm}
+    \caption{Comparison of attacks on Azure `detect' API. Goal: get an image that is tagged as `no face' by the API when humans can clearly see a face there. The \sourceimage is a cat as shown in Figure~\ref{fig:src_img_azure}.}
+    \label{fig:azure_atk}
+    \vspace{-0.3cm}
+\end{figure}
+
+% this is for the arxiv version
+% the cvpr version does not have the two \vspace commands and the width is 0.95 for both images

@@ -1,0 +1,96 @@
+\section{Daily Development \& Verification Workflow}
+\label{sec:verification}
+\todo{cross-verification: how to}
+We have developed and verified the onboard software of the glider in parallel for two reasons: 
+\begin{enumerate}
+\item To let verification needs steer design refinement and
+  implementation decisions, and 
+\item to get an early grasp on verification efforts, and avoid that
+  verification would be done in the last minute, possibly posing
+  difficulties or even exposing an unverifiable implementation.
+\end{enumerate}
+We used two mechanisms were to realize such a co-verification
+approach. First, the developers were also responsible for
+verification. Besides taking and realizing implementation choices,
+their job was to ensure that a minimal set of annotations were
+provided (as required per the SPARK language, e.g., state
+abstraction), such that static analysis can process their packages.
+They also had the option to run the static analysis locally on their
+machines. However, analyzing the complete flight stack with sufficient
+depth would have taken too long, so local runs were usually limited to
+the subprogram they were working on, and with short timeouts
+only. This helped them to identify simple defects early, such as
+out-of-bounds access to arrays.
+
+Second, we had set-up a Jenkins server to perform nightly analysis
+runs on the whole flight stack, with a longer
+timeout. One such run could take up to one hour on an octa-core machine
+(\SI{2.7}{GHz} Intel Xeon E5-2680 processor with \SI{16}{GB} RAM); note that the
+analysis makes full use of all cores. Every time the server had
+finished analyzing the project, artifacts summarizing the verification
+were emailed to the developers, most importantly:
+\begin{inparaenum}
+\item the log files of the analysis, showing detailed outputs such as
+  warnings, errors and counterexamples and
+\item a tabular verification summary.% as shown in Tab.~\ref{tab:cov}. 
+\end{inparaenum}
+%
+% The verification summary table is showing all packages, sorted
+% descendingly first by \emph{coverage}, then by \emph{success}. We
+% denote as \emph{coverage}, the percentage of SPARK code relative to
+% all code in a package. A coverage of 100\% can only be reached if all
+% entities in the package body are in SPARK, which includes instances of
+% generics, and if all callees of other packages have at least a SPARK
+% specification. We denote as \emph{success} the percentage of
+% successfully verified properties over all properties.  
+%
+~These artifacts were used every morning to decide where development
+and verification efforts should continue. The goal was reach foll coverage and maximum verification success in the flight-critical packages.
+
+% \bgroup
+% \scriptsize
+% \setlength\tabcolsep{.45em}
+% \begin{table}[btp]
+% \begin{minipage}{\linewidth}
+%   \centering
+%   \caption{Example of a nightly verification summary.}
+%     \small
+%   \begin{tabular}{lrrrrrr}
+%     \toprule
+%     Unit & \#entities & \#skip & coverage \% & \#properties & \#proven & success \%\\
+%     \midrule
+% px4io.protocol & 1 & 0 &  100 & 54 & 54 & 100.0\\
+% ublox8.driver & 17 & 0 &  100 & 205 & 202 & 98.5\\
+% units.navigation & 16 & 0 &  100 & 109 & 93 & 85.4\\
+% \vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+% mystrings & 8 & 1 & 88 & 18 & 18 & 100.0\\
+% controller & 25 & 3 &  88 & 139 & 119 & 85.6\\
+% estimator & 25 & 3 &  88 & 175 & 148 & 84.6\\
+% \vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+% fat\_filesystem.directories & 9 & 9 &  0 & 0 & 0 & --\\
+%     \bottomrule
+%   \end{tabular}\label{tab:cov}
+%   \textbf{Totals:} entities: 1062, success: 89.9\%, proven: 2274, coverage:  32.5\%, props: 2531, units: 106
+% \end{minipage}
+% \end{table}
+% \egroup
+
+\textbf{Failing checks} have been investigated by placing additional
+assertions to probe the knowledge of the solver, and with that
+identify the underlying reason and propose a rewrite that could be
+verified. If a failing property depended on a fact that was not
+visible to the solver (e.g., the implicitly known length of integer
+images), then \texttt{pragma Assume} has been used to provide
+knowledge to the analyzer, or, alternatively, a wrapper function was
+introduced with a post-condition stating the new fact. If a result was
+identified as False Positive, then we applied \texttt{pragma Annotate}
+to suppress the warning. Finally, for unclear cases we placed an
+\texttt{pragma Assert}, which has the same effect as \texttt{pragma
+  Assume}, but leaves a failing VC marking such cases, and potentially
+produces a run-time exception which then can be used to understand
+such cases.
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

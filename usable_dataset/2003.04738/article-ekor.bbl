@@ -1,0 +1,1738 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{c15684ecc5457498383def28d8aa36ae}{article}{dataonly}
+      \name{author}{2}{}{%
+        {{hash=c64b6c03ed29493a9f37cf0d5ca9f33e}{%
+           family={{Kisin}},
+           familyi={K\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=c818c09a20c8ac67c2daf522cabd6f74}{%
+           family={{Pappas}},
+           familyi={P\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Berlin/Heidelberg; Institut des Hautes Études Scientifiques, Bures-sur-Yvette}%
+      }
+      \strng{namehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{fullhash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{bibnamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authorbibnamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authornamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authorfullhash}{5262bfa905323f0590eb2334aaf4c818}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{clonesourcekey}{zbMATH07018373}
+      \field{issn}{0073-8301; 1618-1913/e}
+      \field{journaltitle}{{Publ. Math., Inst. Hautes Étud. Sci.}}
+      \field{title}{{Integral models of Shimura varieties with parahoric level structure}}
+      \field{volume}{128}
+      \field{year}{2018}
+      \field{pages}{121\bibrangedash 218}
+      \range{pages}{98}
+    \endentry
+    \entry{ahsendorf}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=cde75e07283cbf68eb36df81e05365e8}{%
+           family={Ahsendorf},
+           familyi={A\bibinitperiod},
+           given={Tobias},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Universität Bielefeld}%
+      }
+      \strng{namehash}{cde75e07283cbf68eb36df81e05365e8}
+      \strng{fullhash}{cde75e07283cbf68eb36df81e05365e8}
+      \strng{bibnamehash}{cde75e07283cbf68eb36df81e05365e8}
+      \strng{authorbibnamehash}{cde75e07283cbf68eb36df81e05365e8}
+      \strng{authornamehash}{cde75e07283cbf68eb36df81e05365e8}
+      \strng{authorfullhash}{cde75e07283cbf68eb36df81e05365e8}
+      \field{labelalpha}{Ahs11}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{\(\mathcal{O}\)-displays and \(\pi\)-divisible formal \(\mathcal{O}\)-modules}}
+      \field{type}{phdthesis}
+      \field{year}{2011}
+      \verb{urlraw}
+      \verb http://nbn-resolving.de/urn:nbn:de:hbz:361-24713520
+      \endverb
+      \verb{url}
+      \verb http://nbn-resolving.de/urn:nbn:de:hbz:361-24713520
+      \endverb
+    \endentry
+    \entry{arhangel}{book}{}
+      \name{author}{2}{}{%
+        {{hash=65d7377493ae57d1708f07899579146b}{%
+           family={{Arhangel'skii}},
+           familyi={A\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=27157e7094cdba070db7ea61fbdec524}{%
+           family={{Tkachenko}},
+           familyi={T\bibinitperiod},
+           given={Mikhail},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Hackensack, NJ: World Scientific; Paris: Atlantis Press}%
+      }
+      \strng{namehash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \strng{fullhash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \strng{bibnamehash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \strng{authorbibnamehash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \strng{authornamehash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \strng{authorfullhash}{b539d8c0b4207d35cbfbf80a6328e71d}
+      \field{labelalpha}{AT08}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-90-78677-06-2/hbk}
+      \field{title}{{Topological groups and related structures}}
+      \field{year}{2008}
+    \endentry
+    \entry{brenti}{book}{}
+      \name{author}{2}{}{%
+        {{hash=daefd6e6c8d09987fee6ab8b6292d570}{%
+           family={Björner},
+           familyi={B\bibinitperiod},
+           given={Anders},
+           giveni={A\bibinitperiod}}}%
+        {{hash=030f282d581dcf337909ac4009f583de}{%
+           family={Brenti},
+           familyi={B\bibinitperiod},
+           given={Francesco},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, New York}%
+      }
+      \strng{namehash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \strng{fullhash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \strng{bibnamehash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \strng{authorbibnamehash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \strng{authornamehash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \strng{authorfullhash}{ec31fb88fae1a59ecdc0eead7e5f6419}
+      \field{labelalpha}{BB05}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3540-442387; 3-540-44238-3}
+      \field{series}{Graduate Texts in Mathematics}
+      \field{title}{Combinatorics of {C}oxeter groups}
+      \field{volume}{231}
+      \field{year}{2005}
+      \field{pages}{xiv+363}
+      \range{pages}{-1}
+    \endentry
+    \entry{perfection}{article}{}
+      \name{author}{2}{}{%
+        {{hash=dee1cfd48a9b36b1e86829debba03fbf}{%
+           family={{Bertapelle}},
+           familyi={B\bibinitperiod},
+           given={Alessandra},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e0aab6726941c5bbd5619eeefb7b9d24}{%
+           family={{González-Avilés}},
+           familyi={G\bibinitperiod},
+           given={Cristian\bibnamedelima D.},
+           giveni={C\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier, Munich}%
+      }
+      \strng{namehash}{e5cda6e430006123d891de4c69d19172}
+      \strng{fullhash}{e5cda6e430006123d891de4c69d19172}
+      \strng{bibnamehash}{e5cda6e430006123d891de4c69d19172}
+      \strng{authorbibnamehash}{e5cda6e430006123d891de4c69d19172}
+      \strng{authornamehash}{e5cda6e430006123d891de4c69d19172}
+      \strng{authorfullhash}{e5cda6e430006123d891de4c69d19172}
+      \field{labelalpha}{BG18}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0723-0869}
+      \field{journaltitle}{{Expo. Math.}}
+      \field{number}{2}
+      \field{title}{{On the perfection of schemes}}
+      \field{volume}{36}
+      \field{year}{2018}
+      \field{pages}{197\bibrangedash 220}
+      \range{pages}{24}
+    \endentry
+    \entry{borelarith}{book}{}
+      \name{author}{1}{}{%
+        {{hash=0ee895917eb0a33121189b88eecae67e}{%
+           family={Borel},
+           familyi={B\bibinitperiod},
+           given={Armand},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Hermann, Paris}%
+      }
+      \strng{namehash}{0ee895917eb0a33121189b88eecae67e}
+      \strng{fullhash}{0ee895917eb0a33121189b88eecae67e}
+      \strng{bibnamehash}{0ee895917eb0a33121189b88eecae67e}
+      \strng{authorbibnamehash}{0ee895917eb0a33121189b88eecae67e}
+      \strng{authornamehash}{0ee895917eb0a33121189b88eecae67e}
+      \strng{authorfullhash}{0ee895917eb0a33121189b88eecae67e}
+      \field{labelalpha}{Bor69}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Publications de l'Institut de Mathématique de l'Université de Strasbourg, XV. Actualités Scientifiques et Industrielles, No. 1341}
+      \field{title}{Introduction aux groupes arithmétiques}
+      \field{year}{1969}
+    \endentry
+    \entry{bt-ii}{article}{}
+      \name{author}{2}{}{%
+        {{hash=43c5da35c311208e306149c5abe57548}{%
+           family={{Bruhat}},
+           familyi={B\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod}}}%
+        {{hash=9f7ad51c5672b6f1c6ba0f16cae9ea81}{%
+           family={{Tits}},
+           familyi={T\bibinitperiod},
+           given={Jacques},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {French}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Berlin/Heidelberg; Institut des Hautes Études Scientifiques, Bures-sur-Yvette}%
+      }
+      \strng{namehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{fullhash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{bibnamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authorbibnamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authornamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authorfullhash}{8474552e3ceb0d6358b80b3dfe152937}
+      \field{extraname}{1}
+      \field{labelalpha}{BT84}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0073-8301; 1618-1913/e}
+      \field{journaltitle}{{Publ. Math., Inst. Hautes Étud. Sci.}}
+      \field{title}{{Groupes réductifs sur un corps local. II. Schémas en groupes. Existence d'une donnée radicielle valuée.}}
+      \field{volume}{60}
+      \field{year}{1984}
+      \field{pages}{1\bibrangedash 194}
+      \range{pages}{194}
+    \endentry
+    \entry{zbMATH03900941}{article}{}
+      \name{author}{2}{}{%
+        {{hash=43c5da35c311208e306149c5abe57548}{%
+           family={{Bruhat}},
+           familyi={B\bibinitperiod},
+           given={François},
+           giveni={F\bibinitperiod}}}%
+        {{hash=9f7ad51c5672b6f1c6ba0f16cae9ea81}{%
+           family={{Tits}},
+           familyi={T\bibinitperiod},
+           given={Jacques},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Société Mathématique de France (SMF), Paris}%
+      }
+      \strng{namehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{fullhash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{bibnamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authorbibnamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authornamehash}{8474552e3ceb0d6358b80b3dfe152937}
+      \strng{authorfullhash}{8474552e3ceb0d6358b80b3dfe152937}
+      \field{extraname}{2}
+      \field{labelalpha}{BT84}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0037-9484; 2102-622X/e}
+      \field{journaltitle}{{Bull. Soc. Math. Fr.}}
+      \field{title}{{Schémas en groupes et immeubles des groupes classiques sur un corps local}}
+      \field{volume}{112}
+      \field{year}{1984}
+      \field{pages}{259\bibrangedash 301}
+      \range{pages}{43}
+      \verb{doi}
+      \verb 10.24033/bsmf.2006
+      \endverb
+    \endentry
+    \entry{carter}{book}{}
+      \name{author}{1}{}{%
+        {{hash=807017b886982448912935afa0e134ce}{%
+           family={Carter},
+           familyi={C\bibinitperiod},
+           given={Roger\bibnamedelima W.},
+           giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons, Ltd., Chichester}%
+      }
+      \strng{namehash}{807017b886982448912935afa0e134ce}
+      \strng{fullhash}{807017b886982448912935afa0e134ce}
+      \strng{bibnamehash}{807017b886982448912935afa0e134ce}
+      \strng{authorbibnamehash}{807017b886982448912935afa0e134ce}
+      \strng{authornamehash}{807017b886982448912935afa0e134ce}
+      \strng{authorfullhash}{807017b886982448912935afa0e134ce}
+      \field{labelalpha}{Car93}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-471-94109-3}
+      \field{note}{Conjugacy classes and complex characters, Reprint of the 1985 original, A Wiley-Interscience Publication}
+      \field{series}{Wiley Classics Library}
+      \field{title}{Finite groups of {L}ie type}
+      \field{year}{1993}
+      \field{pages}{xii+544}
+      \range{pages}{-1}
+    \endentry
+    \entry{vandantzig}{article}{}
+      \name{author}{1}{}{%
+        {{hash=00a41f621b123b11254d7133cee00012}{%
+           family={Dantzig},
+           familyi={D\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press, Cambridge; London Mathematical Society, London}%
+      }
+      \strng{namehash}{00a41f621b123b11254d7133cee00012}
+      \strng{fullhash}{00a41f621b123b11254d7133cee00012}
+      \strng{bibnamehash}{00a41f621b123b11254d7133cee00012}
+      \strng{authorbibnamehash}{00a41f621b123b11254d7133cee00012}
+      \strng{authornamehash}{00a41f621b123b11254d7133cee00012}
+      \strng{authorfullhash}{00a41f621b123b11254d7133cee00012}
+      \field{labelalpha}{Dan36}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0010-437X; 1570-5846/e}
+      \field{journaltitle}{{Compos. Math.}}
+      \field{title}{{Zur topologischen Algebra. III: Brouwersche und Cantorsche Gruppen}}
+      \field{volume}{3}
+      \field{year}{1936}
+      \field{pages}{408\bibrangedash 426}
+      \range{pages}{19}
+    \endentry
+    \entry{travaux}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=876d32ddd7383ddfb7c5ca89662b261d}{%
+           family={Deligne},
+           familyi={D\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Berlin}%
+      }
+      \strng{namehash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \strng{fullhash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \strng{bibnamehash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \strng{authorbibnamehash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \strng{authornamehash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \strng{authorfullhash}{876d32ddd7383ddfb7c5ca89662b261d}
+      \field{labelalpha}{Del71}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Séminaire {B}ourbaki, 23ème année (1970/71), {E}xp. {N}o. 389}
+      \field{series}{Lecture Notes in Math.}
+      \field{title}{Travaux de {S}himura}
+      \field{volume}{244}
+      \field{year}{1971}
+      \field{pages}{123\bibrangedash 165}
+      \range{pages}{43}
+    \endentry
+    \entry{DGen}{book}{}
+      \name{author}{2}{}{%
+        {{hash=4558d70507b16a9ad75411f1f682efcb}{%
+           family={Demazure},
+           familyi={D\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod}}}%
+        {{hash=b010559580ee7fd625a6762be85ea52e}{%
+           family={Gabriel},
+           familyi={G\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {North-Holland Publishing Co., Amsterdam-New York}%
+      }
+      \strng{namehash}{f30631edac754b1aa6300ed6354f68f4}
+      \strng{fullhash}{f30631edac754b1aa6300ed6354f68f4}
+      \strng{bibnamehash}{f30631edac754b1aa6300ed6354f68f4}
+      \strng{authorbibnamehash}{f30631edac754b1aa6300ed6354f68f4}
+      \strng{authornamehash}{f30631edac754b1aa6300ed6354f68f4}
+      \strng{authorfullhash}{f30631edac754b1aa6300ed6354f68f4}
+      \field{labelalpha}{DG80}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-444-85443-6}
+      \field{note}{Translated from the French by J. Bell}
+      \field{series}{North-Holland Mathematics Studies}
+      \field{title}{Introduction to algebraic geometry and algebraic groups}
+      \field{volume}{39}
+      \field{year}{1980}
+      \field{pages}{xiv+357}
+      \range{pages}{-1}
+    \endentry
+    \entry{EGA2}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6e1e873f9a9e10eed2c0bea7d3c8c7a8}{%
+           family={Grothendieck},
+           familyi={G\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \strng{fullhash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \strng{bibnamehash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \strng{authorbibnamehash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \strng{authornamehash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \strng{authorfullhash}{6e1e873f9a9e10eed2c0bea7d3c8c7a8}
+      \field{extraname}{1}
+      \field{labelalpha}{EGA2}
+      \field{sortinit}{E}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0073-8301}
+      \field{journaltitle}{Inst. Hautes Études Sci. Publ. Math.}
+      \field{number}{8}
+      \field{shorthand}{EGA2}
+      \field{title}{Éléments de géométrie algébrique. {II}. Étude globale élémentaire de quelques classes de morphismes}
+      \field{year}{1961}
+      \verb{urlraw}
+      \verb http://www.numdam.org/item?id=PMIHES_1961__8__222_0
+      \endverb
+      \verb{url}
+      \verb http://www.numdam.org/item?id=PMIHES_1961__8__222_0
+      \endverb
+    \endentry
+    \entry{goertz-sympl}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6ce6acdb0fb322d897f757dab4854fa0}{%
+           family={{Görtz}},
+           familyi={G\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier (Academic Press), San Diego, CA}%
+      }
+      \strng{namehash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \strng{fullhash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \strng{bibnamehash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \strng{authorbibnamehash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \strng{authornamehash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \strng{authorfullhash}{6ce6acdb0fb322d897f757dab4854fa0}
+      \field{labelalpha}{Gör03}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0001-8708}
+      \field{journaltitle}{{Adv. Math.}}
+      \field{number}{1}
+      \field{title}{{On the flatness of local models for the symplectic group}}
+      \field{volume}{176}
+      \field{year}{2003}
+      \field{pages}{89\bibrangedash 115}
+      \range{pages}{27}
+    \endentry
+    \entry{groth-bt}{book}{}
+      \name{author}{1}{}{%
+        {{hash=aa39afb043bb2b10255ad9e6efbd0775}{%
+           family={Grothendieck},
+           familyi={G\bibinitperiod},
+           given={Alexandre},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Les Presses de l'Université de Montréal, Montreal, Que.}%
+      }
+      \strng{namehash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \strng{fullhash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \strng{bibnamehash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \strng{authorbibnamehash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \strng{authornamehash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \strng{authorfullhash}{aa39afb043bb2b10255ad9e6efbd0775}
+      \field{extraname}{2}
+      \field{labelalpha}{Gro74}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Séminaire de Mathématiques Supérieures, No. 45 (Été, 1970)}
+      \field{title}{Groupes de {B}arsotti-{T}ate et cristaux de {D}ieudonné}
+      \field{year}{1974}
+    \endentry
+    \entry{haines}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=e1e62ac2bcc9871a5fe2065b2a450fc2}{%
+           family={{Haines}},
+           familyi={H\bibinitperiod},
+           given={Thomas\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Providence, RI: American Mathematical Society (AMS)}%
+      }
+      \strng{namehash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \strng{fullhash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \strng{bibnamehash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \strng{authorbibnamehash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \strng{authornamehash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \strng{authorfullhash}{e1e62ac2bcc9871a5fe2065b2a450fc2}
+      \field{labelalpha}{Hai05}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{{Harmonic analysis, the trace formula, and Shimura varieties. Proceedings of the Clay Mathematics Institute 2003 summer school, Toronto, Canada, June 2--27, 2003}}
+      \field{isbn}{0-8218-3844-X/pbk}
+      \field{title}{{Introduction to Shimura varieties with bad reduction of parahoric type}}
+      \field{year}{2005}
+      \true{nocite}
+      \field{pages}{583\bibrangedash 642}
+      \range{pages}{60}
+    \endentry
+    \entry{haze-fg}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=5e7dc05085895c5fb4ee6f9a5a9bfab5}{%
+           family={{Hazewinkel}},
+           familyi={H\bibinitperiod},
+           given={Michiel},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \strng{fullhash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \strng{bibnamehash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \strng{authorbibnamehash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \strng{authornamehash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \strng{authorfullhash}{5e7dc05085895c5fb4ee6f9a5a9bfab5}
+      \field{labelalpha}{Haz78}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{{Pure and Applied Mathematics, 78. New York-San Francisco-London: Academic Press. XXII, 573 p.}}
+      \field{title}{{Formal groups and applications}}
+      \field{year}{1978}
+    \endentry
+    \entry{diss}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=2f958c7e67061d31b52377bc91a4bc9b}{%
+           family={Hesse},
+           familyi={H\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Technische Universität Darmstadt}%
+      }
+      \strng{namehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{fullhash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{bibnamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authorbibnamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authornamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authorfullhash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \field{extraname}{1}
+      \field{labelalpha}{Hes20}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Central leaves and {EKOR} strata on {S}himura varieties with parahoric reduction}
+      \field{type}{phdthesis}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb http://nbn-resolving.de/urn:nbn:de:tuda-tuprints-115430
+      \endverb
+      \verb{url}
+      \verb http://nbn-resolving.de/urn:nbn:de:tuda-tuprints-115430
+      \endverb
+    \endentry
+    \entry{article-leaves}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=2f958c7e67061d31b52377bc91a4bc9b}{%
+           family={Hesse},
+           familyi={H\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{fullhash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{bibnamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authorbibnamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authornamehash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \strng{authorfullhash}{2f958c7e67061d31b52377bc91a4bc9b}
+      \field{extraname}{2}
+      \field{labelalpha}{Hes20}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{month}{3}
+      \field{note}{Preprint}
+      \field{title}{Central leaves on {S}himura varieties with parahoric reduction}
+      \field{year}{2020}
+      \verb{eprint}
+      \verb 2003.03175
+      \endverb
+    \endentry
+    \entry{hainesrap}{article}{}
+      \name{author}{2}{}{%
+        {{hash=e1e62ac2bcc9871a5fe2065b2a450fc2}{%
+           family={Haines},
+           familyi={H\bibinitperiod},
+           given={Thomas\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=df25f40cd6319812703743af5056da78}{%
+           family={Rapoport},
+           familyi={R\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \strng{fullhash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \strng{bibnamehash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \strng{authorbibnamehash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \strng{authornamehash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \strng{authorfullhash}{74e5eb223a64e79040bcce5d4f9f1ead}
+      \field{labelalpha}{HR08}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0001-8708}
+      \field{journaltitle}{Advances in Mathematics}
+      \field{number}{1}
+      \field{title}{Appendix: On parahoric subgroups}
+      \field{volume}{219}
+      \field{year}{2008}
+      \field{pages}{188\bibrangedash 198}
+      \range{pages}{11}
+      \verb{doi}
+      \verb https://doi.org/10.1016/j.aim.2008.04.020
+      \endverb
+    \endentry
+    \entry{he-rapo}{article}{}
+      \name{author}{2}{}{%
+        {{hash=b5fceee09cbf412999a05dbeffc3dd5b}{%
+           family={{He}},
+           familyi={H\bibinitperiod},
+           given={X.},
+           giveni={X\bibinitperiod}}}%
+        {{hash=f7a04ab40fa533cf3ecf71e74deb3f58}{%
+           family={{Rapoport}},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Berlin/Heidelberg}%
+      }
+      \strng{namehash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \strng{fullhash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \strng{bibnamehash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \strng{authorbibnamehash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \strng{authornamehash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \strng{authorfullhash}{5d21bc5b285806a4ab60dbf2dd37e7b5}
+      \field{labelalpha}{HR17}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0025-2611; 1432-1785/e}
+      \field{journaltitle}{{Manuscr. Math.}}
+      \field{number}{3-4}
+      \field{title}{{Stratifications in the reduction of Shimura varieties.}}
+      \field{volume}{152}
+      \field{year}{2017}
+      \field{pages}{317\bibrangedash 343}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1007/s00229-016-0863-x
+      \endverb
+    \endentry
+    \entry{illusie}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f560424c5d8b060f8a187618b42603ef}{%
+           family={Illusie},
+           familyi={I\bibinitperiod},
+           given={Luc},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{f560424c5d8b060f8a187618b42603ef}
+      \strng{fullhash}{f560424c5d8b060f8a187618b42603ef}
+      \strng{bibnamehash}{f560424c5d8b060f8a187618b42603ef}
+      \strng{authorbibnamehash}{f560424c5d8b060f8a187618b42603ef}
+      \strng{authornamehash}{f560424c5d8b060f8a187618b42603ef}
+      \strng{authorfullhash}{f560424c5d8b060f8a187618b42603ef}
+      \field{labelalpha}{Ill85}
+      \field{sortinit}{I}
+      \field{sortinithash}{320bc8fe8101b9376f9f21cd507de0e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0303-1179}
+      \field{journaltitle}{Astérisque}
+      \field{note}{Seminar on arithmetic bundles: the Mordell conjecture (Paris, 1983/84)}
+      \field{number}{127}
+      \field{title}{Déformations de groupes de {B}arsotti-{T}ate (d'après {A}. {G}rothendieck)}
+      \field{year}{1985}
+      \true{nocite}
+      \field{pages}{151\bibrangedash 198}
+      \range{pages}{48}
+    \endentry
+    \entry{kisin}{article}{}
+      \name{author}{1}{}{%
+        {{hash=271059b2ee90dd745628945a3433f732}{%
+           family={Kisin},
+           familyi={K\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{271059b2ee90dd745628945a3433f732}
+      \strng{fullhash}{271059b2ee90dd745628945a3433f732}
+      \strng{bibnamehash}{271059b2ee90dd745628945a3433f732}
+      \strng{authorbibnamehash}{271059b2ee90dd745628945a3433f732}
+      \strng{authornamehash}{271059b2ee90dd745628945a3433f732}
+      \strng{authorfullhash}{271059b2ee90dd745628945a3433f732}
+      \field{labelalpha}{Kis10}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0894-0347}
+      \field{journaltitle}{J. Amer. Math. Soc.}
+      \field{number}{4}
+      \field{title}{Integral models for {S}himura varieties of abelian type}
+      \field{volume}{23}
+      \field{year}{2010}
+      \field{pages}{967\bibrangedash 1012}
+      \range{pages}{46}
+      \verb{doi}
+      \verb 10.1090/S0894-0347-10-00667-3
+      \endverb
+    \endentry
+    \entry{kottwitz}{article}{}
+      \name{author}{1}{}{%
+        {{hash=269724a45b7c9d8e4513f510dca13b5e}{%
+           family={Kottwitz},
+           familyi={K\bibinitperiod},
+           given={Robert\bibnamedelima E.},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{269724a45b7c9d8e4513f510dca13b5e}
+      \strng{fullhash}{269724a45b7c9d8e4513f510dca13b5e}
+      \strng{bibnamehash}{269724a45b7c9d8e4513f510dca13b5e}
+      \strng{authorbibnamehash}{269724a45b7c9d8e4513f510dca13b5e}
+      \strng{authornamehash}{269724a45b7c9d8e4513f510dca13b5e}
+      \strng{authorfullhash}{269724a45b7c9d8e4513f510dca13b5e}
+      \field{labelalpha}{Kot92}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0894-0347}
+      \field{journaltitle}{J. Amer. Math. Soc.}
+      \field{number}{2}
+      \field{title}{Points on some {S}himura varieties over finite fields}
+      \field{volume}{5}
+      \field{year}{1992}
+      \true{nocite}
+      \field{pages}{373\bibrangedash 444}
+      \range{pages}{72}
+      \verb{doi}
+      \verb 10.2307/2152772
+      \endverb
+    \endentry
+    \entry{kisin-pappas}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=c64b6c03ed29493a9f37cf0d5ca9f33e}{%
+           family={{Kisin}},
+           familyi={K\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=c818c09a20c8ac67c2daf522cabd6f74}{%
+           family={{Pappas}},
+           familyi={P\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{fullhash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{bibnamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authorbibnamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authornamehash}{5262bfa905323f0590eb2334aaf4c818}
+      \strng{authorfullhash}{5262bfa905323f0590eb2334aaf4c818}
+      \field{labelalpha}{KP15}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{month}{12}
+      \field{note}{Preprint}
+      \field{relatedstring}{Published version:}
+      \field{title}{{Integral models of Shimura varieties with parahoric level structure}}
+      \field{year}{2015}
+      \field{related}{c15684ecc5457498383def28d8aa36ae}
+      \verb{eprint}
+      \verb 1512.01149v2
+      \endverb
+    \endentry
+    \entry{kottrap}{article}{}
+      \name{author}{2}{}{%
+        {{hash=ed87143e7b2ffef4d95d0eb5cc6cb28d}{%
+           family={Kottwitz},
+           familyi={K\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=f7a04ab40fa533cf3ecf71e74deb3f58}{%
+           family={Rapoport},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{cd040fa9518e40da05d5bd637720402a}
+      \strng{fullhash}{cd040fa9518e40da05d5bd637720402a}
+      \strng{bibnamehash}{cd040fa9518e40da05d5bd637720402a}
+      \strng{authorbibnamehash}{cd040fa9518e40da05d5bd637720402a}
+      \strng{authornamehash}{cd040fa9518e40da05d5bd637720402a}
+      \strng{authorfullhash}{cd040fa9518e40da05d5bd637720402a}
+      \field{labelalpha}{KR00}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0025-2611}
+      \field{journaltitle}{Manuscripta Math.}
+      \field{number}{4}
+      \field{title}{Minuscule alcoves for {$\mathrm{GL}_n$} and {$\mathrm{GSp}_{2n}$}}
+      \field{volume}{102}
+      \field{year}{2000}
+      \field{pages}{403\bibrangedash 428}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.1007/s002290070034
+      \endverb
+    \endentry
+    \entry{landvogt}{article}{}
+      \name{author}{1}{}{%
+        {{hash=d196e54a28d2fa6cc03451a6f7dd4cb2}{%
+           family={{Landvogt}},
+           familyi={L\bibinitperiod},
+           given={Erasmus},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {De Gruyter, Berlin}%
+      }
+      \strng{namehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{fullhash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{bibnamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authorbibnamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authornamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authorfullhash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \field{extraname}{1}
+      \field{labelalpha}{Lan00}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0075-4102; 1435-5345/e}
+      \field{journaltitle}{{J. Reine Angew. Math.}}
+      \field{title}{{Some functorial properties of the Bruhat-Tits building}}
+      \field{volume}{518}
+      \field{year}{2000}
+      \field{pages}{213\bibrangedash 241}
+      \range{pages}{29}
+      \verb{doi}
+      \verb 10.1515/crll.2000.006
+      \endverb
+    \endentry
+    \entry{landvogt-buch}{book}{}
+      \name{author}{1}{}{%
+        {{hash=d196e54a28d2fa6cc03451a6f7dd4cb2}{%
+           family={Landvogt},
+           familyi={L\bibinitperiod},
+           given={Erasmus},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag, Berlin}%
+      }
+      \strng{namehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{fullhash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{bibnamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authorbibnamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authornamehash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \strng{authorfullhash}{d196e54a28d2fa6cc03451a6f7dd4cb2}
+      \field{extraname}{2}
+      \field{labelalpha}{Lan96}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{3-540-60427-8}
+      \field{series}{Lecture Notes in Mathematics}
+      \field{title}{A compactification of the {B}ruhat-{T}its building}
+      \field{volume}{1619}
+      \field{year}{1996}
+      \true{nocite}
+      \field{pages}{viii+152}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1007/BFb0094594
+      \endverb
+    \endentry
+    \entry{lautrunc}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3b6096351e49f2f3979ee560b1b188c7}{%
+           family={{Lau}},
+           familyi={L\bibinitperiod},
+           given={Eike},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Mathematical Society (AMS), Providence, RI}%
+      }
+      \strng{namehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{fullhash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{bibnamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authorbibnamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authornamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authorfullhash}{3b6096351e49f2f3979ee560b1b188c7}
+      \field{extraname}{1}
+      \field{labelalpha}{Lau13}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0894-0347; 1088-6834/e}
+      \field{journaltitle}{{J. Am. Math. Soc.}}
+      \field{number}{1}
+      \field{title}{{Smoothness of the truncated display functor.}}
+      \field{volume}{26}
+      \field{year}{2013}
+      \true{nocite}
+      \field{pages}{129\bibrangedash 165}
+      \range{pages}{37}
+    \endentry
+    \entry{laurel}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3b6096351e49f2f3979ee560b1b188c7}{%
+           family={Lau},
+           familyi={L\bibinitperiod},
+           given={Eike},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{fullhash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{bibnamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authorbibnamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authornamehash}{3b6096351e49f2f3979ee560b1b188c7}
+      \strng{authorfullhash}{3b6096351e49f2f3979ee560b1b188c7}
+      \field{extraname}{2}
+      \field{labelalpha}{Lau14}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1937-0652}
+      \field{journaltitle}{Algebra Number Theory}
+      \field{number}{9}
+      \field{title}{Relations between {D}ieudonné displays and crystalline {D}ieudonné theory}
+      \field{volume}{8}
+      \field{year}{2014}
+      \field{pages}{2201\bibrangedash 2262}
+      \range{pages}{62}
+      \verb{doi}
+      \verb 10.2140/ant.2014.8.2201
+      \endverb
+    \endentry
+    \entry{milne-isv}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=1c48e53e44d3122db018aff3b6321bd6}{%
+           family={{Milne}},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Providence, RI: American Mathematical Society (AMS)}%
+      }
+      \strng{namehash}{1c48e53e44d3122db018aff3b6321bd6}
+      \strng{fullhash}{1c48e53e44d3122db018aff3b6321bd6}
+      \strng{bibnamehash}{1c48e53e44d3122db018aff3b6321bd6}
+      \strng{authorbibnamehash}{1c48e53e44d3122db018aff3b6321bd6}
+      \strng{authornamehash}{1c48e53e44d3122db018aff3b6321bd6}
+      \strng{authorfullhash}{1c48e53e44d3122db018aff3b6321bd6}
+      \field{labelalpha}{Mil05}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{{Harmonic analysis, the trace formula, and Shimura varieties. Proceedings of the Clay Mathematics Institute 2003 summer school, Toronto, Canada, June 2--27, 2003}}
+      \field{isbn}{0-8218-3844-X/pbk}
+      \field{title}{{Introduction to Shimura varieties.}}
+      \field{year}{2005}
+      \field{pages}{265\bibrangedash 378}
+      \range{pages}{114}
+    \endentry
+    \entry{morris}{article}{}
+      \name{author}{1}{}{%
+        {{hash=b4cbc652c4bb3712fdae7abdfcb20ead}{%
+           family={Morris},
+           familyi={M\bibinitperiod},
+           given={Lawrence},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \strng{fullhash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \strng{bibnamehash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \strng{authorbibnamehash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \strng{authornamehash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \strng{authorfullhash}{b4cbc652c4bb3712fdae7abdfcb20ead}
+      \field{labelalpha}{Mor93}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0020-9910}
+      \field{journaltitle}{Invent. Math.}
+      \field{number}{1}
+      \field{title}{Tamely ramified intertwining algebras}
+      \field{volume}{114}
+      \field{year}{1993}
+      \field{pages}{1\bibrangedash 54}
+      \range{pages}{54}
+      \verb{doi}
+      \verb 10.1007/BF01232662
+      \endverb
+    \endentry
+    \entry{mw}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7c1b2db1a292e6d8d05e34ed70b6eefd}{%
+           family={Moonen},
+           familyi={M\bibinitperiod},
+           given={Ben},
+           giveni={B\bibinitperiod}}}%
+        {{hash=19a9170cb8e6a605aacaaf60dcce3a64}{%
+           family={Wedhorn},
+           familyi={W\bibinitperiod},
+           given={Torsten},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \strng{fullhash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \strng{bibnamehash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \strng{authorbibnamehash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \strng{authornamehash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \strng{authorfullhash}{f969ddd20dc2efcd64c2d3923ef962c8}
+      \field{labelalpha}{MW04}
+      \field{sortinit}{M}
+      \field{sortinithash}{cfd219b90152c06204fab207bc6c7cab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1073-7928}
+      \field{journaltitle}{Int. Math. Res. Not.}
+      \field{number}{72}
+      \field{title}{Discrete invariants of varieties in positive characteristic}
+      \field{year}{2004}
+      \field{pages}{3855\bibrangedash 3903}
+      \range{pages}{49}
+      \verb{doi}
+      \verb 10.1155/S1073792804141263
+      \endverb
+    \endentry
+    \entry{pink}{book}{}
+      \name{author}{1}{}{%
+        {{hash=3414d3525b672e537343414d33f9323d}{%
+           family={Pink},
+           familyi={P\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Universität Bonn, Mathematisches Institut}%
+      }
+      \strng{namehash}{3414d3525b672e537343414d33f9323d}
+      \strng{fullhash}{3414d3525b672e537343414d33f9323d}
+      \strng{bibnamehash}{3414d3525b672e537343414d33f9323d}
+      \strng{authorbibnamehash}{3414d3525b672e537343414d33f9323d}
+      \strng{authornamehash}{3414d3525b672e537343414d33f9323d}
+      \strng{authorfullhash}{3414d3525b672e537343414d33f9323d}
+      \field{labelalpha}{Pin90}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Bonner Mathematische Schriften [Bonn Mathematical Publications]}
+      \field{title}{Arithmetical compactification of mixed {S}himura varieties}
+      \field{volume}{209}
+      \field{year}{1990}
+    \endentry
+    \entry{prs}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1a5411ac98929ae88cd292d89ceb7bd1}{%
+           family={Pappas},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod}}}%
+        {{hash=df25f40cd6319812703743af5056da78}{%
+           family={Rapoport},
+           familyi={R\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=4fe97e29bd29a63cd9b1c54769a81c15}{%
+           family={Smithling},
+           familyi={S\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Int. Press, Somerville, MA}%
+      }
+      \strng{namehash}{1b981e412ad574cf38fc711d0e8fe506}
+      \strng{fullhash}{1b981e412ad574cf38fc711d0e8fe506}
+      \strng{bibnamehash}{1b981e412ad574cf38fc711d0e8fe506}
+      \strng{authorbibnamehash}{1b981e412ad574cf38fc711d0e8fe506}
+      \strng{authornamehash}{1b981e412ad574cf38fc711d0e8fe506}
+      \strng{authorfullhash}{1b981e412ad574cf38fc711d0e8fe506}
+      \field{labelalpha}{PRS13}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of moduli. {V}ol. {III}}
+      \field{series}{Adv. Lect. Math. (ALM)}
+      \field{title}{Local models of {S}himura varieties, {I}. {G}eometry and combinatorics}
+      \field{volume}{26}
+      \field{year}{2013}
+      \field{pages}{135\bibrangedash 217}
+      \range{pages}{83}
+    \endentry
+    \entry{PWZ-AZD}{article}{}
+      \name{author}{3}{}{%
+        {{hash=3414d3525b672e537343414d33f9323d}{%
+           family={{Pink}},
+           familyi={P\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=19a9170cb8e6a605aacaaf60dcce3a64}{%
+           family={{Wedhorn}},
+           familyi={W\bibinitperiod},
+           given={Torsten},
+           giveni={T\bibinitperiod}}}%
+        {{hash=6f07f332d7615fb5609e51b2e42a92bb}{%
+           family={{Ziegler}},
+           familyi={Z\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Deutsche Mathematiker-Vereinigung, Berlin}%
+      }
+      \strng{namehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{fullhash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{bibnamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authorbibnamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authornamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authorfullhash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \field{extraname}{1}
+      \field{labelalpha}{PWZ11}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1431-0635; 1431-0643/e}
+      \field{journaltitle}{{Doc. Math.}}
+      \field{title}{{Algebraic zip data}}
+      \field{volume}{16}
+      \field{year}{2011}
+      \field{pages}{253\bibrangedash 300}
+      \range{pages}{48}
+    \endentry
+    \entry{PWZ}{article}{}
+      \name{author}{3}{}{%
+        {{hash=3414d3525b672e537343414d33f9323d}{%
+           family={{Pink}},
+           familyi={P\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=19a9170cb8e6a605aacaaf60dcce3a64}{%
+           family={{Wedhorn}},
+           familyi={W\bibinitperiod},
+           given={Torsten},
+           giveni={T\bibinitperiod}}}%
+        {{hash=6f07f332d7615fb5609e51b2e42a92bb}{%
+           family={{Ziegler}},
+           familyi={Z\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Mathematical Sciences Publishers (MSP), Berkeley, CA; Pacific Journal of Mathematics c/o University of California, Berkeley, CA}%
+      }
+      \strng{namehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{fullhash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{bibnamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authorbibnamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authornamehash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \strng{authorfullhash}{b7fa0c8a0ae8326d98df4bc545744a9d}
+      \field{extraname}{2}
+      \field{labelalpha}{PWZ15}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0030-8730}
+      \field{journaltitle}{{Pac. J. Math.}}
+      \field{number}{1}
+      \field{title}{{$F$-zips with additional structure}}
+      \field{volume}{274}
+      \field{year}{2015}
+      \field{pages}{183\bibrangedash 236}
+      \range{pages}{54}
+      \verb{doi}
+      \verb 10.2140/pjm.2015.274.183
+      \endverb
+    \endentry
+    \entry{pappas-zhu}{article}{}
+      \name{author}{2}{}{%
+        {{hash=1a5411ac98929ae88cd292d89ceb7bd1}{%
+           family={{Pappas}},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod}}}%
+        {{hash=6f82c47673a7e51ae1c82742466e8cc0}{%
+           family={{Zhu}},
+           familyi={Z\bibinitperiod},
+           given={Xinwen},
+           giveni={X\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer, Berlin/Heidelberg}%
+      }
+      \strng{namehash}{36c10d55b1b3cb8567318a7ffd224173}
+      \strng{fullhash}{36c10d55b1b3cb8567318a7ffd224173}
+      \strng{bibnamehash}{36c10d55b1b3cb8567318a7ffd224173}
+      \strng{authorbibnamehash}{36c10d55b1b3cb8567318a7ffd224173}
+      \strng{authornamehash}{36c10d55b1b3cb8567318a7ffd224173}
+      \strng{authorfullhash}{36c10d55b1b3cb8567318a7ffd224173}
+      \field{labelalpha}{PZ13}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0020-9910; 1432-1297/e}
+      \field{journaltitle}{{Invent. Math.}}
+      \field{number}{1}
+      \field{title}{{Local models of Shimura varieties and a conjecture of Kottwitz}}
+      \field{volume}{194}
+      \field{year}{2013}
+      \field{pages}{147\bibrangedash 254}
+      \range{pages}{108}
+      \verb{doi}
+      \verb 10.1007/s00222-012-0442-z
+      \endverb
+    \endentry
+    \entry{rapo-guide}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=df25f40cd6319812703743af5056da78}{%
+           family={{Rapoport}},
+           familyi={R\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Paris: Société Mathématique de France}%
+      }
+      \strng{namehash}{df25f40cd6319812703743af5056da78}
+      \strng{fullhash}{df25f40cd6319812703743af5056da78}
+      \strng{bibnamehash}{df25f40cd6319812703743af5056da78}
+      \strng{authorbibnamehash}{df25f40cd6319812703743af5056da78}
+      \strng{authornamehash}{df25f40cd6319812703743af5056da78}
+      \strng{authorfullhash}{df25f40cd6319812703743af5056da78}
+      \field{labelalpha}{Rap05}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{{Formes automorphes (I). Actes du Semestre du Centre Émile Borel, Paris, France, 17 février au 11 juillet 2000}}
+      \field{isbn}{2-85629-172-4/pbk}
+      \field{title}{{A guide to the reduction modulo \(p\) of Shimura varieties.}}
+      \field{year}{2005}
+      \true{nocite}
+      \field{pages}{271\bibrangedash 318}
+      \range{pages}{48}
+    \endentry
+    \entry{roesner}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f6e91c6ba74cd3f422eca2e0a6ebcd66}{%
+           family={{Rösner}},
+           familyi={R\bibinitperiod},
+           given={Mirko},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer Netherlands, Dordrecht}%
+      }
+      \strng{namehash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \strng{fullhash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \strng{bibnamehash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \strng{authorbibnamehash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \strng{authornamehash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \strng{authorfullhash}{f6e91c6ba74cd3f422eca2e0a6ebcd66}
+      \field{labelalpha}{Rös18}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1386-923X; 1572-9079/e}
+      \field{journaltitle}{{Algebr. Represent. Theory}}
+      \field{number}{1}
+      \field{title}{{Parahoric restriction for \(\mathrm{GSp}(4)\).}}
+      \field{volume}{21}
+      \field{year}{2018}
+      \field{pages}{145\bibrangedash 161}
+      \range{pages}{17}
+    \endentry
+    \entry{rz}{book}{}
+      \name{author}{2}{}{%
+        {{hash=f7a04ab40fa533cf3ecf71e74deb3f58}{%
+           family={Rapoport},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=42d2e909de04e67755f3029be26636f9}{%
+           family={Zink},
+           familyi={Z\bibinitperiod},
+           given={Th.},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press, Princeton, NJ}%
+      }
+      \strng{namehash}{943d36046397596d8a7d6983900699c5}
+      \strng{fullhash}{943d36046397596d8a7d6983900699c5}
+      \strng{bibnamehash}{943d36046397596d8a7d6983900699c5}
+      \strng{authorbibnamehash}{943d36046397596d8a7d6983900699c5}
+      \strng{authornamehash}{943d36046397596d8a7d6983900699c5}
+      \strng{authorfullhash}{943d36046397596d8a7d6983900699c5}
+      \field{labelalpha}{RZ96}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Annals of Mathematics Studies}
+      \field{title}{Period spaces for {$p$}-divisible groups}
+      \field{volume}{141}
+      \field{year}{1996}
+      \verb{doi}
+      \verb 10.1515/9781400882601
+      \endverb
+    \endentry
+    \entry{serre-galois}{book}{}
+      \name{author}{1}{}{%
+        {{hash=523a41970d92b80420ca6d5307619da7}{%
+           family={Serre},
+           familyi={S\bibinitperiod},
+           given={Jean-Pierre},
+           giveni={J\bibinithyphendelim P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag, Berlin}%
+      }
+      \strng{namehash}{523a41970d92b80420ca6d5307619da7}
+      \strng{fullhash}{523a41970d92b80420ca6d5307619da7}
+      \strng{bibnamehash}{523a41970d92b80420ca6d5307619da7}
+      \strng{authorbibnamehash}{523a41970d92b80420ca6d5307619da7}
+      \strng{authornamehash}{523a41970d92b80420ca6d5307619da7}
+      \strng{authorfullhash}{523a41970d92b80420ca6d5307619da7}
+      \field{labelalpha}{Ser97}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{3-540-61990-9}
+      \field{note}{Translated from the French by Patrick Ion}
+      \field{title}{Galois cohomology}
+      \field{year}{1997}
+      \field{pages}{x+210}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1007/978-3-642-59141-9
+      \endverb
+    \endentry
+    \entry{stacks-project}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=abb7996abcbb3ba4cf4194c8dcb595ca}{%
+           family={{Stacks Project Authors}},
+           familyi={S\bibinitperiod},
+           given={The},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{fullhash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{bibnamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authorbibnamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authornamehash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \strng{authorfullhash}{abb7996abcbb3ba4cf4194c8dcb595ca}
+      \field{labelalpha}{Stacks}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{http://stacks.math.columbia.edu}}
+      \field{shorthand}{Stacks}
+      \field{title}{\itshape Stacks Project}
+      \field{year}{2020}
+    \endentry
+    \entry{SYZnew}{misc}{}
+      \name{author}{3}{}{%
+        {{hash=47b4273eab0f88434ed2e7034fd17465}{%
+           family={Shen},
+           familyi={S\bibinitperiod},
+           given={Xu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=65e86cf45078adc47674b289dd0acbc5}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={{Chia-Fu}},
+           giveni={C\bibinitperiod}}}%
+        {{hash=03ae9f31823ca904e5b163319d310224}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Chao},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \strng{fullhash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \strng{bibnamehash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \strng{authorbibnamehash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \strng{authornamehash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \strng{authorfullhash}{a307d7aba97ddf6f6cc5506f14389d9e}
+      \field{labelalpha}{SYZ19}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{month}{10}
+      \field{note}{Preprint}
+      \field{title}{{EKOR} strata for {S}himura varieties with parahoric level structure}
+      \field{year}{2019}
+      \verb{eprint}
+      \verb 1910.07785v1
+      \endverb
+    \endentry
+    \entry{tits}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=5df5c47c0e1b4ee587e24f6674180b1b}{%
+           family={Tits},
+           familyi={T\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Amer. Math. Soc., Providence, R.I.}%
+      }
+      \strng{namehash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \strng{fullhash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \strng{bibnamehash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \strng{authorbibnamehash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \strng{authornamehash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \strng{authorfullhash}{5df5c47c0e1b4ee587e24f6674180b1b}
+      \field{labelalpha}{Tit79}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Automorphic forms, representations and {$L$}-functions ({P}roc. {S}ympos. {P}ure {M}ath., {O}regon {S}tate {U}niv., {C}orvallis, {O}re., 1977), {P}art 1}
+      \field{series}{Proc. Sympos. Pure Math., XXXIII}
+      \field{title}{Reductive groups over local fields}
+      \field{year}{1979}
+      \field{pages}{29\bibrangedash 69}
+      \range{pages}{41}
+    \endentry
+    \entry{vieh-wed}{article}{}
+      \name{author}{2}{}{%
+        {{hash=a53ceabab807b9a9ad265caa02471a10}{%
+           family={Viehmann},
+           familyi={V\bibinitperiod},
+           given={Eva},
+           giveni={E\bibinitperiod}}}%
+        {{hash=19a9170cb8e6a605aacaaf60dcce3a64}{%
+           family={Wedhorn},
+           familyi={W\bibinitperiod},
+           given={Torsten},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \strng{fullhash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \strng{bibnamehash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \strng{authorbibnamehash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \strng{authornamehash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \strng{authorfullhash}{ce6b3c4c8f0343ff9bdc070e5217f408}
+      \field{labelalpha}{VW13}
+      \field{sortinit}{V}
+      \field{sortinithash}{75dd7385c90b2252c3ae853a80ca853b}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0025-5831}
+      \field{journaltitle}{Math. Ann.}
+      \field{number}{4}
+      \field{title}{Ekedahl-{O}ort and {N}ewton strata for {S}himura varieties of {PEL} type}
+      \field{volume}{356}
+      \field{year}{2013}
+      \field{pages}{1493\bibrangedash 1550}
+      \range{pages}{58}
+      \verb{doi}
+      \verb 10.1007/s00208-012-0892-z
+      \endverb
+    \endentry
+    \entry{wortmann}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=05f5b049ea19ef699090b19955ad8566}{%
+           family={{Wortmann}},
+           familyi={W\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{05f5b049ea19ef699090b19955ad8566}
+      \strng{fullhash}{05f5b049ea19ef699090b19955ad8566}
+      \strng{bibnamehash}{05f5b049ea19ef699090b19955ad8566}
+      \strng{authorbibnamehash}{05f5b049ea19ef699090b19955ad8566}
+      \strng{authornamehash}{05f5b049ea19ef699090b19955ad8566}
+      \strng{authorfullhash}{05f5b049ea19ef699090b19955ad8566}
+      \field{labelalpha}{Wor13}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{month}{10}
+      \field{note}{Preprint}
+      \field{title}{The $\mu$-ordinary locus for Shimura varieties of Hodge type}
+      \field{year}{2013}
+      \true{nocite}
+      \verb{eprint}
+      \verb 1310.6444v1
+      \endverb
+    \endentry
+    \entry{yu}{article}{}
+      \name{author}{1}{}{%
+        {{hash=65e86cf45078adc47674b289dd0acbc5}{%
+           family={{Yu}},
+           familyi={Y\bibinitperiod},
+           given={Chia-Fu},
+           giveni={C\bibinithyphendelim F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier (Academic Press), San Diego, CA}%
+      }
+      \strng{namehash}{65e86cf45078adc47674b289dd0acbc5}
+      \strng{fullhash}{65e86cf45078adc47674b289dd0acbc5}
+      \strng{bibnamehash}{65e86cf45078adc47674b289dd0acbc5}
+      \strng{authorbibnamehash}{65e86cf45078adc47674b289dd0acbc5}
+      \strng{authornamehash}{65e86cf45078adc47674b289dd0acbc5}
+      \strng{authorfullhash}{65e86cf45078adc47674b289dd0acbc5}
+      \field{labelalpha}{Yu08}
+      \field{sortinit}{Y}
+      \field{sortinithash}{b8d711a035f7be9840c721c82920477e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0001-8708}
+      \field{journaltitle}{{Adv. Math.}}
+      \field{number}{4}
+      \field{title}{{Irreducibility and \(p\)-adic monodromies on the Siegel moduli spaces}}
+      \field{volume}{218}
+      \field{year}{2008}
+      \field{pages}{1253\bibrangedash 1285}
+      \range{pages}{33}
+    \endentry
+    \entry{zhang}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=08835018e7f90fcf262517bf88eb4d72}{%
+           family={{Zhang}},
+           familyi={Z\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{08835018e7f90fcf262517bf88eb4d72}
+      \strng{fullhash}{08835018e7f90fcf262517bf88eb4d72}
+      \strng{bibnamehash}{08835018e7f90fcf262517bf88eb4d72}
+      \strng{authorbibnamehash}{08835018e7f90fcf262517bf88eb4d72}
+      \strng{authornamehash}{08835018e7f90fcf262517bf88eb4d72}
+      \strng{authorfullhash}{08835018e7f90fcf262517bf88eb4d72}
+      \field{extraname}{1}
+      \field{labelalpha}{Zha15}
+      \field{sortinit}{Z}
+      \field{sortinithash}{156173bd08b075d7295bc3e0f4735a04}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.AG}
+      \field{eprinttype}{arXiv}
+      \field{month}{12}
+      \field{note}{Preprint}
+      \field{title}{Stratifications and foliations for good reductions of Shimura varieties of Hodge type}
+      \field{year}{2015}
+      \verb{eprint}
+      \verb 1512.08102v1
+      \endverb
+    \endentry
+    \entry{zhangEO}{article}{}
+      \name{author}{1}{}{%
+        {{hash=03ae9f31823ca904e5b163319d310224}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Chao},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{03ae9f31823ca904e5b163319d310224}
+      \strng{fullhash}{03ae9f31823ca904e5b163319d310224}
+      \strng{bibnamehash}{03ae9f31823ca904e5b163319d310224}
+      \strng{authorbibnamehash}{03ae9f31823ca904e5b163319d310224}
+      \strng{authornamehash}{03ae9f31823ca904e5b163319d310224}
+      \strng{authorfullhash}{03ae9f31823ca904e5b163319d310224}
+      \field{extraname}{2}
+      \field{labelalpha}{Zha18}
+      \field{sortinit}{Z}
+      \field{sortinithash}{156173bd08b075d7295bc3e0f4735a04}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0008-414X}
+      \field{journaltitle}{Canad. J. Math.}
+      \field{number}{2}
+      \field{title}{Ekedahl-{O}ort strata for good reductions of {S}himura varieties of {H}odge type}
+      \field{volume}{70}
+      \field{year}{2018}
+      \field{pages}{451\bibrangedash 480}
+      \range{pages}{30}
+      \verb{doi}
+      \verb 10.4153/CJM-2017-020-5
+      \endverb
+    \endentry
+    \entry{zinka}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=30def455bde93adad089395f6b29c9d6}{%
+           family={{Zink}},
+           familyi={Z\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Tokyo: Mathematical Society of Japan}%
+      }
+      \strng{namehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{fullhash}{30def455bde93adad089395f6b29c9d6}
+      \strng{bibnamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authorbibnamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authornamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authorfullhash}{30def455bde93adad089395f6b29c9d6}
+      \field{extraname}{1}
+      \field{labelalpha}{Zin01}
+      \field{sortinit}{Z}
+      \field{sortinithash}{156173bd08b075d7295bc3e0f4735a04}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{{Class field theory -- its centenary and prospect. Proceedings of the 7th MSJ International Research Institute of the Mathematical Society of Japan, Tokyo, Japan, June 3--12, 1998}}
+      \field{isbn}{4-931469-11-6/hbk}
+      \field{title}{{A Dieudonné theory for \(p\)-divisible groups.}}
+      \field{year}{2001}
+      \true{nocite}
+      \field{pages}{139\bibrangedash 160}
+      \range{pages}{22}
+    \endentry
+    \entry{zinkformal}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=30def455bde93adad089395f6b29c9d6}{%
+           family={{Zink}},
+           familyi={Z\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Paris: Société Mathématique de France}%
+      }
+      \strng{namehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{fullhash}{30def455bde93adad089395f6b29c9d6}
+      \strng{bibnamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authorbibnamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authornamehash}{30def455bde93adad089395f6b29c9d6}
+      \strng{authorfullhash}{30def455bde93adad089395f6b29c9d6}
+      \field{extraname}{2}
+      \field{labelalpha}{Zin02}
+      \field{sortinit}{Z}
+      \field{sortinithash}{156173bd08b075d7295bc3e0f4735a04}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{{Cohomologies \(p\)-adiques et applications arithmétiques (I)}}
+      \field{isbn}{2-85629-115-5/pbk}
+      \field{title}{{The display of a formal \(p\)-divisible group.}}
+      \field{year}{2002}
+      \true{nocite}
+      \field{pages}{127\bibrangedash 248}
+      \range{pages}{122}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

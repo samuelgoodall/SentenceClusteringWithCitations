@@ -1,0 +1,242 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{ahmed1974discrete}
+Nasir Ahmed, T\_ Natarajan, and Kamisetty~R Rao.
+\newblock Discrete cosine transform.
+\newblock {\em IEEE transactions on Computers}, 100(1):90--93, 1974.
+
+\bibitem{brendel2017decision}
+Wieland Brendel, Jonas Rauber, and Matthias Bethge.
+\newblock Decision-based adversarial attacks: Reliable attacks against
+  black-box machine learning models.
+\newblock {\em arXiv preprint arXiv:1712.04248}, 2017.
+
+\bibitem{brunner2019guessing}
+Thomas Brunner, Frederik Diehl, Michael~Truong Le, and Alois Knoll.
+\newblock Guessing smart: Biased sampling for efficient black-box adversarial
+  attacks.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 4958--4966, 2019.
+
+\bibitem{carlini2017towards}
+Nicholas Carlini and David Wagner.
+\newblock Towards evaluating the robustness of neural networks.
+\newblock In {\em 2017 IEEE Symposium on Security and Privacy (SP)}, pages
+  39--57. IEEE, 2017.
+
+\bibitem{chaowei2018characterizing}
+Bo~Li Fisher Yu Jinfeng Yi Mingyan~Liu Chaowei~Xiao, Duizhi~Deng and Dawn Song.
+\newblock Characterizing adversarial examples based on spatial consistency
+  information for semantic segmentation.
+\newblock In {\em ECCV}, 2018.
+
+\bibitem{chaowei2018spatially}
+Bo~Li Warren He Mingyan~Liu Chaowei~Xiao, Jun-Yan~Zhu and Dawn Song.
+\newblock Spatially transformed adversarial examples.
+\newblock In {\em ICLR}, 2018.
+
+\bibitem{chen2015deepdriving}
+Chenyi Chen, Ari Seff, Alain Kornhauser, and Jianxiong Xiao.
+\newblock Deepdriving: Learning affordance for direct perception in autonomous
+  driving.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 2722--2730, 2015.
+
+\bibitem{chen2018rise}
+Hongming Chen, Ola Engkvist, Yinhai Wang, Marcus Olivecrona, and Thomas
+  Blaschke.
+\newblock The rise of deep learning in drug discovery.
+\newblock {\em Drug discovery today}, 23(6):1241--1250, 2018.
+
+\bibitem{chen2019hopskipjumpattack}
+Jianbo Chen, Michael~I Jordan, and Martin~J Wainwright.
+\newblock Hopskipjumpattack: A query-efficient decision-based attack.
+\newblock {\em arXiv preprint arXiv:1904.02144}, 2019.
+
+\bibitem{cheng2018query}
+Minhao Cheng, Thong Le, Pin-Yu Chen, Jinfeng Yi, Huan Zhang, and Cho-Jui Hsieh.
+\newblock Query-efficient hard-label black-box attack: An optimization-based
+  approach.
+\newblock {\em arXiv preprint arXiv:1807.04457}, 2018.
+
+\bibitem{deng2009imagenet}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock In {\em 2009 IEEE conference on computer vision and pattern
+  recognition}, pages 248--255. Ieee, 2009.
+
+\bibitem{dong2019efficient}
+Yinpeng Dong, Hang Su, Baoyuan Wu, Zhifeng Li, Wei Liu, Tong Zhang, and Jun
+  Zhu.
+\newblock Efficient decision-based black-box adversarial attacks on face
+  recognition.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 7714--7722, 2019.
+
+\bibitem{eykholt2017robust}
+Kevin Eykholt, Ivan Evtimov, Earlence Fernandes, Bo Li, Amir Rahmati, Chaowei
+  Xiao, Atul Prakash, Tadayoshi Kohno, and Dawn Song.
+\newblock Robust physical-world attacks on deep learning models.
+\newblock {\em arXiv preprint arXiv:1707.08945}, 2017.
+
+\bibitem{goodfellow2014explaining}
+Ian~J Goodfellow, Jonathon Shlens, and Christian Szegedy.
+\newblock Explaining and harnessing adversarial examples.
+\newblock {\em arXiv preprint arXiv:1412.6572}, 2014.
+
+\bibitem{guo2018low}
+Chuan Guo, Jared~S Frank, and Kilian~Q Weinberger.
+\newblock Low frequency adversarial perturbation.
+\newblock {\em arXiv preprint arXiv:1809.08758}, 2018.
+
+\bibitem{halko2011finding}
+Nathan Halko, Per-Gunnar Martinsson, and Joel~A Tropp.
+\newblock Finding structure with randomness: Probabilistic algorithms for
+  constructing approximate matrix decompositions.
+\newblock {\em SIAM review}, 53(2):217--288, 2011.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 770--778, 2016.
+
+\bibitem{huang2017densely}
+Gao Huang, Zhuang Liu, Laurens Van Der~Maaten, and Kilian~Q Weinberger.
+\newblock Densely connected convolutional networks.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 4700--4708, 2017.
+
+\bibitem{ilyas2018black}
+Andrew Ilyas, Logan Engstrom, Anish Athalye, and Jessy Lin.
+\newblock Black-box adversarial attacks with limited queries and information.
+\newblock {\em arXiv preprint arXiv:1804.08598}, 2018.
+
+\bibitem{ilyas2018prior}
+Andrew Ilyas, Logan Engstrom, and Aleksander Madry.
+\newblock Prior convictions: Black-box adversarial attacks with bandits and
+  priors.
+\newblock {\em arXiv preprint arXiv:1807.07978}, 2018.
+
+\bibitem{khalid2019red}
+Faiq Khalid, Hassan Ali, Muhammad~Abdullah Hanif, Semeen Rehman, Rehan Ahmed,
+  and Muhammad Shafique.
+\newblock Red-attack: Resource efficient decision based attack for machine
+  learning.
+\newblock {\em arXiv preprint arXiv:1901.10258}, 2019.
+
+\bibitem{lenz2015deep}
+Ian Lenz, Honglak Lee, and Ashutosh Saxena.
+\newblock Deep learning for detecting robotic grasps.
+\newblock {\em The International Journal of Robotics Research},
+  34(4-5):705--724, 2015.
+
+\bibitem{liu2019geometry}
+Yujia Liu, Seyed-Mohsen Moosavi-Dezfooli, and Pascal Frossard.
+\newblock A geometry-inspired decision-based attack.
+\newblock {\em arXiv preprint arXiv:1903.10826}, 2019.
+
+\bibitem{liu2018large}
+Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
+\newblock Large-scale celebfaces attributes (celeba) dataset.
+
+\bibitem{madry2017towards}
+Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and
+  Adrian Vladu.
+\newblock Towards deep learning models resistant to adversarial attacks.
+\newblock {\em arXiv preprint arXiv:1706.06083}, 2017.
+
+\bibitem{facepp-compare-api}
+MEGVII.
+\newblock Facial recognition compare api.
+\newblock {https://console.faceplusplus.com/documents/5679308}.
+
+\bibitem{facepp-partner}
+MEGVII.
+\newblock Selected cases.
+\newblock {https://megvii.com/selected\_cases}.
+
+\bibitem{azure-detect-api}
+Microsoft.
+\newblock Faceoperations class detect\_with\_stream.
+\newblock {https://tinyurl.com/t7ulxvx}.
+
+\bibitem{azure-verify-api}
+Microsoft.
+\newblock Faceoperations class verify\_face\_to\_face.
+\newblock {https://tinyurl.com/rlcayd2}.
+
+\bibitem{ren2015faster}
+Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun.
+\newblock Faster r-cnn: Towards real-time object detection with region proposal
+  networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  91--99, 2015.
+
+\bibitem{richter2019open}
+Florian Richter, Ryan~K Orosco, and Michael~C Yip.
+\newblock Open-sourced reinforcement learning environments for surgical
+  robotics.
+\newblock {\em arXiv preprint arXiv:1903.02090}, 2019.
+
+\bibitem{mlsurgicalrobotics}
+Kumba Sennaar.
+\newblock Machine learning in surgical robotics – 4 applications that matter.
+\newblock
+  {https://emerj.com/ai-sector-overviews/machine-learning-in-surgical-robotics-4-applications/}.
+
+\bibitem{simonyan2014very}
+Karen Simonyan and Andrew Zisserman.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock {\em arXiv preprint arXiv:1409.1556}, 2014.
+
+\bibitem{spath1993two}
+Helmuth Sp{\"a}th.
+\newblock {\em Two dimensional spline interpolation algorithms}.
+\newblock CRC Press, 1993.
+
+\bibitem{srinivasan2019black}
+Vignesh Srinivasan, Ercan~E Kuruoglu, Klaus-Robert M{\"u}ller, Wojciech Samek,
+  and Shinichi Nakajima.
+\newblock Black-box decision based adversarial attack with symmetric
+  alpha-stable distribution.
+\newblock {\em arXiv preprint arXiv:1904.05586}, 2019.
+
+\bibitem{szegedy2015going}
+Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir
+  Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich.
+\newblock Going deeper with convolutions.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 1--9, 2015.
+
+\bibitem{tu2019autozoom}
+Chun-Chen Tu, Paishun Ting, Pin-Yu Chen, Sijia Liu, Huan Zhang, Jinfeng Yi,
+  Cho-Jui Hsieh, and Shin-Ming Cheng.
+\newblock Autozoom: Autoencoder-based zeroth order optimization method for
+  attacking black-box neural networks.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~33, pages 742--749, 2019.
+
+\bibitem{wallace1992jpeg}
+Gregory~K Wallace.
+\newblock The jpeg still picture compression standard.
+\newblock {\em IEEE transactions on consumer electronics}, 38(1):xviii--xxxiv,
+  1992.
+
+\bibitem{wold1987principal}
+Svante Wold, Kim Esbensen, and Paul Geladi.
+\newblock Principal component analysis.
+\newblock {\em Chemometrics and intelligent laboratory systems}, 2(1-3):37--52,
+  1987.
+
+\bibitem{xiao2018generating}
+Chaowei Xiao, Bo Li, Jun-Yan Zhu, Warren He, Mingyan Liu, and Dawn Song.
+\newblock Generating adversarial examples with adversarial networks.
+\newblock {\em arXiv preprint arXiv:1801.02610}, 2018.
+
+\bibitem{zagoruyko2016wide}
+Sergey Zagoruyko and Nikos Komodakis.
+\newblock Wide residual networks.
+\newblock {\em arXiv preprint arXiv:1605.07146}, 2016.
+
+\end{thebibliography}

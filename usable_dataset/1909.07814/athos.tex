@@ -1,0 +1,1080 @@
+\newcommand{\kw}[1]{{\ensuremath{\mathtt{#1}}}}
+\newcommand{\ftext}[1]{\text{\small{#1}}}
+\newcommand{\cond}[3]{\ensuremath{{{#1}\:?\:{#2}\::{#3}}}}
+\newcommand{\forl}[4]{\ensuremath{\kw{for}\:{#1}\:\kw{in}\:[{#2}, {#3}]\:\kw{do}\:{#4}}}
+\newcommand{\ite}[3]{\ensuremath{\kw{if}({#1}, {#2}, {#3})}}
+\newcommand{\loops}[3]{\ensuremath{\kw{while}\:{#1} \leq {#2}\:\kw{do}\:{#3}}}
+
+\section{Athos}
+\label{sec:athos}
+Athos compiles ML inference code written in \tensorflow to \mpc protocols. It has the following main components:
+
+\begin{tiret}
+
+\item \emph{Frontend.} Athos frontend compiles \tensorflow code to a
+high-level intermediate language (HLIL). HLIL supports floating-point
+tensors and sequence of function calls (corresponding to the
+\tensorflow nodes) that manipulate tensors. The main challenge in the
+frontend is to reconcile dynamic typing in \tensorflow to static
+typing in HLIL. \tensorflow code, written in Python, does not have
+tensor dimensions, whereas our HLIL has explicit tensor dimensions as
+it enables the compiler to perform analyses and optimizations.
+
+\item \emph{Float-to-fixed converter.} While ML models use
+floating-point arithmetic, \mpc protocols operate on fixed-point
+arithmetic. Rather than requiring the programmers to manually convert
+(or re-train) their models to integers, Athos performs the conversion
+automatically, without compromising on the inference accuracy.
+
+\item \emph{Modular LLIL.} Athos compiles floating-point HLIL code to 
+fixed-point code in a low-level
+intermediate language (LLIL). LLIL is a C-like imperative language
+that supports integer tensors, loops, conditionals, and functions. LLIL
+also makes it easier for different cryptographic backends to be
+plugged into Athos. It precisely specifies the interface that it
+requires the cryptographic protocols to implement, while providing a
+ library for other operations. The LLIL is compiled down to
+the MPC protocol code.
+
+\item \emph{Optimizations.} Athos implements 
+ \mpc specific optimizations as well as
+several standard dataflow
+  analyses and compiler optimizations.
+ The design of HLIL and LLIL, and the choice of them being
+  statically typed, is partly motivated by the requirements of these
+  analyses.
+
+Below we explain each of these components in detail.
+\end{tiret}
+\subsection{Frontend and HLIL}
+\label{subsec:athosfrontend}
+
+Athos frontend compiles the input \tensorflow models to HLIL (described
+next) with explicit tensor dimensions. To obtain these dimensions,
+the frontend first runs \tensorflow code on one dummy input and
+generates \tensorflow metadata that has all the required information.
+The metadata is then translated to HLIL.
+
+We discuss some details of the frontend.
+A plain dump of  the \tensorflow metadata contains some nodes that 
+are semantically irrelevant for actual inference,
+e.g. {\tt identity}, {\tt assign}, etc. To avoid representing these
+nodes in HLIL,
+we first prune the \tensorflow graph to remove such nodes,
+specifically we use the \tensorflow graph transform tool
+\cite{tfGraphTransformTool} for this purpose. Next, Athos desugars the remaining (tens of) \tensorflow nodes  to HLIL, while keeping the number of functions in HLIL as small
+as possible. \tensorflow also supports
+``broadcasting'' \cite{tensorflowbroadcasting} that allows operations
+on tensors of incompatible dimensions and sizes. For example, due to
+broadcasting, addition of a four-dimensional tensor with a one-dimensional tensor is a valid operation. Athos frontend
+passes the broadcasting information to HLIL,
+which then accounts for it by compiling it to the appropriate LLIL
+library function call.
+
+
+% Finally, some \tensorflow graphs have ``control edges'' 
+% \cite{abadi2017computational} that constrain the order of execution of
+% the nodes -- Athos frontend also accounts for their mutability
+% \aseem{Add detail how}.
+
+\begin{figure}[htp]
+  \footnotesize
+  \[
+  \begin{array}{rrcl}
+    %\ftext{Function} & f &&\\
+    \ftext{Constant} & n & ::= & 0 \mid 1 \mid 2 \mid \ldots\\
+    \ftext{Float constant} & r & ::= & n.n\\
+    \ftext{Type} & \hat{\tau} &::=& \kw{float} \mid \kw{int} \mid \hat{\tau}[n] \\
+    \ftext{Matrix} & \hat{M} & ::= & \overline{r} \mid \overline{\hat{M}}\\
+    \ftext{Expression} & \hat{e} &::=& n \mid x \mid \hat{M} \mid \hat{e_1} \oplus \hat{e_2} \mid x[\hat{e}] \\
+    \ftext{Program} & \hat{p} & ::= &\kw{void}\ \kw{main}\;()\;\{\overline{\hat{\tau}\;x}\;;\overline{f(\overline{\hat{e}})}\}
+  \end{array}
+  \]
+\caption{HLIL syntax}
+\label{fig:hil}
+\end{figure}
+
+Figure~\ref{fig:hil} shows the HLIL (we use $\overline{r}$ to denote
+sequences of floating-point constants, and similarly for other
+syntactic categories). It is a simple language of floating-point
+tensors ($\hat{M}$), with dimensions ($n$) and sizes as explicit type annotations ($\hat{\tau}[n]$), and
+the $\kw{main}$ is a sequence of variable declarations and function calls.
+
+We next discuss how Athos performs float-to-fixed conversion on HLIL
+programs.
+
+\subsection{Float-to-fixed}
+\label{subsec:athosquantizer}
+As observed earlier, most ML models are expressed using
+floating-point, while \mpc protocols operate on
+integers. For large models, we cannot expect the programmers to
+manually translate or re-train floating-point ML models to integer
+code (the common approach in literature on secure inference~\cite{secureml,minionn,gazelle,aby3,securenn,delphi,chameleon}).
+Furthermore, it is well-known that floating-point operations are much
+more inefficient than fixed-point when evaluated
+securely~(\cite{secureml,aby3}) -- we re-confirm this by performing
+two-party secure multiplication~\cite{ddkssz15} using both fixed-point
+and floating-point arithmetic to showcase the difference. This is
+illustrated in Table \ref{tab:floatvsfixed} which shows the huge
+overheads associated with floating-point arithmetic.
+In future, if efficient protocols for floating-point become
+available then we can directly compile HLIL to them, but until then
+Athos automatically performs the translation.
+
+The translation is parametrized by a scale parameter
+$s$ that determines the precision.
+We discuss how this scale is set later in the section. Given a scale
+$s\in\mathbb{Z}$, we define a map $\rho_s:\mathbb{R}\rightarrow \mathbb{Z}_{2^b}$
+that maps Reals to $b$-bit integers: $\rho_s(r)=\lfloor r\cdot2^s\rfloor$. We abuse notation and also apply $\rho_s$ to
+matrices $M$ of Reals where the result is a point-wise application of
+$\rho_s$ to each matrix element.  
+In the output fixed-point code, every Real number $r$ is represented by a $b$-bit integer.
+The Real representation of an integer $n$ is given by $\frac{n}{2^s}$.
+%the conversion algorithm
+The float-to-fixed conversion (for select cases) is described in
+the following algorithm (\kw{ScaleDown} is described in
+Table~\ref{tab:smf}):
+
+\[
+\begin{array}{lcl}
+%F(n) & = & n\\
+%F(r) & = & \rho_s(r)\\
+%F(\hat{M}) & = & \rho_s(\hat{M})\\
+%F(\kw{float}\ x) & = & \kw{int}\ x\\
+F(\kw{MatAdd}(A,B,C)) & = & \kw{MatAdd}(A,B,C)\\
+F(\kw{MatMul}(A,B,C)) &= &\kw{MatMul}(A,B,C);\\
+& &\kw{ScaleDown}(C,s)
+\end{array}
+\]
+
+%Here, $\mathit{unop}$ denotes a generic unary operator (e.g., $\mathtt{argmax},\mathtt{maxpool},\mathtt{relu},\dots$).
+%In the first step, we run the a procedure that replaces all floating-point numbers in the program with fixed-point integers. 
+% The only operation which needs to change because of float-to-fixed is matrix multiplication. Since convolution calls matrix multiplication (Figure~\ref{convtomatmul}), it needs to be modified to call the new matrix multiplication (Figure~\ref{newmatmul}).
+
+%example
+\
+As an example of the conversion process, consider the program $M_1*M_2$ that multiplies
+the row vector $M_1=[400.1,200.1]$ with the column vector $M_2=[0.3,0.1]^T$.
+Then in infinite precision Real arithmetic the result of the computation
+$400.1*0.3+200.1*0.1$
+is $140.04$. Single-precision floating-point 
+arithmetic with 32 bits only has a 23-bit mantissa and computes the approximately correct result 140.040009.
+%When using Athos, the computed result
+%can be much more precise than the floating-point result. 
+We use $0.1f$ to denote the floating-point number closest to the Real number $0.1$. 
+Given $s=24$, $F(M_1*M_2)$ results 
+into the following program over integers
+\[
+(\rho_{24}(400.1f)*\rho_{24}(0.3f)+\rho_{24}(200.1f)*\rho_{24}(0.1f)) >> {24}
+\]
+which results in the following computation with 64-bit integers
+\[
+(6712564224*3357121024+5033165*1677721)>>{24}
+\]
+The final result is 2349481329 that represents the real number
+$\frac{2349481329}{2^{24}}=140.040000021457672119140625$ which is good approximation of the desired result $140.04$. Although it is feasible to constuct examples where fixed-point computations
+can be imprecise, ML usually operates on normalized values and we have observed that Athos does not lose accuracy in practice (Table~\ref{tab:fixed-accuracy}).
+
+Athos, assigns the same bit-width $b$ and the same scale $s$ to all
+network parameters. While we could use different $b$ and $s$, our
+experimental results show that same values for all parameters works
+quite well in practice.
+%Hence, no information about any individual parameter gets leaked. 
+We keep the scale public for efficiency: division with $2^s$ when $s$ is secret is much more expensive than when $s$ is public.
+Moreover, scaling down operations (division by $2^s$) cause loss of precision, as they lose significant bits, and hence need to be minimized.
+ Therefore, Athos scales down only once per matrix multiplication and does not scale down matrix additions.
+%These design choices make Athos ``crypto-aware" and effective for secure machine learning (Section~\ref{subsec:athosexperiments}).
+%Prior float-to-fixed converters assign different bit-widths/scales to different parameters and  scale down after every operation~\cite{}.
+%Because IEEE754 floating-point numbers have a 23-bit mantissa, if $s$ is set to 23 and all intermediate values occurring at runtime are below 128 then the fixed-point code has very similar accuracy to floating-point code. 
+%However, in practice, the intermediate values do exceed 128, causing $s$ being set to smaller values, and some accuracy is lost.
+
+%\subsubsection{Setting Scale}\label{subsec:athossettingscale}
+%We try all possible $s$. If $s$ is large then overflows and garbage. If $s$ is small then imprecise %result. Autotuning gives a good $s$ that produces good results. 
+
+While we use machine integer width (64) for $b$, finding a good value
+of $s$ is difficult. We explain the various tradeoffs that
+govern the choice of $s$ and then discuss our solution.
+
+Suppose, in our example, $s$ is set too low: $s=2$.
+Then $F([400.1f,200.1f]*[0.3f,0.1f])$ is $(1600*1+800*0)>>2$,
+which represents the Real number $400/4=100$.
+This result is far from 140.04. Here, low scale values have lead to
+loss of significant bits. In particular, 0.1 has been rounded to zero
+causing an imprecise result. Ideally we want to set the scale to a large value
+so that the integers have many significant digits.
+
+Next, suppose $s$ is set to a very high value, e.g., 60. Then, the
+computation $\rho_{60}(400.1f)*\rho_{60}(0.3f)$ overflows 64-bit integers and
+the result is garbage
+(multiplication of these two large positive numbers would become a negative number).  
+%Usually, at compile time the operations are of the form $x*y$ where the values of $x$
+%and $y$ are known only at runtime. Hence, it is hard to decide whether a particular
+%scale value would lead to overflows or not at compile time.
+
+Thus, scale can neither be very low nor very high; we need to find a sweet spot.
+To determine an appropriate value of $s$, we sweep over all its possible values $\{0,1,\ldots,b-1\}$
+and choose the value that leads to the best accuracy. For the example $400.1f*0.3f+200.1f*0.1f$,
+the most accurate result is obtained at $s=24$. In general, machine learning algorithms have a 
+ validation dataset that is used for hyperparameter tuning. We consider scale as a hyperparameter
+and select the scale that leads to a fixed-point classifier implementation that performs the best on the validation set.
+The scale chosen by Athos is a {\em leakage} function that depends on the weights of the model.
+Athos gives a methodical way of picking this scale that prior works did manually.
+Hence, leakage by Athos is similar to all prior works on secure inference. 
+%We point out that while the scale chosen by Athos is a ``leakage'' function that depends on the weights of the model, we stress that this is not unique to our work. Indeed, all prior works on secure evaluation of machine learning algorithms pick an appropriate scale with the hope that the accuracy of the fixed-point network will not be too much worse than the original floating-point version. Our scheme helps us select the scale that helps match the floating-point accuracy.
+
+%Like all prior works on secure inference, we keep the scale public for efficiency reasons.
+%Hence, the {\em{leakage}} by Athos is identical to prior work.
+
+%The accuracy of the final classifier is reported on the test set. In particular, the test set
+%is used only for evaluation and {\em not} to generate a classifier implementation. Athos only works with the validation
+%set and does not have access to the test set. 
+
+
+
+\begin{table}
+  \centering
+  \resizebox{\columnwidth}{!}{
+
+      \begin{tabular}{|c|c|c|c|l|}
+    \hline
+    \# Sequential Multiplications & Fixed (ms) & Float (ms) & Overhead \\
+    \hline
+  $1$ & $2.57$ & $72.35$ & $28.11$x\\
+  \hline
+    $10$ & $4.88$ & $278.8$ & $57.1$x \\  \hline
+    $100$ & $21.65$ & $2735$ & $126.34$x \\   \hline
+    $1000$ & $199.6$ & $25281.42$ & $126.6$x \\   \hline
+\end{tabular}
+}
+ \caption{Floating-point vs Fixed-point multiplication.}
+\label{tab:floatvsfixed}
+%\tableup
+\end{table}
+
+\subsection{Modular LLIL}
+\label{sec:athosmodularity}
+
+\begin{figure}[htp]
+  \footnotesize
+  \[
+  \begin{array}{rrcl}
+    \ftext{Constant} & n & ::= & 0 \mid 1 \mid 2 \mid \ldots\\
+    \ftext{Type} & \tau &::=& \kw{int} \mid \tau[n] \\
+    \ftext{Matrix} & M & ::= & \overline{n} \mid \overline{M}\\
+    \ftext{Expression} & e &::=& n \mid x \mid M \mid e_{1} \oplus e_{2} \mid x[e]\\
+    \ftext{Statement} & s &::=& \tau\:x \mid x = e \mid \kw{for}(x=e_{1};x<e_{2};x++)\{s\}\\
+    & & \mid& x[e_{1}] = e_{2} \mid \kw{if}(e, s_{1}, s_2\} \mid
+    s_{1}; s_{2} \mid \kw{return}\ e\\
+    & & \mid & f\;(\overline{e}) \mid d\;(\overline{e})\\
+    \ftext{Global} & g & ::= &\kw{extern}\;\tau\;d\;(\overline{\tau\;x}) \mid \tau\;f\;(\overline{\tau\;x})\{s\}\\
+    \ftext{Program} & p & ::= & \overline{g};\;\kw{void}\ \kw{main}\;()\;\{s\}
+  \end{array}
+  \]
+\caption{LLIL syntax}
+\label{fig:lil}
+\end{figure}
+
+Athos compiles HLIL to LLIL, a crypto-aware, C-like intermediate
+language that has only integer-valued tensors. Figure~\ref{fig:lil}
+shows the syntax of LLIL. This language  has sufficient expressiveness
+required to implement ML inference tasks. In particular it supports
+arrays, basic arithmetic, loops, branching, functions, and \kw{extern}
+declarations.
+%
+LLIL makes the Athos interface to the \mpc cryptographic protocols
+explicit. We observe that the tensor operations in a typical
+\tensorflow code fall into two categories: those that do not change
+the values but just copy the data around (e.g. {\tt squeeze} to remove
+dimensions of size 1 from a tensor, {\tt pad} to pad a tensor with
+various kinds of paddings, {\tt transpose} to take the transpose of a
+tensor, and {\tt concat} to concatenate two tensors into a single
+tensor), and those that compute new values.
+%
+For functions that do not manipulate shares (denoted by $f$), LLIL
+provides a library with their
+implementations that is automatically added as a prelude to LLIL
+programs. Changing the underlying crypto protocol does not require
+changes to these library functions and this library can be used by all
+crypto developers. These functions are implemented in LLIL and are
+compiled to C++ code.
+
+Share-manipulating functions ($\kw{extern}\;d$) are required to be
+implemented in the cryptographic backend.
+All a crypto developer needs to do is to implement these functions,
+and then she would be able to directly evaluate
+the protocols on ML models used in practice. We describe these
+functions with their signatures and intended semantics in Table~\ref{tab:smf}.
+Concretely, we provide three implementations of these functions: using the 2PC
+protocols of ABY~\cite{aby}, 3PC protocols of SecureNN~\cite{securenn},
+and Porthos (Section~\ref{sec:porthos}). 
+
+\begin{table*}
+\begin{tabular}{rl}
+MatMul(int[L][M] A, int[M][N] B, int[L][N] C) & Multiply two tensors $A$ and $B$ and store results in $C$\\
+MatAdd(int[L][M] A, int[L][M] B, int[L][M] C)& Add two tensors $A$ and $B$ into $C$\\
+Conv(int[H][W][CI] A,  int[FH][FW][CI][CO] F) & Convolve a tensor $A$ with filter $F$\\
+% Optional parameters include padding and strides. \\
+Avg/Max Pool(a, b, int[H][W][C] A) & Apply a stencil that computes the average/max value in windows of size $a\times b$ of tensor $A$.\\
+ArgMax(int[M] A) & Compute the index with maximum value in $A$ \\
+FusedBatchNorm(int[K][L][M][N] A, int[N] B, int[N] C) & Returns $\forall k,l,m,n. B[n] \times A[k][l][m][n] + C[n]$\\
+ReLU(int[M][N] A) & Returns $\forall i,j. {\sf Max}(A[i][j],0)$\\
+ScaleDown(int[M][N] A, k) & Arithmetic right shift each entry of $A$ with $k$.\\
+\end{tabular}
+\caption{Share manipulating functions. These have been simplified for
+  exposition by suppressing parameters such as padding and
+  strides. For comprehensive signatures, see~\url{https://www.tensorflow.org/api_docs/python/tf/}.}
+\label{tab:smf}
+\end{table*} 
+
+
+Finally, Athos compiles LLIL programs to C++ and links them with
+the cryptographic \mpc protocol implementation.
+
+\subsection{Optimizations}
+\label{sec:athosopt}
+Athos intermediate languages are designed to be amenable to static analysis. 
+In particular, we have implemented several standard dataflow analyses and compiler optimizations~\cite{dragonbook}:
+reaching definitions, liveness analysis, and so on. These analyses help with
+optimizing memory utilization and we have observed
+savings reaching up to 80\%. 
+To demonstrate the ease of implementing analyses and optimizations, we provide an example each:
+(a) a peephole optimization ReLU MaxPool Switching on HLIL to improve
+efficiency of DNNs that use ReLU and MaxPool, and (b) an analysis
+Counting Scale Down operations on LLIL to determine the number of scale
+down operations done in order to prevent loss in
+accuracy (a similar analysis was done manually in~\cite{secureml,securenn,aby3}).
+
+\subsubsection{ReLU MaxPool Switching}
+% The ReLU operation is one of the most time intensive task in secure inference of DNNs. For some DNNs, secure evaluation of ReLUs can consume up to 80\% of the total protocol execution %time. This is in contrast to evaluation in the clear where ReLUs consume only a fraction of the total time.
+%Hence, it is plausible that ML developers can write \tensorflow code
+%in a way that has no impact on cleartext evaluation  but can severely
+%degrade the performance of secure evaluation. One such idiom involves
+%applying ReLU to a matrix followed by MaxPool. Notice that ReLU and
+%MaxPool are commutative operators: ReLU(MaxPool($\cdot$)) is
+%functionally equivalent to MaxPool(ReLU($\cdot$)). Moreover, for
+%cleartext performance, there is no discernible difference in the
+%performance of these two alternatives. Hence,
+Most \tensorflow
+developers have adopted the convention of expressing DNN layers using the MaxPool(ReLU($\cdot$)) idiom.
+For protocols like Porthos and SecureNN~\cite{securenn} that reduce ReLU and MaxPool to secure comparison protocols, ReLU(MaxPool($\cdot$)) can be much more efficient than  MaxPool(ReLU($\cdot$))  as this significantly reduces the number of comparisons. As opposed to SecureNN, where this was done manually, we have built a peephole optimization pass on HLIL
+that replaces occurrences of $\kw{MaxPool}(a,b, \kw{ReLU}(A));$ with $\kw{ReLU}(\kw{MaxPool}(a,b,A));$. For example,
+if the input matrix $A$ has dimensions $112\times112\times64$ and we compute a MaxPool with $2\times2$ windows.
+Then, the output matrix has dimensions $56\times56\times 64$. Hence, the latter needs to compute only one fourth the number of ReLUs
+compared to the former. In this case, the optimized code is over $3\times$ better in communication and over $2\times$ faster in our experimental setup (Section~\ref{sec:experiments}).
+\subsubsection{Counting Scale Down operations}
+We describe an analysis to count the number of scale down operations in an LLIL code. The analysis uses an environment $\rho$ that
+maps tensors to the number of elements they contain. This
+environment is populated using variable declarations in the code.
+ The analysis makes a single pass over $\kw{main}$ and for each call
+ $\kw{ScaleDown(A,s)}$ 
+accumulates $\rho(A)$ into a counter. The final value of the counter
+provides the number of scale down operations in the code.
+
+Note that this analysis is easy to describe as the LLIL code contains
+dimensions of all the tensors explicitly.
+Hence, the compiler can statically populate $\rho$. This analysis is
+impossible to perform on the \tensorflow Python code 
+as the sizes of tensors are unknown at compile time. 
+
+
+
+%% \aseem{Should we move the Discussion to the end of this section on Athos? It
+%%   breaks the flow of describing the compiler.}
+
+
+
+%% \section{Athos}\label{sec:athos}
+%% %% The goal of Athos is to bridge the gap between the increasingly important task of secure inference and MPC protocols published in literature.
+%% %% Achieving this goal requires addressing several challenges. %that we address in the following sections.
+
+%% %\aseem{Should we change the mpc macro to be MPC rather than 2PC? Below
+%% %  I use the macro everywhere. Also can we add mactos for Athos,
+%% %  Porthos, and Aramis too? I added one for TensorFlow that we should
+%% %  use consistently.}
+
+%% Athos compiles ML inference code written in \tensorflow to \mpc
+%% cryptographic protocols. Our ambition with Athos is to make it easier
+%% for the ML programmers, who are comfortable writing \tensorflow code
+%% and not so much cryptographic protocols, to use \mpc for secure
+%% inference \emph{out of the box}. However, this requirement imposes
+%% several challenges:
+
+%% %% \aseem{May be we should summarize challenges together, and then
+%% %%   say how we address them?}
+
+%% \begin{tiret}
+%% %\item Athos provides static typechecking of the input inference
+%% %  code (e.g. checking the dimensions of the matrices in matrix
+%% %  multiplications) so as to provide early feedback to the programmers
+%% %  and to prevent undefined runtime behaviors in the crypto
+%% %  protocols. Our first challenge then is to reconcile the dynamically
+%% %  typed \tensorflow Python code with static typing in Athos.
+%% \item The first challenge for Athos is to handle the floating-point
+%%   arithmetic in the input \tensorflow code. Most cryptographic
+%%   protocols use integer or fixed-point arithmetic, and given the size of the models
+%%   we are targeting, it would be unreasonable to expect programmers to
+%%   manually translate floating-point ML models to fixed-point code.
+%%   Given a floating-point model in \tensorflow, we require Athos to produce fixed-point models with good accuracies without   any access to training data
+%%   or the high computational overheads associated with re-training.
+%% %  Furthermore, Athos operates directly on trained models, does not require access to training data,
+%% %  and hence is compatible with all training procedures. 
+%% \item We would also like to make it convenient to plug-in various \mpc
+%%   protocols as backends in Athos. Designing a modular, crypto- and
+%%   ML-aware compiler, that presents well-defined interface to the
+%%   secure inference \mpc protocols for them to be plugged-in as
+%%   backends, is our next challenge.
+%% \item Finally, as with any other compiler, Athos implements several
+%%   optimizations on the input code. We need to design Athos so that
+%%   implementing these, and other analyses in future, is easy. To this end,
+%%   Athos uses intermediate languages that are statically typed so that
+%%   the analyses have more (e.g. tensor dimensions) to work with.
+%%  Our final challenge then is to reconcile the dynamically
+%%  typed \tensorflow Python code with static typing in Athos.
+%% \end{tiret}
+
+%% Below we describe the design of Athos and its various intermediate
+%% languages that help us address these challenges.
+
+%% %\aseem{Should we describe the compiler top-down or bottom-up? I am
+%% %  thinking top-down, we can also add a figure with boxes etc. that
+%% %  shows the compiler pipeline?}
+
+%% \subsection{Modularity}
+%% \label{sec:athosmodularity}
+%% The first design challenge that we address is modularity: It should be
+%% easy for an \mpc cryptographic protocol developer to plug her system
+%% in Athos and evaluate the protocols on large DNNs. We observe that
+%% large DNNs perform two kinds of operations: those that manipulate the
+%% values of secret shares (e.g., addition, multiplication, etc.) and those which just copy them
+%% around (e.g., reshaping a tensor, transposing a matrix, etc.). A cryptographic protocol should only need
+%% to provide implementations of the former and should not be bothered
+%% with the operations that fall in the latter class. 
+
+%% %\aseem{Some minor comments: (a) No else in if? (b) Definitions are missing
+%% %  statement body? (c) What is s + x ... in the main body? (d)
+%% %  Definitions d have at least one argument?}
+
+%% %\aseem{More than minor comments: (a) No function calls? (b) Perhaps we
+%% %  should add a syntactic category f for functions that are expected
+%% %  from the backend ... and then function calls can use either those
+%% %  functions or definitions as head? A different syntactic category
+%% %  would bring about the point from above.}
+
+%% %\aseem{Depending on space, we could leave this in the main text?}
+
+%% \begin{figure}[htp]
+%%   \footnotesize
+%%   \[
+%%   \begin{array}{rrcl}
+%%     \ftext{Constant} & n & ::= & 0 \mid 1 \mid 2 \mid \ldots\\
+%%     \ftext{Type} & \tau &::=& \kw{int} \mid \tau[n] \\
+%%     \ftext{Matrix} & M & ::= & \{n(, n)^*\} \mid \{M (, M)^*\}\\
+%%     \ftext{Expression} & e &::=& n \mid x \mid M \mid e_{1} \oplus e_{2} \mid x[e]\\
+%%     \ftext{Statement} & s &::=& \tau\:x \mid x = e \mid \kw{for}(x=e_{1};x<e_{2};x++)\{s\}\\
+%%     & & \mid& x[e_{1}] = e_{2} \mid \kw{if}(e)\{s_{1}\} \mid  s_{1}; s_{2} \mid \kw{return}\ e\\
+%%     \ftext{Declaration} & d & ::= &\kw{extern}\ \tau\ x(\tau\ x (, \tau x)^*)\\
+%%     \ftext{Definition} & f & ::= & \tau\ x(\tau\ x (, \tau x)^*)\{s\}\\
+%%     \ftext{Program} & p & ::= & (d+f)(;(d+f))^*;\kw{void}\ \kw{main}\{(s+ x(e(, e)^*))^+\}
+%%   \end{array}
+%%   \]
+%% \caption{LLIL syntax \rs{move to appendix?}}
+%% \label{fig:llil}
+%% \end{figure}
+
+
+%% To this end, the output of Athos is a program in a
+%% low-level intermediate language (LLIL), described in
+%% Figure~\ref{fig:llil}.
+%% This language is a subset of C and has sufficient expressiveness
+%% required to implement ML inference tasks. In particular it supports
+%% arrays, basic arithmetic, loops, branching, and function calls.
+%% For functions that do not manipulate shares (denoted by
+%%   \textit{definitions} $f$), we have implemented a library with their
+%%  implementations that is automatically added as a prelude to LLIL programs.
+%% Changing the underlying crypto protocol does not require changes to
+%% these library functions and this library can be used by all crypto
+%% developers. 
+%% Examples of these functions include {\tt squeeze} (remove dimensions
+%% of size 1 from a tensor), {\tt pad} (pad a tensor with various kinds
+%% of paddings), 
+%% {\tt transpose} (the transpose of a tensor), {\tt concat} (concatenate
+%% two tensors into a single tensor), etc. These functions are
+%% implemented in LLIL and are compiled to C++ code.
+
+
+%% For share-manipulating functions (\textit{declarations} $d$ using the $\kw{extern}$ keyword),
+%% Athos provides a unified interface that the cryptographers can
+%% target.
+%% All a crypto developer needs to do is to implement these functions,
+%% and then she would be able to directly evaluate
+%% the protocols on ML models used in practice. We describe these
+%% functions with their signatures and intended semantics in Table~\ref{tab:smf}.
+%% We provide three implementations of these functions: using the 2PC
+%% protocols of ABY~\cite{aby}, 3PC protocols of SecureNN~\cite{securenn},
+%% and Porthos (Section~\ref{sec:porthos}). 
+
+%% \begin{table*}
+%% \begin{tabular}{rl}
+%% MatMul(int[L][M] A, int[M][N] B, int[L][N] C) & Multiply two tensors $A$ and $B$ and store results in $C$\\
+%% MatAdd(int[L][M] A, int[L][M] B, int[L][M] C)& Add two tensors $A$ and $B$ into $C$\\
+%% Conv(int[H][W][CI] A,  int[FH][FW][CI][CO] F) & Convolve a tensor $A$ with filter $F$\\
+%% % Optional parameters include padding and strides. \\
+%% Avg/Max Pool(a, b, int[H][W][C] A) & Apply a stencil that computes the average/max value in windows of size $a\times b$ of tensor $A$.\\
+%% ArgMax(int[M] A) & Compute the index with maximum value in $A$ \\
+%% FusedBatchNorm(int[K][L][M][N] A, int[N] B, int[N] C) & Returns $\forall k,l,m,n. B[n] \times A[k][l][m][n] + C[n]$\\
+%% ReLU(int[M][N] A) & Returns $\forall i,j. {\sf Max}(A[i][j],0)$\\
+%% ScaleDown(int[M][N] A, k) & Divide each entry of $A$ with $2^k$.\\
+%% \end{tabular}
+%% \caption{Share manipulating functions. These have been simplified for
+%%   exposition by suppressing parameters such as padding and
+%%   strides. For comprehensive signatures, see~\url{https://www.tensorflow.org/api_docs/python/tf/}.}
+%% \label{tab:smf}
+%% \end{table*} 
+
+
+
+
+%% \subsection{Floating-point}
+%% \label{subsec:athosquantizer}
+%% The programs written in LLIL manipulate integers. However, most ML models are expressed using floating-point.
+%% For large models, we cannot expect the user to manually translate
+%% floating-point ML models to integer code (the common approach in
+%% literature on secure inference of toy
+%% models~\cite{secureml,minionn,gazelle,aby3,securenn}).
+%% Therefore Athos automatically translates floating-point ML models to
+%% LLIL via a high-level intermediate language (HLIL), described in
+%% Figure~\ref{fig:hlil}. HLIL is very similar to LLIL except that it permits
+%% floating-point values ($r$) and arrays of floating-point values. In
+%% this section, we describe HLIL and translation from HLIL to LLIL.
+%% A frontend that translates \tensorflow code to HLIL is described in
+%% Section~\ref{subsec:athosfrontend}.
+
+%% \aseem{No statements in HLIL? No if, for ?}
+
+%% \begin{figure}[htp]
+%%   \footnotesize
+%%   \[
+%%   \begin{array}{rrcl}
+%%     \ftext{Float constant} & r &&\\
+%%     \ftext{Type} & \hat{\tau} &::=& \kw{float} \mid \kw{int} \mid \hat{\tau}[n] \\
+%%     \ftext{Matrix} & \hat{M} & ::= & M \mid \{r(, r)^*\} \mid \{\hat{M} (, \hat{M})*\}\\
+%%     \ftext{Expression} & \hat{e} &::=& e \mid r\mid \hat{M} \mid \hat{e}_{1} \oplus \hat{e}_{2} \\
+%%     \ftext{Program} & \hat{p} & ::= &\kw{void}\ \kw{main}\{((\hat{\tau}\ x;)+ x(\hat{e}(, \hat{e})^*))^+\}
+%%   \end{array}
+%%   \]
+%% \caption{HLIL syntax \rs{move to appendix?}}
+%% \label{fig:hlil}
+%% \end{figure}
+
+%% The float-to-fixed translation is parametrized by a scale parameter $s$ that determines the precision.
+%% We show how this scale is set in Section~\ref{subsec:athossettingscale}.
+%% Given a scale $s$, we define a map $\rho_s:\mathbb{R}\rightarrow \mathbb{Z}_{2^b}$ that
+%% maps Reals to $b$-bit integers: $\rho_s(r)=\lfloor r\cdot2^s\rfloor$. 
+%% We abuse notation and
+%% also apply $\rho_s$ to matrices $M$ of Reals where the result is a pointwise application of $\rho_s$ to each matrix element. 
+%% In the output fixed-point code, every Real number $r$ is represented by a $b$-bit integer.
+%% The Real representation of an integer $n$ is given by $\frac{n}{2^s}$.
+%% %the conversion algorithm
+%% The float-to-fixed conversion (for interesting cases) is described in
+%% the following algorithm (\kw{ScaleDown} is described in
+%% Table~\ref{tab:smf}):
+
+%% \aseem{What is the type of F? hat\{e\} to e? But then (float x) or
+%%   (x = e1) are not in HLIL?}
+
+%% \[
+%% \begin{array}{lcl}
+%% F(n) & = & n\\
+%% F(r) & = & \rho_s(r)\\
+%% F(M) & = & \rho_s(M)\\
+%% F(\kw{float}\ x) & = & \kw{int}\ x\\
+%% F( x = e_1) & = & x = F(e_1)\\
+%% F(e_1+e_2) & = & F(e_1) + F(e_2)\\
+%% F(\kw{MatMul}(A,B,C)) &= &\kw{MatMul}(A,B,C);\\
+%% & &\kw{ScaleDown}(C,s)
+%% \end{array}
+%% \]
+%% The converter $F$ takes an HLIL program over floating-point as input and outputs an LLIL program over integers.
+%% %Here, $\mathit{unop}$ denotes a generic unary operator (e.g., $\mathtt{argmax},\mathtt{maxpool},\mathtt{relu},\dots$).
+%% %In the first step, we run the a procedure that replaces all floating-point numbers in the program with fixed-point integers. 
+%% % The only operation which needs to change because of float-to-fixed is matrix multiplication. Since convolution calls matrix multiplication (Figure~\ref{convtomatmul}), it needs to be modified to call the new matrix multiplication (Figure~\ref{newmatmul}).
+
+%% %example
+%% \
+%% As an example of the conversion process, consider the program $M_1*M_2$ that multiplies
+%% the row vector $M_1=[400.1,200.1]$ with the column vector $M_2=[0.3,0.1]^T$.
+%% Then in infinite precision Real arithmetic the result of the computation
+%% $400.1*0.3+200.1*0.1$
+%% is 140.04. Floating-point
+%% arithmetic only has a 23-bit mantissa and computes the approximately correct result 140.040009.
+%% When using Athos, the computed result
+%% can be much more precise than the floating-point result. 
+%% We use $0.1f$ to denote the floating-point number closest to the Real number $0.1$. 
+%% Given $s=24$, $F(M_1*M_2)$ results 
+%% into the following program over integers
+%% \[
+%% (\rho_{24}(400.1f)*\rho_{24}(0.3f)+\rho_{24}(200.1f)*\rho_{24}(0.1f))/{2^{24}}
+%% \]
+%% which results in the following computation with 64-bit integers
+%% \[
+%% (6712564224*3357121024+5033165*1677721)/2^{24}
+%% \]
+%% The final result is 2349481329 that represents the real number
+%% $\frac{2349481329}{2^{24}}=140.040000021457672119140625$ which is a better approximation than
+%% the floating-point result.
+
+
+%% \aseem{It's not clear to me how can different b and s leak information
+%%   about parameters? Aren't the parameters hidden by the MPC protocol
+%%   anyway?}
+
+%% Athos, assigns the same bitwidth $b$ and the same scale $s$ to all network parameters. 
+%% %Hence, no information about any individual parameter gets leaked. 
+%% We keep the scale public for efficiency: division with $2^s$ when $s$ is secret is much more expensive than when $s$ is public.
+%% Moreover, scaling down operations (division by $2^s$) cause loss of precision, as they lose significant bits, and hence need to be minimized.
+%%  Therefore, Athos scales down only once per matrix multiplication and does not scale down matrix additions.
+%% %These design choices make Athos ``crypto-aware" and effective for secure machine learning (Section~\ref{subsec:athosexperiments}).
+%% %Prior float-to-fixed converters assign different bitwidths/scales to different parameters and  scale down after every operation~\cite{}.
+%% %Because IEEE754 floating-point numbers have a 23-bit mantissa, if $s$ is set to 23 and all intermediate values occuring at runtime are below 128 then the fixed-point code has very similar accuracy to floating-point code. 
+%% %However, in practice, the intermediate values do exceed 128, causing $s$ being set to smaller values, and some accuracy is lost.
+
+%% \subsubsection{Setting Scale}\label{subsec:athossettingscale}
+%% %We try all possible $s$. If $s$ is large then overflows and grabage. If $s$ is small then imprecise %result. Autotuning gives a good $s$ that produces good results. 
+
+%% Finding a good value of $s$ is difficult. We explain the various tradeoffs that
+%% govern the choice of $s$ and then discuss our solution.
+
+%% Suppose, in our example, $s$ is set too low: $s=2$.
+%% Then $F([400.1f,200.1f]*[0.3f,0.1f])$ is
+%% \[
+%% (1600*1+800*0)/4
+%% \]
+%% which represents the Real number $400/4=100$.
+%% This, result is far from 140.04. Here, low scale values have lead to
+%% loss of significant bits. In particular, 0.1 has been rounded to zero
+%% causing an imprecise result. Hence, ideally we want to set the scale to a large value
+%% so that the integers have many significant digits.
+
+%% Next, suppose $s$ is set to a very high value, e.g., 60. Then, the
+%% computation $\rho_{60}(400.1f)*\rho_{60}(0.3f)$ overflows 64-bit integers and
+%% the result is garbage
+%% (multiplication of these two large positive numbers would become a negative number).  
+%% %Usually, at compile time the operations are of the form $x*y$ where the values of $x$
+%% %and $y$ are known only at runtime. Hence, it is hard to decide whether a particular
+%% %scale value would lead to overflows or not at compile time. 
+
+%% \aseem{Should we say how we choose b? Is it just the machine integer width?}
+
+%% Thus, scale can neither be very low nor very high; we need to find a sweet spot.
+%% To determine an appropriate value of $s$, we sweep over all its possible values $\{0,1,\ldots,b-1\}$
+%% and choose the value that leads to the best accuracy. For the example $400.1f*0.3f+200.1f*0.1f$,
+%% the most accurate result is obtained at $s=24$. In general, machine learning algorithms have a 
+%%  validation dataset which is used for hyperparameter tuning. We consider scale as a hyperparameter
+%% and select the scale that leads to a fixed-point classifier implementation which performs the best on the validation set.
+%% This scheme helps us select values of scales that result in minimal accuracy loss.
+%% %The accuracy of the final classifier is reported on the test set. In particular, the test set
+%% %is used only for evaluation and {\em not} to generate a classifier implementation. Athos only works with the validation
+%% %set and does not have access to the test set. 
+
+
+
+%% \begin{table}
+%%   \centering
+%%   \resizebox{\columnwidth}{!}{
+
+%%       \begin{tabular}{|c|c|c|c|l|}
+%%     \hline
+%%     \# Sequential Multiplications & Fixed (ms) & Float (ms) & Overhead \\
+%%     \hline
+%%   $1$ & $2.57$ & $72.35$ & $28.11$x\\
+%%   \hline
+%%     $10$ & $4.88$ & $278.8$ & $57.1$x \\  \hline
+%%     $100$ & $21.65$ & $2735$ & $126.34$x \\   \hline
+%%     $1000$ & $199.6$ & $25281.42$ & $126.6$x \\   \hline
+%% \end{tabular}
+%% }
+%%  \caption{Floating-point vs Fixed-point multiplication.}
+%% \label{tab:floatvsfixed}
+%% %\tableup
+%% \end{table}
+
+
+%% \aseem{Should we move the Discussion to the end of this section on Athos? It
+%%   breaks the flow of describing the compiler.}
+
+%% \subsubsection{Discussion}
+%% We discuss why an automatic float-to-fixed converter is necessary for \tool and how Athos is different from prior work.
+%% %A question is that why target cryptographic protocols over integers and not compile HLIL to protocols over floating-point.
+%% It is well-known that floating-point operations are much more inefficient than fixed-point when evaluated securely~(\cite{secureml,aby3}) -- we re-confirm this by performing two-party secure multiplication~\cite{ddkssz15} using both fixed-point and floating-point arithmetic to showcase the difference. This is illustrated in Table \ref{tab:floatvsfixed} which shows the huge overheads associated with floating-point arithmetic.
+%% Since machine learning algorithms are typically expressed using floating-point, we use Athos to first convert floating-point programs to fixed-point.
+%% In the future, if efficient protocols for floating-point become
+%% available then we can directly compile HLIL to them (without going
+%% through LLIL). \aseem{Not sure, does HLIL have the distinction of f vs
+%%   d? If at all, convert TF to LLIL directly?}
+
+
+
+
+
+%% \aseem{Should we move optimizations before Frontend, that way static
+%%   typing would have already been motivated.}
+
+%% \subsection{Frontend}
+%% \label{subsec:athosfrontend}
+%% Although the developers can directly implement ML models in HLIL, it raises their barrier to entry.
+%% Usually developers train their models in \tensorflow, expecting them
+%% to manually write HLIL code everytime they make
+%% minor modifications to their \tensorflow code is untenable. We have
+%% developed a frontend that translates \tensorflow code to HLIL automatically.
+
+%% The main challenge here is that the \tensorflow programs are written in Python which has dynamic types.
+%% However, HLIL has static types. For example, a Python developer does not need to explicitly annotate the dimensions of matrices.
+%% However, HLIL requires the sizes of all matrices to be known at compile time. This information makes the code amenable to static analysis (Section~\ref{sec:athosopt}). To obtain this crucial information, we first run \tensorflow code on one dummy input
+%% to generate \tensorflow metadata which has all the requisite information and then translate the metadata to HLIL.
+
+%% We discuss some interesting low-level details of compilation from \tensorflow.
+%% First, we need to desugar hundreds of \tensorflow nodes to the small number of functions in the library and the interface (Section~\ref{sec:athosmodularity}).
+%% Second,  \tensorflow supports  ``broadcasting'' \cite{tensorflowbroadcasting} that  allows operations on 
+%% tensors of seemingly incompatible dimensions and sizes. For example,
+%% due to broadcasting, addition of a four dimensional tensor with a one
+%% dimensional tensor is a valid operation. The compilation should
+%% account for this and  pass the broadcasting information to the
+%% statically-typed HLIL programs.
+%% Third, some \tensorflow graphs have ``control edges'' 
+%% \cite{abadi2017computational} that constrain the order of execution of the nodes and  the 
+%% compilation needs to account for their mutability. \aseem{Elaborate
+%%   more on mutability?}
+
+%% \subsection{Optimizations}
+%% \label{sec:athosopt}
+%% The intermediate languages are designed to be amenable to static analysis. 
+%% In paricular, we have implemented several standard dataflow analyses and compiler optimizations~\cite{dragonbook}:
+%% reaching definitions, liveness analysis, etc. These analyses help with
+%% optimizing memory utilization and we have observed
+%% savings reaching upto 80\%. 
+%% To demonstrate the ease of implementing analyses and optimizations, we provide an example each:
+%% (a) a peephole optimization ReLU Maxpool Switching on HLIL to improve efficiency of DNNs that use ReLU and maxpool, and (b) an analysis Counting Scale Down operations on LLIL to determine the number of scale down operations that must be done in order to prevent any loss in accuracy (a similar analysis was done manually in~\cite{secureml}).
+
+%% \subsubsection{ReLU Maxpool Switching} The ReLU operation is one of the most time intensive task in secure inference of DNNs. For some DNNs, secure evaluation of ReLUs can consume upto 80\% of the total protocol execution time. This is in contrast to evaluation in the clear where ReLUs consume only a fraction of the total time.
+%% Hence, it is plausible that ML developers can write \tensorflow code
+%% in a way that has no impact on cleartext evaluation  but can severely
+%% degrade the performance of secure evaluation. One such idiom involves
+%% applying ReLU to a matrix followed by MaxPool. Notice that ReLU and
+%% MaxPool are commutative operators: ReLU(MaxPool($\cdot$)) is
+%% functionally equivalent to MaxPool(ReLU($\cdot$)). Moreover, for
+%% cleartext performance, there is no discernible difference in the
+%% performance of these two alternatives. Hence, most \tensorflow
+%% developers have adopted the convention of MaxPool(ReLU($\cdot$)).
+
+%% For secure evaluation, MaxPool(ReLU($\cdot$)) can be much more inefficient than ReLU(MaxPool($\cdot$)) as this significantly reduces the number of ReLU operations that need to be performed in \mpc. Hence, we have built an optimization pass on HLIL
+%% that replaces occurences of $\kw{MaPool}(a,b, \kw{ReLU}(A));$ with $\kw{ReLU}(\kw{MaxPool}(a,b,A));$. For example,
+%% if the input matrix $A$ has dimensions $112\times112\times64$ and we compute a maxpool with $2\times2$ windows.
+%% Then, the output matrix has dimensions $56\times56\times 64$. Hence, the latter needs to compute only one fourth the number of ReLUs
+%% compared to the former. In this case, the optimized code is over $3\times$ better in communication and over $2\times$ faster in our experimental setup (Section~\ref{sec:experiments}).
+%% \subsubsection{Counting Scale Down operations}
+%% We describe an analysis to count the number of scale down operations in an LLIL code. The analysis uses an environment $\rho$ that
+%% maps tensors to the number of elements they contain \aseem{rho maps to
+%%   number of elements or to the number of scale down operations?}. This
+%% environment is populated using variable declarations in the code.
+%%  The analysis makes a single pass over $\kw{main}$ and for each call
+%%  $\kw{ScaleDown(A,s)}$ 
+%% accumulates $\rho(A)$ into a counter \aseem{Didn't get this
+%%   ``accumulates into a counter''?}. The final value of the counter
+%% provides the number of scale down operations in the code.
+
+%% \aseem{We don't say why is this analysis useful.}
+
+%% Note that this analysis is easy to describe as the LLIL code contains dimensions of all the tensors explicitly.
+%% Hence, the compiler can statically populate $\rho$. This analysis is impossible to perform on the Python code 
+%% as the sizes of tensors are unknown at compile time. 
+
+
+%% \begin{comment}
+%% %Previous schemes don't work
+
+%% We first describe the frontend of Athos that compiles \tensorflow to the SeeDot intermediate language followed by the float-to-fixed conversion of a SeeDot program to secure fixed-point code.
+
+
+
+
+%% \subsection{Frontend}\label{subsec:athosfrontend}
+%% In this section, we describe the compilation from Tensorflow to SeeDot.
+%% The syntax of the core of SeeDot language is shown in Figure~\ref{fig:syntax}.
+%% (Details about the semantics of SeeDot can be found in the original reference~\cite{seedot}.)
+%% %The Athos language is strongly typed with a type system shown in Figure~\ref{fig:type}.
+%% Here, $r$ is a Real number, $n$ is a $b$-bit integer, and $M$ is a matrix. Unless specified otherwise, we use $b=64$.
+%% The language supports basic linear algebra operations as well as commonly used ML operators.
+
+%% \begin{figure}[t]
+%% \centering
+%% \begin{math}
+%% \begin{array}{rcl}
+%%   e & ::= & n\ |\ r \ |\ M\ |\ x\ \vert\  \mathtt{let}\ x = e_1\ \mathtt{in}\  e_2\\
+%%   & &\vert\  e_1 + e_2\  \vert\ e_1 * e_2\ \vert\ \mathtt{argmax}(e)\\
+%%     & &\vert\ \mathtt{maxpool}(e,n,n)\ \vert\ \mathtt{relu}(e)
+%% \end{array}
+%% \end{math}
+%% \caption{Syntax of the core language of SeeDot~\cite{seedot}}
+%% \label{fig:syntax}
+%% \end{figure}
+
+%% As shown in the toolchain in \figureref{cryptflowtoolchain}, as a first step, the compiler takes in a Tensorflow (TF) model 
+%% code as input and produces TF metadata. This metadata consists of two things. 1) First, it contains the TF model graph definition (as shown in Figure \ref{fig:lrtfgraphdump}), which is a 
+%% textual representation of a topological sort of the Directed Acyclic Graph representing the TF computation. 
+%% For each node in the computation graph, this graph definition contains the identifier for the node, the operation it performs and a list of children of the node.
+%% 2) Second, the metadata contains the sizes of all the tensors involved in the computation. To understand why this metadata is required, consider that on the input end of the toolchain, we have dynamically-typed python-based TensorFlow, 
+%% in which sizes of tensors are not known statically at compile time, while on the output end, we desire something like C++, which requires us to declare sizes of all matrices statically.
+%%  The metadata on the sizes of the tensors helps us in bridging this gap between the two.
+%% % We remark that since we are compiling a 
+%% % dynamically-typed Python like language to statically typed C++, extra information about the sizes of the tensors involved
+%% % is a must and cannot be avoided.
+%% In order to do this, we first execute the TF model code, as is, on a sample input, which helps us in profiling the execution and capturing the metadata on the sizes
+%% of all tensors.
+%% % We choose to execute the TF model code on garbage input of right size and dimension,
+%% % which allows us to learn the sizes of all the other tensors involved in the computation.
+
+%% The second part of the compiler takes this dumped TF metadata as input and compiles it to the SeeDot intermediate language.
+%% The high-level idea here is to traverse the TF computation graph sorted topologically and 
+%% output recursive let-bindings for each node that is found. At the end of the traversal, this compiled let-binding 
+%% SeeDot code is output, which is fed to the float-to-fixed converter. 
+
+%% % The second part of the TF metadata - the size information about the tensors, is also used 
+%% % in this compilation step to output Athos matrices of fixed sizes.
+
+%% % We mention a few design choices we made here. Since Athos is a float-to-fixed point compiler, any fixed-point computation on inputs which do not
+%% % involve multiplication \nishant{Rahul: i have mentioned multiplication - thats ok, right ?} (e.g. tensor restructuring operations and $\relu(x)$ (defined as $\mathsf{max}(x,0)$), 
+%% % as opposed to operations like convolution and matrix multiplication)
+%% % can be passed obliviously through Athos. Keeping this in mind, such computations are compiled to uninterpreted function calls which are passed unaltered through Athos 
+%% % (see for example the uninterpreted calls in \figureref{lrseedot}). 
+%% % On the other hand, computations like convolution are compiled to interpreted calls in Athos, allowing the Athos compiler
+%% % to do the necessary quantization.
+
+%% % \nishant{There is more to be talked about here - about TF quirks while doing this compilation (like broadcasting, Batch norm) etc. Plus, mention 
+%% % Athos is strongly-typed language and so the size info in this compilation step is a must.}
+
+%% We remark here some of the lower-level details of TensorFlow which make this compilation step non-trivial to perform. 
+%% Firstly, along with the need to deal with a wide variety of node operations, TF supports what is referred to as ``broadcasting'' \cite{tensorflowbroadcasting}, which essentially allows operations on 
+%% two tensors of different sizes and dimensions. For example, this makes addition between a 4D tensor and a 1D tensor a valid operation in TF. The non-triviality arises
+%% since the compilation should account for this and somehow pass this information onto the strongly-typed SeeDot program.
+%% Secondly, TF graph definitions are not always as simplified as shown in Figure \ref{fig:lrtfgraphdump}. Some of the edges of the graph are what are known as ``control edges'' 
+%% \cite{abadi2017computational}, which constrain the order of execution of the nodes of the graph. In essence, these edges have to dealt with differently during the 
+%% compilation to account for their mutability aspect.
+
+
+%% \iffalse
+
+%% Discuss complicated things like batch normalization, matrix dimensions
+%% from program execution, instrumenting Tensorflow code, graph dumps,
+%% etc.
+
+%% \aseem{04/10: discussions with Nishant, see tf-to-sdot.jpg, main
+%% points:
+
+%% TF graph is a DAG capturing the input-output relationship between the
+%% operators in the graph. The roots (or leaves, depending on how you
+%% look at it) of the DAG are the inputs and the leaf (or root) is the
+%% final output. The nodes metadata contain properties like
+%% node kind etc. The graph does not contain the dimensions and sizes of
+%% the tensors. To get this information, we run the TF graph on some
+%% input image (it doesn't matter what the image is, since we are only
+%% interested in the sizes and dimensions). Depending on the batch size
+%% $n$ we are interested in for inference, we can also run the graph on
+%% $n$ images and get the sizes and dimensions accordingly.
+
+%% So now we have the TF graph dump and separately the sizes etc. We have
+%% written a compiler in Python that takes these as inputs and outputs
+%% the SeeDot AST. Operators that change the values (can we make it more
+%% precise?) such as multiplication, convolution etc. are faithfully (for
+%% the lack of better term for now) compiled to SeeDot, whereas operators
+%% that just change the tensor structures are compiled to uninterpreted
+%% functions in SeeDot -- these are given hand-written implementations in
+%% EzPC.
+
+%% Other than this, the compilation is straightforward -- it traverses
+%% the TF graph in the topological sort order and outputs straightline
+%% SeeDot code with a let-binding for each node and threading the inputs
+%% outputs properly.
+
+%% There are some interesting quirks. There is something called
+%% Broadcasting in TF that promotes, for example, a 1-D array to a 2-D
+%% array on-demand at runtime. We account for this by implementing
+%% similar broadcasting functions in EzPC.
+
+%% Then there is also batch normalization (TODO: add details).
+%% }
+
+%% \fi
+
+
+%% \subsection{Float-to-fixed}\label{subsec:athosquantizer}
+%% We describe the compilation of a program over Reals written in SeeDot intermediate language
+%% to a fixed-point program. 
+%% %Athos source language is a high level
+%% %language like MATLAB which succinctly expresses matrix computations. 
+%% %To obtain a fixed-point program, we override the floating-point implementations with fixed-point procedures. These procedures can be implemented
+%% %in any general purpose language like C++ or available languages for secure computation (ObliVM, OblivC, EzPC).
+%% %We show the source code of these procedures in Figure~\ref{alg:proc}.
+%% %auxilliary function
+%% The float-to-fixed conversion is parametrized by the scale parameter $s$ that determines the precision.
+%% We show how this scale is set in Section~\ref{subsec:athossettingscale}.
+%% Given a scale $s$, we define a map $\rho_s:\mathbb{R}\rightarrow \mathbb{Z}_{b}$ that
+%% maps Reals to $b$-bit integers: $\rho_s(r)=\lfloor r\cdot2^s\rfloor$. 
+%% We abuse notation and
+%% also apply $\rho_s$ to matrices of Reals where the result is a pointwise application of $\rho_s$ to each matrix element. 
+%% In the output fixed-point code, every Real number $r$ is represented by a $b$-bit integer.
+%% The Real representation of an integer $n$ is given by $\frac{n}{2^s}$.
+%% %the conversion algorithm
+%% The float-to-fixed conversion is described in the following algorithm:
+%% \[
+%% \begin{array}{lcl}
+%% F(n) & = & n\\
+%% F(r) & = & \rho_s(r)\\
+%% F(M) & = & \rho_s(M)\\
+%% F( \mathtt{let}\ x = e_1\ \mathtt{in}\  e_2) & = & \mathtt{let}\ x = F(e_1)\ \mathtt{in}\  F(e_2)\\
+%% F(e_1+e_2) & = & F(e_1) + F(e_2)\\
+%% F(e_1*e_2) & = & \frac{1}{2^s}*\left(F(e_1)*F(e_2)\right)\\
+%% F(\mathit{unop}(e)) & = & \mathit{unop}(F(e)) 
+%% \end{array}
+%% \]
+%% The converter $F$ takes a program over Reals as input and outputs a program over integers.
+%% Here, $\mathit{unop}$ denotes a generic unary operator (e.g., $\mathtt{argmax},\mathtt{maxpool},\mathtt{relu},\dots$).
+%% %In the first step, we run the a procedure that replaces all floating-point numbers in the program with fixed-point integers. 
+%% % The only operation which needs to change because of float-to-fixed is matrix multiplication. Since convolution calls matrix multiplication (Figure~\ref{convtomatmul}), it needs to be modified to call the new matrix multiplication (Figure~\ref{newmatmul}).
+
+%% %example
+%% \
+%% As an example of the conversion process, consider the program $M_1*M_2$ that multiplies
+%% the row vector $M_1=[400.1,200.1]$ with the column vector $M_2=[0.3,0.1]^T$.
+%% Then in infinite precision Real arithmetic the result of the computation
+%% $400.1*0.3+200.1*0.1$
+%% is 140.04. Floating-point
+%% arithmetic only has a 23-bit mantissa and computes the approximately correct result 140.040009.
+%% When using Athos, the computed result
+%% can be much more precise than the floating-point result. 
+%% Given $s=24$, $F(M_1*M_2)$ results 
+%% into the following program over integers
+%% \[
+%% (\rho_{24}(400.1)*\rho_{24}(0.3)+\rho_{24}(200.1)*\rho_{24}(0.1))/{2^{24}}
+%% \]
+%% which results in the following computation with 64-bit integers
+%% \[
+%% (6712564224*3357121024+5033165*1677721)/2^{24}
+%% \]
+%% The final result is 2349481329 that represents the real number
+%% $\frac{2349481329}{2^{24}}=140.040000021457672119140625$ which is a better approximation than
+%% the floating-point result.
+
+
+%% Athos, by design, assigns the same bitwidth $b$ and the same scale $s$ to all network parameters. 
+%% Hence, no information about any individual parameter gets leaked. 
+%% We keep the scale public for efficiency: division with $2^s$ when $s$ is secret is much more expensive than when $s$ is public.
+%% Moreover, scaling down operations (division by $2^s$) cause loss of precision, as they lose significant bits, and hence need to be minimized.
+%%  Therefore, Athos scales down only once per matrix multiplication and does not scale down matrix additions.
+%% These design choices are unique to Athos and make it effective for secure machine learning (Section~\ref{subsec:athosexperiments}).
+%% %Prior float-to-fixed converters assign different bitwidths/scales to different parameters and  scale down after every operation~\cite{}.
+%% %Because IEEE754 floating-point numbers have a 23-bit mantissa, if $s$ is set to 23 and all intermediate values occuring at runtime are below 128 then the fixed-point code has very similar accuracy to floating-point code. 
+%% %However, in practice, the intermediate values do exceed 128, causing $s$ being set to smaller values, and some accuracy is lost.
+
+%% \subsection{Setting Scale}\label{subsec:athossettingscale}
+%% %We try all possible $s$. If $s$ is large then overflows and grabage. If $s$ is small then imprecise %result. Autotuning gives a good $s$ that produces good results. 
+
+%% Finding a good value of $s$ is difficult. We explain the various tradeoffs that
+%% govern the choice of $s$ and then discuss our solution.
+
+%% Suppose, in our example, $s$ is set to too low a value of 2.
+%% Then the computed result is
+%% \[
+%% (1600*1+800*0)/4
+%% \]
+%% which represents the Real number $400/4=100$.
+%% This, result is far from 140.04. Here, low scale values have lead to
+%% loss of significant bits. In particular, 0.1 has been rounded to zero
+%% causing an imprecise result. Hence, ideally we want to set the scale to a large value
+%% so that the integers have many significant digits.
+
+%% Next, suppose $s$ is set to too high a value, e.g., 60. Then, the
+%% computation $\rho_{60}(400.1)*\rho_{60}(0.3)$ overflows 64-bit integers and
+%% the result is garbage
+%% (multiplication of these two large positive numbers would become a negative number).  
+%% Usually, at compile time the operations are of the form $x*y$ where the values of $x$
+%% and $y$ are known only at runtime. Hence, it is hard to decide whether a particular
+%% scale value would lead to overflows or not at compile time. 
+
+%% Thus, scale can neither be very low or very high; we need to find a sweet spot.
+%% To determine an appropriate value of $s$, we sweep over all its possible values $\{0,1,\ldots,63\}$
+%% and choose the value that leads to the best accuracy. For the example $400.1*0.3+200.1*0.1$,
+%% the most accurate result is obtained at $s=24$. In general, machine learning algorithms have a 
+%%  validation dataset which is used for hyperparameter tuning. We consider scale as a hyperparameter
+%% and select the scale that leads to a fixed-point classifier implementation which performs the best on the validation set.
+%% This scheme helps us select values of scales that result in minimal accuracy loss.
+%% %The accuracy of the final classifier is reported on the test set. In particular, the test set
+%% %is used only for evaluation and {\em not} to generate a classifier implementation. Athos only works with the validation
+%% %set and does not have access to the test set. 
+%% \end{comment}
+
+
+%% %0   0   0   1   0
+%% %1   0   0   2   0
+%% %2   100   1600    4   400
+%% %3   100   6400    8   800
+%% %4   112.51953125    28805   16    1800
+%% %5   131.28515625    134436    32    4201
+%% %6   137.53662109375   563350    64    8802
+%% %7   137.53662109375   2253400   128   17604
+%% %8   138.31977844238281    9064925   256   35409
+%% %9   139.49281311035156    36567204    512   71420
+%% %10    139.88352966308594    146678518   1024    143240
+%% %11    139.88352966308594    586714072   2048    286481
+%% %12    139.93247985839844    2347677533    4096    573163
+%% %13    140.00579833984375    9395630244    8192    1146927
+%% %14    140.03022766113281    37589076214   16384   2294255
+%% %15    140.03022766113281    150356317962    32768   4588510
+%% %16    140.03327941894531    601438385602    65536   9177221
+%% %17    140.03787231445312    2405832211824   131072    18355043
+%% %18    140.03939819335938    9623433731112   262144    36710486
+%% %19    140.03939819335938    38493734924448    524288    73420972
+%% %20    140.03958129882812    153975149517856   1048576   146842145
+%% %21    140.03987121582031    615901856782080   2097152   293684891
+%% %22    140.03996276855469    2463609105269376    4194304   587370182
+%% %23    140.03996276855469    9854436421077504    8388608   1174740364
+%% %24    140.03999328613281    39417755753995264   16777216    2349481329
+%% %25    140.04000854492188    157671029730223104    33554432    4698962859
+%% %26    140.04000854492188    630684118920892416    67108864    9397925718
+%% %27    140.04000854492188    2522736502540537856   134217728   18795851636
+%% %28    140.04000854492188    10090946010162151424    268435456   37591703273
+%% %29    12.040007591247559    3470295893229502464   536870912   6463929811
+%% %30    12.040007591247559    13881183572918009856    1073741824    12927859623
+%% %31    0.040007509291172028    184502070543384576    2147483648    85915471
+%% %32    inf   738008282173538304    4294967296    171830943
+%% %33    inf   2952033128694153216   8589934592    343661886
+%% %34    inf   11808132514776612864    17179869184   687323773
+%% %35    inf   10339041911687348224    34359738368   300905722
+%% %36    inf   4462679499330289664   68719476736   64940533
+%% %37    inf   17850717997321158656    137438953472    129881067
+%% %38    inf   16062639768155979776    274877906944    58435543
+%% %39    inf   8910326851495264256   549755813888    16207790
+%% %40    inf   17194563332271505408    1099511627776   15638364
+%% %41    inf   13438021107957366784    2199023255552   6110904
+%% %42    inf   16858596284410363904    4398046511104   3833201
+%% %43    inf   12094152916512800768    8796093022208   1374946
+%% %44    inf   11483123518632099840    17592186044416    652740
+%% %45    inf   9039005927109296128   35184372088832    256904
+%% %46    inf   17709279634727632896    70368744177664    251664
+%% %47    inf   15496886317781876736    140737488355328   110112
+%% %48    inf   6647313049998852096   281474976710656   23616
+%% %49    inf   8142508126285856768   562949953421312   14464
+%% %50    inf   14123288431433875456    1125899906842624    12544
+%% %51    inf   1152921504606846976   2251799813685248    512
+%% %52    inf   4611686018427387904   4503599627370496    1024
+%% %53    -nan    0   9007199254740992    0
+%% %54    -nan    0   18014398509481984   0
+%% %55    -nan    0   36028797018963968   0
+%% %56    -nan    0   72057594037927936   0
+%% %57    -nan    0   144115188075855872    0
+%% %58    -nan    0   288230376151711744    0
+%% %59    -nan    0   576460752303423488    0
+%% %60    -nan    0   1152921504606846976   0
+%% %61    -nan    0   2305843009213693952   0
+%% %62    -nan    0   4611686018427387904   0
+%% %140.040009
+

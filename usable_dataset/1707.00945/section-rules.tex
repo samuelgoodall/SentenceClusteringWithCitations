@@ -1,0 +1,47 @@
+
+\section{A Rule Set for Co-Verification}
+These rules ensure: 
+\begin{itemize}
+\item consistency of the prover result it itself
+\item no masking of errors occurs
+\item ...
+\end{itemize}
+
+\subsection{Consistency Rules}
+
+\begin{itemize}
+\item \textbf{rule:} code must not be modified to reach AoRTE based on proof attempts that ran into timeout/memout/stepout (see \texttt{Lim} function). Instead, increase steps/time or apply \texttt{Assert\_and\_cut};
+\item \textbf{rule:} necessary: contracts must be proven AoRTE,
+  otherwise we get false negatives \textbf{upstream}, which is
+  unintuitive and likely to cause big problems. sufficient: body must
+  also be AoRTE, otherwise RTE in post can be masked.
+
+
+\item \textbf{rule:} sufficient: we can only rely on the proofs in a
+  subprogram, if all its dependencies are met, which in particular
+  includes the bodies and postcondition of all callees.
+\item \textbf{false negatives} skew the picture and can hide dangerous run-time exceptions
+  \begin{itemize}
+  \item cause exceptions that are not anticipated
+  \item \textbf{rule:} we can only trust any verified CV within a subprogram if the subprogram itself is completely free of RTE and has a verified pre- and Postcondition
+  \item if Post is not verified and exceptions are off, then errors propagate wildly (obviously), which should be avoided at all cost. 
+  \item \textbf{rule:} assuming exceptions are not turned off before \textbf{all} VCs are verified: in contrast to Model Checking with CBMC, a subprogram with non-verified VCs cannot generate false negatives in other subprograms (exception to this rule: inlining in the analysis). Therefore, deductive verification - or more general, assume-guarantee reasoning at pre- and post-condition of functions - limits propagation of error conditions and gives a more certain picture on ``verification success''.
+  \item \textbf{false positives} (developer knows that the prover has insufficient knowledge) due to insufficient solver knowledge can also hide dangerous run-time exceptions (GPS failure)
+    \begin{itemize}
+    \item \textbf{rule:} suppressing false positives should be avoided. If necessary, then include an \texttt{Assert\_And\_Cut} after the suppressed statement, to reset solver knowledge on the specific item that cause the check to fail. E.g., when length check fails, then \texttt{Assert\_And\_Cut(arr'Length >= 0)}, to remove all possibly incorrect assumptions on the array length and thereby unhide downstream false negatives.
+    \end{itemize}
+  \end{itemize}
+  \item RTS requires careful configuration and cannot be abstracted completely
+  \item E.g., if architecture details are incorrect (S'Denorm) then
+    some runtime checks may fail unexpectedly because target does not
+    behave as claimed
+  \item can refute the soundness of analysis
+
+\end{itemize}
+
+
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

@@ -1,0 +1,119 @@
+\section{Introduction}
+\label{sec:intro}
+
+% Wording:
+% - VC vs. check: UNCLEAR
+%   - VC: what is to be proved. overflow check, etc.
+%   - check: evaluation of a property during run-time. AdaCore uses it as synonym for 
+% - ...
+
+% \begin{itemize}
+% \item here is a problem, make it specific and not too generic
+%   \begin{itemize}
+%   \item show that it is interesting
+%   \item say that it is unsolved
+%   \end{itemize}
+% \item state contribution, clearly.
+%   \begin{itemize}
+%   \item make contributions refutable (to keep it interesting)
+%   \item briefly explain idea
+%   \end{itemize}
+% \end{itemize}
+
+% How do we start? No blabla, we need to get there straight away because no space.
+% Formal verification of software has the reputation of being
+% time-consuming, complicated and having limitations, especially in
+% terms of scalability.  In our earlier work we concluded that a small
+% program of a microcontroller can be fully analyzed with Model
+% Checking, but only with a lot of additional work and if the software
+% has a specific structure.~\cite{Becker2015}. In this paper use
+% state-of-the-art deductive verification tools to verify a much more
+% complex software system, and we show what the manual effort is
+% comparably low, if some rules are followed.
+
+The system under consideration is a novel kind of weather balloon
+which is actively controlled, and thus requires verification to ensure
+it is working properly in public airspace.  As any normal weather
+balloon, the system climbs up to the stratosphere (beyond an altitude of $\SI{10}{\kilo\meter}$),
+while logging weather data such as temperature, pressure,
+NO\textsubscript{2}-levels and so on. Eventually the balloon bursts,
+and the sensors would be falling back to the ground with a parachute,
+drifting away with prevailing wind conditions. However, our system is
+different from this point onwards: the sensors are placed in a
+light-weight glider aircraft which is attached to the balloon. At a
+defined target altitude, the glider separates itself from the balloon,
+stabilizes its attitude and performs a controlled descent back to the
+take-off location, thus, bringing the sensors back home. In this paper
+we focus on the development and formal verification of the glider's
+onboard software.
+
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=\textwidth]{fig/flight-phases}
+%   \caption{Mission Profile of high-altitude glider.}
+%   \label{fig:mission}
+%  \end{figure}
+
+% this is obvious from the earlier description:
+%   \begin{enumerate}
+%   \item Detecting take-off and memorizing location
+%   \item Monitoring of ascend, actively unhitch at predefined
+%     target altitude
+%   \item Stabilize glider's attitude in the prevailing wind conditions
+%   \item Navigate back to take-off location
+%   \item Logging of weather data during the entire mission
+%   \end{enumerate}
+% requirements
+
+ % motivate the criticality: TODO: reduce
+The requirements for such a system are challenging already because of the
+extreme environmental conditions; temperatures range from $\SI{+30}{\celsius}$
+down to $\SI{-50}{\celsius}$, winds may exceed $\SI{100}{kph}$, and GPS devices may
+yield vastly different output in those altitudes due to decreasing precision and the
+wind conditions. The combination of
+those extreme values is likely to trigger corner cases % here its "corner case"
+in the software, and thus should be covered by means of extensive testing or
+by analysis. 
+ % Problems due to extreme conditions are aggravated by the complexity
+ % of such a system: Since we have to stabilize and control the attitude
+ % of the glider, this means implementing a full flight stack including
+ % complex algorithms for pose estimation (i.a., a Kalman Filter), but
+ % also logging of weather data to an SD card using a file system. This
+ % is a complex piece of multi-threaded software, which under all these
+ % circumstances must work properly. Clearly, such a high-altitude flyer
+ % has many ways to fail, yet, being technically a drone in public
+ % airspace, we need to keep the vehicle in a controlled flight even in
+ % the presence of some hardware failures that may occur.
+
+ We use this opportunity of a safety-critical, yet hardly testable
+ system to explore the new state-of-the art verification tools of
+ Ada/SPARK~2014~\cite{GNATprove}, especially to identify limitations,
+ pitfalls and applicability in practice.  To
+ experience this new SPARK release to its full extent, we applied a
+ \emph{co-verification} approach. That is, we did not perform
+ verification on a finished product, but instead in parallel to the
+ software development (the specific strategy is not of relevance for this paper, but only the effect that this enabled us to identify 
+ code features that pose challenges in verification, and find workarounds for them). The implementation could therefore be shaped by
+ verification needs. Moreover, since the high-altitude glider was a
+ research project, we allowed ourselves to modify the initial
+ software design to ease verification when needed.
+
+% Our contributions are as follows:
+% \begin{enumerate}
+% \item We give a brief introduction to the SPARK~2014 language in Section~\ref{sec:verification-spark},
+% \item we evaluate the application of a dimensionality checking system
+%   and object-oriented features in verification,
+% \item we explain verification and design problems and workarounds in
+%   Section~\ref{sec:workarounds},
+% \item we propose a daily workflow for co-verification in Section~\ref{sec:verification} and
+% \item we generalize the experienced problems and propose a set of
+%   verification rules in Section~\ref{sec:results}.
+% % there is not enough work/evidence to claim that we explored OOP capabilities
+% \end{enumerate}
+
+% NOT: "the rest of this paper is organized as follows"
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

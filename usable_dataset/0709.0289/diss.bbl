@@ -1,0 +1,683 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BLMS00b}
+
+\bibitem[ADR02]{ADR02}
+Yonatan Aumann, Yan~Zong Ding, and Michael~O. Rabin.
+\newblock Everlasting security in the bounded storage model.
+\newblock {\em {IEEE} Transactions on Information Theory}, 48(6):1668--1680,
+  June 2002.
+
+\bibitem[AS00]{AS00}
+Noga Alon and Joel Spencer.
+\newblock {\em The Probabilistic Method}.
+\newblock Series in Discrete Mathematics and Optimization. Wiley-Interscience,
+  2nd edition, 2000.
+
+\bibitem[Aza04]{Azarchs04}
+Adam Azarchs.
+\newblock Entropic uncertainty relations for incomplete sets of mutually
+  unbiased observables.
+\newblock Available at http://arxiv.org/abs/quant-ph/0412083, 2004.
+
+\bibitem[Azu67]{Azuma67}
+Kazuoki Azuma.
+\newblock Weighted sums of certain dependent random variables.
+\newblock {\em T\^ohoku Mathematical Journal}, 19:357--367, 1967.
+
+\bibitem[BB84]{BB84}
+Charles~H. Bennett and Gilles Brassard.
+\newblock Quantum cryptography: Public key distribution and coin tossing.
+\newblock In {\em Proceedings of IEEE International Conference on Computers,
+  Systems, and Signal Processing}, pages 175--179, 1984.
+
+\bibitem[BB06]{Bialynicki06}
+I.~Bialynicki-Birula.
+\newblock Formulation of the uncertainty relations in terms of the {R}\'enyi
+  entropies.
+\newblock {\em Physical Review A}, 74:052101, 2006.
+
+\bibitem[BBCM95]{BBCM95}
+Charles~H. Bennett, Gilles Brassard, Claude Cr{\'e}peau, and Ueli~M. Maurer.
+\newblock Generalized privacy amplification.
+\newblock {\em {IEEE} Transactions on Information Theory}, 41:1915--1923,
+  November 1995.
+
+\bibitem[BBCS91]{BBCS91}
+Charles~H. Bennett, Gilles Brassard, Claude Cr{\'e}peau, and
+  Marie-H{\'e}l{\`e}ne Skubiszewska.
+\newblock Practical quantum oblivious transfer.
+\newblock In {\em Advances in Cryptology---CRYPTO~'91}, volume 576 of {\em
+  Lecture Notes in Computer Science}, pages 351--366. Springer, 1991.
+
+\bibitem[BBM75]{BM75}
+I.~Bialynicki-Birula and J.~Mycielski.
+\newblock Uncertainty relations for information entropy.
+\newblock {\em Communications in Mathematical Physics}, 129(44), 1975.
+
+\bibitem[BBR88]{BBR88}
+Charles~H. Bennett, Gilles Brassard, and Jean-Marc Robert.
+\newblock Privacy amplification by public discussion.
+\newblock {\em SIAM J. Comput.}, 17(2):210--229, 1988.
+
+\bibitem[BC97]{BC97}
+Gilles Brassard and Claude Cr{\'e}peau.
+\newblock Oblivious transfers and privacy amplification.
+\newblock In {\em Advances in Cryptology---CRYPTO~'97}, volume 1294 of {\em
+  Lecture Notes in Computer Science}. Springer, 1997.
+
+\bibitem[BCJL93]{BCJL93}
+Gilles Brassard, Claude Cr{\'e}peau, Richard Jozsa, and Denis Langlois.
+\newblock A quantum bit commitment scheme provably unbreakable by both parties.
+\newblock In {\em 34th Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}, pages 362--371, 1993.
+
+\bibitem[BCW03]{BCW03}
+Gilles Brassard, Claude Cr{\'e}peau, and Stefan Wolf.
+\newblock Oblivious transfer and privacy amplification.
+\newblock {\em Journal of Cryptology}, 16(4), 2003.
+
+\bibitem[Bea95]{Beaver95}
+Donald Beaver.
+\newblock Precomputing oblivious transfer.
+\newblock In {\em Advances in Cryptology---CRYPTO~'95}, volume 963 of {\em
+  Lecture Notes in Computer Science}, pages 97--109. Springer, 1995.
+
+\bibitem[Bha97]{Bhatia97}
+Rajendra Bhatia.
+\newblock {\em Matrix Analysis}.
+\newblock Graduate Texts in Mathematics. Springer-Verlag, 1997.
+
+\bibitem[BLMS00a]{BLMS00a}
+Gilles Brassard, Norbert L{\"u}tkenhaus, Tal Mor, and Barry~C. Sanders.
+\newblock Limitations on practical quantum cryptography.
+\newblock {\em Physical Review Letters}, 85(6):1330--1333, August 2000.
+
+\bibitem[BLMS00b]{BLMS00b}
+Gilles Brassard, Norbert L{\"u}tkenhaus, Tal Mor, and Barry~C. Sanders.
+\newblock Security aspects of practical quantum cryptography.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'00}, volume 1807 of {\em
+  Lecture Notes in Computer Science}, pages 289--299. Springer, 2000.
+
+\bibitem[BM04]{BM04}
+Michael {Ben-Or} and Dominic Mayers.
+\newblock General security definition and composability for quantum and
+  classical protocols, September 2004.
+\newblock online available at {\tt http://xxx.lanl.gov/abs/quant-ph/0409062}.
+
+\bibitem[BS93]{BS93}
+Gilles Brassard and Louis Salvail.
+\newblock Secret-key reconciliation by public discussion.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'93}, volume 765 of {\em
+  Lecture Notes in Computer Science}, pages 410--423. Springer, 1993.
+
+\bibitem[BWW06]{BWW06}
+Manuel~A. Ballester, Stephanie Wehner, and Andreas Winter.
+\newblock State discrimination with post-measurement information, 2006.
+\newblock {\tt http://arxiv.org/abs/quant-ph/0608014}.
+
+\bibitem[Cac97]{Cachin97}
+Christian Cachin.
+\newblock Smooth entropy and {R}{\'e}nyi entropy.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'97}, volume 1233 of {\em
+  Lecture Notes in Computer Science}, pages 193--208. Springer, 1997.
+
+\bibitem[Cac98]{Cachin98}
+Christian Cachin.
+\newblock On the foundations of oblivious transfer.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'98}, volume 1403 of {\em
+  Lecture Notes in Computer Science}. Springer, 1998.
+
+\bibitem[CCM98]{CCM98}
+C.~Cachin, C.~Cr{\'e}peau, and J.~Marcil.
+\newblock Oblivious transfer with a memory-bounded receiver.
+\newblock In {\em 39th Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}, pages 493--502, 1998.
+
+\bibitem[CK78]{CK78}
+Imre Csisz{\'a}r and J{\'a}nos K{\"o}rner.
+\newblock Broadcast channels with confidential messages.
+\newblock {\em {IEEE} Transactions on Information Theory}, 24(3):339--348, May
+  1978.
+
+\bibitem[CK88]{CK88}
+Claude Cr{\'e}peau and Joe Kilian.
+\newblock Achieving oblivious transfer using weakened security assumptions.
+\newblock In {\em 29th Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}, pages 42--53, 1988.
+
+\bibitem[CM97]{CM97}
+Christian Cachin and Ueli~M. Maurer.
+\newblock Unconditional security against memory-bounded adversaries.
+\newblock In {\em Advances in Cryptology---CRYPTO~'97}, volume 1294 of {\em
+  Lecture Notes in Computer Science}, pages 292--306. Springer, 1997.
+
+\bibitem[CMW04]{CMW04}
+Claude Cr{\'e}peau, Kirill Morozov, and Stefan Wolf.
+\newblock Efficient unconditional oblivious transfer from almost any noisy
+  channel.
+\newblock In {\em International Conference on Security in Communication
+  Networks (SCN)}, volume~4 of {\em Lecture Notes in Computer Science}, 2004.
+
+\bibitem[Cr{\'e}87]{Crepeau87}
+Claude Cr{\'e}peau.
+\newblock Equivalence between two flavours of oblivious transfers.
+\newblock In {\em Advances in Cryptology---CRYPTO~'87}, volume 293 of {\em
+  Lecture Notes in Computer Science}. Springer, 1987.
+
+\bibitem[Cr{\'e}94]{Crepeau94}
+Claude Cr{\'e}peau.
+\newblock Quantum oblivious transfer.
+\newblock {\em Journal of Modern Optics}, 41(12):2455 -- 2466, 1994.
+
+\bibitem[Cr{\'e}97]{Crepeau97}
+Claude Cr{\'e}peau.
+\newblock Efficient cryptographic protocols based on noisy channels.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'97}, volume 1233 of {\em
+  Lecture Notes in Computer Science}, pages 306--317. Springer, 1997.
+
+\bibitem[CRE04]{CRE04}
+Matthias Christandl, Renato Renner, and Artur Ekert.
+\newblock A generic security proof for quantum key distribution.
+\newblock http://arxiv.org/abs/quant-ph/0402131, February 2004.
+
+\bibitem[CS06]{CS06}
+Claude Cr{\'e}peau and Georges Savvides.
+\newblock Optimal reductions between oblivious transfers using interactive
+  hashing.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'06}, volume 4004 of {\em
+  Lecture Notes in Computer Science}, pages 201--221. Springer, 2006.
+
+\bibitem[CSSW06]{CSSW06}
+Claude Cr{\'e}peau, George Savvides, Christian Schaffner, and J{\"u}rg
+  Wullschleger.
+\newblock Information-theoretic conditions for two-party secure function
+  evaluation.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'06}, volume 4004 of {\em
+  Lecture Notes in Computer Science}, pages 538--554. Springer, 2006.
+
+\bibitem[CT91]{CT91}
+T.M. Cover and J.A. Thomas.
+\newblock {\em Elements of Information Theory}.
+\newblock Wiley, 1991.
+
+\bibitem[CW77]{WC77}
+J.~Lawrence Carter and Mark~N. Wegman.
+\newblock Universal classes of hash functions.
+\newblock In {\em 9th Annual ACM Symposium on Theory of Computing (STOC)},
+  pages 106--112, 1977.
+
+\bibitem[Deu83]{Deutsch83}
+David Deutsch.
+\newblock Uncertainty in quantum measurements.
+\newblock {\em Physical Review Letters}, 50(9):631--633, February 1983.
+
+\bibitem[DFMS04]{DFMS04}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Kirill Morozov, and Louis Salvail.
+\newblock Unfair noisy channels and oblivious transfer.
+\newblock In {\em Theory of Cryptography Conference (TCC)}, volume 2951 of {\em
+  Lecture Notes in Computer Science}, pages 355--373. Springer, 2004.
+
+\bibitem[DFR{\etalchar{+}}07]{DFRSS07}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Renato Renner, Louis Salvail, and Christian
+  Schaffner.
+\newblock A tight high-order entropic quantum uncertainty relation with
+  applications.
+\newblock In {\em Advances in Cryptology---CRYPTO~'07}, volume 4622 of {\em
+  Lecture Notes in Computer Science}, pages 360--378. Springer, 2007.
+
+\bibitem[DFSS05]{DFSS05}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Louis Salvail, and Christian Schaffner.
+\newblock Cryptography in the bounded quantum-storage model.
+\newblock In {\em 46th Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}, pages 449--458, 2005.
+
+\bibitem[DFSS06]{DFSS06}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Louis Salvail, and Christian Schaffner.
+\newblock Oblivious transfer and linear functions.
+\newblock In {\em Advances in Cryptology---CRYPTO~'06}, volume 4117 of {\em
+  Lecture Notes in Computer Science}, pages 427--444. Springer, 2006.
+
+\bibitem[DFSS07]{DFSS07}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Louis Salvail, and Christian Schaffner.
+\newblock Secure identification and {QKD} in the bounded-quantum-storage model.
+\newblock In {\em Advances in Cryptology---CRYPTO~'07}, volume 4622 of {\em
+  Lecture Notes in Computer Science}, pages 342--359. Springer, 2007.
+
+\bibitem[DFSS08]{DFSS08journal}
+Ivan~B. Damg{\aa}rd, Serge Fehr, Louis Salvail, and Christian Schaffner.
+\newblock Cryptography in the bounded-quantum-storage model.
+\newblock {\em special issue of SIAM Journal of Computing}, 2008.
+\newblock to appear.
+
+\bibitem[DHRS04]{DHRS04}
+Yan~Zong Ding, Danny Harnik, Alon Rosen, and Ronen Shaltiel.
+\newblock Constant-round oblivious transfer in the bounded storage model.
+\newblock In {\em Theory of Cryptography Conference (TCC)}, volume 2951 of {\em
+  Lecture Notes in Computer Science}, pages 446--472. Springer, 2004.
+
+\bibitem[Din01a]{Ding01}
+Yan~Zong Ding.
+\newblock Oblivious transfer in the bounded storage model.
+\newblock In {\em Advances in Cryptology---CRYPTO~'01}, volume 2139 of {\em
+  Lecture Notes in Computer Science}, pages 155--170. Springer, 2001.
+
+\bibitem[Din01b]{Din01}
+Yan~Zong Ding.
+\newblock Oblivious transfer in the bounded storage model.
+\newblock In {\em Advances in Cryptology---CRYPTO~'01}, volume 2139 of {\em
+  Lecture Notes in Computer Science}. Springer, 2001.
+
+\bibitem[Din05]{Ding05}
+Yan~Zong Ding.
+\newblock Error correction in the bounded storage model.
+\newblock In {\em Theory of Cryptography Conference (TCC)}, volume 3378 of {\em
+  Lecture Notes in Computer Science}, pages 578--599. Springer, 2005.
+
+\bibitem[DKS99]{DKS99}
+Ivan Damg{\aa}rd, Joe Kilian, and Louis Salvail.
+\newblock On the (im)possibility of basing oblivious transfer and bit
+  commitment on weakened security assumptions.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'99}, volume 1592 of {\em
+  Lecture Notes in Computer Science}, pages 56--73. Springer, 1999.
+
+\bibitem[DM04]{DM04}
+Stefan Dziembowski and Ueli~M. Maurer.
+\newblock On generating the initial key in the bounded-storage model.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'04}, volume 3027 of {\em
+  Lecture Notes in Computer Science}, pages 126--137. Springer, 2004.
+
+\bibitem[DMS00]{DMS00}
+Paul Dumais, Dominic Mayers, and Louis Salvail.
+\newblock Perfectly concealing quantum bit commitment from any quantum one-way
+  permutation.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'00}, volume 1807 of {\em
+  Lecture Notes in Computer Science}, pages 300--315. Springer, 2000.
+
+\bibitem[DPS04]{DPS04}
+Ivan~B. Damg{\aa}rd, Thomas~B. Pedersen, and Louis Salvail.
+\newblock On the key-uncertainty of quantum ciphers and the computational
+  security of one-way quantum transmission.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'04}, volume 3027 of {\em
+  Lecture Notes in Computer Science}, pages 91--108. Springer, 2004.
+
+\bibitem[DRS04]{DRS04}
+Yevgeniy Dodis, Leonid Reyzin, and Adam Smith.
+\newblock Fuzzy extractors: How to generate strong keys from biometrics and
+  other noisy data.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'04}, volume 3027 of {\em
+  Lecture Notes in Computer Science}, pages 523--540. Springer, 2004.
+
+\bibitem[DSTW07]{DSTW07privcom}
+David~P. DiVincenzo, Christian Schaffner, Barbara~M. Terhal, and Stephanie
+  Wehner.
+\newblock Cryptography from noisy quantum storage.
+\newblock private communication, 2007.
+
+\bibitem[EGL82]{EGL82}
+Shimon Even, Oded Goldreich, and Abraham Lempel.
+\newblock A randomized protocol for signing contracts.
+\newblock In {\em Advances in Cryptology: Proceedings of CRYPTO~82}. Plenum
+  Press, 1982.
+
+\bibitem[Eke91]{Ekert91}
+Artur~K. Ekert.
+\newblock Quantum cryptography based on bell's theorem.
+\newblock {\em Physical Review Letter}, 67(6):661--663, August 1991.
+
+\bibitem[Eng03]{Englert03}
+B.-G. Englert.
+\newblock Mutually unbiased bases.
+\newblock Open Problems in Quantum Information Theory, 2003.
+\newblock {\tt http://www.imaph.tu-bs.de/qi/problems}.
+
+\bibitem[FGG{\etalchar{+}}97]{FGGNP97}
+Christopher~A. Fuchs, Nicolas Gisin, Robert~B. Griffiths, Chie-Sheng Niu, and
+  Asher Peres.
+\newblock Optimal eavesdropping in quantum cryptography. {I. I}nformation bound
+  and optimal strategy.
+\newblock {\em Physical Review A}, 56:1163 -- 1172, 1997.
+
+\bibitem[FvdG99]{FG99}
+Christopher~A. Fuchs and Jeroen van~de Graaf.
+\newblock Cryptographic distinguishability measures for quantum-mechanical
+  states.
+\newblock {\em {IEEE} Transactions on Information Theory}, 45:1216--1227, 1999.
+
+\bibitem[Gol95]{Goldreich95}
+Oded Goldreich.
+\newblock Three {XOR}-lemmas - an exposition.
+\newblock {\em Electronic Colloquium on Computational Complexity (ECCC)},
+  2(56), 1995.
+
+\bibitem[Hei27]{Heisenberg27}
+Werner Heisenberg.
+\newblock Schwankungserscheinungen und quantenmechanik.
+\newblock {\em Zeitschrift f{\"u}r Physik}, 40:501--506, 1927.
+
+\bibitem[HIGM95]{HIGM95}
+B.~Huttner, N.~Imoto, N.~Gisin, and T.~Mor.
+\newblock Quantum cryptography with coherent states.
+\newblock {\em Phys. Rev. A}, 51(3):1863--1869, Mar 1995.
+
+\bibitem[HILL99]{HILL99}
+Johan H{\aa}stad, Russell Impagliazzo, Leonid~A. Levin, and Michael Luby.
+\newblock A pseudorandom generator from any one-way function.
+\newblock {\em SIAM Journal on Computing}, 28(4), 1999.
+
+\bibitem[HR06]{HR06}
+Thomas Holenstein and Renato Renner.
+\newblock On the randomness of independent experiments.
+\newblock {\tt http://www.arxiv.org/cs.IT/0608007}, 2006.
+
+\bibitem[HU88]{HU88}
+J.~Hilgevood and J.B.M. Uffink.
+\newblock The mathematical expression of the uncertainty principle.
+\newblock In {\em Microphysical Reality and Quantum Description}. Kluwer
+  Academic, 1988.
+
+\bibitem[HV06]{HV06}
+Peter Harremo{\"e}s and Christophe Vignat.
+\newblock R{\'e}nyi entropies of marginal distributions.
+\newblock submitted to Elsevier Science, 2006.
+
+\bibitem[ILL89]{ILL89}
+Russell Impagliazzo, Leonid~A. Levin, and Michael Luby.
+\newblock Pseudo-random generation from one-way functions.
+\newblock In {\em 21st Annual ACM Symposium on Theory of Computing (STOC)},
+  pages 12--24, 1989.
+
+\bibitem[Ivo81]{Ivanovic81}
+I.~D. Ivonovi{\'c}.
+\newblock Geometrical description of quantal state determination.
+\newblock {\em Journal of Physics A: Mathematical and General},
+  14(12):3241--3245, December 1981.
+
+\bibitem[Jon91]{Jones91}
+K.R.W. Jones.
+\newblock {R}iemann-{L}iouville fractional integration and reduced
+  distributions on hyperspheres.
+\newblock {\em Journal of Physics A: Mathematical and General}, 24:1237--1244,
+  1991.
+
+\bibitem[JRW94]{JRW94}
+Richard Jozsa, Daniel Robb, and William~K. Wootters.
+\newblock Lower bound for accessible information in quantum mechanics.
+\newblock {\em Physical Review A}, 49(2):668--677, 1994.
+
+\bibitem[KGR05]{KGR05}
+Barbara Kraus, Nicolas Gisin, and Renato Renner.
+\newblock Lower and upper bounds on the secret key rate for qkd protocols using
+  one-way classical communication.
+\newblock {\em Physical Review Letters}, 95(080501), August 2005.
+\newblock eprint archive: http://arxiv.org/abs/quant-ph/0410215.
+
+\bibitem[Kil88]{Kilian88}
+Joe Kilian.
+\newblock Founding cryptography on oblivious transfer.
+\newblock In {\em 20th Annual ACM Symposium on Theory of Computing (STOC)},
+  pages 20--31, 1988.
+
+\bibitem[Kit97]{Kittaneh97}
+Fuad Kittaneh.
+\newblock Norm inequalities for certain operator sums.
+\newblock {\em Journal of Functional Analysis}, 143(FU962957):337--348, 1997.
+
+\bibitem[KMR05]{KMR03}
+Robert K\"onig, Ueli Maurer, and Renato Renner.
+\newblock On the power of quantum memory.
+\newblock {\em IEEE Transaction on Information Theory}, 51(7):2391--2401, July
+  2005.
+\newblock eprint archive: http://arxiv.org/abs/quant-ph/0305154.
+
+\bibitem[Kra87]{Kraus87}
+K.~Kraus.
+\newblock Complementary observables and uncertainty relations.
+\newblock {\em Physical Review D}, 35(10):3070--3075, May 1987.
+
+\bibitem[KT06]{KT06}
+Robert K\"onig and Barbara~M. Terhal.
+\newblock The bounded storage model in the presence of a quantum adversary.
+\newblock {\tt http://arxiv.org/abs/quant-ph/0608101}, 2006.
+
+\bibitem[Lar90]{Larsen90}
+Ulf Larsen.
+\newblock Superspace geometry: the exact uncertainty relationship between
+  complementary aspects.
+\newblock {\em Journal of Physics A: Mathematical and General},
+  23(7):1041--1061, April 1990.
+
+\bibitem[LBZ02]{LBZ02}
+Jay Lawrence, {\v{C}}aslav Brukner, and Anton Zeilinger.
+\newblock Mutually unbiased binary observable sets on {N} qubits.
+\newblock {\em Physical Review A}, 65(3), February 2002.
+
+\bibitem[LC97]{LC97}
+Hong-Kwong Lo and H.~F. Chau.
+\newblock Is quantum bit commitment really possible?
+\newblock {\em Physical Review Letters}, 78(17):3410--3413, April 1997.
+
+\bibitem[Lo97]{Lo97}
+Hong-Kwong Lo.
+\newblock Insecurity of quantum secure computations.
+\newblock {\em Physical Review A}, 56(2):1154--1162, 1997.
+
+\bibitem[Lo01]{Lo01}
+Hong-Kwong Lo.
+\newblock Proof of unconditional security of six-state quantum key distribution
+  scheme.
+\newblock {\em Quantum Information and Computation}, 1(2):81--94, 2001.
+
+\bibitem[Lu04]{Lu04}
+Chi-Jen Lu.
+\newblock Encryption against storage-bounded adversaries from on-line strong
+  extractors.
+\newblock {\em Journal of Cryptology}, 17(1):27--42, 2004.
+
+\bibitem[L{\"u}t00]{Lutkenhaus00}
+Norbert L{\"u}tkenhaus.
+\newblock Security against individual attacks for realistic quantum key
+  distribution.
+\newblock {\em Physical Review A}, 61:052304, 2000.
+
+\bibitem[Mau90]{Maurer90}
+Ueli~M. Maurer.
+\newblock A provably-secure strongly-randomized cipher.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'90}, volume 473 of {\em
+  Lecture Notes in Computer Science}, pages 361--373. Springer, 1990.
+
+\bibitem[Mau91]{Maurer91}
+Ueli~M. Maurer.
+\newblock Perfect cryptographic security from partially independent channels.
+\newblock In {\em 23rd Annual ACM Symposium on Theory of Computing (STOC)},
+  pages 561--572, 1991.
+
+\bibitem[Mau92]{Maurer92}
+Ueli~M. Maurer.
+\newblock Conditionally-perfect secrecy and a provably-secure randomized
+  cipher.
+\newblock {\em Journal of Cryptology}, 5(1):53--66, 1992.
+\newblock Preliminary version: \cite{Maurer90}.
+
+\bibitem[May95]{Mayers95}
+Dominic Mayers.
+\newblock On the security of the quantum oblivious transfer and key
+  distribution protocols.
+\newblock In {\em Advances in Cryptology---CRYPTO~'95}, volume 963 of {\em
+  Lecture Notes in Computer Science}, pages 124--135. Springer, 1995.
+
+\bibitem[May97]{Mayers97}
+Dominic Mayers.
+\newblock Unconditionally secure quantum bit commitment is impossible.
+\newblock {\em Physical Review Letters}, 78(17):3414--3417, April 1997.
+
+\bibitem[MN05]{MN05}
+Tal Moran and Moni Naor.
+\newblock Basing cryptographic protocols on tamper-evident seals.
+\newblock In {\em 32nd International Colloquium on Automata, Languages and
+  Programming (ICALP)}, volume 3580 of {\em Lecture Notes in Computer Science},
+  pages 285--297. Springer, 2005.
+
+\bibitem[MP95]{MR95}
+Rajeev Motwani and Raghavan Prabhakar.
+\newblock {\em Randomized Algorithms}.
+\newblock Cambridge University Press, 1995.
+
+\bibitem[MS94]{MS94}
+Dominic Mayers and Louis Salvail.
+\newblock Quantum oblivious transfer is secure against all individual
+  measurements.
+\newblock In {\em Workshop on Physics and Computation, PhysComp '94}, pages
+  69--77, November 1994.
+
+\bibitem[MST04]{MST04}
+Tal Moran, Ronen Shaltiel, and Amnon {Ta-Shma}.
+\newblock Non-interactive time\-stamping in the bounded storage model.
+\newblock In {\em Advances in Cryptology---CRYPTO~'04}, volume 3152 of {\em
+  Lecture Notes in Computer Science}, pages 460--476. Springer, 2004.
+
+\bibitem[MU88]{MU88}
+Hans Maassen and Jos B.~M. Uffink.
+\newblock Generalized entropic uncertainty relations.
+\newblock {\em Physical Review Letters}, 60(12):1103--1106, March 1988.
+
+\bibitem[NC00]{NC00}
+Michael~A. Nielsen and Isaac~L. Chuang.
+\newblock {\em Quantum Computation and Quantum Information}.
+\newblock Cambridge university press, 2000.
+
+\bibitem[Rab81]{Rabin81}
+M.~Rabin.
+\newblock How to exchange secrets by oblivious transfer.
+\newblock Technical report, Harvard Aiken Computation Lab, 1981.
+
+\bibitem[R{\'e}n61]{Renyi61}
+Alfr{\'e}d R{\'e}nyi.
+\newblock On measures of entropy and information.
+\newblock In {\em Proceedings of the 4th Berkeley Symposium Mathematical
+  Statistics and Probability}, volume~1, pages 547--561. University of
+  California Press, 1961.
+
+\bibitem[Ren05]{Renner05}
+Renato Renner.
+\newblock {\em Security of Quantum Key Distribution}.
+\newblock PhD thesis, ETH Z\"urich (Switzerland), September 2005.
+\newblock {\tt http://arxiv.org/abs/quant-ph/0512258}.
+
+\bibitem[RGK05]{RGK05}
+Renato Renner, Nicolas Gisin, and Barbara Kraus.
+\newblock An information-theoretic security proof for {QKD} protocols.
+\newblock {\em Phys. Rev. A}, 72(012332), July 2005.
+
+\bibitem[RK05]{RK05}
+Renato Renner and Robert K\"onig.
+\newblock Universally composable privacy amplification against quantum
+  adversaries.
+\newblock In {\em Theory of Cryptography Conference (TCC)}, volume 3378 of {\em
+  Lecture Notes in Computer Science}, pages 407--425. Springer, 2005.
+
+\bibitem[Rus94]{Ruskai94}
+Mary~Beth Ruskai.
+\newblock {Beyond Strong Subadditivity? Improved Bounds on the Contraction of
+  Generalized Relative Entropy}.
+\newblock {\em Reviews in Mathematical Physics}, 6:1147--1161, 1994.
+
+\bibitem[RW05]{RW05}
+Renato Renner and Stefan Wolf.
+\newblock Simple and tight bounds for information reconciliation and privacy
+  amplification.
+\newblock In {\em Advances in Cryptology---ASIACRYPT~2005}, Lecture Notes in
+  Computer Science, pages 199--216. Springer, 2005.
+
+\bibitem[Sal98]{Salvail98}
+Louis Salvail.
+\newblock Quantum bit commitment from a physical assumption.
+\newblock In {\em Advances in Cryptology---CRYPTO~'98}, volume 1462 of {\em
+  Lecture Notes in Computer Science}, pages 338--353. Springer, 1998.
+
+\bibitem[S{\'a}n93]{Ruiz93}
+Jorge S{\'a}nchez{-Ruiz}.
+\newblock Entropic uncertainty and certainty relations for complementary
+  observables.
+\newblock {\em Physics Letters A}, 173(3):233--239, February 1993.
+
+\bibitem[S{\'a}n95]{Ruiz95}
+Jorge S{\'a}nchez{-Ruiz}.
+\newblock Improved bounds in the entropic uncertainty and certainty relations
+  for complementary observables.
+\newblock {\em Physics Letters A}, 201(2--3):125--131, May 1995.
+
+\bibitem[Sha48]{Shannon48}
+Claude~Elwood Shannon.
+\newblock A mathematical theory of communication.
+\newblock {\em Bell Telephone System Technical Publications}, 1948.
+
+\bibitem[SP00]{SP00}
+Peter~W. Shor and John Preskill.
+\newblock Simple proof of security of the {BB84} quantum key distribution
+  protocol.
+\newblock {\em Physical Review Letters}, 85(2):441--444, July 2000.
+
+\bibitem[S{\'y}k74]{Sykora74}
+Stanislav S{\'y}kora.
+\newblock Quantum theory and the {B}ayesian inference problems.
+\newblock {\em Journal of Statistical Physics}, 11(1):17--27, 1974.
+
+\bibitem[Unr02]{Unruh02}
+Dominique Unruh.
+\newblock Formal security in quantum cryptology.
+\newblock Master's thesis, Institut f\"ur Algorithmen und Kognitive Systeme,
+  Universit\"at Karlsruhe, December 2002.
+\newblock available at {\tt http://www.unruh.de/DniQ/publications}.
+
+\bibitem[Vad04]{Vadhan04}
+Salil~P. Vadhan.
+\newblock On constructing locally computable extractors and cryptosystems in
+  the bounded storage model.
+\newblock {\em Journal of Cryptology}, 17(1):43--77, 2004.
+
+\bibitem[Vaz86]{Vazirani86}
+Umesh~Virkumar Vazirani.
+\newblock {\em Randomness, adversaries and computation}.
+\newblock PhD thesis, University of California, Berkeley, 1986.
+
+\bibitem[WC79]{WC79}
+Mark~N. Wegman and J.~Lawrence Carter.
+\newblock New classes and applications of hash functions.
+\newblock In {\em 20th Annual IEEE Symposium on Foundations of Computer Science
+  (FOCS)}, pages 175--182, 1979.
+
+\bibitem[WF89]{WF89}
+William~K. Wootters and Brian~D. Fields.
+\newblock Optimal state-determination by mutually unbiased measurements.
+\newblock {\em Annals of Physics}, 191(2):363--381, 1989.
+
+\bibitem[Wie83]{Wiesner83}
+Stephen Wiesner.
+\newblock Conjugate coding.
+\newblock {\em SIGACT News}, 15(1):78--88, 1983.
+\newblock Original manuscript written circa 1970.
+
+\bibitem[Wol00]{Wolf00}
+Stefan Wolf.
+\newblock Reducing oblivious string transfer to universal oblivious transfer.
+\newblock In {\em IEEE International Symposium on Information Theory (ISIT)},
+  2000.
+
+\bibitem[Wul07]{Wullschleger07}
+J{\"u}rg Wullschleger.
+\newblock Oblivious-{T}ransfer amplification.
+\newblock In {\em Advances in Cryptology---EUROCRYPT~'07}, Lecture Notes in
+  Computer Science. Springer, 2007.
+
+\bibitem[WW07]{WW07privcom}
+Stephanie Wehner and J\"urg Wullschleger.
+\newblock Security in the bounded-quantum-storage model.
+\newblock private communication, 2007.
+
+\bibitem[Yao95]{Yao95}
+Andrew Chi-Chih Yao.
+\newblock Security of quantum protocols against coherent measurements.
+\newblock In {\em 27th Annual ACM Symposium on the Theory of Computing (STOC)},
+  pages 67--75, 1995.
+
+\end{thebibliography}

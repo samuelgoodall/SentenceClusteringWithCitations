@@ -1,0 +1,190 @@
+\section{Results}
+\label{sec:results}
+
+In general, verification of SPARK~2014 programs is accessible and mostly
+automatic.  Figure~\ref{fig:stats} shows
+the results of our launch release. As it can be seen, we could not
+prove all properties during the time of this project (three months). The non-proven
+checks have largely been identified as ``fixable'', following our design recommendations given below.
+
+\begin{figure}[hbtp]\vspace*{-4mm}
+    %\centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{fig/vc_success}
+        %\caption{VC type vs. success ratio}
+        %\label{fig:usucc}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.48\textwidth}
+      \includegraphics[width=\textwidth]{fig/total_time_per_VC}
+      %\caption{Total CPU time per VC type}
+      %\label{fig:props}
+    \end{subfigure}%\vspace*{-5mm}
+    % \begin{subfigure}[t]{0.48\textwidth}
+    %   \includegraphics[width=\textwidth]{fig/props}
+    %   \caption{Property Occurrence}
+    %   \label{fig:props}
+    % \end{subfigure}
+    \caption{Statistics on Verification Conditions (VCs) by type.%: Floating-Point VCs have the lowest success ratio, meanwhile they take most analysis time.
+\vspace*{-3mm}}\label{fig:stats}
+  \end{figure}
+
+The complexity of our flight stack and verification progress are
+summarized in Table~\ref{tab:complexity}. It can be seen that our
+focus on the application part is reflected in the SPARK coverage that we
+have achieved (\SI{82}{\percent} of all bodies in SPARK, and even
+\SI{99}{\percent} of all specifications), but also that considerably more work has to
+be done for the BSP (currently only verified by testing). In
+particular, the HAL (off-chip device drivers, bus configuration, etc.)
+is the largest part and thus needs a higher SPARK coverage.
+% SVD: 14248 loc -> 43\% of HAL
+However, we should add that \SI{43}{\percent} of the HAL is consisting of
+specifications generated from CMSIS-SVD files, which do not contain any
+subprograms, but only definitions of peripheral addresses and record definitions to access
+them, and therefore mostly cannot be covered in SPARK. Last
+but not least, a completely verified RTS would be desirable, as well.
+
+\bgroup
+\setlength\tabcolsep{.5em}
+\begin{table}[htbp]\vspace*{-9mm}
+\begin{minipage}{\linewidth}
+  \centering
+  \caption{Metrics and verification statistics of our Flight Stack.}
+  \small
+  %\scriptsize % looks odd
+  \begin{tabular}{lrrrr}
+    \toprule
+    &               & \multicolumn{2}{c}{\scriptsize{Board Support Package}} & \\
+                         \cmidrule{3-4}
+    Metric                      & {Application} & {HAL}         & RTS          & {All}\\
+    \midrule
+    lines of code (GNATmetric)  & 6,750         & 32,903        & 15,769       & 55,422   \\
+    number of packages          & 49            & 100           & 121          & 270      \\
+    cyclomatic complexity       & 2.03          & 2.67          & 2.64         & 2.53      \\
+    SPARK body/spec             & 81.9/99.4\,\% & 15.5/23.5\,\% & 8.6/11.8\,\% & 30.0/38.5\,\%  \\ 
+    %SPARK spec                     & 99.4\%        & 23.5\%  & 11.8\%  & 38.5\%  \\ 
+    \midrule
+    number of VCs               & 3,214         & 765      & 2       & 3,981      \\
+    VCs proven                  & 88.1\,\%      & 92.5\,\% & 100\,\% & 88.8\,\%   \\
+    analysis time\footnote{Intel Xeon E5-2680 Octa-Core with \SI{16}{GB} RAM, timeout=\SI{120}{\second}, steps=inf.}  & --        & --        & -- & \SI{19}{\minute} \\
+    \bottomrule
+  \end{tabular}\label{tab:complexity}
+\end{minipage}
+\vspace*{-4mm}
+\end{table}
+\egroup
+
+
+\textbf{Floats are expensive}. Statistically, we have spent most
+  of the analysis time (\SI{65}{\percent}) for proving absence of floating-point
+  overflows, although these amount to only \SI{21}{\percent} of all VCs. This is
+  because discharging such VCs is in average one
+  magnitude slower than discharging most other VC types. In particular, one has
+  to allow a high step limit (roughly the number of
+  decisions a solver may take, e.g., deciding on a literal) and a
+  high timeout. Note that at some point an increase of either of them does not improve 
+  the result anymore.% because: I don't know why. If the solver's cannot decide, then they
+ % should terminate early. But they don't. So this means they are trying something. How
+ % do we know that more time/steps do not lead to solution?
+
+% workaround there
+  % \textbf{Nonlinear operations, such as trigonometric functions are
+  %   uninterpreted}. There are many arithmetic functions which are not
+  % interpreted by the solvers, such as sine, square root, and so on.
+  % Analyzers have to assume the worst when no precise information is
+  % available, and therefore may produce False Positives. This is one of
+  % the few places where the solvers benefit from manual annotations in
+  % the form of user lemmas. These are provided by ghost subprograms
+  % with null body, where the post-condition expresses the lemma, and
+  % the pre-condition captures the circumstances in which the lemma is
+  % valid (and becomes a proof obligation). SPARK includes a lemma
+  % library which has been proven useful for nonlinear operations, but
+  % also we had to add our own lemmas. In particular, we added a lemma
+  % to state the fact that $|a\cdot b| \leq |b|$ (postcondition) when
+  % $|a| \leq 1.0$ (precondition) which holds for IEE754 single
+  % precision floats. This was necessary to verify the \emph{haversine
+  %   formula}, which computes the distance between two location
+  % coordinates as part of the homing functionality. This formula
+  % includes a dozen of nonlinear operations applied in
+  % sequence. Furthermore, some basic postconditions about the ranges of
+  % sine, cosine and arctan were added, as well as for the sign of
+  % arctan ($sgn(arc\tan(y,x) = sgn(y)$). Providing this information
+  % enabled to prove AoRTE in the entire subprogram in a few seconds, as
+  % well as the post-condition that distance is positive and at most
+  % half the circumference of the earth.
+  
+% \begin{figure}[htbp]
+%   \includegraphics[width=\textwidth]{fig/units_cov}
+%   \caption{SPARK coverage in units. Hardware interfaces (\texttt{hil},
+%     \texttt{hal}) tend to have less coverage, whereas data processing
+%     and high-level implementation (left side) have full coverage. Exception: \texttt{estimator} (array casts in generic queue), \texttt{units.vectors} (RTS not in SPARK).}
+%   \label{fig:ucov}
+% \end{figure}
+
+
+%First: how set search depth (by time, because nightly build). In general, more properties could be proven with more analysis time. However, practically this saturates quickly, (we are not sure whether spending much more time would help there anyway). 
+
+%We show the data for the latest stable with timeout=30s/property and unlimited steps (roughly number of decisions be taken by the solver per VC, i.e., choosing literals). 
+
+%Fig.~TODO shows the 
+
+\textbf{Multi-Threading} could be proven to follow our goals. By using the Ravenscar RTS, 
+our goals related to deadlock, priority inversion and blocking, hold true by design.
+Several
+race conditions and non-thread-safe subprograms have been identified by GNATprove, which otherwise would have refuted task separation. To ensure that
+termination of low-criticality tasks cannot terminate the flight-critical task, we
+provided a custom implementation for GNAT's last chance handler 
+(outside of the SPARK language and therefore not being analyzed) which
+reads the priority of the failing task %(assumed to be proportional
+%to its criticality) 
+and acts accordingly: If the priority is lower than
+that of the flight-critical task (i.e., the mission-critical
+task had an exception), then we prevent a system reset by sending the
+low-priority task into an infinite null loop (thus keeping it busy
+executing \texttt{nop}s, and keeping the flight-critical task alive). 
+If the flight-critical task is failing, then our handler allows a system reset. 
+Multi-threading is therefore easy to
+implement, poses no verification problems, and can effectively
+separate tasks by their criticality.
+
+\textbf{High-Level Behavioral Contracts} related to the homing functionality could
+be expressed and proven with the help of ghost functions, although this is beyond the main purpose of SPARK contracts. For example, we could prove the overall behavior in case of loosing the GPS fix, or missing home coordinates. 
+
+
+
+
+% This stuff should go in the conclusion:
+% \begin{itemize}
+% \item general: ``how hard is it'' to write zero defect code?
+%   \begin{itemize}
+%   \item becomes more practical now
+%   \end{itemize}
+% \item ``bang for buck'': How much of verification works automatically, how much needs writing contracts?
+%   \begin{itemize}
+%   \item a lot of checks are proven w/o annotations, such as invariants
+%   \item TODo: where do we have the most contracts, and why?
+%   \end{itemize}
+% \item investigating remaining fails: float. propose interval arithmetic or fixed-point as solution?
+% \item what cannot be verified and why (pointer stuff; can only be hidden so much with spec functions)
+% \end{itemize}
+
+\subsection{Design Recommendations}\label{sec:recommendations}
+The following constructs and strategies have been found amenable to verification:\vspace{-1mm}
+\begin{enumerate}
+\item Split long expressions into multiple statements $\rightarrow$ discharges more VCs. % TODO: find out why. It's not a time limit thing, and not a steps thing either.
+\item Limit ranges of data types, especially floats $\rightarrow$ better analysis of overflows.
+\item Avoid saturation $\rightarrow$ uncovers missing error handling and requirements.
+\item Avoid interfaces $\rightarrow$ annotations for data flows break concept of abstraction.
+\item Emulate polymorphic objects that must be copied with mutable variant records.
+\item Separation of tasks by criticality using a custom last chance handler $\rightarrow$ abnormal termination of a low-criticality task does not cause termination of high-criticality tasks.
+%\item Avoid the following constructs:
+%  \begin{itemize}
+%  \item TODO
+%  \end{itemize}
+\end{enumerate}
+
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

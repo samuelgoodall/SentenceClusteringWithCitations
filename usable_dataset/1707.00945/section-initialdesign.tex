@@ -1,0 +1,89 @@
+\section{Initial System Design \& Verification Goals}
+\label{sec:context}
+
+\textbf{Target Hardware.} We have chosen the ``Pixhawk''
+autopilot~\cite{pixhawk2011}. It comprises two ARM processors; one
+Cortex-M4F (STM32F427) acting as flight control computer, and one
+Cortex-M3 co-processor handling the servo outputs. We implemented our
+flight stack on the Cortex-M4 from the ground up, thus completely
+replacing the original PX4/NuttX firmware that is installed when
+shipped. 
+
+%Besides being suitable for our environmental requirements,
+%another reason for this choice was that there existed an Ada Run-Time
+%System (RTS) for a very similar processor, the STM32F409.
+
+\textbf{Board Support, Hardware Abstraction Layer \& Run-Time System.}
+We are hiding the specific target from the application
+layer by means of a board support package (not to be confused with an Ada package). This package contains an
+hardware abstraction layer (HAL) and a run-time system (RTS). The RTS
+is implementing basic functionality such
+as tasking and 
+%string handling, math operations, 
+memory management. %removed "required by Ada"; because SPARK does require it as well.
+The HAL is our extension of AdaCore's Drivers
+Library~\cite{AdaDriverLib}, and the RTS is our port of the Ada RTS for the
+ STM32F409 target.  Specifically, we have ported the
+Ravenscar Small Footprint variant~\cite{Ravenscar},   % Abbr. SFP is never used
+which restricts Ada's and SPARK's tasking facilities to a deterministic and
+analyzable subset, but meanwhile forbids exception handling, which anyway is not permitted in SPARK.
+
+% \begin{figure}[htb]
+%   \centering
+%   \includegraphics[width=.8\textwidth]{fig/software-parts}
+%   \caption{Software Layering}
+%   \label{fig:layers}
+% \end{figure}
+% Figure~\ref{fig:X} shows the layers of our flight stack: The RTS, the
+% board support package and the hardware abstraction layer (HAL), and on
+% top the application. 
+
+
+\textbf{Separating Tasks by Criticality\label{sec:separ-tasks-crit}}
+has been one goal, since multi-threading is supported in
+SPARK. In particular, \begin{inparaenum}
+\item termination of low-critical tasks must not cause termination of
+  high-critical tasks,
+\item higher-criticality tasks must not be blocked by lower-critical tasks and,
+\item adverse effects such as deadlocks,
+priority inversion and race condition must not occur. 
+\end{inparaenum}
+We partitioned our glider software into two tasks (further concurrency arises
+from interrupt service routines):
+\begin{enumerate}
+\item The \emph{Flight-Critical Task} includes all execution flows
+  required to keep the glider in a controlled and
+  navigating flight, thus including sensor reads and actuator
+  writes. It is time-critical for control reasons. High-criticality.
+\item The \emph{Mission-Critical Task} includes all execution flows that
+  are of relevance for recording and logging of weather data to an SD
+  card. Low-priority task, only allowed to run when the
+  flight-critical task is idle. Low-criticality.
+\end{enumerate}
+%
+The latter task requires localization data from the former one, to
+annotate the recorded weather data before writing it to the SD card.
+Additionally, it takes over the role of a flight logger, saving data
+from the flight-critical task that might be of interest for a
+post-flight analysis. The interface between these two tasks would
+therefore be a protected object with a message queue that must be
+able to hold different types of messages. 
+
+\textbf{Verification Goals.} First and foremost, AoRTE shall be
+established for all SPARK parts, since exceptions would result in task
+termination. Additionally, the application shall make use of as many
+contracts and checks as possible, and perform all of its computations using
+dimension-checked types. Last but not least, a few functional high-level
+requirements related to the homing functionality have been encoded in
+contracts.
+%
+Overall, the focus of verification was the application, not the
+BSP. The BSP has been written in SPARK only as far as necessary to 
+support proofs in the application. The rationale was that the RTS was assumed to
+be well tested, and the HAL was expected to be hardly verifiable
+due to direct hardware access involving pointers and restricted types.
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

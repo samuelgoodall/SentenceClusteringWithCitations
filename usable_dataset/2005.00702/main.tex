@@ -1,0 +1,99 @@
+%
+% File acl2020.tex
+%
+%% Based on the style files for ACL 2020, which were
+%% Based on the style files for ACL 2018, NAACL 2018/19, which were
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl2020}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{url,comment}
+\usepackage{multirow}
+\usepackage{xspace}
+\usepackage{booktabs}
+
+\aclfinalcopy % Uncomment this line for the final submission
+\def\aclpaperid{2211} %  Enter the acl Paper ID here
+
+\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand{\zubair}[1]{\textcolor{red}{#1}}
+\newcommand{\asad}[1]{\textcolor{cyan}{#1}}
+\newcommand{\padmini}[1]{\textcolor{magenta}{#1}}
+
+
+\newcommand{\presec}{\vspace{0.0in}}
+\newcommand{\postsec}{\vspace{0.0in}}
+\newcommand{\presub}{\vspace{0.0in}}
+\newcommand{\postsub}{\vspace{0.0in}}
+\newcommand{\presubsub}{\vspace{0.0in}}
+\newcommand{\postsubsub}{\vspace{0.0in}}
+\newcommand{\precaption}{\vspace{0.0in}}
+\newcommand{\postcaption}{\vspace{0.0in}}
+\newcommand{\preequation}{\vspace{0.0in}}
+\newcommand{\postequation}{\vspace{0.0in}}
+\usepackage{makecell}
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\newcommand{\amt}{\textsc{EBG}\xspace}
+\newcommand{\blogs}{\textsc{BLOG}\xspace}
+
+\newcommand{\svm}{\textsc{SVM}\xspace}
+\newcommand{\rfc}{\textsc{RFC}\xspace}
+\newcommand{\knn}{\textsc{KNN}\xspace}
+\newcommand{\nueralnetworks}{\textsc{ANN}\xspace}
+\newcommand{\naivebayes}{\textsc{GNB}\xspace}
+
+\newcommand{\gptsmall}{\textsc{GPT-2 117M}\xspace}
+\newcommand{\gptlarge}{\textsc{GPT-2 345M}\xspace}
+\newcommand{\bertsmall}{\textsc{BERT base}\xspace}
+\newcommand{\bertlarge}{\textsc{BERT large}\xspace}
+
+\newcommand{\dspan}{\textsc{DS-PAN17}\xspace}
+\newcommand{\snpan}{\textsc{SN-PAN16}\xspace}
+\newcommand{\mutantx}{\textsc{Mutant-X}\xspace}
+
+\title{A Girl Has A Name: Detecting Authorship Obfuscation}
+
+
+\author{Asad Mahmood  \hspace{10mm} Zubair Shafiq  \hspace{10mm}  Padmini Srinivasan\\\\
+The University of Iowa \\
+  {\small \tt \{asad-mahmood,zubair-shafiq,padmini-srinivasan\}@uiowa.edu} }
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  \input{Sections/1_abstract}
+\end{abstract}
+
+\input{Sections/2_introduction}
+\input{Sections/3_related}
+\input{Sections/4_methodology}
+\input{Sections/5_experiments}
+%\input{Sections/6_tables}
+\input{Sections/7_results}
+\input{Sections/8_Conclusion}
+
+
+\bibliography{Asad,mutantx}
+\bibliographystyle{acl_natbib}
+
+% \input{appendix.tex}
+\end{document}

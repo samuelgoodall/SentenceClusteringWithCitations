@@ -1,0 +1,206 @@
+\begin{thebibliography}{31}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abbasi-Yadkori(2012)]{Abbasi-Yadkori-2012}
+Y.~Abbasi-Yadkori.
+\newblock \emph{Online Learning for Linearly Parametrized Control Problems}.
+\newblock PhD thesis, University of Alberta, 2012.
+
+\bibitem[Banijamali et~al.(2019)Banijamali, Abbasi-Yadkori, Ghavamzadeh, and
+  Vlassis]{banijamali2018optimizing}
+Ershad Banijamali, Yasin Abbasi-Yadkori, Mohammad Ghavamzadeh, and Nikos
+  Vlassis.
+\newblock Optimizing over a restricted policy class in {M}arkov decision
+  processes.
+\newblock In \emph{AISTATS}, 2019.
+
+\bibitem[Bellman(1957)]{Bellman-1957}
+R.~Bellman.
+\newblock \emph{Dynamic Programming}.
+\newblock Princeton University Press, 1957.
+
+\bibitem[Bertsekas(2007)]{Bertsekas-2007}
+D.~P. Bertsekas.
+\newblock \emph{Dynamic Programming and Optimal Control}.
+\newblock Athena Scientific, 2007.
+
+\bibitem[Bertsekas and Tsitsiklis(1996)]{Bertsekas-Tsitsiklis-1996}
+D.~P. Bertsekas and J.~Tsitsiklis.
+\newblock \emph{Neuro-Dynamic Programming}.
+\newblock Athena scientific optimization and computation series. Athena
+  Scientific, 1996.
+
+\bibitem[Chen et~al.(2018)Chen, Li, and Wang]{chen2018scalable}
+Yichen Chen, Lihong Li, and Mengdi Wang.
+\newblock Scalable bilinear $\pi$ learning using state and action features.
+\newblock \emph{arXiv preprint arXiv:1804.10328}, 2018.
+
+\bibitem[de~Farias and {V}an Roy(2003{\natexlab{a}})]{DeFarias-VanRoy-2003}
+D.~P. de~Farias and B.~{V}an Roy.
+\newblock The linear programming approach to approximate dynamic programming.
+\newblock \emph{Operations Research}, 51, 2003{\natexlab{a}}.
+
+\bibitem[de~Farias and {V}an
+  Roy(2003{\natexlab{b}})]{deFarias-VanRoy-NIPS-2003}
+D.~P. de~Farias and B.~{V}an Roy.
+\newblock Approximate linear programming for average-cost dynamic programming.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  2003{\natexlab{b}}.
+
+\bibitem[de~Farias and {V}an Roy(2004)]{DeFarias-VanRoy-2004}
+D.~P. de~Farias and B.~{V}an Roy.
+\newblock On constraint sampling in the linear programming approach to
+  approximate dynamic programming.
+\newblock \emph{Mathematics of Operations Research}, 29, 2004.
+
+\bibitem[de~Farias and {V}an Roy(2006)]{DeFarias-VanRoy-2006}
+D.~P. de~Farias and B.~{V}an Roy.
+\newblock A cost-shaping linear program for average-cost approximate dynamic
+  programming with performance guarantees.
+\newblock \emph{Mathematics of Operations Research}, 31, 2006.
+
+\bibitem[{de la Pe\~{n}a} et~al.(2009){de la Pe\~{n}a}, Lai, and
+  Shao]{delaPena-Lai-Shao-2009}
+V.~H. {de la Pe\~{n}a}, T.~L. Lai, and Q-M. Shao.
+\newblock \emph{Self-normalized processes: Limit theory and Statistical
+  Applications}.
+\newblock Springer, 2009.
+
+\bibitem[Desai et~al.(2012)Desai, Farias, and
+  Moallemi]{Desai-Farias-Moallemi-2012}
+V.~V. Desai, V.~F. Farias, and C.~C. Moallemi.
+\newblock Approximate dynamic programming via a smoothed linear program.
+\newblock \emph{Operations Research}, 60\penalty0 (3):\penalty0 655--674, 2012.
+
+\bibitem[Flaxman et~al.(2005)Flaxman, Kalai, and
+  McMahan]{Flaxman-Kalai-McMahan-2005}
+A.~D. Flaxman, A.~T. Kalai, and H.~B. McMahan.
+\newblock Online convex optimization in the bandit setting: gradient descent
+  without a gradient.
+\newblock In \emph{Proceedings of the sixteenth annual ACM-SIAM symposium on
+  Discrete algorithms}, 2005.
+
+\bibitem[Goodfellow et~al.(2016)Goodfellow, Bengio, Courville, and
+  Bengio]{goodfellow2016deep}
+Ian Goodfellow, Yoshua Bengio, Aaron Courville, and Yoshua Bengio.
+\newblock \emph{Deep learning}, volume~1.
+\newblock MIT press Cambridge, 2016.
+
+\bibitem[Guestrin et~al.(2004)Guestrin, Hauskrecht, and
+  Kveton]{Guestrin-Hauskrecht-Kveton-2004}
+C.~Guestrin, M.~Hauskrecht, and B.~Kveton.
+\newblock Solving factored mdps with continuous and discrete variables.
+\newblock In \emph{Twentieth Conf. Uncertainty in Artificial Intelligence},
+  2004.
+
+\bibitem[Hauskrecht and Kveton(2003)]{Hauskrecht-Kveton-2003}
+M.~Hauskrecht and B.~Kveton.
+\newblock Linear program approximations to factored continuous-state markov
+  decision processes.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2003.
+
+\bibitem[Howard(1960)]{Howard-1960}
+R.~A. Howard.
+\newblock \emph{Dynamic Programming and {M}arkov Processes}.
+\newblock MIT, 1960.
+
+\bibitem[Lakshminarayanan et~al.(2018)Lakshminarayanan, Bhatnagar, and
+  Szepesv{\'a}ri]{lakshminarayanan2018linearly}
+Chandrashekar Lakshminarayanan, Shalabh Bhatnagar, and Csaba Szepesv{\'a}ri.
+\newblock A linearly relaxed approximate linear program for markov decision
+  processes.
+\newblock \emph{IEEE Transactions on Automatic Control}, 63\penalty0
+  (4):\penalty0 1185--1191, 2018.
+
+\bibitem[Maei et~al.(2009)Maei, Szepesv\'{a}ri, Bhatnagar, Precup, Silver, and
+  Sutton]{Maei-Szepesvari-Bhatnagar-Precup-Silver-Sutton-2009}
+H.~R. Maei, Cs. Szepesv\'{a}ri, S.~Bhatnagar, D.~Precup, D.~Silver, and R.~S.
+  Sutton.
+\newblock Convergent temporal-difference learning with arbitrary smooth
+  function approximation.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2009.
+
+\bibitem[Maei et~al.(2010)Maei, Szepesv\'{a}ri, Bhatnagar, and
+  Sutton]{Maei-Szepesvari-Bhatnagar-Sutton-2010}
+H.~R. Maei, Cs. Szepesv\'{a}ri, S.~Bhatnagar, and R.~S. Sutton.
+\newblock Toward off-policy learning control with function approximation.
+\newblock In \emph{Proceedings of the 27th International Conference on Machine
+  Learning}, 2010.
+
+\bibitem[Manne(1960)]{Manne-1960}
+A.~S. Manne.
+\newblock Linear programming and sequential decisions.
+\newblock \emph{Management Science}, 6\penalty0 (3):\penalty0 259--267, 1960.
+
+\bibitem[Petrik and Zilberstein(2009)]{Petrik-Zilberstein-2009}
+M.~Petrik and S.~Zilberstein.
+\newblock Constraint relaxation in approximate linear programs.
+\newblock In \emph{Proc. 26th Internat. Conf. Machine Learning (ICML)}, 2009.
+
+\bibitem[Puterman(1994)]{Puterman:MDP}
+Martin~L. Puterman.
+\newblock \emph{Markov Decision Processes: Discrete Stochastic Dynamic
+  Programming}.
+\newblock John Wiley \& Sons, Inc., New York, NY, USA, 1st edition, 1994.
+
+\bibitem[Rybko and Stolyar(1992)]{Rybko-Stolyar-1992}
+A.~N. Rybko and A.~L. Stolyar.
+\newblock Ergodicity of stochastic processes describing the operation of open
+  queueing networks.
+\newblock \emph{Problemy Peredachi Informatsii}, 28\penalty0 (3):\penalty0
+  3--26, 1992.
+
+\bibitem[Schweitzer and Seidmann(1985)]{Schweitzer-Seidmann-1985}
+P.~Schweitzer and A.~Seidmann.
+\newblock Generalized polynomial approximations in {M}arkovian decision
+  processes.
+\newblock \emph{Journal of Mathematical Analysis and Applications},
+  110:\penalty0 568--582, 1985.
+
+\bibitem[Sutton et~al.(2009{\natexlab{a}})Sutton, Maei, Precup, Bhatnagar,
+  Silver, Szepesv\'{a}ri, and
+  Wiewiora]{Sutton-Maei-Precup-Bhatnagar-Silver-Szepesvari-Wiewiora-2009}
+R.~S. Sutton, H.~R. Maei, D.~Precup, S.~Bhatnagar, D.~Silver, Cs.
+  Szepesv\'{a}ri, and E.~Wiewiora.
+\newblock Fast gradient-descent methods for temporal-difference learning with
+  linear function approximation.
+\newblock In \emph{Proceedings of the 26th International Conference on Machine
+  Learning}, 2009{\natexlab{a}}.
+
+\bibitem[Sutton et~al.(2009{\natexlab{b}})Sutton, Szepesv\'{a}ri, and
+  Maei]{Sutton-Szepesvari-Maei-2009}
+R.~S. Sutton, Cs. Szepesv\'{a}ri, and H.~R. Maei.
+\newblock A convergent {O}(n) algorithm for off-policy temporal-difference
+  learning with linear function approximation.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  2009{\natexlab{b}}.
+
+\bibitem[Veatch(2013)]{Veatch-2013}
+M.~H. Veatch.
+\newblock Approximate linear programming for average cost mdps.
+\newblock \emph{Mathematics of Operations Research}, 38\penalty0 (3), 2013.
+
+\bibitem[Wang et~al.(2008)Wang, Lizotte, Bowling, and
+  Schuurmans]{Wang-Lizotte-Bowling-Schuurmans-2008}
+T.~Wang, D.~Lizotte, M.~Bowling, and D.~Schuurmans.
+\newblock Dual representations for dynamic programming.
+\newblock \emph{Journal of Machine Learning Research}, pages 1--29, 2008.
+
+\bibitem[Xiao and Zhang(2014)]{xiao2014proximal}
+Lin Xiao and Tong Zhang.
+\newblock A proximal stochastic gradient method with progressive variance
+  reduction.
+\newblock \emph{SIAM Journal on Optimization}, 24\penalty0 (4):\penalty0
+  2057--2075, 2014.
+
+\bibitem[Zinkevich(2003)]{Zinkevich-2003}
+M.~Zinkevich.
+\newblock Online convex programming and generalized infinitesimal gradient
+  ascent.
+\newblock In \emph{ICML}, 2003.
+
+\end{thebibliography}

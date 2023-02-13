@@ -1,0 +1,156 @@
+\begin{thebibliography}{10}
+
+\bibitem{paugam2012computing}
+H{\'e}lene Paugam-Moisy and Sander~M Bohte,
+\newblock ``Computing with spiking neuron networks.,''
+\newblock {\em Handbook of natural computing}, vol. 1, pp. 1--47, 2012.
+
+\bibitem{diamond2016comparing}
+Alan Diamond, Thomas Nowotny, and Michael Schmuker,
+\newblock ``Comparing neuromorphic solutions in action: implementing a
+  bio-inspired solution to a benchmark classification task on three
+  parallel-computing platforms,''
+\newblock {\em Frontiers in neuroscience}, vol. 9, pp. 491, 2016.
+
+\bibitem{gerstner2002spiking}
+Wulfram Gerstner and Werner~M Kistler,
+\newblock {\em Spiking neuron models: Single neurons, populations, plasticity},
+\newblock Cambridge university press, 2002.
+
+\bibitem{hinton2015distilling}
+Geoffrey Hinton, Oriol Vinyals, and Jeff Dean,
+\newblock ``Distilling the knowledge in a neural network,''
+\newblock {\em arXiv preprint arXiv:1503.02531}, 2015.
+
+\bibitem{mirzadeh2019improved}
+Seyed-Iman Mirzadeh, Mehrdad Farajtabar, Ang Li, and Hassan Ghasemzadeh,
+\newblock ``Improved knowledge distillation via teacher assistant: Bridging the
+  gap between student and teacher,''
+\newblock {\em arXiv preprint arXiv:1902.03393}, 2019.
+
+\bibitem{tavanaei2019deep}
+Amirhossein Tavanaei, Masoud Ghodrati, Saeed~Reza Kheradpisheh, Timothee
+  Masquelier, and Anthony Maida,
+\newblock ``Deep learning in spiking neural networks,''
+\newblock {\em Neural Networks}, vol. 111, pp. 47--63, 2019.
+
+\bibitem{neil2016learning}
+Daniel Neil, Michael Pfeiffer, and Shih-Chii Liu,
+\newblock ``Learning to be efficient: Algorithms for training low-latency,
+  low-compute deep spiking neural networks,''
+\newblock in {\em Proceedings of the 31st annual ACM symposium on applied
+  computing}, 2016, pp. 293--298.
+
+\bibitem{wu2019direct}
+Yujie Wu, Lei Deng, Guoqi Li, Jun Zhu, Yuan Xie, and Luping Shi,
+\newblock ``Direct training for spiking neural networks: Faster, larger,
+  better,''
+\newblock in {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, 2019, vol.~33, pp. 1311--1318.
+
+\bibitem{ankit2017resparc}
+Aayush Ankit, Abhronil Sengupta, Priyadarshini Panda, and Kaushik Roy,
+\newblock ``Resparc: A reconfigurable and energy-efficient architecture with
+  memristive crossbars for deep spiking neural networks,''
+\newblock in {\em Proceedings of the 54th Annual Design Automation Conference
+  2017}, 2017, pp. 1--6.
+
+\bibitem{lin2018mapping}
+Chit-Kwan Lin, Andreas Wild, Gautham~N Chinya, Tsung-Han Lin, Mike Davies, and
+  Hong Wang,
+\newblock ``Mapping spiking neural networks onto a manycore neuromorphic
+  architecture,''
+\newblock {\em ACM SIGPLAN Notices}, vol. 53, no. 4, pp. 78--89, 2018.
+
+\bibitem{cao2015spiking}
+Yongqiang Cao, Yang Chen, and Deepak Khosla,
+\newblock ``Spiking deep convolutional neural networks for energy-efficient
+  object recognition,''
+\newblock {\em International Journal of Computer Vision}, vol. 113, no. 1, pp.
+  54--66, 2015.
+
+\bibitem{antelis2020spiking}
+Javier~M Antelis, Luis~E Falc{\'o}n, et~al.,
+\newblock ``Spiking neural networks applied to the classification of motor
+  tasks in eeg signals,''
+\newblock {\em Neural Networks}, vol. 122, pp. 130--143, 2020.
+
+\bibitem{sengupta2019going}
+Abhronil Sengupta, Yuting Ye, Robert Wang, Chiao Liu, and Kaushik Roy,
+\newblock ``Going deeper in spiking neural networks: Vgg and residual
+  architectures,''
+\newblock {\em Frontiers in neuroscience}, vol. 13, 2019.
+
+\bibitem{kim2019spiking}
+Seijoon Kim, Seongsik Park, Byunggook Na, and Sungroh Yoon,
+\newblock ``Spiking-yolo: Spiking neural network for real-time object
+  detection,''
+\newblock {\em arXiv preprint arXiv:1903.06530}, 2019.
+
+\bibitem{lee2016training}
+Jun~Haeng Lee, Tobi Delbruck, and Michael Pfeiffer,
+\newblock ``Training deep spiking neural networks using backpropagation,''
+\newblock {\em Frontiers in neuroscience}, vol. 10, pp. 508, 2016.
+
+\bibitem{kempter1999hebbian}
+Richard Kempter, Wulfram Gerstner, and J~Leo Van~Hemmen,
+\newblock ``Hebbian learning and spiking neurons,''
+\newblock {\em Physical Review E}, vol. 59, no. 4, pp. 4498, 1999.
+
+\bibitem{yin2017algorithm}
+Shihui Yin, Shreyas~K Venkataramanaiah, Gregory~K Chen, Ram Krishnamurthy,
+  Yu~Cao, Chaitali Chakrabarti, and Jae-sun Seo,
+\newblock ``Algorithm and hardware design of discrete-time spiking neural
+  networks based on back propagation with binary activations,''
+\newblock in {\em 2017 IEEE Biomedical Circuits and Systems Conference
+  (BioCAS)}. IEEE, 2017, pp. 1--5.
+
+\bibitem{gupta2009hebbian}
+Ankur Gupta and Lyle~N Long,
+\newblock ``Hebbian learning with winner take all for spiking neural
+  networks,''
+\newblock in {\em 2009 International Joint Conference on Neural Networks}.
+  IEEE, 2009, pp. 1054--1060.
+
+\bibitem{bucilua2006model}
+Cristian Buciluǎ, Rich Caruana, and Alexandru Niculescu-Mizil,
+\newblock ``Model compression,''
+\newblock in {\em Proceedings of the 12th ACM SIGKDD international conference
+  on Knowledge discovery and data mining}, 2006, pp. 535--541.
+
+\bibitem{cheng2017survey}
+Yu~Cheng, Duo Wang, Pan Zhou, and Tao Zhang,
+\newblock ``A survey of model compression and acceleration for deep neural
+  networks,''
+\newblock {\em arXiv preprint arXiv:1710.09282}, 2017.
+
+\bibitem{chen2017learning}
+Guobin Chen, Wongun Choi, Xiang Yu, Tony Han, and Manmohan Chandraker,
+\newblock ``Learning efficient object detection models with knowledge
+  distillation,''
+\newblock in {\em Advances in Neural Information Processing Systems}, 2017, pp.
+  742--751.
+
+\bibitem{liu2019improving}
+Xiaodong Liu, Pengcheng He, Weizhu Chen, and Jianfeng Gao,
+\newblock ``Improving multi-task deep neural networks via knowledge
+  distillation for natural language understanding,''
+\newblock {\em arXiv preprint arXiv:1904.09482}, 2019.
+
+\bibitem{huang2018knowledge}
+Mingkun Huang, Yongbin You, Zhehuai Chen, Yanmin Qian, and Kai Yu,
+\newblock ``Knowledge distillation for sequence model.,''
+\newblock in {\em Interspeech}, 2018, pp. 3703--3707.
+
+\bibitem{kim2016sequence}
+Yoon Kim and Alexander~M Rush,
+\newblock ``Sequence-level knowledge distillation,''
+\newblock {\em arXiv preprint arXiv:1606.07947}, 2016.
+
+\bibitem{xiao2017fashion}
+Han Xiao, Kashif Rasul, and Roland Vollgraf,
+\newblock ``Fashion-mnist: a novel image dataset for benchmarking machine
+  learning algorithms,''
+\newblock {\em arXiv preprint arXiv:1708.07747}, 2017.
+
+\end{thebibliography}

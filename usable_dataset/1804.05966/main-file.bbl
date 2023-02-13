@@ -1,0 +1,106 @@
+\begin{thebibliography}{10}
+
+\bibitem{benzi2014note}
+{\sc M.~Benzi}, {\em A note on walk entropies in graphs}, Linear Algebra and
+  its Applications, 445 (2014), pp.~395--399.
+
+\bibitem{benzi2013total}
+{\sc M.~Benzi and C.~Klymko}, {\em Total communicability as a centrality
+  measure}, Journal of Complex Networks, 1 (2013), pp.~124--149.
+
+\bibitem{benzi2014matrix}
+{\sc M.~Benzi and C.~Klymko}, {\em A matrix analysis of different centrality
+  measures}, arXiv preprint arXiv:1312.6722,  (2014).
+
+\bibitem{benzi2015limiting}
+{\sc M.~Benzi and C.~Klymko}, {\em On the limiting behavior of
+  parameter-dependent network centrality measures}, SIAM Journal on Matrix
+  Analysis and Applications, 36 (2015), pp.~686--706.
+
+\bibitem{chiue1999connectivity}
+{\sc W.-S. Chiue and B.-S. Shieh}, {\em On connectivity of the cartesian
+  product of two graphs}, Applied Mathematics and Computation, 102 (1999),
+  pp.~129--137.
+
+\bibitem{chung2007heat}
+{\sc F.~Chung}, {\em The heat kernel as the pagerank of a graph}, Proceedings
+  of the National Academy of Sciences, 104 (2007), pp.~19735--19740.
+
+\bibitem{dehmer2008information}
+{\sc M.~Dehmer}, {\em Information processing in complex networks: Graph entropy
+  and information functionals}, Applied Mathematics and Computation, 201
+  (2008), pp.~82--94.
+
+\bibitem{estrada2012structure}
+{\sc E.~Estrada}, {\em The structure of complex networks: theory and
+  applications}, Oxford University Press, 2012.
+
+\bibitem{estrada2013discriminant}
+{\sc E.~Estrada}, {\em About the discriminant power of the subgraph centrality
+  and other centrality measures}, arXiv preprint arXiv:1305.6836,  (2013).
+
+\bibitem{estrada2014walk}
+{\sc E.~Estrada, J.~A. de~la Pe{\~n}a, and N.~Hatano}, {\em Walk entropies in
+  graphs}, Linear Algebra and its Applications, 443 (2014), pp.~235--244.
+
+\bibitem{estrada2010network}
+{\sc E.~Estrada and D.~J. Higham}, {\em Network properties revealed through
+  matrix functions}, SIAM review, 52 (2010), pp.~696--714.
+
+\bibitem{estrada2005subgraph}
+{\sc E.~Estrada and J.~A. Rodriguez-Velazquez}, {\em Subgraph centrality in
+  complex networks}, Physical Review E, 71 (2005), p.~056103.
+
+\bibitem{Farkas1902}
+{\sc J.~Farkas}, {\em Theorie der einfachen ungleichungen.}, Journal für die
+  reine und angewandte Mathematik, 124 (1902), pp.~1--27,
+  \url{http://eudml.org/doc/149129}.
+
+\bibitem{gleich2015pagerank}
+{\sc D.~F. Gleich}, {\em Pagerank beyond the web}, SIAM Review, 57 (2015),
+  pp.~321--363.
+
+\bibitem{godsil2013algebraic}
+{\sc C.~Godsil and G.~F. Royle}, {\em Algebraic graph theory}, vol.~207,
+  Springer Science \& Business Media, 2013.
+
+\bibitem{higham2008functions}
+{\sc N.~J. Higham}, {\em Functions of matrices: theory and computation}, SIAM,
+  2008.
+
+\bibitem{spiderdonuts_v1.0.0}
+{\sc E.~Horton, K.~Kloster, and B.~D. Sullivan}, {\em Spider {D}onuts: Version
+  1.0.0}, 2018, \url{http://dx.doi.org/10.5281/zenodo.1219253}.
+
+\bibitem{katz1953new}
+{\sc L.~Katz}, {\em A new status index derived from sociometric analysis},
+  Psychometrika, 18 (1953), pp.~39--43.
+
+\bibitem{Kloster2018115}
+{\sc K.~Kloster, D.~Král', and B.~D. Sullivan}, {\em Walk entropy and
+  walk-regularity}, Linear Algebra and its Applications, 546 (2018), pp.~115 --
+  121.
+
+\bibitem{newman2010networks}
+{\sc M.~Newman}, {\em Networks: an introduction}, Oxford university press,
+  2010.
+
+\bibitem{page1999pagerank}
+{\sc L.~Page, S.~Brin, R.~Motwani, and T.~Winograd}, {\em The pagerank citation
+  ranking: Bringing order to the web.}, tech. report, Stanford InfoLab, 1999.
+
+\bibitem{paton2017centrality}
+{\sc M.~Paton, K.~Akartunali, and D.~J. Higham}, {\em Centrality analysis for
+  modified lattices}, SIAM Journal on Matrix Analysis and Applications, 38
+  (2017), pp.~1055--1073.
+
+\bibitem{rodriguez2007functional}
+{\sc J.~A. Rodr{\'\i}guez, E.~Estrada, and A.~Guti{\'e}rrez}, {\em Functional
+  centrality in graphs}, Linear and Multilinear Algebra, 55 (2007),
+  pp.~293--302.
+
+\bibitem{weichsel1962kronecker}
+{\sc P.~M. Weichsel}, {\em The kronecker product of graphs}, Proceedings of the
+  {American Mathematical Society}, 13 (1962), pp.~47--52.
+
+\end{thebibliography}

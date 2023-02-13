@@ -1,0 +1,334 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.65in]{geometry}
+
+
+\usepackage{authblk}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{cleveref}
+\usepackage{pifont}
+\usepackage{multicol}
+\usepackage{siunitx}
+\usepackage{textcomp}
+\usepackage{bbm}
+\usepackage{algorithm2e}
+\usepackage{xcolor}
+\usepackage{subfig}
+\usepackage[]{algorithm2e}
+\usepackage{algorithmic}
+\usepackage{tcolorbox}
+\usepackage{tikz,pgfplots,tikz-3dplot}
+\usetikzlibrary{arrows,shapes,positioning,calc,intersections,through}\tdplotsetmaincoords{55}{110}   
+\pgfplotsset{compat=newest} 
+\pgfplotsset{plot coordinates/math parser=false} 
+% \usepackage{IEEEtrantools}
+% \usepackage[cal=boondoxo]{mathalfa}
+\allowdisplaybreaks
+\newtheorem{experiment}{Experiment}
+\newtheorem{proof}{Proof}
+% \newtheorem*{remark-non}{Remark}
+% \newenvironment{proof}{
+%   \renewcommand{\proofname}{Sketch}\proof}{\endproof}
+% \newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+  \renewcommand\customgenericname{#2}%
+  \renewcommand\theinnercustomgeneric{##1}%
+  \innercustomgeneric
+  }
+  {\endinnercustomgeneric}
+}
+\newcustomtheorem{customtheorem}{Theorem}
+\newcustomtheorem{customlemma}{Lemma}
+\newcustomtheorem{customproposition}{Proposition}
+\newcommand{\boldpi}{\boldsymbol{\pi}}
+\newcommand{\mc}{\mathcal}
+\newcommand{\N}{\mc{N}}
+\newcommand{\G}{\mc{G}}
+\newcommand{\T}{\top}
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\orange}{\textcolor{orange}}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=red,
+    filecolor=magenta,      
+    urlcolor=blue,
+linktocpage}
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2020
+
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{pgf,tikz}
+\usepackage{setspace}
+\usetikzlibrary{arrows}
+\usepackage{tikz-network}
+\usepackage{multirow,array}
+\usepackage{subfig}
+\usepackage[]{algorithm2e}
+\usepackage{algorithmic}
+
+
+
+
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+%\newtheorem*{proof}{Proof}
+%%\newtheorem{theorem}[Theorem]
+%%\newtheorem{observation}[Theorem]{Observation}
+%\newtheorem*{ndefinition}{Definition}[section]
+%\newtheorem*{nlemma}{Lemma}[section]
+%\newtheorem*{ncorollary}{Corollary}[section]
+%\theoremstyle{empty}
+\newtheorem{refexample}{Example}[section]
+\newtheorem{refproof}{Proof}[section]
+\newtheorem{refcorollary}{Corollary}[section]
+\usepackage{tcolorbox}
+\usepackage{tikz,pgfplots,tikz-3dplot}
+\usetikzlibrary{arrows,shapes,positioning,calc,intersections,through}\tdplotsetmaincoords{55}{110}   
+\pgfplotsset{compat=newest} 
+\pgfplotsset{plot coordinates/math parser=false} 
+% \usepackage{IEEEtrantools}
+% \usepackage[cal=boondoxo]{mathalfa}
+\allowdisplaybreaks
+% \newtheorem*{remark-non}{Remark}
+\newtheorem{assumption}{Assumption}
+
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{SPGs_arXiv.bib}
+
+
+
+
+\title{Proofs}
+\author{}
+\begin{document}
+\date{}
+\maketitle
+\begin{lemma}\label{lemma:bellman_contraction}
+The Bellman operator $T$ is a contraction, that is the following bound holds:
+\begin{align*}
+&\left\|T\psi-T\psi'\right\|\leq \gamma\left\|\psi-\psi'\right\|.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+Recall we define the Bellman operator $T_\psi$ of $\mathcal{G}$ acting on a function $\Lambda:\mathcal{S}\times\mathbb{N}\to\mathbb{R}$ by
+% 
+\begin{align}
+T_\psi \Lambda(s_{\tau_k}):=\max\left\{\mathcal{M}^{\pi^2}\Lambda(s_{\tau_k}),\left[ \psi(s_{\tau_k},a)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\sum_{s'\in\mathcal{S}}P(s';a,s_{\tau_k})\Lambda(s')\right]\right\}\label{bellman_proof_start}
+\end{align}
+
+In what follows and for the remainder of the script, we employ the following shorthands:
+\begin{align*}
+&\mathcal{P}^a_{ss'}=:\sum_{s'\in\mathcal{S}}P(s';a,s), \quad\mathcal{P}^{\pi^1}_{ss'}=:\sum_{a\in\mathcal{A}^1}\pi^1(a|s)\mathcal{P}^a_{ss'}, \quad \mathcal{R}^{\boldsymbol{\pi}}(s_{t}):=\sum_{\boldsymbol{a}_t\in\boldsymbol{\mathcal{A}}}\boldsymbol{\pi}(\boldsymbol{a}_t|s)\boldsymbol{R}(s_t,\boldsymbol{a}_t)
+\end{align*}
+
+To prove that $T$ is a contraction, we consider the three cases produced by \eqref{bellman_proof_start}, that is to say we prove the following statements:
+
+i) $\qquad\qquad
+\left| \boldsymbol{R}(s_t,a^1_t,a^2_t)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^{\pi^1}_{s's_t}\psi(s',\cdot)-\left( \boldsymbol{R}(s_t,a^1_t,a^2_t)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^{\pi^1}_{s's_t}\psi'(s',\cdot)\right)\right|\leq \gamma\left\|\psi-\psi'\right\|$
+
+ii) $\qquad\qquad
+\left\|\mathcal{M}^{\pi^2}\psi-\mathcal{M}^{\pi^2}\psi'\right\|\leq    \gamma\left\|\psi-\psi'\right\|,\qquad \qquad$
+  (and hence $\mathcal{M}$ is a contraction).
+
+iii) $\qquad\qquad
+    \left\|\mathcal{M}^{\pi^2}\psi-\left[ \boldsymbol{R}(\cdot,a)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^a\psi'\right]\right\|\leq \gamma\left\|\psi-\psi'\right\|.
+$
+
+We begin by proving i).
+
+Indeed, 
+\begin{align*}
+&\left| \boldsymbol{R}(s_t,a^1_t,a^2_t)+\gamma\mathcal{P}^{\pi^1}_{s's_t}\psi(s',\cdot)-\left[ \boldsymbol{R}(s_t,a^1_t,a^2_t)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^{\pi^1}_{s's_t}\psi'(s',\cdot)\right]\right|
+\\&\leq \underset{a\in\mathcal{A}}{\max}\left|\gamma\mathcal{P}^{\pi^1}_{s's_t}\psi(s',\cdot)-\gamma\mathcal{P}^{\pi^1}_{s's_t}\psi'(s',\cdot)\right|
+\\&\leq \gamma\left\|P\psi-P\psi'\right\|
+\\&\leq \gamma\left\|\psi-\psi'\right\|,
+\end{align*}
+again using the fact that $P$ is non-expansive and Lemma \ref{max_lemma}.
+
+We now prove ii).
+
+
+For any $\tau\in\mathcal{F}$, define by $\tau'=\inf\{t>\tau|s_t\in A,\tau\in\mathcal{F}_t\}$. Now using the definition of $\mathcal{M}$ we have that
+\begin{align*}
+&\left|(\mathcal{M}^{\pi^2}\psi-\mathcal{M}^{\pi^2}\psi')(s_{\tau})\right|
+\\&\leq \underset{a^1_\tau,a^2_\tau\in \mathcal{A}^1\times \mathcal{A}^2}{\max}    \Bigg|\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+c(\tau)+\gamma\mathcal{P}^\pi_{s's_\tau}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+c(\tau)+\gamma\mathcal{P}^\pi_{s's_\tau}\psi'(s_{\tau})\right)\Bigg| 
+\\&= \gamma\left|\mathcal{P}^\pi_{s's_\tau}\psi(s_{\tau})-\mathcal{P}^\pi_{s's_\tau}\psi'(s_{\tau})\right| 
+\\&\leq \gamma\left\|P\psi-P\psi'\right\|
+\\&\leq \gamma\left\|\psi-\psi'\right\|,
+\end{align*}
+using the fact that $P$ is non-expansive. The result can then be deduced easily by applying max on both sides.
+
+We now prove iii). We split the proof of the statement into two cases:
+
+\textbf{Case 1:} 
+\begin{align}\mathcal{M}^{\pi^2}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)<0.
+\end{align}
+
+We now observe the following:
+\begin{align*}
+&\mathcal{M}^{\pi^2}\psi(s_{\tau})-\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')
+\\&\leq\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\mathcal{P}^\pi_{s's_\tau}\psi(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}
+\\&\qquad-\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')
+\\&\leq \Bigg|\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\mathcal{P}^\pi_{s's_\tau}\psi(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}
+\\&\qquad-\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}
+\\&+\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}
+\\&\qquad-\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\Bigg|
+\\&\leq \Bigg|\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}
+\\&\qquad-\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}\Bigg|
+\\&\qquad+\Bigg|\max\left\{\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s',I({\tau})),\mathcal{M}^{\pi^2}\psi(s_{\tau})\right\}\\&\qquad\qquad-\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\Bigg|
+\\&\leq \gamma\underset{a\in\mathcal{A}^1}{\max}\;\left|\mathcal{P}^\pi_{s's_\tau}\psi(s')-\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right|
+\\&\qquad+\left|\max\left\{0,\mathcal{M}^{\pi^2}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)\right\}\right|
+\\&\leq \gamma\left\|P\psi-P\psi'\right\|
+\\&\leq \gamma\|\psi-\psi'\|,
+\end{align*}
+where we have used the fact that for any scalars $a,b,c$ we have that $
+    \left|\max\{a,b\}-\max\{b,c\}\right|\leq \left|a-c\right|$ and the non-expansiveness of $P$.
+
+
+
+\textbf{Case 2: }
+\begin{align*}\mathcal{M}^{\pi^2}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)\geq 0.
+\end{align*}
+
+For this case, first recall that for any $\tau\in\mathcal{F}$, $-c(\tau)>\lambda$ for some $\lambda >0$.
+% 
+\begin{align*}
+&\mathcal{M}^{\pi^2}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)
+\\&\leq \mathcal{M}^{\pi^2}\psi(s_{\tau})-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)-c(\tau)
+\\&\leq \boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+c(\tau)+\gamma\mathcal{P}^\pi_{s's_\tau}\psi(s')
+\\&\qquad\qquad\qquad\qquad\quad-\left(\boldsymbol{R}(s_\tau,a^1_\tau,a^2_\tau)+c(\tau)+\gamma\underset{a\in\mathcal{A}^1}{\max}\;\mathcal{P}^\pi_{s's_\tau}\psi'(s')\right)
+\\&\leq \gamma\underset{a\in\mathcal{A}^1}{\max}\;\left|\mathcal{P}^\pi_{s's_\tau}\left(\psi(s')-\psi'(s')\right)\right|
+\\&\leq \gamma\left|\psi(s')-\psi'(s')\right|
+\\&\leq \gamma\left\|\psi-\psi'\right\|,
+\end{align*}
+again using the fact that $P$ is non-expansive. Hence we have succeeded in showing that for any $\Lambda\in L_2$ we have that
+\begin{align}
+    \left\|\mathcal{M}^{\pi^2}\Lambda-\underset{a\in\mathcal{A}}{\max}\left[ \psi(\cdot,a)+\gamma\mathcal{P}^a\Lambda'\right]\right\|\leq \gamma\left\|\Lambda-\Lambda'\right\|.\label{off_M_bound_gen}
+\end{align}
+Gathering the results of the three cases gives the desired result. 
+\end{proof}
+
+\begin{lemma}[Our Reward Shaping Paper]  
+For any single stage (i.e. $T=1$) additive game, that is   $R_i(s,(a^i,a^{-i}))=\sum_{j\in\mathcal{N}}u^i_j(s,a^i)$, then there exists a function $\phi:\mathcal{S}\times \left(\times_{i\in\mathcal{N}}\mathcal{A}_i\right)\to \mathbb{R}$ such that
+\begin{align*}
+    R_i(s,(a^i,a^{-i}))-R_i(s,(a',a^{-i}))=\Theta(s,(a^i,a^{-i}))-\Theta(s,(a',a^{-i})).
+\end{align*}
+\end{lemma}
+\begin{proof}
+The proof proceeds by construction of $\Theta$ and verification.
+
+Indeed, define by $\Theta(s,\boldsymbol{a})=\sum_{i\in\mathcal{N}}\sum_{j\in\mathcal{N}}u^j_i(s,a^i)\delta^i_j$ then we find that
+\begin{align*}
+&\Theta(s,\boldsymbol{a})- \Theta(s,(a',a^{-i}))
+\\&= \sum_{i\in\mathcal{N}}\sum_{j\in\mathcal{N}}u^j_i(s,a^i)\delta^i_j-\left(u^i_i(s,a')+\sum_{i\in\mathcal{N}}\sum_{j\in\mathcal{N}/\{i\}}u^j_i(s,a^i)\delta^i_j\right)
+\\&= \sum_{i\in\mathcal{N}}\sum_{j\in\mathcal{N}/\{i\}}u^j_i(s,a^i)\delta^i_j+u^i_i(s,a^i)-\left(u^i_i(s,a')+\sum_{i\in\mathcal{N}}\sum_{j\in\mathcal{N}/\{i\}}u^j_i(s,a^i)\delta^i_j\right)
+\\&=u^i_i(s,a^i)-u^i_i(s,a')
+\\&=\sum_{j\in\mathcal{N}}u^i_j(s,a^i)-\left(\sum_{j\in\mathcal{N}/\{i\}}u^i_j(s,a^i)+u^i_i(s,a')\right)
+\\&=R_i(s,a^i,a^{-i})-R_i(s,a',a^{-i}) 
+\end{align*}
+\end{proof}
+
+\begin{proposition}[Our SPG paper]\label{dpg_proposition}
+\begin{align}
+ v^{\boldsymbol{\pi}}_i(s)-v^{\boldsymbol{\pi'}}_i(s)
+=B^{\boldsymbol{\pi}}(s)-B^{\boldsymbol{\pi'}}(s).\label{potential_relation_proof}
+\end{align}    
+\end{proposition}
+
+\begin{proposition}[Our SPG paper]\label{reduction_prop}
+Denote by $NE\{\mathcal{G}\}$ the set of pure Markov strategies for the game $\mathcal{G}$, then for the function $B:\mathcal{S}\times \boldsymbol{\Pi}\to\mathbb{R}$ we have that $
+\boldsymbol{\hat{\pi}}\in \underset{{\boldsymbol{{\pi}}}\in\boldsymbol{\Pi}}{\arg\sup}\;B^{\boldsymbol{{\pi}}}\;\implies \boldsymbol{\hat{\pi}}\in NE\{\mathcal{G}\}
+$ for any $s\in \mathcal{S}$.
+\end{proposition}
+
+\clearpage
+We begin the analysis with some preliminary lemmata and definitions which are useful for proving the main results.
+
+\begin{definition}{A.1}
+An operator $T: \mathcal{V}\to \mathcal{V}$ is said to be a \textbf{contraction} w.r.t a norm $\|\cdot\|$ if there exists a constant $c\in[0,1[$ such that for any $V_1,V_2\in  \mathcal{V}$ we have that:
+\begin{align}
+    \|TV_1-TV_2\|\leq c\|V_1-V_2\|.
+\end{align}
+\end{definition}
+
+\begin{definition}{A.2}
+An operator $T: \mathcal{V}\to  \mathcal{V}$ is \textbf{non-expansive} if $\forall V_1,V_2\in  \mathcal{V}$ we have:
+\begin{align}
+    \|TV_1-TV_2\|\leq \|V_1-V_2\|.
+\end{align}
+\end{definition}
+% \begin{definition}{A.3}
+% The \textbf{residual} of a vector $V\in \mathcal{V}$ w.r.t the operator $T: \mathcal{V}\to  \mathcal{V}$ is:
+% \begin{align}
+%     \epsilon_T(V):= \|TV-V\|.
+% \end{align}
+% \end{definition}
+
+
+
+
+\begin{lemma} \label{max_lemma}
+For any
+$f: \mathcal{V}\to\mathbb{R},g: \mathcal{V}\to\mathbb{R}$, we have that:
+\begin{align}
+\left\|\underset{a\in \mathcal{V}}{\max}\:f(a)-\underset{a\in \mathcal{V}}{\max}\: g(a)\right\| \leq \underset{a\in \mathcal{V}}{\max}\: \left\|f(a)-g(a)\right\|.    \label{lemma_1_basic_max_ineq}
+\end{align}
+\end{lemma}
+\begin{proof}
+We restate the proof given in \cite{mguni2019cutting}:
+\begin{align}
+f(a)&\leq \left\|f(a)-g(a)\right\|+g(a)\label{max_inequality_proof_start}
+\\\implies
+\underset{a\in \mathcal{V}}{\max}f(a)&\leq \underset{a\in \mathcal{V}}{\max}\{\left\|f(a)-g(a)\right\|+g(a)\}
+\leq \underset{a\in \mathcal{V}}{\max}\left\|f(a)-g(a)\right\|+\underset{a\in \mathcal{V}}{\max}\;g(a). \label{max_inequality}
+\end{align}
+Deducting $\underset{a\in \mathcal{V}}{\max}\;g(a)$ from both sides of (\ref{max_inequality}) yields:
+\begin{align}
+    \underset{a\in \mathcal{V}}{\max}f(a)-\underset{a\in \mathcal{V}}{\max}g(a)\leq \underset{a\in \mathcal{V}}{\max}\left\|f(a)-g(a)\right\|.\label{max_inequality_result_last}
+\end{align}
+After reversing the roles of $f$ and $g$ and redoing steps (\ref{max_inequality_proof_start}) - (\ref{max_inequality}), we deduce the desired result since the RHS of (\ref{max_inequality_result_last}) is unchanged.
+\end{proof}
+
+\begin{lemma}{A.4}\label{non_expansive_P}
+The probability transition kernel $P$ is non-expansive, that is:
+\begin{align}
+    \|PV_1-PV_2\|\leq \|V_1-V_2\|.
+\end{align}
+\end{lemma} 
+\begin{proof}
+The result is well-known e.g. \cite{tsitsiklis1999optimal}. We give a proof using the Tonelli-Fubini theorem and the iterated law of expectations, we have that:
+\begin{align*}
+&\|PJ\|^2=\mathbb{E}\left[(PJ)^2[s_0]\right]=\mathbb{E}\left(\left[\mathbb{E}\left[J[s_1]|s_0\right]\right)^2\right]
+\leq \mathbb{E}\left[\mathbb{E}\left[J^2[s_1]|s_0\right]\right] 
+= \mathbb{E}\left[J^2[s_1]\right]=\|J\|^2,
+\end{align*}
+where we have used Jensen's inequality to generate the inequality. This completes the proof.
+\end{proof}
+\end{document}

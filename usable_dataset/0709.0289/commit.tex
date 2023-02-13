@@ -1,0 +1,576 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Quantum Bit Commitment} \label{chap:qbc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{bit commitment|(}
+This chapter is about quantum Bit Commitment (\BC) schemes. In \BC, a
+committer $\C$ commits himself to a choice of a bit $b \in \set{0,1}$
+by exchanging information with a verifier $\V$. We want that $\V$ does
+not learn $b$ (we say the commitment is \emph{hiding}), yet $\C$ can later
+choose to reveal $b$ in a convincing way, i.e., only the value fixed at
+commitment time will be accepted by $\V$ (we say the commitment is
+\emph{binding}).
+
+In the next section, we present a \BC scheme from a committer $\C$ with
+bounded quantum memory to an unbounded receiver $\V$. The scheme is
+peculiar since in order to commit to a bit, the committer does not
+send anything. During the committing stage, information only goes from
+$\V$ to $\C$.  Therefore, there is no way for the verifier to get
+information about the committed bit, i.e.~the scheme is perfectly
+hiding.
+
+In Section~\ref{sec:defbinding}, we define two notions of the binding
+property and show our scheme secure against quantum-memory-bounded
+committer in both of these senses. Similar techniques as in the two previous
+chapters for the analysis of the oblivious-transfer protocols are
+used.
+
+The results in this chapter appeared in \cite{DFSS05, DFRSS07}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Protocol} \label{sec:commprotocol}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The protocol is given in Figure~\ref{fig:comm}. Intuitively, a
+commitment to a bit $b$ is made by measuring random BB84-states in
+basis $\{+,\times\}_{[b]}$.
+  
+\begin{myfigure}{h}
+\begin{myprotocol}{\comm$(b)$}
+\item $\V$ picks $x \in_R \nbit$ and $\theta \in_R \{+,\times \}^n$ and
+  sends $x_i$ in the corresponding bases $\ket{x_1}_{\theta_1},
+  \ket{x_2}_{\theta_2}, \ldots, \ket{x_n}_{\theta_n}$ to~$\C$.
+ \item $\C$ commits to the bit $b$ by measuring all qubits in basis
+   $\{+,\times \}_{[b]}$. Let $x' \in \nbit$ be the result.
+ \item\label{step:open} To open the commitment, $\C$ sends $b$ and $x'$ to $\V$.
+ \item $\V$ verifies that $x_i= x_i'$ for those $i$ where $\theta_i =
+   \{+,\times \}_{[b]}$. $\V$ accepts if and only if this is the case.
+\end{myprotocol}
+\caption{Protocol for quantum bit commitment}\label{fig:comm}
+\end{myfigure}
+
+As for the oblivious-transfer protocols in the two previous chapters, we present an
+equivalent EPR-version of the protocol that is easier to analyze (see
+Figure~\ref{fig:eprcomm}). \index{purification}
+\begin{myfigure}{h}
+\begin{myprotocol}{\eprcomm$(b)$}
+\item $\V$ prepares $n$ EPR pairs each in state
+  $\ket{\Omega}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$. $\V$ sends one half of each pair to $\C$ and keeps the other halves.
+\item $\C$ commits to the bit $b$ by measuring all received qubits in basis
+  $\{+,\times \}_{[b]}$. Let $x' \in \nbit$ be the result.
+\item To open the commitment, $\C$ sends $b$ and $x'$ to $\V$.\label{step:epropen}
+\item $\V$ measures all his qubits in basis $\{+,\times \}_{[b]}$ and
+  obtains $x \in \nbit$.  He chooses a random subset $I \subseteq \{1,
+  \ldots ,n\}$. $\V$ verifies that
+  $x_i= x_i'$ for all $i \in I$ and accepts if and only if this is the
+  case.\label{step:last}
+\end{myprotocol}
+\caption{Protocol for EPR-based quantum bit commitment}\label{fig:eprcomm}
+\end{myfigure}
+
+\begin{lemma}\label{lem:commeprcomm}
+  \comm\ is secure against dishonest committers $\dC$ if and only if \eprcomm\ is.
+\end{lemma}
+\begin{proof}
+The proof uses similar reasoning as the one for Lemma~\ref{lem:seqequiv}. 
+First, it clearly makes no difference, if we change Step~\ref{step:last} to the
+following:
+\begin{itemize}
+\item[\ref{step:last}'.] $\V$ chooses the subset $I$, measures all
+  qubits with index in $I$ in basis $\{+,\times \}_{[b]}$ and all
+  qubits not in $I$ in basis $\{+,\times \}_{[1-b]}$. $\V$ verifies
+  that $x_i= x_i'$ for all $i\in I$ and accepts if and only if this is
+  the case.
+\end{itemize}
+Finally, we can observe that the view of $\dC$ does not change if $\V$
+would have done his choice of $I$ and his measurement already in
+Step~1. Doing the measurements at this point means that the qubits to
+be sent to $\dC$ collapse to a state that is distributed identically to
+the state prepared in the original scheme. The EPR-version is
+therefore equivalent to the original commitment scheme from $\dC$'s
+point of view.
+\end{proof}
+
+It is clear that \eprcomm\ is \index{bit commitment!hiding}hiding, i.e., that the commit phase
+reveals no information on the committed bit, since no information is
+transmitted to $\V$ at all. Hence we have
+\begin{lemma}\label{lem:sec:hiding}
+\eprcomm\ is perfectly hiding.
+\end{lemma}
+%% \begin{proof}                   
+%% %  which $\C$ committed to is leaked to any verifier $\dV$, because $\C$ does
+%% %  not send anything, i.e.~\eprcomm\ is non-interactive! 
+%% \end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modeling Dishonest Committers}\label{sec:dishonestcomm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{dishonest committer|(} A dishonest committer $\dC$ with bounded
+memory of at most $\gamma n$ qubits in \eprcomm\ can be modeled very
+similarly to the dishonest oblivious-transfer receivers $\dB$ from
+Section~\ref{sec:modeldishonestreceiversrabin} and
+\ref{sec:modeldishonestreceivers}: $\dC$ consists first of a circuit
+acting on all $n$ qubits received, then of a measurement of all but at
+most $\gamma n$ qubits, and finally of a circuit that takes the
+following input: a bit $b$ that $\dC$ will attempt to open, the
+$\gamma n$ qubits in memory, and some ancilla in a fixed state. The
+output is a string $x' \in \nbit$ to be sent to $\V$ at the opening
+stage.
+\begin{definition}
+  We define $\mathfrak{C}_{\gamma}$ to be the class of all committers
+  $\{\dC_n\}_{n>0}$ in \comm\ or \eprcomm\ that, at the start of the opening phase
+  (i.e. at Step \ref{step:epropen}), have a quantum memory of size at most
+  $\gamma n$ qubits.
+\end{definition}
+\index{dishonest committer|)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Defining the Binding Property} \label{sec:defbinding}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{bit commitment!binding|(}
+\subsection{The ``Standard'' Binding Condition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In the context of unconditionally secure \emph{quantum} bit
+commitment, it is widely accepted that ``the right way'' of defining
+the \emph{binding property} is to require that the probability of
+opening a commitment successfully to 0 plus the probability of opening
+it successfully to 1 is essentially upper bounded by one, put forward by
+Dumais, Mayers, and Salvail \cite{DMS00}. We call this notion
+\emph{weakly binding}, as opposed to the new notion of \emph{strongly
+  binding} defined in the next section below.
+\begin{definition} \label{def:weakbinding}
+  A (quantum) bit-commitment scheme is \emph{weakly binding}
+  against $\mathfrak{C}$ if for all $\{\dC_n\}_{n>0}\in \mathfrak{C}$,
+  the probability $p_b(n)$ that $\dC_n$ opens $b\in\{0,1\}$ with
+  success satisfies
+\[ p_0(n)+p_1(n) \leq 1+\negl{n}.
+\] 
+\end{definition} \index{bit commitment!weak binding}
+In the next Section~\ref{sec:weakbinding}, we show that \eprcomm\ is
+weakly binding against $\mathfrak{C}_{\gamma}$ for any
+$\gamma<\frac{1}{2}$.
+
+Note that the binding condition given here in
+Definition~\ref{def:weakbinding} is weaker than the classical one,
+where one would require that a bit $b$ exists such that $p_b(n)$ is
+negligible.  For a general quantum adversary though who can always
+commit to 0 and 1 in superposition, this is a too strong requirement;
+thus, it is typically argued that Definition~\ref{def:weakbinding} is the best
+one can hope for. 
+
+However, we argue now that this weaker notion is not really
+satisfactory, and we show that there exists a stronger notion, which
+still allows the committer to commit to a superposition and thus is
+not necessarily impossible to achieve in a quantum setting, but which
+is closer to the classical standard way of defining the
+binding property. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A Stronger Binding Condition}\label{sec:strongerbinding}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A shortcoming of Definition~\ref{def:weakbinding} is that committing
+bit by bit is not guaranteed to yield a secure string commitment---the
+argument that one is tempted to use requires independence of the
+$p_{b}$'s between the different executions, which in general does not
+hold.
+%% Because of these shortcoming, we propose the
+%% following \emph{stronger} definition.
+%% one expects that if one commits to a string
+%% bit by bit using a secure bit commitment scheme, then this gives a
+%% secure string commitment scheme. However, this weaker notion does not
+%% seem to allow a proof for this reduction - the argument that
+%%   one is tempted to use requires independency of the $p_{b}$'s between
+%%   the different executions, which in general does not hold. 
+
+We now argue that this notion is {\em unnecessarily} weak, at least in
+some cases, and in particular in the case of commitments in the
+bounded-quantum-storage model where the dishonest committer is forced
+to do some partial measurement and where we assume honest parties to
+produce only classical output (by measuring their entire quantum
+state).  Technically, this means that for any dishonest committer
+$\tilde{\sf C}$, the joint state of the honest verifier and of
+$\tilde{\sf C}$ after the commit phase is a ccq-state \smash{$\rho_{V
+    Z \tilde{\sf C}} = \sum_{v,z} P_{VZ}(v,z) \proj{v} \otimes
+  \proj{z} \otimes \rho_{\tilde{\sf C}}^{v,z}$}, where the first
+register contains the verifier's (classical) output and the remaining
+two registers contain $\tilde{\sf C}$'s (partially classical) output.
+We propose the following definition.
+
+\begin{definition}\label{def:strongbinding}
+  A commitment scheme in the bounded-quantum-storage model is called
+  {\em $\eps$-binding}, if for every (dishonest) committer $\tilde{\sf
+    C}$, inducing a joint state $\rho_{V Z \tilde{\sf C}}$ after the
+  commit phase, there exists a classical binary random variable $D$,
+  given by its conditional distribution $P_{D|VZ}$, such that for
+  $b=0$ and $b=1$ the state \smash{$\rho_{V Z \tilde{\sf C}}^{b} =
+    \sum_v P_{VZ|D}(v,z|b) \proj{v} \otimes \proj{z} \otimes
+    \rho_{\tilde{\sf C}}^{v,z}$} satisfies the following condition.
+  When executing the opening phase on the state $\rho_{V \tilde{\sf
+      C}}^{b}$, for any strategy of \smash{$\tilde{\sf C}$}, the
+  honest verifier accepts an opening to $1-b$ with probability at most
+  $\eps$.
+\end{definition}
+% Note that this definition still allows a committer to commit to a
+% superposition and otherwise honestly follow the protocol. $D$ is
+% then simply defined to be the outcome when the register that carries
+% the superposition is measured.  On the other hand, t
+It is easy to see that the binding property as defined here implies
+the above discussed weak version, namely $p_b \leq P_{D}(b) +
+P_{D}(1-b)\eps$ and thus $p_0 + p_1 \leq 1 + \eps$.  Furthermore, it
+is straightforward to see that this stronger notion allows for a
+formal proof of the obvious reduction of a string to a bit commitment
+by committing bit-wise: the $i$-th execution of the bit commitment
+scheme guarantees a random variable $D_i$, defined by $P_{D_i|V_i
+  Z}$, such that the committer cannot open the $i$-th bit commitment
+to $1-D_i$, and thus there exists a random variable $S$, namely $S
+= (D_1,\ldots,D_m)$ defined by $P_{D_1\cdots D_m|V_1\cdots V_m Z}
+= \prod_i P_{D_i|V_i Z}$, such that for any opening strategy, the
+committer cannot open the list of commitments to any other string than
+$S$.
+
+% We show in the following that the quantum bit-commitment scheme \comm\
+% from~\cite{DFSS05} fulfills the stronger notion of binding from
+% Definition~\ref{def:binding} above. For convenience, the protocol
+% \comm\ is reproduced in Fig.~\ref{fig:comm} below.  Let
+% $\mathfrak{C}_{q}$ denote the set of all possible quantum dishonest
+% committers \smash{$\dC$} in \comm\ which have quantum memory of size
+% at most $q$ at the start of the opening phase (Step~\ref{it:bound}).
+% Then the following holds.
+
+% \begin{theorem}
+%   The quantum bit-commitment scheme \comm\ is $\eps$-binding
+%   according to Definition~\ref{def:binding} against $\mathfrak{C}_{q}$
+%   for a negligible (in $n$) $\eps$ if $n/4 - q \in \Omega(n)$.
+% \end{theorem}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% First, Definition~\ref{def:weakbinding} does not prohibit
+% commitment schemes with the following property. There exists a
+% strategy for the dishonest committer to produce a commitment in such a
+% way that during the course of the opening phase, the committer learns
+% some information such that, with probability $\frac12$, it allows him
+% to open the commitment to $0$ as well as to $1$ at free will, and,
+% with probability $\frac12$, it tells him that he cannot open the
+% commitment at all. Even though this does not break the commitment
+% scheme completely, it does not capture the expected behavior of a
+% commitment scheme.
+
+% Another shortcoming of this notion is that committing bit by bit does
+% not yield a secure \index{string commitment}string commitment
+% -- the argument that one is
+% tempted to use requires independence of the $p_{b}$'s between the
+% different executions, which in general does not hold.
+
+% %% one expects that if one commits to a string
+% %% bit by bit using a secure bit commitment scheme, then this gives a
+% %% secure string commitment scheme. However, this weaker notion does not
+% %% seem to allow a proof for this reduction - the argument that
+% %%   one is tempted to use requires independency of the $p_{b}$'s between
+% %%   the different executions, which in general does not hold. 
+
+% Because of these shortcomings, we propose the following
+% \emph{stronger} definition.
+% \begin{definition}\label{def:strongbinding}
+%   An unconditionally secure commitment scheme is called \emph{strongly
+%     binding} against $\mathfrak{C}$ if for all $\{\dC_n\}_{n>0}\in
+%   \mathfrak{C}$, there exists a classical binary random variable $D$
+%   whose distribution \emph{cannot} by influenced by the (dishonest)
+%   committer after the commit phase and with the property that the
+%   committer's probability to successfully open the commitment to $1-D$
+%   is negligible.
+% \end{definition} \index{bit commitment!strong binding}
+
+% Note that this definition still allows a committer to commit to a
+% superposition and otherwise honestly follow the protocol. $D$ is
+% then simply defined to be the outcome when the register, that carries
+% the superposition, is measured.  On the other hand, the definition
+% captures exactly what one expects from a commitment
+% scheme, except that the bit, to which the committer can open the
+% commitment, is not fixed right after the commit phase.
+% However, once committed, the dishonest committer \emph{cannot influence} its
+% distribution anymore, and thus this is not of any help to him,
+% because he can always pretend not to know that bit.
+
+% It is also clear that with this stronger notion of the binding
+% property, the obvious reduction from a string- to a bit-commitment
+% scheme by committing bit-wise can be proven secure: the $i$th
+% execution of the bit commitment scheme guarantees a random variable
+% $D_i$ such that the committer cannot open the $i$th bit commitment
+% to $1-D_i$, and thus there exists a random variable $S$, namely $S
+% = (D_1,D_2,\ldots)$ such that the committer cannot open the list of
+% commitments to any other string than $S$.
+
+In Section~\ref{sec:strongbinding}, we show that the bit commitment
+\comm\ from Figure~\ref{fig:comm} as a matter of fact satisfies this
+stronger and more useful notion of security. This turns out to be a
+rather straightforward consequence of the security of the \OT\ scheme
+from Chapter~\ref{chap:12OT}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weak Binding of the Commitment Scheme} \label{sec:weakbinding}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{bit commitment!weak binding|(} In this section, we use the
+techniques from the analysis of the \RabinOT protocol from
+Chapter~\ref{chap:RabinOT} to prove our commitment scheme \comm\ (or
+rather its purified version \eprcomm) weakly binding against
+quantum-memory-bounded adversarial committers.
+
+Note that the first two steps of \eprqot\ (from
+Figure~\ref{fig:eprot}) and \eprcomm\ (i.e.~before the memory bound applies) are exactly the
+same!  This allows us to reuse Corollary~\ref{cor:hadamard} and the
+analysis of Section~\ref{sec:otsecurity} to prove the weakly binding
+property of \eprcomm.
+\begin{theorem}\label{thm:weakbinding}
+For any $\gamma<\frac{1}{2}$,
+\comm\ is perfectly hiding and weakly binding against $\mathfrak{C}_{\gamma}$.  
+\end{theorem}
+The proof is given below. It boils down to showing that essentially
+$p_0(n) \leq 1 - \qp$ and $p_1(n) \leq 1 - \qt$. The weak binding property
+then follows immediately from Corollary~\ref{cor:hadamard}. The
+intuition behind $p_0(n) \leq 1 - \qp = 1 - \Qp(S^+)$ is that a committer has only a
+fair chance in opening to $0$ if $x$ measured in the $+$-basis has large
+probability, i.e., $x \not\in S^+$. The following proof makes this
+intuition precise by choosing the $\varepsilon$ and $\delta$'s
+correctly.
+\begin{proof}
+  It remains to show that \eprcomm\ is binding against
+  $\mathfrak{C}_{\gamma}$. Let $\eps, \delta > 0$ be such that $\gamma
+  + 2h(\delta) + 2\eps < 1/2$, where $h$ is the binary entropy
+  function. Recall that the number $\ball{\delta n}$ of $n$-bit strings of Hamming-distance at
+  most $\delta n$ from a fixed string is at most $2^{h(\delta) n}$. Let
+  $R$ be the basis, determined by the bit that $\dC$ claims in
+  Step~\ref{step:open}, and in which $\V$ measures the quantum state
+  in Step~\ref{step:last}, and let $X$ be the outcome.
+  Corollary~\ref{cor:hadamard} implies the existence of an event $\cal
+  E$ such that $\P[\ev|R\!=\!+] + \P[\ev|R\!=\!\times] \geq 1 -
+  \negl{n}$ and $\H_{\infty}(X|R\!=\!r,\ev) \geq (\gamma+2h(\delta) +
+  2\eps) n$. Applying Corollary~\ref{cor:guess} (with constant $U$ and
+  $\eps=0$), it follows that any guess $\hat{X}$ for $X$ satisfies
+\begin{align*}
+\P\big[ \hat{X} \in \ball{\delta n}(X) \,|\, R\!=\!r,\ev \big]
+ &\leq 2^{-\frac{1}{2} (\H_{\infty}(X|X \in S^+)-\gamma n-1) + \log(\ball{\delta
+ n}) } \leq 2^{-\eps n + \frac{1}{2}}.
+\end{align*}
+However, if $\hat{X} \not\in \ball{\delta n}(X)$ then sampling a
+random subset of the positions will detect an error except with
+probability at most $2^{-\delta n}$. Hence, writing $\qp \assign
+\P[\ev|R\!=\!+]$ and $\qt \assign \P[\ev|R\!=\!\times]$,
+$$
+p_0(n) \leq (1-\qp) + \qp\cdot (2^{-\eps n + \frac12} + 2^{-\delta
+  n}) \leq 1-\qp + \negl{n}
+$$
+and analogously $p_1(n) \leq 1-\qt + \negl{n} $. We conclude that
+$$
+p_0(n) + p_1(n) \leq  2 - \qp - \qt + \negl{n} \leq  1+ \negl{n} \, .
+$$
+\end{proof}
+\index{bit commitment!weak binding|)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Strong Binding of the Commitment Scheme} \label{sec:strongbinding}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{bit commitment!strong binding|(} In this section, we reuse the
+analysis of the \OT-protocol from Chapter~\ref{chap:12OT} to prove the
+strong binding condition.
+
+\begin{theorem}
+  The quantum bit-commitment scheme \comm\ is $\eps$-binding
+  according to Definition~\ref{def:strongbinding} against $\mathfrak{C}_{\gamma}$
+  for a negligible (in $n$) $\eps$ if $\gamma < \frac14$.
+\end{theorem}
+% \begin{theorem} 
+%   For any $\gamma < \frac14$, \comm\ is perfectly hiding and strongly
+%   binding against $\mathfrak{C}_{\gamma}$.
+% \end{theorem}
+Intuitively, one can argue that $X$ has (smooth) min-entropy about $n/2$ given
+$\Theta$.  The \index{min-entropy splitting lemma}
+Min-Entropy Splitting Lemma implies that there exists
+$D$ such that $X_{1-D}$ has smooth min-entropy about $n/4$ given
+$\Theta$ and $D$. Privacy amplification implies that $F(X_{1-D})$ is
+close to random given $\Theta, D, F$ and $\dC$'s quantum register of
+size $\gamma n$, where $F$ is a \univ one-bit-output hash function,
+which in particular implies that $\dC$ cannot guess $X_{1-D}$. The
+formal proof is given below.
+\begin{proof}
+  It remains to show that \eprcomm\ is strongly binding against
+  $\mathfrak{C}_{\gamma}$.  Let $\Theta \in \set{+,\times}^n$ be the
+  random basis that would correspond to the choice of basis in the
+  first step of \comm, i.e. $\theta_i = \set{+,\times}_{[b]}$ for $i
+  \in I$ and $\theta_i = \set{+,\times}_{[1-b]}$ for $i \not\in I$. Let
+  $X$ be the measurement outcome when $\V$ measures his halves of the
+  EPR-pairs in basis $\Theta$.
+  
+Recall that $h(\cdot)$ denotes the binary Shannon entropy. Choose $\lambda, \lambda', \kappa$ and $\delta$ all positive, but
+  small enough such that $\gamma \leq 1/4 - \lambda - \lambda' -
+  2h(\delta) - 2 \kappa$, $h(\delta) \leq \lambda'-\kappa$, and
+  $h(\delta) \leq \frac{\lambda^4}{32} -
+  \kappa$. Before Step~\ref{step:open}, the overall state is given by
+  the ccq-state $\rho_{X \Theta \dC}$ after $\dC$ has measured all but
+  $\gamma n$ of his qubits, where $X$ describes the outcome of the
+  verifier $\V$ measuring his part of the state in random basis
+  $\Theta$.  From the uncertainty relation
+  (Corollary~\ref{cor:uncertainty}), we know that $\hie{\eps}{X
+    \mid \Theta} \geq (1/2 - 2\lambda )n$ for
+  $\eps=2^{-\frac{\lambda^4}{32}n}$ % and $\eps'=2^{-\lambda' n}$ 
+exponentially small in $n$.  Therefore, by
+  Corollary~\ref{cor:ESL}, there exists a binary random variable $D
+  \in \set{0,1}$ such that for $\eps'=2^{-\lambda' n}$, it holds that
+\begin{align*}
+\hie{\eps+\eps'}{X_{1-D} \mid \Theta D} &\geq (1/4 - \lambda - \lambda')n -1\\ 
+&\geq (1/4 -\lambda - \lambda')n -1\\
+&\geq \gamma n + 2h(\delta)n + 2 \kappa n -1 \, .
+\end{align*}
+
+Recall that $\ball{\delta n} \leq 2^{h(\delta) n}$. Applying
+Corollary~\ref{cor:guess}, it follows that any guess $\hat{X}$ for $X_{1-D}$
+satisfies
+\begin{align*}
+  \P\big[ \hat{X} \in \ball{\delta n}(X_{1-D}) \big] &\leq 2^{-\frac{1}{2}
+    (\hie{\eps+\eps'}{X_{1-D}|\Theta D}-\gamma n-1) + \log(\ball{\delta
+      n}) } + (2 \eps + 2 \eps') \ball{\delta n}\\
+  &\leq 2^{-\frac{1}{2} (2 \kappa n - 2)} + 2 \cdot 2^{
+    -\frac{\lambda^4}{32}n + h(\delta) n } + 2 \cdot 2^{ -
+    \lambda' n + h(\delta) n} \\
+  &\leq \frac12 2^{-\kappa n } + 2 \cdot 2^{ -\kappa n } + 2 \cdot 2^{
+    -\kappa n} \, ,
+\end{align*}
+which is negligible by the choice of the parameters.
+\end{proof}
+
+\index{bit commitment!strong binding|)}
+\index{bit commitment!binding|)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weakening the Assumptions} \label{sec:weakassumptioncomm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{weak quantum model|(}As argued earlier, assuming that a party can
+produce single qubits (with probability~1) is not reasonable given
+current technology. Also the assumption that there is no noise on the
+quantum channel is impractical.  It can be shown that a
+straightforward modification of \comm\ remains secure in the
+$(\phi,\eta)$-weak quantum model as introduced in
+Section~\ref{sec:weakass} (see also Section~\ref{sec:moreimperfect}),
+with $\phi < \frac{1}{2}$ and $\eta < 1- \phi$.
+
+\begin{myfigure}{h}
+\begin{myprotocol}{\comm'$(b,\phi)$}
+\item $\V$ picks $x \in_R \nbit$ and $\theta \in_R \{+,\times \}^n$ and
+  sends $x_i$ in the corresponding bases $\ket{x_1}_{\theta_1},
+  \ket{x_2}_{\theta_2}, \ldots, \ket{x_n}_{\theta_n}$ to~$\C$.
+ \item $\C$ commits to the bit $b$ by measuring all qubits in basis
+   $\{+,\times \}_{[b]}$. Let $x' \in \nbit$ be the result.
+ \item To open the commitment, $\C$ sends $b$ and $x'$ to $\V$.
+ \item $\V$ verifies that $x_i= x_i'$ for $i$ where $\theta_i = \{+,\times
+   \}_{[b]}$. $\V$ accepts if and only if this is the case \emph{for all but
+   a $\phi$-fraction of these positions}.
+\end{myprotocol}
+\caption{Protocol for noise-tolerant quantum bit commitment}\label{fig:commnoisy}
+\end{myfigure}
+
+
+The protocol \comm'\ in Figure~\ref{fig:commnoisy} is the same as
+\comm\ from Figure~\ref{fig:comm} except that in the last
+Step~\ref{step:last}, $\V$ accepts if and only if $x_i = x'_i$ for all
+{\em but about a $\phi$-fraction} of the $i$ where $r_i = \{+,\times
+\}_{[b]}$. More precisely, for all but a
+$(\phi+\varepsilon)$-fraction, where $\varepsilon > 0$ is sufficiently
+small.
+\begin{theorem}\label{thm:weakcommsec}
+  In the $(\phi,\eta)$-weak quantum model, \comm'\ is perfectly hiding
+  and it is weakly binding against $\mathfrak{C}_{\gamma}$ for any $\gamma$
+  satisfying $\gamma < \frac{1}{2}(1-\eta) - 2 h(\phi)$.
+\end{theorem}
+\begin{sketch} %[of Theorem~\ref{thm:weakcommsec}]
+  Using \index{Chernoff's inequality} Chernoff's inequality (Lemma~\ref{lem:chernoff}), one can
+  argue that for {\em honest} $\C$ and $\V$, the opening of a
+  commitment is accepted except with negligible probability.  The
+  hiding property holds using the same reasoning as in
+  Lemma~\ref{lem:sec:hiding}. And the binding property can be argued
+  essentially along the lines of Theorem~\ref{thm:weakbinding}, with
+  the following modifications. Let $J$ denote the set of indices $i$
+  where $\V$ succeeds in sending a single qubit. We restrict the
+  analysis to those $i$'s which are in $J$. By 
+  \index{Chernoff's inequality} Chernoff's inequality
+  (Lemma~\ref{lem:chernoff}), the cardinality of $J$ is about
+  $(1-\eta)n$ (meaning within $(1-\eta\pm \varepsilon)n$), except with
+  negligible probability.  Thus, restricting to these $i$'s has the
+  same effect as replacing $\gamma$ by $\gamma/(1-\eta)$ (neglecting
+  the $\pm \varepsilon$ to simplify notation). Assuming that $\dC$
+  knows every $x_i$ for $i \not\in J$, for all $x_i$'s with $i \in J$,
+  he has to be able to guess all but about a $\phi/(1-\eta)$-fraction
+  correctly, in order to be successful in the opening. Using
+  Corollary~\ref{cor:guess}, we can show that for a correctly chosen
+  $\delta >0$, the probability of guessing $\hat{X}$ within Hamming
+  distance $\delta n$ to the real $X$ is negligible. Therefore, $\dC$
+  succeeds with only negligible probability if the fraction of allowed
+  errors $\phi/(1-\eta)$ is smaller than $\delta$, i.e.
+$$
+\phi/(1-\eta) < \delta \, ,$$ 
+Additionally, in order for the machinery from Theorem~\ref{thm:weakbinding} to work, $\delta$ must be such that 
+$$ \frac{\gamma}{1-\eta} + 2h(\delta) < \frac{1}{2} \, .
+$$ 
+$\delta$ can be chosen that way if 
+$$
+\frac{\gamma}{1-\eta} + 2 \, h\!\left( \frac{\phi}{1-\eta} \right) < \frac{1}{2} \, .
+$$
+Using the fact that $h(\nu p) \leq \nu h(p)$ for any $\nu \geq 1$
+and $0 \leq p \leq \frac12$ such that $\nu p \leq 1$, this is clearly
+satisfied if
+$\gamma + 2 h(\phi) < \frac{1}{2}(1-\eta)$. 
+\end{sketch}
+
+
+\begin{theorem}\label{thm:weakcommsecstrong}
+  In the $(\phi,\eta)$-weak quantum model, \comm'\ is perfectly hiding
+  and it is strongly binding against $\mathfrak{C}_{\gamma}$ for any $\gamma$
+  satisfying $\gamma < \frac{1}{4}(1-\eta) - 3 h(\phi) - \sqrt[4]{32
+  \, h(\phi)}$.
+\end{theorem}
+\begin{sketch}
+  The proof goes like the proof of Theorem~\ref{thm:weakcommsec}, but
+  uses the techniques from Section~\ref{sec:strongbinding}. In order
+  for those to work, we need to choose $\lambda, \lambda'$,
+  and $\delta$ all positive and such that
+\begin{align} \label{eq:conditions} \begin{split}
+\frac{\phi}{1 - \eta} &< \delta,  \\
+\frac{\gamma}{1 - \eta} + 2 h(\delta) + \lambda' + \lambda &< 1/4 \,
+, \\
+h(\delta) &< \lambda' \, , \\
+h(\delta) &< \frac{\lambda^4}{32} \, .
+\end{split} \end{align}
+We verify that the assumption $\gamma < \frac{1}{4}(1-\eta) - 3 h(\phi) - \sqrt[4]{32
+  \, h(\phi)}$ on $\gamma$ allows for that. Rearranging
+the terms and using that $x < \sqrt[4]{x}$ for $0<x<1$ yields
+\[
+ \frac{\gamma}{1 - \eta} + 3 \frac{h(\phi)}{1 - \eta} +
+ \sqrt[4]{32\frac{h(\phi)}{1- \eta}} < 1/4 \, .
+\]
+Using as in the previous proof the fact that $h(\nu p) \leq \nu h(p)$ for any
+$\nu \geq 1$ and $0 \leq p \leq \frac12$ such that $\nu p \leq 1$, we
+get that
+\[
+ \frac{\gamma}{1 - \eta} + 3 h\left(\frac{\phi}{1-\eta}\right) +
+ \sqrt[4]{32 \, h\left(\frac{\phi}{1-\eta}\right)} < 1/4.
+\]
+That allows to choose $\delta > \frac{\phi}{1-\eta}$ such that
+\[
+ \frac{\gamma}{1 - \eta} + 2 h(\delta) +  h(\delta) + 
+ \sqrt[4]{32 \, h(\delta)} < 1/4,
+\]
+and therefore, also $\lambda$ and $\lambda'$ can be chosen such that
+the conditions \eqref{eq:conditions} are fulfilled.
+\end{sketch}
+
+\index{weak quantum model|)}
+\index{bit commitment|)}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

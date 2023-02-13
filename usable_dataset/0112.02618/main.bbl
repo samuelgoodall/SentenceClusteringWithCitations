@@ -1,0 +1,364 @@
+\begin{thebibliography}{52}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bayraktar \& Egami(2010)Bayraktar and Egami]{bayraktar2010one}
+Erhan Bayraktar and Masahiko Egami.
+\newblock On the one-dimensional optimal switching problem.
+\newblock \emph{Mathematics of Operations Research}, 35\penalty0 (1):\penalty0
+  140--159, 2010.
+
+\bibitem[Benveniste et~al.(2012)Benveniste, M{\'e}tivier, and
+  Priouret]{benveniste2012adaptive}
+Albert Benveniste, Michel M{\'e}tivier, and Pierre Priouret.
+\newblock \emph{Adaptive algorithms and stochastic approximations}, volume~22.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem[Blackwell \& Ferguson(1968)Blackwell and Ferguson]{blackwell1968big}
+David Blackwell and Tom~S Ferguson.
+\newblock The big match.
+\newblock \emph{The Annals of Mathematical Statistics}, 39\penalty0
+  (1):\penalty0 159--163, 1968.
+
+\bibitem[Burda et~al.(2018)Burda, Edwards, Storkey, and
+  Klimov]{burda2018exploration}
+Yuri Burda, Harrison Edwards, Amos Storkey, and Oleg Klimov.
+\newblock Exploration by random network distillation.
+\newblock \emph{arXiv preprint arXiv:1810.12894}, 2018.
+
+\bibitem[Devlin \& Kudenko(2011)Devlin and Kudenko]{devlin2011theoretical}
+Sam Devlin and Daniel Kudenko.
+\newblock Theoretical considerations of potential-based reward shaping for
+  multi-agent systems.
+\newblock In \emph{The 10th International Conference on Autonomous Agents and
+  Multiagent Systems}, pp.\  225--232. ACM, 2011.
+
+\bibitem[Devlin \& Kudenko(2016)Devlin and Kudenko]{devlin2016plan}
+Sam Devlin and Daniel Kudenko.
+\newblock Plan-based reward shaping for multi-agent reinforcement learning.
+\newblock \emph{The Knowledge Engineering Review}, 31\penalty0 (1):\penalty0
+  44--58, 2016.
+
+\bibitem[Devlin et~al.(2011)Devlin, Kudenko, and
+  Grze{\'s}]{devlin2011empirical}
+Sam Devlin, Daniel Kudenko, and Marek Grze{\'s}.
+\newblock An empirical study of potential-based reward shaping and advice in
+  complex, multi-agent systems.
+\newblock \emph{Advances in Complex Systems}, 14\penalty0 (02):\penalty0
+  251--278, 2011.
+
+\bibitem[Devlin \& Kudenko(2012)Devlin and Kudenko]{devlin2012dynamic}
+Sam~Michael Devlin and Daniel Kudenko.
+\newblock Dynamic potential-based reward shaping.
+\newblock In \emph{Proceedings of the 11th International Conference on
+  Autonomous Agents and Multiagent Systems}, pp.\  433--440. IFAAMAS, 2012.
+
+\bibitem[Dilokthanakul et~al.(2019)Dilokthanakul, Kaplanis, Pawlowski, and
+  Shanahan]{dilokthanakul2019feature}
+Nat Dilokthanakul, Christos Kaplanis, Nick Pawlowski, and Murray Shanahan.
+\newblock Feature control as intrinsic motivation for hierarchical
+  reinforcement learning.
+\newblock \emph{IEEE transactions on neural networks and learning systems},
+  30\penalty0 (11):\penalty0 3409--3418, 2019.
+
+\bibitem[Du et~al.(2019)Du, Han, Fang, Liu, Dai, and Tao]{du2019liir}
+Yali Du, Lei Han, Meng Fang, Ji~Liu, Tianhong Dai, and Dacheng Tao.
+\newblock Liir: Learning individual intrinsic reward in multi-agent
+  reinforcement learning.
+\newblock 32, 2019.
+
+\bibitem[Foerster et~al.(2018)Foerster, Farquhar, Afouras, Nardelli, and
+  Whiteson]{foerster2018counterfactual}
+Jakob~N Foerster, Gregory Farquhar, Triantafyllos Afouras, Nantas Nardelli, and
+  Shimon Whiteson.
+\newblock Counterfactual multi-agent policy gradients.
+\newblock In \emph{Thirty-second AAAI conference on artificial intelligence},
+  2018.
+
+\bibitem[Fudenberg \& Tirole(1991)Fudenberg and Tirole]{fudenberg1991tirole}
+Drew Fudenberg and Jean Tirole.
+\newblock Tirole: Game theory.
+\newblock \emph{MIT Press}, 726:\penalty0 764, 1991.
+
+\bibitem[Harutyunyan et~al.(2015)Harutyunyan, Devlin, Vrancx, and
+  Now{\'e}]{harutyunyan2015expressing}
+Anna Harutyunyan, Sam Devlin, Peter Vrancx, and Ann Now{\'e}.
+\newblock Expressing arbitrary reward functions as potential-based advice.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~29, 2015.
+
+\bibitem[Hosu \& Rebedea(2016)Hosu and Rebedea]{hosu2016playing}
+Ionel-Alexandru Hosu and Traian Rebedea.
+\newblock Playing atari games with deep reinforcement learning and human
+  checkpoint replay.
+\newblock \emph{arXiv preprint arXiv:1607.05077}, 2016.
+
+\bibitem[H{\"u}ttenrauch et~al.(2017)H{\"u}ttenrauch, {\v{S}}o{\v{s}}i{\'c},
+  and Neumann]{huttenrauch2017guided}
+Maximilian H{\"u}ttenrauch, Adrian {\v{S}}o{\v{s}}i{\'c}, and Gerhard Neumann.
+\newblock Guided deep reinforcement learning for swarm systems.
+\newblock \emph{arXiv preprint arXiv:1709.06011}, 2017.
+
+\bibitem[Jaakkola et~al.(1994)Jaakkola, Jordan, and
+  Singh]{jaakkola1994convergence}
+Tommi Jaakkola, Michael~I Jordan, and Satinder~P Singh.
+\newblock Convergence of stochastic iterative dynamic programming algorithms.
+\newblock In \emph{Advances in neural information processing systems}, pp.\
+  703--710, 1994.
+
+\bibitem[Kulkarni et~al.(2016)Kulkarni, Narasimhan, Saeedi, and
+  Tenenbaum]{kulkarni2016hierarchical}
+Tejas~D Kulkarni, Karthik Narasimhan, Ardavan Saeedi, and Josh Tenenbaum.
+\newblock Hierarchical deep reinforcement learning: Integrating temporal
+  abstraction and intrinsic motivation.
+\newblock \emph{Advances in neural information processing systems},
+  29:\penalty0 3675--3683, 2016.
+
+\bibitem[Macua et~al.(2018)Macua, Zazo, and Zazo]{macua2018learning}
+Sergio~Valcarcel Macua, Javier Zazo, and Santiago Zazo.
+\newblock Learning parametric closed-loop policies for markov potential games.
+\newblock \emph{arXiv preprint arXiv:1802.00899}, 2018.
+
+\bibitem[Mahajan et~al.(2019)Mahajan, Rashid, Samvelyan, and
+  Whiteson]{mahajan2019maven}
+Anuj Mahajan, Tabish Rashid, Mikayel Samvelyan, and Shimon Whiteson.
+\newblock Maven: Multi-agent variational exploration.
+\newblock \emph{arXiv preprint arXiv:1910.07483}, 2019.
+
+\bibitem[Mannion et~al.(2017)Mannion, Devlin, Mason, Duggan, and
+  Howley]{mannion2017policy}
+Patrick Mannion, Sam Devlin, Karl Mason, Jim Duggan, and Enda Howley.
+\newblock Policy invariance under reward transformations for multi-objective
+  reinforcement learning.
+\newblock \emph{Neurocomputing}, 263:\penalty0 60--73, 2017.
+
+\bibitem[Mannion et~al.(2018)Mannion, Devlin, Duggan, and
+  Howley]{mannion2018reward}
+Patrick Mannion, Sam Devlin, Jim Duggan, and Enda Howley.
+\newblock Reward shaping for knowledge-based multi-objective multi-agent
+  reinforcement learning.
+\newblock \emph{The Knowledge Engineering Review}, 33, 2018.
+
+\bibitem[Matignon et~al.(2012)Matignon, Laurent, and
+  Le~Fort-Piat]{matignon2012independent}
+Laetitia Matignon, Guillaume~J Laurent, and Nadine Le~Fort-Piat.
+\newblock Independent reinforcement learners in cooperative markov games: a
+  survey regarding coordination problems.
+\newblock \emph{The Knowledge Engineering Review}, 27\penalty0 (1):\penalty0
+  1--31, 2012.
+
+\bibitem[Mguni(2018)]{mguni2018viscosity}
+David Mguni.
+\newblock A viscosity approach to stochastic differential games of control and
+  stopping involving impulsive control.
+\newblock \emph{arXiv preprint arXiv:1803.11432}, 2018.
+
+\bibitem[Mguni(2019)]{mguni2019cutting}
+David Mguni.
+\newblock Cutting your losses: Learning fault-tolerant control and optimal
+  stopping under adverse risk.
+\newblock \emph{arXiv preprint arXiv:1902.05045}, 2019.
+
+\bibitem[Mguni et~al.(2018)Mguni, Jennings, and
+  de~Cote]{mguni2018decentralised}
+David Mguni, Joel Jennings, and Enrique~Munoz de~Cote.
+\newblock Decentralised learning in systems with many, many strategic agents.
+\newblock In \emph{Thirty-Second AAAI Conference on Artificial Intelligence},
+  2018.
+
+\bibitem[Mguni et~al.(2019)Mguni, Jennings, Macua, Sison, Ceppi, and
+  de~Cote]{mguni2019coordinating}
+David Mguni, Joel Jennings, Sergio~Valcarcel Macua, Emilio Sison, Sofia Ceppi,
+  and Enrique~Munoz de~Cote.
+\newblock Coordinating the crowd: Inducing desirable equilibria in
+  non-cooperative systems.
+\newblock \emph{arXiv preprint arXiv:1901.10923}, 2019.
+
+\bibitem[Mguni et~al.(2021)Mguni, Wu, Du, Yang, Wang, Li, Wen, Jennings, and
+  Wang]{mguni2021learning}
+David Mguni, Yutong Wu, Yali Du, Yaodong Yang, Ziyi Wang, Minne Li, Ying Wen,
+  Joel Jennings, and Jun Wang.
+\newblock Learning in nonzero-sum stochastic games with potentials.
+\newblock \emph{arXiv preprint arXiv:2103.09284}, 2021.
+
+\bibitem[Ng et~al.(1999)Ng, Harada, and Russell]{ng1999policy}
+Andrew~Y Ng, Daishi Harada, and Stuart Russell.
+\newblock Policy invariance under reward transformations: Theory and
+  application to reward shaping.
+\newblock In \emph{ICML}, volume~99, pp.\  278--287, 1999.
+
+\bibitem[{\O}ksendal(2003)]{oksendal2003stochastic}
+Bernt {\O}ksendal.
+\newblock Stochastic differential equations.
+\newblock In \emph{Stochastic differential equations}, pp.\  65--84. Springer,
+  2003.
+
+\bibitem[Papoudakis et~al.(2020)Papoudakis, Christianos, Sch{\"a}fer, and
+  Albrecht]{papoudakis2020comparative}
+Georgios Papoudakis, Filippos Christianos, Lukas Sch{\"a}fer, and Stefano~V
+  Albrecht.
+\newblock Comparative evaluation of multi-agent deep reinforcement learning
+  algorithms.
+\newblock \emph{arXiv preprint arXiv:2006.07869}, 2020.
+
+\bibitem[Pathak et~al.(2017)Pathak, Agrawal, Efros, and
+  Darrell]{pathak2017curiosity}
+Deepak Pathak, Pulkit Agrawal, Alexei~A Efros, and Trevor Darrell.
+\newblock Curiosity-driven exploration by self-supervised prediction.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  2778--2787, 2017.
+
+\bibitem[Pesce \& Montana(2020)Pesce and Montana]{pesce2020improving}
+Emanuele Pesce and Giovanni Montana.
+\newblock Improving coordination in small-scale multi-agent deep reinforcement
+  learning through memory-driven communication.
+\newblock \emph{Machine Learning}, pp.\  1--21, 2020.
+
+\bibitem[Rashid et~al.(2018)Rashid, Samvelyan, Schroeder, Farquhar, Foerster,
+  and Whiteson]{rashid2018qmix}
+Tabish Rashid, Mikayel Samvelyan, Christian Schroeder, Gregory Farquhar, Jakob
+  Foerster, and Shimon Whiteson.
+\newblock Qmix: Monotonic value function factorisation for deep multi-agent
+  reinforcement learning.
+\newblock In \emph{International Conference on Machine Learning}, pp.\
+  4295--4304. PMLR, 2018.
+
+\bibitem[Roughgarden \& Tardos(2007)Roughgarden and
+  Tardos]{roughgarden2007introduction}
+Tim Roughgarden and Eva Tardos.
+\newblock Introduction to the inefficiency of equilibria.
+\newblock \emph{Algorithmic Game Theory}, 17:\penalty0 443--459, 2007.
+
+\bibitem[Sadeghlou et~al.(2014)Sadeghlou, Akbarzadeh-T, and
+  Naghibi-S]{sadeghlou2014dynamic}
+Maryam Sadeghlou, Mohammad~Reza Akbarzadeh-T, and Mohammad~Bagher Naghibi-S.
+\newblock Dynamic agent-based reward shaping for multi-agent systems.
+\newblock In \emph{2014 Iranian Conference on Intelligent Systems (ICIS)}, pp.\
+   1--6. IEEE, 2014.
+
+\bibitem[Samvelyan et~al.(2019)Samvelyan, Rashid, De~Witt, Farquhar, Nardelli,
+  Rudner, Hung, Torr, Foerster, and Whiteson]{samvelyan2019starcraft}
+Mikayel Samvelyan, Tabish Rashid, Christian~Schroeder De~Witt, Gregory
+  Farquhar, Nantas Nardelli, Tim~GJ Rudner, Chia-Man Hung, Philip~HS Torr,
+  Jakob Foerster, and Shimon Whiteson.
+\newblock The starcraft multi-agent challenge.
+\newblock \emph{arXiv preprint arXiv:1902.04043}, 2019.
+
+\bibitem[Schulman et~al.(2017)Schulman, Wolski, Dhariwal, Radford, and
+  Klimov]{schulman2017Proximal}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\newblock Proximal policy optimization algorithms.
+\newblock \emph{CoRR}, abs/1707.06347, 2017.
+
+\bibitem[Shoham \& Leyton-Brown(2008)Shoham and
+  Leyton-Brown]{shoham2008multiagent}
+Yoav Shoham and Kevin Leyton-Brown.
+\newblock \emph{Multiagent systems: Algorithmic, game-theoretic, and logical
+  foundations}.
+\newblock Cambridge University Press, 2008.
+
+\bibitem[Son et~al.(2019)Son, Kim, Kang, Hostallero, and Yi]{son2019qtran}
+Kyunghwan Son, Daewoo Kim, Wan~Ju Kang, David~Earl Hostallero, and Yung Yi.
+\newblock Qtran: Learning to factorize with transformation for cooperative
+  multi-agent reinforcement learning.
+\newblock In \emph{International Conference on Machine Learning}, pp.\
+  5887--5896. PMLR, 2019.
+
+\bibitem[Sunehag et~al.(2017)Sunehag, Lever, Gruslys, Czarnecki, Zambaldi,
+  Jaderberg, Lanctot, Sonnerat, Leibo, Tuyls, et~al.]{sunehag2017value}
+Peter Sunehag, Guy Lever, Audrunas Gruslys, Wojciech~Marian Czarnecki, Vinicius
+  Zambaldi, Max Jaderberg, Marc Lanctot, Nicolas Sonnerat, Joel~Z Leibo, Karl
+  Tuyls, et~al.
+\newblock Value-decomposition networks for cooperative multi-agent learning.
+\newblock \emph{arXiv preprint arXiv:1706.05296}, 2017.
+
+\bibitem[Tijsma et~al.(2016)Tijsma, Drugan, and Wiering]{tijsma2016comparing}
+Arryon~D Tijsma, Madalina~M Drugan, and Marco~A Wiering.
+\newblock Comparing exploration strategies for q-learning in random stochastic
+  mazes.
+\newblock In \emph{2016 IEEE Symposium Series on Computational Intelligence
+  (SSCI)}, pp.\  1--8. IEEE, 2016.
+
+\bibitem[Tsitsiklis \& Van~Roy(1999)Tsitsiklis and
+  Van~Roy]{tsitsiklis1999optimal}
+John~N Tsitsiklis and Benjamin Van~Roy.
+\newblock Optimal stopping of markov processes: Hilbert space theory,
+  approximation algorithms, and an application to pricing high-dimensional
+  financial derivatives.
+\newblock \emph{IEEE Transactions on Automatic Control}, 44\penalty0
+  (10):\penalty0 1840--1851, 1999.
+
+\bibitem[Viseras et~al.(2016)Viseras, Wiedemann, Manss, Magel, Mueller, Shutin,
+  and Merino]{viseras2016decentralized}
+Alberto Viseras, Thomas Wiedemann, Christoph Manss, Lukas Magel, Joachim
+  Mueller, Dmitriy Shutin, and Luis Merino.
+\newblock Decentralized multi-agent exploration with online-learning of
+  gaussian processes.
+\newblock In \emph{2016 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pp.\  4222--4229. IEEE, 2016.
+
+\bibitem[Wang et~al.(2020{\natexlab{a}})Wang, Ren, Han, Ye, and
+  Zhang]{wang2020towards}
+Jianhao Wang, Zhizhou Ren, Beining Han, Jianing Ye, and Chongjie Zhang.
+\newblock Towards understanding linear value decomposition in cooperative
+  multi-agent q-learning.
+\newblock \emph{arXiv preprint arXiv:2006.00587}, 2020{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2020{\natexlab{b}})Wang, Ren, Liu, Yu, and
+  Zhang]{wang2020qplex}
+Jianhao Wang, Zhizhou Ren, Terry Liu, Yang Yu, and Chongjie Zhang.
+\newblock Qplex: Duplex dueling multi-agent q-learning.
+\newblock \emph{arXiv preprint arXiv:2008.01062}, 2020{\natexlab{b}}.
+
+\bibitem[Yang \& Wang(2020)Yang and Wang]{yang2020overview}
+Yaodong Yang and Jun Wang.
+\newblock An overview of multi-agent reinforcement learning from game
+  theoretical perspective.
+\newblock \emph{arXiv preprint arXiv:2011.00583}, 2020.
+
+\bibitem[Yang et~al.(2020)Yang, Wen, Wang, Chen, Shao, Mguni, and
+  Zhang]{yang2020multi}
+Yaodong Yang, Ying Wen, Jun Wang, Liheng Chen, Kun Shao, David Mguni, and
+  Weinan Zhang.
+\newblock Multi-agent determinantal q-learning.
+\newblock In \emph{International Conference on Machine Learning}, pp.\
+  10757--10766. PMLR, 2020.
+
+\bibitem[Yu et~al.(2021)Yu, Velu, Vinitsky, Wang, Bayen, and
+  Wu]{yu2021surprising}
+Chao Yu, Akash Velu, Eugene Vinitsky, Yu~Wang, Alexandre Bayen, and Yi~Wu.
+\newblock The surprising effectiveness of mappo in cooperative, multi-agent
+  games.
+\newblock \emph{arXiv preprint arXiv:2103.01955}, 2021.
+
+\bibitem[Zheng et~al.(2018)Zheng, Oh, and Singh]{zheng2018learning}
+Zeyu Zheng, Junhyuk Oh, and Satinder Singh.
+\newblock On learning intrinsic rewards for policy gradient methods.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2018.
+
+\bibitem[Zhou et~al.(2020{\natexlab{a}})Zhou, Liu, Sui, Li, and
+  Chung]{zhou2020learning}
+Meng Zhou, Ziyu Liu, Pengwei Sui, Yixuan Li, and Yuk~Ying Chung.
+\newblock Learning implicit credit assignment for multi-agent actor-critic.
+\newblock \emph{arXiv e-prints}, pp.\  arXiv--2007, 2020{\natexlab{a}}.
+
+\bibitem[Zhou et~al.(2020{\natexlab{b}})Zhou, Luo, Villella, Yang, Rusu, Miao,
+  Zhang, Alban, Fadakar, Chen, et~al.]{zhou2020smarts}
+Ming Zhou, Jun Luo, Julian Villella, Yaodong Yang, David Rusu, Jiayu Miao,
+  Weinan Zhang, Montgomery Alban, Iman Fadakar, Zheng Chen, et~al.
+\newblock Smarts: Scalable multi-agent reinforcement learning training school
+  for autonomous driving.
+\newblock \emph{arXiv preprint arXiv:2010.09776}, 2020{\natexlab{b}}.
+
+\bibitem[Zinkevich et~al.(2006)Zinkevich, Greenwald, and
+  Littman]{zinkevich2006cyclic}
+Martin Zinkevich, Amy Greenwald, and Michael Littman.
+\newblock Cyclic equilibria in markov games.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  18:\penalty0 1641, 2006.
+
+\end{thebibliography}

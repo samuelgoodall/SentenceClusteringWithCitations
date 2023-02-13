@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Front pages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace*{\fill}
+\begin{flushright}
+  {\Huge\sf Cryptography in the Bounded-Quantum-Storage Model}\\[3ex]
+  {\huge\sf Christian Schaffner} 
+\end{flushright}
+\noindent\rule{\linewidth}{1mm}\\[-.5ex]
+\noindent\rule{\linewidth}{2.5mm}
+\vfill
+\begin{center}
+  {\huge\sf PhD Dissertation}\\[\fill]
+  \includegraphics{./figures/au-segl}\\[\fill]
+  {\sf BRICS Research School\\DAIMI -- Department of Computer Science\\University of Aarhus\\Denmark}
+\end{center}
+\vspace*{\fill}
+\cleardoublepage
+\begin{center}
+  \vspace*{\stretch{1}}
+  {\huge Cryptography in the\\[3mm]
+Bounded-Quantum-Storage Model}\\[\fill]
+  A Dissertation\\
+  Presented to the Faculty of Science\\
+  of the University of Aarhus\\
+  in Partial Fulfillment of the Requirements for the\\
+  PhD Degree\\[\stretch{2}]
+  by\\
+  Christian Schaffner\\
+  official version submitted: March 2, 2007\\[5mm]
+
+  final version: \makeatletter\@date\makeatother\\
+\end{center}
+\vspace*{\stretch{1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+\pagestyle{plain}
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\chapter*{{\Huge Abstract}}
+
+Cryptographic primitives such as oblivious transfer and bit commitment
+are impossible to realize if unconditional security is required against
+adversaries who are unbounded in running time and memory size.
+Therefore, it is a great challenge to come up with restrictions on the
+adversary's capabilities such that on one hand interesting
+cryptographic primitives become possible, but on the other hand the
+model is still realistic and as close to practice as possible.
+
+The \emph{bounded-quantum-storage model} is a prime example of
+such a cryptographic model. In this thesis, we initiate the study of
+cryptographic primitives with unconditional security under the sole
+assumption that the adversary's {\em quantum} memory is of bounded
+size.
+
+Oblivious transfer and bit commitment can be implemented in this model
+using protocols where honest parties need no quantum memory, whereas
+an adversarial player needs to store \emph{at least a large fraction} of the
+total number of transmitted qubits in order to break the protocol.
+This is in sharp contrast to the classical bounded-memory model, where
+we can only tolerate adversaries with memory of size polynomially
+larger than the honest players' memory size.
+
+On the practical side, our protocols are efficient, non-interactive
+and can be adapted to cope with various kinds of noise in the
+transmission. In fact, they can be \emph{implemented using today's
+technology}. 
+
+On the theoretical side, new \emph{entropic uncertainty relations}
+involving min-entropy are established and used to prove the security
+of protocols in the bounded-quantum-storage model according to new
+strong security definitions. The uncertainty relations lower bound
+the min-entropy of the encoding used in most quantum-cryptographic
+protocols and therefore contribute to the understanding of the quantum
+effects which these protocols are based upon. The most direct way to
+make use of these lower bounds is by assuming a quantum-memory bound on
+the adversary. For instance, in the realistic setting of \emph{Quantum
+  Key Distribution (\QKD)} against quantum-memory-bounded
+eavesdroppers, the uncertainty relation allows to prove the security
+of QKD protocols while tolerating considerably higher error rates
+compared to the standard model with unbounded adversaries. %%  For
+%% instance, for the six-state protocol with one-way communication, a
+%% bit-flip error rate of up to 17\% can be tolerated (compared to 13\%
+%% in the standard model).
+
+\vspace{2mm} In addition, though not directly related to the
+bounded-quantum-storage model, a classical result about
+unconditionally secure 1-out-of-2 Oblivious Transfer (\OT) is
+obtained. It is pointed out that the standard security requirement for
+\OT\ of bits, namely that the receiver only learns one of the bits
+sent, holds if and only if the receiver has no information on the XOR
+of the two bits. This result generalizes to \OT\ of strings, in which
+case the security can be characterized in terms of \emph{binary linear
+  functions}.  More precisely, it is shown that the receiver learns
+only one of the two strings sent, if and only if he has no information
+on the result of applying any binary linear function which
+non-trivially depends on both inputs to the two strings. This result
+not only gives new insight into the nature of \OT, but it in
+particular provides a \emph{powerful tool for analyzing \OT\ 
+  protocols}. With this characterization at hand, the reducibility of
+\OT\ of strings to a wide range of weaker primitives follows by a very
+simple argument.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\chapter*{{\Huge Acknowledgements}}
+
+I am grateful to everyone who helped and supported me during my PhD
+studies here in {\AA}rhus. 
+
+First of all, I want to cordially thank my supervisors and co-authors
+Louis Salvail and Ivan Damg{\aa}rd and the whole cryptology group at
+DAIMI for providing an excellent environment for cryptographic
+research. Countless are the hours I have spent discussing scientific
+as well as non-scientific issues with Louis, \emph{merci beaucoup}! I
+thank my other co-authors Claude Cr\'epeau, Serge Fehr, Renato Renner,
+George Savvides and J\"urg Wullschleger for many inspiring visits and
+discussions.
+
+I appreciated very much being a PhD student in a well-organized and
+well-funded research group and to be able to work in a brand-new building
+with plenty of space, great infrastructure and always helpful and
+friendly staff and secretaries: Ellen, Hanne, Karen, Lene,
+Michael, and Uffe.
+
+Studying in {\AA}rhus has been a great experience mainly because of
+all the friends from the constantly changing ``gang'' of foreign and
+Danish fellows at DAIMI including Allan, Claudio, Claus, Doina, Gabi,
+Henrik, Jan, Jesper, Jooyong, Johan, Kevin, Michael, Mikkel, Mirka,
+Rune, Tord, Thomas M, Tomas, and Troels; but not to forget the ones
+who have left Denmark and are now spread around the world:
+Barnie, Christopher, Emanuela and Paolo, Fitzi, Gosia and Darek, Jens,
+Jes\'us, Karl, Kirill, Marco, Nelly and Antonio, Philipp, Thomas P, and
+Saurabh. I thank you all for the wonderful time, both at and off the
+table-soccer table. Special thanks to
+Gosia and Henrik for constructive comments on the introduction of this
+thesis and to J\"urg and Serge for further comments.
+
+I would also like to thank Claude Cr\'epeau for hosting me for a
+fantastic summer half-year at McGill university in Montr\'eal where I
+had the chance to meet many interesting people doing quantum research
+and experience the exciting spot where the francophone part of North
+America meets the anglophone rest of the continent.
+
+I thank Prof.~Andreas Winter from the University of Bristol and
+Prof.~Stefan Wolf from ETH Z\"urich as well as Prof.~Susanne
+B{\o}dker from the University of Aarhus for agreeing to constitute the
+evaluation committee for my PhD thesis.
+
+Last but not least, I want to express my gratitude to my family for
+their immense love and support from the distance. I am infinitely
+grateful for the great childhood they gave me which was and still is an
+invaluable source of self-confidence for me.
+
+\vspace{8mm}
+This research was partially supported by the EU Project SECOQC,
+No:~FP6-2002-IST-1-506813.
+
+\vspace{2ex}
+\begin{flushright}
+  \emph{Christian Schaffner,}\\
+  \emph{{\AA}rhus, March 2, 2007.}
+\end{flushright}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

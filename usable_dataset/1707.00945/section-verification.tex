@@ -1,0 +1,182 @@
+
+\section{Verification in Ada/SPARK}
+\label{sec:verification-spark}
+
+% \subsection{Introduction to SPARK}
+% SPARK is a formally defined, imperative and strongly typed programming
+% language, founded specifically for use in high-integrity and
+% safety-critical applications and to leverage state-of-the-art
+% verification tools. SPARK~2014 is the latest release, which is a
+% complete redesign that adopts wide parts of Ada 2012, in particular a
+% deterministic subset thereof.  As a result, an Ada compiler can build
+% an executable from SPARK source code, and moreover, it also becomes
+% possible to write software which mixes both languages (though, there
+% are rules what kind of mixing is allowed). Since only the SPARK subset
+% is intended for formal verification, this means that a safety-critical
+% software can still make use of Ada features, if necessary, but this
+% should be minimized because those parts cannot be verified.  At the
+% present moment, there exists only one implementation of SPARK~2014,
+% maintained by AdaCore and Altran~\cite{GNATprove}.
+
+% We now briefly explain language features relevant for this paper. For
+% a more comprehensive overview we refer the reader to~\cite{SPARKUG}
+% and further~\cite{Trojanek2014}.
+
+% \textbf{Restrictions. } There are only few Ada features that are
+% restricted in the SPARK subset and worth mentioning in practice. Once
+% of them are pointers (called \emph{access} in Ada), which would make
+% formal verification hard and oftentimes impossible, as well known from
+% other verification tools. In extension to this, SPARK 2014 also
+% forbids the use of aliasing and allocators. Most of the remaining
+% restrictions (such as no \texttt{goto} statements, or expressions and
+% functions must be free of side effects) should be familiar to
+% developers concerned with safety-critical software, and can be largely
+% avoided by appropriate design and coding guidelines. However, the most
+% severe restriction is exclusion of exception handling.
+% %A SPARK program must only have one
+% %global handler that catches all exceptions, and subsequently
+% %terminates the program. 
+% As a consequence, SPARK programs first and foremost must be shown to
+% be free of run-time exceptions (called \emph{AoRTE} - absence of
+% run-time exceptions), which is going to be the main verification task.
+
+
+SPARK~2014 is a major redesign of the original SPARK language, which was intended for formal verification. SPARK~2014 now adopts Ada~2012 syntax, and covers a large subset of Ada. As a result, the GNAT Ada compiler can build
+an executable from SPARK~2014 source code, and even compile a program which mixes both languages. Compared to
+Ada, the most important exclusions are
+pointers (called \emph{access}), aliasing and allocators, as well as a
+ban of exception handling.
+As a consequence, SPARK programs first and foremost must be shown to
+be free of run-time exceptions (called \emph{AoRTE} - absence of
+run-time errors), which constitutes the main verification task.
+
+The SPARK language -- for the rest of this paper we refer to SPARK~2014 simply as SPARK -- is built
+on functional contracts and data flow contracts. Subprograms (procedures and
+functions) can be annotated with pre- and postconditions, as well as with
+data dependencies. GNATprove, the (only) static analyzer for SPARK~2014, aims to prove subprograms in a
+modular way, by analyzing each of them individually.
+The effects of callees are summarized by their
+post-condition when the calling subprogram is analyzed, and the
+precondition of the callee is imposing a proof obligation on the
+caller, i.e., the need to verify that the caller respects the callee's
+precondition. Further proof obligations arise from each
+language-defined check that is executed on the target, such as
+overflow checks, index checks, and so on. If all proofs are successful, 
+then the program is working according to its contracts 
+and no exceptions will be raised during execution, i.e., AoRTE is established. % no parentheses at end of sentence
+
+
+Internally, GNATprove~\cite{GNATprove} builds on the
+Why3 platform~\cite{why3}, which performs deductive verification on
+the proof obligations to generate verification conditions (VCs), and
+then passes them to a theorem solver of user's choice, e.g., cvc4, alt-ergo or z3. Note that there exists also a tool for abstract interpretation, which is, however, not discussed here.
+
+%mentioned already. not necessary:
+% \textbf{Multi-Threading.} Since its 2016 update, the SPARK tools support
+% the analysis of a deterministic subset of Ada's tasking facilities,
+% known as the \emph{Ravenscar Profile}~\cite{Ravenscar}. With this,
+% SPARK programs have become significantly more flexible and powerful
+% for their multi-thread support. The analyzer is able to understand the
+% data flow of multi-threaded applications, and point out possible race
+% conditions.
+
+% \textbf{State Abstraction. FIXME: do we need this? }The last feature that we mention here
+% is \emph{state abstraction} for packages. Packages with internal
+% states may hide these to the outside world, but for analysis is is
+% often required to express properties over the states from the outside
+% view. For example, whether a package is being initialized or not can
+% depend on a number of internal variables, but for the user of the
+% package who expects a usage contract from his point of view, this is
+% only an atomic proposition. In such cases, internal states can be
+% summarized and represented by an abstract state. This enables to
+% provide an outside-view specification of a package's behavior, and yet
+% perform the proofs on the internals of the package, which may be one
+% of many implementation choices.
+
+% \subsection{Deductive Verification Backend}
+% Internally, the SPARK tools build on the Why3 platform~\cite{why3},
+% which implements deductive verification by means of Weakest
+% Precondition (WP) calculus and passing the goal (precondition implies
+% WP) to a theorem solver of user's choice (e.g., cvc4, z3,
+% mathsat). Therefore, SPARK programs are first translated to WhyML,
+% where further axioms are available for lists, arithmetic operations
+% etc. Then, WP calculus is used to generate verification conditions
+% (VC), which subsequently are translated to the input language of the
+% selected prover, and hopefully discharged. Since provers have their
+% particular strength and weaknesses, Why3 (and therefore the SPARK
+% tools) allows to invoke as many solvers as needed to prove a
+% property. Consequently, each proof obligation in the SPARK program may
+% have multiple prover runs associated
+% % \footnote{In fact, complex proofs
+% %  could also be decomposed into smaller sub-proofs, and cause even
+% %  more runs.}. 
+% Some may run out of memory, others may be unable to
+% decide, and again others might produce a counterexample or discharge
+% the VC.
+% % we don't talk about the back-mapping here, that gnat2why performs. This is for another paper.
+
+% % \begin{itemize}
+% % \item 2-valued vs 3-valued logic~\cite{Chalin2005}
+% % \end{itemize}
+
+\subsection{The GNAT Dimensionality Checking System}
+We also want to introduce a feature that is not part of the SPARK
+language itself, but an implementation-defined extension of the GNAT compiler, and thus available for SPARK programs. 
+% Facts:
+% Dimension_System is an implementation defined aspect -> unique for GNAT     [GNAT_RM]
+% Implementation defined aspects possible since Ada2012
+% Aspect Dimension_System allows to specify up to 7 dimensions on a numeric derived type
+% GNAT provides definition of the International MKS system in the runtime package System.Dim.Mks.   [GNAT_RM]
+% Aspect Dimesion specifies the dimensionsof a \emph{subtype} of a dimensioned numeric type.    [GNAT_RM]
+% "when the dimensioned type is an integer type, then any dimension value must be an integer literal"  [GNAT_RM]
+%\begin{itemize}
+%\item GNAT's system, what does it do?
+%\item What use it is for the user?
+%\item What must the user do to use it?
+%\end{itemize}
+%
+%references: \cite{Polderman2013,Grein2014,Grein2003,Schonberg:2012:ISD:2402676.2402692}
+%
+% One Sentence Motivation
+%Checking the dimensions of physical calculations is an established practice in scientific disciplines but mostly ignored in software implementations.
+% History?
+%Previous attempts to implement a dimension system involved significant overhead either by operator overloading or due to additional run-time checks~\cite{Grein2003}.
+% Features
+Since Ada 2012, the GNAT compiler offers a dimension system for numeric types through implementation-defined aspects~\cite{Schonberg:2012:ISD:2402676.2402692}. 
+The dimension system can consist of up to seven base dimensions, % <-- oxford comma 
+and physical quantities are declared as subtypes, annotated with the exponents of each dimension.
+Expressions using such variables are statically analyzed by the compiler for their dimensional consistency.
+Furthermore, the dimensioned variables contribute to readability and documentation of the code. Inconsistencies such as the following are found (dividend and divisor are switched in the calculation of rate):
+
+\vspace{-1mm}\begin{lstlisting}[name=units]
+angle : Angle_Type := 20.0 * Degree;         
+dt    : Time_Type  := 100.0 * Milli * Second;
+rate  : Angular_Velocity_Type := dt / angle; -- compiler error
+\end{lstlisting}\vspace{-1mm}
+Note that scaling prefixes like \lstinline$Milli$ can be used, and
+that common conversions, such as between Degree and Radian in line 1, can be governed in a similar way.
+
+%
+% unfortunately too much detail:
+%To use the dimensionality checking system, the aspect \texttt{Dimension\_System} must be applied on a numeric derived type.
+%This aspect allows to specify the dimensions and the name and the symbol of each corresponding unit.
+%Afterwards, subtypes of the dimensioned type are declared with the aspect \texttt{Dimension} to assign the exponent of each dimension.
+%To reduce specification effort, the GNAT runtime also provides predefined types of the International MKS system in the package \texttt{System.Dim.%Mks}.
+
+In our project, we specified a unit system with the dimensions \emph{length}, \emph{mass}, \emph{time}, \emph{temperature}, \emph{current}, and \emph{angle}. 
+Adding angle as dimension provides better protection against assignments of dimensionless types, as proposed in~\cite{Xiang2015}.
+
+
+
+
+% Maybe just "verify dimensional consistency of physical computations".
+% How to setup
+% make it more explicit that you now talk about usage: "To make use of the dimensionality checking system, ..."
+
+%UNDO: The implementation defined aspect \texttt{Dimension\_System} can be applied on a numeric derived type and allows to specify up to 7 dimensions of that type. Subtypes of the dimensioned type define possible quantities by assigning the exponent of each dimension with the aspect \texttt{Dimension}.
+
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex"  ***
+%%% End: ***

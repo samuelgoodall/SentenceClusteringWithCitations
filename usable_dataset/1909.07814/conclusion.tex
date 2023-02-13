@@ -1,0 +1,17 @@
+\section{Conclusion}\label{sec:conclusion}
+\cryptflow\ is the first end-to-end system that translates high-level
+\tensorflow inference code to MPC protocols. It has 3 components - a) compiler from \tensorflow to \mpc, b) an improved semi-honest 3PC protocol for DNNs, and c) a generic technique to convert semi-honest secure protocols to malicious secure ones.
+% that makes a minimal trust assumption in hardware. 
+Using \cryptflow, we demonstrate the first instance of secure inference on large benchmarks such as \resnet\ and \densenet\ on the ImageNet dataset
+with both semi-honest (in about thirty seconds) and malicious security (in less than two minutes).
+ \cryptflow's modular design supports a variety of backends, and we hope that it can serve as a testbed for benchmarking new MPC protocols in the area. 
+
+Going forward, we would like to plugin protocols like SPDZ~\cite{mpspdz} and Delphi~\cite{delphi} in \cryptflow.
+%hope that protocol developers like~\cite{aby3,delphi} would integrate their work as backends to \cryptflow.
+Our more ambitious goal is to extend \cryptflow\ to support
+\tensorflow training.
+%% We would like to consider compiling \tensorflow training code as
+%% well.
+It is a challenging problem since in the absence of the GPU support, the
+overheads of MPC protocols for secure training can be prohibitive.
+%% However, none of the existing  \mpc protocols~\cite{secureml,securenn,aby3} for training have GPU support and thus the overheads of secure training are huge.

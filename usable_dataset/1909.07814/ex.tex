@@ -1,0 +1,133 @@
+\section{Motivating Example}\label{sec:toolchain}
+
+In this section, we describe the end-to-end working of \cryptflow\ through an example of logistic regression. The high-level toolchain is shown in Figure \ref{fig:cryptflowtoolchain}. We describe how code compilation happens from \tensorflow to \mpc protocols. 
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{cryptflowtoolchain.pdf}
+  \caption{\cryptflow: End-to-end toolchain}
+  \label{fig:cryptflowtoolchain}
+\end{figure}
+
+%% The developer would write code in \tensorflow, which is the first step
+%% of the toolchain.
+
+The \cryptflow\ toolchain takes as input code written in vanilla
+\tensorflow. For example, consider the code snippet for
+logistic regression over MNIST
+dataset in \tensorflow as shown in Figure \ref{fig:lrtf}. 
+Our compiler
+% compiles this code to \mpc protocols using the following
+%sequence of steps. It
+ first generates the
+\tensorflow graph dump (as shown in Figure \ref{fig:tfGraphDef}) as
+well as metadata to help compute the dimensions of all the tensors
+(Figure \ref{fig:tfGraphMetadata}). \ref{subsec:athosfrontend}
+provides more details on the frontend. Next, the \tensorflow graph
+dump is compiled into a high-level intermediate language HLIL. The
+code snippet for logistic regression in HLIL is shown in Figure
+\ref{fig:lrseedot}. Next, Athos' float-to-fixed converter translates
+the floating-point HLIL code to fixed-point code in a low-level
+intermediate language LLIL. This step requires Athos to
+compute the right precision to be used for maximum accuracy
+(Section~\ref{subsec:athosquantizer}).
+Figure \ref{fig:lrezpc} shows the
+LLIL code snippet for logistic regression. The function calls in this
+sequence can be implemented with a variety of secure computation
+backends - e.g. ABY~\cite{aby} for the case of 2-party secure
+computation, Porthos for the case of semi-honest 3-party secure
+computation (Section \ref{sec:porthos}) and Aramis (Section
+\ref{sec:aramis}) for the malicious secure variant. Different backends
+provide different security guarantees and hence vary in their
+performance. For this example, the three backends take
+227ms, 6.5ms, and 10.2ms respectively.
+
+\begin{figure}
+\small
+% \begin{minted}[mathescape,
+%                linenos,
+%                numbersep=5pt,
+%                gobble=2,
+%                frame=lines,
+%                framesep=2mm]{python}
+\begin{Verbatim}[frame=single]
+# x is an MNIST image of shape (1,784).
+# W and b are the model parameters.
+
+print(tf.argmax(tf.matmul(x, W) + b, 1))
+\end{Verbatim}
+% \end{minted}
+\caption{Logistic Regression: TensorFlow snippet}
+\label{fig:lrtf}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \resizebox{0.49\columnwidth}{!}{
+    \begin{subfigure}{0.4\columnwidth}
+      \centering
+      \includegraphics[scale=0.8]{E2E_TF_Graph_Dump.pdf}
+      \caption{}
+      \label{fig:tfGraphDef}
+    \end{subfigure}
+  }
+  \resizebox{0.38\columnwidth}{!}{
+    \begin{subfigure}{0.4\columnwidth}
+      \centering
+      \def\arraystretch{1.2}
+      \begin{tabular}{|p{1.2cm}|p{1.6cm}|}
+        \hline
+        Node & Outgoing \\ & dimensions \\ \hline \hline
+        x & $1 \times 784$\\ \hline
+        W & $784 \times 10$\\ \hline
+        MatMul & $1 \times 10$ \\\hline
+        b & $1 \times 10$ \\\hline
+        MatAdd & $1 \times 10$ \\\hline
+        ArgMax & $1 \times 1$ \\\hline
+      \end{tabular}
+    \caption{}
+    \label{fig:tfGraphMetadata}
+    \end{subfigure}
+  }
+  \caption{Logistic Regression: (a) \tensorflow graph definition (b) Metadata consisting of graph nodes and their outgoing dimensions}
+  \label{fig:lrtfgraphdump}
+\end{figure}
+
+\begin{SaveVerbatim}{HLIL_LR_Verbatim}
+xW = MatMul(x, W);
+xWb = MatAdd(xW, b);
+output(ArgMax(xWb));
+\end{SaveVerbatim}
+
+\begin{SaveVerbatim}[]{LLIL_LR_Verbatim}
+//Assume Athos chooses
+//15 bit precision
+
+xW = MatMul(x, W);
+ScaleDown(xW, 15);
+xWb = MatAdd(xW, b);
+output(ArgMax(xWb));
+\end{SaveVerbatim}
+
+\begin{figure}
+  \centering
+  \resizebox{0.47\columnwidth}{!}{
+    \begin{subfigure}{0.49\columnwidth}
+      \centering
+      \setlength{\fboxsep}{1.7mm}
+      \fbox{\BUseVerbatim[fontsize=\small]{HLIL_LR_Verbatim}}
+      \caption{}
+      \label{fig:lrseedot}
+    \end{subfigure}
+  }
+  \resizebox{0.47\columnwidth}{!}{
+    \begin{subfigure}{0.49\columnwidth}
+      \centering
+      \setlength{\fboxsep}{1.6mm}
+      \fbox{\BUseVerbatim[fontsize=\small]{LLIL_LR_Verbatim}}
+      \caption{}
+      \label{fig:lrezpc}
+    \end{subfigure}
+  }
+  \caption{Logistic Regression in (a) floating-point: HLIL syntax (b) fixed-point: LLIL syntax}
+\end{figure}

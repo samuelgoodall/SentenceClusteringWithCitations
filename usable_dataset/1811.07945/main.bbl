@@ -1,0 +1,266 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{tensorflow2015-whitepaper}
+M.~Abadi, A.~Agarwal, P.~Barham, E.~Brevdo, Z.~Chen, C.~Citro, G.~S. Corrado,
+  A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
+  M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
+  D.~Man\'{e}, R.~Monga, S.~Moore, D.~Murray, C.~Olah, M.~Schuster, J.~Shlens,
+  B.~Steiner, I.~Sutskever, K.~Talwar, P.~Tucker, V.~Vanhoucke, V.~Vasudevan,
+  F.~Vi\'{e}gas, O.~Vinyals, P.~Warden, M.~Wattenberg, M.~Wicke, Y.~Yu, and
+  X.~Zheng.
+\newblock {TensorFlow}: Large-scale machine learning on heterogeneous systems,
+  2015.
+\newblock Software available from tensorflow.org.
+
+\bibitem{inv:aharon2006k}
+M.~Aharon, M.~Elad, and A.~Bruckstein.
+\newblock K-svd: An algorithm for designing overcomplete dictionaries for
+  sparse representation.
+\newblock {\em IEEE Transactions on signal processing}, 54(11):4311, 2006.
+
+\bibitem{bruna2015super}
+J.~Bruna, P.~Sprechmann, and Y.~LeCun.
+\newblock Super-resolution with deep convolutional sufficient statistics.
+\newblock {\em arXiv preprint arXiv:1511.05666}, 2015.
+
+\bibitem{inv:candes-romberg-tao06a}
+E.~Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Robust uncertainty principles: Exact signal reconstruction from
+  highly incomplete fourier information.
+\newblock {\em IEEE Trans. Inform. Theory}, 52(2):489--509, 2006.
+
+\bibitem{inv:candes-romberg-tao06b}
+E.~Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Stable signal recovery from incomplete and inaccurate measurements.
+\newblock {\em Comm. Pure Appl. Math.}, 59(8):1207--1223, 2006.
+
+\bibitem{inv:candes-tao06}
+E.~Cand\`es and T.~Tao.
+\newblock Near optimal signal recovery from random projections: Universal
+  encoding strategies?
+\newblock {\em IEEE Trans. Inform. Theory}, 52(12):5406--5425, 2006.
+
+\bibitem{creath1985phase}
+K.~Creath.
+\newblock Phase-shifting speckle interferometry.
+\newblock {\em Applied Optics}, 24(18):3053--3058, 1985.
+
+\bibitem{dong2014learning}
+C.~Dong, C.~C. Loy, K.~He, and X.~Tang.
+\newblock Learning a deep convolutional network for image super-resolution.
+\newblock In {\em European conference on computer vision}, pages 184--199.
+  Springer, 2014.
+
+\bibitem{inv:donoho2006compressed}
+D.~L. Donoho.
+\newblock Compressed sensing.
+\newblock {\em IEEE Transactions on information theory}, 52(4):1289--1306,
+  2006.
+
+\bibitem{dosovitskiy2016generating}
+A.~Dosovitskiy and T.~Brox.
+\newblock Generating images with perceptual similarity metrics based on deep
+  networks.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  658--666, 2016.
+
+\bibitem{inv:elad2006image}
+M.~Elad and M.~Aharon.
+\newblock Image denoising via learned dictionaries and sparse representation.
+\newblock In {\em 2006 IEEE Computer Society Conference on Computer Vision and
+  Pattern Recognition}, volume~1, pages 895--900. IEEE, 2006.
+
+\bibitem{gatys2015texture}
+L.~Gatys, A.~S. Ecker, and M.~Bethge.
+\newblock Texture synthesis using convolutional neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  262--270, 2015.
+
+\bibitem{gerchberg1972practical}
+R.~W. Gerchberg.
+\newblock A practical algorithm for the determination of phase from image and
+  diffraction plane pictures.
+\newblock {\em Optik}, 35:237--246, 1972.
+
+\bibitem{goodfellow2014generative}
+I.~Goodfellow, J.~Pouget-Abadie, M.~Mirza, B.~Xu, D.~Warde-Farley, S.~Ozair,
+  A.~Courville, and Y.~Bengio.
+\newblock Generative adversarial nets.
+\newblock In {\em Advances in neural information processing systems}, pages
+  2672--2680, 2014.
+
+\bibitem{goodman2005introduction}
+J.~W. Goodman.
+\newblock {\em Introduction to Fourier optics}.
+\newblock Roberts and Company Publishers, 2005.
+
+\bibitem{goodman1967digital}
+J.~W. Goodman and R.~Lawrence.
+\newblock Digital image formation from electronically detected holograms.
+\newblock {\em Applied physics letters}, 11(3):77--79, 1967.
+
+\bibitem{goy2018low}
+A.~Goy, K.~Arthur, S.~Li, and G.~Barbastathis.
+\newblock Low photon count phase retrieval using deep learning.
+\newblock {\em arXiv preprint arXiv:1806.10029}, 2018.
+
+\bibitem{gregor2010learning}
+K.~Gregor and Y.~LeCun.
+\newblock Learning fast approximations of sparse coding.
+\newblock In {\em Proceedings of the 27th International Conference on
+  International Conference on Machine Learning}, pages 399--406. Omnipress,
+  2010.
+
+\bibitem{gupta2011modified}
+P.~Gupta, P.~Srivastava, S.~Bhardwaj, and V.~Bhateja.
+\newblock A modified psnr metric based on hvs for quality assessment of color
+  images.
+\newblock In {\em Communication and Industrial Application (ICCIA), 2011
+  International Conference on}, pages 1--4. IEEE, 2011.
+
+\bibitem{he2016deep}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 770--778, 2016.
+
+\bibitem{johnson2016perceptual}
+J.~Johnson, A.~Alahi, and L.~Fei-Fei.
+\newblock Perceptual losses for real-time style transfer and super-resolution.
+\newblock In {\em European Conference on Computer Vision}, pages 694--711.
+  Springer, 2016.
+
+\bibitem{kingma2014adam}
+D.~P. Kingma and J.~Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{lecun2015deep}
+Y.~LeCun, Y.~Bengio, and G.~Hinton.
+\newblock Deep learning.
+\newblock {\em nature}, 521(7553):436, 2015.
+
+\bibitem{ledig2017photo}
+C.~Ledig, L.~Theis, F.~Husz{\'a}r, J.~Caballero, A.~Cunningham, A.~Acosta,
+  A.~P. Aitken, A.~Tejani, J.~Totz, Z.~Wang, et~al.
+\newblock Photo-realistic single image super-resolution using a generative
+  adversarial network.
+\newblock In {\em CVPR}, volume~2, page~4, 2017.
+
+\bibitem{li2018spectral}
+S.~Li and G.~Barbastathis.
+\newblock Spectral pre-modulation of training examples enhances the spatial
+  resolution of the phase extraction neural network (phenn).
+\newblock {\em Optics Express}, 26(22):29340--29352, 2018.
+
+\bibitem{lim2008wide}
+D.~Lim, K.~K. Chu, and J.~Mertz.
+\newblock Wide-field fluorescence sectioning with hybrid speckle and
+  uniform-illumination microscopy.
+\newblock {\em Optics letters}, 33(16):1819--1821, 2008.
+
+\bibitem{mahendran2015understanding}
+A.~Mahendran and A.~Vedaldi.
+\newblock Understanding deep image representations by inverting them.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 5188--5196, 2015.
+
+\bibitem{inv:mardani2017b}
+M.~Mardani, H.~Monajemi, V.~Papyan, S.~Vasanawala, D.~Donoho, and J.~Pauly.
+\newblock Recurrent generative residual networks for proximal learning and
+  automated compressive image recovery.
+\newblock {arXiv}:1711.10046, 11 2017.
+
+\bibitem{mathieu2015deep}
+M.~Mathieu, C.~Couprie, and Y.~LeCun.
+\newblock Deep multi-scale video prediction beyond mean square error.
+\newblock {\em arXiv preprint arXiv:1511.05440}, 2015.
+
+\bibitem{Pan_2018_CVPR}
+J.~Pan, S.~Liu, D.~Sun, J.~Zhang, Y.~Liu, J.~Ren, Z.~Li, J.~Tang, H.~Lu, Y.-W.
+  Tai, and M.-H. Yang.
+\newblock Learning dual convolutional neural networks for low-level vision.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, June 2018.
+
+\bibitem{rivenson2017deep}
+Y.~Rivenson, Z.~G{\"o}r{\"o}cs, H.~G{\"u}naydin, Y.~Zhang, H.~Wang, and
+  A.~Ozcan.
+\newblock Deep learning microscopy.
+\newblock {\em Optica}, 4(11):1437--1443, 2017.
+
+\bibitem{rivenson2018phase}
+Y.~Rivenson, Y.~Zhang, H.~G{\"u}nayd{\i}n, D.~Teng, and A.~Ozcan.
+\newblock Phase recovery and holographic image reconstruction using deep
+  learning in neural networks.
+\newblock {\em Light: Science \& Applications}, 7(2):17141, 2018.
+
+\bibitem{ronneberger2015u}
+O.~Ronneberger, P.~Fischer, and T.~Brox.
+\newblock U-net: Convolutional networks for biomedical image segmentation.
+\newblock In {\em International Conference on Medical image computing and
+  computer-assisted intervention}, pages 234--241. Springer, 2015.
+
+\bibitem{inv:rubinstein2010dictionaries}
+R.~Rubinstein, A.~M. Bruckstein, and M.~Elad.
+\newblock Dictionaries for sparse representation modeling.
+\newblock {\em Proceedings of the IEEE}, 98(6):1045--1057, 2010.
+
+\bibitem{russakovsky2015imagenet}
+O.~Russakovsky, J.~Deng, H.~Su, J.~Krause, S.~Satheesh, S.~Ma, Z.~Huang,
+  A.~Karpathy, A.~Khosla, M.~Bernstein, et~al.
+\newblock Imagenet large scale visual recognition challenge.
+\newblock {\em International Journal of Computer Vision}, 115(3):211--252,
+  2015.
+
+\bibitem{simonyan2013deep}
+K.~Simonyan, A.~Vedaldi, and A.~Zisserman.
+\newblock Deep inside convolutional networks: Visualising image classification
+  models and saliency maps.
+\newblock {\em arXiv preprint arXiv:1312.6034}, 2013.
+
+\bibitem{simonyan2014very}
+K.~Simonyan and A.~Zisserman.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock {\em arXiv preprint arXiv:1409.1556}, 2014.
+
+\bibitem{sinha2017lensless}
+A.~Sinha, J.~Lee, S.~Li, and G.~Barbastathis.
+\newblock Lensless computational imaging through deep learning.
+\newblock {\em Optica}, 4(9):1117--1125, 2017.
+
+\bibitem{teague1983deterministic}
+M.~R. Teague.
+\newblock Deterministic phase retrieval: a green’s function solution.
+\newblock {\em JOSA}, 73(11):1434--1441, 1983.
+
+\bibitem{van1996modelling}
+A.~van~der Schaaf and J.~H. van Hateren.
+\newblock Modelling the power spectra of natural images: statistics and
+  information.
+\newblock {\em Vision research}, 36(17):2759--2770, 1996.
+
+\bibitem{wang2004image}
+Z.~Wang, A.~C. Bovik, H.~R. Sheikh, and E.~P. Simoncelli.
+\newblock Image quality assessment: from error visibility to structural
+  similarity.
+\newblock {\em IEEE transactions on image processing}, 13(4):600--612, 2004.
+
+\bibitem{wang2003multiscale}
+Z.~Wang, E.~P. Simoncelli, and A.~C. Bovik.
+\newblock Multiscale structural similarity for image quality assessment.
+\newblock In {\em The Thrity-Seventh Asilomar Conference on Signals, Systems \&
+  Computers, 2003}, volume~2, pages 1398--1402. Ieee, 2003.
+
+\bibitem{yang2014single}
+C.-Y. Yang, C.~Ma, and M.-H. Yang.
+\newblock Single-image super-resolution: A benchmark.
+\newblock In {\em European Conference on Computer Vision}, pages 372--386.
+  Springer, 2014.
+
+\bibitem{yosinski2015understanding}
+J.~Yosinski, J.~Clune, A.~Nguyen, T.~Fuchs, and H.~Lipson.
+\newblock Understanding neural networks through deep visualization.
+\newblock {\em arXiv preprint arXiv:1506.06579}, 2015.
+
+\end{thebibliography}

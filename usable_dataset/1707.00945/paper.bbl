@@ -1,0 +1,52 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+
+\bibitem{AdaDriverLib}
+AdaCore: {Ada Drivers Library} (2015), available online at
+  \url{https://github.com/AdaCore}
+
+\bibitem{Brandon2016}
+Brandon, C., Chapin, P.: {The Use of SPARK in a Complex Spacecraft}. HILT
+  (2016)
+
+\bibitem{Ravenscar}
+Burns, A.: {The Ravenscar Profile}. ACM SIGAda Ada Letters  19(4),  pp. 49--52
+  (1999)
+
+\bibitem{Chapman2014}
+Chapman, R., Schanda, F.: {Are we there yet? 20 Years of industrial theorem
+  proving with SPARK}. LLCS  Vol. 8558(March 1987),  17--26 (2014)
+
+\bibitem{Dross2014}
+Dross, C., Efstathopoulos, P., Lesens, D., Mentr, D., Mentr{\'{e}}, D., Moy,
+  Y.: {Rail, Space, Security: Three Case Studies for SPARK 2014}. ERTS2 2014
+  pp. 1--10 (2014)
+
+\bibitem{why3}
+Filli{\^{a}}tre, J.C., Paskevich, A.: {Why3: Where Programs Meet Provers}
+  (2013)
+
+\bibitem{GNATprove}
+Hoang, D., Moy, Y., Wallenburg, A., Chapman, R.: {SPARK~2014 and GNATprove}.
+  International Journal on Software Tools for Technology Transfer  17(6),
+  695--707 (2015)
+
+\bibitem{pixhawk2011}
+Meier, L., Tanskanen, P., Fraundorfer, F., Pollefeys, M.: {PIXHAWK: A system
+  for autonomous flight using onboard computer vision}. In: ICRA. pp.
+  2992--2997 (2011)
+
+\bibitem{Schonberg:2012:ISD:2402676.2402692}
+Schonberg, E., Pucci, V.: {Implementation of a Simple Dimensionality Checking
+  System in Ada 2012}. In: HILT '12. pp. 35--42. ACM, New York, NY, USA (2012)
+
+\bibitem{Trojanek2014}
+Trojanek, P., Eder, K.: {Verification and testing of mobile robot navigation
+  algorithms: A case study in SPARK}. In: IROS 2014. pp. 1489--1494 (2014)
+
+\bibitem{Xiang2015}
+Xiang, J., Knight, J., Sullivan, K.: Real-world types and their application.
+  In: SAFECOMP 2015. pp. 471--484. Springer International Publishing (2015)
+
+\end{thebibliography}

@@ -1,0 +1,191 @@
+\begin{comment}
+\subsection{Deep Neural Networks}
+A Deep Neural Network (DNN) consists of multiple layers each performing a specific operation on a layer's input (typically a matrix) to prepare the output to be fed into the next layer as input. We now define some common operations performed by different layers in a DNN. For the rest of the discussion, we assume the input to a layer as a matrix $X$ of dimension $a \times b$ and the output as a matrix $Y$ of dimension $c \times d$. In the following discussion, we talk about 2-dimensional matrices as input and output from layers. The description can be easily extended to n-dimensional matrices.
+
+\begin{itemize}
+\item \textsf{ReLU($x$)}: A Rectifier Linear Unit (\textsf{ReLU}) is defined by $\mathsf{max(x, 0)}$. In the context of Deep Neural Networks, \textsf{ReLU} is used as an activation function. A \textsf{ReLU} layer does the following: $\forall$ $(i,j)$ $\in ([a], [b])$, where $[n]=\{0, 1, ..., n-1\}$, outputs $Y$ such that $Y[i][j]=$ \textsf{ReLU($X[i][j]$)}. Note that here $c=a$ and $d=b$.
+\item \textsf{Batch Normalization}: This technique has recently been used in popular CNNs where the output of select intermediate layers is normalized across a mini-batch of images. It proceeds as follows: $\forall$ $(i,j)$ $\in ([a], [b])$, where $[n]=\{0, 1, ..., n-1\}$, outputs $Y$ such that $Y[i][j] = c_1\left(\frac{X[i][j]-\mu}{\sigma}\right)+c_2$, where constants $c_1$ and $c_2$ are learned during training, and $\mu$ and $\sigma$ denote mean and standard deviation, respectively, of the mini-batch. During inference, the mean and standard deviation are taken to be those of the entire training set.
+\item \textsf{Fully Connected}: A fully connected layer is defined by a weight matrix $W$ with dimension $b \times d$ and a bias matrix $E$ with dimension $c \times d$. This layer outputs $Y$ computed as $Y = X \cdot W + E$, where $\cdot$ defines a regular matrix multiplication operation, with $c=a$.
+\item \textsf{Convolution}: A convolution layer is defined by a filter matrix $F$ with dimension $m \times n$ and stride parameters $s_x$ (stride along row) and $s_y$ (stride along column). For this discussion, we assume $s_x = s_y = 1$. Let us define a function $f(A, B)=A \odot B$, where $\odot$ is the dot-product operation (element-wise product followed by additive reduction) between 2 matrices. A convolution layer does the following: $\forall$ $(i,j)$ $\in (I, J)$, where $I = \{0, 1, ..., a-m+1\}$ and $J = \{0, 1, ..., b-n+1\}$, outputs $Y$ such that $Y[i][j] = f(\mathsf{submat}_{m,n}(X, i, j), F)$, where $\mathsf{submat}_{m,n}(A, i, j)$ gives the sub-matrix of dimension equal to that of filter $F$, i.e. $m \times n$, with its top left point at position $(i,j)$ in matrix $A$. Here $c = a-m+1$ and $d = b-n+1$.
+\item \textsf{MaxPool} and \textsf{AvgPool}: \textsf{MaxPool} and \textsf{AvgPool} layers are defined by a stencil of dimension $m \times n$ and stride parameters $s_x$ (stride along row) and $s_y$ (stride along column). Just like \textsf{Convolution}, we assume $s_x = s_y = 1$. Let us define a function $f_{\alpha,\beta}(A, i, j) = g(\mathsf{submat}_{\alpha,\beta}(A, i, j))$ ($\mathsf{submat}$ function as defined above in \textsf{Convolution}), where $g$ can be instantiated as any function that takes as input a matrix and outputs a single value. These layers do that following: $\forall$ $(i,j)$ $\in (I, J)$, where $I = \{0, 1, ..., a-m+1\}$ and $J = \{0, 1, ..., b-n+1\}$, output $Y$ such that $Y[i][j] = f_{m, n}(X, i, j)$. For \textsf{MaxPool}, $g(A)$ returns the maximum value from the matrix $A$, and for \textsf{AvgPool}, it returns the average of all the values in the matrix $A$. The output dimension $c \times d$ satisfy $c = a-m+1$ and $d = b-n+1$.
+\end{itemize}
+\end{comment}
+\subsection{Algorithms used by Porthos}\label{appendix:porthos}
+The additional algorithms that reshape filters, input, and output, used by Porthos are shown in Algorithms \ref{algo:reshapefilter}, \ref{algo:reshapeinput}, and \ref{algo:reshapeoutput}.
+
+\begin{algorithm}[h]
+\KwIn{$X \in \bbZ_L^{f \times f}$.}
+\KwOut{$Z \in \bbZ_L^{f^2 \times 1}$.}
+1. \textbf{for} $i = \{0, ..., f-1\}$ do \\
+2. \hspace{10mm} \textbf{for} $j = \{0, ..., f-1\}$ do \\
+3. \hspace{10mm} \hspace{10mm} $Z[i \cdot f + j] = X[i][j]$\\
+4. \hspace{10mm} \textbf{end for}\\
+5. \textbf{end for}
+
+    \caption{{ ReshapeFilter} \label{algo:reshapefilter}}
+
+\end{algorithm}
+
+\begin{algorithm}[h]
+\KwIn{$X \in \mathbb{Z}_L^{m \times m}$.}
+\KwOut{$Z \in \mathbb{Z}_L^{n^2 \times f^2}$ where $n = m-f+1$.}
+\textbf{Global Information}: Filter dimension $f$.\\
+1. \textbf{for} $i = \{0, ..., m-f\}$ do \\
+2. \hspace{10mm} \textbf{for} $j = \{0, ..., m-f\}$ do \\
+3. \hspace{10mm} \hspace{10mm} \textbf{for} $k = \{0, ..., f-1\}$ do \\
+4. \hspace{10mm} \hspace{10mm} \hspace{10mm} \textbf{for} $l = \{0, ..., f-1\}$ do \\
+5. \hspace{10mm} \hspace{10mm} \hspace{10mm} \hspace{10mm} $Z[i \cdot (m-f+1) + j][k\cdot f+j] = X[k+i][l+j]$\\
+6. \hspace{10mm} \hspace{10mm} \hspace{10mm} \textbf{end for}\\
+7. \hspace{10mm} \hspace{10mm} \textbf{end for}\\
+8. \hspace{10mm} \textbf{end for}\\
+9. \textbf{end for}
+
+    \caption{{ ReshapeInput} \label{algo:reshapeinput}}
+
+\end{algorithm}
+
+\begin{algorithm}[h]
+\KwIn{$X \in \bbZ_L^{n^2 \times 1}$.}
+\KwOut{$Z \in \bbZ_L^{n \times n}$.}
+1. \textbf{for} $i = \{0, ..., n-1\}$ do \\
+2. \hspace{10mm} \textbf{for} $j = \{0, ..., n-1\}$ do \\
+3. \hspace{10mm} \hspace{10mm} $Z[i][j] = X[i\cdot n + j]$\\
+4. \hspace{10mm} \textbf{end for}\\
+5. \textbf{end for}
+
+    \caption{{ ReshapeOutput} \label{algo:reshapeoutput}}
+
+\end{algorithm}
+
+\subsection{Batch Normalization}\label{appendix:batchnorm}
+Batch Normalization \cite{batchNormPaper} is used to normalize the inputs to intermediate layers across a mini-batch of images. 
+For a batch $B$ of inputs, let $\mu_B$ and $\sigma_B^2$ be the mean and the variance respectively. 
+For an input $x$, the output of the batch normalization layer is defined as
+\[ BN(x) = \gamma\frac{\left( x - \mu_B \right)}{\sqrt{\sigma_B^2 + \epsilon}} + \beta \]
+where $\gamma$ and $\beta$ are the model parameters learned during training phase. In the inference phase, $\mu_B$ and $\sigma_B^2$ represent the mean and variance of the entire training dataset.
+
+%\pagebreak
+\subsection{Accuracy of Athos}\label{appendix:accuracies}
+
+%\pagebreak
+%\begin{comment}
+\section{Accuracy of Athos}\label{appendix:accuracies}
+
+% This section presents Top 1 and Top 5 accuracies of Athos on \densenet\ running on ImageNet.
+In this section, we present the Top 1 and Top 5 accuracies of Athos on the ImageNet dataset. 
+
+\begin{figure}
+  \includegraphics[width=0.8\linewidth]{resnetaccuracy1.pdf}
+  \caption{\resnet: Top 1 accuracy vs Scale}
+  \label{fig:resnetaccuracy1}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=0.8\linewidth]{resnetaccuracy5.pdf}
+  \caption{\resnet: Top 5 accuracy vs Scale}
+  \label{fig:resnetaccuracy5}
+\end{figure}
+
+%\begin{figure}
+%  \includegraphics[width=0.8\linewidth]{squeezenetaccuracy1.pdf}
+ % \caption{\squeezenet: Top 1 accuracy vs Scale}
+  %\label{fig:squeezenetaccuracy1}
+%\end{figure}
+
+%\begin{figure}
+ % \includegraphics[width=0.8\linewidth]{squeezenetaccuracy5.pdf}
+ % \caption{\squeezenet: Top 5 accuracy vs Scale}
+  %\label{fig:squeezenetaccuracy5}
+%\end{figure}
+
+\begin{figure}
+  \includegraphics[width=0.8\linewidth]{densenetaccuracy1.pdf}
+  \caption{\densenet: Top 1 accuracy vs Scale}
+  \label{fig:densenetaccuracy1}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=0.8\linewidth]{densenetaccuracy5.pdf}
+  \caption{\densenet: Top 5 accuracy vs Scale}
+  \label{fig:densenetaccuracy5}
+\end{figure}
+%\end{comment}
+% \begin{figure}
+%   \includegraphics[width=0.8\linewidth]{squeezenetaccuracy1.pdf}
+%   \caption{\squeezenet: Top 1 accuracy vs Scaling Factor}
+%   \label{fig:squeezenetaccuracy1}
+% \end{figure}
+
+\subsection{Comparison with 2PC/FHE}
+\label{unfaircomp}
+See Table~\ref{tab:porthosvspriorcifar10} which validates the well-known fact that 3PC protocols like Porthos are much faster than 2PC/FHE-based approaches.
+We omit other 2PC/FHE works (\cite{secureml,ezpc,nhe,nhe2,delphi}, etc.) as the performance comparisons are similar and do not provide additional insights.
+\begin{table}
+  \centering
+%  \resizebox{\columnwidth}{!}{
+
+      \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Benchmark & CHET & MiniONN  & Gazelle & Porthos\\
+    \hline
+	$\squeezenet^*$ (CIFAR) & $1342$ & - & - & $0.05$ \\
+	\hline
+    MiniONN (CIFAR) & - & $544$  & $12.9$ & $0.36$\\
+	\hline
+    MiniONN (MNIST) & - & 9.4  & 0.81 & 0.03\\
+   \hline 
+\end{tabular}
+%}
+ \caption{Comparison with 2PC  -- All times in seconds. CHET replaces ReLUs in a small \squeezenet\ with square activations.}
+\label{tab:porthosvspriorcifar10}
+%\tableup
+	%\vspace{-0.5cm}
+\end{table}
+%\mayank{Adding the comparison of Aramis with QuantizedNN here. QuantizedNN uses MP-SDPZ only, so this table serves the purpose of a comparison with both of them.}
+
+\subsection{Proof of malicious security}
+\label{app:proof}
+For simplicity, consider the case of single malicious party $P_i$. 
+Informally, we argue that our technique constrains $P_i$ to follow the instructions of the semi-honest protocol $\pi(\cdot)$ faithfully. 
+Or, deviating from faithful execution would result in some honest party to abort. 
+%Below, we give a security proof using the standard simulation paradigm (we refer the reader to~\cite{gmw,canetti00} for details on the paradigm).
+%
+The first $\compute$ invocation of $\fattest^{(\vk_i,\sksign_i)}$ fixes the input of $P_i$ used in the protocol. 
+Since every other $\fattest^{(\vk_j,\sksign_j)}$ reliably knows
+the verification key $\vk_i$ used by $\fattest^{(\vk_i,\sksign_i)}$,
+it checks the signatures on the function description (i.e., $\token^{(i)}_{\pi^*}$)
+ as well as the messages of the protocol. The unforgeability of the signature scheme guarantees that $P_i$ cannot forge signatures on incorrectly generated protocol messages. Note that we use this property to ensure that both of the following signatures cannot be forged: (a) signatures under $\vk_i$ on messages generated by $\fattest^{(\vk_i,\sksign_i)}$ and sent to honest $P_j$ (b) signatures under $\vk_j$ on messages sent by $P_j$ being fed into $\fattest^{(\vk_i,\sksign_i)}$. 
+%
+Also, $\fattest^{(\vk_i,\sksign_i)}$ provides correct randomness to generate messages of $P_i$ in the semi-honest secure protocol. 
+%
+Hence, all messages from $P_i$ to any honest party $P_j$ are generated correctly as directed by $\pi$. 
+This argument can be easily extended to multiple colluding corrupt parties.
+
+%Below, we give a security proof using the standard simulation paradigm (we refer the reader to~\cite{gmw,canetti00} for details on the paradigm).
+
+Formally, we give a security proof using the standard simulation paradigm (we refer the reader to~\cite{gmw,canetti00} for details on the paradigm).
+%we prove simulation based security, %(Section~\ref{sec:sim-security}),  
+That is, the protocol in Figure~\ref{fig:shtomprotocol} securely realizes the ideal \mpc functionality described in Figure~\ref{fig:fideal} against malicious adversaries. 
+
+\begin{theorem}[Restated]
+\label{theorem:maliciousmpc}
+Let $\pi(\cdot)$ be a semi-honest secure MPC protocol securely realizing $\fmpc^f$. Then, protocol $\protshtom$ described in Figure \ref{fig:shtomprotocol} securely realizes $\fmpc^f$ in the $\fattest^{(\vk_i,\sksign_i)}-$hybrid model (with $i \in [n]$) against malicious adversaries.
+\end{theorem}
+
+\newcommand{\simush}{\simu'}
+
+\noindent\begin{proof}[Proof Sketch]  Let $\adv$ be the real world adversary. 
+Ideal world adversary $\simu$ that simulates the view of $\adv$ is as follows: 
+Let $\simush$ be the ideal world adversary or the semi-honest simulator for $\pi$ (this exists because $\pi$ is semi-honest secure). 
+$\simu$ picks $\{(\vk_k,\sksign_k)\}_{k\in[n]}$ and gives $\{\vk_k\}_{k \in [n]}$ to $\adv$. 
+We denote a corrupt party by $P_i$ and honest party by $P_j$.
+Next, when $\adv$ invokes an instance of $\fattest^{(\vk_i, \sksign_i)}$ on command $\gcommit$ for a corrupted party $P_i$, $\simu$ simulates the correct behavior of $\fattest^{(\vk_i,\sksign_i)}$. 
+Also, $\simu$ sends correctly generated tokens $\{\token^{(j)}_{\pi^*}\}$ for all honest parties to $\adv$. 
+When $\simu$ receives token from $\adv$ corresponding to a corrupted party $P_i$, it checks it against $\pi^*$ and $\vk_i$. It aborts if verification fails.
+When $\adv$ invokes $\fattest^{(\vk_i, \sksign_i)}$ with $x_i$, $\simu$ stores it as input of $P_i$. When $\adv$ commits to inputs of all corrupt parties, $\simu$ sends these to $\fmpc^f$ to learn output $y$. It sends inputs of corrupt parties and outputs $y$ to $\simush$ that generates the view of the adversary in the semi-honest protocol, that contains the randomness for all corrupt parties as well as the transcript of the protocol. Using this, it is easy for $\simu$ to simulate the view of $\adv$ in the rest of the protocol. 
+The indistinguishability of the adversary's view in real and ideal executions follows from the semi-honest security of $\pi$. 
+\end{proof}
+
+
+
+

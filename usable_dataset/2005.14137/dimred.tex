@@ -1,0 +1,41 @@
+% \section{Dimension Reduction-assisted Boundary Attack} \Huichen{change title to something related to `theory' blablabla?}
+\section{Theoretic Analysis on \name}
+% \subsection{Dimension Reduction Theorem}
+% \section{Dimension Reduction Helps Gradient Estimation}
+\label{sec:dimred-theory}
+
+% We propose to apply dimension reduction techniques to improve the gradient estimation quality. The intuition is straightforward: if the dimension of the space from which we sample the $u$'s is smaller, then the estimation quality will be better. Hence, we will choose a subspace in $\mathbb{R}^m$ from which we sample the random perturbations.
+% We theoretically show that the gradient estimation quality will be better if we can sample from an informative subspace rather than from the entire space.
+% In this section, w
+We theoretically analyze how dimension reduction helps with the gradient estimation in \name. We show that the gradient estimation bound is tighter by sampling from a representative subspace rather than the original space.
+
+We consider the gradient estimation as in Eqn. \ref{eq:MC_gradient_estimation} and let $\rho = \frac{||\text{proj}_{\text{span}(W)}(\nabla S)||_2}{||\nabla S||_2}$ denote the proportion of $\nabla S$ that lies on the chosen subspace $\text{span}(W)$. Then we have the following theorem on the expectation of the cosine similarity between $\nabla S$ and estimated $\widetilde{\nabla S}$:
+
+\begin{theorem}
+\label{tho:dimred}
+Suppose 1) $S({\bf x})$ has $L$-Lipschitz gradients in a neighborhood of $\bf x$, 2) the sampled ${\bf v}_1, \ldots, {\bf v}_B$ are orthogonal to each other, and 3) $W^\intercal W = I$, then the expected cosine simliarity between $\widetilde{\nabla S}$ and $\nabla S$ can be bounded by:
+% For a boundary point $x$, suppose that 1) $S(x)$ has $L$-Lipschitz gradients in a neighborhood of $x$, 2) the sampled ${\bf v}_1, \ldots, {\bf v}_B$ are orthogonal to each other, 3) $W^\intercal W = I$. Let constant $\rho = \frac{||\text{proj}_{\text{span}(W)}(\nabla S)||_2}{||\nabla S||_2}$ denote the proportion of $\nabla S$ that lies on $\text{span}(W)$. Then the expected cosine simliarity between $\widetilde{\nabla_W y}$ and $\nabla y$ can be bounded by:
+\begin{align}
+    &\bigg( 2\bigg(1-(\frac{L\delta}{2||\nabla S||_2})^2\bigg)^{\frac{n-1}{2}} - 1 \bigg)c_n\rho\sqrt{\frac B n} \\
+    \leq & \mathbb{E}\big[\cos (\widetilde{\nabla S}, \nabla S) \big]\\
+    \leq & c_n\rho\sqrt{\frac B n}
+\end{align}
+where $c_n$ is a coefficient related with the subspace dimension $n$ and can be bounded by $c_n \in (2/\pi, 1)$. In particular:
+\begin{equation}
+    \label{eqn:grad-est-qual-dr}
+    \lim_{\delta\rightarrow 0}\mathbb{E}\big[\cos (\widetilde{\nabla_W S}, \nabla S) \big] = c_n\rho 
+    \sqrt{\frac B n}.
+\end{equation}
+\end{theorem}
+The theorem proof is in Appendix \ref{sec:tho-proof}. 
+If we sample from the entire space (i.e. $\text{span}(W) = \mathbb{R}^m$), the expected cosine similarity is $c_m\sqrt{\frac{B}{m}}$.
+If we let $m=3\times224\times224$ and $B=100$, the similarity is only around 0.02.
+% Hence, we claim that gradient estimation by sampling from the entire space is not an efficient estimation approach.
+
+On the other hand, if the subspace basis $w$'s are randomly chosen, then $\rho \approx \sqrt{\frac{n}{m}}$ and the estimation quality is low. With larger $\rho$, the estimation quality will be better than sampling from the entire space.
+Therefore, we further explore three approaches to optimize the representative subspace that contains a larger portion of the gradient as discussed in Section~\ref{sec:subspaces}.
+For example, in the experiments we see that when $n=m/16$, we can reach $\rho=0.5$ and the expected cosine similarity increase to around 0.06.
+This improves the gradient estimation quality which leads to more efficient attacks.
+% with a carefully chosen subspace with more information, we can have a larger $\rho$ to achieve better estimation quality of the gradient. Thus, the key is to choose a subspace that maximizes $\rho$.
+
+

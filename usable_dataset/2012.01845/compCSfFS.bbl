@@ -1,0 +1,177 @@
+\begin{thebibliography}{10}
+
+\bibitem{BRV2001}
+P.~Blackburn, M.~de~Rijke, and Y.~Venema.
+\newblock {\em Modal Logic}.
+\newblock Number~53 in Cambridge Tracts in Theoretical Computer Science.
+  Cambridge University Press, 2001.
+
+\bibitem{BloomP95}
+B.~Bloom and R.~Paige.
+\newblock Transformational design and implementation of a new efficient
+  solution to the ready simulation problem.
+\newblock {\em Sci. Comput. Program.}, 24(3):189--220, 1995.
+
+\bibitem{CaoCK11}
+Y.~Cao, G.~Chen, and E.E. Kerre.
+\newblock Bisimulations for fuzzy-transition systems.
+\newblock {\em {IEEE} Trans. Fuzzy Systems}, 19(3):540--552, 2011.
+
+\bibitem{CaoSWC13}
+Y.~Cao, S.X. Sun, H.~Wang, and G.~Chen.
+\newblock A behavioral distance for fuzzy-transition systems.
+\newblock {\em {IEEE} Trans. Fuzzy Systems}, 21(4):735--747, 2013.
+
+\bibitem{MicicJS18}
+I.~{\'C}iri{\'c}, Z.~Jan\v{c}i{\'c}, and S.~Stanimirovi{\'c}.
+\newblock Computation of the greatest right and left invariant fuzzy
+  quasi-orders and fuzzy equivalences.
+\newblock {\em Fuzzy Sets and Systems}, 339:99--118, 2018.
+
+\bibitem{CiricIDB12}
+M.~{\'C}iri{\'c}, J.~Ignjatovi{\'c}, N.~Damljanovi{\'c}, and M.~Ba\u{s}ic.
+\newblock Bisimulations for fuzzy automata.
+\newblock {\em Fuzzy Sets and Systems}, 186(1):100--139, 2012.
+
+\bibitem{CiricIJD12}
+M.~{\'C}iri{\'c}, J.~Ignjatovi{\'c}, I.~Jan\u{c}i{\'c}, and N.~Damljanovi{\'c}.
+\newblock Computation of the greatest simulations and bisimulations between
+  fuzzy automata.
+\newblock {\em Fuzzy Sets and Systems}, 208:22--42, 2012.
+
+\bibitem{BSDL-P-LOGCOM}
+A.R. Divroodi and L.A. Nguyen.
+\newblock On directed simulations in description logics.
+\newblock {\em J. Log. Comput.}, 27(7):1955--1986, 2017.
+
+\bibitem{Fan15}
+T.-F. Fan.
+\newblock Fuzzy bisimulation for {G\"{o}del} modal logic.
+\newblock {\em {IEEE} Trans. Fuzzy Systems}, 23(6):2387--2396, 2015.
+
+\bibitem{ai/FanL14}
+T.{-}F. Fan and C.{-}J. Liau.
+\newblock Logical characterizations of regular equivalence in weighted social
+  networks.
+\newblock {\em Artif. Intell.}, 214:66--88, 2014.
+
+\bibitem{HennessyM85}
+M.~Hennessy and R.~Milner.
+\newblock Algebraic laws for nondeterminism and concurrency.
+\newblock {\em Journal of the ACM}, 32(1):137--161, 1985.
+
+\bibitem{HenzingerHK95}
+M.R. Henzinger, T.A. Henzinger, and P.W. Kopke.
+\newblock Computing simulations on finite and infinite graphs.
+\newblock In {\em Proceedings of FOCS'1995}, pages 453--462. {IEEE} Computer
+  Society, 1995.
+
+\bibitem{IgnjatovicCS15}
+J.~Ignjatovi{\'c}, M.~{\'C}iri{\'c}, and I.~Stankovi{\'c}.
+\newblock Bisimulations in fuzzy social network analysis.
+\newblock In {\em Proceedings of IFSA-EUSFLAT-15}. Atlantis Press, 2015.
+
+\bibitem{KurtoninaR97}
+N.~Kurtonina and M.~de~Rijke.
+\newblock Simulating without negation.
+\newblock {\em J. Log. Comput.}, 7(4):501--522, 1997.
+
+\bibitem{CompBSDLP}
+L.A. Nguyen.
+\newblock Computing bisimulation-based comparisons.
+\newblock {\em Fundam. Inform.}, 157(4):385--401, 2018.
+
+\bibitem{Nguyen-TFS2019}
+L.A. Nguyen.
+\newblock Bisimilarity in fuzzy description logics under the {Zadeh} semantics.
+\newblock {\em {IEEE} Trans. Fuzzy Systems}, 27(6):1151--1161, 2019.
+
+\bibitem{jBSfDL3}
+L.A. Nguyen.
+\newblock Characterizing crisp notions of bisimulation, simulation and directed
+  simulation in fuzzy description logics.
+\newblock Manuscript in a final stage of preparation, to be submitted in
+  September 2020, 2020.
+
+\bibitem{compCSfFS-impl}
+L.A. Nguyen.
+\newblock An implementation in {C++} of the agorithms provided in the current
+  paper.
+\newblock Available at
+  \url{https://drive.google.com/drive/folders/1vfKtkVqt1PDc73fXXsrVZSwCBCDGYrbu?usp=sharing}
+  and \url{https://www.mimuw.edu.pl/~nguyen/compCSfFS/CompBSDLP-prog.zip},
+  2020.
+
+\bibitem{jBSfDL2}
+L.A. Nguyen, Q.-T. Ha, N.T. Nguyen, T.H.K. Nguyen, and T.-L. Tran.
+\newblock Bisimulation and bisimilarity for fuzzy description logics under the
+  {G\"odel} semantics.
+\newblock {\em Fuzzy Sets and Systems}, 388:146--178, 2020.
+
+\bibitem{minimization-by-fBS}
+L.A. Nguyen and N.-T. Nguyen.
+\newblock Minimizing interpretations in fuzzy description logics under the
+  {G\"{o}del} semantics by using fuzzy bisimulations.
+\newblock {\em Journal of Intelligent and Fuzzy Systems}, 37(6):7669--7678,
+  2019.
+
+\bibitem{TFS2020}
+L.A. {Nguyen} and D.X. {Tran}.
+\newblock Computing fuzzy bisimulations for fuzzy structures under the
+  {G\"odel} semantics.
+\newblock {\em IEEE Transactions on Fuzzy Systems, {\em DOI:
+  10.1109/TFUZZ.2020.2985000}, {\em
+  {https://ieeexplore.ieee.org/document/9056459/}}}, 2020.
+
+\bibitem{PaigeT87}
+R.~Paige and R.E. Tarjan.
+\newblock Three partition refinement algorithms.
+\newblock {\em SIAM J. Comput.}, 16(6):973--989, 1987.
+
+\bibitem{Park81}
+D.M.R. Park.
+\newblock Concurrency and automata on infinite sequences.
+\newblock In Peter Deussen, editor, {\em Proceedings of the 5th GI-Conference},
+  volume 104 of {\em LNCS}, pages 167--183. Springer, 1981.
+
+\bibitem{Sangiorgi09}
+D.~Sangiorgi.
+\newblock On the origins of bisimulation and coinduction.
+\newblock {\em {ACM} Trans. Program. Lang. Syst.}, 31(4):15:1--15:41, 2009.
+
+\bibitem{StanimirovicSC2019}
+S.~Stanimirovi{\'c}, A.~Stamenkovi{\'c}, and M.~{\'C}iri{\'c}.
+\newblock Improved algorithms for computing the greatest right and left
+  invariant boolean matrices and their application.
+\newblock {\em Filomat}, 33(9):2809--2831, 2019.
+
+\bibitem{vBenthem76}
+J.~van Benthem.
+\newblock {\em Modal Correspondence Theory}.
+\newblock PhD thesis, Mathematisch Instituut \& Instituut voor
+  Grondslagenonderzoek, University of Amsterdam, 1976.
+
+\bibitem{vBenthem83}
+J.~van Benthem.
+\newblock {\em Modal Logic and Classical Logic}.
+\newblock Bibliopolis, Naples, 1983.
+
+\bibitem{vBenthem84}
+J.~van Benthem.
+\newblock Correspondence theory.
+\newblock In D.~Gabbay and F.~Guenther, editors, {\em Handbook of Philosophical
+  Logic, Volume {II}}, pages 167--247. Reidel, Dordrecht, 1984.
+
+\bibitem{DBLP:journals/fss/WuCBD18}
+H.~Wu, Y.~Chen, T.{-}M. Bu, and Y.~Deng.
+\newblock Algorithmic and logical characterizations of bisimulations for
+  non-deterministic fuzzy transition systems.
+\newblock {\em Fuzzy Sets Syst.}, 333:106--123, 2018.
+
+\bibitem{DBLP:journals/fss/WuD16}
+H.~Wu and Y.~Deng.
+\newblock Logical characterizations of simulation and bisimulation for fuzzy
+  transition systems.
+\newblock {\em Fuzzy Sets Syst.}, 301:19--36, 2016.
+
+\end{thebibliography}

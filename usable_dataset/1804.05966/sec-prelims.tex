@@ -1,0 +1,88 @@
+We consider only simple, loopless, unweighted, undirected graphs.
+Given a graph $G = (V,E)$, we label its nodes as $1, 2, ..., n = |V|$ and denote its adjacency matrix by $\mA_{G}$, or $\mA$ when context is clear.
+$K_c$ denotes the complete graph on $c$ nodes.
+Uppercase bold letters indicate matrices, $\mI$ is reserved for the square identity matrix, and
+we write $\mI_{(n)}$ to indicate dimensions $n\times n$ if they are not clear from context.
+The entry in the $i$th row and $j$th column of $\mA$ is denoted $\mA_{ij}$.
+The $j$th column of $\mA$ is $\mA(:,j)$, and the subvector of $\mA(:,j)$
+with row indices in set $S$ is $\mA(S,j)$.
+
+Vectors are denoted by lowercase bold letters, e.g. $\vv$, and we write $\vvk{v}{\ell}$ to indicate length $\ell$. We write $\ve_j$ for the $j$th column of the identity matrix and $\ve$ for the vector of all 1s. To refer to entry $i$ of a vector we write $\vv(i)$, or $\vv_i$ if it is not ambiguous.
+
+In the rest of this section we provide background on walk-regularity and walk-classes, graph entropy and centrality measures, as well as our definitions for entropic graphs, functions, and parameters
+
+\ourparag{Walk-classes and walk-regularity}
+We call a walk of length $\ell$ an \emph{$\ell$-walk}.
+A graph $G$ is \emph{walk-regular} if and only if for each $\ell \geq 0$, each node in $G$ is incident to the same number of closed $\ell$-walks.
+Two nodes $u, v$ are in the same \emph{walk-class}
+if and only if for every $\ell \geq 0$ they are incident to the same number of closed $\ell$-walks.
+This is equivalent to having $(\mA^\ell)_{uu} = (\mA^\ell)_{vv}$ for $\ell \geq 0$;
+by the Cayley-Hamilton theorem, it suffices to consider only the $m$ values $\ell = 0, \cdots, m-1$ where $m\leq n$ is the degree of the minimal polynomial of $\mA$.
+We remark that $G$ is walk-regular if and only if it has exactly one walk-class.
+
+To analyze the walk-classes of a graph $G$ with adjacency matrix $\mA$, we define the \emph{walk matrix} as follows.
+First, define the vector $\vvd{\ell}_{\mA}$ entrywise by $\vvd{\ell}_{\mA,j} = (\mA^\ell)_{jj}$ for each $j=1,\cdots,n$ and every $\ell \geq 0$.
+When the context is clear, we use $\vvd{\ell} = \vvd{\ell}_{\mA}$.
+Because we consider only loopless graphs, $\mA^1$ is constant diagonal, so the term $\vvd{1}$ provides no distinguishing information about the nodes.
+The walk matrix $\mW_{\mA}$ is then
+$\mW_{\mA} = \bmat{ \vvd{2} & \cdots & \vvd{n-1} }$, which we denote by $\mW$ if it is not ambiguous.
+
+\noindent Given a square matrix $\mM \in \mathbb{R}^{n \times n}$, we say $\mM$ is \emph{constant diagonal} if every entry $\mM_{jj}$ is the same value.
+A graph $G$ is walk-regular if and only if for each integer $\ell \geq 0$, the matrix $\mA^{\ell}$ is constant diagonal~\cite{godsil2013algebraic}.
+
+
+\ourparag{Centrality, entropy, and functions of matrices}
+If a function $f(x)$ with power series $\sum_{k=0}^{\infty} c_k x^k$ is defined on the spectrum of $\mA$, we can express
+\[
+    f(\mA) = \sum_{k=0}^{\infty} c_k \mA^k.
+\]
+Note that all nodes in the same walk-class will have the same diagonal value $f(\mA)_{ii}$,
+and for a walk-regular graph, $f(\mA)$ is constant diagonal for any $f$ defined on $\mA$.
+For more detail on the conditions $f(x)$ must satisfy to be defined on $\mA$, see~\cite{higham2008functions}.
+
+For any function $f$ defined on the spectrum of $\mA$, the $f$-\emph{subgraph centrality} of node $j$ is given by $f(\mA)_{jj}$.
+For $f(x) = \exp(x)$, this is simply called \emph{subgraph centrality}~\cite{estrada2005subgraph}.
+An $f$-subgraph centrality and parameter $\beta$ define a probability distribution $p_f(\beta)$ on $V(G)$ by normalizing $\pscf{j}{\beta} = f(\beta\mA)_{jj} / \tr( f(\beta\mA) )$.
+
+Dehmer introduced the concept of \emph{graph entropy} to study uniformity of various graph structures~\cite{dehmer2008information}.
+Given any probability distribution $p:V(G)\rightarrow [0,1]$ on the nodes of a graph $G$, the corresponding \emph{graph entropy} is defined by $I_p(G) = - \sum_{j=1}^n \left( p(j) \cdot \log p(j) \right)$.
+Graph entropies take values in $[0, \log n]$ and attain $\log n$ if and only if the distribution $p$ is uniform.
+Thus, $G$ has maximum graph entropy with respect to $p_f$ exactly when $f(\mA)$ is constant diagonal.
+
+For a fixed function $f(x)$, we study a family of associated graph entropies given by $f(\beta x)$
+for varying $\beta$.
+We use $\pscf{j}{\beta}$ to denote the probability distribution that arises from the centrality values $f(\beta \mA)_{jj}$, and we use $\gentropy{\beta}$ to denote the corresponding graph entropy.
+
+The \emph{walk entropy} is defined in terms of subgraph centrality for a parameter $\beta$:
+\begin{align}\label{eqn:walk-entropy}
+  S^V(G, \beta) = -\sum_{j=1}^n \left( \frac{\exp(\beta\mA)_{jj}}{\tr (\exp(\beta\mA))}  \log \frac{\exp(\beta\mA)_{jj}}{\tr (\exp(\beta\mA))} \right).
+\end{align}
+A closer analysis of walk entropy was initiated in~\cite{estrada2014walk}, where it was conjectured that a graph is walk-regular if and only if its walk entropy is maximized for all $\beta \geq 0$.
+A stronger form of this conjecture was proven in~\cite{benzi2014note}, namely that walk-regularity follows if walk entropy is maximized for all $\beta \in I$, for any set $I\subset \mathbb{R}$ with a limit point.
+It was further conjectured that walk-regularity follows if there exists even a single value $\beta > 0$ such that walk entropy is maximized, but~\cite{Kloster2018115} exhibited a counterexample which we refer to as $G(4,5)$;
+we introduce this notation in Section~\ref{sec:beta-distribution}.
+
+\ourparag{Entropic graphs, functions, and values}
+In this paper we restrict our attention to functions $f$ that have power-series representations with coefficients that are all positive.
+Additionally, we assume that the power series has positive radius of convergence.
+The authors in~\cite{benzi2015limiting} explored this exact setting;
+previous work had considered a slight variant, allowing some coefficients to be nonnegative~\cite{estrada2010network, rodriguez2007functional}.
+\begin{definition}\label{def:positive-power}
+  A function $f(x)$ is a \emph{positive power-series coefficient} (PPSC) function if it has a power series $f(x) = \sum_{k=0}^{\infty} c_k x^k$ with $c_k > 0$ $\forall k$.
+\end{definition}
+This class of functions includes functions associated with several popular centrality measures.
+In particular, the matrix resolvent $f(\beta \mA) = (\mI - \beta\mA)^{-1}$~(Katz centrality~\cite{katz1953new} and PageRank~\cite{gleich2015pagerank,page1999pagerank})
+and the matrix exponential $f(\beta x) = \exp(\beta \mA)$~(subgraph centrality~\cite{estrada2005subgraph}, total subgraph communicability~\cite{benzi2013total}, and heat kernel centrality~\cite{chung2007heat}) have been widely studied.
+
+\begin{definition}\label{def:entropic}
+  A graph $G$ is \emph{$f$-entropic} if $G$ is connected and non--walk-regular, and
+  there exists a PPSC function, $f$, such that $f(\beta_0\mA)$ is constant diagonal for some $\beta_0 > 0$.
+  We say $G$ is \emph{$f$-entropic with respect to $\beta_0$}, $f$ is \emph{entropic on $G$}, and we call $\beta_0$ an \emph{$f$-entropic value}.
+  If $f(x) = \exp(x)$, we simply say $G$ is \emph{entropic} and $\beta_0$ is an \emph{entropic value}.
+\end{definition}
+
+Conversely, we call a value $\beta_0$ for which no entropic graph exists \emph{sub-entropic}.
+That is, if $\beta_0$ is sub-entropic, then for \emph{any} graph's adjacency matrix $\mA$, $\exp(\beta_0 \mA)$ is constant diagonal if and only if the graph is walk-regular.
+When using $f(x)\neq \exp(x)$, we say $\beta_0$ is $f$-sub-entropic.
+Pursuit of a concrete, sub-entropic value $\beta_0$ (and in particular the conjectured value $\beta_0 = 1$) has motivated much of the recent literature on the topic.
+See Conjecture 3 in~\cite{estrada2013discriminant} and Conjecture 3.1 in~\cite{benzi2014note}.

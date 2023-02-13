@@ -1,0 +1,107 @@
+\begin{figure*}[htbp]
+    \centering
+    % \includegraphics[width=\textwidth]{figs/pipeline.pdf}
+    \includegraphics[width=\textwidth]{figs/arxiv_ver/pipeline.jpeg}
+    \caption{Pipeline of \name. In this example, the attack goal is to obtain an \advimage that looks like a cat (\targetimage) but be misclassified as a fish ($y_{mal}$). We start from a source-image together with an optimized subspace. We then iterativelly perform gradient estimation with queries, move along the estimated direction, and project the new instance to the decision boundary by binary search towards the \targetimage till converge. The grey solid arrows indicate steps within each iteration. 
+    In particular, we show a toy example of how the source-image (purple rectangles) is moved towards the \targetimage (green rectangles), while the intermediate projected \boundaryimage is shown as red rectangles.}
+    \label{fig:pipeline}
+    % \vspace{-0.5cm}
+\end{figure*}
+
+\section{Introduction}
+% 1. machine learning is vulnerable, many attack
+% 2. blackbox attack is more realistic, transfearbility -- it cannot that it works, 
+% gradient estimation - finite diffxxx, but they require logit output
+% only based on output -- example of APIs that allow ***
+% 3. challenges, 1. #queries, 2. how to reduce dimension, litterateurs -- three perspectives are important, so we plan to make a comprehensive studies about these. 
+% 4. in the meantime, what's the key factor for such reduction -- mention the intuition about the theorem and rho
+% 5.  exp: datasets, and models, APIs, beat all the stoa
+% 6. contribution list: 1. propose blackbox from three xxxxx, and we did comprehensive studies for three types of query reduction; 2. from theoretic perspective, xxxx show xxx is important-- much smaller #queries, and lower magnitude of perturbation, 100% attack success; 3. extensive experiments for models/datasets. 4. real-world APIs
+
+Recent developments of machine learning (ML), especially deep neural networks (DNNs), have advanced a number of real-world applications, including object detection~\cite{ren2015faster}, drug discovery~\cite{chen2018rise}, and robotics~\cite{lenz2015deep}. In the meantime, several safety-critical applications have also adopted ML, such as autonomous driving vehicles~\cite{chen2015deepdriving} and surgical robots~\cite{richter2019open,mlsurgicalrobotics}.
+However, recent research have shown that machine learning systems are vulnerable to \emph{adversarial examples}, which are inputs with small magnitude of adversarial perturbations added and therefore cause arbitrarily incorrect predictions during test time~\cite{eykholt2017robust,xiao2018generating,carlini2017towards,goodfellow2014explaining,chaowei2018characterizing,chaowei2018spatially}.
+Such adversarial attacks have led to great concerns when applying ML to real-world applications. Thus in-depth analysis of the intrinsic properties of these adversarial attacks as well as potential defense strategies are required.
+
+First, such attacks can be categorized into whitebox and blackbox attacks based on the attacker's knowledge about the victim ML model. In general, the whitebox attacks are possible by leveraging the gradient of the model --- methods like fast gradient sign method (FGSM) ~\cite{goodfellow2014explaining}, optimization based attack~\cite{carlini2017towards}, projected gradient descent based method (PGD)~\cite{madry2017towards} have been proposed. However, whitebox attack is less practical, given the fact that most real-world applications will not release the actual model they are using. In addition, these whitebox attacks are shown to be defendable~\cite{madry2017towards}.
+As a result, blackbox adversarial attack have caught a lot of attention in these days.
+In blackbox attack, based on whether an attacker needs to query the victim ML model, there are query-free (e.g. transferability based attack) and query-based attacks. Though \emph{transferability} based attack does not require query access to the model, it assumes the attacker has access to the large training data to train a substitute model, and there is no guarantee for the attack success rate. The query based attack includes score-based and boundary-based attacks. Score-based attack assumes the attacker has access to the class probabilities of the model, which is less practical compared with boundary-based attack which only requires the final model prediction, while both require large number of queries. 
+
+
+% In this paper, we propose a Query-Efficient Boundary-based blackbox Attack (\name) to estimate model decision boundary given only the classification output by leveraging the intrinsic dimensionalities of inputs. 
+In this paper,  we propose Query-Efficient Boundary-based blackbox Attack (\name) based only on model's final prediction labels as a general framework to minimize the query number.
+Since the gradient estimation consumes the majority of all the queries, the main challenge of reducing the number of queries for boundary-based blackbox attack is that a high-dimensional data (e.g. an image) would require large number of queries to probe the decision boundary. As a result, we propose to search for a small representative subspace for query generation.
+% that can serve as the supports for the original gradient space. \Huichen{supports?}
+In particular, queries are generated by adding perturbations to an image. We explore the subspace optimization methods from three novel perspectives for perturbation sampling: 1) spatial, 2) frequency, and 3) intrinsic component.
+The first one leverages spatial transformation (e.g. linear interpolation) so that the sampling procedure can take place in a low-dimensional space and then project back to the original space.
+The second one uses intuition from image compression literature and samples from low frequency subspace and use discrete consine transformation (DCT)~\cite{guo2018low} to project back.
+The final one performs scalable gradient matrix decomposition to select the major principle components via principle component analysis (PCA)~\cite{wold1987principal} as subspace to sample from.
+% The resulting boundary-based attack from the three methods are called \name-S, \name-F, and \name-I respectively.
+% The first one is the spatial transformed subspace. We first sample a low-dimensional vector and then apply spatial transformation (e.g. linear interpolation) to project it back to the original space to get perturbations. 
+% Secondly, we propose the low-frequency subspace enabled blackbox attack (\name-F), which leverage discrete consine transformation (DCT)~\cite{guo2018low} to select the low frequency subspace to perform efficient queries against the victim model.
+% Finally we also propose the intrinsic component subspace based blackbox attack (\name-I) by performing scalable gradient matrix decomposition to select the major principle components via principle component analysis (PCA)~\cite{wold1987principal} as subspace to conduct the queries.
+In addition
+% to the three proposed query efficient \name methods
+, we theoretically prove the optimality of them on estimating the gradient compared with estimating the gradient directly over the original space.
+
+
+To demonstrate the effectiveness of the proposed blackbox attack \name methods, 
+% , and analyzing different dimension reduction methods, 
+we conduct extensive experiments on high dimensional image data including ImageNet~\cite{deng2009imagenet} and CelebA~\cite{liu2018large}. We perform attacks on the ResNet model~\cite{he2016deep}, and show that compared with the-state-of-the-art blackbox attack methods, the different variations of \name can achieve lower magnitude of perturbation with smaller number of queries (attack success rate 100\%). 
+\Huichen{I deleted one sentence here because its expression is not accurate.}
+% In particular, the \name-S performs slightly better in terms of achieving lower magnitude of perturbation.
+In order to show the real-world impact of the proposed attacks, we also perform \name against online commercial APIs including MEGVII Face++\cite{facepp-compare-api} and Microsoft Azure\cite{azure-detect-api}. Our methods can successfully attack the APIs with perturbations of reasonable magnitude.
+Towards these different subspaces, our conjecture is that the over-all performance on different subspaces depends on multiple factors including dataset size, model smoothness, adversarial attack goals etc. Therefore, our goal here is to make the first attempt towards providing sufficient empirical observations for these three subspaces, while further extensive studies are required to compare different factors of these subspaces, as well as identifying new types of subspaces.
+% We show that we can generate adversarial examples by transferring \name against these real-world applications.
+% \bo{add other proud results if any?}
+
+% \Huichen{Do we need to put this paragraph (as in the rebuttal) here?}
+
+% Our intuition for solving this challenge is through dimension reduction. If we can find a small subspace that is representative of the whole gradient space, i.e., most of the gradient vectors lie in this subspace, we can sample from the subspace and reduce the query number. In this paper, we prove a theorem and theoretically show the key to reducing queries is finding the bases that span a good subspace. We further propose three kinds of dimension reduction methods based on hyper pixels, frequency domain, and intrinsic component. Experiments are done on three public datasets: CIFAR10, ImageNet, and CelebA. The results show that compared with state-of-the-art methods, our methods require fewer queries to get to smaller perturbations while sustaining an attack success rate of 100\%. We also successfully attack two real-world APIs: FacePlusPlus and Microsoft Azure.
+
+
+% We theoretically show why estimating model gradient is not efficient in terms of blackbox attack, and provide the optimality analysis for our dimension reduced decision boundary estimation.
+
+% \Huichen{General information about machine learning/image recognition/face recognition}
+% The recent development of machine learning systems has enabled the use of these algorithms in many security-sensitive applications. For example, face recognition is used to authorize log-ins of digital devices and even payment authentications\Huichen{cite}.
+
+% % \Huichen{Illustrate what is a decision-based attack as opposed to other attacks}
+% Research and findings bring adversarial examples against machine learning models to the focus of a broad audience\Huichen{cite. maybe also including news reports}. The fact that tiny human-imperceptible perturbations added onto images would alter the predictions of the machine learning systems reveals their vulnerabilities.
+% There have been extensive amount of papers discussing the attacks and defenses under various settings, including different attacker goals and threat models. 
+% Threat models are generally divided into two categories: white-box and black-box. 
+% Under a white-box setting, the attacker has full knowledge about the model's architecture and parameter weights to perform an attack. Thus they can define a loss function with respect to the attack goal and leverage the gradient information of the model to optimize the adversarial example in an end-to-end fashion.
+% The more practical assumption 
+% on the attacker side however, is the black-box setting where the attacker's capability is limited. T
+% As opposed to the white-box setting where the attacker knows everything, the black-box setting is more practical to assume the model architecture is hidden from the attacker and only the output can be accessed. 
+
+% In a score-based attack setting, the victim model's output logits are known to the attackers. The gradients can be estimated by finite difference methods \Huichen{cite} and used to update the attack instance.
+% \Huichen{Existing challenges}
+
+% However, systems in the real world tempt to only give a hard decision. For example, in face recognition system for authentication on phones\Huichen{todo: cite}, the system either recognizes the legitimate user and unlocks, or rejects the attempt. It does not present a `score' for the likelihood it believes the person has access to log in.
+% This black-box setting is called decision-based attack since it depends only on the final decision of the model, and it is the most realistic among all the threat models. It is also the most challenging one since the hard labels reveal limited information about the model's gradients. Existing works approach this problem by two major directions: transfer-based and boundary-based. 
+
+% Transfer-based approaches train their own substitute models with no direct connection with the victim model. The adversarial examples generated on the substitute models is likely to attack successfully on victim models as well. The substitute model can be an ensemble of various models in order to boost the performance. This method relies heavily on the transferability between models and does not have guarantee on the attack success rate. Also, this attack cannot use the access to the victim model's decisions for improvement. 
+% Boundary-based approaches, on the other hand, can make use of the model predictions. This kind of method starts from a point that is predicted as the attacker's desired class, and employs a rejection sampling process to find better points, so the attack success rate is always 100\%. What remains to be optimized is the magnitude of perturbations, which is the distance between the attack sample and a sample with desired appearance. 
+% The main challenge of existing boundary-based methods is that they require large number of queries for this optimization. 
+
+% This is due to the large number of dimensions of the image pixel gradient space. For example, in ImageNet, the gradient of a 3-channel image of size $224\times 224$ has a dimension of over 150 k. It is not easy to find a good direction for updates (gradient directions) by randomly sampling from the whole high-dimensional space.
+% This makes them unrealistic in practice, since real-world systems would likely reject tens of thousands of incoming queries. 
+% Our intuition for solving this challenge is through dimension reduction. If we can find a small subspace that is representative of the whole gradient space, i.e., most of the gradient vectors lie in this subspace, we can sample from the subspace and reduce the query number. In this paper, we prove a theorem and theoretically show the key to reducing queries is finding the bases that span a good subspace. We further propose three kinds of dimension reduction methods based on hyper pixels, frequency domain, and intrinsic component. Experiments are done on three public datasets: CIFAR10, ImageNet, and CelebA. The results show that compared with state-of-the-art methods, our methods require fewer queries to get to smaller perturbations while sustaining an attack success rate of 100\%. We also successfully attack two real-world APIs: FacePlusPlus and Microsoft Azure.
+
+% \Huichen{The contributions of our work}
+The \textbf{contributions} of this work are summarized as follows: 
+% 1) We propose a general query-efficient blackbox attack \name to reduce the number of queries based on boundary-based attack;
+% 2) We propose three different subspace optimization-based blackbox attack approaches, including spatial transformed attack (\name-S), low frequency attack (\name-F), and intrinsic component based attack (\name-I);
+1) We propose a general Query-Efficient Boundary-based blackbox Attack \name to reduce the number of queries based on boundary-based attack. The \name contains three variations based on three different representative subspaces including spatial transformed subspace, low frequency subspace, and intrinsic component subspace;
+2) We theoretically demonstrate that gradient estimation in the whole gradient space is inefficient in terms of query numbers, and we prove the optimality analysis for our proposed query-efficient gradient estimation methods;
+3) We conduct comprehensive experiments on two high resolution image datasets: ImageNet and CelebA. All the different variations of \name outperform the state-of-the-art baseline method by a large margin;
+4) We successfully attack two real-world APIs including Face++\cite{facepp-compare-api} and Azure\cite{azure-detect-api} and showcase the effectiveness of \name.
+
+% \begin{enumerate}
+    % \item We propose a general query efficient blackbox attack \name to reduce the number of queries based on boundary-based attack;
+    % \item We theoretically demonstrate that only gradient estimation is insufficient for performing blackbox attacks, and we provide the optimality analysis for our proposed query efficient decision boundary estimation;
+    % \item We propose three different subspace optimization based blackbox attack approaches, including spatial transformed attack (\name-S), low frequency attack (\name-F), and intrinsic component based attack (\name-I);
+    % \item We conduct comprehensive experiments on two high resolution image datasets: ImageNet and CelebA. DIfferent variations of \name outperform the state-of-the-art baselines by a large margin;
+    % \item We also successfully attack two real-world APIs including xxxx\bo{fill} and showcase the effectiveness of \name.
+% \end{enumerate}
+
+

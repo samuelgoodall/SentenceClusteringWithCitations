@@ -1,0 +1,124 @@
+\begin{thebibliography}{Wel00b}
+
+\bibitem[Bar75]{Bar}
+K.J. Barwise.
+\newblock {\em Admissible Sets and Structures}.
+\newblock Perspectives in Mathematical Logic. Springer Verlag, 1975.
+
+\bibitem[Car19]{carl2019ordinal}
+Merlin Carl.
+\newblock {\em Ordinal Computability: An Introduction to Infinitary Machines},
+  volume~9 of {\em Logic and Its Applications}.
+\newblock De Gruyter, 2019.
+
+\bibitem[Car20]{carl2020space}
+Merlin Carl.
+\newblock Space and time complexity for infinite time {T}uring machines.
+\newblock {\em Journal of Logic and Computation}, 30(6):1239--1255, 2020.
+
+\bibitem[CSW21]{countableranks}
+Merlin Carl, Philipp Schlicht, and Philip~D. Welch.
+\newblock Countable ranks at the first and second projective levels.
+\newblock In preparation, 2021.
+
+\bibitem[FW07]{friedman2007two}
+Sy-David Friedman and Philip~D. Welch.
+\newblock Two observations regarding infinite time {T}uring machines.
+\newblock In {\em {B}onn {I}nternational {W}orkshop on {O}rdinal
+  {C}omputability}, page~44, 2007.
+
+\bibitem[Gan60]{Ga}
+R.O. Gandy.
+\newblock On a proof of {Mostowski's} conjecture.
+\newblock {\em Bulletin de l'Academie Polonaise des Sciences (s\'{e}rie des
+  sciences math\'{e}matique, astronomique et physique)}, 8:571--575, 1960.
+
+\bibitem[Hin78]{Hi78}
+P.~Hinman.
+\newblock {\em Recursion-Theoretic Hierarchies}.
+\newblock {$\Omega$} Series in Mathematical Logic. Springer, Berlin, 1978.
+
+\bibitem[Hjo10]{Hjorth-Vienna-notes-on-descriptive-set-theory}
+Greg Hjorth.
+\newblock {Vienna notes on effective descriptive set theory and admissible
+  sets}.
+\newblock available at
+  http://www.math.uni-bonn.de/people/logic/events/young-set-theory-2010/Hjorth.pdf,
+  2010.
+
+\bibitem[HL00]{hamkins2000infinite}
+Joel~David Hamkins and Andy Lewis.
+\newblock Infinite time {T}uring machines.
+\newblock {\em Journal of Symbolic Logic}, pages 567--604, 2000.
+
+\bibitem[Jec03]{Je03}
+T.~J. Jech.
+\newblock {\em Set Theory}.
+\newblock Springer Monographs in Mathematics. Springer, 2003.
+
+\bibitem[Kec12]{kechris2012classical}
+Alexander Kechris.
+\newblock {\em Classical descriptive set theory}, volume 156.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem[KMS89]{MR1011178}
+Alexander~S. Kechris, David Marker, and Ramez~L. Sami.
+\newblock {$\Pi^1_1$} {B}orel sets.
+\newblock {\em J. Symbolic Logic}, 54(3):915--920, 1989.
+
+\bibitem[Mat15]{mathias2015provident}
+Adrian~R.D. Mathias.
+\newblock Provident sets and rudimentary set forcing.
+\newblock {\em Fundamenta Mathematicae}, 230(2):99--148, 2015.
+
+\bibitem[Rog67]{Rog}
+H.~Rogers.
+\newblock {\em Recursive Function Theory}.
+\newblock Higher Mathematics. McGraw, 1967.
+
+\bibitem[Sac90]{Sa90}
+G.E. Sacks.
+\newblock {\em Higher Recursion Theory}.
+\newblock Perspectives in Mathematical Logic. Springer Verlag, 1990.
+
+\bibitem[Spe55]{Sp55}
+C.~Spector.
+\newblock Recursive wellorderings.
+\newblock {\em Journal of Symbolic Logic}, 20:151--163, 1955.
+
+\bibitem[Spe60]{Sp59}
+C.~Spector.
+\newblock Hyperarithmetic quantifiers.
+\newblock {\em Fundamenta Mathematicae}, 48:313--320, 1960.
+
+\bibitem[Suz64]{Su64}
+Y.~Suzuki.
+\newblock A complete classification of the the {$\Delta^1_2$} functions.
+\newblock {\em Bulletin of the American Mathematical Society}, 70:246--253,
+  1964.
+
+\bibitem[Wel00a]{W}
+Philip~D. Welch.
+\newblock Eventually {Infinite} {Time} {Turing} degrees: infinite time
+  decidable reals.
+\newblock {\em Journal of Symbolic Logic}, 65(3):1193--1203, 2000.
+
+\bibitem[Wel00b]{welch2000length}
+Philip~D. Welch.
+\newblock The length of infinite time {T}uring machine computations.
+\newblock {\em Bulletin of the London Mathematical Society}, 32(2):129--136,
+  2000.
+
+\bibitem[Wel08]{W08}
+Philip~D. Welch.
+\newblock Bounding lemmata for non-deterministic halting times of transfinite
+  {Turing} machines.
+\newblock {\em Theoretical Computer Science}, 394:223--228, 2008.
+
+\bibitem[Wel09]{welch2009characteristics}
+Philip~D. Welch.
+\newblock Characteristics of discrete transfinite time {T}uring machine models:
+  halting times, stabilization times, and normal form theorems.
+\newblock {\em Theoretical Computer Science}, 410(4-5):426--442, 2009.
+
+\end{thebibliography}

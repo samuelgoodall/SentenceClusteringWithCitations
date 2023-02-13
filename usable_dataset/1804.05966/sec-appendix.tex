@@ -1,0 +1,280 @@
+%%%
+%%%
+%    APPENDIX
+%%%
+%%%
+
+\section{Connecting walk-class collisions and Farkas's Lemma}
+In Section~\ref{sec:suff-condition} we presented a sufficient condition on the walk matrix $\mW$ of a graph $G$ for concluding that $G$ is $f$-entropic, and we observed that for the sufficient condition to hold, the linear system $\mW\vx = \ve$ must satisfy Farkas's Lemma.
+Because the system we consider, $\mW\vx = \ve$, has a specific structure, we are able to give a sharper necessary condition for Farkas's Lemma to hold in this setting (Definition~\ref{def:saff}).
+We use $\avg(\vv)$ to denote the average of the entries of a nonnegative vector $\vv$.
+\begin{definition}\label{def:saff}
+    We say that a nonnegative matrix $\mM$ satisfies the \emph{set-average flip-flop property} (SAFF) if for every pair of disjoint, non-empty subsets $S$ and $T$ of row indices, there exists a column $j$ such that $\avg(\mM(T,j)) \leq \avg(\mM(S,j))$.
+    We say a graph satisfies the set-average flip-flop property if its walk-matrix $\mW$ does.
+\end{definition}
+Equivalently, for each $S$, there must exist some $j$ so that $\avg( \mM(S,j) ) \geq \max\{  \mM(i,j) | i \notin S \}$.
+\begin{lemma}
+  Let $\mM$ be a nonnegative matrix and $\ve$ the vector of all 1s.
+  Then for $\mM\vx = \ve$ to have a nonnegative solution, it is necessary that
+  $\mM$ satisfies the set-average flip-flop property.
+\end{lemma}
+\begin{proof}
+  Assume that $\mM$ does not satisfy SAFF. We will construct a vector $\vy$ such that $\vy^T\mM \geq 0$ but $\vy^T\ve < 0$; then, by Farkas's Lemma, there is no $\vx \geq 0$ such that $\mM\vx = \ve$.
+
+  Since $\mM$ does not satisfy SAFF by assumption, there must exist disjoint, non-empty subsets $S,T$ such that for all columns $j$ we have $\avg(\mM(T,j)) \lneq \avg(\mM(S,j))$.
+  Construct the vector $\vy$ as follows. Set $\vy(S) = 1/|S|$, and set $\vy(T) = -(1+\delta)/|T|$ for some $\delta > 0$ to be determined later in the proof.
+  Then $\vy = \tfrac{1}{|S|}\ve_S - \tfrac{1+\delta}{|T|}\ve_T$, and we know
+  $\vy^T\ve = -\delta$, so $\vy^T\ve < 0$
+  as long as $\delta > 0$.
+
+  Next we pick a specific $\delta > 0$ so that $\vy$ satisfies $\vy^T\mM \geq 0$.
+  By construction, $\avg(\mM(T,j)) \lneq \avg(\mM(S,j))$ for all $j$, and by assumption $\mM$ is nonnegative, so the quantity
+  \begin{equation}
+    \delta = \displaystyle\min_i \left(  \frac{\avg(\mM(S,i)) - \avg(\mM(T,i))}{\avg(\mM(T,i))}   \right)
+  \end{equation}
+  is positive.
+  With $\delta$ now defined, we will show $\vy^T\mM \geq 0$.
+  Multiplying $\vy = \tfrac{1}{|S|}\ve_S - \tfrac{1+\delta}{|T|}\ve_T$ with column $j$ of $\mM$ gives
+  \begin{align}
+    \vy^T\mM(:,j) &= \avg(\mM(S,j)) - (1+\delta)\cdot \avg(\mM(S,j)) \nonumber \\
+                  &= \avg(\mM(S,j)) - \avg(\mM(T,j)) - \delta \cdot \avg(\mM(T,j)). \label{eqn:affc-delta}
+  \end{align}
+  By construction of $\delta$, we know
+  $\delta \leq ( \avg(\mM(S,j)) - \avg(\mM(T,j)) ) / \avg(\mM(T,j)) $,
+  and so $-\delta \cdot \avg(\mM(T,j)) \geq - (\avg(\mM(S,j)) - \avg(\mM(T,j)))$.
+  Substituting this in Equation~\eqref{eqn:affc-delta}, for each $j$ we have ${\vy^T\mM(:,j)\geq0}$.
+  Thus, by Farkas's Lemma, no solution $\vx \geq 0 $ can exist to the equation $\mM\vx = \ve$.
+\end{proof}
+
+For Corollary~\ref{cor:pos-suff-condition} to imply that a graph $G$ is $f$-entropic, it is necessary that the walk matrix of $G$ satisfy the SAFF property.
+
+
+%%%%
+%%%%
+%%    PROOFS
+%%%%
+%%%%
+\section{Proofs from Section~\ref{sec:beta-distribution}}
+
+
+\def\thetheorem{\ref{thm:entropic-kks-general}}
+\begin{theorem}
+    \input{./repeated-lemmas/thm-kks-generalize.tex}
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:entropic-kks-general}]
+      Given values $\beta, c, m$, let $\subscore{IS}{\beta}{c}{m}$ and $\subscore{CN}{\beta}{c}{m}$ denote the quantity $\exp(\beta \mA)_{jj}$ for independent set nodes and clique nodes in $G(c,m)$, respectively.
+      We can explicitly produce expressions for $\subscore{IS}{\beta}{c}{m}$ and $\subscore{CN}{\beta}{c}{m}$ using the eigendecomposition in Table~\ref{tab:eigenvectors}.
+
+      Observe that, because the independent set nodes have degree $m > c$, for small enough $\beta$ we know that $\subscore{IS}{\beta}{c}{m} > \subscore{CN}{\beta}{c}{m}$.
+      Hence, to prove that an entropic value $\beta$ exists, by continuity it suffices to prove that $\subscore{CN}{\beta_0}{c}{m} > \subscore{IS}{\beta_0}{c}{m}$ for some $\beta_0 > 0$.
+      To do this we will use the fact
+      \[
+          \exp(\beta\mA) = \sum_{k=1}^6 \exp(\beta \lambda_k) \mV_K \mV_k^T,
+      \]
+      where $\mV_k$ is composed of columns that form an eigen-basis for the eigenvalue $\lambda_k$ of $G(c,m)$.
+      We remark that, because there are just two walk-classes in $G(c,m)$, the quantity $(\mV_k\mV_k^T)_{jj}$ can have only two values, depending on whether node $j$ is in a clique or the independent set.
+      Replacing the quantities $(\mV_k\mV_k^T)_{jj}$ with expressions from Table~\ref{tab:eigenvectors} and Equation~\eqref{eqn:N-property} and simplifying we get the following:
+      \begin{align*}
+          \subscore{CN}{\beta}{c}{m} &=
+                        e^{\beta\lambda_1} \tfrac{1}{c(\lambda_5^2 + m )} + e^{\beta\lambda_5} \tfrac{1}{c(\lambda_1^2 + m )}
+                        + (1- \tfrac{1}{c})\left(e^{\beta\lambda_3} \tfrac{1}{(\lambda_3+1)^2 + m}
+                        + e^{\beta\lambda_6} \tfrac{1}{(\lambda_6+1)^2 + m} \right),\\
+                        &~~+ e^{\beta\lambda_2}\tfrac{1}{c}(1 - \tfrac{1}{m})
+                      + e^{\beta\lambda_4}(1 - \tfrac{1}{c})(1 - \tfrac{1}{m}) \\
+          \subscore{IS}{\beta}{c}{m} &=
+              e^{\beta\lambda_1} \tfrac{\lambda_5^2 }{c(\lambda_5^2 + m)}
+              + e^{\beta\lambda_5} \tfrac{\lambda_1^2 }{c(\lambda_1^2 + m)}
+              + (1- \tfrac{1}{c})\left( e^{\beta\lambda_3} \tfrac{(\lambda_3+1)^2}{(\lambda_3+1)^2 + m}
+              + e^{\beta\lambda_6} \tfrac{(\lambda_6+1)^2}{(\lambda_6+1)^2 + m} \right).
+      \end{align*}
+
+    Our goal is to prove $\subscore{CN}{\beta_c}{c}{m} > \subscore{IS}{\beta_c}{c}{m}$ for some $\beta_c$ for all $c$ larger than some threshold $C$.
+    We proceed by splitting the above functions into pieces, which we bound independently.
+    Let
+    \begin{align*}
+        h_1(c,m) &=  \tfrac{1}{c}\left(e^{\beta\lambda_1} \tfrac{1}{(\lambda_5^2 + m )}
+                            + e^{\beta\lambda_5} \tfrac{1}{(\lambda_1^2 + m )}\right)
+                  + \left(e^{\beta\lambda_2}-e^{\beta\lambda_4} - (e - 2) \right)\tfrac{1}{c}(1 - \tfrac{1}{m}), \\
+        h_2(c,m) &= \left( e^{\beta \lambda_4} + \tfrac{e-2}{c}\right)(1-\tfrac{1}{m}), \\
+        g_1(c,m) &= \tfrac{1}{c}\left( e^{\beta\lambda_1} \tfrac{\lambda_5^2}{\lambda_5^2 + m} + e^{\beta\lambda_5}\tfrac{\lambda_1^2}{\lambda_1^2+m} \right), \text{and} \\
+        g_2(c,m) &= (1 - \tfrac{1}{c}) \left( e^{\beta\lambda_3} \tfrac{(\lambda_3+1)^2-1}{(\lambda_3+1)^2+m} + e^{\beta \lambda_6} \tfrac{(\lambda_6+1)^2-1}{(\lambda_6+1)^2+m} \right).
+    \end{align*}
+    Then $\subscore{CN}{\beta}{c}{m} = h_1(c,m) + h_2(c,m)$ and
+    $\subscore{IS}{\beta}{c}{m} = g_1(c,m) + g_2(c,m)$, and it suffices to show
+    $h_1(c,m) > g_1(c,m)$ and $h_2(c,m) > g_2(c,m)$.
+    We proceed by handling these inequalities separately. We remark that, although we assume $m = c+1$ throughout, we continue to write things in terms of $c$ and $m$ for clarity.
+
+\paragraph{Proving that $h_1 > g_1$.}
+    First, note that $h_1(c,m) > g_1(c,m)$ holds if and only if $c\cdot h_1(c,m) > c \cdot g_1(c,m)$.
+    Second, subtracting the smallest exponential terms, $e^{\beta\lambda_1} \tfrac{1}{(\lambda_5^2 + m )}$ and $e^{\beta\lambda_5} \tfrac{1}{(\lambda_1^2 + m )}$, from both sides, it thus suffices to show
+    \begin{equation}\label{eqn:main-piece1}
+      \left(e^{\beta\lambda_2}-e^{\beta\lambda_4} - (e - 2) \right)(1 - \tfrac{1}{m})
+    > e^{\beta\lambda_1} \tfrac{\lambda_5^2 - 1}{\lambda_5^2 + m} + e^{\beta\lambda_5}\tfrac{\lambda_1^2 - 1}{\lambda_1^2+m}.
+    \end{equation}
+
+    Recall that the exponential satisfies $1- x < e^{-x} < 1 - \tfrac{x}{1+x}$.
+    Since $\beta\lambda_2 = 1+\tfrac{1}{c-2}$ and $\lambda_4 = -1$, this implies
+    $e^{\beta\lambda_2} > e(1 + \tfrac{1}{c-2})$
+    and
+    $-e^{\beta\lambda_4} > -(1 - \tfrac{1}{c-1}).$
+    Thus, we can write
+    \[
+        \left(e^{\beta\lambda_2}-e^{\beta\lambda_4} - (e - 2) \right)(1 - \tfrac{1}{m}) > (\tfrac{e+1}{c-1} + 1)(1 - \tfrac{1}{m}),
+    \]
+    and Inequality~\eqref{eqn:main-piece1} follows if
+    \begin{equation}\label{eqn:nolambdaleft}
+      (\tfrac{e+1}{c-1} + 1)(1 - \tfrac{1}{m}) > e^{\beta\lambda_1} \tfrac{\lambda_5^2 - 1}{\lambda_5^2 + m} + e^{\beta\lambda_5}\tfrac{\lambda_1^2 - 1}{\lambda_1^2+m}.
+    \end{equation}
+
+    Now we upperbound the right-hand side, handling
+    each term separately. Since $\lambda_5 < -1$, $e^{\beta \lambda_5} < e^{-\tfrac{1}{c-2}}$,
+    we know $e^{\beta \lambda_5} < 1 - \tfrac{1}{c-1} < 1 - \tfrac{1}{m}$.
+    Using the fact that $\tfrac{\lambda_1^2 - 1}{\lambda_1^2 + m} < 1$, we can write
+    \[
+        e^{\beta \lambda_5} \tfrac{\lambda_1^2 - 1}{\lambda_1^2 + m} < (1 - \tfrac{1}{m}).
+    \]
+    Next, since $m = c+1$, we know that $\lambda_1 < c+2$, therefore
+    $e^{\beta \lambda_1} < e^{ 1 + \tfrac{3}{c-2}}$.
+
+    Standard algebraic manipulation shows $\lambda_5^2 < 2$ holds,
+    which implies $\lambda_5^2 < 2 m/(m-1)$.
+    This allows us to show $\tfrac{\lambda_5^2-1}{\lambda_5^2 + m} < \tfrac{1}{m}$,
+    and substituting above yields the inequality
+    \[
+        e^{\beta \lambda_1} \tfrac{\lambda_5^2-1}{\lambda_5^2 + m} < e^{1 + \tfrac{3}{c-2}}\tfrac{1}{m}.
+    \]
+    We can now replace Inequality~\eqref{eqn:nolambdaleft} with
+    \[
+        (\tfrac{e+1}{c-1} + 1)(1 - \tfrac{1}{m})
+        > e^{1 + \tfrac{3}{c-2}}\tfrac{1}{m} + (1 - \tfrac{1}{m}).
+    \]
+    Subtracting $(1-\tfrac{1}{m})$ from both sides, we need to show
+    \[
+        \tfrac{e+1}{c-1}(1 - \tfrac{1}{m})
+        >  e^{1 + \tfrac{3}{c-2}}\tfrac{1}{m}.
+    \]
+    Multiplying both sides by $c-1$, noting that $m = c+1$, and taking the limit as $c\rightarrow \infty$
+    yields $e+1$ on the left and $e$ on the right, completing the proof that $h_1 > g_1$.
+
+    \paragraph{Proving that $h_2 > g_2$.}
+    Since $(1-1/m) > (1-1/c)$, it suffices to show
+    \begin{equation}\label{eqn:g2h2}
+      \left(e^{\beta \lambda_4} + \tfrac{e-2}{c}\right)
+      >
+      e^{\beta\lambda_3} \tfrac{(\lambda_3+1)^2-1}{(\lambda_3+1)^2+m} + e^{\beta \lambda_6} \tfrac{(\lambda_6+1)^2-1}{(\lambda_6+1)^2+m}.
+    \end{equation}
+    We begin by simplifying the fractions containing $\lambda_3$ and $\lambda_6$ and transforming the right-hand side into hyperbolic trig expressions.
+
+    Setting $\gamma = \sqrt{4m+1}$, substitution and algebra yields the following identities
+    \begin{align}
+            \tfrac{(\lambda_3+1)^2}{(\lambda_3+1)^2 + m} & = \tfrac{1}{2}(1+\tfrac{1}{\gamma})
+            & \textrm{and} \qquad\qquad
+            \tfrac{(\lambda_6+1)^2}{(\lambda_6+1)^2 + m} & = \tfrac{1}{2}(1-\tfrac{1}{\gamma}), \label{eqn:lambda3gamma}\\
+            \tfrac{1}{(\lambda_3+1)^2 + m} & = \tfrac{1}{2}\tfrac{1}{m}(1-\tfrac{1}{\gamma})
+            & \textrm{and} \qquad\qquad
+            \tfrac{1}{(\lambda_6+1)^2 + m} & = \tfrac{1}{2}\tfrac{1}{m}(1+\tfrac{1}{\gamma}).\label{eqn:lambda6gamma}
+    \end{align}
+
+    Substituting Equations~\eqref{eqn:lambda3gamma} and~\eqref{eqn:lambda6gamma}
+    into the right-hand side of Inequality~\eqref{eqn:g2h2} and rearranging we get that $e^{\beta\lambda_3} \tfrac{(\lambda_3+1)^2-1}{(\lambda_3+1)^2+m} + e^{\beta \lambda_6} \tfrac{(\lambda_6+1)^2-1}{(\lambda_6+1)^2+m}$ is
+    \begin{align*}
+        =~& e^{\beta\lambda_3} \left(\tfrac{1}{2}(1+\tfrac{1}{\gamma}) - \tfrac{1}{2m}(1-\tfrac{1}{\gamma}) \right)
+         + e^{\beta \lambda_6} \left(\tfrac{1}{2}(1-\tfrac{1}{\gamma}) - \tfrac{1}{2m}(1+\tfrac{1}{\gamma}) \right) \\
+        =~&
+        \tfrac{1}{2}\left(
+            (e^{\beta\lambda_3} + e^{\beta\lambda_6})(1-\tfrac{1}{m})
+            +
+            (e^{\beta\lambda_3} - e^{\beta\lambda_6})\tfrac{1}{\gamma}(1+\tfrac{1}{m})
+        \right).
+    \end{align*}
+    To transform this expression into hyperbolic trig functions,
+    first observe that
+    \begin{equation}\label{eqn:lambda36beta}
+      \beta \lambda_3 = - \tfrac{1}{2} \beta + \tfrac{1}{2}\beta \gamma
+      \quad\quad \textrm{and} \quad\quad
+      \beta \lambda_6 = - \tfrac{1}{2} \beta - \tfrac{1}{2}\beta \gamma.
+    \end{equation}
+    Setting $\xi = \tfrac{1}{2}\beta \gamma$, we can write
+    \begin{align*}
+      e^{\beta\lambda_3} \tfrac{(\lambda_3+1)^2-1}{(\lambda_3+1)^2+m} + e^{\beta \lambda_6} \tfrac{(\lambda_6+1)^2-1}{(\lambda_6+1)^2+m}
+      &=
+      \tfrac{1}{2}e^{-\tfrac{1}{2}\beta}\left(
+          (e^{\xi} + e^{-\xi})(1-\tfrac{1}{m})
+          +
+          (e^{\xi} - e^{-\xi})\tfrac{1}{\gamma}(1+\tfrac{1}{m}) \right) \\
+      &=
+         e^{-\tfrac{1}{2}\beta} \left( \cosh(\xi)(1-\tfrac{1}{m}) + \tfrac{1}{\gamma} \sinh(\xi) (1+\tfrac{1}{m}) \right).
+    \end{align*}
+
+    Thus, to show Inequality~\eqref{eqn:g2h2} it suffices to prove
+    \[
+        e^{-\tfrac{1}{2}\beta} + e^{\tfrac{1}{2}\beta}(\tfrac{e-2}{c})
+        > \cosh(\xi)(1-\tfrac{1}{m}) + \tfrac{1}{\gamma} \sinh(\xi) (1+\tfrac{1}{m}).
+    \]
+
+    Using the standard inequality $(1+x) \leq e^{x}$, we have $e^{-\tfrac{1}{2}\beta} > (1 - \tfrac{1}{2}\beta)$ and $e^{\tfrac{1}{2}\beta} >  (1 + \tfrac{1}{2}\beta)$, so it suffices to prove that
+    \[
+        (1 - \tfrac{1}{2}\beta) + (1 + \tfrac{1}{2}\beta) (\tfrac{e-2}{c})
+        > \cosh(\xi)(1-\tfrac{1}{m}) + \tfrac{1}{\gamma} \sinh(\xi) (1+\tfrac{1}{m}).
+    \]
+    We accomplish this by splitting into two inequalities as follows
+    \begin{align}
+        (1 - \tfrac{1}{2}\beta) + \tfrac{2}{\gamma}(1+\tfrac{1}{2}\beta)(\tfrac{e-2}{c})
+        &> \cosh(\xi)(1-\tfrac{1}{m}), \label{eqn:cosh-piece} \\
+        (1-\tfrac{2}{\gamma})(1+\tfrac{1}{2}\beta)(\tfrac{e-2}{c})
+        &> \tfrac{1}{\gamma}\sinh(\xi)(1+\tfrac{1}{m})\label{eqn:sinhineq}.
+    \end{align}
+    We begin by showing~\eqref{eqn:sinhineq}.
+    Multiplying by $c$ and rearranging, we have
+    \[
+    (1-\tfrac{2}{\gamma})(1+\tfrac{1}{2}\beta)(e-2)
+    > \frac{\sinh\left(\tfrac{\sqrt{c+5/4}}{c-2}\right)}{ 2 \tfrac{\sqrt{c+5/4}}{c} } \cdot (1+\tfrac{1}{m}).
+    \]
+    Letting $c\rightarrow \infty$ yields $e-2$ on the left and $1/2$ on the right, since $\lim\limits_{x\rightarrow 0} \tfrac{\sinh(x)}{x} = 1$.
+
+    It remains to show Inequality~\eqref{eqn:cosh-piece}. Recall that
+    $m =  c+1$,
+    $\beta = \tfrac{1}{c-2}$,
+    $\gamma = \sqrt{1 + 4m} = 2 \sqrt{c + 5/4}$,
+        and $\xi = \tfrac{1}{2} \beta \gamma = \tfrac{\sqrt{c+5/4}}{c-2}$.
+    Then Inequality~\eqref{eqn:cosh-piece} holds if and only if
+    \[
+         (e-2)(1+\tfrac{1}{2}\beta)
+        >
+        c\cdot\gamma\cdot \left( \cosh(\xi)(1-\tfrac{1}{m}) - (1 - \tfrac{1}{2}\beta) \right).
+    \]
+    Taking the limit as $c\rightarrow \infty$, the left-hand side goes to $(e-2)$.
+    We will show the right-hand side converges to 0.
+    To see this, we rewrite the right-hand side as
+    \[
+        \tfrac{c}{c-2} \gamma \left( (c-2)(\cosh(\xi)-1)  - \tfrac{1}{2} \right)
+        - \gamma(\cosh(\xi) - 1) + \tfrac{2\gamma}{c-2} + \tfrac{\gamma}{m} \cosh(\xi) - \tfrac{c\gamma}{(c-2)m}.
+    \]
+  As $c$ increases, $\xi \rightarrow 0$ and $\cosh(\xi) \rightarrow 1$;
+  thus, $\tfrac{\gamma}{m} \cosh(\xi)$ vanishes, and $\gamma(\cosh(\xi) - 1)$ vanishes by the well-known trigonometric fact $\lim\limits_{x\rightarrow 0} \tfrac{\cosh(x)-1}{x} = 0$.
+  The terms $\tfrac{2\gamma}{c-2}$ and $\tfrac{c\gamma}{(c-2)m}$ vanish by the power rule.
+
+  All that remains is to show that
+  $\gamma \left( (c-2)(\cosh(\xi)-1)  - \tfrac{1}{2} \right)$ converges to 0 as $c$ increases.
+  Recall that $\gamma = \sqrt{4m+1} = 2(c+5/4)^{1/2}$.
+  From the power series expansion of $\cosh(\xi)$, we have
+ $(c+5/4)^{1/2} \left( (c-2)(\cosh(\xi) -1 ) - \tfrac{1}{2} \right)$ is
+  \begin{align*}
+      =~& (c+5/4)^{1/2} \left(  (c-2)\cdot\left( \sum_{k=1}^{\infty} \tfrac{1}{(2k)!} \left( \tfrac{\sqrt{c+5/4}}{c-2} \right)^{2k}  \right) - \tfrac{1}{2} \right) \\
+     =~& (c+5/4)^{1/2} \left(  \left( \sum_{k=2}^{\infty} \tfrac{1}{(2k)!}
+     \tfrac{(c+5/4)^{k} }{(c-2)^{2k-1}} \right) + \tfrac{1}{2}\tfrac{c+5/4}{c-2} - \tfrac{1}{2} \right) \\
+     =~& \left( \sum_{k=2}^{\infty} \tfrac{1}{(2k)!}
+     \tfrac{(c+5/4)^{k + 0.5} }{(c-2)^{2k-1}}\right) + \tfrac{1}{2} (c+5/4)^{1/2} \left( \tfrac{c+5/4}{c-2} - 1\right).
+  \end{align*}
+  For $c$ large enough, the summation can be bounded above, term for term, by the geometric series
+  $\sum_{k=1} (\sqrt{c})^{-k} = \frac{c^{-1/2}}{1 - c^{-1/2}},$
+  which vanishes as $c$ increases.
+  Finally, observe
+  \[
+  \tfrac{1}{2}(c+5/4)^{1/2}\left(\tfrac{c+5/4}{c-2} - 1\right) = \tfrac{1}{2}(c+5/4)^{1/2}\cdot \tfrac{13}{4(c-2)},
+  \]
+  which also converges to 0 as $c$ increases.
+  Thus, $h_2 > g_2$, which completes the proof.
+
+\end{proof}

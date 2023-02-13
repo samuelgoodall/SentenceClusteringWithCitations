@@ -1,0 +1,343 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass[oneside,a4paper,10pt]{llncs}
+
+\usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{units}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{fixltx2e}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{footmisc}
+\usepackage{wrapfig}
+\usepackage{paralist}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{mdwlist}
+%\usepackage{natbib}
+%\usepackage[fixlanguage]{babelbib}
+\usepackage{url}
+%\usepackage{showframe}
+\input{tumci}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% SUBTLE SQUEEZE MARGINS
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% original Springer margins: 
+\usepackage[a4paper,top=1.62in,bottom=2.5in,left=1.87in,right=1.59in]{geometry}
+% slightly squeezed margins:
+%\usepackage[a4paper,asymmetric,top=1.62in,bottom=1.8in,left=1.57in,right=1.39in]{geometry}
+
+%% Springer's llncs is incompatible to titlesec, but we can fix it
+% Save the class definition of \subparagraph
+\let\llncssubparagraph\subparagraph
+% Provide a definition to \subparagraph to keep titlesec happy
+\let\subparagraph\paragraph
+\usepackage{titlesec}
+\usepackage{chngcntr}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,shadows,fit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    BEGIN SQUEEZE MAGIC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\footnotelayout{\small}
+%\addtolength{\textfloatsep}{-5mm}
+%\addtolength{\itemsep}{-0.05in}
+%\renewcommand{\topfraction}{0.85}
+% %\renewcommand{\textfraction}{0.1}
+% \renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\baselinestretch}{.98} % hands away until right before submission, if necessary!
+% \setlength{\jot}{0pt} % tighter math
+% \AtBeginDocument{%
+%   \setlength\abovedisplayskip{6pt}
+%   \setlength\belowdisplayskip{6pt}}
+% \renewcommand{\bibsep}{.0em}
+%\titlespacing*{\section}{0pt}{2ex}{1ex}
+%\titlespacing*{\subsection}{0pt}{2ex}{1ex}
+%\titlespacing*{\subsubsection}{0pt}{0.5ex}{0ex}
+%\parskip 0pt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    END SQUEEZE MAGIC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{shadecolor}{gray}{.95}                                                           %farbe für listings
+
+
+% listings default format
+\lstset{captionpos=t, 
+  xleftmargin=.6cm,
+  basicstyle=\ttfamily\scriptsize,%
+  language=Ada,
+  commentstyle=\color{TUMdarkgray},
+  keywordstyle=[1]\bfseries\color{Pantone301},
+  stringstyle=\color{black},%\color{TUMpred},
+  morekeywords={Dim_Type,Angle_Type,Time_Type,Angular_Velocity_Type,Lat_Type},
+  identifierstyle=\color{black},
+  extendedchars=true,%
+  numbers=left,%
+  numbersep=5pt,%
+  numberstyle={\tiny\color{TUMdarkgray}},%
+ % backgroundcolor=\color{shadecolor},%
+  stepnumber=1, % Z.nr in 5er schritten
+  numberfirstline=true,
+  breaklines=true, % Zeilenumbruch
+  breakautoindent=true, % Bei Zeilenumbruch einrücken
+  tabsize=2, % Breite eines Tabulators
+  postbreak=\space,
+  showspaces=false, % Keine Leerzeichensymbole
+  showtabs=false, % Keine Tabsymbole
+  showstringspaces=false,% Leerzeichen in Strings         
+  rulecolor=\color{TUMdarkgray},
+  frame=l}
+
+%\renewcommand*{\lstlistingname}{Code \arabic{lstlisting} de \textsl{Mathematica}}
+
+
+% handy todo
+\providecommand{\todo}[1]{\marginpar{\color{red}{\textbf{ToDo!}}}\textcolor{red}{\textbf{ToDo: #1}}}
+
+%
+%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EDITOR ONLY:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \chapter*{Preface}
+% %
+% This textbook is intended for use by students of physics, physical
+% chemistry, and theoretical chemistry. The reader is presumed to have a
+% basic knowledge of atomic and quantum physics at the level provided, for
+% example, by the first few chapters in our book {\it The Physics of Atoms
+% and Quanta}. The student of physics will find here material which should
+% be included in the basic education of every physicist. This book should
+% furthermore allow students to acquire an appreciation of the breadth and
+% variety within the field of molecular physics and its future as a
+% fascinating area of research.
+
+% For the student of chemistry, the concepts introduced in this book will
+% provide a theoretical framework for that entire field of study. With the
+% help of these concepts, it is at least in principle possible to reduce
+% the enormous body of empirical chemical knowledge to a few basic
+% principles: those of quantum mechanics. In addition, modern physical
+% methods whose fundamentals are introduced here are becoming increasingly
+% important in chemistry and now represent indispensable tools for the
+% chemist. As examples, we might mention the structural analysis of
+% complex organic compounds, spectroscopic investigation of very rapid
+% reaction processes or, as a practical application, the remote detection
+% of pollutants in the air.
+
+% \vspace{1cm}
+% \begin{flushright}\noindent
+% April 1995\hfill Walter Olthoff\\
+% Program Chair\\
+% ECOOP'95
+% \end{flushright}
+% %
+% \chapter*{Organization}
+% ECOOP'95 is organized by the department of Computer Science, Univeristy
+% of \AA rhus and AITO (association Internationa pour les Technologie
+% Object) in cooperation with ACM/SIGPLAN.
+% %
+% \section*{Executive Commitee}
+% \begin{tabular}{@{}p{5cm}@{}p{7.2cm}@{}}
+% Conference Chair:&Ole Lehrmann Madsen (\AA rhus University, DK)\\
+% Program Chair:   &Walter Olthoff (DFKI GmbH, Germany)\\
+% Organizing Chair:&J\o rgen Lindskov Knudsen (\AA rhus University, DK)\\
+% Tutorials:&Birger M\o ller-Pedersen\hfil\break
+% (Norwegian Computing Center, Norway)\\
+% Workshops:&Eric Jul (University of Kopenhagen, Denmark)\\
+% Panels:&Boris Magnusson (Lund University, Sweden)\\
+% Exhibition:&Elmer Sandvad (\AA rhus University, DK)\\
+% Demonstrations:&Kurt N\o rdmark (\AA rhus University, DK)
+% \end{tabular}
+% %
+% \section*{Program Commitee}
+% \begin{tabular}{@{}p{5cm}@{}p{7.2cm}@{}}
+% Conference Chair:&Ole Lehrmann Madsen (\AA rhus University, DK)\\
+% Program Chair:   &Walter Olthoff (DFKI GmbH, Germany)\\
+% Organizing Chair:&J\o rgen Lindskov Knudsen (\AA rhus University, DK)\\
+% Tutorials:&Birger M\o ller-Pedersen\hfil\break
+% (Norwegian Computing Center, Norway)\\
+% Workshops:&Eric Jul (University of Kopenhagen, Denmark)\\
+% Panels:&Boris Magnusson (Lund University, Sweden)\\
+% Exhibition:&Elmer Sandvad (\AA rhus University, DK)\\
+% Demonstrations:&Kurt N\o rdmark (\AA rhus University, DK)
+% \end{tabular}
+% %
+% \begin{multicols}{3}[\section*{Referees}]
+% V.~Andreev\\
+% B\"arwolff\\
+% E.~Barrelet\\
+% H.P.~Beck\\
+% G.~Bernardi\\
+% E.~Binder\\
+% P.C.~Bosetti\\
+% Braunschweig\\
+% F.W.~B\"usser\\
+% T.~Carli\\
+% A.B.~Clegg\\
+% G.~Cozzika\\
+% S.~Dagoret\\
+% Del~Buono\\
+% P.~Dingus\\
+% H.~Duhm\\
+% J.~Ebert\\
+% S.~Eichenberger\\
+% R.J.~Ellison\\
+% Feltesse\\
+% W.~Flauger\\
+% A.~Fomenko\\
+% G.~Franke\\
+% J.~Garvey\\
+% M.~Gennis\\
+% L.~Goerlich\\
+% P.~Goritchev\\
+% H.~Greif\\
+% E.M.~Hanlon\\
+% R.~Haydar\\
+% R.C.W.~Henderso\\
+% P.~Hill\\
+% H.~Hufnagel\\
+% A.~Jacholkowska\\
+% Johannsen\\
+% S.~Kasarian\\
+% I.R.~Kenyon\\
+% C.~Kleinwort\\
+% T.~K\"ohler\\
+% S.D.~Kolya\\
+% P.~Kostka\\
+% U.~Kr\"uger\\
+% J.~Kurzh\"ofer\\
+% M.P.J.~Landon\\
+% A.~Lebedev\\
+% Ch.~Ley\\
+% F.~Linsel\\
+% H.~Lohmand\\
+% Martin\\
+% S.~Masson\\
+% K.~Meier\\
+% C.A.~Meyer\\
+% S.~Mikocki\\
+% J.V.~Morris\\
+% B.~Naroska\\
+% Nguyen\\
+% U.~Obrock\\
+% G.D.~Patel\\
+% Ch.~Pichler\\
+% S.~Prell\\
+% F.~Raupach\\
+% V.~Riech\\
+% P.~Robmann\\
+% N.~Sahlmann\\
+% P.~Schleper\\
+% Sch\"oning\\
+% B.~Schwab\\
+% A.~Semenov\\
+% G.~Siegmon\\
+% J.R.~Smith\\
+% M.~Steenbock\\
+% U.~Straumann\\
+% C.~Thiebaux\\
+% P.~Van~Esch\\
+% from Yerevan Ph\\
+% L.R.~West\\
+% G.-G.~Winter\\
+% T.P.~Yiou\\
+% M.~Zimmer\end{multicols}
+% %
+% \section*{Sponsoring Institutions}
+% %
+% Bernauer-Budiman Inc., Reading, Mass.\\
+% The Hofmann-International Company, San Louis Obispo, Cal.\\
+% Kramer Industries, Heidelberg, Germany
+% %
+% \tableofcontents
+% %
+% \mainmatter              % start of the contributions
+% %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE, AUTHORS ETC OF PAPERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Development and Verification of a Flight Stack\\for a High-Altitude Glider in Ada/SPARK~2014\thanks{The source code for this project is available at \url{github.com/tum-ei-rcs/StratoX}. This is a pre-print. The final publication will be available at Springer via \url{http://dx.doi.org/TODO} in \emph{Computer Safety, Reliability and Security, 36th International Conference SAFECOMP~2017}, S. Tonetta and E. Schoitsch and F. Bitsch (Eds.), Trento, Italy, 2017.}}
+%
+\titlerunning{A SPARK~2014 Flight Stack for a High-Altitude Glider}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{\vspace*{-1em}Martin Becker \and Emanuel Regnath \and Samarjit Chakraborty}
+%
+\authorrunning{Becker et al.} % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{Martin Becker, Emanuel Regnath, and Samarjit Chakraborty}
+%
+\institute{Chair of Real-Time Computer Systems, Technical University of Munich\\80333 Munich, Germany\\
+%\email{\{becker,regnath\}@rcs.ei.tum.de}
+}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}\vspace*{-1em}
+%The abstract should summarize the contents of the paper
+%using at least 70 and at most 150 words. It will be set in 9-point
+%font size and be inset 1.0 cm from the right and left margins.
+%There will be two blank lines before and after the Abstract. \dots
+%
+% explore capabilities and weaknesses of latest technology in software verification
+% co-verification to influence design (and not be stuck in the end)
+% we derive a set of rules
+% we give design recommendations
+  SPARK~2014 is a modern programming language and a new state-of-the-art
+  tool set for development and verification of high-integrity
+  software. In this paper, we explore the capabilities and limitations
+  of its latest version in the context of building a flight stack for
+  a high-altitude unmanned glider. Towards that, we deliberately
+  applied static analysis early and continuously during
+  implementation, to give verification the possibility to steer
+  the software design. 
+  %
+  In this process we have identified several limitations and pitfalls
+  of software design and verification in SPARK, for which we give
+  workarounds and protective actions to avoid them. Finally, we give
+  design recommendations that have proven effective for verification, and
+  summarize our experiences with this new language.
+  % perfect length of abstract
+\keywords{Ada/SPARK, formal verification, limitations, rules}
+\end{abstract}
+%
+\input{section-intro}
+\input{section-verification}
+\input{section-initialdesign}
+%\input{section-workflow}
+\input{section-workarounds}
+%\input{section-rules}
+\input{section-results}
+\input{section-related}
+\input{section-conclusion}
+
+\section*{Acknowledgements}
+Thanks to the SPARK~2014 team of AdaCore for their guidance and insights.
+
+% \selectbiblanguage{english}
+{
+% \bibliographystyle{plain}
+ \scriptsize
+ \bibliographystyle{splncs03}
+ \bibliography{literature}
+}
+
+\end{document}

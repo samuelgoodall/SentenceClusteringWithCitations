@@ -1,0 +1,236 @@
+\section{Introduction}
+Secure multiparty computation (or MPC) allows a set of mutually distrusting parties to
+compute a publicly known function on their secret inputs without revealing their
+inputs to each other. This is done through the execution of a cryptographic protocol which guarantees that the protocol participants learn only the function output on their secret inputs and nothing else. 
+\mpc has made rapid strides - from
+being a theoretical concept three decades ago \cite{yao,gmw}, to now
+being on the threshold of having real world impact.
+One of the most compelling use cases for MPC is that of machine
+learning (ML) - e.g. being able to execute inference over ML
+algorithms securely when the model and the query are required to be
+hidden from the participants in the protocol. There has been a flurry of
+recent works aimed at running inference securely with MPC such as
+SecureML~\cite{secureml}, MinioNN~\cite{minionn}, 
+ABY$^3$~\cite{aby3}, CHET~\cite{chet},
+SecureNN~\cite{securenn}, Gazelle~\cite{gazelle}, Delphi~\cite{delphi}, and so on.
+ Unfortunately, these techniques are not easy-to-use by ML developers and have only been demonstrated on small deep
+ neural networks (DNNs) on tiny datasets such as MNIST or CIFAR.
+However, in order for MPC to be truly ubiquitous for secure inference
+tasks, it must be both effortless to use and capable of handling large
+ImageNet~\cite{imagenet} scale DNNs.
+
+In this work, we present \cryptflow, a first of its kind system, that
+converts \tensorflow \cite{tensorflow} inference code into \mpc protocols at the push of a button. By converting code in
+standard \tensorflow, a ubiquitous ML framework that is used in production by
+various technology companies, to \mpc protocols, we
+significantly lower the entry barrier for ML practitioners and
+programmers to use cryptographic \mpc protocols in real world
+applications. We make the following four contributions:
+
+\begin{tiret}
+
+\item First, we provide a compiler, called {\em Athos}, from
+  \tensorflow to a variety of secure computation protocols (both 2 and
+  3 party) while preserving accuracy. In the absence of Athos, all prior works require {\em
+    manually} re-implementing ML models in an MPC friendly low-level
+  language/library, and hence, their evaluations have been limited to
+ small benchmarks where this task is feasible.
+%\dg{may be add sentence for ease to use} %demonstrating the secure inference of ImageNet scale neural networks.
+
+
+\item Second, we provide a semi-honest secure 3-party computation protocol, {\em Porthos}, that outperforms all prior protocols for secure inference and enables us to execute, 
+for the first time, the inference of ImageNet scale networks in {\em about 30 seconds}.
+%\dg{quantify improvement.}
+
+\item Third, assuming a minimally secure hardware  which guarantees
+  the integrity of computations,  we show a novel technique, {\em
+    Aramis}, that compiles any semi-honest secure MPC protocol to a malicious
+  secure MPC protocol.
+Aramis only relies on these integrity checks and assumes no confidentiality
+guarantees for data residing within the hardware. 
+% Prior works that combine \mpc and hardware are 
+%secure only in weaker adversary models.
+%The overhead of malicious security of 
+Aramis
+% based protocols is much
+%lower compared to prior approaches, which 
+enables the first
+implementations of DNN inference secure against malicious
+adversaries.
+% Prior \mpc protocols are either much slower than Aramis
+%or fail to provide security against malicious adversaries.
+
+% with only 3-4x overhead.
+
+\item Fourth, we demonstrate the ease-of-use, efficiency and scalability of \cryptflow\ by evaluating on  \\ (a) \resnet~\cite{resnet}, which won the ImageNet Large Scale Visual Recognition Challenge in 2015~\cite{imagenet}; \\ (b) \densenet~\cite{densenet}, a convolutional neural network that won the best paper at CVPR 2017.\\
+% and has been used for real-world lung disease prediction on chest x-rays~\cite{lungdisease}
+% and \\ (c) \squeezenet~\cite{squeezenet} with Fire modules.\\
+\noindent 
+These
+ networks have heavily influenced the ML community with thousands of
+ citations each. To demonstrate that \tool  is immediately useful in
+ healthcare, we  also evaluate \tool on DNNs used for prediction of
+ lung diseases and diabetic retinopathy.
+
+
+\end{tiret}
+
+Our toolchain and all of our benchmarks are publicly
+available\footnote{\url{https://github.com/mpc-msri/EzPC}}.We now describe our results in more detail.
+
+\subsection{Results}
+\tool outperforms prior work on ease-of-use, scalability, and efficiency. It automatically compiles \tensorflow code to \mpc protocols with {\em no loss in classification accuracy}. This makes \cryptflow\ the first secure inference system to produce a Top 1 accuracy of $76.45\%$ and Top 5 accuracy of $93.23\%$ for predictions running securely on the ImageNet dataset. Furthermore, in the 3-party (3PC) setting, this can be done in about $30$ seconds with semi-honest security and about $2$ minutes with malicious security. 
+Prior work in the area of secure inference has been limited to small networks over tiny datasets such as MNIST or CIFAR.
+  Moreover, these implementations are limited to security against weaker semi-honest adversaries, that are assumed not to modify the code of the MPC protocol.
+%The largest benchmark in the published literature on secure inference is Delphi's~\cite{delphi} 2-party (2PC) semi-honest secure %inference of 32 layer \textsc{ResNet}, with 0.46 million parameters, for 100 class CIFAR.  
+In contrast, our largest network \textsc{ResNet-200} has 200 layers, 65 million parameters, over 1000 ImageNet classes, and the user can choose between semi-honest and malicious security -- the latter also protects against adversaries who can deviate from the MPC protocol specification arbitrarily. 
+We have evaluated \tool on secure inference over DNNs that are at least an order of magnitude larger
+than the state-of-the-art~\cite{delphi,chet,chameleon,securenn,secureml,gazelle,ezpc,minionn,aby3,nhe,xonn,quantizednn}.
+Even on MNIST/CIFAR, \cryptflow\ has lower communication complexity and is more efficient than prior and concurrent works~\cite{securenn,aby3,chameleon,quantizednn}. 
+Furthermore, \cryptflow\ is the first system to implement\footnote{ABY$^3$~\cite{aby3} provided a theoretical protocol to convert their semi-honest protocol into a malicious secure protocol on much smaller benchmarks than \cryptflow, but did not provide an implementation or experimental validation.} malicious security for secure DNN inference. 
+We show that the overhead of Aramis over semi-honest protocols is small and varies between 25\% and 3X depending on the size of the computation.
+%\rs{remove? For the case of small benchmarks such as $32-$bit addition using the GMW protocol, the overhead of Aramis is within $25\%$ of the semi-honest protocol.
+%Prior ``crypto-only'' works on malicious secure MPC for such benchmarks had much higher overheads over their semi-honest secure counterparts~\cite{wrk17,wrk17b,krrw18}. 
+%For large ImageNet scale benchmarks such as \resnet\ and \densenet, the overhead of Aramis is within YX of Porthos.}
+Moreover, by very conservative estimates, Aramis based secure DNN inference is faster than state-of-the-art  malicious secure \mpc inference protocols~\cite{mpspdz} by at least an order of magnitude (and also the maliciously secure \mpc protocols for general computation~\cite{wrk17,wrk17b,krrw18}). Hence, on inference tasks, prior \mpc protocols are either much slower than Aramis  or fail to provide security against malicious adversaries. 
+%The recent works of  SecureML~\cite{secureml}, MinioNN~\cite{minionn}, HyCC~\cite{hycc}, ABY3~\cite{aby3}, CHET~\cite{chet}, EzPC~\cite{ezpc}, SecureNN~\cite{securenn}, Gazelle~\cite{gazelle}, etc. fall in the latter category.
+%
+%
+%Athos automatically produces fixed-point models that have inference accuracies that sometimes beat (Top 5 accuracies of \resnet\ and \squeezenet) and otherwise nearly match (in the case of Top 1 accuracies of \resnet\ and \densenet) the inference accuracies of the corresponding networks over floating-point values. 
+%Porthos has lower communication than prior works~\cite{securenn,aby3,quantizednn} and also has better performance than these works that all provide semi-honest secure 3 party computation for secure inference of small networks over the MNIST and CIFAR-10 datasets. Not surprisingly, Porthos also outbeats prior works on semi-honest secure 2 party computation for secure inference on similar networks~\cite{secureml,minionn,gazelle,ezpc}. 
+%Finally, we show that the overhead of Aramis over the corresponding semi-honest secure protocol is quite small. For the case of small benchmarks (such as $32-$bit comparison) using the GMW protocol, the overhead of Aramis is within $54\%$ of the semi-honest protocol. This can be attributed to the benchmarks being small and all of the code and data fitting inside the SGX enclave without the need for paging. Prior ``crypto-only'' works on malicious secure MPC for such benchmarks had much higher overheads over their semi-honest secure counterparts~\cite{wrk17,wrk17b,krrw18}. 
+%We show empirically that Aramis-based protocols are at least 9X faster than existing cryptographic approaches to malicious security.
+%Even when considering larger benchmarks such as \resnet\ and \densenet, the overhead of Aramis is within $3.86$x of Porthos (the corresponding semi-honest protocol). This overhead can be attributed to the common overheads incurred when executing large amounts of code and data in the Intel SGX enclave~\cite{intelsgxperf}. We are the first work to provide experimentally validated malicious secure inference protocols. 
+%A summary of all our evaluation can be found in Section~\ref{sec:summ-eval}.
+
+\subsection{Components of \cryptflow}
+We describe the three components of \cryptflow\ next.
+\\\\
+\noindent\textbf{Athos (Section \ref{sec:athos}).} Athos is a compiler that compiles \tensorflow inference code to secure computation protocols. There are several challenges in doing so. For optimizations  (Section~\ref{sec:athosopt}), the compiler needs the dimensions of all the tensors occurring in the dynamic Python code.
+The compiler is designed to be modular (Section~\ref{sec:athosmodularity}) and it provides facilities for plugging in various \mpc protocols.
+%The output of Athos is a sequence of function calls where each function can be implemented by an appropriate \mpc protocol.
+To demonstrate this modularity, we have implemented the following backends: ABY-based  2-party computation (2PC), Porthos-based semi-honest secure 3-party computation (3PC), and Aramis-based  malicious secure 3-party computation. 
+
+The transformations implemented in Athos are sensitive to the performance of \mpc protocols. 
+ For performance reasons all efficient secure computation protocols perform computation over fixed-point arithmetic - i.e., arithmetic over integers or arithmetic with fixed precision. This is in contrast to \tensorflow where computations are over floating-point values. Athos automatically converts \tensorflow code over floating-point values into code that computes the same function over fixed-point values. This compilation is done while {\em matching} the inference accuracy of floating-point code. 
+%For this purpose, Athos leverages and builds upon the intermediary language SeeDot~\cite{seedot} while taking care that the conversion is done in a secure manner. While the SeeDot %compiler generates inherently insecure code, Athos is the first  secure compiler that automatically transforms \tensorflow floating-point code to fixed-point code for secure inference.
+Prior works (\cite{secureml,minionn,gazelle,aby3,securenn,delphi}) in the area of running ML securely have performed this task by hand with significant losses in accuracy over floating-point code.
+% For example, it is trivial~\cite{tftutorial} to obtain a floating-point DNN with over $99\%$ accuracy on classifying handwritten digits as $0,1,\cdots,9$. However, SecureML~\cite{secureml} %works with a hand constructed fixed-point DNN which has only $94\%$ accuracy to classify digits as 0 or 1.
+ Although these fixed-point conversions are feasible to do manually for one or two small benchmarks, this task quickly becomes intractable for large benchmarks and needs to be repeated for every new benchmark. Athos automates this tedious and error prone task.
+% Athos works by ``sweeping through'' various precision levels to estimate the best precision.
+% By doing so, Athos exhibits negligible loss in accuracy over its insecure counterparts. In some instances, Athos even improves the inference accuracy! 
+%This design of Athos addresses the challenge of modularity and makes it easy
+%to incorporate new \mpc protocols ) and compiler optimizations.
+\\\\
+\noindent\textbf{Porthos (Section \ref{sec:porthos}).} 
+Porthos is an improved semi-honest 3-party secure computation protocol (tolerating one corruption) that builds upon SecureNN~\cite{securenn}. 
+Porthos makes two crucial modifications to SecureNN. 
+First, SecureNN reduces convolutions  to matrix multiplications and  invokes the Beaver triples~\cite{beaver} based matrix multiplication protocol. 
+When performing a convolution with filter size $f\times f$ on a matrix of size $m\times m$, the communication is roughly $2q^2f^2+2f^2+q^2$ elements in the ring $\bbZ_{2^{64}}$, where $q = m-f+1$. 
+Porthos computes these Beaver triples by appropriately reshaping $m\times m$ and $f\times f$ matrices. 
+This reduces the communication to roughly $2m^2+2f^2+q^2$ ring elements. 
+Typically the filter size, $f$, is between 1 and 11 and the communication of Porthos can be up to two orders of magnitudes lower than SecureNN. 
+%Let $P_0, P_1$ and $P_2$ denote the 3 parties in the protocol.
+Additionally, in SecureNN, the protocols for non-linear layers (such as Rectified Linear Units (ReLU) and MaxPool)  require the third party to send secret shares to the first two parties. 
+In Porthos, we cut this communication to half by eliminating the communication of one of these shares. 
+This reduces the communication in the overall ReLU and MaxPool protocols by 25\%.
+Thus, by reducing the communication in both linear convolution layers and non-linear layers, the communication in Porthos is several  GBs lower than SecureNN  (Table~\ref{tab:porthosvssecurenn}). 
+%we make the observation that communication of one of these shares can be eliminated (as it is purely random) and can be pre-shared between the two parties using a PRF key. Additionally, we also ``load balance'' this pre-sharing across the two pairs of parties ($P_2,P_1$ and $P_2,P_0$) as these functions are always computed in large batches in machine learning applications. 
+%Finally, Porthos optimizes local computations of parties to derive maximum benefit from these communication reductions.
+\\\\ 
+\noindent\textbf{Aramis (Section \ref{sec:aramis}).}
+%\dg{remove definitions from here?}
+%Semi-honest secure MPC protocols assume that the protocol participants
+%follow the protocol specification honestly and compute every message
+%of the protocol correctly with respect to their input and the protocol
+%history. On the other hand, maliciously secure MPC protocols make no
+%such assumptions on the adversary and are guaranteed to be secure even
+%when protocol participants deviate arbitrarily from the
+%protocol. 
+Obtaining maliciously secure MPC protocols through
+cryptography can often be challenging and expensive -- typically some
+sort of ``proof of honest computation'' must be provided by the
+parties for every step of the protocol. We present a novel technique, called Aramis, that compiles \mpc
+protocols secure against semi-honest adversaries into \mpc protocols
+that are secure against malicious adversaries, by leveraging secure
+hardware. 
+We only require the hardware to provide
+code attestation and a secure signing functionality (that we use to
+sign and verify the protocol messages). Aramis has two attractive features: (a) it works in a strong adversarial threat model; and (b) it serves as a general technique that can work on a variety of semi-honest secure MPC protocols. In more detail:
+
+\begin{tiretnospace}
+\item[(a)] The threat model of Aramis is significantly stronger than the prior
+work on MPC using secure
+hardware~\cite{vc3, obliviousmpml, GuptaFC16, BahmaniFC17,gcsgx,ndss1,ndss2,ndss3,slalom,opaque,chiron}.
+Specifically, in our threat model, not only is the host operating system outside the Trusted Computing Base, but it is also allowed to observe
+the entire state of the hardware (including user data). 
+In contrast, for security of the protocol, the prior works require that the hardware hides the state from  the host and even if data is decrypted and computed upon inside the hardware, it cannot be viewed by the host. In Section~\ref{sec:aramis}, we describe the Aramis threat model in
+more detail, formalize the secure hardware as an ideal functionality,
+provide a formal description of the malicious secure MPC protocols,
+and formally prove their security. The ideal functionality can potentially
+ be realized using various hardware platforms that provide
+code attestation and signing, e.g., STM32H7, MediaTek MT3620, CEC1702, ARMTrustZone, Intel's SGX, etc.
+We provide a proof-of-concept 
+implementation of Aramis by using SGX as the underlying secure
+hardware. 
+\item[(b)] Aramis is general and can be applied to any semi-honest secure \mpc protocol. To demonstrate this, we
+derive malicious secure MPC protocols from both semi-honest GMW (2
+party protocol)~\cite{gmw} and
+Porthos (3 party protocol). Porthos compiled with Aramis gives the
+first experimentally vetted maliciously secure protocol for neural
+network inference with at most 3X overhead over semi-honest security. 
+While these were the semi-honest protocols we applied Aramis to, one could potentially obtain performant maliciously secure variants of several other recent semi-honest secure inference protocols (e.g. \cite{gazelle, delphi, nitin}), and \mpc protocols for other applications~\cite{krtwpsi, pisgoogle}.
+\end{tiretnospace}
+
+%\aseem{One line about performance numbers, since
+  %that's how we motivated the section.}
+%% which can
+%% be realized using various hardware platforms that provide
+%% code attestation, e.g., STM32H7, MediaTek MT3620, CEC1702, ARM
+%% TrustZone, etc.
+%% We provide details of implementing this functionality using Intel's
+%% Software Guard Extensions (Intel SGX)~\cite{intelsgx} in
+%% Section~\ref{sec:fattest-sgx}. 
+%% This trust assumption on the secure hardware is significantly weaker than prior works on secure computation based on SGX~\cite{vc3, obliviousmpml, GuptaFC16, BahmaniFC17,gcsgx,ndss1,ndss2,ndss3,slalom} which assume that SGX completely hides all secrets
+%%  from the host and even if data is decrypted and computed upon inside SGX, it cannot be viewed by the host. 
+%% In contrast, in our adversarial model, the host can see all the data inside the hardware. Thus, all previous work that combines MPC and SGX are secure
+%% only in adversarial models that are much weaker than that of Aramis.
+%% %Since we rely on semi-honest \mpc for confidentiality, unlike prior works that use SGX, Aramis is naturally resistant to all side-channel attacks.
+%% %Our model is similar in spirit to the work of~\cite{sealedglass} who made a similar assumption in the context of zero-knowledge proofs (and other fundamentally asymmetric primitives, where only one party needs to perform trusted computation). 
+%% To demonstrate the generality of Aramis, we compile both the semi-honest GMW (2 party protocol)~\cite{gmw} and Porthos (3 party protocol) to obtain malicious versions of these protocols. Porthos compiled with Aramis gives the first experimentally vetted maliciously secure protocol for neural network inference. 
+%% Running interactive MPC protocols that perform memory intensive inference tasks in SGX with low overhead requires us to address various challenges that are discussed in Section~\ref{sec:challenges-aramis}.
+%% %% uses hardware with integrity protection and 
+%% %In particular, Aramis converts any semi-honest secure MPC protocol into a malicious secure MPC protocol preserving the corruption threshold. 
+%% Our system, Aramis, only assumes a hardware with a) the integrity guarantee that once the code is attested, it cannot be modified; and b) the ability to securely sign messages (without the host machine or party running the hardware being able to forge signatures).
+%% We formalize this secure hardware as an ideal functionality which can be realized using various hardware platforms that provide
+%% code attestation, e.g., STM32H7, MediaTek MT3620, CEC1702, ARM TrustZone, etc.
+%% We provide details of implementing this functionality using Intel's Software Guard Extensions (Intel SGX)~\cite{intelsgx} in Section~\ref{sec:fattest-sgx}. 
+%% This trust assumption on the secure hardware is significantly weaker than prior works on secure computation based on SGX~\cite{vc3, obliviousmpml, GuptaFC16, BahmaniFC17,gcsgx,ndss1,ndss2,ndss3,slalom} which assume that SGX completely hides all secrets
+%%  from the host and even if data is decrypted and computed upon inside SGX, it cannot be viewed by the host. 
+%% In contrast, in our adversarial model, the host can see all the data inside the hardware. Thus, all previous work that combines MPC and SGX are secure
+%% only in adversarial models that are much weaker than that of Aramis.
+%% %Since we rely on semi-honest \mpc for confidentiality, unlike prior works that use SGX, Aramis is naturally resistant to all side-channel attacks.
+%% %Our model is similar in spirit to the work of~\cite{sealedglass} who made a similar assumption in the context of zero-knowledge proofs (and other fundamentally asymmetric primitives, where only one party needs to perform trusted computation). 
+%% To demonstrate the generality of Aramis, we compile both the semi-honest GMW (2 party protocol)~\cite{gmw} and Porthos (3 party protocol) to obtain malicious versions of these protocols. Porthos compiled with Aramis gives the first experimentally vetted maliciously secure protocol for neural network inference. 
+%% Running interactive MPC protocols that perform memory intensive inference tasks in SGX with low overhead requires us to address various challenges that are discussed in Section~\ref{sec:challenges-aramis}.
+%% % and these scale to ImageNet dataset.
+%% %We apply Aramis to both GMW (to showcase its generality) as well as Porthos to obtain the first experimentally vetted maliciously secure protocols for neural network inference.
+%\subsection{Summary of empirical results}
+%\label{sec:summ-eval}
+%We list the claims empirically validated by this work:
+%\begin{tiret}
+%\item \tool is the first work to automatically run \mpc protocols for ImageNet scale DNNs  (Table~\ref{tab:bigbenchmarks}) and  DNNs for realistic healthcare datasets (Section~\ref{subsec:realworldimpact}). 
+%\tool compiles \tensorflow code to \mpc protocols whose runtime and communication scale linearly with the depth of DNNs (Figure~\ref{fig:scalingResnet}).
+%\item \mpc protocols for fixed-point are much more efficient than their floating-point counterparts (Table~\ref{tab:floatvsfixed}). Therefore, \tool uses fixed-point arithmetic.
+%Athos-generated fixed-point code matches classification accuracy of floating-point code (Table~\ref{tab:fixed-accuracy}).
+ %\item Not surprisingly, 2-party computation (2PC) protocols  (ABY, CHET, MiniONN, Gazelle, Delphi) are much slower than the 3-party computation (3PC) protocols (Section~\ref{sec:prior-comparison}). Thus, in \tool we focus on running the large benchmarks with Porthos, a 3PC protocol, that has lower runtime and communication than prior 3PC works on secure inference (SecureNN~\cite{securenn}, Chameleon~\cite{chameleon}, and ABY$^3$~\cite{aby3}) (Tables~\ref{tab:porthosvssecurenn} and \ref{tab:porthosvspriormnist}).
+%\item As the sizes of convolution filters increases, the performance of Porthos improves w.r.t SecureNN (Figure X).
+%These improvements translate to tangible gains in practical DNNs (Table~\ref{tab:porthosvssecurenn}).
+%\item Aramis is a general technique that can be used to port \mpc protocols like GMW to SGX with minimal overhead (Table~\ref{tab:gmwport}).
+%On ImageNet, Aramis-based protocols for inference  secure against malicous adversaries have about 3X overhead over the corresponding semi-honest secure protocols (Table~\ref{tab:bigbenchmarks}).
+%For inference tasks, Aramis is much more efficient than pure crypto-based approaches to malicious security (Section~\ref{sec:concurrent-comparison}).
+%\end{tiret}
+\subsection{Organization of the paper} We provide an end-to-end walkthrough of our system to illustrate the overall toolchain in Section \ref{sec:toolchain}. %After discussing preliminaries related to neural networks, security, and SGX in Section \ref{subsec:preliminaries}
+In Section \ref{sec:athos}, we describe our compiler Athos. Section \ref{sec:porthos} describes our improved 3-party semi-honest secure protocol for neural networks. We describe Aramis that compiles any semi-honest secure protocol into a malicious secure protocol, in Section \ref{sec:aramis}. We present all our experimental results in Section \ref{sec:experiments}, related works in Section \ref{sec:related} and conclude in Section \ref{sec:conclusion}.
+
+

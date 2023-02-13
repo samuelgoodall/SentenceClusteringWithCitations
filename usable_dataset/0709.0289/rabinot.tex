@@ -1,0 +1,681 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter[\RabinOT in the Bounded-Quantum-Storage Model]{\RabinOT in the Bounded-Quantum-Storage
+  Model} \label{chap:RabinOT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{oblivious transfer!\RabinOT|(}
+In this chapter, we present an efficient protocol for Rabin Oblivious Transfer
+which is secure in the bounded-quantum-storage model. It first
+appeared in \cite{DFSS05}, a journal version of this paper is in preparation
+\cite{DFSS08journal}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Definition} \label{sec:def-rabin-obliv-transf}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A protocol for Rabin Oblivious Transfer (\RabinOT) between sender
+Alice and receiver Bob allows for Alice to send a bit $b$ through an
+erasure \index{erasure channel} channel to Bob. Each transmission
+delivers $b$ or an erasure with probability $\frac12$.  Intuitively, a
+protocol for \RabinOT is secure if
+\begin{itemize}
+\item the sender Alice gets no information on whether $b$ was
+                  received or not, no matter what she does, and
+\item the receiver Bob gets no information about $b$ with
+  probability at least~$\frac{1}{2}$, 
+   no matter what he does. 
+\end{itemize}
+In this chapter, we are considering quantum protocols for \RabinOT. This
+means that while the inputs and outputs of the honest senders are classical,
+described by random variables, the protocol may contain quantum
+computation and quantum communication, and the view of a dishonest
+player is quantum, and is thus described by a %random state.
+quantum state. \index{quantum protocol}
+
+Any such (two-party) protocol is specified by a family
+$\{(\A_n,\B_n)\}_{n>0}$ of pairs of interactive quantum circuits (i.e.
+interacting through a quantum channel). Each pair is indexed by a
+security parameter $n>0$, where $\A_n$ and $\B_n$ denote the circuits
+for sender Alice and receiver Bob, respectively.  In order to simplify
+the notation, we often omit the index $n$, leaving the dependency on it
+implicit.
+
+%we typically do not write the index $n$ explicitly but view
+%the dependence on it us understood.
+
+For the formal definition of the security requirements of a \RabinOT
+protocol, let us fix the following notation. Let $B$ denote the binary
+random variable describing \A's input bit $b$, and let $A$ and $Y$
+denote the binary random variables describing \B's two output bits,
+where the meaning is that $A$ indicates whether the bit was received
+or not. 
+%% Furthermore, for a dishonest sender \dA, we
+%%  slightly abuse
+%% notation and also write \dA\ for the quantum state that the sender
+%% outputs, which may depend on $A$ and $Y$, and, similarly for a
+%% dishonest receiver \dB, we also write \dB\ for the quantum state that
+%% the receiver outputs, which may depend on $B$.
+Furthermore, for a dishonest sender~\dA, the final state of a fixed
+candidate protocol for \RandOT can be described by the ccq-state
+\smash{$\rho_{AY\dA}$} where (by slight abuse of notation) we also denote by
+\smash{$\dA$} the quantum register that the sender outputs. Its state may
+depend on $A$ and $Y$. Similarly, for a dishonest receiver \dB, we
+have the cq-state $\rho_{B \dB}$.
+
+
+\begin{definition}\label{def:ROT}
+%A {\bf (statistically) secure ROT} is a two-party (quantum) protocol $(\A,\B)$ with the following properties. 
+  A two-party (quantum) protocol $(\A,\B)$ is a \emph{$\eps$-secure \RabinOT} if the following holds:
+\begin{description}
+\item[\boldmath$\varepsilon$-Correctness:] For honest \A\ and \B, 
+$$\P[B=Y|A=1] \geq 1 - \eps \, .$$
+\item[\boldmath$\varepsilon$-Receiver-security:] For honest \B\ and any dishonest \dA\ there
+  exists\footnote{Recall from Section~\ref{sec:qit}: Given a cq-state
+    $\rho_{X \regE}$, by saying that there exists a random
+    variable $Y$ such that $\rho_{XY\regE}$ satisfies some condition,
+    we mean that $\rho_{X \regE}$ can be understood as $\rho_{X\regE}
+    = \tr_Y(\rho_{XY\regE})$ for a ccq-state $\rho_{XY\regE}$ that
+    satisfies the required condition.} a binary random variable $B'$
+  such that
+\[ \P[B'=Y|A=1] \geq 1 - \eps, \quad\mbox{ and }\quad \dist{\rho_{AB'\dA}, \I \otimes \rho_{B'\dA} } \leq \eps \, . \]
+\item[\boldmath$\varepsilon$-Sender-security:] For any \dB\ there exists an event $\ev$ with
+  $\P[\ev] \geq \frac{1}{2} - \eps$ such that
+\[
+\dist{ \rho_{B\dB|\ev}, \rho_B \otimes \rho_{\dB|\ev} } \leq \eps \, .
+\]
+\end{description}
+\index{correctness!of quantum \RabinOT}
+\index{receiver-security!of quantum \RabinOT}
+\index{sender-security!of quantum \RabinOT}
+If any of the above holds for $\eps=0$,  %(for large enough~$n$),
+then the corresponding property is said to hold {\bf perfectly}. 
+If one of the properties only holds with respect to a restricted class
+$\mathfrak{S}$ of \dA's respectively $\mathfrak{R}$ of \dB's, then this property
+is said to hold (and the protocol is said to be secure) {\bf against}
+$\mathfrak{S}$ respectively~$\mathfrak{R}$.
+\end{definition}
+
+Receiver-security requires that the joint quantum state is essentially
+the same as when the dishonest sender chooses a bit $B'$ according to
+some distribution and a (possibly dependent) quantum state, and gives
+$B'$ to an ideal functionality which passes it on to the receiver with
+probability $\frac12$. Sender-security requires that the joint quantum
+state is essentially the same as when the dishonest receiver gets the
+sender's bit $B$ with probability $\frac12$ and prepares some state
+that may depend on $B$ in case he receives it, and prepares some state
+that does not depend on $B$ otherwise. In other words, security
+requires that the dishonest party cannot do more than when attacking
+an ideal functionality.  From such a strong security guarantee we
+expect nice composition behavior, for instance like
+in~\cite{CSSW06}.
+
+Note that the original definition given in~\cite{DFSS05} does not
+guarantee that the distribution of the input bit is determined at the
+end the execution of \RabinOT. This is a strictly weaker definition
+and does not fully capture what is expected from a \RabinOT: it is
+easy to see that if the dishonest sender can still influence his input
+bit after the execution of the protocol, then known schemes based on
+\RabinOT, like bit commitments, are not secure anymore. The security
+definition given here is in the spirit of the security definition
+from~\cite{DFRSS07} for 1-2~OT, described in the next
+Chapter~\ref{chap:12OT}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Protocol}\label{sec:otprot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We present a quantum protocol for \RabinOT that will be shown
+perfectly correct and perfectly receiver-secure (against any sender)
+and statistically sender-secure against any quantum-memory-bounded
+receiver. Our protocol exhibits some similarity with quantum conjugate
+coding introduced by Wiesner~\cite{Wiesner83}. \index{conjugate coding}
+
+\begin{myfigure}{h}
+ \begin{myprotocol}{\qot$(b)$}
+      \item $\A$ picks $x\in_R\{0,1\}^n$, and $r\in_R\{+,\times \}$
+        and sends $\ket{\psi} \assign \ket{x}_r$ %in basis $r$ 
+            to $\B$ (i.e. the string $x$ encoded in basis $r$).
+      \item $\B$ picks $r'\in_R\{+,\times \}$ and measures all qubits
+       of $\ket{\psi}$ in basis $r'$. Let $x'\in\{0,1\}^n$ be the
+       result.
+      \item $\A$ announces $r$, $\hf\in_R \chf{n}$, and $e \assign b\oplus \hf(x)$.\label{bound}
+      \item $\B$ outputs $a \assign 1$ and $y \assign e\oplus \hf(x')$ if $r'=r$ and else $a \assign 0$ and $y \assign 0$.
+%      \item $\B$ gets $b=s\oplus \hf(x')$ whenever $r'=r$.
+ \end{myprotocol}
+\caption{Quantum Protocol for \RabinOT}\label{fig:ot}
+\end{myfigure}
+
+The protocol given in~Figure~\ref{fig:ot} is very simple: $\A$ picks
+$x\in_R\{0,1\}^n$ and sends to
+$\B$ $n$ qubits in state either $\ket{x}_+$ %(i.e. $x$ is sent in basis $+^n$) 
+or $\ket{x}_{\times}$ %(i.e. $x$ is sent in basis $\times^n$) 
+each chosen with probability~$\frac{1}{2}$.  $\B$ then measures all
+received qubits either in the rectilinear or in the diagonal basis.
+\index{basis!rectilinear} \index{basis!diagonal} With probability
+\smash{$\frac{1}{2}$}, $\B$ picked the right basis and gets $x$, while
+any \dB\ that is forced to measure part of the state (due to a memory
+bound) can only have full information on $x$ in case the $+$-basis was
+used {\em or} in case the $\times$-basis was used (but not in both
+cases). \index{privacy amplification}Privacy amplification based on
+any \univ\ class of hashing functions $\chf{n}$ is then used to
+eliminate partial information (as explained in Section~\ref{sec:pa}).
+For simplicity, we focus on the case where the output size of the
+family $\chf{n}$ is just one bit, i.e. $\ell=1$, but all results of
+this chapter can easily be extended to \RabinlStringOT of $\ell$-bit
+strings, by using an output size $\ell > 1$ and adjusting the memory
+bounds accordingly, see Section~\ref{sec:extensionrot}.
+%allows to obtain a proper ROT. 
+
+In order to avoid \index{abort}aborting, we specify that if a dishonest \dA\ 
+refuses to participate, or sends data in incorrect format, then \B\ 
+samples its output bits $a$ and $y$ both at random in $\set{0,1}$.
+
+We first consider receiver-security. 
+\index{receiver-security!of quantum \RabinOT}
+\begin{proposition}\label{prop:sec:receiverprivate}
+\qot\ is perfectly receiver-secure.
+\end{proposition}
+It is obvious that no information about whether $\B$ has received the
+bit is leaked to any sender \smash{$\dA$}, since $\B$ does not send
+anything. However, one needs to show the existence of a random
+variable $B'$ as required by receiver-security.
+\begin{proof}
+  Recall, the quantum state \smash{$\rho_{AY\dA}$} is defined by the
+  experiment where the dishonest sender $\dA$ interacts with the
+  honest memory-bounded $\B$. Consider a modification of the
+  experiment where we allow $\B$ to be {\em unbounded} in memory and
+  where $\B$ waits to receive $r$ and then measures all qubits in
+  basis~$r$. Let $X'$ be the resulting string. Nevertheless, $\B$
+  picks $r' \in_R \set{+,\times}$ at random and outputs $(A,Y) =
+  (0,0)$ if $r' \neq r$ and $(A,Y) = (1,e \oplus f(X'))$ if $r' = r$.
+  Since the only difference between the two experiments is {\em when}
+  $\B$ measures the qubits and {\em in what basis} $\B$ measures them
+  when $r \neq r'$, in which case his final output is independent of
+  the measurement outcome, the two experiments result in the same
+  $\rho_{AY\dA}$. However, in the modified experiment we can choose
+  $B'$ to be $e \oplus f(X')$, such that by construction $B' = Y$ if
+  $A=1$ and $A$ is uniformly distributed, independent of anything, and
+  thus $\rho_{AB'\dA} = \I \otimes \rho_{B'\dA}$.
+\end{proof}
+
+
+As we shall see in Section~\ref{sec:otsecurity}, the security of the
+\qot\ protocol against receivers with bounded-size quantum memory
+holds as long as the bound applies before Step~\ref{bound} is reached.
+An equivalent protocol is obtained by purifying the sender's actions.
+Although \qot\ is easy to implement, the purified or EPR-based version
+depicted in Figure~\ref{fig:eprot} is easier to prove secure. This
+technique was pioneered by Ekert~\cite{Ekert91} in the scenario of
+quantum key distribution. A similar approach was taken in the
+Shor-Preskill proof of security for the BB84 quantum-key-distribution
+scheme~\cite{SP00}. \index{purification} \index{EPR-based version|see {purification}}
+
+\begin{myfigure}{h}
+\begin{myprotocol}{\eprqot$(b)$}
+\item $\A$ prepares $n$ EPR pairs each in state
+  $\ket{\Omega}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$ and sends one
+  half of each pair to $\B$ and keeps the other halves.\label{rec}
+\item $\B$ picks $r'\in_R\{+,\times \}$ and measures all received qubits
+      in basis $r'$. Let $x'\in\{0,1\}^n$ be the result.
+\item $\A$ picks $r\in_R\{+,\times \}$, and measures all kept
+      qubits in basis $r$. Let $x\in\{0,1\}^n$ be the outcome.  $\A$
+      announces $r$, $\hf\in_R \chf{n}$, and $e \assign b\oplus \hf(x)$.\label{it:measure}
+\item $\B$ outputs $a \assign 1$ and $y \assign e \oplus \hf(x')$ if $r'=r$ and else $a \assign 0$ and $y \assign 0$.
+%      \item $\B$ gets $b=s\oplus \hf(x')$ whenever $r'=r$.
+\end{myprotocol}
+\caption{Protocol for EPR-based \RabinOT}\label{fig:eprot}
+\end{myfigure}
+
+Notice that while \qot\ requires no quantum memory for honest players,
+quantum memory for $\A$ seems to be required in \eprqot. The following
+Lemma shows the strict security equivalence between \qot\ and \eprqot.
+
+\begin{lemma}\label{lem:seqequiv}
+  \qot\ is $\eps$-sender-secure if and only if \eprqot\ is.
+\end{lemma}
+\begin{proof}
+The proof follows easily after observing that $\A$'s
+choices of $r$ and $\hf$, together with 
+the measurements all commute with $\dB$'s actions.
+Therefore, they can be performed right after Step 1
+with no change for $\dB$'s view. Modifying \eprqot\
+that way results in \qot.
+\end{proof}
+
+Note that for a dishonest receiver it is not only irrelevant whether he tries to attack \qot\ or \eprqot, but in fact there is no difference in the two protocols from his point of view. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modeling Dishonest Receivers} \label{sec:modeldishonestreceiversrabin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We model dishonest receivers in \qot, respectively \eprqot, under the assumption that 
+the maximum size of their quantum storage is bounded.
+These adversaries are only required to have bounded quantum storage
+when they reach Step~\ref{bound} in (\epr-)\qot. %respectively \eprqot. 
+Before (and after) that, \index{bounded-quantum-storage model}
+the adversary can store and carry out quantum computations involving any number
+of qubits. Apart from the restriction on the size of the quantum
+memory available to the adversary, no other assumption is made. In 
+particular, the adversary is not assumed to be computationally
+bounded and the size of its classical memory is not restricted. 
+\begin{definition}\label{boundedstorage}
+The set $\mathfrak{R}_{\gamma}$ denotes all
+possible quantum dishonest receivers $\{\dB_n\}_{n>0}$ in \qot\ or \eprqot\ 
+where for each $n>0$, $\dB_n$ has quantum memory of size 
+at most $\gamma n$ when Step \ref{bound} is reached.  
+\end{definition}
+\index{dishonest receiver!of \RabinOT}
+In general, the adversary $\dB$ is allowed to perform any quantum
+computation compressing the $n$ qubits received from $\A$ into a
+quantum register $M$ of size at most $\gamma n$ when Step \ref{bound}
+is reached. More precisely, the \index{compression}compression function is implemented by
+some unitary transform $T$ acting upon the quantum state received and
+an \index{ancilla}ancilla register of arbitrary size (initially in the state
+$\ket{0}$). The compression is performed by a measurement that we
+assume in the computational basis without loss of generality.  Before
+starting Step \ref{bound}, the adversary first applies a unitary
+transform~$T$:
+\begin{eqnarray*}
+2^{-n/2} \!\! \sum_{x\in\{0,1\}^n}\ket{x}\otimes T\ket{x}\ket{0}
+  \mapsto  2^{-n/2} \!\! \sum_{x\in\{0,1\}^n} \ket{x} \otimes
+ \sum_{y}\alpha_{x,y}\ket{\varphi_{x,y}}^{M}\ket{y}^{Y}, 
+\end{eqnarray*}
+where for all $x$, $\sum_y |\alpha_{x,y}|^2=1$.
+Then, a measurement in the computational basis is applied
+to register $Y$ providing classical outcome $y$. The result
+is a quantum state in register $M$ of size $\gamma n$ qubits.
+Ignoring the value of $y$ to ease the notation,
+%Given the classical outcome $z$, 
+the re-normalized state of the system in its most general
+form when Step~\ref{bound} in \eprqot\ is reached is thus of the form
+\[ \ket{\psi}= 
+\sum_{x\in\{0,1\}^n} \alpha_x \ket{x}\otimes\ket{\varphi_{x}}^M,
+\]
+where $\sum_{x} |\alpha_x|^2=1$. We will prove security for any such state $\ket{\psi}$ and thus conditioned on any value $y$ that may be observed. It is therefore safe to leave the dependency on $y$ implicit. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Security Against Dishonest Receivers}\label{sec:otsecurity}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section, we use the uncertainty relation derived in
+Section~\ref{sec:twounbiasedbases} to show that \eprqot\ is secure
+against any dishonest receiver having access to a quantum storage
+device of size strictly smaller than half the number of qubits
+received at Step \ref{rec}.
+
+\index{sender-security!of quantum \RabinOT}
+\begin{theorem}\label{thm:privacyeprqot}
+For all $\gamma < \frac12$, \qot\ is $\eps$-secure for a negligible (in $n$) $\eps$ 
+against $\mathfrak{R}_{\gamma}$.
+\end{theorem}
+\begin{proof}
+  After Lemmas~\ref{lem:seqequiv} and~\ref{prop:sec:receiverprivate},
+  it remains to show that \eprqot\ is $\eps$-sender-secure against
+  $\mathfrak{R}_{\gamma}$.  Since \mbox{$\gamma < \frac{1}{2}$}, we
+  can find $\sp > 0$ with \mbox{$\gamma + \sp < \frac{1}{2}$}.
+  Consider a dishonest receiver \smash{$\dB$} in \eprqot\ with quantum
+  memory of size~$\gamma n$.  Let $R$ and $X$ denote the random
+  variables describing the basis $r$ and the outcome $x$ of \A's
+  measurement (in basis~$r$) in Step~\ref{it:measure} of \eprqot,
+  respectively.  We implicitly understand the distribution of $X$
+  given $R$ to be conditioned on the classical outcome $y$ of the
+  measurement \smash{$\dB$} performed when the memory bound applies,
+  as described in Section~\ref{sec:modeldishonestreceiversrabin}; the
+  following analysis works no matter what $y$ is.
+  Corollary~\ref{cor:hadamard} with $\lambda = \gamma + \sp$ implies
+  the existence of $\eps$ negligible in $n$ and an event $\ev$ such
+  that $\P[\ev] \geq \frac12 - \eps$ and such that
+  $\H_{\infty}(X|R\!=\!r,\ev) \geq \gamma n + \sp n$ for any relevant
+  $r$.  Note that by construction, the random variables $X$ and $R$,
+  and thus also the event $\ev$, are independent of the sender's input
+  bit $B$, and hence $\rho_{B|\ev} = \rho_B$.  It remains to show that
+  $\dist{ \rho_{B\dB|\ev},\rho_{B|\ev}\!\otimes\!\rho_{\dB|\ev} } \leq
+  \eps$.  As the bit $B$ is masked by the output of the
+  two-universal hash function $F(X)$ in Step 4 of \eprqot\ (where the
+  random variable $F$ represents the random choice for~$f$), it
+  suffices to show that $F(X)$ is close to uniform and essentially
+  independent from $\dB$'s view, conditioned on $\ev$.  But this is
+  guaranteed by the above bound on $\H_{\infty}(X|R\!=\!r,\ev)$ and by
+  the \index{privacy amplification} privacy-amplification theorem
+  (Corollary~\ref{thm:pasmooth} with $\eps \assign 0, \ell \assign 1,
+  q \assign \gamma n$ and $U$ constant).
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{On the Necessity of Privacy Amplification}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{privacy amplification!randomized}
+In this section, we show that randomized privacy amplification is
+needed for protocol \qot\ to be secure.
+For instance, it is tempting to believe that the sender could use the
+XOR $\bigoplus_i x_i$ in order to mask the bit $b$, rather than $f(x)$
+for a randomly sampled $f \in \chf{n}$. This would reduce the
+communication complexity as well as the number of random coins needed.
+However, we argue in this section that this is not secure (against an
+adversary as we model it). Indeed, somewhat surprisingly, this variant
+can be broken by a dishonest receiver that has {\em no quantum memory
+ at all} (but that can do coherent measurements on pairs of qubits) in
+the case $n$ is even. For odd $n$, the dishonest receiver needs to
+store \emph{a single qubit}.
+
+Clearly, a dishonest receiver can break the modified scheme \qot\ and
+learn the bit $b$ with probability $1$ if he can compute $\bigoplus_i
+x_i$ with probability~$1$. Note that, using the equivalence between
+\qot\ and \eprqot, $x_i$ can be understood as the outcome of the
+\index{basis!computational} \index{basis!diagonal}
+measurement in either the $+$- or the $\times$-basis, performed by the
+sender on one part of an EPR pair while the other is handed over
+to the receiver.  The following proposition shows that indeed the
+receiver can learn $\bigoplus_i x_i$ by a suitable measurement of his
+parts of the \index{EPR pair}EPR pairs. Concretely, he measures the qubits he receives
+pair-wise by a suitable measurement which allows him to learn the XOR
+of the two corresponding $x_i$'s, no matter what the basis is (and he
+needs to store one single qubit in case $n$ is odd). This obviously
+allows him to learn the XOR of all $x_i$'s in all cases.
+
+\begin{proposition}
+  Consider two EPR pairs, i.e., $\ket{\psi} = \frac{1}{2} \sum_{x}
+  \ket{x}^S\ket{x}^R$ where $x$ ranges over $\set{0,1}^2$.  Let $r \in
+  \set{+,\times}$, and let $x_1$ and $x_2$ be the result when
+  measuring the two qubits in register $S$ in basis $r$.  There exists
+  a fixed measurement for register $R$ so that the outcome together
+  with $r$ uniquely determines $x_1 \oplus x_2$.
+\end{proposition}
+
+\begin{proof}
+\index{Bell measurement} \index{Bell basis}
+The measurement that does the job is the {\em Bell measurement}, i.e., the measurement in the Bell basis $\set{\ket{\Phi^+},\ket{\Psi^+},\ket{\Phi^-},\ket{\Psi^-}}$. Recall, 
+\begin{align*}
+\ket{\Phi^+} &= \frac{1}{\sqrt{2}} \big(\ket{00}_+ + \ket{11}_+\big) =  \frac{1}{\sqrt{2}} \big(\ket{00}_{\times} + \ket{11}_{\times}\big) \\
+\ket{\Psi^+} &= \frac{1}{\sqrt{2}} \big(\ket{01}_+ + \ket{10}_+\big) =  \frac{1}{\sqrt{2}} \big(\ket{00}_{\times} - \ket{11}_{\times}\big) \\
+\ket{\Phi^-} &= \frac{1}{\sqrt{2}} \big(\ket{00}_+ - \ket{11}_+\big) =  \frac{1}{\sqrt{2}} \big(\ket{01}_{\times} + \ket{10}_{\times}\big) \\
+\ket{\Psi^-} &= \frac{1}{\sqrt{2}} \big(\ket{01}_+ - \ket{10}_+\big) =  \frac{1}{\sqrt{2}} \big(\ket{10}_{\times} - \ket{01}_{\times}\big)  \, .
+\end{align*}
+Due to the special form of the Bell basis, when register $R$ is
+measured and, as a consequence, one of the four Bell states is
+observed, the state in register $S$ collapses to that {\em same} Bell
+state. Indeed, when doing the basis transformation, all cross-products
+cancel each other out. It now follows by inspection that knowledge of
+the Bell state and the basis $r$ allows to predict the XOR of the two
+bits observed when measuring the Bell state in basis $r$. For
+instance, for the Bell state $\ket{\Psi^+}$, the XOR is $1$ if $r = +$
+and it is $0$ if $r = \times$.
+\end{proof}
+
+Note that from the proof above, one can see that the receiver's attack,
+respectively his measurement on each pair of qubits, can be understood
+as teleporting one of the two entangled qubits from the receiver to
+the sender using the other as EPR pair. However, the receiver does not send
+the outcome of his measurement to the sender, but keeps it in order to
+predict the XOR. \index{teleportation}
+
+Clearly, the same strategy also works against any fixed linear
+function. Therefore, the only hope for doing deterministic privacy
+amplification is by using a non-linear function. However, it has been
+shown recently by Ballester, Wehner, and Winter \cite{BWW06}, that
+also this approach is doomed to fail in our scenario, because the
+outcome of \emph{any fixed Boolean function} can be perfectly predicted by a
+dishonest receiver who can store a single qubit and later learns the
+correct basis $r \in \set{+,\times}$. \index{privacy amplification!deterministic}
+
+%deterministic privacy amplification can only be possible
+%if the fixed function is non-linear. It is unknown to us
+%whether these functions can be used to reduce the 
+%communication complexity of privacy amplification in \qot\ while
+%preserving its security. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weakening the Assumptions}\label{sec:weakass}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Observe that \qot\ requires error-free quantum communication, in that
+a transmitted bit $b$, that is encoded by the sender and measured by
+the receiver using the same basis, is always received as $b$. In
+addition, it also requires a perfect quantum source which on request
+produces {\em one and only one} qubit in the right state, e.g.\ {\em
+  one} photon with the right polarization.  Indeed, in case of noisy
+quantum communication, an honest receiver in \qot\ is likely to
+receive an incorrect bit, and the sender-security of \qot\ is
+vulnerable to imperfect sources that once in a while transmit more
+than one qubit in the same state: a malicious receiver $\dB$ can
+easily determine the basis $r \in \{+,\times \}$ and measure all the
+following qubits in the right basis.  However, current technology only
+allows to approximate the behavior of single-photon sources and of
+noise-free quantum communication. It would be preferable to find a
+variant of \qot\ that allows to weaken the technological requirements
+put upon the honest parties. \index{single-photon source}
+\index{imperfect source} \index{multi-qubit emission}
+
+In this section, we present such a protocol based on BB84 states
+\cite{BB84}, \BBqot\ (see Figure~\ref{fig:BB84ot}). The security proof
+follows essentially by adapting the security analysis of \qot\ in a
+rather straightforward way, as will be discussed later.
+\index{BB84 coding scheme}
+
+\subsection{Weak Quantum Model}
+\index{weak quantum model} \index{$(\phi,\eta)$-weak quantum model|see
+{weak quantum model}}
+Let us consider a quantum channel with an error probability $\phi <
+\frac{1}{2}$, i.e., $\phi$ denotes the probability that a transmitted
+bit $b$, that is encoded by the sender and measured by the receiver
+using the same basis, is received as $1-b$. In order not to have the
+security rely on any level of noise, we assume 
+the error probability to be zero when considering a {\em dishonest} receiver.
+Also, let us consider a quantum source which produces two or more
+qubits (in the same state), rather than just one, with probability
+$\eta < 1 - \phi$.
+%We model such an imperfect quantum source by an oracle ${\cal O}$ which 
+%for each transmitted qubit announces the exact state of the qubit to 
+%the dishonest receiver with probability $\eta$. 
+We call this the \emph{$(\phi,\eta)$-weak quantum model}. By adjusting the
+parameters, this model can also cope with dark counts and empty
+pulses, see Section~\ref{sec:moreimperfect}.
+\index{dark count} \index{empty pulse}
+
+In order to deal with noisy quantum communication, we need to do
+error-correction without giving the adversary too much information. 
+%
+\remove{ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For this, we use {\em secure sketches}, as introduced in~\cite{DRS04}.
+A $(\ell,m,\phi)$-secure sketch\footnote{Note that our definition of a
+  secure sketch differs slightly from the one given in~\cite{DRS04}. }
+is a randomized function $S:\{0,1\}^{\ell} \rightarrow \{0,1\}^*$ such
+that (1) for any $w \in \{0,1\}^{\ell}$ and for $w'$ received from $w$
+by flipping each bit (independently) with probability $\phi$, the
+string $w$ can be recovered from $w'$ and $S(w)$ except with
+negligible probability (in $\ell$), and (2) for all random variables
+$W$ over $\{0,1\}^{\ell}$, the ``average min-entropy'' of $W$ given
+$S(W)$ is at least $\H_{\infty}(W) - m$.  We would like to point out
+that the notion of average min-entropy used in \cite{DRS04} and here differs
+slightly from the standard notion $\H_{\infty}(W|S(W))$, but it implies
+that for any $\Delta > 0$, the probability that $S(W)$ takes on a
+value $y$ such that $\H_{\infty}(W|S(W)=y) \geq \H_{\infty}(W)-m-\Delta$
+is at least $1-2^{-\Delta}$ (which is sufficient for our purpose).
+}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%In order to analyze the behavior of privacy amplification when
+%error-correction is used, we consider one-way error-correction.
+Techniques to solve this problem are known as {\em information
+  reconciliation} (as introduced for instance by Brassard and 
+Salvail~\cite{BS93}) or as {\em secure sketches} introduced by Dodis,
+Reyzin, Smith~\cite{DRS04}.  Let $x \in \{0,1\}^\ell$ be an
+arbitrary string, and let $x' \in\{0,1\}^\ell$ be the result of
+flipping every bit in $x$ (independently) with probability $\phi$. It
+is well known that learning the syndrome $S(x)$ of $x$, with respect
+to a suitable efficiently-decodable linear error-correcting code $C$
+of length $\ell$, allows to recover $x$ from $x'$, except with negligible probability
+in~$\ell$ (see,e.g.,~\cite{Maurer91,Crepeau97,DRS04}).  Furthermore,
+it is known from coding theory that, for large enough $\ell$, such a
+code can be chosen with rate $R$ arbitrarily close to but smaller than
+$1 - h(\phi)$, i.e., such that the syndrome length $s$ is bounded by
+$s < (h(\phi) + \varepsilon) \ell$ where $\varepsilon > 0$ (see
+e.g.~\cite{Crepeau97} or the full version of~\cite{DRS04} and the
+references therein). \index{error correction} \index{syndrome} \index{information reconciliation} \index{secure sketch} \index{error probability} \index{code}  % with minimal distance $d = (\phi+\varepsilon)\ell$ where$\varepsilon > 0$, 
+
+Regarding the loss of information, we can use the
+\index{privacy amplification} privacy-amplification statement in form of
+Corollary~\ref{thm:pasmooth} with $\eps \assign 0$ and constant $U$ in
+a similar way as before, just by appending the classical syndrome
+$S(x)$ (of length $s$) to the quantum register $\regE$, which results
+in
+%% \H_0(S(X)) = \H_{\infty}(S) - s$ via the chain rule (Lemma
+%% quantum register $\regE$. Using that $S_0(\rho_{S(X)\regE}) \leq q +
+%% s$, Theorem~\ref{thm:pa} then reads
+%
+\begin{align}  \label{ddbound}
+  \dist{ \rho_{F(X) F S(X) \regE},\I \otimes \rho_{F S(X) \regE} }
+&\leq \frac{1}{2} 2^{-\frac{1}{2}({\H_{\infty}(X)-q-s-1})}.
+\end{align}
+
+Consider the protocol \BBqot\ shown in Figure~\ref{fig:BB84ot} in the
+$(\phi,\eta)$-weak quantum model. The protocol uses an efficiently
+decodable linear code $C_{\ell}$, parametrized in $\ell \in
+\naturals$, with codeword length $\ell$,
+% minimal distance $d = (\phi+\varepsilon)\ell$, and 
+rate $R = 1 - h(\phi) - \varepsilon$ for some small $\varepsilon > 0$,
+and being able to correct errors occurring with probability $\phi$
+(except with negligible probability). Let $S_{\ell}$ be the
+corresponding syndrome function.  Like before, the memory bound in
+\BBqot\ applies before Step~\ref{BBbound}.
+
+
+\begin{myfigure}{h}
+\begin{myprotocol}{\BBqot$(b)$}
+ \item $\A$ picks $x \in_R \nbit$ and $\theta \in_R \{+,\times \}^n$
+ and sends $x_i$ in the corresponding bases $\ket{x_1}_{\theta_1}, \ldots, \ket{x_n}_{\theta_n}$ to~$\B$.
+\item $\B$ picks $r'\in_R\{+,\times \}$ and measures all qubits in
+    basis $r'$. Let $x'\in\{0,1\}^n$ be the result.
+\item $\A$ picks $r \in_R \{+,\times \}$, sets $I \assign \Set{i}{\theta_i \!=\!\set{+,\times}_{[r]}}$ and $\ell \assign |I|$, and announces $r$, $I$, $syn \assign S_{\ell}(x|_{I})$, $\hf\in_R \chf{\ell}$, and $e \assign b\oplus \hf(x|_{I})$.\label{BBbound}
+\item $\B$ recovers $x|_{I}$ from $x'|_{I}$ and $syn$, and outputs
+  $a \assign 1$ and $b' \assign e \oplus \hf(x|_{I})$ if $r'=r$ and else $a
+  \assign 0$ and $b' \assign 0$.
+\end{myprotocol}
+\caption{Protocol for the BB84 version of \RabinOT}\label{fig:BB84ot}
+\end{myfigure}
+
+By the above mentioned properties of the code $C_{\ell}$, it is
+obvious that $\B$ receives the correct bit $b$ if $r'=r$, except with
+negligible probability. \index{correctness!of quantum \RabinOT} (The
+error probability is negligible in $\ell$, but by Chernoff's
+\index{Chernoff's inequality} inequality (Lemma~\ref{lem:chernoff}),
+$\ell$ is linear in $n$ except with negligible probability.)  Also,
+since there is no communication from $\B$ to $\A$, a dishonest sender
+$\dA$ cannot learn whether $\B$ received the bit. In fact, \BBqot\ can
+\index{receiver-security!of quantum \RabinOT} \index{purification}
+be shown perfectly receiver-secure in the same way as in
+Proposition~\ref{prop:sec:receiverprivate}.  Similar as for protocol
+\qot, in order to argue about sender-security we compare \BBqot\ with
+a purified version shown in Figure~\ref{fig:BB84eprot}.  \BBeprqot\ 
+runs in the $(\phi,0)$-weak quantum model, and the imperfectness of
+the quantum source assumed in \BBqot\ is simulated by $\A$ in
+\BBeprqot\ so that there is no difference from $\B$'s point of view.
+\index{weak quantum model}
+
+\begin{myfigure}{h}
+\begin{myprotocol}{\BBeprqot$(b)$}
+\item $\A$ prepares $n$ EPR pairs each in state
+  $\ket{\Omega}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$. Additionally,
+  $\A$ initializes $I'_{+}:= \emptyset$ and $I'_{\times}:= \emptyset$.
+  For every $i \in \{1,\ldots,n\}$, $\A$ does the following. With
+  probability $1-\eta$, $\A$ sends one half of the $i$-th pair to $\B$
+  and keeps the other half. While with probability $\eta$, $\A$ picks
+  $\theta_i \in_R \set{+,\times}$, replaces $I'_{\theta_i}$ by
+  $I'_{\theta_i} \cup \{i\}$ and sends two or more qubits in the same
+  state $\ket{x_i}_{\theta_i}$ to $\B$ where $x_i \in_R \{0,1\}$.
+\item $\B$ picks $r'\in_R\{+,\times \}$ and measures all received
+  qubits in basis $r'$. Let $x'\in\{0,1\}^n$ be the result.
+\item\label{it:abort} $\A$ picks a random index set $J \subset_R
+  \{1,\ldots,n\} \setminus (I'_{+}\cup I'_{\times})$. Then, it picks $r \in_R \{+,\times \}$, sets $I \assign J \cup I'_r$ and $\ell \assign |I|$, and for each $i \in J$ it measures the corresponding qubit
+  in basis $r$. Let $x_i$ be the corresponding outcome, and let
+  $x|_{I}$ be the collection of all $x_i$'s with $i \in
+  I$. $\A$ announces $r$, $I$, $syn =
+  S_{\ell}(x|_{I})$, $\hf\in_R \chf{\ell}$, and $e = b\oplus
+  \hf(x|_{I})$.
+\item $\B$ recovers $x|_{I}$ from $x'|_{I}$ and
+  $syn$, and outputs $a \assign 1$ and $b' \assign e \oplus \hf(x|_{I})$, if
+  $r'=r$ and else $a \assign 0$ and $b' \assign 0$.
+\end{myprotocol}
+\caption{Protocol for EPR-based \RabinOT, BB84 version}\label{fig:BB84eprot}
+\end{myfigure}
+The security equivalence between \BBqot\ (in the $(\phi,\eta)$-weak
+quantum model) and \BBeprqot\ (in the $(\phi,0)$-weak quantum model)
+follows along the same lines as in Section~\ref{sec:otprot}. 
+
+\index{sender-security!of quantum \RabinOT}
+\begin{theorem}\label{thm:BBqotsec}
+  In the $(\phi,\eta)$-weak quantum model, \BBqot\ is $\eps$-secure
+  with $\eps$ negligible in $n$ against $\mathfrak{R}_{\gamma}$ for
+  any $\gamma < \frac{1-\eta}{4} - \frac{h(\phi)}{2}$ and $n$ large
+  enough.
+\end{theorem}
+\begin{sketch}%[of Theorem~\ref{thm:BBqotsec}]
+  It remains to show that \BBeprqot\ is sender-secure against
+  $\mathfrak{R}_{\gamma}$ (in the $(\phi,0)$-weak quantum model).  The
+  reasoning goes analogous to the proof of
+  Theorem~\ref{thm:privacyeprqot}, except that we restrict our
+  attention to those $i$'s which are in $J$.  By Chernoff's inequality
+  (Lemma~\ref{lem:chernoff}), $\ell$ lies within $(1\pm\varepsilon)n/2$ and $|J|$
+  within $(1-\eta\pm\varepsilon)n/2$ except with negligible
+  probability. In order to make the proof easier to read, we assume
+  that $\ell = n/2$ and $|J| = (1-\eta)n/2$, and we also treat the
+  $\varepsilon$ occurring in the rate of the code $C_{\ell}$ as zero.
+  For the full proof, we simply need to carry the $\varepsilon$'s
+  along, and then choose them small enough at the end of the proof.
+
+Write $n' = |J| = (1-\eta)n/2$, and let $\gamma'$ be such that $\gamma n =
+  \gamma' n'$, i.e., $\gamma' = 2\gamma/(1-\eta)$. 
+Assume $\kappa > 0$ such that $\gamma' + \kappa < \frac12$, where we make sure later that such $\kappa$ exists. 
+It then follows from Corollary~\ref{cor:hadamard} that there exists an 
+event $\ev$ such that $\P[\ev] \geq \frac12 - \negl{n'} = \frac12 - \negl{n}$ and 
+$$
+\H_{\infty}\big(X|_J \big| R\!=\!r,\ev\big) \geq (\gamma' +
+ \kappa) n' 
+ = \gamma n + \kappa (1-\eta)n/2 \, .
+$$
+By Inequality~(\ref{ddbound}), it remains to argue that this is larger than $q + s = \gamma n + h(\phi) n/2$, i.e., 
+$$
+\kappa (1-\eta) > h(\phi) \, ,
+$$ 
+where $\kappa$ has to satisfy 
+$$
+\kappa < \frac12 -
+\gamma' = \frac12 - 2\gamma/(1-\eta) \, .
+$$
+This can obviously be achieved (by choosing $\kappa$ appropriately) if and only if
+%$$
+%h(\phi) < \frac{1-\eta}{2} - 2\gamma
+%$$
+%which is equivalent to the claimed bound. 
+the claimed bound on $\gamma$ holds. 
+\end{sketch}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Extension} \label{sec:extensionrot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\RabinOT of Strings} \label{sec:extensionrot}
+In this chapter, we only considered \RabinOT of one bit per invocation.
+Our technique can easily be extended to deal with \RabinlStringOT of
+$\ell$-bit strings, essentially by using a class of two-universal
+functions \index{two-universal hashing} with range $\set{0,1}^{\ell
+  n}$ rather than $\set{0,1}$, for some $\ell$ with $\gamma + \ell <
+\frac{1}{2}$ (respectively $<\frac{1-\eta}{4}-\frac{h(\phi)}{2}$ for
+\BBqot).
+
+%% \subsection{Correcting Error Without Leaking Information}
+%% It has been shown very recently by Damg{\aa}rd, Fehr, Salvail,
+%% Schaffner in \cite{DFSS07b} that the techniques by Dodis and Smith for
+%% doing efficient error correction without leaking partial information
+%% \cite{DS05} can be translated to the quantum setting. Using these
+%% techniques, the syndrome $syn$ has the additional property that it is
+%% close to uniformly distributed if the receiver has large enough
+%% min-entropy about $X|_I$. Hence, for sender-security of \BBeprqot,
+%% less than the whole length $s$ of the syndrome needs to be subtracted
+%% in Inequality~(\ref{ddbound}), which---depending on the concrete
+%% parameters---may lead to a larger amount of quantum memory $\gamma n$ that
+%% can be tolerated in the $(\phi,\eta)$-weak quantum model.
+
+\index{oblivious transfer!\RabinOT|)}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

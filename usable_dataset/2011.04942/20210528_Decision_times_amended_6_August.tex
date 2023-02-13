@@ -1,0 +1,1457 @@
+
+\documentclass[a4paper,11pt]{amsart}
+
+\pagestyle{myheadings} 
+
+
+\usepackage{hyperref,upgreek,mathtools,stmaryrd,enumitem,bbm} 
+
+%Note that there are some conflicts between amssymb and mathabx 
+\usepackage{mathabx}
+
+%Note that there are some conflicts with other packages, not sure which ones 
+%\usepackage{MnSymbol}
+
+\usepackage[textsize=footnotesize,color=yellow!70, bordercolor=white]{todonotes}
+
+\setlength{\marginparwidth}{2.5cm}
+
+\usepackage{xcolor}
+\definecolor{dblue}{rgb}{0,0,0.70}
+\hypersetup{
+	unicode=true,
+	colorlinks=true,
+	citecolor=dblue,
+	linkcolor=dblue,
+	anchorcolor=dblue
+}
+
+
+%\paperwidth=\dimexpr \paperwidth + 3cm\relax
+%\oddsidemargin=\dimexpr\oddsidemargin + 1cm\relax
+%\evensidemargin=\dimexpr\evensidemargin + 1cm\relax
+%\marginparwidth=\dimexpr \marginparwidth + 1cm\relax
+
+\usepackage%[scale=0.682]
+[a4paper, margin=1.2in]{geometry}
+
+%\hypersetup{colorlinks=true}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+
+\usepackage{mathrsfs}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsbsy}
+
+\usepackage{xspace}
+\usepackage[all]{xy}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{latexsym}
+
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral {\sharp}1@}
+\makeatother
+
+
+\theoremstyle{definition}
+
+
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+%\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\T}{\ensuremath{\mathbb{T}}}
+\newcommand{\Perre}{\ensuremath{\mathbb{P}}}
+\newcommand{\A}{\ensuremath{\aleph}}
+\newcommand{\M}{\ensuremath{\mathcal{M}}}
+\newcommand{\Rs}{\ensuremath{\mathcal{R}}}
+\newcommand{\vs}{\vspace{0.3cm}}
+\newcommand{\pow}{\mathcal{P}}
+\newcommand{\Ord}{\mathrm{Ord}}
+\newcommand{\tc}{\mathrm{tc}}
+\newcommand{\ra}{\mathrm{r}}
+
+\newcommand{\WO}{\mathrm{WO}}
+\newcommand{\wo}{\mathrm{wo}}
+\newcommand{\cof}{\mathrm{cof}}
+\newcommand{\len}{\mathrm{l}}
+\newcommand{\ck}{\mathrm{ck}}
+
+\renewcommand{\Col}{\mathrm{Col}}
+
+\catcode`\<=\active \def<{
+\fontencoding{T1}\selectfont\symbol{60}\fontencoding{\encodingdefault}}
+\catcode`\>=\active \def>{
+\fontencoding{T1}\selectfont\symbol{62}\fontencoding{\encodingdefault}}
+
+\newcommand{\nobracket}{}
+\newcommand{\nocomma}{}
+\newcommand{\tmdate}[1]{\today}
+\newcommand{\tmem}[1]{{\em #1\/}}
+\newcommand{\tmmathbf}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\tmtextit}[1]{{\itshape{#1}}}
+\newcommand{\sset}{\subseteq} 
+\newcommand{\nat}{\mathbb{N}} 
+\newcommand{\cant}{2^\nat} 
+\newcommand{\da}{{\downarrow}} 
+\newcommand{\equi}{\Leftrightarrow} 
+\newcommand{\dfs}{=_{\mathrm{def}}} 
+
+\newcommand{\ran}{\mathrm{ran}} 
+\newcommand{\ITTM}{\rm{ITTM}} 
+\newcommand{\sd}{\mathrm{sd}} 
+\newcommand{\cC}{\mathcal{C}} 
+\newcommand{\otp}{\mathrm{otp}} 
+\newcommand{\PP}{\mathbb{P}} 
+\newcommand{\dPi}{\underset{\hat{}}{\Pi}}
+\newcommand{\pred}{\mathrm{pred}}
+\newcommand{\LL}{\mathbb{L}}
+\newcommand{\NN}{\mathbb{N}}
+
+\newcommand{\ZFC}{\mathsf{ZFC}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\en}{\mathrm{end}}
+
+\DeclareMathOperator{\dcl}{dcl}
+\DeclareMathOperator{\acl}{acl}
+\DeclareMathOperator{\rank}{\mathrm{rank}}
+\DeclareMathOperator{\card}{card}
+
+\newtheorem{fact}{Fact}[section]
+\newtheorem{example}[fact]{Example}
+\newtheorem{theorem}[fact]{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[fact]{Lemma}
+\newtheorem{proposition}[fact]{Proposition}
+\newtheorem{corollary}[fact]{Corollary}
+\newtheorem{definition}[fact]{Definition}
+\newtheorem{criterion}[fact]{Criterion}
+\newtheorem{conjecture}[fact]{Conjecture}
+\newtheorem{question}[fact]{Question}
+\newtheorem{problem}[fact]{Problem}
+\newtheorem*{problem*}{Problem}
+\newtheorem*{generalproblem*}{General Problem}
+\newtheorem*{problem A}{Problem 1}
+\newtheorem*{problem B}{Problem 2}
+\newtheorem*{claim*}{Claim}
+
+\theoremstyle{remark} 
+\newtheorem{remark}[fact]{Remark}
+
+
+\newenvironment{enumerate-(a)}{\begin{enumerate}[label={\upshape (\alph*)}, leftmargin=2pc]}{\end{enumerate}}
+\newenvironment{enumerate-(a)-r}{\begin{enumerate}[label={\upshape (\alph*)}, leftmargin=2pc,resume]}{\end{enumerate}}
+\newenvironment{enumerate-(A)}{\begin{enumerate}[label={\upshape (\Alph*)}, leftmargin=2pc]}{\end{enumerate}}
+\newenvironment{enumerate-(A)-r}{\begin{enumerate}[label={\upshape (\Alph*)}, leftmargin=2pc,resume]}{\end{enumerate}}
+\newenvironment{enumerate-(i)}{\begin{enumerate}[label={\upshape (\roman*)}, leftmargin=2pc]}{\end{enumerate}}
+\newenvironment{enumerate-(i)-r}{\begin{enumerate}[label={\upshape (\roman*)}, leftmargin=2pc,resume]}{\end{enumerate}}
+\newenvironment{enumerate-(I)}{\begin{enumerate}[label={\upshape (\Roman*)}, leftmargin=2pc]}{\end{enumerate}}
+\newenvironment{enumerate-(I)-r}{\begin{enumerate}[label={\upshape (\Roman*)}, leftmargin=2pc,resume]}{\end{enumerate}}
+\newenvironment{enumerate-(1)}{\begin{enumerate}[label={\upshape (\arabic*)}, leftmargin=2pc]}{\end{enumerate}}
+\newenvironment{enumerate-(1)-r}{\begin{enumerate}[label={\upshape (\arabic*)}, leftmargin=2pc,resume]}{\end{enumerate}}
+\newenvironment{itemizenew}{\begin{itemize}[leftmargin=2pc]}{\end{itemize}}
+
+\def\omicron{o}
+\def\etc{{\em etc.}}
+\def\mb{\mbox{ }}
+
+\begin{document}
+
+%\thanks{The first and third author were partially supported by DFG-grant LU2020/1-1.}
+
+%\subjclass[2010]{03E30, 03E40, 03E70} 
+
+%\keywords{} 
+
+%philipp, 23.10.2020 (gmail-chat):
+%Die aktuelle Datei heisst 20201023 Decision times 
+%Ich habe gerade Teile gelÃ¶scht
+%Sections 2 und 3 sind aus dem anderen Paper
+%Aus Section 2 kÃ¶nnten wir nur das wesentliche ÃŒbernehmne (vielleicht nur die Definitionen)
+%Statt dem Beweis aus Section 3 brauchen wir eine Version fÃŒr itms, das muss man noch umarbeiten
+%ich lasse die Dateien jetzt in Ruhe
+%bis dann!
+
+\author{Merlin Carl}
+\address{Europa-Universit\"at Flensburg, 
+Institut f\"ur mathematische, naturwissenschaftliche und technische Bildung
+Abteilung f\"ur Mathmematik und ihre Didaktik
+Geb\"aude Riga 1, 
+Auf dem Campus 1b, 
+24943 Flensburg} 
+\email{merlin.carl@uni-flensburg.de}
+\urladdr{}
+
+
+\author{Philipp Schlicht}
+\address{School of Mathematics, University of Bristol, Fry Building, Woodland Road, Bristol, BS8 1UG, UK
+and 
+Institute for Mathematics, University of Vienna, Kolingasse 14-16, 1090 Vienna, Austria} 
+\email{philipp.schlicht@bristol.ac.uk }
+
+
+
+\author{Philip Welch}
+\address{School of Mathematics, University of Bristol, Fry Building, Woodland Road, Bristol, BS8 1UG, UK} 
+\email{p.welch@bristol.ac.uk}
+
+
+\thanks{We would like to thank the referee for a number of useful comments.} 
+\thanks{This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sk{\l}odowska-Curie grant agreements No 794020 of the second-listed author (Project \emph{IMIC: Inner models and infinite computations}). He was also partially supported by FWF grant number I4039.} 
+
+
+
+
+
+
+%\title{The influence of $\tau$} 
+\title{Decision times of infinite computations} 
+%$\Pi^1_1$ 
+% and decision times for infinite computations} 
+\date{\today}
+
+\begin{abstract} 
+The \emph{decision time} of an infinite time algorithm is the supremum of its halting times over all real inputs. 
+The \emph{decision time} of a set of reals is the least decision time of an algorithm that decides the set; semidecision times of semidecidable sets are defined similary. 
+It is not hard to see that $\omega_1$ is the maximal decision time of sets of reals. 
+Our main results determine the supremum of countable decision times as $\sigma$ and that of countable semidecision times as $\tau$, where $\sigma$ and $\tau$ denote the suprema of $\Sigma_1$- and $\Sigma_2$-definable ordinals, respectively, over $L_{\omega_1}$. 
+We further compute analogous suprema for singletons. 
+%These ordinals are far beyond the ordinals previously associated with infinite time Turing machines, and the size of the latter varies between different models of set theory. 
+%Furthermore, we determine the suprema of decision and semidecision times for singletons. 
+%We determine the supremum of decision times of infinite time computations for sets of reals. 
+\end{abstract} 
+
+\maketitle
+
+\thispagestyle{plain} 
+
+\setcounter{tocdepth}{2}
+\tableofcontents 
+
+
+
+\section{Introduction}
+
+
+Infinite time Turing machines (ittm's) were invented by Hamkins and Kidder as a natural machine model allowing a standard Turing machine to operate not only through unboundedly many finite stages, but {\em transfinitely}, thus passing through an $\omega$'th stage and beyond. These are by now well studied. 
+The machines and the sets that they define link computability, descriptive set theory and low levels of the constructible hierarchy. Although, not unnaturally,  the analogy pursued by the authors of \cite{hamkins2000infinite} was that of Turing reducibility and its degree theory, the notion of recursion most closely analogous to it in the literature turned out to be that of {\em Kleene Recursion} ({\em cf.}, for example, \cite{Hi78} for an account of this).
+In this theory, $\Pi^1_1$ sets of integers were characterised by transfinite processes bounded by $\omega_1^{\ck}$ in time, and could be viewed as resulting from computation calls (either viewed as arising from systems of equations, or from Turing machines) down wellfounded recursive trees. 
+
+
+This can be reformulated more concretely by taking infinite time Turing machines to model transfinite processes. 
+Hamkins and Lewis  \cite{hamkins2000infinite} showed that the subsets, either of the natural numbers, or Baire space, which are computable by the basic ittms's fall strictly between the $\Pi^1_1$ and $\Delta^1_2$ sets.
+% studied in descriptive set theory. 
+They thus provide natural classes in this region and are a natural test case for properties of Wadge classes. 
+
+The computational properties of infinite time Turing machines lead to some new phenomena that do not occur in Turing machines. 
+For instance, there are two natural notions of forming an output -- besides a program halting in a final state with an element of Cantor space on its output tape, one can consider the `eventual output', if it occurs, when the output tape is seen to stabilise even though the machine has not formally halted, but is perhaps just working away on its scratch tape. In terms of the machine architecture one could argue that this eventual output is characteristic: to analyse the formally halting times of the ittms one has in any case to analyse these `stabilisation times', and then formally halting becomes a special case of stabilisation.
+
+
+Another new phenomenon is the appearance of new reals on the output or work tapes beyond all 
+%configuration. 
+%Such configurations can appear later than all 
+stabilisation times in those processes which do {\em } not stabilize. What are these reals? Hamkins and Lewis dubbed such reals {\em accidental}. They are constructed in some process, written to the output tape, but are evanescent: later they will be overwritten and disappear.
+
+We make this clearer by giving a brief sketch how these machines work (for more details see \cite{hamkins2000infinite}.) 
+An {\em ittm-program} is  just a regular Turing program. % with states $0, \dots, n$ for some natural $n$.  
+The `hardware' of an ittm consists of an input, work and output tape, each a sequence of cells of order type $\omega$, and a single head that may move one cell to the left or right along the tapes each of which thus have an initial leftmost cell, and are infinite in the rightward direction. The read/write head can read, say, the $n$'th cell from each of the three tapes simultaneously, if the head is situated in position $n$. (This is merely for convenience, a single tape model is possible.)
+Each cell contains $0$ or $1$.  At a moment in time, $\alpha$, the machine proceeds to  $\alpha+1$ by following the ordinary Turing program, and acts depending on what it sees on the tape at its current position and the program dictates, just as an ordinary Turing machine of such a kind would. 
+However at any limit stage $\mu$ of time, by fiat, the contents of every cell on the tape is set to the inferior limit, or `liminf' of the earlier contents at times $\alpha < \mu$ of this cell. Thus a `$1$' is in a cell at stage $\mu$ iff $\exists \beta <\mu \forall \alpha \in (\beta,\mu)$ that cell has a `$1$'. The head is positioned at the liminf of its positions at times $\alpha <\mu$, and the current state or instruction number to the liminf again of those prior to $\mu$. (In \cite{hamkins2000infinite} an inessentially different but equivalent set of rules obtained: limsups rather than liminf were used
+for cell values, the read/write head was returned to position zero, and a special limit state $q_{L}$ was entered. This set of rules can be seen to provide the same class of computable functions. Other variations are possible. It is the liminf (or limsup) rule on the cell values that is the determining feature. Its $\Sigma_{2}$ nature is `complete' in the sense that all other possible choices of $\Sigma_{2}$-definable rules are reducible to it. See \cite[Theorem 2.9]{W}.)
+%ITTMs, Deciding sets of real numbers, clockability.
+
+These basic  machines define the following classes of sets. (We loosely call any element of Baire or Cantor space which we also identify with $\pow(\omega)$ as a `real'.)
+For a subset $A$ of $\pow(\omega)$, let $\chi_A$ denote the characteristic function of $A$. 
+$A$ is called \emph{ittm-decidable} if and only if there is an ittm-program $p$ such that, for all subsets $x$ of $\omega$, $p(x)$ halts with output $\chi_A(x)$. 
+We shall often omit the prefix \emph{ittm}. 
+$A$ is called \emph{semidecidable} if and only if there is an ittm-program $p$ such that $p(x)$ halts precisely if $x\in A$. 
+We say that $A$ is \emph{cosemidecidable} if its complement is semidecidable. 
+For singletons $A=\{x\}$, we call $x$ \emph{recognisable} if $A$ is decidable. This terminology can be thought of as coming from the direction of automata theory and the `recognition' of languages. From a  logician's perspective one should probably call a  real $x$ {\em implicitly definable} if the singleton $A=\{x\}$ is definable. 
+In \cite{hamkins2000infinite} at the `Lost Melody' Theorem, the authors show the divergence of the implicitly definable reals from the explicitly definable ones. As those authors say, this is a divergence from the classical Turing machine theory. (But not a new phenomenon in general: for example the set $A=\{0^{(\omega)}\}$ of arithmetical truths is implicitly definable by a $\Pi^{0}_{2}$ definition, whilst obviously its members cannot be explicitly defined at any finite level of the arthmetical hierarchy.)
+Further, $x$ will be called \emph{semirecognisable} if $\{x\}$ is semidecidable, and cosemirecognisable if $\{x\}$ is cosemidecidable. %Since we will only consider ittm-computability in this work, the prefix "ittm-" will usually be dropped.
+
+By a result of the third-listed author \cite[Theorem 1.1]{welch2000length}, the supremum of ittm-halting times on empty input equals the supremum $\lambda$ of writable ordinals, {\em i.e.} those ordinals for which an ittm can compute a code on zero input. 
+This solved a well known problem posed by Hamkins and Lewis. 
+We consider an extension of Hamkins' and Lewis' problem by allowing all real inputs. 
+More precisely, we consider the problem which decision times of sets and singletons are possible. 
+This is defined as follows. 
+%For this purpose, we fix the following definitions:
+
+\begin{definition} \ 
+\begin{enumerate-(a)} 
+\item 
+The \emph{decision time} of a program $p$ is the supremum of its halting times for arbitrary inputs. 
+\item 
+The \emph{decision time} of a decidable set $A$ is the least decision time of a program that decides $A$. 
+\item 
+The \emph{semidecision time} of a semidecidable set $A$ is the least decision time of a program that semidecides $A$. 
+\item 
+The \emph{cosemidecision time} of a cosemidecidable set $A$ is the semidecision time of its complement.
+\end{enumerate-(a)} 
+\end{definition} 
+
+%It will always be clear whether a set is assumed to be semidecidable or decidable. 
+
+%While the supremum of halting times with empty input is well understood -- it equals the supremum $\lambda$ or writable ordinals by a result of Welch -- we study the decision times in depth. 
+
+%Let us say that an ITTM-program $P$ decides the set $X\subseteq\mathfrak{P}(\omega)$ with uniform time bound $\alpha$ if and only if $P$ that halts on every real input $x$ in $<\alpha$ many steps. Conversely, let us say that $\alpha$ is ITTM-set-clockable if and only if there is a set $X$ 
+%such that $X$ is ITTM-decidable with uniform time bound $\alpha$ and $\alpha$ is minimal with this property.
+
+%We will also make use of the notion of ITTM-recognizability, which was introduced in \cite{HL}: A real number $x$ is ITTM-recognisable if and only if $\{x\}$ is ITTM-decidable; moreover, we say that $x$ is ITTM-semirecognisable if and only if $\{x\}$ is ITTM-semidecidable.
+
+%WO will denote the set of real numbers coding well-orderings. By $\alpha^{+}$, we denote the next admissible ordinal after $\alpha$; $\alpha^{+\omega}$ denotes the next limit of admissible ordinals after $\alpha$. $\sigma$ denotes the smallest $\Sigma_{1}$-stable ordinal, i.e. the minimal ordinal such that 
+%$L_{\sigma}\prec_{\Sigma_{1}}L$. For $P$ an ITTM-program and $x$ a real number, we write $\tau(P,x)$ for the halting time of $P$ when run in the oracle $x$. (If $P^{x}$ does not halt, $\tau(P,x)$ is undefined.)
+
+Since halting times are always countable, it is clear that these ordinals are always at most $\omega_{1}$. It is also not hard to see that the bound $\omega_{1}$ is attained (see Lemma \ref{long decision times} below). 
+The questions are then: 
+Which countable ordinals can occur as decision or semidecision times of sets of real numbers? 
+Which ordinals occur for singletons? 
+As there are only countable many programs, there are only countably many semidecidable sets of real numbers, so the suprema of the countable (semi-)decision times must be countable. 
+Writing $\omega_1$ for $\omega_1^V$ (throughout the paper), we shall show that these
+suprema can be determined in the course of this paper. (We call a supremum \emph{strict} to emphasise that it is not attained.)
+
+\begin{definition} \ 
+\begin{enumerate-(a)} 
+\item 
+$\sigma$ denotes the first $\Sigma_1$-stable ordinal, {\em i.e.} the least $\alpha$ with $L_\alpha\prec_{\Sigma_1}L_{\omega_1}$.
+Equivalently, this is the supremum of the $\Sigma_1^{L_{\omega_{1}}}$-definable ordinals (see Lemma \ref{versions of sigma}).\footnote{We mean that for an ordinal $\alpha$, the set $\{\alpha\}$ is $\Sigma_1$-definable over $L_{\omega_1}$, or equivalently in $V$. The reason for writing $L_{\omega_1}$ here is to make the analogy with the definition of $\tau$ clear. } 
+\item 
+$\tau$ denotes the supremum of the $\Sigma_{2}^{L_{\omega_{1}}}$-definable ordinals. 
+\end{enumerate-(a)} 
+\end{definition} 
+
+While the value of $\sigma$ is absolute, we would like to remark that $\tau$ is sensitive to the underlying model of set theory. 
+% among different models of set theory. 
+For instance, $\tau<\omega_1^L$ holds in $L$, but $\tau>\omega_n^L$ if $\omega_n^L$ is countable in $V$. 
+%if $\omega_1^L$ is countable in $V$. 
+%The same holds for $\omega_2^L$, $\omega_3^L$ etc. \todo{ref to other paper}. 
+Note that $\tau$ equals the ordinal $\gamma^1_2$ studied in \cite{MR1011178} by a result of \cite{countableranks}. 
+
+The following are our main results: 
+
+%\begin{itemize}
+%\item 
+\begin{theorem*} (see Theorem \ref{countable decision times}) 
+The strict supremum of countable decision times for sets of reals equals $\sigma$. 
+\end{theorem*} 
+%prop. 4.5, prop. 4.6; S. 8-9
+
+
+%The same holds for recognisable reals (see Theorem \ref{}). %theorem 4.10, S. 10 
+%singleton sets, i.e., recognisable real numbers (see Theorem \ref{}). %theorem 4.10, S. 10
+%\item 
+
+\begin{theorem*} (see Theorem \ref{supremum of countable semidecision times}) 
+The strict supremum of countable semidecision times for sets of reals equals $\tau$.  
+\end{theorem*} 
+
+%https://www.dropbox.com/preview/2019%20Carl%20Schlicht%20-%20ITTM%20decision%20times/Versions/20200627%20ITTM%20decision%20times.pdf?role=personal Theorem 9.8 und folgendes
+%https://www.dropbox.com/preview/2019%20Carl%20Schlicht%20-%20ITTM%20decision%20times/Versions/Welch%20-%20ITTM-semidecidable%20wellorders-4.pdf?role=personal
+%\item 
+
+\begin{theorem*} (see Theorems \ref{sigma upper set clockable bound}, \ref{supremum of semidecision times of semirecognisable singletons} and \ref{supremum of cosemidecision times of reals}) 
+The strict suprema of decision times, semidecision times and cosemidecision times for singletons equal $\sigma$. 
+\end{theorem*} 
+
+%theorem 4.10, S. 10,    4.17, S. 11,   theorem 4.10, S. 10; prop. 4.19, S. 12
+%For singletons is $\sigma$ (see Theorem \ref{}). %Theorem 4.17, S. 11
+%\item 
+%The (strict) supremum of 
+%\todo{Do we need countable here?} 
+%countable cosemidecision times for singletons is $\sigma$ (see Theorem \ref{}). %theorem 4.10, S. 10; prop. 4.19, S. 12
+%\end{itemize}
+
+We also prove the existence of semidecidable and cosemidecidable singletons that are not recognisable. 
+The latter answers \cite[Question 4.5.5]{carl2019ordinal}. 
+
+Since there are gaps in the clockable ordinals (see \cite{hamkins2000infinite}), it is natural to ask whether there are gaps below $\sigma$ in the countable decision times. 
+We answer this in Theorem \ref{uniform running time bound} by showing that gaps of arbitrarily large lengths less than $\sigma$ exists. 
+
+
+
+
+\section{Preliminaries}
+
+We fix some notation and recall some facts. 
+
+The symbols $x,y,z,\ldots$ will be reserved for reals and elements of Cantor space ${}^{\omega}2$. 
+%; literally for tape contents they would be elements of Cantor space $\mb^{\omega}2$.
+$\WO$ will denote the set of reals that code strict total orders of $\omega$ which are wellordered.   This class  is a complete $\Pi^{1}_{1}$ set of reals. It is a basic result of \cite[Cor. 2.3]{hamkins2000infinite} that is ittm-decidable.
+
+As usual in admissible set theory (see \cite{Bar}), we write $\omega_{1}^{x}=\omega_{1}^{x,\ck}$ for the least ordinal not recursive in $x$. It is thus the least ordinal $\alpha$ so that $L_{\alpha}[x]$ is an admissible set. We use the well-known fact that if $M$ is a transitive model which is a union of admissible sets that are elements of $M$, then $\Sigma^{1}_{1}$ relations are absolute to $M$. Thus if $\varphi(y)$ is a $\Sigma^{1}_{1}$ statement about $y\in M$, then $\varphi(y)\Leftrightarrow \varphi(y)^{M}$. 
+
+When $\alpha$ is an ordinal, let $\alpha^\oplus$ denote the least admissible ordinal that is strictly above $\alpha$. When $\alpha$ is an ordinal which is countable in $L$, then $x_\alpha$ denotes the $<_{L}$-least real coding $\alpha$. 
+Conversely, when a real  $x$, regarded as a set of integers, codes an ordinal via a recursive pairing function on $\omega$, then we denote this ordinal by $\alpha_x$. 
+
+We write $p(x){\downarrow}y$ if a program $p$ with input $x$ halts with $y$ on its output tape, and $p(x){\downarrow}^{\leq\alpha}y$ if it  so halts at or before time $\alpha$. 
+Moreover, $y$ can be omitted if one does not want to specify the output. 
+
+\begin{definition} \ %\mb \\ 
+Each of the following is defined as the supremum of ordinals coded by reals of the following form: 
+\begin{enumerate-(a)} 
+\item 
+%(i) 
+$\lambda$ for halting outputs of some $p(0)$. 
+%\dfs$ 
+%the supremum of ordinals which have codes which are the halting output of some $p(0)$; 
+%$p_{e}(0)$;%\\
+\item 
+%(ii) 
+$\zeta$ for stable outputs of some $p(0)$. 
+% \dfs$ 
+%the supremum of ordinals which have codes which are the stable output of some $p(0)$; 
+%$p_{e}(0)$;%\\
+\item 
+%(iii) 
+$\Sigma$ for reals which appear on the tape of some computation $p(0)$. 
+%\dfs$ the supremum of ordinals which have codes which appear on the tape of some computation $p(0)$. 
+%$p_{e}(0)$.
+\end{enumerate-(a)} 
+\end{definition}
+
+These three classes are then the \emph{writable}, the \emph{eventually writable}, and the \emph{accidentally writable} ordinals respectively. 
+
+
+The relativisations for reals $x$ are denoted $\lambda^x$, $\zeta^x$ and $\Sigma^x$.  
+%There is the automatic relativisation for reals $x$ where we write $\lambda^x \ldots$ {\em etc.}.  
+In particular $\omega_{1}^{x,\ck}$ is smaller than $\lambda^{x}$. 
+%However $\omega_{1}$ is the first uncountable cardinal (in $V$ unless otherwise stated).
+From this one can show the following fact, which we shall use without further mention in the sequel. 
+If  $p(x){\downarrow}y$, then we say that $y$ is {\em ittm-computable} from $x$ and write $y\leq_{\infty}x$. We further write $x=_{\infty}y$ if $x\leq
+_{\infty} y $ and $ y\leq_{\infty} x$. 
+
+\begin{lemma} 
+\label{L_lambdax is writable-invariant}  
+$y \leq_{\infty}x \Leftrightarrow y\in L_{\lambda^{x}}[x] \Leftrightarrow L_{\lambda^{y}}[y] \subseteq L_{\lambda^{x}}[x]$.
+\end{lemma}
+
+
+We shall use the following characterisation of $\lambda$, $\zeta$ and $\Sigma$: 
+
+%\noindent {\bf Theorem}
+\begin{theorem} 
+\label{lambda-zeta-Sigma-theorem} 
+ {\em (The $\lambda$-$\zeta$-$\Sigma$ Theorem; {\em cf.} \cite{W}, \cite[Corollary 32]{welch2009characteristics}) \\ 
+The triple  $(\lambda,\zeta,\Sigma)$ is the lexicographically least triple so that $L_{\lambda}\prec
+_{\Sigma_{1}}L_{\zeta}\prec_{\Sigma_{2}}L_{\Sigma}$. }
+\end{theorem} 
+
+The action of any particular program $p$ 
+%$p_{e}$ 
+on input an integer, will of course depend on the program itself, but there are programs $p$ for which $p(k)$ 
+%$p_e(k)$ 
+does not halt but runs for ever. The significance of the ordinals $\zeta$ and $\Sigma $ in this case is that by stage $\zeta$, the machine will enter a \emph{final loop} from $\zeta$ to $\Sigma$. 
+In a final loop from $\alpha$ to $\alpha+\beta$, the snapshots of the machine at stage $\alpha+(\beta\cdot \gamma)$ are by definition identical for all ordinals $\gamma$. 
+In other words, the loop is repeated endlessly. 
+%It will then repeat this loop $\zeta \rightsquigarrow \Sigma\rightsquigarrow \zeta\rightsquigarrow \dots$ forever. 
+(A computation may have a loop that is iterated finitely often without it being of this final looping kind.)
+%in which it runs up to $\Sigma$, and the snapshot of the machine at stage $\Sigma$ is precisely that at stage $\zeta$. It will then repeat this loop $\zeta \rightsquigarrow \Sigma\rightsquigarrow \zeta\rightsquigarrow \dots$ forever. 
+The point is that one can easily recognise final loops from $\alpha$ to $\alpha+\beta$ as the loops with the following property for each cell: if the inferior limit $1$ is attained at $\alpha+\beta$, then the contents of the cell is constant throughout the loop. 
+
+Of particular interest is the \emph{Theory Machine} ({\em cf.} \cite{friedman2007two}) that also does not stop, but on zero input writes (and overwrites) the $\Sigma_{2}$-theories of the levels of the $L_{\alpha}$ hierarchy to the output tape for all $\alpha \leq\Sigma$. But the $\Sigma_{2}$-Theory of $L_{\Sigma}$ is identical to that of $L_{\zeta}$. Hence 
+%We call the {\em length of a loop} to be the first ordinal $\tau$ so that (i) the snapshot at $\tau$ is the repeat of an earlier snapshot, but also (ii) will reappear unboundedly through $\Ord$. (Condition (ii) is necessary, a computation may have a loop that is iterated through finitely often without it being of this final looping kind.)  For the Theory Machine for example, that length is then $\Sigma$. 
+there is a final loop from $\zeta$ to $\Sigma$, but no shorter final loop and none beginning before $\zeta$. 
+
+In this  `$\lambda$-$\zeta$-$\Sigma$-Theorem' one should note that $\Sigma$ is a limit of admissible ordinals, but is not itself admissible. As part of the analysis of this theorem, $\gamma$, the supremum of {\em halting times} of computations $p(k)$ 
+%$p_{e}(k)$ 
+on integer   input (the \emph{clockable} ordinals) was shown to be $\lambda$ (\cite{welch2000length}). The ordinals which have a code computed as an output of some $p(k)$ 
+%$p_{e} (k)$ 
+(the \emph{writable} ordinals) are an initial segment of the countable ordinals, but the clockables are not.
+
+
+
+\begin{definition} \ 
+%\begin{enumerate-(1)} 
+%\item 
+$\sigma_\nu$ denotes the supremum of $\Sigma_1^{L_{\omega_1}}$-definable ordinals with parameters in $\nu\cup\{\nu\}$. 
+%\item 
+%$\sigma_\nu^*$ denotes the 
+%\todo{Add a definition of $\sigma_\nu$ here} 
+%$\sigma_\alpha$ denotes the first $\Sigma_1$-stable ordinal relative to $\alpha+1$, i.e the least $\beta$ with $L_\beta\prec_{\Sigma_1}L_{\omega_1^V}$ with respect to $\Sigma_1$-formulas in with parameters $\alpha$ and below. 
+%Equivalently, this is the supremum of the $\Sigma_{1}^{L_{\omega_{1}}}(\alpha+1)$-definable ordinals (see Fact \ref{versions of sigma}).\footnote{We mean that for an ordinal $\alpha$, the set $\{\alpha\}$ is $\Sigma_1$-definable over $L_{\omega_1^V}$, or equivalently in $V$. We work with $L_{\omega_1^V}$ in analogy with the definition of $\tau$. } 
+%Let $\sigma=\sigma_0$. 
+%\item 
+%$\tau$ denotes the supremum of the $\Sigma_{2}^{L_{\omega_{1}}}$-definable ordinals. 
+%\end{enumerate-(1)} 
+\end{definition} 
+
+
+\begin{lemma}%(folklore) 
+\label{versions of sigma} 
+$L_{\sigma_\nu}\prec_{\Sigma_1} L_{\omega_1}$ for any countable ordinal $\nu$. 
+\end{lemma} 
+\begin{proof} 
+Assume $\nu=0$ for ease of notation. 
+Let $\hat{\sigma}$ denote the least $\alpha$ with $L_\alpha\prec_{\Sigma_1} L_{\omega_1}$. 
+It suffices to show that every element of $L_{\hat{\sigma}}$ is $\Sigma_1^{L_{\omega_1}}$-definable. 
+If not, then the set $N$ of $\Sigma_1^{L_{\omega_1}}$-definable elements of $L_{\omega_1}$ is not transitive, so the collapsing map $\pi\colon N\rightarrow \bar{N}$ moves some set $x$. 
+Assume that $x$ has minimal $L$-rank and $x$ is $\Sigma_1^{L_{\omega_1}}$-definable by $\varphi(x)$. 
+One may check that $N\prec_{\Sigma_1}L_{\omega_1}$: suppose $(\exists z\ \psi(z, x_{0},\ldots \, , x_{n}))^{L_{\omega_{1}}}$ with $x_{i}\in
+N$ and $\psi$ $\Sigma_{0}$. Then the $L$-least such $z$ is $\Sigma_{1}$-definable in the vector of the $x_{i}$; replacing each $x_{i}$ by its $\Sigma_{1}$-definition, yields a $\Sigma_{1}$ definition of such a $z$. Hence $(\exists z\ \psi(z, x_{0},\ldots \, , x_{n}))^N$.
+Thus $\bar{N}\models \varphi(\pi(x))$. 
+Since $\bar{N}$ is transitive, this implies $V\models\varphi(\pi(x))$. 
+Since $\pi(x)\neq x$, this contradicts the assumption that $\varphi(x)$ has $x$ as its unique solution. 
+\end{proof} 
+
+Note that $\Sigma_1$-statements in $H_{\omega_1}$ are equivalent to $\Sigma^1_2$-statements and conversely \cite[Lemma 25.25]{Je03}. 
+In particular, $L_\sigma$ is $\Sigma^1_2$-correct in $V$. 
+We shall use this without further reference below. 
+
+%\subsection*{Acknowledgements}
+
+
+
+
+
+\section{Decision times}
+
+%Let $A$ be an ITTM-decidable set. 
+In this section, we focus on 
+%study 
+the problem of ascertaining the decision times of ittm-semidecidable sets. 
+
+\subsection{The supremum of countable decision times} 
+
+By a standard condensation argument, (see \cite[Thm.1.1]{hamkins2000infinite}) halting times of ittm's on arbitrary inputs are always countable, so it is clear that decision times are always at most $\omega_1$. 
+%\todo{I doubt that this was proved before we figured this out (and it's relatively easy), so I would delete the reference to this} 
+%We start by recalling from [space and time complexity for infinite time turing machines, Prop. 32] that this supremum can be equal to $\omega_{1}$:
+
+\begin{lemma}
+%(Cf. \cite[Prop. 32]{carl2020space}) 
+\label{long decision times} 
+Every set with countable decision time is Borel. 
+Hence any non-Borel $\Pi^1_1$ set has decision time $\omega_1$. 
+%There is an ittm-decidable set with semidecision time $\omega_1$. 
+%In fact, the set WO of real numbers that code a well-ordering.
+\end{lemma}
+\begin{proof} 
+Suppose that an ittm-program $p$ semidecides a set $A$ within a countable time $\alpha$. 
+%and let $x^\alpha$ code $\alpha$. 
+Note that $p(x){\downarrow}^{\leq\alpha}$ can be expressed by $\Sigma^1_1$ and $\Pi^1_1$ formulas in any code for $\alpha$. 
+By Lusin's separation theorem, it is Borel. 
+\end{proof} 
+
+For instance, the set $\WO$ of wellorders on the natural numbers is $\Pi^1_1$-complete and hence not Borel. Its decision time thus equals $\omega_1$.
+Since all $\Pi^1_1$ sets are ittm-decidable by \cite[Corollary 2.3]{hamkins2000infinite}, $\WO$ is decidable with decision time $\omega_1$ (cf. \cite[Prop. 32]{carl2020space}). 
+
+
+\iffalse 
+%This is $\Pi^1_1$ and \todo{cite the boundedness theorem from Moschovakis}  not Borel. 
+is ittm-decidable, since this is the case for all $\Pi^1_1$ sets by \cite[Corollary 2.3]{hamkins2000infinite}. 
+Towards a contradiction, suppose that an ittm-program $p$ semidecides $\WO$ within a countable time $\alpha$. 
+%and let $x^\alpha$ code $\alpha$. 
+Note that $p(x){\downarrow}^{\leq\alpha}$ can be expressed by a $\Sigma^1_1$-formula in any code for $\alpha$. 
+%$x^\alpha$. 
+This would imply that $\WO$ is a ${\bf\Sigma}^1_1$ set. 
+%But this contradicts the fact that 
+But $\WO$ is ${\bf \Pi}^1_1$-complete and hence not ${\bf \Sigma}^1_1$. 
+%contradicting the boundedness theorem for ${\bf \Sigma}^1_1$ subsets of $\WO$ \cite[Theorem 4A.4]{Mo09}. 
+\fi 
+
+It remains to study sets with countable decision times, and in particular, the following problem: 
+%In particular, we will solve the following problem: 
+
+\begin{problem*} 
+%\todo{really as a problem, or in the text?} 
+What is the supremum of \textit{countable} decision times of sets of reals? 
+\end{problem*} 
+% Let $\rho$ denote the supremum of the countable decision times. It is clear that $\rho<\omega_{1}$. 
+
+%\todo{(Philipp) Can I delete this? It's silly to mention who's result this is (we prove everything together), and it's so easy that a reference is not necessary } 
+%The next result, due to the second author, is mentioned without proof in [space and time complexity, Theorem $11$], where only the analogous proof for space usage is given.
+
+
+%Thus, we know that $\rho\leq\sigma$. To show equality, 
+%The show that $\sigma$ is the supremum of countable decision times, we first show 
+%We will use that quickly semidecidable singletons appear quickly in $L$: 
+%which improves a result in [space and time complexity, Lemma $7$].  
+%The next result shows that quickly semi-recognisable real numbers appear early in $L$. 
+
+We need two auxiliary results to answer this problem. 
+The next lemma shows that if $x$ is semi-recognisable, but $x\notin L_{\alpha^\oplus}$, then $\{x\}$'s semidecision  time is greater than $\alpha$. 
+
+\begin{lemma} \
+\label{recognisable reals appear quickly} 
+\begin{enumerate-(1)} 
+\item
+\label{recognisable reals appear quickly 1} 
+If $p$ semirecognises $x$ and $p(x){\downarrow}^{\leq\alpha}$, then $x\in L_{\alpha^\oplus}$. 
+\item 
+\label{recognisable reals appear quickly 2} 
+The bound of $\alpha^{\oplus}$  is in general optimal.
+\end{enumerate-(1)} 
+\end{lemma} 
+\begin{proof} 
+%We first claim that for any admissible set $M$, any forcing $\PP\in M$ and mutually $\PP$-generic filters $f$ and $g$ over $M$, we have $M[f]\cap M[g]=M$. (This is nothing to do with computation theory, but is just a general fact about forcing. Our terminology comes from \cite{kunen:book}.) Towards a contradiction, take a set $x$ of least rank in $(M[f]\cap M[g])\setminus M$ and let $x=\mu^f=\nu^g$ where $\mu$ and $\nu$ are $\PP$-names in $M$.  We shall identify $\PP$ with each factor in $\PP\times \PP$ and thus interpret $\mu$ and $\nu$ as $\PP\times \PP$-names.  By the forcing theorem (restricted to  $\Delta_0$-formulas if we are considering forcing over admissible sets - see \cite[Thm. 4.17]{mathias2015provident}), some $(p,q)\in f\times g$ forces $\mu=\nu$. Since $\mu^f\notin M$, there is some $y\in M$ such that $p$ doesn't decide whether $y\in \mu$. Now take generics $f_0$, $f_1$ with $p\in f_0, f_1$ and $\mu^{f_0}\neq \mu^{f_1}$ and $ M [f_1] $ with $q\in h$. Then $\mu^{f_0}=\nu^h=\mu^{f_1}$, contradicting the assumption on $f_0$ and $f_1$. 
+\ref{recognisable reals appear quickly 1} 
+Let $M=L_{\alpha^\oplus}$ and take any $\Col(\omega,\alpha)$-generic filter $g\in V$ over $M$. 
+Since $\Col(\omega,\alpha)$ is a set forcing in $M$, $M[g]$ is admissible if $g$ is taken to be sufficiently generic. (By \cite[Theorem 10.17]{mathias2015provident}, it suffices that the generic filter meets every dense class that is a union of a $\Sigma_1$-definable with a $\Pi_1$-definable class.)  In this model everything is countable. Let $y\in \WO\cap M[g]$ be a real coding $\alpha$. 
+
+Set $R(z)$ if ``$\exists h\ [ h $ {\em codes a  sequence of computation snapshots of $p(z)$, along the
+ordering $y$, which converges with output $1$}]''. Then as $ x \in R$, the latter is a non-empty $\Sigma^{1}_{1}(y)$ predicate; by an effective $\Sigma^{1}_{1}$ Perfect Set Theorem (see \cite[III Thm.6.2]{Sa90})  (relativized to $y$) if there is no solution to $R$ in $L_{\omega_1^y}[y]$ 
+then there is a perfect set of such solutions in $V$.  But $R=\{x\}$. Hence $x\in  L_{\omega_{1}^y}[y] = M[g]$. 
+As $\Col(\omega,\alpha)$ is homogeneous ({\em cf.}  \cite[Corollary 26.13]{Je03}) we can see that $x\in  L_{\alpha^\oplus}$ by asking for each $n\in\omega$ whether $\Col(\omega,\alpha)$ forces $n$ to be in some real $z$ such that $p(z)$ halts. 
+
+%Hence, as $g$ was arbitrary, $x\in L_{\alpha^\oplus}$.
+
+
+%a $\Pi^{1}_{1}(y)$ equivalent version obtains (``$\forall h $
+
+ %which by $\Sigma^{1}_{1}$-Absoluteness is then true in $M[g]$. But $x'=x$ is the only input for such a convergent computation. Therefore $x\in M[g]$.\\
+%Then $M[g]=M[y]=L_{\omega_1^y}[y]$.  By the above claim, it suffices to show that $x\in M[g]$. To see this, note that $\alpha$ is countable in $M[y]$ and hence $\{x\}$ is $\Delta^1_1(y)$ by the assumption of the lemma. Therefore $x\in L_{\omega_1^y}[y]=M[g]$ by \cite{BGM71} (see \cite[Section 5]{Hjorth-Vienna-notes-on-descriptive-set-theory}). 
+
+\ref{recognisable reals appear quickly 2} 
+This is essentially \cite[Thm LII]{Rog}: to sketch why this is so, take any computable ordinal $\gamma< \omega^{\ck}_{1}$. 
+One can construct a real $x$ which is $\Pi^0_2$ as a singleton and codes a sequence of iterated (ordinary Turing jumps) of length $\omega\cdot \gamma$. 
+Then $x \notin L_\gamma$, (as the theory of $L_{\gamma}$ is reducible to $x$), but $x$ is recognisable in time $\omega +1$ since $x$ is $\Pi^0_2$ (recall, for example, that on zero input a complete $\Pi^{0}_{2}(x)$ set can be written to the worktape in $\omega$ stages). 
+This shows that $\omega^\oplus=\omega^{\ck}_{1}$ is optimal when $\alpha=\omega +1$. 
+\end{proof} 
+
+
+
+%After submitting this paper, we realised that 
+%the answer to the previous question is no, and in fact % by classical results in recursion theory. 
+%This answers the previous question. 
+
+
+
+
+%This criterion can be used to show that certain sets are not too quickly semi-decidable. 
+%Towards lower bounds, we needs the following result:
+
+
+
+
+The next result will be used to provide a lower bound for decision times of sets. 
+%We now determine the supremum of decision times for singletons, as we shall use this for the lower bound of the supremum for decision times for sets. 
+
+\begin{theorem}
+\label{sigma upper set clockable bound}
+The supremum of decision times of singletons equals $\sigma$. 
+%There are unboundedly many decision times of total ittm-programs below $\sigma$. 
+%Suppose that $\alpha<\omega_{1}$ is set-clockable. Then $\alpha<\sigma$.
+\end{theorem}
+
+\begin{remark} 
+It should be unsurprising that the supremum of decision times is at least $\sigma$. 
+%In one sense this should be unsurprising. 
+It is well known that the $\Pi^{1}_{1}$ singletons are wellordered and appear unboundedly in $L_\sigma$ by work of Suzuki \cite{Su64}, and these are clearly ittm-decidable. Moreover, their order type is $\sigma$ (see e.g. \cite[Exercise 16.63]{Rog}). 
+%However we can give an argument in the current setting.
+\end{remark} 
+
+\begin{proof}
+%Let $\alpha$ be $\Sigma_1$-definable. 
+To see that the supremum is at least $\sigma$, take any $\alpha<\sigma$. 
+Pick some $\beta$ with $\alpha<\beta<\sigma$ such that 
+%$L_{\beta}$ is a $KP$-model and 
+some $\Sigma_1$-sentence $\varphi$ holds in $L_\beta$ for the first time.
+% but for no smaller $KP$-model. 
+We claim that the $<_{L}$-minimal code $x$ for $L_{\beta^{\oplus}}$ is recognisable. 
+To see this, let $T$ denote the theory $\mathsf{KP}+(V=L)+\varphi$. 
+Devise a program $p(z)$ that checks if $z$ codes a wellfounded model of $T+$``{\em there is no transitive model of $T$}'' and halts if so. 
+However, 
+%(by a diagonalisation argument) 
+such a code $x$ is not an element of $L_{\beta^{\oplus}}$.
+% i.e. $\{x\}$ is decidable. 
+%Since $\beta^{\oplus}$ is admissible, $x\notin L_{\beta^{\oplus}}$. 
+By Lemma \ref{recognisable reals appear quickly}, the decision time of $\{x\}$ is thus at least $\beta^{\oplus}$. 
+%To see that $\delta>\beta$, note that $\beta^{\oplus}>\beta$. Now, by admissibility of $L_{\beta^{\oplus}}$ the recursion theorem holds in $L_{\beta^{\oplus}}$, so if we had $c\in L_{\beta^{\oplus}}$, then we would have $L_{\beta^{\oplus}}\in L_{\beta^{\oplus}}$, a contradiction. But then it follows from Lemma \ref{recognisable reals appear quickly} that no program can even semi-decide $\{c\}$ in $<\beta^{\oplus}$ many steps.
+%To show that $\delta<\sigma$, it suffices by Proposition \ref{sigma upper set clockable bound} to see that $\delta$ is countable. We describe a program $p$ for recognizing $c$ in countably many steps. $p$ starts by testing whether $c$ encodes an $\in$-structure in which $V=L$, $\phi$ and $\neg\exists{\gamma}L_{\gamma}\models\phi$ hold, which can be done in $<\omega^{\omega}$ many steps. If not, $p$ returns $0$ and halts. Otherwise, denote by $C$ the $\in$-structure encoded by $c$. Note that at this point, it is ensured that the ordinal height of the well-founded part of $C$ is $\leq\beta$: Indeed, if it was $>\beta$, then $C$ would cneed to determine whether the structure encoded by $c$ is well-founded. To this end, we run the usual depth-first search described, e.g., in [Hamkins and Lewis], starting simultaneously with $i\in\omega$. 
+
+It remains to show that any recognisable real $x$ is recognisable with a uniform time bound strictly below $\sigma$.
+To see this, suppose that $p$ recognises $x$. 
+We shall run $p$ and a new program $q$ synchronously, and halt as soon as one of them does. 
+Thus $q$ ensures that the halting time is small. 
+
+We now describe $q$. 
+A run 
+$q(y)$ simulates all ittm-programs with input $y$ synchronously. 
+% on separate tapes. 
+For each halting output on one of these tapes, we check whether it codes a linear order. 
+In this case, run a wellfoundedness test and save the wellfounded part, as far as it is detected. 
+(These routines are run synchronously for all tapes, one step at a time.) 
+A wellfoundedness test works as follows. 
+We begin by searching for a minimal element; this is done by a subroutine that searches for a strictly decreasing sequence $x_0, x_1, \dots$.
+If the sequence cannot be extended at some finite stage, we have found a minimal element and add it to the wellfounded part. 
+The rest of the algorithm is similar and proceeds by successively adding new elements to the wellfounded part. 
+Each time the wellfounded part increases to some $\alpha+1$ by adding a new element, 
+we construct a code for $L_{\alpha+1}$. 
+(Note that the construction of $L_\alpha$ takes approximately $\omega\cdot \alpha$ many steps.) 
+We then search for $z$ such that $p(z){\downarrow}^{\leq\alpha}$
+%\todo{should we take $1$ or $0$? Answer: 1 should be "yes"} 
+$1$ in $L_{\alpha+1}$. 
+We halt if such a $z$ is found and $x\neq z$. 
+
+By Lemma \ref{recognisable reals appear quickly}, $x\in L_{\lambda^x}$. 
+So for any $y$ with $\lambda^y\geq\lambda^x$, some $L_\alpha$ satisfying \emph{$p(x){\downarrow}^{\leq\alpha} 1$} appears in $q(y)$ in ${<}\lambda^x$ steps. 
+Otherwise $\lambda^y<\lambda^x$, so $p(y)$ will halt in ${<}\lambda^y$ and therefore ${<}\lambda^x$ steps. 
+Clearly 
+%\todo{where above is this stated?} 
+$\lambda^x<\sigma$. 
+\end{proof} 
+
+
+We call an ittm-program \emph{total} if it halts for every input. 
+We are now ready to prove the main results of this section.
+
+\begin{theorem}
+\label{countable decision times}
+The suprema of countable decision times of (a) total programs and of (b) decidable sets equal $\sigma$. 
+\end{theorem}
+\begin{proof} 
+Given Theorem \ref{sigma upper set clockable bound}, is remains to show that $\sigma$ is a strict upper bound for countable decision times of total programs. 
+Suppose that $p$ is total and has a countable decision time. 
+Since $\exists \alpha<\omega_1\ \forall x\ p(x){\downarrow}^{\leq\alpha}$ is a $\Sigma^1_2$ statement, this holds in $L$ by Shoenfield absoluteness. 
+Since $L_\sigma\prec_{\Sigma^1_2} L$, there is some $\alpha<\sigma$ such that $\forall x\ p(x){\downarrow}^{\leq\alpha}$ holds in $V$, as required. 
+%The first result is immediate from Proposition \ref{sigma upper set clockable bound} and Corollary \ref{sigma upper set clockable bound}, the latter follows from Theorem \ref{recog uniform time bound} and Corollary \ref{sigma upper set clockable bound}. 
+\end{proof}
+
+%BIS HIER ÃBERARBEITET: 26.10.2020
+
+%DAS HIER NOCH ÃBERARBEITEN!
+
+
+
+
+
+\subsection{Quick recognising}
+\label{subsection - Quick recognising}  
+
+The lost melody theorem, {\em i.e.}, the existence of recognisable, but not writable reals in \cite[Theorem 4.9]{hamkins2000infinite} shows that the recognisability strength of ittm's goes beyond their writability strength. 
+It thus becomes natural to ask whether this result still works with bounds on the time complexity.
+%It is clear that, 
+If a real $x$ can be written in $\alpha$ many steps, then it takes at most $\alpha+\omega+1$ many steps to recognise $x$ by simply writing $x$ and comparing it to the input. 
+Can it happen that a writable real can be semirecognised much quicker than it can be written? 
+The next lemma shows that this is impossible. 
+%We take the opportunity to observe that writable real numbers cannot be recognized much quicker than they can be written.
+
+\begin{lemma}{\label{bounded writing time}} 
+%Suppose that $x$ is writable in time $\gamma$ and $\gamma$ is the least such. 
+Suppose that $p$ recognises $x$ and $p(x)$ halts at time $\alpha$. Then: 
+\begin{enumerate-(1)} 
+\item 
+$x\in L_\beta$ for some $\beta< \alpha^\oplus$. 
+\item
+ $x$ is writable from any real coding $\beta$ in time less than $\beta^\oplus$ steps. 
+ %More particularly 
+ If $\beta$ is clockable $x$ is simply writable  in time less than $\beta^\oplus$.
+
+%If $x\in L_\beta$ and $\beta$ is clockable, then
+\end{enumerate-(1)} 
+%If $\delta$ is  the first clockable ordinal above $\beta^\oplus$, then $x$ is writable in time at most $\delta+\omega^3$. 
+\end{lemma}
+\begin{proof} 
+The first claim holds by Lemma \ref{recognisable reals appear quickly}. 
+For the second claim,
+% the first sentence is true for any $x'\in L_{\beta^{\oplus}}$. For the second sentence 
+note that there is an algorithm that writes a code for $\beta$ in at most $\beta$ many steps by the quick writing theorem  \cite[Lemma 48]{welch2009characteristics}. 
+One can therefore write codes for $L_\beta$ and any element of $L_\beta$ in less than $\beta^\oplus$ many steps. 
+%By \cite[Lemma 48]{welch2009characteristics}), we can write a code for $\delta$ in $\delta$ many steps and therefore, a code for $L_\delta$ in $\delta\cdot\omega$ many steps. 
+%a real number $c$ coding $L_{\delta}$ can be written in $\delta$ many steps. Now, as $x\in L_{\delta}$, there is a natural number $i$ that codes $x$ in $c$. It is not hard to see that, for any $j\in\omega$, the natural number coding $j$ in the sense of $c$ can be determined from $c$ in $\omega^{2}$ many steps. 
+%Thus, given $c$, $x$ can be written in $\omega^{3}$ many steps. By writing first $c$ and then using $c$ to write $x$, we write $x$ in $\delta+\omega^{3}$ many steps, as required. 
+%\todo[inline]{Philip's comment (not sure if it refered to this lemma or something else): Not sure about this. The ?Quick writing theorem? says if $\delta$ is clockable then a code for $\delta$ is writable in $\leq delta$ steps. But one has to write a code for $L_\delta$ } 
+\end{proof} 
+
+%BIS HIER
+
+
+\subsection{Gaps in the decision times}
+\label{section - gaps} 
+
+It is well known that there are gaps in the set of halting times of ittm's (see \cite[Section 3]{hamkins2000infinite}). 
+We now show that the same is true for semidecision times of total programs and thus of sets. 
+% (which implies that the same holds for decision times of sets of reals).
+
+%\todo[inline]{This means decision times of programs } 
+
+%%neu: MC 01.02.2020
+%Let us say that an ordinal $\alpha$ is set-clockable if and only if there are a set $X\subseteq\mathfrak{P}(\omega)$ and an ittm-program $P$ such that $P$ decides $X$ and $\alpha$ is the supremum of halting times of computations of $P^{x}$ with $x\in X$. 
+%Moreover, we say that $\alpha$ is optimally set-clockable if and only if there is such an $X$ such that $\alpha$ is minimal among the ordinals with these properties.
+%neu bis hier: 01.02.2020
+
+%\begin{definition}{\label{set-clockable gap def}}
+A \emph{gap} in the semidecision times of programs is an interval that itself contains no such times, but is bounded by one. 
+%\todo{should be: TOTAL programs} 
+%programs is an interval $[\alpha,\beta)$ of ordinals with $\alpha,\beta<\sigma$ that contains no decision time of a total ittm-program. 
+%Similarly, such an interval $[\alpha,\beta)$ is calle  a gap in the decision times if and only if it does not contain the decision time of a decidable set. 
+%	A \todo{rewrite, change notation} (optimally) set-clockable gap is an interval $[\alpha,\beta)$ of ordinals with $\alpha,\beta<\sigma$ that contains no (optimally) set-clockable element. (Note that $\beta<\sigma$ ensures that there are set-clockable ordinals $>\beta$, as the decision times even for singleton sets are unbounded in $\sigma$.) If $\delta$ is such that $\alpha+\delta=\beta$, then $\delta$ is called the ``length" of the gap.
+%\end{definition}
+
+
+
+
+%\begin{definition}
+%An ordinal $\alpha$ is weakly set-clockable if and only if $\alpha<\omega_{1}$ and there is a program $P$ such that $P^{y}$ terminates for all $y\subseteq\omega$ and $\alpha=\text{sup}\{\tau(P,x):x\subseteq\omega\}$. A weakly set-clockable gap is defined in the obvious analogous way to Definition \ref{set-clockable gap def}.
+%\end{definition}
+
+%Clearly, every gap in the decision times of programs is also a gap in the decision times of sets. 
+
+\begin{theorem} 
+\label{uniform running time bound} 
+For any $\alpha<\sigma$, there is a gap below $\sigma$ of length at least $\alpha$ in the semidecision times of programs. 
+\end{theorem} 
+\begin{proof} 
+Consider the $\Sigma^1_2$-statement \emph{``there is an interval $[\beta,\gamma)$ strictly below $\omega_1$ of length $\alpha$ such that for all programs $p$, there is (i) a real $y$ such that $p(y)$ halts later than $\gamma$, or (ii) for all reals $y$ such that $p(y)$ halts, it does not halt within $[\beta,\gamma)$''}. 
+This statement holds, since its negation implies that any interval $[\beta,\gamma)$ strictly below $\omega_1$ of length $\alpha$ contains the decision time of a program. 
+Since $L_\sigma\prec_{\Sigma_1}L$ by Lemma \ref{versions of sigma}, such an interval exists below $\sigma$. 
+%The existence of such intervals can be seen as follows: Given $\alpha<\sigma$, consider the intervals $[\alpha\iota,\alpha(\iota+1))$ for $\iota<\omega_{1}$; these split the ordinals below $\omega_{1}$ into disjoint intervals. Assuming that no interval of the desired kind exists for $\alpha$, there is, for every $\iota<\omega_{1}$, some program $P$ such that, for some $z\subseteq\omega$, we have  $\tau(P,z)\in[\alpha\iota,\alpha(\iota+1))$, while for all $z\subseteq\omega$, we have $\tau(P,z)<\alpha(\iota+1)$. Clearly, each program $P$ can witness this for at most one interval. By mapping a program $P$ to the latest interval for which this holds (if there is one) and to $0$ otherwise, we obtain a cofinal map from $\omega$ into $\omega_1$, a contradiction.
+\end{proof}
+
+Note that we similarly obtain gaps below $\tau$ of any length $\alpha<\tau$ by replacing $\sigma$ by $\sigma_\alpha$. 
+
+
+
+
+
+
+\section{Semidecision times}
+
+
+In this section, we shall determine the supremum of the countable semidecision times. 
+We then study semidecision times of singletons and their complements and show that undecidable singletons of this form exists. 
+
+
+\subsection{The supremum of countable semidecision times}
+
+We shall need the following auxiliary result. 
+
+\begin{lemma} 
+\label{tau is the sup of Pi1-definable ordinals} 
+The supremum of $\Pi_1^{L_{\omega_1}}$-definable ordinals equals $\tau$. 
+\end{lemma} 
+\begin{proof} 
+%Clearly $\nu\leq\tau$. 
+%To see that $\tau\leq\nu$, 
+Suppose that $\bar{\alpha}<\tau$ is $\Sigma_2^{L_{\omega_1}}$-definable as a singleton by the formula $\psi(\bar{\alpha}) = \exists \beta\ \forall w\ \varphi(\bar{\alpha},\beta,w)$, where $\varphi$ is $\Delta_0$. 
+Let $\Psi(\alpha,\beta)$ abbreviate: 
+{\em
+$$ ``(\alpha,\beta) \text{ is } <_{lex}\text{-least such that }\forall w\ \varphi(\alpha,\beta,w)".$$} 
+Then we shall have $L_{\omega_{1}}\models \Psi(\bar{\alpha},\bar{\beta})$ for some $\bar{\beta}$. 
+%$\Psi$ is equivalent to a $\Pi_{1}\wedge\Sigma_{1}$ sentence over $L_{\omega_{1}}$ (the latter being a model of $\mathsf{KP}$).
+However then for all sufficiently large $\delta < \omega_{1}$, we have likewise 
+$L_{\delta}\models \Psi(\bar{\alpha},\bar{\beta})$. 
+To see this, take any $\delta$ such that for each $\alpha<\bar{\alpha}$ there is some $\beta<\delta$ with $\neg\varphi(\alpha,\beta,w)$. 
+%``$(\alpha^{\ast},\bar\beta) \mbox{ is } <_{lex}$-least such that $\forall w \varphi(\alpha^{\ast},\bar\beta,w)$.''\\
+Now let $\bar{\delta}$ be least with $L_{\bar{\delta}}\models \Psi(\bar{\alpha},\bar{\beta})$. 
+% for all $\delta \in [\delta^{\ast},\omega_{1})$.
+Note that $\tau > \bar{\delta}>\max\{\bar{\alpha},\bar{\beta}\}$. 
+Then we have  a $\Pi_{1}^{L_{\omega_{1}}}$ definition of $\bar{\delta}$ as a singleton:
+$$\delta= \bar{\delta} \Longleftrightarrow \exists \alpha,\beta<\delta\ [\forall w\ \varphi(\alpha,\beta,w)\wedge L_{\delta}\models \mbox{``}\Psi(\alpha,\beta)\wedge \forall \eta\ (\neg\Psi(\alpha,\beta)^{L_{\eta}})\mbox{''} ].$$%%
+There is a bounded existential quantifier in front of the conjunction of two $\Pi_1$ formulas in $\delta$. 
+This is a $\Pi_1$ definition in $\delta$ over models of $\mathsf{KP}$. 
+%$\Pi_{1} \wedge \Delta_{1}(\{\delta\})$ matrix, which is equivalent  to a $\Pi_{1}^{KP}(\{\delta\})$ statement. 
+The first conjunct guarantees that the witnessing $\alpha$ equals $\bar{\alpha}$; the second conjunct that $\beta = \bar{\beta}$.
+%It thus reflects from $L_{\omega_{1}}$ to $L_{\tau}$. 
+Now $\bar{\alpha}<\bar{\delta}<\tau$ as required. 
+\end{proof} 
+
+\begin{corollary} If $V=L$ then the $\Pi^1_{2}$ singleton reals appear unboundedly below $\tau$, and $\tau=\delta^{1}_{3}$, the supremum of $\Delta^{1}_{3}$ wellorders of $\omega$.
+\end{corollary}
+
+\begin{remark}
+The previous corollary is the natural analogue at one level higher of the facts that the $\Pi^{1}_{1}$-singletons appear unboundedly in $\sigma$ and the latter equals the analogously defined $\delta^{1}_{2}$. 
+At this lower level, the relevant objects are absolute via Levy-Shoenfield absoluteness and the assumption $V=L$ is not needed. 
+%Of course 
+%The proof of these facts works without  the assumption $V=L$ using Levy-Shoenfield Absoluteness. 
+%By Levy-Shoenfield Absoluteness, there is no need of the assumption $V=L$ to obtain these facts. 
+\end{remark}
+
+We shall use the effective boundedness theorem: 
+
+\begin{lemma}[Essentially \cite{Sp55}]
+%\todo{Omit the proof and cite, or move to an appendix?} 
+\label{effective Sigma11 boundedness} 
+The rank of any $\Sigma^1_1(x)$ wellfounded relation is strictly below $\omega_1^{\ck,x}$. 
+In particular, any $\Sigma^1_1(y)$ subset $A$ of $\WO$ is bounded by $\omega_1^{\ck,y}$. 
+\end{lemma} 
+%\begin{proof} 
+
+We quickly sketch the proof for the reader. 
+The proof of the Kunen-Martin theorem in \cite[Theorem 31.1]{kechris2012classical} shows that the rank of $R$ is bounded by that of a computable wellfounded relation $S$ on $\omega$. 
+Since $L_{\omega_1^{\ck,x}}[x]$ is $x$-admissible, the calculation of the rank of $S$ takes place in $L_{\omega_1^{\ck,x}}$ and hence the rank is strictly less than $\omega_1^{\ck,x}$. 
+
+While the second claim (which is essentially due to Spector) follows immediately from the first one, we give an alternative proof without use of the Kunen-Martin theorem. 
+% for the reader. 
+Fix a computable enumeration $\vec{p}=\langle p_n\mid n\in\omega\rangle$ of all Turing programs. 
+Let $N$ denote the set of $n\in\NN$ such that 
+$p_n^y$ is total and the set decided by $p_n$ codes an ordinal. 
+By standard facts in effective descriptive set theory (for instance the Spector-Gandy theorem \cite{Sp59, Ga}, see also 
+%\footnote{Also known as the Spector-Gandy theorem; it was first proved by Spector and reproved by Gandy after hearing about the result. } 
+\cite[Theorem 5.3]{Hjorth-Vienna-notes-on-descriptive-set-theory}), $N$ is $\Pi^1_1(y)$-complete.  
+In particular, it is not $\Sigma^1_1(y)$. 
+Towards a contradiction, suppose that $A$ is unbounded below $\omega_1^{\ck,y}$. 
+%Otherwise, we can reduce any $\Pi^1_1$ set of integers to $A$ by a computable function: 
+Then $n\in N$ if and only if there exist $a$ decided by $p_n$, a linear order $b$ coded by $a$ and some $c\in A$ such that $b$ embeds into $c$. 
+Then $N$ is $\Sigma^1_1(y)$. 
+%\end{proof} 
+
+
+\begin{theorem} 
+\label{supremum of countable semidecision times} 
+The supremum of countable semidecision times equals $\tau$. 
+\end{theorem} 
+\begin{proof} 
+To see that $\tau$ is a strict upper bound, note that the statement \emph{``there is a countable upper bound for the decision time''} is $\Sigma_2^{L_{\omega_1}}$. 
+In particular if $(\exists x\ \forall y\ \psi(x,y))^{L_{\omega_1}}$ then
+$(\exists x \in L_{\tau}\ \forall y\ \psi(x,y))^{L_{\omega_1}}$.
+% it is easy to see that any true $\Sigma_2^{L_{\omega_1}}$-statement has a witness in $L_\tau$. 
+
+It remains to show that the set of semidecision times is unbounded below $\tau$. 
+In the following proof, we call an ordinal $\beta$ an \emph{$\alpha$-index} if $\beta>\alpha$ and some $\Sigma_1^{L_{\omega_1}}$ fact with parameters in $\alpha\cup\{\alpha\}$ first becomes true in $L_\beta$. 
+Thus $\sigma_\alpha$ is the supremum of $\alpha$-indices. Any such $\sigma_{\alpha}$, like $\sigma$, is an admissible limit of admissible ordinals.
+
+
+Suppose that $\nu$ is $\Pi_1^{L_{\omega_1}}$-definable. (There are unboundedly many such $\nu$ below $\tau$ by Lemma  \ref{tau is the sup of Pi1-definable ordinals}). 
+Fix a $\Pi_1$-formula $\varphi(u)$ defining $\nu$. 
+% for each such $\lambda$. 
+We shall define a $\Pi^1_1$ subset $A=A_\nu$ of $\WO$. 
+%($A_\lambda$ will depend on $\varphi(u)$, but we may fix a single formula for each $\lambda$.) 
+$A$ will be bounded, since for all $x\in A$, $\alpha_x$ will be a $\bar{\nu}$-index for some $\bar{\nu}\leq\nu$ and hence $\alpha_x<\sigma_\nu$. 
+
+For each $x\in \WO$, let $\nu_x$ denote the least ordinal $\bar{\nu}<\alpha_x$ with $L_{\alpha_x}\models \varphi(\bar{\nu})$, if this exists. 
+Let $\psi(u)$ state that \emph{``$\nu_u$ exists and $\alpha_u$ is a $\nu_u$-index''}. 
+Let $A$ denote the set of $x\in\WO$ which satisfy $\psi(x)$. 
+Clearly $A$ is $\Pi^1_1$. 
+
+
+\begin{claim*} 
+\label{lower bound for decision time} 
+The decision time of $A_\nu$ equals $\sigma_\nu$. 
+Furthermore, for any ittm that semidecides $A_\nu$, the order type of the set of halting times for real inputs is at least $\sigma_\nu$. 
+\end{claim*} 
+\begin{proof} 
+The definition of $A_\nu$ yields an algorithm to semidecide $A_\nu$ in time $\sigma_\nu$. 
+Now suppose that for some $\gamma<\sigma_\nu$, there is an ittm-program $p$ that semidecides $A$ with decision time $\gamma$. 
+Let $g$ be $\Col(\omega,\gamma)$-generic over $L_{\sigma_\nu}$ in that it meets all dense sets of this partial order that are elements of $L_{\sigma_{\nu}}$.  Let $x_g\in L_{\sigma_\nu}[g]$ be a real coding $g$. 
+ Such genericity preserves the admissibility of ordinals in the interval $(\gamma,\sigma_{\nu})$, in that for such ordinals $\tau$, $L_{\tau}[g]$, and {\em a fortiori} $L_{\tau}[x_{g}]$, is an admissible set. As we have observed $\sigma_{\nu}$ is a limit of admissibles, and thus $\gamma < \omega_1^{\ck,x_{g}}<\sigma_\nu$.  However $A$ is $\Sigma^1_1(x_g)$, since $x\in A$ holds if and only if there is a halting computation $p(x)$ of length at most $\gamma$. 
+By Lemma \ref{effective Sigma11 boundedness}, $A$ is bounded by $\omega_1^{\ck,x_g}$. 
+This contradicts the definition of $A$, as it is unbounded in $\sigma_\nu$. 
+%We now show that $\omega_1^{\ck,x_{g}}<\sigma_\nu$, contradicting the previous facts. 
+%We can take $g$ to be sufficiently generic so that $L_{\sigma_\nu}[g]$ is admissible.\footnote{By \cite[Theorem 10.17]{mathias2015provident}, it suffices that the generic filter meets every dense class that is a union of a $\Sigma_1$-definable with a $\Pi_1$-definable class. } 
+%To see this, recall that set generic extension of admissible sets are again admissible. 
+%Since $\sigma_\nu$ is a limit of admissibles and $g$ is set generic over $L_{\sigma_\nu}$, $\sigma_\nu$ is a limit of $x_g$-admissibles. 
+%Hence $\omega_1^{\ck,x_{g}}<\sigma_\nu$. 
+
+For the second sentence of the claim, construct a strictly increasing sequence of halting times of length $\sigma_\nu$ by $\Sigma_1$-recursion over $L_{\sigma_\nu}$. 
+It is unbounded in $\sigma_\nu$ by the first claim, hence its length is $\sigma_\nu$. 
+\end{proof} 
+This proves Theorem \ref{supremum of countable semidecision times}. 
+\end{proof} 
+
+
+
+
+
+%%%%%%%%%%%%%%
+\subsection{Semirecognisable reals} 
+We have essentially completed the calculation of the supremum of semidecision times of singletons. 
+The upper bound follows from Lemma \ref{versions of sigma} and the lower bound from Lemma \ref{recognisable reals appear quickly}. 
+%the fact that $L_\sigma\prec_1 L$. 
+
+\begin{theorem} 
+\label{supremum of semidecision times of semirecognisable singletons} 
+The supremum of semidecision times of singletons equals $\sigma$. 
+\end{theorem} 
+
+To see that this does not follows from Lemma \ref{sigma upper set clockable bound}, note that semirecognisable, but not recognisable reals exist by \cite[Theorem 4.5.4]{carl2019ordinal}. 
+In fact, we shall obtain a stronger result via the next lemma. 
+%but first a preliminary lemma.
+
+\begin{lemma} \
+\label{semirecognisables are closed under writability} 
+\begin{enumerate-(1)} 
+\item 
+\label{semirecognisables are closed under writability 1} 
+%(i) 
+If $x$ is  semirecognisable  and $y=_{\infty}x$, then $y$ is semirecognisable. 
+\item 
+\label{semirecognisables are closed under writability 2} 
+%(ii) 
+If $x$ is a \emph{fast} real, that is $x\in L_{\lambda^{x}}$, then every $y=_{\infty} x$ is similarly fast.
+\end{enumerate-(1)} 
+\end{lemma} 
+\begin{proof} 
+\ref{semirecognisables are closed under writability 1}: 
+%(i): 
+Suppose $x$ is semirecognisable via the program $p$. Let $q(x)\downarrow y$ and $r(y)\downarrow x$. 
+%Define a procedure to semidecide $\{y\}$ that first: 
+The following program semirecognises $y$. 
+On input $\bar y$, compute $r(\bar y)$ and if this halts with output $\bar x$, then compute $p(\bar x)$. If the latter halts with output 1 (and so $\bar x = x$), we perform $q(\bar x)\downarrow y$ and check that $y= \bar y$. If so we halt with output $1$ and diverge otherwise. 
+
+\ref{semirecognisables are closed under writability 2}: 
+%For (ii) just 
+Note that $y=_\infty x $ implies $ \lambda^{y}=\lambda^{x}$. So $y\in L_{\lambda^{x}}[x] = L_{\lambda^{x}}$. 
+\end{proof}
+
+
+\begin{theorem} Let $x$ be any real. % Suppose that  $x$ is a `fast' real, that is $x\in L_{\lambda^{x}}$.
+%$\alpha$ is countable in $L$ and $x=x_\alpha$. 
+\label{semidecidable undecidable reals} 
+\begin{enumerate-(1)} 
+\item 
+%(Cf. \cite[Lemma 11]{carl2017recognizability}) 
+\label{semidecidable undecidable reals - part 1} 
+No real in $L_{\Sigma^{x}}[x]\setminus L_{\lambda^{x}}[x]$ is recognisable.
+%\footnote{The proofs show that the real is not recognisable from $x$ in \ref{semidecidable undecidable reals - part 1}  and not semirecognisable from $x$ in \ref{semidecidable undecidable reals - part 2}.}  
+\item 
+\label{semidecidable undecidable reals - part 2} 
+No real in $L_{\zeta^{x}}[x]\setminus L_{\lambda^{x}}[x]$ is semirecognisable. 
+\item 
+\label{semidecidable undecidable reals - semirecognisable}
+%All reals in $L_\Sigma\setminus L_\zeta$ are semirecognisable. 
+%Moreover
+%let $s= $ $x_{\Sigma}$ be the $L$-least code  of $\Sigma$
+%extending (3):
+%and suppose $x\in L_{\lambda^{x}}=L_{\lambda^{s}}$. Then $x $ is semi-recognisable.
+Suppose that $y$ is both fast\footnote{For the definition of \emph{fast}, see Lemma \ref{semirecognisables are closed under writability}.} and semirecognisable, $x\leq
+_{\infty}y$ and % (i) $\exists y\in [z]_{\infty}(y\in L_{\lambda^{y}})$; (ii)
+ $\lambda^{x}=\lambda^{y}$. 
+ Then $x$ is semirecognisable. 
+ %In particular:
+\item 
+\label{semidecidable undecidable reals - part 4} 
+All reals in $L_{\Sigma}\setminus L_{\zeta}$ are semirecognisable.
+\end{enumerate-(1)} 
+\end{theorem}
+\begin{proof} 
+\ref{semidecidable undecidable reals - part 1}
+%(1) %Since the statement ``$p(y)$ halts'' is $\Sigma_{1}(y)$ 
+%Since $L_{\lambda^x}=L_{\lambda^x}[x]$, it suffices to show that any recognisable real $y\in L_{\Sigma^x}$ is writable from $x$.  
+%To see this, 
+Suppose that $p$ recognises $y\in L_{\Sigma^{x}}[x]$. 
+We run a universal ittm $q$ with oracle $x$ and run $p(z)$ on each tape contents $z$ produced by $q$. 
+Once $p$ is successful, we have found $y$ and shall write it on the output tape and halt.  Hence  $y\in L_{\lambda^{x}}[x]$.
+
+%ADD PROOF OF FIRST ITEM 
+%We already know that the snapshot $u$ of the universal ITTM at time $\zeta$ is semi-recognisable from [BUCH]. %maybe sketch the argument
+%Moreover, it is easy to see that $x\in L_{\zeta+1}\setminus L_{\zeta}$.
+%\noindent 
+\ref{semidecidable undecidable reals - part 2}
+%(2) 
+%Since $L_{\lambda^x}=L_{\lambda^x}[x]$, it suffices to show that every semirecognisable real $y\in L_{\zeta^x}$ is writable from $x$. 
+Suppose that $p$ eventually writes $y$ from $x$ and $q$ semirecognises $y$. 
+We run $p(x)$ and in parallel $q(z)$, where $z$ is the current content of the output tape of $p$. 
+Whenever the latter $z$ changes, the run of $q(z)$ is restarted. 
+When $q(z)$ halts, output $z$ and halt. 
+To see that this algorithm writes $y$, note that the output of $p(x)$ eventually stabilises at $y$, so $q(y)$ is run and $y$ is output when this halts. Hence $y\in L_{\lambda^{x}}[x]$.
+%et $Q$ be a program that eventually writes $x$. Suppose for a contradiction that $P$ is an ITTM-program that semirecognizes $x$. We show that $x$ is writable, which contradicts the assumption that $x\notin L_{\lambda}$. 
+%To write $x$, run $Q$; in parallel (that is, alternately carry out one step of $Q$ and one step of $P$), run $P^{y}$, where $y$ is the current content of the output tape of $Q$ at every time. When $Q$ changes the content of the output tape, $P$ is started anew on the new content. When $P$ terminates, write the current content of the output tape of $Q$ to the output tape and halt. 
+%By definition, $Q$ will eventually stabilize with output $x$. From this point on, $P$ will be run on input $x$ and, by definition of $P$, will at some point halt. Thus, the described routine indeed writes $x$. 
+
+%\medskip
+\ref{semidecidable undecidable reals - semirecognisable} 
+%(3) 
+By the previous Lemma \ref{semirecognisables are closed under writability} it suffices to show that $y\leq_{\infty}x$. But this is immediate from $y\in L_{\lambda^{x}}$ and Lemma \ref{L_lambdax is writable-invariant}. 
+%\noindent 
+
+\ref{semidecidable undecidable reals - part 4}
+%(4) 
+Take any $x\in L_\Sigma \setminus L_\zeta$. 
+
+We first show that $\lambda^{x}>\zeta$.\footnote{This argument is from \cite[Theorem 2.6 (3)]{W}.}  
+Assume $\lambda^{x}\leq\zeta$. 
+Since $\Sigma\leq\Sigma^{x}$, we have 
+%But were $\Sigma^{x}=\Sigma$ then we should have 
+$L_{\Sigma^{x}}[x]\models x\in L$. 
+By $\Sigma_1$-reflection $L_{\lambda^{x}}[x]\models x\in L$ and hence $x\in L_\zeta$. 
+But this contradicts the choice of $x$. 
+%To see this, first note that $\lambda^{x}>\zeta$ by \cite[Theorem 2.6 (3)]{W}. 
+%by the minimality of the triple $(\lambda,\zeta,\Sigma)$ in the $\lambda$-$\zeta$-$\Sigma$-Theorem \ref{lambda-zeta-Sigma-theorem}.  
+ 
+We now show that $\lambda^{x}>\Sigma$. 
+ %$``$x$ {\em is in some } $L_{\alpha}$'', 
+Since $L_{\lambda^{x}}[x]\prec_{\Sigma_{1}}L_{\Sigma^{x}}[x]$ and 
+ $L_{\zeta}$ is the maximal proper  $\Sigma_{1}$-substructure of $L_{\Sigma}$, 
+ we must have $\Sigma<\Sigma^{x}$. % by the minimality again. 
+ The existence of a $\Sigma_2$-extendible pair reflects to $L_{\lambda^x}$ and hence $\Sigma<\lambda^x$. 
+ %We can then only have that $\Sigma<\lambda^{x}$ as otherwise the existence of a `$\Sigma_{2}$-extendible pair' $(\zeta, \Sigma)$ would reflect down to $L_{\lambda^{x}}$ which is absurd. 
+  
+  
+  Let $y$ denote the $L$-least code of $L_{\Sigma}$. 
+  Clearly $y$ is recognisable via first order properties of $L_\Sigma$. 
+  % let $p(\bar s)$ test if $\bar s$ is the $L$-least code for $L_{\Sigma}$. %(with such a code lying in $L_{\Sigma+1}\in L_{\lambda^{s}}$.
+  %Let it halt with the appropriate $0/1$ output. 
+%We first show that $x\in L_{\Sigma}\setminus L_{\zeta}$ implies  $x\in L_{\lambda^{x}}=L_{\lambda^{s}}$.  
+We claim that $y$ is fast. 
+Since $y\in L_{\lambda^{x}}[x]$ and $x\in L_{\lambda^{y}}[y]$, we have ${y}=_{\infty}{x}$ and $\lambda^x=\lambda^y$ by Lemma \ref{L_lambdax is writable-invariant}. 
+Thus $\lambda^y>\Sigma$ by the previous argument and $y \in L_{\Sigma+1}\subseteq  L_{\lambda^{y}}$ as required. 
+%So $s$ is fast. 
+The result then follows from \ref{semidecidable undecidable reals - semirecognisable}.
+   \end{proof}
+
+% (equality fails as the latter is an admissible ordinals whilst the former is not). 
+%Hence   $\lambda^{x}>\zeta$.)
+%and likewise $L_{\Sigma}$ is the maximal proper transitive $\Sigma_{1}$-end-extension of $L_{\zeta}$
+
+ % Then by \cite{W} (3) of Theorem 2.6, $\lambda^{x}>\zeta$ (by the minimality of the triple $\lambda$-$\zeta$-$\Sigma$ in the Theorem of the same name, if $\lambda^{x}\leq\zeta$ then we should have $\zeta^{x}=\zeta < \Sigma =\Sigma^{x}$; but then
+% Repeated use of these minimality considerations show that 
+%we must have $\Sigma^{x}>\Sigma$. As $L_{\lambda^{x}}\prec_{\Sigma_{1}}L_{\Sigma^{x}}$, whilst by the same minimality $L_{\Sigma}$ has no $\Sigma_{1}$ transitive end extensions, we must have $\lambda^{x}>\Sigma$ also.
+
+
+
+%PDW Note that we can write a code for $\zeta$ from $x$. 
+%To see this, accidentally write codes for $L$-levels and write a code for $\alpha$ as soon as $x\in L_\alpha$. 
+%Since $\alpha$ is writable from $x$, $\zeta$ is as well. 
+%We therefore have $\lambda^x>\zeta$. 
+%Thus $\lambda^x>\Sigma$ by the proof of \cite[Theorem 3.11]{hamkins2002post} or \cite[Lemma 13]{carl2017recognizability}. 
+%Take then a program $p(x)$ that writes the $L$-least code for $L_\Sigma$ and let $n$ denote the place where $x$ appears in this code. 
+%Thus, $x$ is accidentally, but not eventually writable. By a theorem of Hamkins and Lewis [QUELLE], there is an ITTM-program $P$ such that $P^{x}\downarrow=\text{cc}(L_{\Sigma})$. It is also easy to see that $\text{cc}(L_{\Sigma})$ is recognisable. Moreover, within $\text{cc}(L_{\Sigma})$, $x$ will be coded by some fixed natural number $k$.
+%The following algorithm semirecognises $x$. 
+%For an input $y$, run $p(y)$. 
+%If $p(y)$ halts with output $z$, we can decide whether $z$ equals the $L$-least code for $L_\Sigma$. 
+%Diverge if they are different. 
+%If $z$ equals this code, we obtain $x$ in its $n^{th}$ place. 
+%If $x=y$, then converge, and diverge otherwise. 
+%Now, to semi-recognize $x$, proceed as follows: Given the input $y$, run $P^{y}$. If it does not halt, then $y\neq x$ by definition of $P$ and $P^{y}\uparrow$ by assumption. So suppose $P^{y}\downarrow=z$. Then use the recognizability of $\text{cc}(L_{\Sigma})$ to check whether $z=L_{\Sigma}$. If not, run into an endless loop. Otherwise, use $k$ and $\text{cc}(L_{\Sigma})$ to compute $x$ and compare it to $y$. If they differ, run into an endless loop, otherwise halt.
+
+%If $x \in L_{\lambda^{s}}$, then the supposition that $\lambda^{x}>\Sigma$ is equivalent to saying that any such $x$ satisfies $\lambda^{x}=\lambda^{s}$. The argument is then that of (3).
+
+%Now suppose $x\in L_{\lambda^{x}}=L_{\lambda^{s}}$. Let $e$ be an index such that $p_{e}({s})=x$ (such an $e$ exists as $x \in L_{\lambda^{s}}[s]$).
+
+% Let $p(x)$ be the procedure that writes the $L$-least code for $\Sigma$, $s$;  once this is verified it then runs
+ % $p_{e}({s})$ and converges on 1 if the result is $x$ and divegrs otherwise.\\ 
+ %Suppose that $p_{e}({s})=x$ (such an index $e$ exists as $x \in L_{\lambda^{s}}[s]$). 
+
+%  Also, as $\lambda^{x}>\Sigma$, there is a procedure $P$ that firstly, writes on input $x$ the code $s$; and secondly it verifies that this output $s$ is indeed the $L$-least code for $\Sigma$.  Our desired semi-decidable procedure then on input $z$ first performs $P(z)$ and if this succeeds ({\em e.g.} when $z=x$) with output verified as $s$, it then checks that $p_{e}(s)\downarrow z$, and converges on $1$ if so, and diverges otherwise. 
+
+%Note that Proposition \ref{semidecidable undecidable reals} holds relative to oracles. 
+%In particular, the same pattern occurs for $\lambda_\Sigma$, $\zeta_\Sigma$ and $\Sigma_\Sigma$, where $\lambda_\alpha$ is defined as $\lambda_{x_\alpha}$, with similar definitions of $\zeta_\alpha$ and $\Sigma_\alpha$. 
+
+%Moreover Proposition \ref{semidecidable undecidable reals} \ref{semidecidable undecidable reals - semirecognisable} can be extended: $x_\alpha$ is semirecognisable if $\Sigma\leq\alpha<\lambda_\Sigma$ by virtually the same argument, but we do not know if this is the case for all reals in $L_{\lambda_\Sigma}\setminus L_\Sigma$. 
+ We remark that some requirement on $\lambda^{x}$ is needed in \ref{semidecidable undecidable reals - semirecognisable}.
+ % $x \in L_{\lambda^{s}}$:
+ To see this, take any Cohen generic $x \in L_{\lambda^{y}}$ over $L_{\Sigma}$, where $y$ denotes the $L$-least code for $\Sigma$. 
+ (Then $\lambda^x=\lambda$.) 
+%  and so with $L_{\lambda^{x}}[x]\prec_{\Sigma_{1}} L_{\Sigma^{x}}[x]$, $\lambda^{x}=\lambda, \Sigma^{x}=\Sigma$, 
+We claim that $x$ is on semirecognisable by a program $p$. 
+Otherwise $L_{\Sigma}[x]\models p(x){\downarrow}^\alpha$ for some $\alpha < \lambda^{x}$. 
+This statement is forced over $L_{\Sigma}$ for the Cohen real, and we can take two incompatible Cohen reals over $L_\Sigma$ for which $p$ would have to halt. 
+%$x$, by some finite Cohen condition. But such a condition is extendible to two incompatible generics, whilst $p$ is supposed to halt on only a single input.
+
+
+
+
+\subsection{Cosemirecognisable reals}
+
+Here we study semidecision times for the complements of cosemirecognisable reals. 
+We shall call them \emph{cosemidecision times}. 
+% note that the $\Sigma^1_2$-statement \emph{there is a real $x$ and a countable ordinal $\alpha$ such that for all $y\neq x$, $P(y){\downarrow}^{\leq\alpha}$} reflects to $L_\sigma$. 
+
+We determine the supremum of cosemidecision times of singletons. 
+To this end, we shall need an analogue to Lemma \ref{recognisable reals appear quickly}. 
+It will be used to show that
+any countable cosemidecision time of a program $p$ is strictly below $\sigma$.
+
+\begin{lemma} 
+\label{cosemirecognisable reals appear quickly} 
+If $p$ cosemirecognises $x$ and $p(x)$ has a final loop of length  $\leq \alpha$, then 
+\begin{enumerate-(1)} 
+%{\downarrow}^{\leq\alpha}$, then 
+%(i) 
+\item 
+\label{cosemirecognisable reals appear quickly 1} 
+$\alpha < \sigma$. 
+\item 
+\label{cosemirecognisable reals appear quickly 2} 
+%(ii) 
+$x\in L_{\alpha^\oplus}$. 
+\end{enumerate-(1)} 
+\end{lemma} 
+
+
+%\begin{lemma}{\label{corecognisables in sigma}}
+%If $x$ is cosemirecognisable, then $x\in L_{\sigma}$.
+%\end{lemma}
+\begin{proof} 
+\ref{cosemirecognisable reals appear quickly 1} 
+%(i) 
+Suppose that $p$ cosemirecognizes $x$.  Then $x$ is the unique $y$ such that $p(y)$ loops. 
+The statement that $p(y)$ loops for some $y$ is a true $\Sigma_1$-statement and it therefore holds in $L_\sigma$. 
+By uniqueness, $x\in L_\sigma$, and further the length of that final loop is some $\alpha <\sigma$.
+%\end{proof}
+
+\ref{cosemirecognisable reals appear quickly 2} 
+%(ii) 
+Let $M=L_{\alpha^\oplus}$ and take any $\Col(\omega,\alpha)$-generic filter $g\in V$ over $M$. 
+Since $\Col(\omega,\alpha)$ is a set forcing in $M$, $M[g]$ is admissible. 
+Let $y\in M[g]\cap \WO$ be a real coding $\alpha$. 
+%Then $M[g]=M[y]=L_{\omega_1^y}[y]$. 
+As in the proof of Lemma \ref{recognisable reals appear quickly}, it suffices to show that $x\in M[g]$.  Following that proof, set $R(z)$ if ``$\exists h\ [ h $ {\em  codes a  sequence of computation snapshots in $p(z)$, along the ordering $y$, 
+%of a run  of length $\leq ||y||$ 
+%$p_{e}(x')$ 
+of a 
+%looping 
+computation of length 
+$\alpha$ with a final loop}]''.
+%which diverges without any output}]''.
+The rest of the agument is identical as $z=x$ is the only possible solution to $R(z)$.
+% Then as $ x \in R$, the latter is a non-empty $\Sigma^{1}_{1}(y)$ predicate; by an effective $\Sigma^{1}_{1}$ Perfect Set Theorem (see \cite[III Thm.6.2]{Sa90})  (relativized to $y$) if there is no solution to $R$ in $L_{\omega_1^y}[y]$ 
+%then there is a perfect set of such solutions in $V$.  But $R=\{x\}$. Hence $x\in  L_{\omega_{1}^y}[y] = M[g]$. Hence, as $g$ was arbitrary, $x\in L_{\alpha^\oplus}$.
+%To see this, note that $\alpha$ is countable in $M[y]$ and hence $\{x\}$ is $\Delta^1_1(y)$ by the assumption of the lemma. Therefore $x\in L_{\omega_1^y}[y]=M[g] $ %L_{\alpha^\oplus}[y]=M[y]$
+% by \cite{BGM71} (see \cite[Section 5]{Hjorth-Vienna-notes-on-descriptive-set-theory}). 
+\end{proof} 
+
+
+\begin{theorem} 
+\label{supremum of cosemidecision times of reals} 
+The supremum of cosemidecision times of 
+%cosemirecognisable 
+reals equals $\sigma$. 
+\end{theorem} 
+\begin{proof} 
+We first show that $\sigma$ is an upper bound. 
+Suppose that $p$ cosemirecognises $x$. 
+We define a program $r$ with inputs $y$ by simultaneously running $p$ and the following program $q$, and halt as soon as $p(y)$ or $q(y)$ halts. 
+%We follow the proof of Theorem \todo{Theorem or Prop.?} \ref{recog uniform time bound} with minor changes: 
+The definition of $q(y)$ is based on the machine considered in \cite{friedman2007two}, 
+which writes the $\Sigma_2(y)$-theories of $J_\alpha[y]$ in its output, successively for $\alpha$. 
+Note that the $\Sigma_2(y)$-theory of $J_\alpha[y]$ appears in step 
+ $\omega^2\cdot (\alpha +1)$. 
+ (This is the reason for the choice of this specific program.)  
+$q(y)$ searches within these theories for two writable reals relative to $y$: a real $z$ and a real coding an ordinal $\alpha$ such that $p(z)$ has a final loop of length at most $\alpha$ (in particular, it does not converge). 
+Note that such a loop occurs by time $\Sigma^z$, if it occurs at all (see \cite[Main Proposition]{welch2000length} or \cite[Lemma 2]{welch2009characteristics}). 
+
+Clearly $r$ cosemirecognises $x$. 
+It suffices to show that its semidecision time is at most $(\Sigma^x)^{\oplus}<\sigma$. 
+To this end, we consider two cases. Suppose $y\neq
+x$. If $\lambda^y\leq\Sigma^x$, then $p(y)$ halts at time $\Sigma^x$ or before. 
+Now suppose that $\lambda^y>\Sigma^x$. 
+By Lemma \ref{cosemirecognisable reals appear quickly}, $x\in L_{(\Sigma^x)^\oplus}$. 
+By the definition of $q$, the statement \emph{``there exists $x$ such that the length of $p(x)$'s loop is  $\leq \alpha$''} appears in $q(y)$ in strictly less than $(\Sigma^x)^\oplus$ steps. Then $q(y)$, and so $r(y)$ in both cases, halts in at most $(\Sigma^x)^{\oplus}$ whilst $r(x)$ diverges.
+
+
+It remains to show that $\sigma$ is a lower bound. 
+Towards a contradiction, suppose that $\beta<\sigma$ is a strict upper bound for the cosemidecision times. 
+%We can assume that $\beta$ is least such that a $\Sigma_1$-sentence is true for the first time in $L_\beta$. 
+We can assume that $x_\beta$ is recognisable, for instance by taking $\beta$ to be an index. 
+Suppose that $x_\beta$ is recognised by an algorithm with decision time $\alpha$. 
+Note that $\alpha<\sigma$ by Theorem \ref{sigma upper set clockable bound}. 
+%Let $d=x_\beta$. 
+%neu bis hier MC
+%Let $d$ denote the $L$-least code for $\beta$. 
+%Then $d$ is recognisable, say in time $\delta<\sigma$. 
+Take $\gamma\geq (\alpha+\beta)^\oplus$ such that $x_\gamma$ is recognisable. 
+Then $x_\gamma\oplus x_\beta$ is recognisable. 
+
+
+We claim that $x_\beta\oplus x_\gamma$ is not cosemirecognisable by an algorithm with decision time strictly less than $\beta$. 
+So suppose that $p$ such an algorithm. 
+We shall describe an algorithm $q$ that semirecognises $x_\gamma$ in at most $\alpha+\beta+1$ steps. 
+This contradicts Lemma \ref{recognisable reals appear quickly}. 
+Note that $x_\beta$ is coded in $x_\gamma$ by a natural number $n$. 
+The algorithm $q$ extracts the real $x$ coded by $n$ from the input $y$. 
+It then decides whether $x= x_\beta$, taking at most $\alpha$ steps, and diverges if $x\neq x_\beta$. 
+If $x=x_\beta$, we run $p(x\oplus y)$ for $\beta$ steps and let $q$ halt if and only if $p(x\oplus y)$ fails to halt before time $\beta$. 
+Then $q(y)$ halts if and only if $y=x_\gamma$. 
+%This halts only for input $x_\gamma\oplus x_\beta$, and before $\alpha+\beta$. 
+%This contradicts the above. 
+\end{proof} 
+
+%The co-semidecision times of arbitrary sets are just the semi-decision times of their complements, which will be treated in the next section. Here, we concentrate on co-semidecidable singletons, {\em i.e.}, corecognisable real numbers. 
+
+The previous result would follow from Theorem \ref{sigma upper set clockable bound} if every cosemirecognisable real were recognisable. 
+%reals would not exist. 
+However, the next result disproves this and thus answers \cite[Question 4.5.5]{carl2019ordinal}. 
+
+%Below, we say that a set $S$ is cofinal in $L_{\alpha}$ if and only if, for all $\iota<\alpha$, there is an element of $S$ in $L_{\alpha}\setminus L_{\iota}$.
+%The next result answers: 
+%existenz von coregonizables: frage 4.5.5, S. 191 in Merlins Buch 
+%Below, we say that a set $S$ is cofinal in $L_{\alpha}$ if and only if, for all $\iota<\alpha$, there is an element of $S$ in $L_{\alpha}\setminus L_{\iota}$.
+
+\begin{theorem} 
+%$x_\lambda$ is cosemidecidable, but not decidable. 
+The cosemirecognisable, but not recognisable, reals appear cofinally in $L_\sigma$, that is, their $L$-ranks are cofinal in $\sigma$.
+\end{theorem} 
+\begin{proof} 
+Let $\xi$ be an index, $x=x_\xi$ and $y=x_{\lambda^x}$. 
+Since $y\in L_{\zeta^x}\setminus L_{\lambda^x}$, it is not semirecognisable by Lemma \ref{semidecidable undecidable reals} \ref{semidecidable undecidable reals - part 2}. 
+We claim that $y$ is cosemirecognisable. 
+We shall assume that $\lambda^x=\lambda$; the general case is similar. 
+%\todo{Need $x_\lambda$ as a code for $\lambda$ or $L_\lambda$ in the next proof? } 
+
+For an input $z$, first test whether it fails to be a code for a wellfounded $L_\alpha$; if it is such a code, then check if it has an initial segment which itself has a $\Sigma_2$-substructure (equivalently $\alpha\geq \Sigma$); if it fails this test, then check if it has a $\Sigma_1$-substructure (if it does then $\alpha \neq \lambda$). 
+If it fails this last point, then $z$ is a code for an $L_\alpha$ with $\alpha \leq \lambda$. 
+%Now compute the $L$-hierarchy using the ordinal $\alpha$ provided by $z$. 
+Check if $z$ fails to be the $L$-least code for $L_\alpha$. 
+Furthermore, run a universal machine and check whether some program halts beyond $\alpha$. 
+%and (i) check in $L_\alpha+1$ that $z$ is the $L$-least code for $L_\alpha$; (if it is not then $z$ is not $x$ and we have finished testing);  (ii) otherwise wait for some $mue(0)$ to halt beyond $\alpha$, {\em i.e.} the rank of $z$ (just run the universal machine and do some checking); if this happens again $z$ is not $x$. If this fails to happen then $\alpha = \lambda$ and $z = x$.
+%\begin{claim*} 
+%$x$ is ittm-cosemirecognisable. 
+%\end{claim*}
+%\begin{proof}
+%\end{proof} 
+\end{proof} 
+
+
+
+
+
+%We first prove the existence of cosemidecidable, but not semidecidable singletons. 
+
+%\todo[inline]{EXPLAIN IN TEXT: what is "reals are cofinal in $L_\alpha$"} 
+
+%The next result answers: 
+%existenz von coregonizables: frage 4.5.5, S. 191 in Merlins Buch 
+
+
+
+
+
+%%%%%%%%%%%%%%
+\section{Sets with countable decision time} 
+
+%It is easy to see that a
+Any set $A$ with countable semidecision time $\alpha$ is $\Sigma^1_1$ in any code for $\alpha$. 
+If this is witnessed by a program $p$ and and $y$ is a code for $\alpha$, then 
+%(If $A$ is such a set, semidecided by the program $p(e)$, 
+%$p_{e}$, 
+%and let $z$ be a code for $\alpha$.  Then 
+%we shall have that 
+$x\in A$ if and only if {\em there exists a halting computation of $p(x)$ 
+%$p_{e}(x)$ 
+along the ordering coded by $y$}.  Thus $A$ is  a $\Sigma^{1}_{1}(y)$ set. 
+Similarly, any set with a countable decision time is both $\Sigma^1_1$ and $\Pi^1_1$ in any code for $\alpha$, and is thus Borel. 
+The next result shows that for both implications, the converse fails. 
+This complements Lemma \ref{long decision times}. 
+%This also shows that the condition in Lemma \ref{long decision times} that $A$ is $\Sigma^1_1$ is not necessary. 
+
+\begin{theorem} 
+\label{Borel set with uncountable decision time} 
+There is a cocountable open decidable set $A$ that is not semidecidable in countable time. 
+%Moreover, $A$ can be chosen to be codiscrete\footnote{Its complement is discrete} or open. 
+\end{theorem} 
+\begin{proof} 
+Let $\vec{\varphi}=\langle \varphi_n\mid n\in\omega\rangle$ be a computable enumeration of all $\Sigma_1$-formulas with one free variable. 
+Let $B$ denote the discrete set of all $0^n{}^\smallfrown \langle1\rangle^\smallfrown x$, where $x$ is the $L$-least code for the least $L_\alpha$ where $\varphi_n(x)$ holds. 
+%$L$-least codes for some $L_\alpha$ where a new $\Sigma_1$-fact becomes true. 
+Let further $p$ denote an algorithm that semidecides $B$ as follows.
+First test if the input equals $0^\omega$ and halt in this case. 
+Otherwise, test if the input is of the form $0^n{}^\smallfrown \langle1\rangle^\smallfrown x$, run a wellfoundedness test for $x$, which takes at least $\alpha$ steps for codes for $L_\alpha$, and then test whether $\alpha$ is least such that $\varphi_n(x)$ holds in $L_\alpha$. 
+The decision time of $p$ is at least $\sigma$. 
+Moreover, it is countable since $B$ is countable. 
+
+Let $A$ denote the complement of $B$. 
+Towards a contradiction, suppose that $q$ semidecides $A$ in countable time. 
+Let $r$ be the decision algorithm for $B$ that runs $p$ and $q$ simultaneously. 
+Then $r$ has a countable decision time $\alpha$ and by $\Sigma^1_2$-reflection, we have $\alpha<\sigma$. 
+But this is clearly false, since $p$'s decision time is at least $\sigma$. 
+%Note that $B$ is discrete. To get a closed set, add $0^\omega$ to $B$ as an element and modify $p$ to halt on $0^\omega$. 
+\end{proof} 
+
+
+%\begin{question} 
+%If $A$ is any ittm-semidecidable (or decidable) closed set, is there necessarily a countable ittm-rank (ittm-semidecidable rank) on $A$? %\end{question} 
+
+
+\section{Open problems} 
+
+%We would further like to stress that 
+The above results for sets of reals also hold for Turing machines with ordinal time and tape with virtually the same proofs, while the results for singletons do not. 
+%It is natural to ask about the 
+If we restrict ourselves to sets of natural numbers, then the suprema of decision and semidecision times 
+%for sets of natural numbers instead of reals 
+%; it is easy to see that these 
+equal $\lambda$, the supremum of clockable ordinals. 
+
+In the main results, we determined the suprema of various decision times, but we have not characterised the underlying sets. 
+
+\begin{question} 
+Is there a precise characterisation in the $L$-hierarchy of sets and singletons with countable decision, semidecision and cosemidecision times? 
+\end{question} 
+
+
+We would like to draw a further connection with classical results in descriptive set theory. 
+A set of reals is called \emph{thin} if it does not have an uncountable closed subset. 
+It can be shown that $\{x\mid x \in L_{\lambda^x}\}$ is the largest thin semidecidable set 
+(see \cite[Definition 1.6]{W}; this unpublished result of the third-listed author should appear in \cite{countableranks}).
+%and was mentioned - without proof - in \cite{W}, a proof should appear in \cite{countableranks}.) 
+We ask if the same characterisation holds for eventually semidecidable sets. 
+
+\begin{question} 
+Is $\{x\mid x \in L_{\lambda^x}\}$ the largest thin eventually semidecidable set? 
+\end{question} 
+
+
+In particular, is every eventually semidecidable singleton an element of $L_{\lambda^x}$ (equivalently $L_{\Sigma^x}$)? 
+An indication that these statements might be true is that one can show an analogous statement for null sets instead of countable sets: the largest ittm-semidecidable null set equals the largest ittm-eventually semidecidable null set. 
+Related to Theorem \ref{Borel set with uncountable decision time}, it is natural to ask whether a thin semidecidable set can have halting times unbounded in $\omega_1$. 
+%Or is every thin semidecidable set contained in $L_\tau$? 
+
+
+
+%It is natural to ask what are the optimal results regarding the interplay of recognising speed, writing speed and $L$-levels in Lemma \ref{recognisable reals appear quickly} and Section \ref{subsection - Quick recognising}. 
+%In particular,
+%\begin{question} 
+%If $x$ is semirecognisable in time $\alpha$, is $x \in L_{\omega \cdot \alpha}$? What is the optimal $L$-level? 
+%\end{question} 
+
+We did not study specific values of decision times in this paper. 
+Note that this is an entirely different type of problem, since it is sensitive to the precise definition of ittm's. 
+Regarding Section \ref{section - gaps}, we know from \cite[Theorem 8.8]{hamkins2000infinite} that admissible ordinals are never clockable and from \cite[Theorem 50]{welch2009characteristics} that any ordinal that begins a gap in the clockable ordinals is always admissible. 
+One can ask if an analogous result holds for decision times. 
+
+\begin{question}
+Is an ordinal that begins a gap of the (semi-)decision times always admissible? 
+%Which ordinals start gaps in the (semi-)decision times?
+\end{question}
+
+One can also ask about the decision times of single sets. 
+%By the argument that no admissible is clockable \cite[Theorem 8.8]{hamkins2000infinite} we immediately get that  no semi-decidable singleton $\{x\}$ has decision time an $x$-admissible. 
+%However we have more in form of
+By the Bounding Lemma \cite[Theorem 8]{W08}, no decidable set $A$ has a countable admissible decision time. 
+However, the semidecision time of a decidable set can be admissible. 
+To see this, note that the set of indices as in the proof of Theorem \ref{supremum of countable semidecision times} can be semidecided by a program with semidecision time $\sigma$. 
+We do not know if this is possible for a set that is not decidable. 
+
+%We thus ask:
+
+%\begin{question}
+%Is there a semidecidable, but not decidable, set whose semidecision time is a countable admissible?
+%\end{question}
+
+%For the last question, assuming $V=L$, if we consider the reals $x_{\nu}$ coding indices $\nu$ (such as in the proof of Theorem \ref{supremum of countable semidecision times}), such reals occur cofinally in $\sigma$ and the natural program testing a real $z$ for being such an index gives rise to a semi-decision time for the set of such indices as $\sigma$ - which is a countable admissible. We should have an affirmative answer. However this set of indices is in fact decidable but by program with decision time $\omega_{1}$. Hence the question stipulates non-decidable sets.
+
+
+
+
+
+\bibliographystyle{alpha}
+%\bibliographystyle{abstract}
+%\bibliographystyle{ieeetr}
+\bibliography{References} 
+%\nocite{*} 
+
+\end{document} 
+
+
+%It suffices to find a $\Pi_1^{L_{\omega_1}}$-definable ordinal $\alpha\geq \alpha_*$. 
+{\color{red}Let $\gamma^*$ denote the unique ordinal $\gamma$ such that for some $\alpha,\beta<\gamma$: 
+\begin{enumerate-(a)} 
+\item 
+\label{tau is the sup of Pi1-definable ordinals: condition 1} 
+$\forall w\ \varphi(\alpha,\beta,w)$. 
+\item 
+\label{tau is the sup of Pi1-definable ordinals: condition 2} 
+$(\alpha, \beta)$ is, in the lexicographic ordering, the least pair $(\bar{\alpha}, \bar{\beta})$ with $\bar{\alpha}, \bar{\beta}<\gamma$ and $L_\gamma\models \forall w\ \varphi(\bar{\alpha},\bar{\beta},w)$. 
+\item 
+\label{tau is the sup of Pi1-definable ordinals: condition 3} 
+$\gamma$ is the least $\bar{\gamma}>\alpha,\beta$ such that \ref{tau is the sup of Pi1-definable ordinals: condition 2} holds for $\bar{\gamma}$ in place of $\gamma$. 
+\end{enumerate-(a)} 
+Note that \ref{tau is the sup of Pi1-definable ordinals: condition 1} determines $\alpha$ uniquely. 
+Given $\alpha$, \ref{tau is the sup of Pi1-definable ordinals: condition 2} and \ref{tau is the sup of Pi1-definable ordinals: condition 3} determine $\beta$ and $\gamma$ uniquely. 
+Let $\pi\colon \omega_{1}\times \omega_{1}\rightarrow \omega_{1}$ denote G\"odel's pairing function and $\eta^*=\pi(\alpha^*,\gamma^*)\geq\alpha^*$. 
+Since $\pi$ is $\Delta_1^{L_{\omega_1}}$-definable, $\eta^*$ is $\Pi_1^{L_{\omega_1}}$-definable as required. 
+}

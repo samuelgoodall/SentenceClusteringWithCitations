@@ -1,0 +1,1252 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearemptydoublepage
+\chapter{Quantum Uncertainty Relations} \label{chap:uncertrelations} 
+%% \mycitation
+%% {Never was so much owed by so many to so few}
+%% {Winston S.\ Churchill, House of Commons, August 20, 1940.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Quantum \index{uncertainty relation }uncertainty relations are the
+fundamental tool for the security analysis of protocols in the
+\index{bounded-quantum-storage model}bonded-quantum-storage model
+presented later in this thesis. We start off with some preliminary
+tools in Section~\ref{uncert:sec:prelim} and proceed to the history of
+uncertainty relations in Section~\ref{sec:uncerthistory}. Then, we
+derive new high-order entropic uncertainty relations for two
+(Section~\ref{sec:twounbiasedbases}) and more
+(Section~\ref{sec:moreunbiasedbases}) mutually unbiased bases. In the
+last Section~\ref{sec:morerelation}, we investigate the situation
+where for each qubit, a basis is picked independently at random from a
+set of bases.
+
+The results in this chapter are based on joint work with Damg{\aa}rd,
+Fehr, Salvail and Renner which appeared in \cite{DFSS08journal,DFRSS07}.
+%% In this chapter, we prove a general uncertainty result and derive from that a
+%% corollary that plays the crucial role in the security proof of our protocols.
+%% The uncertainty result concerns the situation where the sender holds an
+%% arbitrary quantum register of $n$ qubits. He may measure them in either the
+%% $+$ or the $\times$ basis. We are interested in the distribution of
+%% both these measurement results, and we claim that they cannot
+%% \emph{both} be ``very far from uniform''.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preliminaries} \label{uncert:sec:prelim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Operators and Norms} \label{sec:norms}
+For a linear operator $A$ on the complex Hilbert space $\cH$, we
+define the \emph{\index{operator norm}operator norm}
+\[
+\| A \| \assign \sup_{\braket{x}{x}=1} \|Ax\|
+\]
+for the \index{Euclidian norm}Euclidian norm $\|x\| \assign \sqrt{\braket{x}{x}}$ of the vector $\ket{x} \in \cH$. When $A$
+is \index{Hermitian}Hermitian, i.e.~the complex conjugate transpose $H^*$ and $H$ coincide, we have
+\[
+\| A \| = \lambda_{\max}(A) \assign \max\{|\lambda_j| : \lambda_j
+  \mbox{ an eigenvalue of } A \}.
+\]
+From an equivalent definition of the norm $\|A\|=
+\!\!\!\sup\limits_{\braket{y}{y}=\braket{x}{x}=1}
+\!\!\!|\bra{y}A\ket{x}|$, it is easy to see that $\|A^*\|=\|A\|$. For
+two Hermitian matrices $A$ and $B$, we have that $\| AB \| =
+\|(AB)^*\|=\|B^*A^*\|=\|BA\|$.  The operator norm is \emph{unitarily
+  invariant}, i.e. for all unitary $U,V$, $\|A\|=\|UAV\|$ holds. It
+is easy to show that
+\[ \left\| \begin{pmatrix} A & 0 \\ 0 & B \end{pmatrix} \right\| =\max\left\{\|A\|,\|B\|\right\}.
+\]
+
+\begin{lemma} \label{lem:ineq}
+Let $X$, $Y$ be any two $n \times n$ matrices such that the products $XY$ and $YX$
+are Hermitian. Then, we have
+\[ \|XY\| = \|YX\| \] 
+\end{lemma}
+\begin{proof}
+For any two $n \times n$ matrices $X$ and $Y$, $XY$ and $YX$ have the
+same eigenvalues, see e.g.\ \cite[Exercise I.3.7]{Bhatia97}. Therefore,
+$\| XY \| = \lambda_{\max}(XY) = \lambda_{\max}(YX) = \|YX\|$.
+\end{proof}
+                                
+A linear operator $P$ such that $P^2=P$ and $P^*=P$ is called an
+\emph{\index{orthogonal projector}orthogonal projector}.
+\index{projector!orthogonal|see {orthogonal projector}}
+\begin{proposition} \label{prop:norm2}
+Let $A$ and $B$ be two orthogonal projectors. Then it holds that $\|A+B\| \leq 1 + \|AB\|$.
+\end{proposition}
+\begin{proof}
+We adapt a technique by Kittaneh \cite{Kittaneh97} to
+our case. Define two $2 \times 2$-\index{block matrix}block matrices $X$ and $Y$ as follows
+\[
+X \assign \begin{pmatrix} A & B \\ 0 & 0 \end{pmatrix}
+\quad \mbox{ and } \quad
+Y \assign \begin{pmatrix} A & 0 \\ B & 0 \end{pmatrix} \, .
+\]
+Using $A^2=A$ and $B^2=B$, we compute
+\[
+XY \assign \begin{pmatrix} A+B & 0 \\ 0 & 0 \end{pmatrix}
+\mbox{ and }
+YX \assign \begin{pmatrix} A & AB \\ BA & B \end{pmatrix}
+= \begin{pmatrix}  A & 0 \\ 0 & B \end{pmatrix}
++
+\begin{pmatrix} 0 & AB \\ BA & 0 \end{pmatrix} \, .
+\]
+As $A$ and $B$ are \index{Hermitian}Hermitian, so are $A+B$, $AB$, $BA$, $XY$ and $YX$ as well.
+We use Lemma~\ref{lem:ineq} and the triangle inequality to obtain
+\[
+\left\| \begin{pmatrix} A+B & 0 \\ 0 & 0 \end{pmatrix} \right\| 
+= \left\| \begin{pmatrix} A & AB \\ BA & B \end{pmatrix} \right\| 
+\leq \left\| \begin{pmatrix} A & 0 \\ 0 & B \end{pmatrix}  \right\| 
+  + \left\| \begin{pmatrix} 0 & AB \\ BA & 0 \end{pmatrix} \right\|.
+\]
+Using the unitary invariance of the operator norm to permute the
+columns in the rightmost matrix and the facts that $\|A\|=\|B\|=1$ as
+well as $\|AB\|=\|BA\|$, we conclude that
+\[
+\| A+B \| \leq 1 + \|AB\|.
+\]
+\end{proof}
+
+A nice feature of this block-matrix technique is that it generalizes
+easily to more projectors.
+\begin{proposition} \label{prop:morebases}
+For orthogonal projectors $A_0, A_1, A_2, \ldots, A_M$, it holds that 
+\begin{equation} \label{eq:multiproj} 
+\left\| \sum_{i=0}^M A_i \right\| \leq 1 + M \cdot \max_{0\leq i< j
+  \leq M}
+\|A_iA_j\|.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Defining
+\[
+X \assign \begin{pmatrix} A_0 & A_1 & \cdots & A_M
+    \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots& & \vdots \\ 0 & 0 &
+    \cdots & 0\end{pmatrix}
+\quad \mbox{ and } \quad
+Y \assign \begin{pmatrix} A_0 & 0 & \cdots & 0 \\
+    A_1 & 0 & \cdots & 0 \\  \vdots & \vdots& & \vdots \\ A_M & 0 & \cdots & 0 \end{pmatrix}
+\]
+yields
+\begin{align*}
+XY &= \begin{pmatrix} A_0 +A_1 + \ldots + A_M & 0 & \cdots & 0
+    \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots& & \vdots \\ 0 & 0 &
+    \cdots & 0\end{pmatrix} \quad \mbox{ and}\\
+YX &= \begin{pmatrix} A_0 & A_0 A_1 & \cdots &
+    A_0 A_M \\  A_1 A_0 & A_1 & \cdots & A_1 A_M \\  \vdots & \vdots&
+    \ddots& \vdots \\ A_M A_0 & A_M A_1 & \cdots & A_M \end{pmatrix}
+\end{align*}
+The matrix $YX$ can be additively decomposed into $M+1$ matrices
+according to the following pattern
+\[
+YX= \begin{pmatrix} * &  &  &
+     & \\   & * & &  &   \\   &  & \ddots & &  \\  &  & & * &  \\
+    &  &  & & * \end{pmatrix}
++ \begin{pmatrix} 0 & * &  &
+     & \\   & 0 & &  &   \\   &  & \ddots & \ddots
+    &  \\  &  & & 0 & * \\
+    * &  &  & & 0 \end{pmatrix}
++\;\ldots\;
++ \begin{pmatrix} 0 & &  &
+     & * \\  * & 0 & &  &   \\   &\ddots  & \! \ddots &  &  \\  
+    &  & & 0 &  \\
+    &  &  & * & 0 \end{pmatrix}
+\]
+where the asterisk stand for entries of $YX$ and for $i=0,\ldots,M$
+the $i$th asterisk-pattern after the diagonal pattern is obtained by
+$i$ cyclic shifts of the columns of the diagonal pattern. Entries
+without asterisk are zero.
+
+As in the proof of Proposition~\ref{prop:norm2}, $XY$ and
+$YX$ are \index{Hermitian}Hermitian and we use Lemma~\ref{lem:ineq}, the triangle
+inequality, the unitary invariance of the operator norm and the facts
+that for all $i \neq j : \|A_i\|=1$, $\|A_i A_j\|=\|A_j A_i\|$ to obtain the desired
+statement \eqref{eq:multiproj}.
+\end{proof}
+
+
+
+\subsection{Azuma's Inequality}\label{sec:Azuma}
+\index{Azuma's inequality} 
+As we will exclusively use the concentration result at the end of this
+section, we only give an informal definition of martingales. We refer
+to \cite{AS00} or \cite{MR95} for a more detailed treatment.
+\begin{definition} \index{martingale sequence} 
+  A sequence of real random variables $X_0, X_1, \ldots$ is a
+  martingale sequence, if for all $i=1,2,\ldots$, it holds $\E[X_i
+  | X_0, \ldots, X_{i-1} ] = X_{i-1}$.
+\end{definition}
+\begin{theorem}[Azuma's inequality \cite{Azuma67}] \label{thm:azuma}
+Let $X_0, X_1, \ldots$ be a martingale sequence such that for each
+$k$, $|X_k - X_{k-1}| \leq c_k$, where $c_k$ may depend on $k$. Then,
+for all $t \geq 0$ and any $\tau > 0$,
+\[ \Pr[ X_t - X_0  \geq \tau ] \leq \exp \left(
+  -\frac{\tau^2}{2 \sum_{k=1}^t c_k^2} \right) \, .
+\]
+\end{theorem}
+The theorem is often stated as two-sided bound with absolute values:
+\[ \Pr\big[ |X_t - X_0|  \geq \tau \big] \leq 2 \exp \left(
+  -\frac{\tau^2}{2 \sum_{k=1}^t c_k^2} \right),
+\]
+but the one-sided version fits our purposes better.
+
+\begin{definition} \index{martingale difference sequence}
+A sequence of real-valued random variables $R_1,\ldots,R_n$ is called
+a \emph{martingale difference sequence} if for every $i$ and every
+$r_1,\ldots,r_{i-1} \in \reals$: 
+\mbox{$
+\E[R_i | R_1\!=\!r_1,\ldots,R_{i-1}\!=\!r_{i-1}] =0
+$}.
+\end{definition}
+Note that for an arbitrary sequence of real random variables $S_0, S_1, \ldots
+\in \reals$, defining $R_n \assign \sum_{i=1}^n S_i - \E[S_i | S^{i-1}]$ (with $R_0 \assign 0$) yields
+a martingale difference sequence $R_0, R_1, \ldots$.
+
+The following lemma follows directly from Azuma's Theorem~\ref{thm:azuma}.
+\begin{corollary}\label{cor:azuma} \index{Azuma's inequality}
+Let $R_1, \ldots, R_n$ be a martingale difference sequence such that
+$|R_i| \leq c$ for every $1 \leq i \leq n$. Then, for any  $\lambda > 0$,
+\[ \Pr\left[ \sum_i R_i \geq \lambda n \right] \leq
+\exp{\bigl(-\frac{\lambda^2 n}{2 c^2}\bigr)}. \]
+\end{corollary}
+\begin{proof}
+Set $\tau \assign \lambda n$, $X_0 \assign 0$, and for $n \geq 1$, $X_n \assign
+\sum_{i=1}^n R_i$ in Theorem~\ref{thm:azuma}.
+\end{proof}
+
+\subsection{Mathematical Tools}
+The following two purely analytical lemmas will be used to bound some error terms.
+\begin{lemma} \label{lem:delta}
+  For any $0 < x < 1/e$ such that $y \assign x \log(1/x) < 1/4$,
+  it holds that $x > \frac{y}{4 \log(1/y)}$.
+\end{lemma}
+\begin{proof}
+  Define the function $x \mapsto f(x) = x \log(1/x)$. It holds that
+  $f'(x) = \frac{d}{dx}f(x) = \log(1/x)-\log e$, which shows that $f$
+  is bijective in the interval $(0,1/e)$, and thus the inverse
+  function $f^{-1}(y)$ is well defined for $y \in (0,\log(e)/e)$,
+  which contains the interval $(0,1/4)$. We are going to show that
+  $f^{-1}(y) > g(y)$ for all $y \in (0,1/4)$, where $g(y) = \frac{y}{4
+    \log(1/y)}$. Since both $f^{-1}(y)$ and $g(y)$ converge to 0 for
+  $y \rightarrow 0$, it suffices to show that $\frac{d}{dy} f^{-1}(y)
+  > \frac{d}{dy} g(y)$; respectively, we will compare their
+  reciprocals. For any $x \in (0,1/e)$ such that $y = f(x) = x
+  \log(1/x) < 1/4$
+$$
+\frac{1}{\frac{d}{dy} f^{-1}(y)} = f'(f^{-1}(y)) = \log(1/x)-\log(e)
+$$
+and
+$$
+\frac{d}{dy} g(y) = \frac{1}{4} \bigg( \frac{1}{\log(1/y)} + \frac{1}{\ln(2) \log(1/y)^2} \bigg)
+$$
+such that 
+\begin{align*}
+\frac{1}{\frac{d}{dy} g(y)} &= 4 \, \frac{\ln(2)\log(1/y)^2}{\ln(2) \log(1/y) + 1} 
+= 4 \, \frac{\log(1/y)}{1+\frac{1}{\ln(2) \log(1/y)}}\\
+& > 2 \log\Big(\frac{1}{y}\Big) 
+= 2 \log\Big(\frac{1}{x \log(1/x)}\Big) \\[0.7ex]
+&= 2\big(\log(1/x) - \log\log(1/x)\big)
+\end{align*} 
+where for the inequality we are using that $y < 1/4$ so that $\ln(2) \log(1/y) > 2\ln(2) = \ln(4) > 1$. 
+Defining the function
+$$
+h(z) \assign z - 2\log(z) + \log(e)
+$$
+and showing that $h(z) > 0$ for all $z>0$ finishes the proof, as then
+$$
+0 < h\big(\log(1/x)\big) \leq  \frac{1}{\frac{d}{dy} g(y)} - \frac{1}{\frac{d}{dy} f^{-1}(y)}
+$$
+which was to be shown. 
+For this last claim, note that $h(z) \rightarrow \infty$ for $z
+\rightarrow 0$ and for $z \rightarrow \infty$, and thus the global
+minimum is at $z_0$ with $h'(z_0) = 0$. $h'(z) = 1 - 2/(\ln(2)z)$ and
+thus $z_0 = 2/\ln(2) = 2\log(e)$, and hence the minimum of $h(z)$ equals
+% $h(z_0) = 3 \log(e) - 2\log\big(\frac{2}{\ln(2)}\big)$
+$h(z_0) = 3 \log(e) - 2\log\big(2\log(e)\big)$, which turns out to be positive. 
+\end{proof}
+
+\begin{lemma} \label{lem:epsilon}
+ For any $0 < x < 1/4$, it holds that $\exp(-\frac{x^2 }{32
+ (2-\log(x))^2}) < 2^{-x^4/32}$ .
+\end{lemma}
+\begin{proof}
+  Note that $\exp(-\frac{x^2 }{32(2-\log(x))^2}) = 2^{-
+    \frac{\log(e)}{32} \frac{x^2}{(2-\log(x))^2}}$. Therefore, it
+  suffices to show that $x^4 \leq \frac{x^2}{(2-\log(x))^2}$ or
+  equivalently that the function $x \mapsto f(x) \assign x^2
+  (2-\log(x))^2$ is smaller than 1 for $0<x<1/4$. It holds that
+  $f(0)=0$ and $f(1/4)=1$ and it is easy to see that $f$ is a
+  continuous increasing function, e.g. by verifying that for the first
+  derivative
+\[ \frac{d}{dx}f(x)=2x \left(2-\log(x) \right) \left(2-\log(x) - \frac{1}{\ln(2)} \right) 
+    >0  \] holds for $0<x<1/4$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{History and Previous Work} \label{sec:uncerthistory}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mutually Unbiased Bases}
+\index{mutually unbiased bases}
+\begin{definition}[Mutually Unbiased Bases (MUBs)]
+Two orthonormal bases $\Ba{0} \assign \set{\ket{a_i}}_{i=1}^N$ and $\Ba{1}
+  \assign \set{\ket{b_j}}_{j=1}^N$ of the complex Hilbert space
+  $\cH_N$ of dimension $N\assign 2^n$ are called \emph{mutually unbiased} if
+\[ \forall i, j \in \set{1, \ldots, N} : \left|
+  \braket{a_i}{b_j} \right| = \frac{1}{\sqrt{N}}=2^{-n/2}.
+\]
+More $\Ba{0}, \Ba{1}, \ldots, \Ba{M}$ bases of this space
+$\cH_N$ are called \emph{mutually unbiased}, if every pair of
+them is mutually unbiased.
+\end{definition}
+
+Wiesner showed in 1970 in one of the first articles about quantum
+cryptography \cite{Wiesner83} that there are at least $m$ mutually
+unbiased bases in a Hilbert space of dimension $2^{(m-1)!/2}$. Later,
+optimal constructions of $N+1$ mutually unbiased bases in a Hilbert
+space of dimension $N$ were shown by Ivanovi\'c when $N$ is prime
+\cite{Ivanovic81} and by Wootters and Fields for $N$ a prime power
+\cite{WF89} (in particular, for $N=2^n$ in the case of $n$ qubits). A
+nice construction based on the \index{stabilizer formalism}stabilizer
+formalism can be found in
+the article by Lawrence, Brukner, and Zeilinger \cite{LBZ02}. It
+turned out to be an intriguing question to determine the maximal
+number of mutually unbiased bases in other dimensions, already the
+case $N=6$ is still open \cite{Englert03}.
+
+For a density matrix $\rho$ describing the state of $n$ qubits, let
+$Q_\rho^0(\cdot), Q_\rho^1(\cdot), \ldots, Q_\rho^M(\cdot)$ be the
+probability distributions over $n$-bit strings when measuring $\rho$
+in bases $\Ba{0}, \Ba{1}, \ldots, \Ba{M}$, respectively. For instance,
+for basis $\Ba{0} = \set{\ket{a_i}}_{i=1}^N$ and basis $\Ba{1}
+\set{\ket{b_j}}_{j=1}^N$, we have $Q_\rho^0(i) =
+\bra{a_i}\rho\ket{a_i}$ and $Q_\rho^1(j) = \bra{b_j}\rho\ket{b_j}$. We
+leave out the state $\rho$ in the subscript when it is clear from the
+context.
+
+\subsection{Uncertainty Relations Using Shannon Entropy}
+\index{uncertainty relation|(}
+The history of uncertainty relations starts with Heisenberg who showed
+that the outcomes of two non-commuting observables applied to a
+quantum state are not easy to predict simultaneously
+\cite{Heisenberg27}. However, Heisenberg only speaks about the
+variance of the measurement results, and his result was shown to have
+several shortcomings by Deutsch \cite{Deutsch83} and Hilgevood and Uffink
+\cite{HU88}. More general forms of uncertainty relations were proposed
+by Bialynicki-Birula and Mycielski in \cite{BM75} and by Deutsch
+\cite{Deutsch83} to resolve these problems.  The new relations were
+called {\em entropic uncertainty relations}, because they are
+expressed using \index{entropy!Shannon}Shannon entropy instead of the statistical variance.
+
+For mutually unbiased bases, \index{Deutsch's relation}Deutsch's relation reads
+\[
+\H(Q^0) + \H(Q^1) \geq -2 \log{ \frac12 (1+\frac{1}{\sqrt{N}}) }.
+\]
+A much stronger bound was first conjectured by Kraus~\cite{Kraus87} and later proved
+by \index{Maassen and Uffink's relation}Maassen and Uffink~\cite{MU88}
+\begin{equation} \label{eq:maassenuffink}
+\H(Q^0) + \H(Q^1) \geq \log{N}=n. 
+\end{equation}
+Intuitively, these bounds assure that if you know the outcome of
+measuring $\rho$ in basis $\Ba{0}$ pretty well, you have large
+uncertainty when measuring in the other basis $\Ba{1}$. 
+
+Note that for entropic bounds using \emph{Shannon entropy}, it is
+sufficient to state them for pure states. They then automatically hold
+for mixed state by \index{concave function}concavity.
+\begin{lemma}
+  If $\H(Q_{\ket{\varphi}}^0) + \H(Q_{\ket{\varphi}}^1) \geq k$ holds
+  for all pure states $\ket{\varphi} \in \cH$, then $\H(Q_{\rho}^0) +
+  \H(Q_{\rho}^1) \geq k$ holds for all (possibly mixed) states $\rho \in \dens{\cH}$.
+\end{lemma}
+\begin{proof}
+Let $\rho=\sum_x \lambda_x \proj{\varphi_x}$ the spectral composition
+of a mixed state. We then have for $i=0,1$ that $Q_{\rho}^i=\sum_x
+\lambda_x Q_{\ket{\varphi_x}}^i$ and therefore by concavity of the
+Shannon entropy (Lemma~\ref{lem:concavity})
+\[
+\H(Q_{\rho}^0) + \H(Q_{\rho}^1) \geq \sum_x \lambda_x \left( \H(Q_{\ket{\varphi_x}}^0)
++ \H(Q_{\ket{\varphi_x}}^1) \right) \geq k.\]
+\end{proof}
+
+
+Although a bound on Shannon \index{entropy!Shannon}entropy can be
+helpful in some cases, it is usually not good enough in cryptographic
+applications.  The main tool to reduce the adversary's
+information---\index{privacy amplification}privacy amplification by two-universal
+hashing---requires a bound on the adversary's min-\index{entropy!min-}entropy (in fact
+collision entropy), see Section~\ref{sec:pa}. As $H(Q) \geq
+H_\alpha(Q)$ for $\alpha > 1$, higher-order entropic bounds are
+generally weaker, but imply bounds for Shannon entropy as well.
+
+\subsection{Higher-Order Entropic Uncertainty Relations}
+Different results are known for
+\emph{complete sets} of $N+1$ mutually unbiased bases of
+$\cH_N$. All of them are based on the following surprising
+geometrical result by Larsen.
+\begin{theorem}[\cite{Larsen90}] \label{thm:larsen}
+ Let $Q_\rho^0, \ldots, Q_\rho^N$ be the $N+1$ distributions obtained by
+ measuring state $\rho$ in mutually unbiased bases $\Ba{0},
+ \ldots, \Ba{N}$ of the Hilbert space $\cH_N$. Then, 
+ \begin{equation} \label{eq:larsen}
+    \sum_{i=0}^{N} \pi_2(Q_\rho^i) = 1 + \tr(\rho^2),
+  \end{equation}
+  where $\pi_2(Q)=\sum_x Q(x)^2$ denotes the \index{collision probability}
+collision probability of a distribution $Q$ (cf.
+  Definition~\ref{def:ordersum}).
+\end{theorem}
+
+For a pure state $\rho = \proj{\psi}$, $\tr(\rho^2)=1$ holds and the
+right hand side of~\eqref{eq:larsen} equals 2. In this case, using
+that $x \mapsto -\log(x)$ is a convex function,
+S{\'a}nchez-Ruiz~\cite{Ruiz95} applies \index{Jensen's inequality}Jensen's inequality
+(Lemma~\ref{lem:jensen}) to derive the following lower-bound on the
+sum of the collision entropies
+\begin{align*}
+  \sum_{i=0}^N \H_2(Q^i) &= \sum_{i=0}^N -\log(\pi_2(Q^i))\\
+&\geq -(N+1) \log\left(\frac{\sum_{i=0}^N \pi_2(Q^i)}{N+1}\right) = (N+1)
+  \log \left( \frac{N+1}{2} \right).
+\end{align*}
+Because of the lack of convexity of higher-order R\'enyi entropy, we
+cannot immediately extend an uncertainty relation for pure states to
+mixed states. On the other hand, the following lemma shows that
+uncertainty relations based on upper bounds of high-order \emph{probability
+sums} for pure states also hold for mixed states and therefore
+translate to entropy lower bounds for mixed states. 
+\begin{lemma} \label{lem:sumbound}
+Let $\alpha \in (1,\infty]$. If $\sum_{i=0}^M
+\pi_\alpha(Q^i_{\ket{\varphi}}) \leq c$ for all pure states
+$\ket{\varphi}$, then for all mixed states $\rho$,
+$$\sum_{i=0}^M \H_\alpha(Q^i_\rho) \geq
+(M+1) \log\left(\frac{M+1}{c} \right).$$
+Equality holds for a state $\rho$ for which
+$\pi_\alpha(Q^i_\rho)=\frac{c}{M+1}$ for all $i$.
+\end{lemma}
+\begin{proof}
+As $x \mapsto x^{\alpha}$ is convex for $\alpha >1$,
+$\pi_\alpha(\cdot)$ is a convex functional. Therefore, for a mixed state
+$\rho = \sum_x \lambda_x \proj{\varphi_x}$, we have $Q^i_\rho=\sum_x
+\lambda_x Q^i_{\ket{\varphi_x}}$ and
+\[
+\sum_{i=0}^M \pi_{\alpha}(Q^i_{\rho}) \leq \sum_{i=0}^M \sum_x
+\lambda_x \pi_\alpha(Q^i_{\ket{\varphi_x}}) \leq \sum_x \lambda_x
+\sum_{i=0}^M \pi_\alpha(Q^i_{\ket{\varphi_x}}) \leq c.
+\]
+Just as above follows by \index{Jensen's inequality}Jensen's
+ inequality (Lemma~\ref{lem:jensen}) that
+\begin{align*}
+  \sum_{i=0}^M \H_\alpha(Q_\rho^i) &= \sum_{i=0}^M
+ -\log(\pi_\alpha(Q^i_\rho))\\
+&\geq -(M+1)  \log\left(\frac{\sum_{i=0}^M \pi_\alpha(Q^i_\rho)}{M+1}\right) \geq (M+1)
+  \log \left( \frac{M+1}{c} \right).
+\end{align*}
+Jensen's inequality is tight if the values $\pi_\alpha(Q^i_\rho)$ are
+all equal.
+\end{proof}
+
+For incomplete sets of bases $\Ba{0},\ldots,\Ba{M}$ with $1 \leq M
+\leq N$, the current state-of-the-art bound was independently obtained
+by Damg{\aa}rd, Salvail and Pedersen~\cite{DPS04} and
+Azarchs~\cite{Azarchs04} by subtracting the minimal amount of
+collision probability ($1/N$) in the bases not included in the sum:
+\begin{equation}
+\sum_{i=0}^{M} \pi_2(Q^i_{\ket{\varphi}}) \leq 2 - \frac{(N + 1 - (M+1))}{N} 
+  = \frac{N + M}{N}. \label{eq:sumcollision}
+\end{equation}
+By Lemma~\ref{lem:sumbound}, this yields
+\begin{equation}
+\sum_{i=0}^{M} \H_2(Q^i_\rho) \geq (M+1) \log \left( \frac{N (M+1)}{N+M} \right).    
+\end{equation}
+
+As mentioned above, all lower bounds on the collision entropy from
+this section imply bounds on the Shannon \index{entropy!min-}
+entropy because $H(Q) \geq H_2(Q)$, but do not tell us anything about
+the min-entropy $H_\infty(Q)$.  In the rest of this chapter, we derive
+entropic uncertainty relations involving \emph{min-entropy}.
+
+Uncertainty relations in terms of R\'enyi entropy have also been studied in a
+different context by Bialynicki-Birula \cite{Bialynicki06}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Two Mutually Unbiased Bases}\label{sec:twounbiasedbases}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section, we consider the situation where a $n$-qubit state is
+measured in one out of two \index{mutually unbiased bases}mutually unbiased bases of
+$\cH_{2^n}$. Without loss of generality, we assume these two bases to
+be the $n$-fold tensor product of the computational basis $+^{\otimes
+  n}$ and of the diagonal basis $\times^{\otimes n}$, in this section
+simply called $+$- and $\times$-basis. 
+%% Measuring a fixed quantum state
+%% $\rho$ in the $+$- and $\times$-basis results in the two probability distributions
+%% $Q^+$ and $Q^{\times}$.
+
+We show that two distributions obtained by measuring in two mutually
+unbiased bases cannot \emph{both} be ``very far from uniform''. One
+way to characterize non-uniformity of a distribution is to identify a
+subset of outcomes that has much higher probability than for a uniform
+choice. Intuitively, the theorem below says that such sets cannot be
+found simultaneously for \emph{both} measurements. 
+
+\index{uncertainty relation!two mutually unbiased bases}
+\begin{theorem} \label{thm:hadamard}
+  Let $\rho$ be an arbitrary state of $n$ qubits, and let $\Qp(\cdot)$ and
+  $\Qt(\cdot)$ be the respective distributions of the outcome when
+  $\rho$ is measured in the $+$-basis respectively the $\times$-basis.
+  Then, for any two sets $L^+ \subset \set{0,1}^n$ and $L^{\times}
+  \subset \set{0,1}^n$ it holds that
+\[ \Qp(L^+)+\Qt(L^{\times}) \leq 1 + 2^{-n/2} \sqrt{|L^+|
+   |L^{\times}|}. \]
+\end{theorem}
+\begin{proof}
+We define the two orthogonal projectors
+\[
+A \assign \sum_{x \in L^+} \proj{x} \quad \mbox{and} \quad B \assign \sum_{y \in
+  L^{\times}} H^{\otimes n}\proj{y}H^{\otimes n}.
+\]
+Using the spectral decomposition of $\rho = \sum_w \lambda_w
+\proj{\varphi_w}$, we have
+\begin{align*}
+\Qp(L^+)+\Qt(L^{\times}) &= \trace{A\rho}  + \trace{B\rho}\\
+ &= \sum_w
+\lambda_w \left( \trace{A \proj{\varphi_w}} + \trace{B
+    \proj{\varphi_w}} \right)\\
+&= \sum_w \lambda_w \left( \bra{\varphi_w}A\ket{\varphi_w} +
+  \bra{\varphi_w}B\ket{\varphi_w} \right)\\
+&= \sum_w \lambda_w \bra{\varphi_w}(A+B)\ket{\varphi_w}\\
+&\leq \|A+B\| \leq 1 + \|AB\|,
+\end{align*}
+where the last line is Proposition~\ref{prop:norm2}.
+%% For any pure state $\ket{\varphi}$ measured, we have
+%% \begin{equation} \label{eq:normbound}
+%% \Qp(L^+)+\Qt(L^{\times}) = \bra{\varphi}A\ket{\varphi} +
+%% \bra{\varphi}B\ket{\varphi} = \bra{\varphi}(A+B)\ket{\varphi} \leq \|A+B\|.
+%% \end{equation}
+%% As $\rho$ can be spectral-decomposed into $\rho = \sum_w \lambda_w
+%% \proj{\varphi_w}$, Inequality \eqref{eq:normbound} also holds for
+%% mixed states $\rho$ by convexity. 
+To conclude, we show that $\|AB\| \leq 2^{-n/2} \sqrt{|L^+|
+  |L^{\times}|}$. Note that an arbitrary state $\ket{\psi} = \sum_z
+\lambda_z H^{\otimes n} \ket{z}$ can be expressed with coordinates
+$\lambda_z$ in the diagonal basis. Then, with the sums over $x$ and $y$ understood as over $x \in L^+$ and $y \in L^{\times}$, respectively, 
+\begin{align*}
+\big\| AB &\ket{\psi} \big\| = \bigg\| \sum_{x,y} \proj{x} H^{\otimes
+  n}\proj{y}H^{\otimes n}  
+%\sum_{z} \lambda_z H^{\otimes n} \ket{z} 
+\ket{\psi}
+\bigg\| 
+= 2^{-n/2} \bigg\| \sum_{x,y} \ket{x}\bra{y}H^{\otimes n}  
+\ket{\psi}
+\bigg\|
+  \\
+% &= 2^{-n/2} \left\| \sum_{x \in L^+} \ket{x} \sum_{y \in L^{\times},z } \lambda_z \bra{y}
+%   H^{\otimes n} H^{\otimes n} \ket{z} \right\| \\
+&= 2^{-n/2} \bigg\| \sum_{x} \ket{x} \bigg\| \cdot \bigg|  \sum_{y} \lambda_y
+  \bigg| 
+\leq 2^{-n/2} \sqrt{|L^+|} \sum_{y} |\lambda_y| 
+\leq 2^{-n/2} \sqrt{|L^+| |L^{\times}|},
+\end{align*}
+The second equality holds since $\bra{x}H^{\otimes n}\ket{y}=2^{-n/2}$
+are mutually unbiased, the first inequality follows from Pythagoras
+and the triangle inequality, and the last inequality follows from
+\index{Cauchy-Schwarz}Cauchy-Schwarz (Lemma~\ref{lem:cauchyschwarz}).  
+This implies $\|AB\| \leq 2^{-n/2} \sqrt{|L^+|
+  |L^{\times}|}$ and finishes the proof.
+\end{proof}
+
+This theorem yields a meaningful bound as long as $|L^+| \cdot
+|L^{\times}| < 2^n$, for instance if $L^+$ and
+$L^{\times}$ both contain less than $2^{n/2}$ elements. The relation
+is tight in the sense that for the Hadamard-invariant state
+$$\ket{\varphi} = \left(\ket{0}^{\otimes n} + (H\ket{0})^{\otimes n}
+\right)/\sqrt{2(1+2^{-n/2})}$$
+and $L^+ = L^{\times} = \set{0^n}$, it
+is straightforward to verify that $\Qp(L^+) = \Qt(L^{\times}) = (1 +
+2^{-n/2})/2$ and therefore $\Qp(L^+) + \Qt(L^{\times}) = 1 +
+2^{-n/2}$. Another state that achieves equality (for $n$ even) is $\ket{\varphi} =
+\ket{0}^{\otimes n/2} \otimes ( H \ket{0} )^{\otimes n/2}$ with $L^+ =
+\set{0^{n/2}x | x \in \set{0,1}^{n/2}}$ and $L^{\times} = \set{x
+  0^{n/2} | x \in \set{0,1}^{n/2}}$. We get that $\Qp(L^+) =
+\Qt(L^{\times}) = 1$ and thus $\Qp(L^+) + \Qt(L^{\times}) = 2 = 1 + 2^{-n/2}
+\sqrt{2^n}$.
+
+If for $r \in
+\{+,\times \}$, $L^{r}$ contains only the $n$-bit string with the
+maximal probability of $Q^{r}$, we obtain a known tight relation (see (9) in \cite{MU88}).
+\begin{corollary}\label{cor:pmax}
+Let $q_{\infty}^+$ and $q_{\infty}^{\times}$ be the maximal
+probabilities of the distributions $Q^+$ and $Q^{\times}$ from
+above. It then holds that $q_{\infty}^+ + q_{\infty}^{\times} \leq
+1+c$ and therefore also $q_{\infty}^+ \cdot q_{\infty}^{\times} \leq
+\frac{1}{4} (1+c)^2$ where $c=2^{-n/2}$.
+\end{corollary}
+Equality is achieved for the same state $\ket{\varphi} = \left(\ket{0}^{\otimes n} + (H\ket{0})^{\otimes n}
+\right)/\sqrt{2(1+2^{-n/2})}$ as above. 
+
+Using Lemma~\ref{lem:sumbound}, the following corollary is obtained.
+\begin{corollary}\label{cor:pmax2} For all quantum states $\rho$ of
+  $n$ qubits, it holds that
+\[\H_\infty(Q_\rho^+) + \H_\infty(Q_\rho^\times) \geq 2 (1-\log(1+2^{-n/2})).
+\]
+There exists a quantum state achieving equality.
+\end{corollary}
+
+The following corollary plays the crucial role in the security proofs of
+protocols in the \index{bounded-quantum-storage model}
+bounded-quantum-storage model presented in the
+following chapters of this thesis.
+\begin{corollary} \label{cor:hadamard}
+  Let $R$ be a random variable over $\set{+,\times}$, and let $X$ be
+  the outcome when $\rho$ is measured in basis $R$, such that
+  $P_{X| R}(x|r) = Q^r(x)$. Then, for any $\lambda < \frac12$ there
+  exists $\sp>0$ and an event $\ev$ such that
+$$
+\P[\ev | R\!=\!+] + \P[\ev | R\!=\!\times] \geq 1 - 2^{-\sp n}
+$$
+and thus $\P[\ev] \geq \frac12 - 2^{-\sp n}$ in case $R$ is uniform, and such that 
+$$
+\H_{\infty}(X | R\!=\!r,\ev) \geq \lambda n 
+$$
+for $r \in \set{+,\times}$ with $P_{R| \ev}(r) > 0$. 
+\end{corollary}
+
+\begin{proof}
+Choose $\sp > 0$ such that $\lambda + 2 \sp < \frac12$, and 
+% Let $Q^+$ and $Q^{\times}$ be as in Theorem~\ref{thm:hadamard}, 
+define
+\begin{align*}
+S^+ \assign \big\{ x \in \nbit &: \Qp(x) \leq  2^{-(\lambda + \sp )n}
+\big\}\; \mbox{ and}\\
+S^{\times} \assign \big\{ z \in \nbit &: \Qt(z) \leq  2^{-(\lambda
+  +\sp )n} \big\}
+\end{align*} 
+to be the sets of strings with small probabilities and denote by $L^+
+\assign \ol{S}^+$ and $L^{\times} \assign \ol{S}^{\times}$ their
+complements\footnote{Here's the mnemonic: $S$ for the strings with
+  \emph{S}mall probabilities, $L$ for \emph{L}arge.}. Note that for
+all $x \in L^+$, we have that $\Qp(x) > 2^{-(\lambda + \sp )n}$ and
+therefore $|L^+| < 2^{(\lambda + \sp)n}$. Analogously, we have
+$|L^{\times}| < 2^{(\lambda + \sp)n}$. For ease of notation, we
+abbreviate the probabilities that strings with small probabilities
+occur with $\qp \assign \Qp(S^+)$ and $\qt \assign \Qt(S^{\times})$.
+It follows immediately from the choice of $\sp$ and
+Theorem~\ref{thm:hadamard} that $$\qp+\qt \geq 1 - 2^{-n/2} \cdot
+2^{(\lambda + \sp)n} \geq 1- 2^{-\sp n} \, .$$
+
+We define $\ev$ to be the event $X \in S^R$.  Then $\P[\ev|R\!=\!+]
+= \P[X\in S^+|R\!=\!+] = \qp$ and similarly $\P[\ev|R\!=\!\times] =
+\qt$, and thus the first claim follows immediately. Furthermore, if
+$R$ is uniformly distributed, then
+\begin{align*}
+\P[\ev] &= \P[\ev|R\!=\!+] P_R(+) + \P[\ev|R\!=\!\times] P_R(\times)\\
+ &= \frac{1}{2} (\qp + \qt) \geq \frac{1}{2} - 2^{-\sp n}/2 \geq
+ \frac{1}{2} - 2^{-\sp n}.
+\end{align*}
+Regarding the second claim, in case $R=+$, we have
+\begin{align*}
+  \H_{\infty}(X|R\!=\!+, \ev) 
+&= -\log\left(\max_{x \in S^+} \frac{\Qp(x)}{\qp}\right) \nonumber\\
+  &\geq -\log\left(\frac{2^{-(\lambda + \sp)n}}{\qp}\right) = \lambda
+  n + \sp n + \log(\qp). %\label{eq:Hinf}
+\end{align*}
+Thus, if $\qp \geq 2^{-\sp n}$ then indeed $\H_{\infty}(X|R\!=\!+, X
+\in S^+) \geq \lambda n$. The corresponding holds for the case $R =
+\times$.
+
+Finally, if $\qp < 2^{-\sp n}$ (or similarly \mbox{$\qt < 2^{-\sp
+    n}$}) then instead of the above, we define $\ev$ as the {\em
+  empty event} if $R = +$ and as the event $X \in S^{\times}$ if $R =
+\times$. It follows that $\P[\ev|R\!=\!+] = 0$ and
+$\P[\ev|R\!=\!\times] = \qt \geq 1 - 2^{-\sp n}$, as well as
+$\H_{\infty}(X|R\!=\!\times, \ev) = \H_{\infty}(X|R\!=\!\times, X \in
+S^{\times}) \geq \lambda n + \sp n + \log(\qt) \geq \lambda n$ (for
+$n$ large enough), both by the bound on $\qp+\qt$ and on~$\qp$,
+whereas $P_{R | \ev}(+) = 0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{More Mutually Unbiased Bases}
+\label{sec:moreunbiasedbases}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section, we generalize the uncertainty relation derived in
+Section~\ref{sec:twounbiasedbases} to more than two mutually unbiased
+bases. Such uncertainty relations over more than two, but not all mutually
+unbiased bases in terms of  min-entropy may be of independent
+interest, see the discussion at the end of Section~\ref{sec:uncerthistory}.
+
+\index{uncertainty relation!more mutually unbiased bases}
+\begin{theorem} \label{thm:mub}
+  Let the density matrix $\rho$ describe the state of $n$ qubits
+  and let $\Ba{0}, \Ba{1}, \ldots, \Ba{M}$ be mutually
+  unbiased bases of $\cH_{2^n}$. Let $Q^0(\cdot), Q^1(\cdot), \ldots,
+  Q^M(\cdot)$ be the distributions of the outcome when $\rho$ is
+  measured in bases $\Ba{0}, \Ba{1}, \ldots, \Ba{M}$, respectively.
+%  Let $\H_{\infty}^i$ be the min-entropies of the distributions $Q^i$.
+  Then, for any sets $L^0, L^1, \ldots, L^M \subset \nbit$, it holds that
+\begin{align*}
+\sum_{i=0}^M& Q^i(L^i)
+\leq \: 1 + M \cdot 2^{-n/2} \max_{0 \leq i<j \leq M} \sqrt{|L^i| |L^j|}.
+\end{align*}
+\end{theorem}
+\begin{proof}
+  Except of using Proposition~\ref{prop:morebases} instead of
+  Proposition~\ref{prop:norm2}, the proof is analogous to the one of
+  Theorem~\ref{thm:hadamard}.
+\end{proof}
+
+As in Corollary~\ref{cor:pmax2}, we derive an uncertainty relation about
+the sum of the min-entropies of up to $2^{n/2}$ distributions.
+\begin{corollary} \label{cor:generalhmax}
+  For an $\varepsilon>0$, let $0< M < 2^{\frac{n}{2}-\varepsilon n}$.
+  For $i=0,\ldots,M$, let $\H_{\infty}(Q^i)$ be the min-entropies of the
+  distributions $Q^i$ from the theorem above. Then,
+\[ \sum_{i=0}^M \H_{\infty}(Q^i) \geq (M+1) \big(\log (M+1) - \negl{n}\big). \]
+\end{corollary}
+\begin{proof}
+  For $i=0,\ldots,M$, we denote by $q_{\infty}^i$ the maximal
+  probability of $Q^i$ and let $L^i$ be the set containing only the
+  $n$-bit string $x$ with this maximal probability $q_{\infty}^i$.
+  Theorem~\ref{thm:mub} together with the assumption about $M$ assures
+  $\sum_{i=0}^M q_{\infty}^i \leq 1 + \negl{n}$. By
+  Lemma~\ref{lem:sumbound} follows
+\begin{align*}
+\sum_{i=0}^M \H_{\infty}(Q^i) &\geq (M+1) \big(\log(M+1) - \negl{n}\big).
+\end{align*}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Independent Bases for Each Subsystem} \label{sec:morerelation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+So far, we have focused on the case of an $n$-qubit state $\rho \in
+\dens{\cH_{2^n}}$ measured in two or more mutually unbiased bases of
+$\cH_{2^n}$. In this section, we investigate the case when each of
+the $n$ qubits is measured in an individual basis, picked
+independently and uniformly from $\set{+,\times}$, i.e. $\rho$ is
+measured in basis \mbox{$\Theta \in_R \set{+,\times}^n$}.
+
+More generally, our result holds for a state $\rho \in \cH_d^{\otimes
+  n}$ of $n$ quantum systems---each $d$-dimensional---which are
+measured in an individual basis, picked independently and uniformly
+from a set $\cB$ of basis of $\cH_d$, see Theorem~\ref{thm:genrel}.
+
+\subsection{A Classical Tool}
+We start our derivation with a classical information-theoretic tool
+which itself might be of independent interest.
+\begin{theorem}\label{thm:hmin}
+Let $Z_1,\ldots, Z_n$ be $n$ random variables (not necessarily
+independent) over alphabet $\cZ$. If there exists a real number
+$h>0$ such that for all $1\leq i\leq n$ and $z_1,\ldots, z_{i-1} \in \cZ$:
+\begin{equation*} %\label{eq:entropyassumption}
+\H(Z_i | Z_1=z_1,\ldots,Z_{i-1}=z_{i-1})\geq h,
+\end{equation*}
+then for any $0<\lambda<\frac12$ 
+%$0<\lambda<\frac12$ with $2 \lambda < h$,
+\[
+\hiee{Z_1,\ldots,Z_n} \geq (h-2\lambda) n,
+\]
+%% where $\varepsilon = \exp\left(-\frac{\lambda^6
+%%     n}{2 |\mathcal{Z}|^4}\right)$.
+where $\varepsilon =
+\exp{\bigl(-\frac{\lambda^2 n}{32\log(|\mathcal{Z}|/\lambda)^2}\bigr)}$.
+% $\varepsilon = \exp \left( - \frac{\lambda^2 n}{32 \left( \log^2
+%       |\mathcal Z| + \log^2(1/ \lambda) \right)} \right)$.
+\end{theorem}
+If the $Z_i$'s are independent and have Shannon
+\index{entropy!Shannon}entropy at least $h$,
+it is known (see Lemma~\ref{lem:asymptshannon}) that the smooth min-entropy of
+$Z_1,\ldots,Z_n$ is at least $n h$ for large enough~$n$. Informally,
+Theorem~\ref{thm:hmin} guarantees that when the independence-condition
+is relaxed to a lower bound on the Shannon entropy of $Z_i$ \emph{given
+  any previous history}, then we still have (almost) $n h$ bits of
+min-entropy except with negligible probability~$\varepsilon$. \index{entropy!min-}
+
+The proof idea is to use \index{Azuma's inequality}Azuma's inequality in the form of
+Corollary~\ref{cor:azuma} for cleverly chosen $R_i$'s. The main trick
+is that for a random variable $Z$ over $\cZ$, we can define another
+random variable $S \assign \log P_Z(Z)$ over $\reals$ with expected
+value $\E[S] = \sum_{z \in \cZ} P_Z(z) \cdot \log P_Z(z) = \H(Z)$
+equal to the Shannon entropy of $Z$, which allows us to make the
+connection with the assumption about the Shannon entropy.
+
+%% \begin{sketch}
+%%   The idea is to use Azuma's inequality in the form of
+%%   Lemma~\ref{lem:azuma} for cleverly chosen $R_i$'s.  For any $i$ we
+%%   write $\prei[i]{Z} \assign (Z_1,\ldots,Z_i)$ (with $Z^0$ being the
+%%   ``empty symbol"), and similarly for other sequences.  We want to
+%%   show that \smash{$\Pr\!\big[P_{\prei[n]{Z}}(\prei[n]{Z}) \geq
+%%     2^{-(h-2\lambda)n}\big] \leq \varepsilon$}.
+%% %% By Lemma~\ref{lemma:prob}, this then implies the claim. 
+%% By the definition of smooth min-entropy, this then implies the claim. 
+%% Note that
+%% $P_{\prei[n]{Z}}(\prei[n]{Z}) \geq 2^{-(h-2\lambda)n}$ is equivalent
+%% to
+%% \begin{equation*}
+%% \sum_{i=1}^n \Big( \log\bigl( P_{Z_i | \prei{Z}}(Z_i | \prei{Z})
+%% \bigr) + h \Big) \geq 2 \lambda n.
+%% \end{equation*}
+
+%% We set $S_i \assign \log P_{Z_i | \prei{Z}}(Z_i | \prei{Z})$.
+%% %Note that $S_1,\ldots,S_n \leq 0$. 
+%% For such a sequence of real-valued
+%% %negative 
+%% random variables $S_1,\ldots,S_n$, it is easy to verify that
+%% $R_1,\ldots,R_n$ where $R_i \assign S_i - \E[S_i | \prei{S}]$ form a
+%% martingale difference sequence. If the $|R_i|$ were bounded by $c$, we
+%% could use Lemma~\ref{lem:azuma} to conclude that
+%% \begin{equation*}
+%% \Pr\Biggl[\sum_{i=1}^n \Big(S_i - \E\big[S_i | \prei{S}\big]\Big) \geq
+%%   \lambda n\Biggr] \leq 
+%% \exp{\biggl(-\frac{\lambda^2 n}{2 c^2}\biggr)}.
+%% %e^{-\frac{\lambda^2 n}{2 c^2} }.
+%% \end{equation*}
+%% As by assumption $\E[S_i | \prei{S}] \leq -h$, this would give us a
+%% bound similar to what we want to show. In order to enforce a bound on
+%% $|R_i|$, the $S_i$ need to be truncated whenever $P_{Z_i |
+%%   \prei{Z}}(Z_i | \prei{Z})$ is smaller than some $\delta > 0$.  It
+%% is then a matter of choosing $\delta$ and $\varepsilon$ appropriately
+%% in order to finish the proof.  Details are given in 
+%% Appendix~\ref{app:proofhmin}.
+%% \end{sketch}
+\begin{proof}
+Recall that the superscript means $\prei[i]{Z} \assign (Z_1,\ldots,Z_i)$ for any $i \in
+\set{1,\ldots,n}$, and similarly for other sequences.  We want to show
+that $$\Pr\big[P_{\prei[n]{Z}}(\prei[n]{Z}) \geq
+  2^{-(h-2\lambda)n}\big] \leq \varepsilon$$ for $\varepsilon$ as
+claimed in Theorem~\ref{thm:hmin}.  This means that
+$P_{\prei[n]{Z}}(\prei[n]{z})$ is smaller than $2^{-(h-2\lambda)n}$
+except with probability at most $\varepsilon$ (over the choice of
+$\prei[n]{z}$), and therefore implies the claim
+\mbox{$H_{\infty}^{\varepsilon}(Z^n) \geq (h-2\lambda)n$}
+%by Lemma~\ref{lemma:prob}.  
+by the definition of smooth min-entropy from Section~\ref{sec:defsmoothrenyientropy}.
+Note that
+$P_{\prei[n]{Z}}(\prei[n]{Z}) \geq 2^{-(h-2\lambda)n}$ is equivalent to
+\begin{equation}\label{eq:bound1}
+  \sum_{i=1}^n \Big( \log\big( P_{Z_i | \prei{Z}}(Z_i | \prei{Z}) \big) + h \Big) \geq 2 \lambda n
+\end{equation}
+which is of suitable form to apply \index{Azuma's inequality}Azuma's
+ inequality (Corollary~\ref{cor:azuma}). 
+
+Consider first an arbitrary sequence $S_1,\ldots,S_n$ of real-valued
+random variables. We assume the $S_i$'s to be either all positive or
+all negative. Define a new sequence $R_1,\ldots,R_n$ of random
+variables by putting $R_i := S_i - \E[S_i | \prei{S}]$. It is
+straightforward to verify that $\E[R_i | \prei{R}] = 0$, i.e.,
+$R_1,\ldots,R_n$ forms a martingale difference sequence. Thus if for any $i$,
+$|S_i| \leq c$ for some $c$, and thus $|R_i| \leq c$,
+Azuma's inequality guarantees that
+\begin{equation}\label{eq:bound2}
+\Pr\left[\sum_{i=1}^n \Big(S_i - \E\big[S_i | \prei{S}\big]\Big) \geq \lambda n\right] \leq \exp\left(-\frac{\lambda^2 n}{2 c^2}\right) \, .
+\end{equation}
+We now put $S_i := \log P_{Z_i | \prei{Z}}(Z_i | \prei{Z})$ for
+$i=1,\ldots,n$. Note that $S_1,\ldots,S_n \leq 0$. It is easy to see that
+the bound on the conditional entropy of $Z_i$ from
+Theorem~\ref{thm:hmin} implies that $\E[S_i | \prei{S}] \leq -h$.  Indeed,
+for any $\prei{z} \in \cZ^{i-1}$, we have $\E\big[\log
+P_{Z_i | \prei{Z}}(Z_i | \prei{Z}) | \prei{Z}\!=\!\prei{z}\big] = -
+\H(Z_i | \prei{Z}\!=\!\prei{z}) \leq - h$, and thus for any subset $\ev$
+of $\cZ^{i-1}$, and in particular for the set of $\prei{z}$'s
+which map to a given $\prei{s}$, it holds that
+\begin{align} \nonumber
+\E\big[S_i | \prei{Z}\!\in\!\ev\big] &=
+\sum_{\prei{z} \in \ev}\!\! P_{\prei{Z} | \prei{Z}\in\ev}(\prei{z}) \cdot
+  \E\big[\log P_{Z_i | \prei{Z}}(Z_i | \prei{Z}) |
+  \prei{Z}\!=\!\prei{z}\big]\\
+ &\leq - h \, . \label{eq:bound3}
+\end{align}
+As a consequence, the bound on the probability of (\ref{eq:bound2}) in
+particular bounds the probability of the event (\ref{eq:bound1}), even
+with $\lambda n$ instead of $2 \lambda n$. A problem though is that we
+have no upper bound $c$ on the $|S_i|$'s.  Because of that, we now
+consider a modified sequence $\tilde{S}_1,\ldots,\tilde{S}_n$ defined
+by $\tilde{S}_i := \log P_{Z_i | \prei{Z}}(Z_i | \prei{Z})$ if
+$P_{Z_i | \prei{Z}}(Z_i | \prei{Z}) \geq \delta$ and
+$\tilde{S}_i := 0$ otherwise, where $\delta > 0$ will be determined
+later.  This gives us a bound like (\ref{eq:bound2}) but with an
+explicit $c$, namely $c = \log(1/\delta)$. Below, we will argue that
+$\E\big[\tilde{S}_i | \prei{\tilde{S}}\big]-\E\big[S_i |
+\prei{\tilde{S}}\big] \leq \lambda$ by the right choice of $\delta$;
+the claim then follows from observing that
+\begin{align*}
+\tilde{S}_i - \E\big[\tilde{S}_i | \prei{\tilde{S}}\big] &\geq S_i -
+\E\big[\tilde{S}_i | \prei{\tilde{S}}\big]\\ 
+&\geq S_i - \E\big[S_i | \prei{\tilde{S}}\big] - \lambda\\
+&\geq S_i + h - \lambda,
+\end{align*}
+where the last inequality follows from (\ref{eq:bound3}).  Regarding
+the claim $\E\big[\tilde{S}_i | \prei{\tilde{S}}\big]-\E\big[S_i
+| \prei{\tilde{S}}\big] \leq \lambda$, using a similar argument as
+for (\ref{eq:bound3}), it suffices to show that $\E\big[\tilde{S}_i
+| \prei{\tilde{Z}}\!=\!\prei{z}\big]-\E\big[S_i |
+\prei{\tilde{Z}}\!=\!\prei{z}\big] \leq \lambda$ for any $\prei{z}$:
+\begin{align*}
+\E&\big[\tilde{S}_i | \prei{\tilde{Z}}\!=\!\prei{z}\big]-
+\E\big[S_i | \prei{\tilde{Z}}\!=\!\prei{z}\big]\\
+%  &= -\hspace{-1.2cm} \sum_{z_i \atop P_{Z_i | \prei{Z}}(z_i | \prei{z}) <
+%    \delta} \hspace{-1.3cm} P_{Z_i | \prei{Z}}(z_i | \prei{z})
+%  \log(P_{Z_i | \prei{Z}}(z_i | \prei{z}))\\
+  &= - \sum_{z_i} P_{Z_i |\prei{Z}}(z_i | \prei{z})
+  \log(P_{Z_i | \prei{Z}}(z_i | \prei{z}))\\
+  &\leq |\mathcal{Z}| \delta \log ( 1/ \delta)
+\end{align*}
+where the summation is over all $z_i \in \cZ$ with $P_{Z_i | \prei{Z}}(z_i | \prei{z}) <
+    \delta$, and 
+where the inequality holds as long as $\delta \leq 1/e$, as can
+easily be verified. Thus, we let $0<\delta<1/e$ be such that
+$|\mathcal{Z}| \delta \log(1/\delta) = \lambda$.  Using the mathematical
+Lemma~\ref{lem:delta}, we have that $\delta > \frac{\lambda /
+  |\mathcal{Z}|}{4 \log{(|\mathcal{Z}| / \lambda})}$ and derive
+that $c^2 = \log(1/\delta)^2 = \lambda^2/(\delta|\cZ|)^2 < 16
+\log(|\mathcal{Z}|/\lambda)^2$, which gives us the claimed bound
+$\varepsilon$ on the probability.
+%% Using Lemma~\ref{lem:delta} below, we have that $\delta > \left( \lambda / |\mathcal{Z}| \right)^3$. Therefore, $c^2 = \log(1/\delta)^2 =
+%% \lambda^2/(\delta|\cZ|)^2 < \left( \frac{|\mathcal{Z}|}{\lambda} \right)^4$,
+%% which gives us the claimed bound $\varepsilon$ on the probability.
+\end{proof}
+
+\subsection{Quantum Uncertainty Relations}
+We now state and prove the new entropic uncertainty relation
+in its most general form. A special case will then be introduced
+(Corollary~\ref{cor:uncertainty})
+and used in the security analysis of the \OT-protocols we consider
+in Chapter~\ref{chap:12OT}. 
+\begin{definition}\label{def:aeub}
+  Let $\bset$ be a finite set of orthonormal bases in the $d$-dimensional
+  Hilbert space~$\cH_d$.  We call $h \geq 0$ an {\em average
+    entropic uncertainty bound} for $\bset$ if every state in $\cH_d$ satisfies $\frac{1}{|\bset|} \sum_{\vartheta \in \bset}\H(P_{\vartheta}) \geq h$, where $P_{\vartheta}$ is the
+  distribution obtained by measuring the state in basis $\vartheta$.
+\end{definition}
+\index{average entropic uncertainty bound}
+Note that by the convexity of the Shannon \index{entropy!Shannon}entropy $\H$, a lower bound
+for all \emph{pure} states in $\cH_d$ suffices to imply the bound
+for all (possibly mixed) states.
+
+\index{uncertainty relation!individual bases}
+\begin{theorem}\label{thm:genrel}
+  Let $\bset$ be a set of orthonormal bases in $\cH_d$ with an
+  average entropic uncertainty bound $h$, and let 
+  $\rho \in \dens{\cH^{\otimes n}_d}$ be an arbitrary quantum state.
+%$\ket{\psi}$ be an arbitrary %$n$-qubit 
+%quantum state in $\cH^{\otimes n}_d$.  
+Let $\Theta = (\Theta_1,\ldots,\Theta_n)$ be uniformly distributed
+over $\bset^n$ and let $X = (X_1,\ldots,X_n)$ be the outcome when
+measuring $\rho$ in basis $\Theta$, distributed over
+\mbox{$\set{0,\ldots, d-1}^n$}.  Then for any $0 < \lambda < \frac12$
+$$
+\hie{\varepsilon}{X | \Theta} \geq \left(h-
+  2\lambda \right)n 
+$$
+with 
+%$\varepsilon = e^{  - \big(\frac{\lambda^2}{32
+%    \left(\log{(|\bset|\cdot N/\lambda) \right)^2}\big)\, n}$ 
+$\varepsilon = \exp \!\left( - \frac{\lambda^2 n}{32
+    \left(\log(|\bset|\cdot d / \lambda) \right)^2} \right)$.
+\end{theorem}
+
+
+\begin{proof}
+Define $Z_i \assign (X_i,\Theta_i)$ and $\prei[i]{Z} \assign (Z_1,\ldots,Z_i)$. Let 
+$\prei[i-1]{z}\in \bset^{i-1}$ be arbitrary. Then
+\begin{align*} 
+\H(Z_i | \prei[i-1]{Z}\!=\!\prei[i-1]{z}) &= \H(X_i | \Theta_i, \prei[i-1]{Z}\!=\!\prei[i-1]{z})
++ \H(\Theta_i | \prei[i-1]{Z}\!=\!\prei[i-1]{z}) \geq h + \log{|\bset|},
+\end{align*}
+where the inequality follows from the fact that $\Theta_i$ is chosen
+uniformly at random and from the definition of $h$. Note that $h$
+lower bounds the average entropy for any system in $\cH_d$, 
+and thus in particular for the $i$th subsystem 
+of $\rho$, with all
+previous $d$-dimensional subsystems measured.  
+Theorem~\ref{thm:hmin} thus implies that $\hie{\varepsilon}{X \Theta} \geq (h+\log|{\cal B}| - 2\lambda) n$ for any $0 < \lambda < \frac12$ and for $\eps$ as claimed. We conclude that 
+\begin{align*}
+\hie{\varepsilon}{X\mid \Theta}
+&\geq \hie{\varepsilon}{X \Theta} - n\log|{\cal B}| \geq (h - 2 \lambda)n \enspace ,
+\end{align*}
+where the first inequality follows from the equality 
+$$
+P_{X\ev|\Theta}(x|\theta) = P_{X \Theta \ev}(x, \theta)/P_{\Theta}(\theta) = |{\cal B}|^n \cdot P_{X \Theta \ev}(x, \theta)
+$$
+for all $x$ and $\theta$ and any event $\ev$, and from the definition of (conditional) smooth entropy.
+\end{proof}
+
+% We use the chain rule for smooth
+% min-entropy (Lemma~\ref{lem:chain}) and Theorem~\ref{thm:hmin} to
+% conclude that,
+% \begin{align*}
+% \hie{\varepsilon+\varepsilon'}{X| \Theta}
+% &> \hie{\varepsilon}{Z} - \hmax(\Theta) -
+% \log{\left(\textstyle\frac{1}{\varepsilon'}\right)} \geq (h - 2 \lambda)n - \lambda'n ,
+% \end{align*}
+% for $\varepsilon$ and $\varepsilon'$ as claimed. 
+% \end{proof}
+
+For the special case where $\bset=\{+,\times\}$ is the set of BB84
+\index{BB84 coding scheme}bases, we can use the uncertainty relation of Maassen and
+Uffink~\cite{MU88} (see Equation~\eqref{eq:maassenuffink}) which, using our
+terminology, states that \index{Maassen and Uffink's relation}
+%Since the relation holds for an arbitrary one-qubit, it in particular
+%also holds for the state conditioned on the previous history.
+%Therefore, 
+$\bset$ has average entropic uncertainty bound $h =
+\frac12$.  Theorem~\ref{thm:genrel} together with
+Lemma~\ref{lem:epsilon} then immediately gives the
+following corollary.
+
+\index{uncertainty relation!individual bases}
+\begin{corollary}\label{cor:uncertainty}
+  Let $\rho \in \dens{\cH_2^{\otimes n}}$
+% $\ket{\psi} \in \cH_2^{\otimes n}$ 
+  be an arbitrary $n$-qubit quantum state. Let $\Theta =
+  (\Theta_1,\ldots,\Theta_n)$ be uniformly distributed over
+  $\set{+,\times}^n$ and $X = (X_1,\ldots,X_n)$ be the outcome
+  when measuring $\rho$ in basis $\Theta$. Then for any $0 <
+  \lambda < \frac{1}{4}$
+$$
+\hie{\varepsilon}{X | \Theta} \geq \left(\textstyle\frac{1}{2}
+  - 2\lambda \right)n 
+$$
+where $\varepsilon = 2^{-\frac{\lambda^4}{32}n }$.
+\end{corollary}
+
+Maassen and Uffink's relation being optimal means there exists a
+quantum state $\rho$|namely the product state of eigenstates of the
+subsystems, e.g.~$\rho=\proj{0}^{\otimes n}$|for which $\H(X |
+\Theta) = \frac{n}{2}$. On the other hand, we have shown that
+$(\frac12 - \lambda)n \leq \hiee{X | \Theta}$ for $\lambda>0$
+arbitrarily close to $0$. For the product state $\rho$, the $X$ are
+independent and we know from Lemma~\ref{lem:asymptshannon} that
+$\hiee{X | \Theta}$ approaches $\H(X | \Theta) = \frac{n}{2}$.
+It follows that the relation cannot be significantly improved even
+when considering R\'enyi entropy of order $1 < \alpha < \infty$. 
+
+Another tight corollary is obtained if we consider the set of
+measurements $\bset=\{+,\times,\circlearrowleft\}$ (see Section~\ref{sec:qit} 
+for the definition of the circular basis $\circlearrowleft$). In \cite{Ruiz93},
+S\'anchez-Ruiz shows that for this $\bset$, the average entropic
+uncertainty bound
+\begin{equation} \label{eq:hthreebases}
+h=\frac{2}{3}
+\end{equation}
+is optimal. It implies that
+$\hie{\varepsilon}{X| \Theta} \gtrsim \H(X| \Theta) =
+\frac{2n}{3}$ for negligible $\varepsilon$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Overall Average Entropic Uncertainty Bound}\label{sec:uncertbound}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{average entropic uncertainty bound!overall}
+In the this section, we compute the average uncertainty bound for the
+set of \emph{all bases} of a $d$-dimensional Hilbert space. Let
+$\cU(d)$ be the set of unitaries on $\cH_d$.  Moreover, let $d U$ be
+the normalized \index{Haar measure}Haar measure on $\cU(d)$, i.e.,
+\[
+  \int_{\cU(d)} f(V U) d U 
+= 
+  \int_{\cU(d)} f(U V) d U 
+= 
+  \int_{\cU(d)} f(U) d U \ ,
+\]
+for any $V \in \cU(d)$ and any integrable function $f$, and $\int_{\cU(d)} dU = 1$. (Note that the
+normalized Haar measure $d U$ exists and is unique.)
+
+\def\all{\text{\rm all}}
+
+Let $\{\omega_1, \ldots, \omega_d\}$ be a fixed orthonormal basis of
+$\cH_d$, and let $\bset_{\all} = \{\vartheta_U\}_{U \in \cU(d)}$ be the
+family of bases $\vartheta_U = \{U \omega_1, \ldots, U \omega_d\}$
+with $U \in \cU(d)$. The set $\bset_{\all}$ consist of {\em all}
+orthonormal basis of $\cH_d$. We generalize Definition~\ref{def:aeub},
+the average entropic uncertainty bound for a finite set of bases, to
+the {\em infinite} set $\bset_{\all}$.
+\begin{definition}
+We call $h_d$ an {\em overall average entropic uncertainty bound} in $\cH_d$ if every state in $\cH_d$ satisfies
+  \[
+     \int_{\cU(d)} \H(P_{\vartheta_U}) d U \geq h_d \ ,
+  \]
+  where $P_{\vartheta_U}$ is the distribution obtained by measuring the state in basis $\vartheta_U \in \bset_{\all} $. 
+  \end{definition}
+  \index{average entropic uncertainty bound!overall}
+
+\begin{proposition} \label{prop:comph} 
+For any positive integer $d$, 
+  \[
+  h_d = \left( \sum_{i=2}^d \frac{1}{i} \right) / \ln(2)
+  \]
+  is the overall average entropic uncertainty bound in $\cH_d$. It is
+  attained for any pure state in $\cH_d$.
+\end{proposition}
+The proposition follows immediately from Formula~(14) in~\cite{JRW94}
+for a pure state, i.e. $(\lambda_1,\ldots,\lambda_n)=(1,0,\ldots,0)$.
+The result was originally shown by S\'ykora~\cite{Sykora74} and by
+Jones~\cite{Jones91}, another proof can be found in the appendix of
+an article by Jozsa, Robb, and Wootters~\cite{JRW94}. An elementary
+proof suggested by Harremo{\"es} based on recent results by
+Harremo{\"e}s and Vignat~\cite{HV06} is given below.
+\begin{proof}
+  Let $\ket{\varphi}$ be a pure state in $\cH_d$. For the probability
+  distribution $P_{\vartheta_U}=(p_1,\ldots,p_d)$ holds $p_i =
+  |\bra{\varphi}U\ket{\omega_i}|^2$. We want to compute the integral
+\[ \int_{\cU(d)} -\sum_{i=1}^d p_i \log(p_i) \, d U =
+-\sum_{i=1}^d \int_{\cU(d)} |\bra{\varphi}U\ket{\omega_i}|^2
+\log(|\bra{\varphi}U\ket{\omega_i}|^2) \, d U.
+\]
+ Note that by the invariance of the \index{Haar measure}Haar measure, all summands on the
+ right-hand side are equal and it suffices to compute
+\begin{equation} \label{eq:summand}
+-d \int_{\cU(d)} |\bra{\varphi}U\ket{e_1}|^2
+ \log(|\bra{\varphi}U\ket{e_1}|^2) \, d U,
+\end{equation}
+where $\ket{e_1}$ is the first vector in the computational basis,
+i.e.~$|\bra{\varphi}U\ket{e_1}|^2$ is the length of the projection onto the first
+coordinate of $U^*\ket{\varphi}$.
+
+The Haar measure over $\cU(d)$ is the uniform distribution over the
+$d$-dimensional complex sphere which can be seen as the uniform
+distribution over the $2d$-dimensional real sphere $S_{2d} =
+\set{(X,Y) \in \mathbb{R}^{2d} | \sum_{i=1}^{2d} X_i^2 +Y_i^2= 1}$
+where the complex coordinates are given by
+$(X_1+iY_1,\ldots,X_d+iY_d)$. Setting $Z_i=X_i^2+Y_i^2$ and
+$Z=(Z_1,\ldots,Z_d)$ and using a result from \cite{HV06} about the
+projection of the uniform distribution over $S_{2d}$ to the first
+coordinate, we obtain that the density of $Z_1$ is
+$f(z)=(d-1)(1-z)^{d-2} dz$ for $z \in [0,1]$. Therefore,
+\eqref{eq:summand} equals
+\[ -d \int_0^1 z \log(z) \cdot (d-1)(1-z)^{d-2} dz = \left(
+\sum_{i=2}^d \frac{1}{i} \right) / \ln(2),
+\]
+where the evaluation of this integral follows from standard
+calculus. By convexity of the Shannon entropy, the bound also holds
+for mixed states and the claim follows.
+\end{proof}
+
+% \begin{proposition} \label{prop:comph} 
+% For any positive integer $d$ 
+%   \[
+%   h_d = \int_0^\infty \cdots \int_0^\infty \H\Bigl(\frac{(p_1, \ldots,
+%     p_d)}{\sum_i p_i} \Bigr) e^{-\sum_i p_i} d p_1 \cdots d p_d \ .
+%   \]
+%   is an overall average entropic uncertainty bound in $\cH_d$. 
+% \end{proposition}
+
+% The proof follows immediately from Lemma~\ref{lem:probunit} below,
+% which itself is based on the known fact that a uniform integration
+% over the set of all normalized vectors can be replaced by an
+% integration over the set of all vectors with respect to a Gaussian
+% distribution over the coordinates (Lemma~\ref{lem:compunit}).  The
+% overall average entropic uncertainty bound from
+% Proposition~\ref{prop:comph} can be evaluated numerically for small
+% values of~$d$.
+
+The following table gives some numerical values of $h_d$ for small
+values of $d$.
+\begin{center}
+\begin{tabular}{c|cccc}
+  $d$                    & $2$    & $4$    & $8$    & $16$ \\
+  \hline
+  $h_d$                  & $0.72$ & $1.56$ & $2.48$ & $3.43$ \\
+  $\frac{h_d}{\log(d)}$ & $0.72$ & $0.78$ & $0.83$ & $0.86$ 
+\end{tabular}
+\end{center}
+
+It is well-known that the harmonic series in
+Proposition~\ref{prop:comph} diverges in the same way as $\log(d)$
+and therefore, $\frac{h_d}{\log(d)}$ goes to 1 for large dimensions
+$d$.
+
+\index{uncertainty relation|)}
+
+
+% \begin{lemma} \label{lem:compunit}
+%   Let $f$ be an integrable function on $\bbC^d$ and let $v \in \bbC^d$
+%   be $L_2$-normalized. Then
+%   \[
+%     \int_{\cU(d)} f(U v) d U 
+%   =
+%     \pi^{-d} \int_{\bbC^d} f\Bigl(\frac{x}{|x|}\Bigr) e^{-|x|^2} d x \ ,
+%   \]
+%   where $|x|$ denotes the $L_2$-norm of the vector $x \in \bbC^d$.
+% \end{lemma}
+
+% \begin{proof}
+%   Note that the integration over $\bbC^d$ is invariant under
+%   unitaries, i.e., for any $U \in \cU(d)$,
+%   \[
+%     \int_{\bbC^d} f\Bigl(\frac{x}{|x|}\Bigr) e^{-|x|^2} d x
+%   =
+%     \int_{\bbC^d} f\Bigl(\frac{U x}{|U x|}\Bigr) e^{-|U x|^2} d x
+%   =
+%     \int_{\bbC^d} f\Bigl(U \frac{x}{|x|}\Bigr) e^{-|x|^2} d x \ ,
+%   \]
+%   where the second equality follows from the fact that the $L_2$-norm
+%   $|\cdot |$ is invariant under unitaries.  Hence,
+%   \[
+%     \int_{\bbC^d} f\Bigl(\frac{x}{|x|}\Bigr) e^{-|x|^2} d x
+%   =
+%     \int_{\cU(d)} \int_{\bbC^d} f\Bigl(U \frac{x}{|x|}\Bigr) e^{-|x|^2} d x d U \\
+%   =
+%     \int_{\bbC^d} \Bigl( \int_{\cU(d)} f\Bigl(U \frac{x}{|x|}\Bigr) e^{-|x|^2} d U \Bigr) d x \ .
+%   \]
+%   For any $x \in \bbC^d$, let $V_x \in \cU(d)$ be such that $V_x x =
+%   |x| v$. Then, because $d U$ is the Haar measure,
+%   \[
+%     \int_{\cU(d)} f\Bigl(U \frac{x}{|x|}\Bigr) e^{-|x|^2} d U
+%   =
+%     \int_{\cU(d)} f\Bigl(U V_x \frac{x}{|x|}\Bigr) e^{-|x|^2} d U
+%   =
+%     \int_{\cU(d)} f(U v) e^{-|x|^2} d U \ .
+%   \]
+%   Combining this with the above gives  
+%   \[
+%     \int_{\bbC^d} f\Bigl(\frac{x}{|x|}\Bigr) e^{-|x|^2} d x
+%   =
+%     \int_{\bbC^d} \Bigl( \int_{\cU(d)} f(U v) e^{-|x|^2} d U \Bigr) d x
+%   =
+%     \int_{\cU(d)} f(U v) d U \cdot \int_{\bbC^d} e^{-|x|^2} d x \ .
+%   \]
+%   The assertion then follows because $\int_{\bbC^d} e^{-|x|^2} d x =
+%   \pi^d.$  
+% \end{proof}
+
+% \begin{lemma} \label{lem:probunit}
+%   Let $f$ be an arbitrary integrable
+%   function on the space of $d$-tuples on $\bbR$. Then, for any $v \in
+%   \cH_d$,
+%   \[
+%   \int_{\cU(d)} f\bigl(|\braket{\omega_1}{U v}|^2, \ldots,
+%   |\braket{\omega_d}{U v}|^2 \bigr) d U = \int_0^\infty \cdots
+%   \int_0^\infty f\Bigl(\frac{(p_1, \ldots p_d)}{\sum_{i} p_i}\Bigr)
+%   e^{-\sum_i p_i} d p_1 \cdots d p_d \ .
+%   \]
+% \end{lemma}
+
+% \begin{proof}
+%   From Lemma~\ref{lem:compunit}, we have
+%   \[
+%   \int_{\cU(d)} f\bigl(|\braket{\omega_1}{U v}|^2, \ldots,
+%   |\braket{\omega_d}{U v}|^2 \bigr) d U = \pi^{-d} \int_{\bbC^d}
+%   f\Bigl( \frac{(|x_1|^2, \ldots, |x_d|^2)}{|x|^2} \Bigr) e^{-|x|^2} d
+%   x \ .
+%   \]
+%   Using polar coordinates, $x_i = r_i e^{i \theta_i}$, and integrating
+%   over $\theta_i$ gives
+%   \[
+%   \pi^{-d} \int_{\bbC^d} f\Bigl( \frac{(|x_1|^2, \ldots,
+%     |x_d|^2)}{|x|^2} \Bigr) e^{-|x|^2} d x = 2^d \int_0^\infty \cdots
+%   \int_0^\infty f\Bigl( \frac{(r_1^2, \ldots, r_d^2)}{\sum_i r_i^2}
+%   \Bigr) e^{-\sum_i r_i^2} r_1 \cdots r_d d r_1 \cdots d r_d \ .
+%   \]
+%   Moreover, with the definition $p_i := r_i^2$ and using $\frac{d
+%     p_i}{d r_i} = 2 r_i$, we find
+%   \begin{multline*}
+%     2^d \int_0^\infty \cdots \int_0^\infty f\Bigl( \frac{(r_1^2, \ldots, r_d^2)}{\sum_i r_i^2} \Bigr) e^{-\sum_i r_i^2} r_1 \cdots r_d d r_1 \cdots d r_d \\
+%     = \int_0^\infty \cdots \int_0^\infty f\Bigl( \frac{(p_1, \ldots,
+%       p_d)}{\sum_i p_i} \Bigr) e^{-\sum_i p_i} d p_1 \cdots d p_d \ .
+%   \end{multline*}
+%   Combining these equalities concludes the proof.
+% \end{proof}
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 

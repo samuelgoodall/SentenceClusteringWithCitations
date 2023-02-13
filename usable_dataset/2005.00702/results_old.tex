@@ -1,0 +1,178 @@
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/LanguageModels.pdf}
+  \caption{Notched box plots of F1 scores for each language model for all experiment combinations (40) across the 4 datasets.}\label{lm}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/LanguageModels_outputs.pdf}
+  \caption{Notched box plots of F1 scores for word likelihood types for all experiment combinations (80) across the 4 datasets.}\label{lmot}
+\end{figure}
+
+
+\section{Results}
+After averaging the F1 scores achieved by all 160 parameter combinations for each dataset, we find that 25\% achieve F1 score greater than 0.74, 50\% achieve F1 score greater than 0.70 whereas 25\% of them were able to achieve F1 score greater than 0.49.
+% Across all 640 experiments (160 parameter combinations for each dataset), we find that 25\% ?? 50\% achieve an F1 score greater than 0.65
+% while 75\% achieve an F1 score of 0.5 or more. has to be dataset independent.  recalculate.
+%
+Thus it shows that a higher percentage of our proposed architectures (160 in total) were able to perform well.
+
+Instead of a random selection for architecture we make a strong assumption that the adversary is knowledgeable about the various choices, tests these alternatives and employs the best configuration. 
+%This indicates that ...
+%which shows that there are relatively less number of experiments having F1 score less than 0.5 as compared to experiments having f1 score greater than 0.5.
+Thus, we present results for the best models achievable by the adversary in Table 1.
+
+%Adversary trying to perform obfuscation detection has access to 4 language models each of which give 2 types of outputs.
+%
+%These outputs can be used to extract 4 different features sets which can be used with any of 5 different classifiers.
+%
+%So in total, adversary has access to 160 unique architectures and can pick the best one.
+%
+%Hence from our architectures, we show results only for the top performing ones.
+%
+The best architectures are chosen on the basis of F1 score.
+%
+For each dataset, table \ref{main_results} shows precision, recall and F1 score for our two best performing architectures and for the other methods presented in section \ref{other_methods}.
+
+
+When comparing the F1 score or recall, our best performing BERT and GPT2 combination outperforms all other methods across all the four datasets.
+%
+But in precision, the methods using GLTR based features outperform others consistently however in each case with a penalty paid in recall.
+%
+
+Table \ref{main_results} also shows that obfuscation detection is easier in \amt dataset than in \blogs dataset.
+%
+This can be explained by the nature of documents in each dataset. %
+\amt dataset comprises of scholarly articles which are relatively more consistent in smoothness than blogs.
+%
+Hence, it is easier to differentiate between original and obfucated documents on the basis of smoothness in \amt dataset than in \blogs dataset.
+%
+We can also see that evaded documents achieve higher F1 scores than obfuscated documents.
+%
+This confirms our intuition presented in \ref{obfandevaded}, that evaded documents are less smooth and therefore easier to detect than obfuscated documents.
+
+
+
+%Hence, if it is important not to misclassify original documents as obfuscated (false positives), then choosing the model with high precision is right.
+%
+%On the other hand, if you need to successfully detect obfuscated documents without caring about the misclassification of original documents  i.e., less false negatives, then using the model with high recall makes more sense.
+
+\subsection{Detector Architecture Choices Analysis}
+Now we analyze the effect of different choices made within each of the three dimensions depicted in figure \ref{pipeline}.
+%
+More specifically, we analyze choices on the basis of highest F1 score achieved and F1 score variability.
+%
+We also check for significant differences between median F1 scores on the basis of notched box plots \cite{krzywinski2014points}.
+%
+This analysis is based on all 640 experiments described in section \ref{mfoa}.
+
+\subsubsection{Dimension 1: Language model and output type}
+
+%In our experiments, we tested with 4 different langauge models i.e., bert base, bert large, GPT-2 117M and GPT-2 345M.
+%
+Figure \ref{lm} presents notched box plots comparing distributions of F1 scores achieved by the language models across all four datasets.
+%by experiments using these langauge models .
+%
+\bertlarge achieves the highest F1 score of 0.91 and 0.93 on \amt obfuscated and evaded datasets respectively.
+%
+The highest F1 score for \blogs obfuscated is achieved by \bertsmall (0.76) and for \blogs evaded by \gptlarge (0.81).
+%
+In terms of F1 score variability (box size) we see that for \amt datasets, BERT shows greater consistency than when using GPT-2.
+%
+In contrast, all models are similar in box size for \blogs datasets.
+%
+The only significant difference found is where \amt obfuscated, where median F1 for \bertlarge is significantly better than for \gptsmall.
+%
+%\vspace{0.05in} \noindent \textbf{2) Ranks versus probabilities as output:}
+%We tested with two output types i.e., probabilities and ranks
+%
+
+There is no difference in maximum F1 score when using probabilities or ranks as the information output by the language models - for the evaded datasets (see Figure \ref{lmot}).
+%
+With obfuscated datasets using ranks is the best (0.91) for \amt whereas probabilities win for \blogs (0.76).
+%experiment,  were able to achieve the highest F1 score of 0.76.
+%
+Box sizes show that F1 scores have a relatively smaller spread with probabilities than with ranks across all four datasets.
+
+\subsubsection{Dimension 2: Feature type}
+% We tested with two different feature representations i.e., binning and VGG-19 features.
+%
+%Notched box plots in figure \ref{ft} show the comparison of F1 scores between binning and image based feature representations across all four datasets.
+%
+From figure \ref{ft} we see that 
+for \amt obfuscated, binning based features is the best (highest F1 score of 0.91) whereas for \blogs obfuscated, image based features is the best (highest F1  of 0.76).
+%
+There is no difference between the two for the evaded datasets.
+%
+Across all the four datasets, the box sizes show that experiments using image based feature representation achieve less variable F1 scores than binning based features which can be explained with the different choices of bin sizes.
+%
+Additionally, it can also be seen that image based features achieve significantly higher median F1 score than binning based features, across all datasets.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/Feature_type.pdf}
+  \caption{Notched box plots of F1 scores for feature types for all experiment combinations (binning based: 120, image based: 40) across the 4 datasets.}\label{ft}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/Classifier.pdf}
+  \caption{Notched box plots of F1 scores for classifiers used for all experiment combinations (32) across the 4 datasets.}\label{c}
+\end{figure}
+
+\subsubsection{Dimension 3: Classifier}
+% For classification, we used a range of different classifiers including GNB, KNN, ANN, SVM, RFC and DC(mahalanobis).
+%
+Figure \ref{c} shows the range of F1 scores achieved by each classifier across the four datasets.
+%
+For \amt obfuscated, \knn and \nueralnetworks achieve the highest F1 score of 0.91 whereas for \amt evaded, \nueralnetworks and \rfc achieve the highest F1 score (0.93).
+%
+For \blogs obfuscated, \svm achieves the highest F1 score of 0.76 and for \blogs evaded, \knn and \naivebayes achieve the highest F1 score of 0.81.
+%
+As for the variability in F1 scores, \knn and \nueralnetworks consistently achieve relatively stable F1 scores than the other classification methods.
+%
+In \amt dataset, \knn and \nueralnetworks both achieve significantly higher median F1 score than \svm and \rfc.
+%
+Additionally, in \amt evaded, \knn also achieves significantly higher median F1 score than \naivebayes.
+%
+In \blogs dataset, \knn and \ann achieve significantly higher median F1 score than \svm, \rfc and \naivebayes.
+
+\vspace{0.05in} \noindent \textbf{Optimal Architecture:}
+We aim to choose the combination of choice variables which gives good results across all four datasets.
+%
+To this end we choose variables which have two qualities.
+%
+1) Their maximum F1 score is equal or closer to the overall maximum F1 score achieved.
+%
+2) They have a relatively tighter range of F1 scores i.e, smaller box sizes.
+%
+Hence we pick the following combination: \bertsmall + probabilities + VGG-19 + \nueralnetworks.
+%
+This combination was able to achieve the F1 scores of 0.84, 0.91, 0.74 and 0.75 for \amt obfucated, \amt evaded, \blogs obfuscated and \blogs evaded respectively.
+% 
+These F1 scores beat the second best model i.e., model using GLTR across all the four datasets.
+
+
+\subsection{Intuition Analysis}
+Earlier in section \ref{propapproach} we explained that our intuition behind obfuscation detection is that the text generated by obfuscaters and humans differ in terms of fluency.
+%
+We defined fluency as the number of high likelihood words used which are extracted by a pre-trained language model.
+%
+Figure \ref{intuit} verifies this intuition.
+%
+For this plot, we first extract the occurrence probabilities of words using \bertsmall and sort them for all the documents in \amt obfuscated dataset.
+%
+Then we average these sorted probabilities for different obfuscator generated and original documents and plot them.
+%
+The steeper the fall, the greater the average number of low probability words in documents and hence lower the smoothness of text.
+%
+This plot shows that original documents are more smooth on average whereas \dspan generates the least smooth documents.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/average_VGG.pdf}
+  \caption{Comparison between different obfuscators and original documents on the basis of average sorted probabilities extracted by \bertsmall for \amt obfuscated dataset.}\label{intuit}
+\end{figure}

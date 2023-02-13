@@ -1,0 +1,140 @@
+\section{Related Work}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Authorship Obfuscation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The task of authorship obfuscation aims at changing the input document, using text transformations such that the output document successfully evades attribution while preserving original semantics.
+%
+On the basis of the way these text-transformations are applied, current research on authorship obfuscation can be divided into two types 1) Manual/Semi-automated Methods and 2) Automated Methods.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Among manual methods, \cite{brennan2012adversarial} tries to achieve obfuscation by instructing humans to either imitate the writing style of some author or just try to hide their own writing style.
+%
+Among semi-automated methods, \cite{mcdonald2012use} presents a tool called Anonymouth which analyzes the input document using an authorship attribution method and then suggest text-based changes.
+%
+% These changes help in changing stylometric features which are giving away the identity of author.
+%
+Main limitation of manual and semi-automated methods is that they require human input for applying text transformations due to which these methods are not very scalable.
+%
+This has lead the research in authorship obfuscation towards automated methods.
+%
+Automated authorship obfuscation methods are the ones in which no human input is required to apply text transformations.
+%
+% Although automated methods targeting authorship obfuscation were introduced earlier \cite{brennan2012adversarial}, the real surge in these methods came in the last five years.
+%
+Existing automated methods can be further classified into rule-based and search-based.
+
+In order to achieve obfuscation, \cite{karadzhov2017case} uses rule-based text transformations to push the style of input document towards the average style of corpus.
+%
+% Then they use a set of rule-based text transformations (e.g., replace ! with !!, merge or split sentences etc.) to move the stylometric feature values (e.g., punctuation to word count ratio, average number of words per sentence etc. ) of input document towards the average of corpus.
+%
+\cite{castro2017author} presents another rule-based approach which tries to achieves obfuscation by applying text transformations which aim to simplify the input document.
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \vspace{0.05in} \noindent \textbf{Model-based.}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \cite{shetty2018a4nt} makes use of Generative Adversarial Networks (GANs) for authorship obfuscation.
+% %
+% They used auto-encoders to generate text which are trained using three different feedbacks.
+% %
+% Each of these feedback respectively makes sure that the generated text evades attribution, preserves semantics and is smooth.
+% %
+% \cite{emmery2018style} also uses auto-encoders to generate text but they use a Gradient Reversal Layer (GRL) to make sure that the generated text does not contain any writing style signature.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \vspace{0.05in} \noindent \textbf{Search-based.}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In search-based methods, \cite{mahmood2019girl} uses genetic algorithms (GA) along with an authorship attribution method to identify words in a document, changing which will have the maximum adverse effect on authorship attribution.
+%
+Sentiment preserving word embeddings are then used for word replacement.
+% Words are changed by replacing them with nearest neighbors using pre-trained word embeddings.
+%
+\cite{bevendorff2019heuristic} tries to achieve obfuscation by increasing the stylistic distance between input document and author's existing text.
+%
+To achieve this, they use a heuristic based search algorithm to find the optimal set of text transformations and words to change.
+%
+Possible text transformation include n-gram removal, context dependent word replacement etc.
+
+Apart from these, there are also a couple of model-based approaches \cite{shetty2018a4nt, emmery2018style} which train a deep learning model to generate obfuscated documents.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Obfuscation Detection}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cite{juola2012detecting} uses stylometric features to perform obfuscation detection on manually obfuscated documents.
+%
+Their method was able to successfully detect 83\% of the obfuscated documents.
+% \cite{juola2012detecting} performs obfuscation detection by applying K Nearest Neighbors (KNN) using cosine distance on the writing style of original and manually generated obfuscated documents.
+%
+% After applying text pre-processing steps i.e., unify case and separate consecutive punctuation characters with space, writing style is extracted using character 3-grams.
+%
+\cite{afroz2012detecting} also performs manual obfuscation detection using stylistic features.
+%
+Their approach achieves F-measure of 97\%.
+%They performed experiments with three different feature sets i.e, writeprints feature set \cite{zheng2006framework}, lying-detection feature set \cite{burgoon2003detecting}\cite{hancock2007lying} and 9-feature set \cite{brennan2009practical}.
+%
+% Support Vector Machine (\svm) with \textit{poly} kernel using writeprints feature set performed the best, achieving an overall F-measure of 96.6\%.
+%
+These methods work great for manual obfuscation but as we show in our experiments, they do not perform as well against automated obfuscation methods.
+%
+
+Text spinning can also be seen as authorship obfuscation problem.
+%
+\cite{shahid2017accurate} uses stylometric analysis to detect whether a document was generated using text spinners or not.
+%
+They first extract a number of text-based features belonging to six classes i.e., n-grams, lexical, vocabulary richness, readability, syntactic and perplexity.
+%
+Then a \svm is applied using the radial basis function (RBF) kernel.
+%
+They were able to detect spun documents with F1-score of 99.94\%.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Machine Generated Text Detection}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cite{gehrmann2019gltr} helps humans in detecting whether a given piece of text is written by a human or a particular language model called GPT-2.
+%
+They achieve this by extracting probability distribution of words given their context, using a pre-trained GPT-2 \cite{radford2019language} and then providing this information to humans.
+%
+Using this approach, authors were able to increase human detection rate from 54\% to 72\%.
+% self note -- This needs work -- how it differs from our work
+\cite{zellers2019defending} performs neural fake news detection by identifying if the given news article is written by a human or their fake news generation model called GROVER.
+%
+For an input document, they used their model GROVER to extract features from the final hidden state, which are then used to perform classification.
+%
+This paper showed that GROVER based detector was able to detect fake news generated by GROVER better than GPT-2 and BERT.
+%
+\cite{bakhtin2019real} also tries to distinguish between human and language model generated text.
+%
+They do this by training a separate detection model instead of relying on the output from language model.
+
+
+
+
+%While prior research has shown that stylometric methods can successfully detect manually obfuscated documents (because humans tend to follow a particular writing style when trying to obfuscate a document \cite{afroz2012detecting}), it is unclear whether this pattern holds for documents obfuscated using authorship obfuscation tools \asad{because text transformations in these tools are applied by machines.
+%On the other hand, it might be possible for these obfuscation tools to make some specific kind of changes, to successfully obfuscate documents, which gives them a unique writing style.}
+%
+% On the other hand, it is also possible that these automated obfuscators have different individual writing styles instead of one unique writing style.}
+%Prior research has shown that synthetic text generated using neural language models can be successfully detected because language models usually tend to choose words with high probabilities to make sure that the generated text is coherent (or ``smooth") \cite{gehrmann2019gltr}.
+%However, it is unclear whether this pattern holds for documents obfuscated using authorship obfuscation tools because synthetic text only have to be coherent whereas obfuscated text has the added constraint of evading attribution while preserving the original semantics.
+
+
+%Obfuscation detection is different than generated text detection in that the generated texts only have to be smooth whereas obfuscated texts have the added constraint of evading attribution while preserving the original semantics.
+
+
+
+%Another similar line of research is generated text detection.
+% - differentiating from generated text detection
+%GLTR \cite{gehrmann2019gltr} tries to perform fake text detection by finding out if the text was generated by a language model or not, using the language model itself.
+%
+%For text generation, 
+%
+%GLTR uses this information to differentiate between human and language model generated text.
+
+%\vspace{0.05in} \noindent \textbf{Proposed Approach.} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% Our intuition is that automated obfuscation methods, in their pursuit of evading authorship attributers, make certain changes in the text which degrade the overall smoothness of text.
+% %
+% This is probably because the transformations used by current obfuscation methods aren't as good as humans.
+% %
+% The added requirement that the obfuscated document should evade attribution also restricts the universe of transformations in some way.

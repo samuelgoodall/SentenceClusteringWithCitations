@@ -1,0 +1,878 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearemptydoublepage
+\chapter{Introduction} \label{chap:intro}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \mycitation
+%% {Start your dissertation with your thesis}
+%% {Olivier Danvy, BRICS retreat, January~19, 2007.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% It is natural to assume a bound on the quantum memory of adversarial
+%% players in a cryptographic protocol.
+
+In the quest for interesting \index{cryptographic model}cryptographic
+models, bounding the quantum memory of adversarial players is a great
+% (good, useful, fruitful, practical, nice, valuable) 
+assumption.
+
+\section{Cryptographic Models and Basic Primitives} \label{sec:cryptomodels}
+It is a fascinating art to come up with
+\emph{\index{protocol}protocols}\footnote{A protocol consists of
+  clear-cut instructions for the participating players.} that achieve a
+cryptographic task like encryption, authentication, identification,
+voting, secure function evaluation to name just a famous few. To
+define a notion of security for such protocols, one needs to specify a
+\emph{\index{cryptographic model}cryptographic model}, i.e. an
+environment in which the protocol is run. The model states for example
+the number of honest and dishonest players, the allowed running time
+and amount of memory available to honest and dishonest players, how
+dishonest players are allowed to deviate from the protocol, the use of
+external resources like (quantum) communication channels or other
+already established cryptographic functionalities etc.
+
+While coming up with more and more protocols for different models,
+cryptographers realized that some basic \emph{primitives}
+(i.e.~precisely defined cryptographic tasks) are useful as
+``benchmarks'' of how powerful a particular cryptographic model is.
+An example is the two-party primitive \emph{
+\index{oblivious transfer}Oblivious Transfer} (\pOT).  It comes in different flavors,
+but all of these variants are equivalent in the sense that anyone of
+them can be implemented using (possibly several instances of) an
+other.  The \emph{\index{oblivious transfer!one-out-of-two}one-out-of-two} variant \OT was originally
+introduced by Wiesner around 1970 (but only published much later
+in~\cite{Wiesner83}) in the very first paper about quantum
+cryptography, and later rediscovered by Even, Goldreich, and Lempel~\cite{EGL82}. It lets a sender Alice transmit two bits to a
+receiver Bob who can choose which of them to receive. A secure
+implementation of \OT does not allow a dishonest sender to learn which
+of the two bits was received and it does not allow a dishonest
+receiver to learn any information about the second bit. It was a
+surprising insight when Kilian showed that this simple primitive is \emph{complete} for
+two-party cryptography \cite{Kilian88}. In other words, a model in
+which \OT can be securely implemented allows to implement any
+cryptographic functionality between two players\footnote{If the model
+  can be reasonably extended to more players, this usually allows to
+  implement secure multi-party protocols as well.}. Another variant we
+are concerned with in this thesis was introduced by Rabin
+\cite{Rabin81} and is hence called \index{oblivious transfer!Rabin}Rabin Oblivious Transfer
+(\RabinOT). It is basically a ``secure erasure channel'': the sender
+Alice sends a bit which with probability one half is absorbed and with
+probability one half finds its way to the receiver Bob. The security
+requirements are the following: whatever a dishonest Alice does, she cannot find
+out whether the bit was received or not; and whatever a dishonest
+receiver does, he does not get any information about the bit with
+probability one half.
+
+Yet another basic two-party primitive of interest is \index{bit
+  commitment} Bit Commitment (\BC) which allows a player to commit
+himself to a choice of a bit $b$ by communicating with a verifier. The
+verifier should not learn $b$ (we say the commitment is
+\emph{\index{bit commitment!hiding}hiding}), yet the committer can
+later choose to reveal $b$ in a convincing way, i.e. only the value
+fixed at commitment time will be accepted by the verifier (we say the
+commitment is \emph{\index{bit commitment!binding}binding}).  Bit
+Commitment is a fundamental building block of virtually every more
+complicated cryptographic protocol. Implementing secure \BC with a
+secure \OT at hand is not difficult\footnote{To commit to a bit $b$,
+  the committer sends random bits of parity $b$ via (several instances
+  of) \OT and the verifier picks randomly one of the bits. To open,
+  the committer sends all the random bits he was using, the verifier
+  checks whether these are consistent with what he received.}. On the
+other hand, there are cryptographic models allowing to securely
+implement \BC, but not \OT. Moran and Naor gave an example of such a
+model by assuming the physical device of a tamper-proof seal~\cite{MN05}.
+
+It is not hard to see that the two security requirements for \BC are
+in a sense contradictory, so perfectly secure bit commitment cannot be
+implemented ``from scratch'', that is if only error-free communication
+is available and there is no limitation assumed on the computing power
+and memory of the players. The informal reason for this is that the
+hiding property implies that when 0 is committed to, exactly the same
+information exchange could have happened when committing to 1.
+Hence, even if 0 was actually committed to, the committer could always
+compute a complete view of the protocol consistent with having
+committed to 1, and pretend that this view was what he had in mind
+originally. By the reduction of \BC to \OT follows that also \OT and
+many other cryptographic functionalities cannot be perfectly secure
+when built from scratch.
+
+One might hope that allowing the protocol to make use of quantum
+communication would make a difference. Here, information is stored in
+qubits, i.e., in the state of two-level quantum mechanical systems,
+such as the polarization state of a single photon. Quantum information
+behaves in a way that is fundamentally different from classical
+information, enabling, for instance, unconditionally secure key
+exchange between two honest players (so-called
+\emph{\index{quantum key distribution}Quantum Key Distribution}).
+However, in the case of two mutually distrusting parties, we are not
+so fortunate: even with quantum communication, unconditionally secure
+\BC and \OT remain \index{impossibility!of quantum bit
+  commitment}impossible. This is the infamous
+impossibility result by Mayers and by Lo and Chau~\cite{Mayers97,LC97}.
+
+For this reason, cryptographers have tried hard to exhibit more
+restricted models where these impossibility results do not apply. The
+high art in this process is to find assumptions that are as realistic
+as possible -- thus only minimally restricting the model, but still
+strong enough to allow for implementing interesting functionalities.
+There are at least three kinds of possible assumptions, namely
+\begin{itemize}
+\item bounding the computing power of players,
+\item using the noise in the communication channel,
+\item exploiting some physical limitation of the adversary, e.g., if
+  the size of the available memory is bounded.
+\end{itemize}
+
+The first scenario is the basis of many well known solutions based on
+plausible but unproven complexity assumptions, such as hardness of
+factoring or discrete logarithms. A term often used for such schemes
+is ``\index{computational security}computational security'', meaning
+that it is \emph{not impossible} for an adversary to behave
+dishonestly, but it is \emph{computationally infeasible} for him to do
+so. Security proofs are usually done by reduction in the sense that
+breaking the security of the protocol would imply solving a hard
+problem like factoring the product of two large prime numbers. The
+second scenario has been used to construct both \BC and \pOT protocols
+in various models for the noise by Cr\'epeau, Kilian, Damg{\aa}rd,
+Salvail, Fehr, Morozov, Wolf, and Wullschleger
+\cite{CK88,DKS99,DFMS04,CMW04,Wullschleger07}.
+
+The third scenario is the focus of this thesis. In contrast to the
+first scenario, we deal with ``\index{unconditional security}unconditional security'' where (depending on the task a
+protocol aims to achieve) an adversary has no way whatsoever to gain
+illegal information. Proofs are not done by reduction, but we can
+prove in information-theoretic terms that except with negligible
+probability, the adversary does not learn \emph{any information} that
+is meant to remain secret.
+
+\section{Classical Bounded-Storage Model} \label{sec:ClassicalBSMIntro}
+In the \index{classical bounded-storage model}classical
+bounded-storage model, we assume the players to use classical
+error-free communication and to be computationally unbounded, but on the
+other hand restrict the size of their memory. In the usual setting,
+there is a large random source $R$ (often called the
+\emph{\index{randomizer}randomizer}) which all players can access, but
+which is too large (or transmitted too quickly) to store as a whole.
+One can think of $R$ as a deep-space radio source or a satellite broadcasting
+random bits at a very high rate.
+
+When Maurer introduced the classical bounded-storage model
+in~\cite{Maurer90}, the goal was \emph{secure message transmission}.
+He showed that two honest parties Alice and Bob sharing an initial key
+can \index{key expansion}expand that key unless the eavesdropper Eve
+can store more than a large fraction of the randomizer.  The basic
+idea of the technique allowing Alice and Bob to get an advantage
+over Eve is that their initial secret key indexes some positions in
+the randomizer about which Eve has some uncertainty if she cannot
+store the whole randomizer. Therefore, the bits at these positions can
+be combined to yield more secure key bits and so to expand the initial
+key.
+
+A line of subsequent work by Maurer, Cachin, Aumann, Ding, Rabin,
+Dziembowski, Lu, and Vadhan \cite{Maurer92, CM97, ADR02, DM04, Lu04,
+  Vadhan04} improved this original protocol in terms of efficiency and
+security. Aumann, Ding and Rabin~\cite{ADR02} noticed that
+protocols in this model enjoy the property of ``\index{everlasting
+security}everlasting security'' in the sense that the newly
+generated key remains secure even when the initial key is later
+revealed and Eve is no longer memory-bounded, under the sole condition
+that the original randomizer cannot be accessed any
+more. Ding~\cite{Ding05} showed how to do 
+\index{error correction!classical bounded-storage model}error correction in the
+bounded-storage model and therefore how to cope with the situation
+when the honest parties do not have exactly the same view on the
+randomizer.
+
+Cachin, Cr\'epeau and Marcil illustrated the power of the
+bounded-storage model by exhibiting in~\cite{CCM98} a protocol for
+\OT. Ding improved on this \cite{Ding01} and later showed a
+constant-round protocol for oblivious transfer in joint work with
+Harnik, Rosen and Shaltiel \cite{DHRS04}.
+
+All these protocols are shown secure as long as the adversary's memory
+size is at most quadratic in the memory size of the honest players.
+Considering the ease and low cost of storing massive amounts of classical
+data nowadays, it is questionable how practical such an assumption on the
+memory size of the players is. It would be clearly more satisfactory
+to have a larger than quadratic separation between the memory size of
+honest players and that of the adversary. However, this was shown to
+be impossible by Dziembowski and Maurer~\cite{DM04}.
+
+
+\section{Contributions} \label{sec:contributions}
+In this section, we give an overview of the contributions of this
+thesis.
+The results about classical oblivious transfer described in
+Chapter~\ref{chap:ClassicalOT} and summarized in
+Section~\ref{sec:ClassicalOTReductions} are joint
+work with Damg{\aa}rd, Fehr and Salvail~\cite{DFSS06}. 
+All other results are based on two papers co-authored with Damg{\aa}rd, Fehr,
+Salvail and Renner: \cite{DFSS05} and \cite{DFRSS07}. A journal version of \cite{DFSS05}
+is to appear in a special issue of the SIAM Journal of Computing
+\cite{DFSS08journal}.
+
+
+\subsection{Bounded-Quantum-Storage Model}
+\index{bounded-quantum-storage model}In this thesis, we study for the
+first time protocols where quantum communication is used and we place
+a bound on the adversary's {\em quantum} memory size.  There are two
+reasons why this may be a good idea: first, if we do not bound the
+classical memory size, we avoid the impossibility result of
+\cite{DM04}.  Second, the adversary's typical goal is to obtain a
+certain piece of classical information that we want to keep hidden
+from him. However, if he cannot store all the quantum information that
+is sent, he must convert some of it to classical information by
+measuring. This may irreversibly destroy information, and we may be
+able to arrange it in such a way that the adversary cannot afford to lose
+information this way, while honest players can.
+
+It turns out that this can be achieved indeed: we present protocols for
+both \BC and \pOT in which $n$ qubits are transmitted, where honest
+players need {\em no quantum memory}, but where the adversary must
+store at least a large fraction (typically $n/2$ or $n/4$) of the $n$
+transmitted qubits to break the protocol. We emphasize that no bound
+is assumed on the adversary's computing power, nor on his classical
+memory. This is clearly much more satisfactory than the classical
+case, not only from a theoretical point of view, but also in practice:
+while sending qubits and measuring them immediately as they arrive is
+well within reach of current technology, storing even a single qubit
+for more than a fraction of a second is a formidable technological
+challenge.
+
+Furthermore, we show that our protocols also work in a non-ideal
+setting where we allow the quantum source to be imperfect and the
+quantum communication to be noisy. We emphasize that what makes \pOT and
+\BC possible in our model is not so much the memory bound per se, but
+rather the loss of information on the part of the adversary. Indeed,
+our results also hold if the adversary's memory device holds an
+arbitrary number of qubits, but is imperfect in certain ways.
+
+% underlying my thesis (see first sentence in intro):
+All these factors make the assumption of \index{bounded-quantum-storage
+model}bounded quantum memory a very attractive cryptographic model.
+On one hand, as for the \index{classical bounded-storage
+model}classical bounded-storage model, it is simple to work with and
+yields beautiful theoretical results. On the other hand, it is much
+more reasonable to assume the difficulty of storing quantum
+information compared to storing classical one and hence, we are very
+close to the physical reality and get schemes that can actually be
+implemented!
+
+%This is discussed in more detail in Section~\ref{sec:noisymem}.
+
+\subsection{Characterization of Security of Classical \OT} \label{sec:ClassicalOTReductions}
+While the task of formally defining \index{unconditional security}unconditional security of classical protocols for \RabinOT
+and \BC is well understood, capturing the security of \OT in
+information-theoretic terms is considerably more delicate, as was
+pointed out by Cr\'epeau, Savvides, Schaffner and
+Wullschleger~\cite{CSSW06}. 
+For \OT of bits, it is clear that the
+security for a honest sender against a cheating receiver guarantees
+that the receiver does not learn any information about the XOR of the
+two bits. Somewhat surprisingly, the converse is true as well, not
+having any information about the XOR of the two bits sent implies that
+we can point at one bit which the dishonest receiver does not know
+(given the other).
+
+This idea can be generalized to \OT of strings where the ignorance of
+the XOR becomes ignorance of the outcome of all \index{non-degenerate
+linear function}Non-Degenerate Linear binary Functions (NDLFs)
+applied to the two strings sent. Such a characterization of
+\index{sender-security!characterization of}sender-security in terms of
+NDLF composes well with \emph{strongly \index{two-universal
+    hashing!strongly}two-universal hashing} and hereby yields a
+powerful technique to improve the analyses of the standard \index{reduction}reductions
+from \OT to weaker variants of \pOT.
+
+As a historical side note, the original motivation for this classical
+characterization was the hope that it translates to the quantum
+setting and thereby yields a security proof of the \OT scheme in the
+\index{bounded-quantum-storage model}bounded-quantum-storage model. We
+will point out why this approach does \emph{not} work.
+
+
+\subsection{Quantum Security Definitions and Protocols}
+When the players are allowed to use quantum communication, the output
+of a dishonest player is a quantum state even when the protocol
+implements a classical primitive. Therefore, security definitions for
+\RabinOT, \OT and \BC have to be phrased in quantum terms. As an
+easy-to-use \index{composability}composability framework has not yet
+been established for quantum protocols\footnote{Some rather
+complicated frameworks are known. They have been put forward by Ben-Or and
+Mayers \cite{BM04} and Unruh \cite{Unruh02}.}, various \emph{ad-hoc}
+security requirements are commonly used. The definitions in this
+thesis are the strongest so far proposed, and as they are based on the
+(classical) considerations in \cite{CSSW06}, we believe that they are
+best suited to provide \emph{sequential composability}.
+
+Most of the presented protocols in the bounded-quantum-storage model
+can be cast in a non-interactive form, i.e.~only one party sends
+information when doing \pOT, commitment or opening. We show the following.
+
+\medskip
+\noindent
+{\bf {\em \pOT in the Bounded-Quantum-Storage Model:}} {\em There
+  exist non-interactive protocols for \RabinOT and 1-out-of-2
+  Oblivious Transfer (\OT[2]) of $\ell$-bit messages, secure in the
+  bounded-quantum-storage model against adversaries with
+  quantum-memory size at most $n/2- \ell$ for \RabinOT and $n/4 -
+  2\ell$ for \OT. Here, $n$ is the number of qubits transmitted in the
+  protocol and $\ell$ can be a constant fraction of $n$. Honest
+  players need no quantum memory at all.}  \medskip
+
+For the case of bit commitment, the standard definition of the
+\index{bit commitment!binding}binding property used in the quantum
+setting was introduced by Dumais, Mayers and Salvail~\cite{DMS00}. For
+$b \in \set{0,1}$, let $p_b$ denote the probability that a dishonest
+committer successfully opens the commitment to value $b$. The binding
+condition then requires that the sum of $p_0$ and $p_1$ does
+essentially not exceed 1. More formally, $p_0 + p_1 \leq 1 + \negl{n}$
+where $\negl{n}$ stands for a term which is negligible in $n$ such as
+$2^{-cn}$ (for a constant $c>0$) which is exponentially small in $n$.
+This is to capture that a quantum committer can always commit to the
+values $0$ and $1$ in superposition. We call this notion \emph{weakly
+  binding} in the following. A shortcoming of this notion is that
+committing bit by bit is not guaranteed to yield a secure string
+commitment---the argument that one is tempted to use requires
+independence of the $p_{b}$'s between the different executions, which
+in general does not hold.
+
+% Note that this definition of the binding
+% condition allows protocols in which with probability one half a
+% dishonest committer cannot open the commitment to any of the two
+% values and with probability one half, he can open it to the bit of his
+% choice.  Clearly, such behavior is not what one intuitively expects
+% from a commitment scheme.
+
+Instead, we propose the following \emph{strong binding} condition:
+After the commitment phase, there exists a binary random variable $D
+\in \set{0,1}$ such that a dishonest committer cannot open the
+commitment to value $D$ except with negligible probability. The point
+is that the distribution of $D$ is not under control of the dishonest
+committer. We will point out that using this definition, we can easily
+derive the security of a string commitment from the security of the
+individual bits.
+
+\medskip
+\noindent
+{\bf {\em \BC in the Bounded-Quantum-Storage Model:}} {\em There
+  exists a protocol for bit commitment which is non-interactive.
+ It is perfectly hiding and weakly binding in the
+  bounded-quantum-storage model against dishonest committers with
+  quantum-memory size at most $n/2$. It is strongly binding against
+  memory sizes of at most $n/4$. Here, $n$ is the number of qubits
+  transmitted in the protocol. Honest players need no quantum memory
+  at all.}  \medskip
+
+
+Furthermore, the commitment protocol has the interesting property that
+the only message is sent \emph{to} the committer, i.e., it is possible
+to commit while only {\em receiving} information.  Such a scheme
+clearly does not exist without a bound on the committer's memory, even
+under computational assumptions and using quantum communication: a
+corrupt committer could always store (possibly quantumly) all the
+information sent, until opening time, and only then follow the honest
+committer's algorithm to figure out what should be sent to
+convincingly open a 0 or a~1.  
+
+Note that in the \index{classical bounded-storage model}classical
+bounded-storage model, it has been shown by Moran, Shaltiel and
+Ta-Shma~\cite{MST04} how to do \index{time-stamping}time-stamping
+that is non-interactive in our sense: a player can time-stamp a
+document while only receiving information.  However, no reasonable
+protocol for \BC or for time-stamping a single bit exists in this
+model.  It is straightforward to see that any such protocol can be
+broken by an adversary with classical memory of size twice that of an
+honest player, while our protocol requires no quantum memory for the
+honest players and remains secure against any adversary unable to
+store more than half the size of the quantum transmission.
+
+We also note that it has been shown earlier by Salvail
+\cite{Salvail98} that \BC is possible using quantum communication,
+assuming a different type of physical limitation, namely a bound on
+the size of coherent measurement that can be implemented. This
+limitation is incomparable to ours: it does not limit the total size
+of the memory, instead it limits the number of bits that can be
+simultaneously operated on to produce a classical result. Our
+adversary has a limit on the total quantum memory size, but can
+measure all of it coherently. The protocol from \cite{Salvail98} is
+interactive, and requires a bound on the maximal measurement size that
+is sub-linear in $n$.
+
+% Finally, our techniques imply security of the
+% practical BB84-based protocol for \ROT\ introduced in \cite{DFSS05} with
+% a memory bound twice that obtained therein. %\cite{DFSS05}.
+
+
+\subsection{Quantum Uncertainty Relations}
+\index{uncertainty relation}A problem often encountered in
+\index{quantum cryptography}quantum cryptography is the following:
+through some interaction between the players, a quantum state is
+generated and then measured by one of the players (we call her Alice
+in the following). Assuming Alice is honest, we want to know how
+unpredictable her measurement outcome is to the adversary.  Once a
+lower bound on the adversary's uncertainty about Alice's measurement
+outcome is established, it is usually easy to prove the desired
+security property of the protocol. Many existing constructions in
+quantum cryptography have been proven secure following this paradigm.
+
+Typically, Alice does not make her measurement in a fixed basis, but
+chooses at random from a set of different bases. These bases are
+usually chosen to be pairwise {\em \index{mutually unbiased
+bases}mutually unbiased}, meaning that if the quantum state is
+such that the measurement outcome in one basis is fixed, then this
+implies that the uncertainty about the outcome of the measurement in
+the other basis is maximal. In this way, one hopes to keep the
+adversary's uncertainty high, even if the state is (partially) under
+the adversary's control.
+
+An inequality that lower bounds the adversary's uncertainty in such a
+scenario is called an {\em uncertainty relation}.  There exist
+uncertainty relations for different measures of uncertainty but
+cryptographic applications typically require the adversary's
+\index{entropy!min-}min-entropy to be bounded from below. Such uncertainty relations are
+the key ingredient in the security proofs of our protocols in the
+bounded-quantum-storage model.
+
+In this thesis, we introduce new general and tight high-order entropic
+uncertainty relations. Since the relations are expressed in terms of
+lower bounds on the min-entropy or upper-bounds on large probabilities
+respectively, they are applicable to a large class of natural
+protocols in quantum cryptography.
+
+The first uncertainty relation is concerned with the situation where a
+\smash{$n$-qubit} state $\rho$ is measured in one out of two mutually
+unbiased bases, say either in the
+\index{basis!computational}computational basis (the $+$-basis) or in
+the \index{basis!diagonal}diagonal basis (the $\times$-basis).
+
+\medskip
+\noindent
+{\bf {\em First Uncertainty Relation:}} {\em Let $\rho$ be an
+  arbitrary state of $n$ qubits, and let $\Qp(\cdot)$ and $\Qt(\cdot)$
+  be the respective probability distributions over $\nbit$ of the
+  outcome when $\rho$ is measured in the $+$-basis respectively the
+  $\times$-basis.  Then, for any two sets $L^+ \subset \set{0,1}^n$
+  and $L^{\times} \subset \set{0,1}^n$ it holds that
+\[ \Qp(L^+)+\Qt(L^{\times}) \leq 1 + 2^{-n/2} \sqrt{|L^+|
+  |L^{\times}|}. \] } 
+
+Another \index{uncertainty relation}uncertainty relation is derived
+for situations where an $n$-qubit state $\rho$ has each of its qubits
+measured in a random and independent basis sampled uniformly from a
+fixed set ${\cal B}$ of bases.  ${\cal B}$ does not necessarily have
+to be \index{mutually unbiased bases}mutually unbiased, but we assume
+a lower bound $h$---the so-called {\em \index{average entropic
+uncertainty bound}average entropic uncertainty bound}---on the
+average \index{entropy!Shannon}Shannon entropy of the distribution $P_{\vartheta}$, obtained
+by measuring an arbitrary one-qubit state in basis $\vartheta \in
+{\cal B}$, meaning that $\frac{1}{|{\cal B}|}\sum_{\vartheta}
+\H(P_{\vartheta}) \geq h$.
+
+\medskip
+\noindent
+{\bf {\em Second Uncertainty Relation (informal):}} {\em Let $\cal B$ be a
+  set of bases with an average entropic uncertainty bound $h$ as
+  above.  Let $P_{\theta}$ denote the probability distribution defined
+  by measuring an arbitrary $n$-qubit state $\rho$ in basis $\theta
+  \in {\cal B}^n$. For a uniform choice $\Theta \in_R {\cal B}^n$,
+  it holds except with negligible probability (over $\Theta$ and over
+  $P_{\theta}$) that %for every $\theta$, we have
+\begin{equation}\label{main}
+\hmin(P_\theta \mid \Theta=\theta) \gtrsim n h.
+\end{equation}
+} \medskip 
+
+Observe that (\ref{main}) cannot be improved significantly since the
+min-entropy of a distribution is at most equal to the Shannon entropy.
+Our uncertainty relation is therefore asymptotically tight when the
+bound $h$ is tight.
+
+Any lower bound on the Shannon entropy associated to a set of
+measurements ${\cal B}$ can be used in (\ref{main}).  In the special
+case where the set of bases is ${\cal B}=\{+,\times\}$ (i.e. the two
+BB84 bases named after Bennett and Brassard who used them in the first
+quantum-key-distribution protocol~\cite{BB84}), 
+$h$ is known precisely using Maassen and Uffink's
+entropic relation~\cite{MU88}, see~(\ref{eq:maassenuffink}).  We
+get $h=\frac{1}{2}$ and (\ref{main}) results in $\hmin(P_{\theta} \mid
+\Theta=\theta) \gtrsim \frac{n}{2}$.
+%% For ${\cal B}=\{+,\times,\oslash\}$ where 
+%% $\oslash$ denotes the circular
+%% basis, $h=\frac{2}{3}$ has also been shown tight in \cite{Ruiz93}.
+%% In this case, (\ref{main}) provides 
+%% $\hmin(P_{\theta} \mid {\cal E}_{\theta}) \geq \frac{2(1-\delta)n}{3}$.
+Uncertainty relations for the \index{BB84 coding scheme}BB84 coding
+scheme are useful, since this coding is widely used in
+quantum cryptography.  Its resilience to imperfect quantum channels,
+sources, and detectors is an important advantage in practice.
+
+A major difference between the first and second uncertainty relation
+is that while both relations can be used to bound the min-entropy
+conditioned on an event, this event happens in the latter case with
+probability essentially 1 (on average) whereas the corresponding event
+from the first relation (defined in Corollary~\ref{cor:hadamard}) only
+happens with probability about $1/2$.
+
+
+\subsection{\QKD against Quantum-Memory-Bounded Eavesdropper}
+We illustrate the versatility of our second uncertainty relation by
+applying it to Quantum-Key-Distribution (\QKD) settings.  \QKD is the
+art of distributing a secret key between two distant parties, Alice
+and Bob, using only a completely insecure quantum channel and
+authentic classical communication. \QKD protocols typically provide
+\index{unconditional security}unconditional security, i.e., even an
+adversary with unlimited resources cannot get any information about
+the key.  A major difficulty when implementing \QKD schemes is that
+they require a low-noise quantum channel.  The tolerated noise level
+depends on the actual protocol and on the desired security of the key.
+Because the quality of the channel typically decreases with its
+length, the maximum tolerated noise level is an important parameter
+limiting the maximum distance between Alice and Bob.
+
+We consider a model in which the adversary has a limited amount of
+quantum memory to store the information she intercepts during the
+protocol execution. In this model, we show that the maximum
+tolerated noise level is larger than in the standard scenario where
+the adversary has unlimited resources.  
+For {\em one-way \QKD protocols} which are protocols where error-correction is
+performed non-interactively (i.e., a single classical message is sent
+from one party to the other), we show the following result:
+
+\medskip
+\noindent
+{\bf {\em \QKD Against Quantum-Memory-Bounded Eavesdroppers:}} {\em Let
+  $\cB$ be a set of orthonormal bases of the two-dimensional Hilbert space $\cH_2$ with average entropic
+  uncertainty bound $h$. Then, a \emph{one-way \QKD-protocol} produces
+  a secure key against eavesdroppers whose quantum-memory size is
+  sublinear in the length of the raw key at a positive rate, as long as
+  the bit-flip probability $p$ of the quantum channel fulfills $h(p)
+  < h $ where $h(\cdot)$ denotes the binary Shannon-entropy
+  function.  } \medskip
+
+Although this result does not allow us to improve (compared to
+unbounded adversaries) the maximum error-rate for the BB84 protocol
+(the \index{protocol!4-state}4-state protocol), the
+\index{protocol!6-state}6-state (using three mutually unbiased bases)
+protocol can be shown secure against adversaries with memory bound
+sublinear in the secret-key length as long as the bit-flip error-rate
+is less than $17\%$. This improves over the maximal error-rate of
+$13\%$ for this protocol against unbounded adversaries.  We also show
+that the generalization of the 6-state protocol to more bases (not
+necessarily mutually unbiased) can be shown secure for a maximal
+error-rate up to $20\%$ provided the number of bases is large enough.
+Note that the best known one-way protocol based on qubits is proven
+secure against general attacks for an error-rate of only up to roughly
+$14.1\%$, and the theoretical maximum is $16.3\%$~\cite{RGK05}.
+
+The quantum-memory-bounded eavesdropper model studied here is not
+comparable to other restrictions on adversaries considered in the
+literature (e.g. \emph{individual attacks}, where the eavesdropper is
+assumed to apply independent measurements to each qubit sent over the
+quantum channel as considered by Fuchs, Gisin, Griffiths, Niu, Peres,
+and L\"utkenhaus~\cite{FGGNP97,Lutkenhaus00}).  In fact, these
+assumptions are generally artificial and their purpose is to simplify
+security proofs rather than to relax the conditions on the quality of
+the communication channel from which secure key can be generated.  We
+believe that the quantum-memory-bounded eavesdropper model is more
+realistic.
+
+%% On the technical side, we derive a new type of uncertainty relation
+%% involving the min-entropy of a quantum encoding
+%% (Theorem~\ref{thm:hadamard}, and
+%% Corollary~\ref{cor:hadamard}), which might be useful in other
+%% contexts as well.  The new relation is then used in combination with a
+%% proof technique by Shor and Preskill \cite{SP00}, where the actions of
+%% honest players are purified, and with privacy amplification against
+%% quantum adversaries as introduced by Renner and K\"onig~\cite{RK05, Renner05}.
+
+
+\section{Outline of the Thesis}
+In Chapter~\ref{chap:prelim}, we introduce notation and present some
+basic concepts from probability and quantum information theory like
+quantum states and various kinds of their entropies. We prepare the
+stage by reproducing and slightly extending the results about privacy
+amplification via two-universal hashing from Renner's PhD thesis \cite{Renner05}.
+
+Chapter~\ref{chap:ClassicalOT} is the only (almost) exclusively
+classical chapter. It introduces the different flavors of oblivious
+transfer and gives a characterization of the security for the sender
+of \OT in terms of non-degenerate linear functions. It is cast in a
+stand-alone manner and the rest of the thesis can be understood
+without reading this chapter.
+
+In Chapter~\ref{chap:uncertrelations}, the basis for the security
+proofs of the following chapters is laid by establishing the quantum
+min-entropic uncertainty relations. The following
+Chapters~\ref{chap:RabinOT} and \ref{chap:12OT} contain the quantum
+definitions, protocols and security proofs for \RabinOT and \OT,
+respectively. Chapter~\ref{chap:qbc} treats quantum bit commitment.
+Two flavors of the ``binding property'' are defined and the techniques
+from the two previous chapters are used to prove security in the
+bounded-quantum-storage model.
+
+Chapter~\ref{chap:qkd} is devoted to another application of the
+(second) uncertainty relation, quantum key distribution against a
+quantum-memory-bounded eavesdropper. The last
+Chapter~\ref{chap:conclusions} addresses some practical issues in
+greater detail and concludes.
+
+A short summary of the notation, the bibliography and an index
+can be found at the end of the thesis.
+
+% Enjoy the ride!
+
+\section{Related Work}
+The classical bounded-storage model is described in
+Section~\ref{sec:ClassicalBSMIntro}. Besides work pointed out
+in the overview of the contributions in
+Section~\ref{sec:contributions} above, it is worth mentioning that several protocols aiming at achieving quantum oblivious transfer have been proposed. After Wiesner's original conjugate-coding protocol~\cite{Wiesner83}, Bennett, Brassard, Cr\'epeau, and Skubiszewska proposed an interactive protocol for \OT~\cite{BBCS91}, whose security was subsequently analyzed by Cr\'epeau~\cite{Crepeau94}, Mayers, Salvail~\cite{MS94, Mayers95}, and Yao~\cite{Yao95}. The protocol from \cite{BBCS91} is interactive and can be easily broken by a dishonest receiver with unbounded quantum memory. To ensure that the receiver actually performs a measurement, it was suggested to use (quantum) bit-commitment schemes such as~\cite{BCJL93} which were believed to be secure against such adversaries at this point in time. After the impossibility proofs of quantum bit-commitment by Lo and Chau~\cite{LC97}, and Mayers~\cite{Mayers97}, and of oblivious transfer by Lo~\cite{Lo97}, it became clear that assumptions are necessary in order to securely realize these primitives. Compared to these previous attempts, the protocols in this thesis are simpler, non-interactive, and provably secure according to stronger security definitions.
+
+Work related to classical OT-reductions is referred to in the introductory sections to
+Chapter~\ref{chap:ClassicalOT} in Sections~\ref{sec:introtoNDLF}
+and~~\ref{sec:reductions}.  Previous work about quantum uncertainty
+relations is described in Section~\ref{sec:uncerthistory}.
+
+
+
+%% \subsubsection{Classical Bounded-Storage Model}
+
+%% \subsubsection{OT Reductions}
+%% \subsubsection{Uncertainty Relations}
+%% \subsubsection{QKD}
+
+
+%% The history of uncertainty relations starts with Heisenberg who showed
+%% that the outcomes of two non-commuting observables $A$ and $B$ applied
+%% to any state $\rho$ are not easy to predict simultaneously.  However,
+%% Heisenberg only speaks about the variance of the measurement results,
+%% and his result was shown to have several shortcomings in
+%% \cite{HU88,Deutsch83}.  More general forms of uncertainty relations
+%% were proposed in \cite{BiMy75} and \cite{Deutsch83} to resolve these
+%% problems.  The new relations were called {\em entropic uncertainty
+%%   relations}, because they are expressed using Shannon entropy instead
+%% of the statistical variance.
+%% % Such relations are called {\em entropic uncertainty relations}. 
+%% %In addition to evade the problems of (\ref{robertson}), 
+%% Entropic uncertainty relations have the advantage of being 
+%% pure information theoretic statements. The first 
+%% entropic uncertainty relation was introduced by Deutsch\cite{Deutsch83}
+%% and stated that
+%% %\begin{equation}\label{deutsch}
+%%  $\H(P)+\H(Q) \geq -2\log{\frac{1+c}{2}}$,
+%% %\end{equation}
+%% where $P,Q$ are random variables representing the measurement
+%% results and  $c$ is the maximum inner product norm between any eigenvectors
+%% of $A$ and $B$. 
+%% %Notice that another advantage of (\ref{deutsch}) over
+%% %Heisneberg's result is that its right-hand side does not
+%% %depend on $\ket{\psi}$ which makes it truly general
+%% %and non-trivial as long as $c<1$.
+%% First conjectured
+%% by Kraus\cite{Kraus87}, Maassen and Uffink\cite{MU88} improved
+%% %(\ref{deutsch}) 
+%% Deutsch's relation to the optimal
+%% \begin{equation}\label{maassenuffink}
+%% \H(P)+\H(Q) \geq -2\log{c}.
+%% \end{equation}
+%% %Relation (\ref{maassenuffink}) 
+%% %has been used for locking/unlocking 
+%% %classical correlations in quantum states\cite{DHLST03} and for the analysis
+%% %of the resilience of quantum symmetric encryption schemes
+%% %against known plaintext attacks\cite{DPS04}.
+
+%% Although a bound on Shannon entropy can be helpful
+%% in some cases, it is usually not good enough in cryptographic applications. 
+%% The main tool
+%% to reduce the adversary's information --
+%%  privacy amplification\cite{BBR88,ILL89,BBCM95,RK05,Renner05} --
+%% only works if a bound on the adversary's min-entropy (in fact
+%% collision entropy) is known. 
+%% Unfortunately, knowing the Shannon entropy of a distribution
+%% does in general not allow
+%% to bound its higher order R\'enyi entropies.   
+
+%% An entropic uncertainty relation involving R\'enyi entropy of order
+%% $2$ (i.e. {\em collision entropy}) was introduced by
+%% Larsen\cite{Larsen90,Ruiz95}.  Larsen's relation quantifies precisely
+%% the collision entropy for the set $\{A_i\}_{i=1}^{d+1}$ of \emph{all}
+%% maximally non-commuting observables, where $d$ is the dimension of the
+%% Hilbert space.  Its use is therefore restricted to quantum coding
+%% schemes that take advantage of \emph{all} $d+1$ observables, i.e. to
+%% schemes that are difficult to implement in practice.
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \section{Introduction from NDLF paper}
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% 1-2 Oblivious Transfer, \OT\ for short, is a two-party primitive which
+%% allows a sender to send two bits (or, more generally, strings) $B_0$
+%% and $B_1$ to a receiver, who is allowed to learn one of the two
+%% according his choice $C$. Informally, it is required that the receiver only
+%% learns $B_C$ but not $B_{1-C}$ ({\em obliviousness}), while at the
+%% same time the sender does not learn $C$ ({\em privacy}). \OT\ was
+%% introduced in~\cite{Wiesner83} under the name of ``multiplexing'' in the
+%% context of quantum cryptography, and, inspired by~\cite{Rabin81} where a
+%% different flavor was introduced, later re-discovered in~\cite{EGL82}.
+
+%% \OT\ turned out to be very powerful in that it was shown to be sufficient
+%% for secure general two-party computation~\cite{Kilian88}. On the other
+%% hand, it is quite easy to see that unconditionally secure \OT\ is not
+%% possible without any assumption.  Even with the help of quantum
+%% communication and computation, unconditionally secure \OT\ remains
+%% impossible~\cite{LC97,Mayers97}.  As a consequence, much effort has been
+%% put into constructing unconditionally secure protocols for \OT\ using
+%% physical assumptions like various models for noisy
+%% channels~\cite{CK88,DKS99,DFMS04,CMW04}, or a memory bounded
+%% adversary~\cite{CCM98,Din01,DHRS04}.  Similarly, much effort has been
+%% put into reducing \OT\ to (seemingly) weaker flavors of \pOT, like
+%% \RabinOT, \XOT, etc.~\cite{Crepeau87,BC97,Cachin98,Wolf00,BCW03,CS06}.  
+
+%% In this work, we focus on a slightly modified notion of \OT, which we
+%% call {\em Randomized} \OT, \RandOT\ for short, where the bits (or
+%% strings) $B_0$ and $B_1$ are not {\em in}put by the sender, but
+%% generated uniformly at random during the \RandOT\ and then {\em
+%%   out}put to the sender. It is still required that the receiver only
+%% learns the bit (or string) of his choice, $B_C$, whereas the sender
+%% does not learn any information on $C$. It is obvious that a \RandOT\ can easily be turned
+%% into an ordinary \OT\, simply by using the generated $B_0$ and $B_1$
+%% to mask the actual input bits (or strings). Furthermore, all known
+%% constructions of unconditionally secure \OT\ protocols make
+%% implicitly the detour via \RandOT. 
+
+%% In a first step, we observe that the obliviousness condition of a
+%% \RandOT\ of {\em bits} is equivalent to requiring the XOR $B_0 \oplus
+%% B_1$ to be (close to) uniformly distributed from the receiver's point
+%% of view. The proof is very simple, and it is kind of surprising
+%% that---to the best of our knowledge---this has not been realized
+%% before. We then ask and answer the question whether there is a natural
+%% generalization of this result to \RandOT\ of {\em strings}. Note that
+%% requiring the bitwise XOR of the two strings to be uniformly
+%% distributed is obviously not sufficient. We show that the
+%% obliviousness condition for \RandOT\ of strings can be characterized
+%% in terms of {\em non-degenerate linear functions} (bivariate binary
+%% linear functions which non-trivially depend on both arguments, as
+%% defined in Definition~\ref{def:linear}): obliviousness holds if and
+%% only if the result of applying any non-degenerate linear function to
+%% the two strings is (close to) uniformly distributed from the
+%% receiver's point of view.
+
+%% We then show the usefulness of this new understanding of \OT. We
+%% demonstrate this on the problem of reducing \OT\ to weaker primitives.
+%% Concretely, we show that the reducibility of an ordinary \OT\ to
+%% weaker flavors via a non-interactive reduction follows by a trivial
+%% argument from our characterization of the obliviousness condition.
+%% This is in sharp contrast to the current literature: The proofs given
+%% in~\cite{BC97,Wolf00,BCW03} for reducing \OT\ to \XOT, \GOT\ and \BUOT\ 
+%% (we refer to Section~\ref{sec:application} for a description of these
+%% flavors of \pOT) are rather complicated and tailored to a particular
+%% class of privacy-amplifying hash functions; whether the reductions
+%% also work for a less restricted class is left as an open
+%% problem~\cite[page~222]{BCW03}. And, the proof given in~\cite{Cachin98}
+%% for reducing \OT\ to one execution of a general \pUOT\ is not only
+%% complicated, but also incorrect, as we will point out.  Thus, our
+%% characterization of the obliviousness condition allows to simplify
+%% existing reducibility proofs and, along the way, to solve the open
+%% problem posed in~\cite{BCW03}, as well as to improve the reduction
+%% parameters in most cases, but it also allows for new, respectively
+%% until now only incorrectly proven reductions.  Furthermore, our
+%% techniques may be useful for the construction and analysis of \OT\ 
+%% protocols in other settings, for instance in a quantum setting as
+%% demonstrated in~\cite{DFRSS06}, or for computationally secure \OT\ 
+%% with unconditional obliviousness.
+
+%% Finally, we extend our result and show how our characterization of
+%% \RandOT\ in terms of non-degenerate linear functions translates
+%% to \onenOT\ and to \OT in a \emph{quantum setting}. 
+
+
+
+
+
+%% %% First things to try: restricting players memory or time.
+
+
+
+
+%% %% (but by any mean does not learn anything about the other bit)
+
+
+%% %% two primitives Bit Commitment
+%% %% (BC) and Oblivious Transfer (OT) are the basic building blocks of
+%% %% almost all
+
+
+
+
+
+%% %% This thesis is only concerned with information-theoretical security,
+%% %% the strongest reasonable security notion which means that adversarial
+%% %% players have 
+
+
+
+%% %% In cryptography, we want to assure that it is
+%% %% impossible to ``cheat''. We call a protocol secure when there is a
+%% %% guarantee for all players that honestly follow the protocol that the
+%% %% dishonest players 
+
+
+
+%% %% One art of cryptography is to come up with cryptographic protocols
+
+
+
+%% %% This thesis opens up a new line of research by introducing a new
+%% %% cryptographic model called the bounded-quantum-storage model.
+
+
+
+
+
+%% \section{Intro from Rabin \pOT paper}
+%% It is well known that non-trivial two-party cryptographic primitives
+%% cannot be securely implemented if only error-free communication is
+%% available and there is no limitation assumed on the computing power
+%% and memory of the players. Fundamental examples of such primitives are
+%% bit commitment (\BC) and oblivious transfer (\pOT). In \BC, a committer $\C$
+%% commits himself to a choice of a bit $b$ by exchanging information
+%% with a verifier $\V$. We want that $\V$ does not learn $b$ (we say the
+%% commitment is hiding), yet $\C$ can later choose to reveal $b$ in a
+%% convincing way, i.e., only the value fixed at commitment time will be
+%% accepted by $\V$ (we say the commitment is binding). In (Rabin) OT, 
+%% a sender $\A$
+%% sends a bit $b$ to a receiver $\B$ by executing some protocol in such a way that
+%% $\B$ receives $b$ with probability $\frac12$ and nothing with probability
+%% $\frac12$, yet $\A$ does not learn what was received.
+
+
+%% Informally, \BC is not possible with unconditional security since
+%% hiding means that when 0 is committed, exactly the same information
+%% exchange could have happened when committing to a 1. Hence, even if 0
+%% was actually committed to, $\C$ could always compute a complete view of
+%% the protocol consistent with having committed to 1, and pretend that
+%% this was what he had in mind originally. A similar type of argument
+%% shows that OT is also impossible in this setting.
+
+%% One might hope that allowing the protocol to make use of quantum
+%% communication would make a difference. Here, information is stored in
+%% qubits, i.e., in the state of two-level quantum mechanical systems,
+%% such as the polarization state of a single photon. It is well known
+%% that quantum information behaves in a way that is fundamentally
+%% different from classical information, enabling, for instance,
+%% unconditionally secure key exchange between two honest players.
+%% However, in the case of two mutually distrusting parties, we are not
+%% so fortunate: even with quantum communication, unconditionally secure
+%% \BC and \pOT remain impossible~\cite{LC97,Mayers97}.
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "diss"
+%%% End: 
+
+

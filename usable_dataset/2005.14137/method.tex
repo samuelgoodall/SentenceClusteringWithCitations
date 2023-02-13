@@ -1,0 +1,275 @@
+
+\section{Query-Efficient Boundary-based blackbox Attack (\name)}
+\label{sec:subspaces}
+In this section we first introduce the pipeline of \name which is based on HopSkipJumpAttack (HSJA)~\cite{chen2019hopskipjumpattack}. We then illustrate the three proposed query reduction approaches in detail. We provide the theoretic justification of \name in Section~\ref{sec:dimred-theory}.
+The pipeline of the proposed Query-Efficient Boundary-based blackbox Attack (QEBA) is shown in Figure \ref{fig:pipeline} as an illustrative example. The goal is to produce an \advimage that looks like ${\bf x}_{tgt}$ (cat) but is mislabeled as the malicious label (fish) by the victim model.
+% The \sourceimage is the starting point of the attack instance.
+First, the attack initializes the \advimage with ${\bf x}_{src}$.
+% Then it performs an iterative algorithm which takes the \targetimage and a chosen representative subspace as input.
+Then it performs an iterative algorithm consisting of three steps: \textbf{estimate gradient at decision boundary} which is based on the proposed representative subspace, \textbf{move along estimated gradient}, and \textbf{project to decision boundary} which aims to move towards ${\bf x}_{tgt}$.
+% There are two inputs to the attack algorithm: the \targetimage and the optimized representative subspace. The \targetimage is fixed and used during the attack. The optimized representative subspace is generated before the attack and also fixed. The attack itself is an iterative algorithm consisting of three steps: estimating gradient at decision boundary, moving towards estimated gradient, and projecting to decision boundary.
+
+% Before we introduce the three steps in our pipeline in detail, 
+% we first 
+First, define the adversarial prediction score $S$ and the indicator function $\phi$ as:
+\begin{align}
+    S_{{\bf x}_{tgt}}({\bf x}) &= [f({\bf x})]_{y_{mal}} - \max_{y \neq y_{mal}} [f({\bf x})]_y,\\
+    \phi_{{\bf x}_{tgt}}({\bf x}) &= \text{sign}(S_{{\bf x}_{tgt}}({\bf x})) =
+    \begin{cases}
+    1 & \text{if } S_{{\bf x}_{tgt}}({\bf x})\geq 0;\\
+    -1 & \text{otherwise}.
+    \end{cases}
+\end{align}
+% \begin{align}
+%     \phi({\bf x}) &=
+%     \begin{cases}
+%     1 & \text{if } F(x) \text{ equals } y_{mal} \\
+%     -1 & \text{otherwise}.
+%     \end{cases}
+% \end{align}
+We abbreviate the two functions as $S({\bf x})$ and $\phi({\bf x})$ if it does not cause confusion. In boundary-based attack, the attacker is only able to get the value of $\phi$ but not $S$.
+% Then $\bf x$ is adversarial if and only if $S({\bf x})\geq 0$, and the adversary can know the value of $\phi$ in the decision-based black-box setting.
+
+In the following, we first introduce the three interative steps in the attack in Section~\ref{sec:iterative_attack}, then introduce three different methods for generating the optimized representative subspace in Section~\ref{sec:name-S}-\ref{sec:name-I}. 
+
+\subsection{General framework of \name}
+\label{sec:iterative_attack}
+
+\begin{figure}
+    \centering
+    % \includegraphics[width=\linewidth]{figs/estimation.pdf}
+    \includegraphics[width=\linewidth]{figs/arxiv_ver/estimation.jpeg}
+    \caption{Query model and estimate gradient near the decision boundary.}
+    \label{fig:gradient_estimation}
+    % \vspace{-0.5cm}
+\end{figure}
+
+\paragraph{Estimate gradient at decision boundary}
+Denote $\xadv{t}$ as the \advimage generated in the $t$-th step. The intuition in this step is that we can estimate the gradient of $S(\xadv{t})$ using only the access to $\phi$ if $\xadv{t}$ is at the decision boundary. This gradient can be sampled via Monte Carlo method:
+% Therefore, if we assume that $\xadv{t}$ is at the decision boundary, then the gradient of $S$ w.r.t. an \advimage which lies on the decision boundary can be estimated via Monte Carlo method:
+\begin{align}
+    \widetilde{\nabla S} = \frac1B \sum_{i=1}^B \phi(\xadv{t}+\delta {\bf u}_b) {\bf u}_b
+    \label{eq:MC_gradient_estimation}
+\end{align}
+where $\{{\bf u}_b\}$ are $B$ randomly sampled perturbations with unit length and $\delta$ is a small weighting constant. An example of this process is shown in Figure \ref{fig:gradient_estimation}. The key point here is how to sample the perturbation ${\bf u}_b$'s and we propose to draw from a representative subspace in $\mathbb{R}^n$.
+
+Formally speaking, let $W=[w_1, \ldots, w_n] \in \mathbb{R}^{m\times n}$ be $n$ orthonormal basis vectors in $\mathbb{R}^m$, meaning $W^\intercal W = I$. Let $\text{span}(W) \subseteq \mathbb{R}^m$ denote the $n$-dimensional subspace spanned by $w_1, \ldots, w_n$. We would like to sample random perturbations from $\text{span}(W)$ instead of from the original space $\mathbb{R}^m$. In order to do that, we sample ${\bf v}_b \in \mathbb{R}^n$ from unit sphere in $\mathbb{R}^n$ and let ${\bf u}_b = W {\bf v}_b$. The detailed gradient estimation algorithm is shown in Alg.\ref{alg:grad-approx}. 
+Note that if we let $\text{span}(W)=\mathbb{R}^m$, this step will be the same as in \cite{chen2019hopskipjumpattack}. However, we will sample from some representative subspace so that the gradient estimation is more efficient, and the corresponding theoretic justification is discussed in Section \ref{sec:dimred-theory}.
+% In \cite{chen2019hopskipjumpattack} the authors sample uniformly in the unit ball in the entire input space $\mathbb{R}^m$. 
+
+\begin{algorithm}
+\caption{Gradient Approximation Based \name}
+\label{alg:grad-approx}
+\begin{algorithmic}[1]
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+ \renewcommand{\algorithmicensure}{\textbf{Output:}}
+ \REQUIRE a data point on the decision boundary ${\bf x} \in \mathbb{R}^m$, basis of the subspace $W \in \mathbb{R}^{m\times n}$, number of random sampling $B$, access to query the decision of victim model $\phi$.
+ \ENSURE the approximated gradient $G$
+ \STATE sample $B$ random Gaussian vectors of the lower dimension: $V_{rnd} \in \mathbb{R}^{B \times n}$.
+ \STATE project the random vectors onto the gradient basis to get the perturbation vectors: $U_{rnd} = V_{rnd} \cdot W^\intercal$.
+ \STATE get query points by adding perturbation vectors with the original point on the decision boundary: ${\bf x}_q[i] = {\bf x} + U_{rnd}[i]$.
+%  \STATE query the victim model to get the binary decisions(1 for success, -1 otherwise): $D = g_{victim}(X_{query})$
+ \STATE Monte Carlo approximation for the gradient: $G = \frac{1}{B}\sum_{i=1}^{B} \phi({\bf x}_q[i]) \cdot U_{rnd}[i]$
+ \RETURN $G$
+\end{algorithmic}
+\end{algorithm}
+\vspace{-0.5cm}
+
+
+% \textbf{Difference on Gradient Estimation in Boundary-based Attack compared with Score-based Attack.} Note that both score-based and gradient-assisted boundary-based attacks do gradient estimation, but both the usage of estimated gradients and the capability of the attacker are different. 
+% In score-based attacks, the attacker keep moving the image (which has the benign label) towards the estimated gradient direction until it is predicted as the adversarial label. In boundary-based attacks, the \advimage on the boundary is moved toward the gradient direction so that its adversarial prediction score is increased, and then project back to the boundary so that its distance towards the target-image is decreased.
+% In score-based attacks, gradient estimation can be done at each data point with model's confidence scores, but the boundary-based attackers are only able to estimate gradients at the decision boundary using Monte Carlo methods. 
+% \Huichen{todo:move}
+
+\paragraph{Move along estimated gradient}
+After we have estimated the gradient of adversarial prediction score $\nabla S$, we will move the $\xadv{t}$ towards the gradient direction:
+\begin{align}
+    \label{eqn:move-grad}
+    \hat{\bf x}_{t+1} = \xadv{t} + \xi_t \cdot \frac{\widetilde{\nabla S}}{||\widetilde{\nabla S}||_2}
+\end{align}
+where $\xi_t$ is the step size at the $t$-th step. Hence, the prediction score of the adversarial class will be increased.
+
+\vspace{-2mm}
+\paragraph{Project to decision boundary}
+% Now that the adversarial prediction score is larger than 0\bo{score or $\phi$? I think we should not talk about score any more in our method sinc it won't use it right? otherwise it would be confusing. we can introduce score for score based attack and be done. never mention it again in our method.}
+Current $\hat{\bf x}_{t+1}$ is beyond the boundary, we can move the \advimage towards the target image so that it is projected back to the decision boundary:
+\begin{align}
+    \label{eqn:binary}
+    \xadv{t+1} = \alpha_t \cdot {\bf x}_{tgt} + (1-\alpha_t) \cdot \hat{\bf x}_{t+1}
+\end{align}
+where the projection is achieved by a binary search over $\alpha_t$.
+
+Note that we assume $\xadv{t}$ lies on the boundary while ${\bf x}_{src}$ does not lie on the boundary. Therefore, in the initialization step we need to first apply a project operation as in Eqn. \ref{eqn:binary} to get $\xadv{0}$.
+
+In the following sections, we will introduce three exploration for the representative subspace optimization from spatial, frequency, and intrinsic component perspectives.
+% In each iterative step we estimate gradient by sampling from a representative subspace and move the \advimage towards the estimated gradient direction. Then we move the \advimage towards the target-image and project it back to the boundary.
+
+% To achieve query efficiency, we aim to optimize a subspace for the gradient matrix with a $\rho$ as large as possible to sample from based on Corollary \ref{tho:dimred}.
+% This is equivalent to optimize a representative subspace to reduce the query  space, and then leverage linear mapping to project the subspace back to the original higher-dimensional space. 
+% In particular, we propose three approaches to optimize the subspace:
+% spatial transformation, low-frequency optimization, and intrinsic components optimization. In the following discussion we assume the image is an $N\times N$ RGB image, which means the dimension of entire image space is $m=3\times N \times N$.
+
+% \subsection{Our pipeline}
+%  Define the attack loss and the indicator function:
+% \begin{align}
+%     S_{{\bf x}_{tgt}}({\bf x}) &= [f({\bf x})]_{y_{mal}} - \max_{y \neq y_{mal}} [f({\bf x})]_y\\
+%     \phi_{{\bf x}_{tgt}}({\bf x}) &= \text{sign}(S_{{\bf x}_{tgt}}({\bf x})) =
+%     \begin{cases}
+%     1 & \text{if } S_{{\bf x}_{tgt}}({\bf x})\geq 0\\
+%     -1 & \text{otherwise}
+%     \end{cases}
+% \end{align}
+% % \begin{align}
+% %     \phi({\bf x}) &=
+% %     \begin{cases}
+% %     1 & \text{if } F(x) \text{ equals } y_{mal} \\
+% %     -1 & \text{otherwise}.
+% %     \end{cases}
+% % \end{align}
+% We abbreviate the two functions as $S({\bf x})$ and $\phi({\bf x})$ if it does not cause confusion. 
+% % Then $\bf x$ is adversarial if and only if $S({\bf x})\geq 0$, and the adversary can know the value of $\phi$ in the decision-based black-box setting. Thus, 
+% Then the gradient of $S$ w.r.t. an \advimage which lies on the decision boundary can be estimated via Monte Carlo method:
+% \begin{align}
+%     \widetilde{\nabla S} = \frac1B \sum_{i=1}^B \phi({\bf x}+\delta {\bf u}_b) {\bf u}_b
+%     \label{eq:MC_gradient_estimation}
+% \end{align}
+% where $\{{\bf u}_b\}$ are $B$ random perturbations uniformly sampled from the unit sphere in $\mathbb{R}^m$ and $\delta$ is a small weighting constant.
+
+% Each iterative step $t$ starts with an adv-image $\xadv{t}$ on the decision boundary. The update breaks down into two steps:
+% \begin{enumerate}
+%     \item Move the \advimage towards the gradient direction:
+%     \begin{align}
+%         \label{eqn:grad-est}
+%         \hat{\bf x}_{t+1} = \xadv{t} + \xi_t \cdot \frac{\widetilde{\nabla S}}{||\widetilde{\nabla S}||_2}
+%     \end{align}
+%     \item Project the new image back to the decision boundary:
+%     \begin{align}
+%         \label{eqn:binary}
+%         \xadv{t+1} = \alpha_t {\bf x}_{tgt} + (1-\alpha_t) \hat{\bf x}_{t+1}
+%     \end{align}
+%     where the projection is achieved by a binary search over $\alpha_t$.
+% \end{enumerate}
+% Note that the \sourceimage does not lie on the boundary, so we need to first project it onto boundary using Eqn.\ref{eqn:binary} to get $\xadv{0}$.
+
+\subsection{Spatial Transformed Subspace (\name-S)}
+\label{sec:name-S}
+First we start with the spatial transformed query reduction approach.
+The intuition comes from the observation that the gradient of input image has a property of local similarity\cite{ilyas2018prior}. Therefore, a large proportion of the gradients lies on the low-dimensional subspace spanned by the bilinear interpolation operation\cite{spath1993two}.
+% The intuition comes from image downsampling where a group of image pixels in a rectangle space is merged into one `hyper pixel' in the new image, and we use the inverse process here.
+In order to sample random perturbations for an image, we first sample a lower-dimensional random perturbation $Q$ of shape $\lfloor \frac Nr \rfloor \times \lfloor \frac Nr \rfloor$, where $r$ is the hyperparameter of dimension reduction factor. Then we use bilinear-interpolation to map it back the original image space, $X = \text{Bil\_Interp}(Q)$.
+
+The basis of this spatial transformed subspace is the images transformed from unit perturbations in the lower space:
+\begin{align*}
+    w^{(i,j)} = \text{Bil\_Interp}(e^{(i,j)}),\quad 0\leq i,j \leq \lfloor N/r \rfloor
+\end{align*}
+where $e^{(i,j)}$ represents the unit vector that has 1 on the $(i,j)$-th entry and 0 elsewhere.
+% In order to sample random perturbations for an image, we sample a smaller vector $v_h$ where each value is the perturbation for a group of pixels in the image. Let the group size be $r_g > 0$, $v_h \sim \mathbb{R}^{\frac{m}{r_g}}$. Then we map $v_h$ into $\mathbb{R}^{m}$ by copying each value for $r_g$ times to fill the pixels in the group.
+% \bo{remember to cite the algorithm if you put in the paper}
+
+\subsection{Low Frequency Subspace (\name-F)}
+\label{sec:name-F}
+In general the low frequency subspace of an image contains the most of the critical information, including the gradient information\cite{guo2018low}; while the high frequency signals contain more noise than useful content.
+Hence, we would like to sample our perturbations from the low frequency subspace via Discrete Cosine Transformation(DCT)\cite{ahmed1974discrete}. Formally speaking, define the basis function of DCT as:
+\begin{align}
+    \phi(i,j) = \cos \bigg(\frac{(i+\frac12)j}{N} \pi \bigg)
+\end{align}
+The inverse DCT transformation is a mapping from the frequency domain to the image domain $X=\text{IDCT}(Q)$:
+\begin{align}
+    X_{i_1,i_2}=\sum_{j_1=0}^{N-1}\sum_{j2=0}^{N-1} N_{j_1} N_{j_2} Q_{j_1,j_2} \phi(i_1,j_1) \phi(i_2,j_2)
+\end{align}
+where $N_j=\sqrt{1/N}$ if $j=0$ and otherwise $N_j=\sqrt{2/N}$.
+
+We will use the lower $\lfloor N/r \rfloor$ part of the frequency domain as the subspace, i.e.
+\begin{align}
+    w^{(i,j)} = \text{IDCT}(e^{(i,j)}),\quad 0\leq i,j \leq \lfloor N/r \rfloor
+\end{align}
+where hyperparameter $r$ is the dimension reduction factor.
+% Here $r$ denotes the hyperpameter of dimension reduction factor. For example, if we use $r=4$, we get a subspace whose dimension is $1/16$ of that from the original space.
+
+% The basis of the frequency domain is the images transformed from unit vectors in the frequency space:
+% \begin{align}
+%     w^{(i,j)} = \text{IDCT}(e^{(i,j)})
+% \end{align}
+% where $e^{(i,j)}$ represents the unit vector that has 1 on the $(i,j)$-th entry and 0 elsewhere. We use the first $\lfloor N/r \rfloor$ part as the basis of the low frequency subspace:
+% \begin{align}
+%     \{w^{(i,j)}\},\quad 0\leq i,j \leq \lfloor N/r \rfloor
+% \end{align}
+
+% Discrete Cosine Transformation (DCT) can transform an image to frequency domain and is used for image compression by only keeping the low-frequency components~\cite{wallace1992jpeg}. Here we first sample a low-dimension random vector $v_f \in \mathbb{R}^{r_f}$ as the perturbations for low-frequency components. To map this vector to the original space, we append 0's to it as the perturbations for higher-frequency components, then do an inverse DCT to get back to image domain.
+
+\subsection{Intrinsic Component Subspace (\name-I)}
+\label{sec:name-I}
+% \Xiaojun{gradient space, transferbility, randomized, disk}
+\begin{figure}
+    \centering
+    % \includegraphics[width=\linewidth]{figs/subspace.pdf}
+    \includegraphics[width=\linewidth]{figs/arxiv_ver/subspace.jpeg}
+    \caption{Generate representative subspace from the original high-dimensional gradient space.}
+    \label{fig:bases_generation}
+    \vspace{-0.5cm}
+\end{figure}
+
+Principal Component Analysis (PCA)\cite{wold1987principal} is a standard way to perform dimension reduction in order to search for the intrinsic components of the given instances. Given a set of data points in high dimensional space, PCA aims to find a lower dimensional subspace so that the projection of the data points onto the subspace is maximized. 
+
+Therefore, it is possible to leverage PCA to optimize the subspace for model gradient matrix. However, in order to perform PCA we will need a set of data points. In our case that should be a set of gradients of $S({\bf x})$ w.r.t. different $\bf x$. This is not accessible under black-box setting. Hence, we turn to a set of `reference models' to whose gradient we have access. As shown in Figure \ref{fig:bases_generation}, we will use a reference model to calculate a set of image gradients ${\bf g}_1, {\bf g}_2, \ldots, {\bf g}_K \in \mathbb{R}^m$ Then we perform a PCA to extract its top-$n$ principal components - ${\bf w}_1, \ldots, {\bf w}_n \in \mathbb{R}^m$. These $w$'s are the basis of the Intrinsic Component Subspace.
+Note that different from transferability, we do not restrict the reference models to be trained by the same training data with the original model, since we only need to search for the intrinsic components of the give dataset which is relatively stable regarding diverse models.
+% By fitting an optimal subspace over gradients of different model, we can find the subspace that captures the the gradient space on the task for all the models. 
+% The detailed algorithm is shown in Alg. \ref{alg:basis-gen}.
+
+
+In practice, the calculation of PCA may be challenging in terms of time and memory efficiency based on large high-dimensional dataset (the data dimension on ImageNet is over 150k and we need a larger number of data points, all of which are dense). Therefore, we leverage the randomized PCA algorithms\cite{halko2011finding} which accelerates the speed of PCA while achieving comparable performance.
+% In addition, we can further improve time efficiency by noticing that we can calculate the subspace of the top-$K$ components of PCA without calculating the exact value of the top-$K$ components. The detailed algorithm is as follows\Xiaojun{todo}.
+
+An additional challenge is that the matrix $X$ may be too large to be stored in memory. Therefore, we store them by different rows since each row (i.e. gradient of one image) is calculated independently with the others. The multiplication of $X$ and other matrices in memory are then implemented accordingly.
+
+
+% \begin{algorithm}
+% \caption{Basis Generation Algorithm}
+% \label{alg:basis-gen}
+% \begin{algorithmic}[1]
+%  \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+%  \renewcommand{\algorithmicensure}{\textbf{Output:}}
+%  \REQUIRE attacker-owned data $X\in \mathbb{R}^{n\times m}$, substitute model ${f}_{sub}$, number of basis $n_b$
+%  \ENSURE  orthonormal basis $B$
+%  \STATE calculate the gradient of $X$ with respect to the model ${f}_{sub}$: $\Delta {f}_{sub}(X) \in \mathbb{R}^{n\times m}$.
+% %  \STATE 
+%  \IF {the size of gradient matrix is small} 
+%     \STATE compute the singular value decomposition of gradient matrix: $\Delta {f}_{sub}(X) = U_f \Sigma_f V_f^T$. 
+%  \ELSE 
+%     \STATE approximate the range of gradient matrix with Algorithm \ref{alg:col_space_approx}.
+%  \ENDIF
+%  \RETURN the basis is the first $b$ rows of matrix $V_f$: $B = V_f[:n_b, :]$.
+% \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}
+% \caption{Matrix Column Space Approximation}
+% \label{alg:col_space_approx}
+% \begin{algorithmic}[1]
+%  \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+%  \renewcommand{\algorithmicensure}{\textbf{Output:}}
+%  \REQUIRE matrix $X\in \mathbb{R}^{n\times m}$, the rank to keep from the column space of the matrix $n_r$, a hyperparameter $t$ representing the trade-off between approximation precision and running time
+%  \ENSURE column space $R \in {n\times n_r}$
+%  \STATE sample a random Gaussian matrix $V_{randn} \mathbb{R}^{m\times n_r}$.
+%  \STATE multiply target matrix with random matrix and get $Y_0 = X V_{randn} \in \mathbb{R}^{n\times n_r}$.
+%  \FOR{$i = 1$ to $t$}
+%     \STATE $Y_i = XX^T Y_{i-1}$.
+%  \ENDFOR
+%  \STATE do QR decomposition on $Y_t$ to get $Y_t = Q_t R_t$.
+%  \RETURN $R = R_t \in \mathbb{R}^{n_r\times n_r}$
+% \end{algorithmic}
+% \end{algorithm}
+
+% \begin{figure*}
+%     \centering
+%     \includegraphics[width=\textwidth]{figs/pipeline_v1.pdf}
+%     \caption{Overall pipeline of the attack version 1}
+%     \label{fig:pipeline_v1}
+% \end{figure*}
+
+% \begin{figure*}
+%     \centering
+%     \includegraphics[width=\textwidth]{figs/pipeline_v2.pdf}
+%     \caption{Overall pipeline of the attack version 2}
+%     \label{fig:pipeline_v2}
+% \end{figure*}

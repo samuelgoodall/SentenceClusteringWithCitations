@@ -1,0 +1,743 @@
+\ifx\mydefs\undefined\else\endinput\fi
+\let\mydefs\relax
+
+%%%%% GENERAL STUFF
+
+\linespread{1.1}
+\allowdisplaybreaks[2]
+
+\ifx\loadcyr\undefined\else
+\input cyracc.def
+\makeatletter
+\font\elvcyr=wncyr10 at 1\@ptsize pt
+\font\elvcyb=wncyb10 at 1\@ptsize pt
+\font\elvcyi=wncyi10 at 1\@ptsize pt
+\makeatother
+\def\cyr{\elvcyr\cyracc}
+\def\cyb{\elvcyb\cyracc}
+\def\cyi{\elvcyi\cyracc}
+\fi
+
+%obsolete
+%-\newcounter{Case}
+%-\def\Cases{\setcounter{Case}0}
+%-\def\case{\par\pagebreak[2]\medskip\noindent\refstepcounter{Case}%
+%-   \textbf{Case \theCase:}\bme\ignorespaces}
+
+\hyphenation{ir-re-flex-ive}
+
+
+%%%%% SYMBOLS
+
+%%% auxiliary macros
+
+\let\M\mathit
+\def\gobble#1{}
+\def\fixsup#1#2{{#1\let\dp\gobble\mathstrut}^#2_}
+\let\mr\mathrel
+\let\me\enskip
+\def\bme{\hskip.75em\relax}
+
+
+%%% general logic
+
+%\def\et{\mathbin\&}
+\let\et\land
+\let\eq\leftrightarrow
+\let\EQ\Leftrightarrow
+\def\nequiv{\not\equiv}
+\def\iff{\quad\text{iff}\quad}
+\let\LOR\bigvee%\limits ?
+\let\ET\bigwedge%\limits ?
+\let\TO\Rightarrow
+\def\?{\mathbin?}
+\let\ot\leftarrow
+\let\Lto\supset
+\let\Leq\equiv
+\let\model\vDash
+\let\nmodel\nvDash
+\def\Par{\mathrm{Par}}
+
+\newbox\circlebox
+\setbox\circlebox\hbox{$\bigcirc$}
+\def\circled#1{%
+  \setbox0\hbox to\wd\circlebox{\hss$#1$\hss}\wd0=0pt
+  \box0\copy\circlebox}
+\def\cand{\mathbin{\circled\land}}
+\def\cor{\mathbin{\circled\lor}}
+\def\ccir{\mathbin{\circled\circ}}
+\def\cneg{\circled\neg}
+
+
+%%% greek
+
+\let\fii\varphi
+\let\tet\vartheta
+\let\ep\varepsilon
+\let\kap\varkappa
+\let\roo\varrho
+\def\greek#1{$\expandafter\greeknum\csname c@#1\endcsname$}
+\makeatletter
+\def\greeknum#1{\ifcase#1\or\alpha\or\beta\or\gamma\or\delta\or\ep
+      \or\digamma\or\zeta\or\eta\or\tet\or\iota\else\@ctrerr\fi}
+\makeatother
+
+
+%%% sets, functions, sequences
+
+\def\p#1{\langle#1\rangle}
+\def\vp#1{[#1]}
+\def\lh#1{\lvert#1\rvert}
+\let\abs\lh
+\let\cat\smallfrown
+%\def\ccat{\mathbin\frown}%\smallsmile
+%\let\vec\overline
+\let\lvec\overrightarrow
+\let\bez\smallsetminus
+\let\sdif\vartriangle
+\let\sset\subseteq
+\let\nsset\nsubseteq
+\let\ssset\subsetneq
+\let\Sset\supseteq
+\let\nSset\nsupseteq
+\let\sSset\supsetneq
+\let\onto\twoheadrightarrow
+\let\otno\twoheadleftarrow
+\let\embed\hookrightarrow%\rightarrowtail
+\def\cupd{\mathbin{\dot\cup}}
+%\def\bigcupd{\mathop{\overset{\text{\large.}}{\bigcup}}} why was that?
+\def\bigcupd{\mathop{\dot\bigcup}}
+%\let\bigcupd\sum
+\def\pw#1{\mathcal P(#1)}
+\let\nul\varnothing
+\def\res{\mathbin\restriction}
+\let\bd\partial
+\def\two{\mathbf2}
+\def\lex{\mathrm{Lex}}
+\let\nulstr\epsilon
+%-\def\iim{^{-1\twoprimes}}
+%-\def\img{^{%\mkern1mu hmmmm
+%\,\twoprimes}}
+%% 0.2\fontdimen etc. = 18/5 mu
+%-\def\twoprimes{\raise.2\fontdimen6\scriptfont2\hbox{$\scriptstyle\prime\prime$}}
+%%full-featured version:
+%%\def\iim{^{-1\twoprimes}}
+%%\def\img{^{\mkern1mu\twoprimes}}
+%%\def\twoprimes{\mathchoice{}{}%
+%%   {\ttwoprimes\scriptfont\scriptstyle}%
+%%   {\ttwoprimes\scriptscriptfont\scriptscriptstyle}}
+%%\def\ttwoprimes#1#2{\raise .2\fontdimen 6 #12
+%%   \hbox{\mathsurround 0pt$#2\prime\prime$}}
+%%
+
+%retraction pairs:
+\newcommand\rpair[3][3em]{\mathrel{%
+   \begin{matrix}%
+     \strut\smash{\xrightonto{\hbox to#1{\hss$#2$\hss}}}\\[-1.7ex]%
+     \strut\smash{\xleftembed[\hbox to#1{\hss$#3$\hss}]{}}%
+   \end{matrix}}}
+\makeatletter
+%after tex/latex/amsmath/amsmath.sty:
+%%\newcommand{\xrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@{#1}{#2}}
+%%\newcommand{\xleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@{#1}{#2}}
+\newcommand\xrightonto[2][]{\ext@arrow 0359\rightontofill{#1}{#2}}
+\newcommand\xleftembed[2][]{\ext@arrow 3095\leftembedfill{#1}{#2}}
+%%\def\leftarrowfill@{\arrowfill@\leftarrow\relbar\relbar}
+%%\def\rightarrowfill@{\arrowfill@\relbar\relbar\rightarrow}
+\def\leftembedfill{\arrowfill@\leftarrow\relbar\hookleftnoarrow}
+\def\rightontofill{\arrowfill@\relbar\relbar\onto}
+%%\renewcommand{\hookleftarrow}{\DOTSB\leftarrow\joinrel\rhook}
+\def\hookleftnoarrow{\DOTSB\relbar\joinrel\rhook}
+\makeatother
+
+%%% arithmetic
+
+\def\code#1{\ulcorner#1\urcorner}
+\let\num\overline
+%\def\div#1#2{\lfloor\frac{#1}{#2}\rfloor}
+\def\div{\genfrac\lfloor\rfloor{}{}}
+\def\tdiv{\genfrac\lfloor\rfloor{}1}
+\def\dive#1#2{\div{#1}{2^{#2}}}
+\def\tdive#1#2{\lfloor#1/2^{#2}\rfloor}
+\def\fracd#1#2{\frac{\displaystyle#1}{\displaystyle#2}}
+\def\rem{\mathbin{\mathrm{rem}}}
+\def\ljk{\genfrac(){}{}}
+\def\mljk{\genfrac[]{}{}}
+\def\tljk#1#2{(#1|#2)}
+\def\tmljk#1#2{[#1|#2]}
+\def\mbin{\genfrac[]{0pt}{}}
+\def\fl#1{\lfloor#1\rfloor}
+\def\Fl#1{\left\lfloor#1\right\rfloor}
+\def\cl#1{\lceil#1\rceil}
+\def\CL#1{\left\lceil#1\right\rceil}
+\mathchardef\#="2023 % \mathbin\#
+\def\varsm{\mathbin{\overline\#}}
+\def\tr#1{\lVert#1\rVert}%\left\|...\right\| ?
+\def\str#1{[\mkern-2.7mu[#1]\mkern-2.7mu]}% \mathbb[ doesn't work
+\def\mtr#1{\{\mkern-6mu\{#1\}\mkern-6mu\}}
+%\def\divi{\mathrel|}
+\let\divi\mid
+\let\leg\lesseqqgtr
+\let\ass\leftarrow
+\let\hash\looparrowright
+\let\ale\precsim
+\def\nale{\not\precsim}
+\def\Tr{{\mathrm T}}
+\def\mnr#1#2{[#1;#2]}
+\def\mat#1{\begin{pmatrix}#1\end{pmatrix}}
+\def\dmat#1{\begin{vmatrix}#1\end{vmatrix}}
+\def\rsuv{\M{RSUV}}
+\def\bmd{\mathbin\%}
+\def\dle{\mathrel{\dot\le}}
+\def\tsum{\textstyle\sum}
+
+%%% sequent calculus
+
+%\let\seq\Longrightarrow
+%\let\seq\longrightarrow
+\let\seq\vdash
+\def\lft#1{\hbox{$#1$-l}}
+\def\rgt#1{\hbox{$#1$-r}}
+
+\ifx\busspf\undefined\else
+\usepackage{bussproofs}
+\EnableBpAbbreviations
+\def\fCenter{\mathstrut\seq}
+\let\LL\LeftLabel
+\let\RL\RightLabel
+\fi
+
+%%% modal stuff
+
+\let\dia\Diamond
+\def\diadot{\centerdot\dia}
+\ifx\symlasy\undefined
+  \let\origboxdot\boxdot
+  \def\boxdot{{\origboxdot}}
+  \def\centerdot#1{{%
+    % NB: straightforward centering of two boxes does not work in this
+    % case, due to negative depth of some of the characters. Hence the
+    % \mathop business.
+    \setbox0\hbox{$\mathop{#1}$}\dimen0 \ht0
+    \setbox0\hbox{$#1$}\advance\dimen0 -\ht0
+    \setbox2\hbox to\wd0{\hss$\mathop{\cdot}$\hss}\wd2=0pt
+    \lower\dimen0\box2\box0 }}
+\else
+  % lasy font metric is wrong, PR latex/3838
+  \def\boxdot{\centerdot\Box}
+  \def\centerdot#1{{%
+     \setbox0\hbox{$#1$}%
+     \raise0.206\ht0\hbox to\wd0{\hss$\cdot$\hss}%
+     \kern-\wd0 \box0 }}
+\fi
+\def\T{\mathsf T}
+\let\ad\vartriangleright
+%\def\isu{\mathrel{<\llap{$\cdot$}}}
+\let\isu\lessdot
+\def\ru{\mathrel/}
+\def\Ru{\Bigm/}
+\let\sls|
+\def\up{\mathord\uparrow}
+\def\down{\mathord\downarrow}
+\def\Up{{\setbox0\hbox{$\uparrow$}%
+         \lower\dp0\hbox to\wd0{\hss\vrule width4pt height.4pt\hss}%
+         \kern-\wd0\box0}}
+\def\UP{{\setbox0\hbox{$\uparrow$}%
+         \lower\dp0\hbox to\wd0{\hss\vrule width4pt height.4pt\hss}%
+         \kern-\wd0\copy0\kern-\wd0\raise.35ex\box0}}
+\def\Down{{\setbox0\hbox{$\downarrow$}%
+         \raise\ht0\hbox to\wd0{\hss\vrule width4pt depth.4pt\hss}%
+         \kern-\wd0\box0}}
+\def\sgen{\mathrel{\mathord\subseteq\cdot\!}}
+\let\for\Vdash
+\let\nfor\nVdash
+\def\frx{\mathrm{Fr}}
+\def\clx{\lgc{Clx}}
+\def\CLX{\mathrm{CLX}}
+\def\pext{\mathrm{PExt}}
+\def\ECI{\EC^\infty}
+\def\EC{\M{EC}}
+
+%\def\adm{\mathrel{|\mkern-8.5mu\sim}}
+%\def\nadm{\mathrel{|\mkern-8.5mu\not\sim}}
+\newif\ifnadm
+% NB: * = not \long
+\DeclareRobustCommand*\adm{\nadmfalse\doadm}
+\DeclareRobustCommand*\nadm{\nadmtrue\doadm}
+\def\doadm{\mathrel{%
+   \setbox0 \hbox{$\mathop\vdash$}\dimen0 \ht0
+   \setbox0 \hbox{$\vdash$}\advance\dimen0 -\ht0
+   \vrule width.8\fontdimen8 \textfont3 height\ht0 depth\dp0
+   % fontdimen 8 of the extension font family = rule thickness
+   % The .8 makes it optically the same width as the \vdash stem.
+   % I don't understand it, as the \vdash metafont code seems to use
+   % full rule thickness.
+   \mkern-1mu
+   \lower\dimen0 \hbox{$\vcenter{%
+      \ifnadm
+        \setbox0 \hbox{$\scriptstyle\sim\mathstrut$}%
+        \hbox{\hbox to\wd0{\hss$\scriptstyle/$\hss}\kern-\wd0 \box0 }%
+      \else
+        \hbox{$\scriptstyle\sim\mathstrut$}%
+      \fi}$}}}
+
+\def\nr#1{\mathchoice
+  {\nrstyle\displaystyle\scriptstyle{#1}}%
+  {\nrstyle\textstyle\scriptstyle{#1}}%
+  {\nrstyle\scriptstyle\scriptscriptstyle{#1}}%
+  {\nrstyle\scriptscriptstyle\scriptscriptstyle{#1}}}
+\def\nrstyle#1#2#3{%
+  \setbox0\hbox{$#1\bigcirc$}%
+  \vcenter{\hbox to\wd0{\hss$#2#3$\hss}}%
+  \kern-\wd0\box0 }
+
+%%% rm operators
+
+\DeclareMathOperator\dom{dom}
+\DeclareMathOperator\rng{rng}
+\DeclareMathOperator\bit{bit}
+\DeclareMathOperator\card{card}
+\DeclareMathOperator\Size{Size}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\Lh{lh}
+\DeclareMathOperator\md{md}
+\DeclareMathOperator\cls{cl}%\cl clashes
+\let\Pr\relax
+\DeclareMathOperator\Pr{Pr}%get rid of \displaylimits
+\DeclareMathOperator\E{E}
+\DeclareMathOperator\var{var}
+\DeclareMathOperator\cont{cont}
+\DeclareMathOperator\Cut{Cut}
+\DeclareMathOperator\Log{Log}
+\DeclareMathOperator\LogLog{LogLog}
+\DeclareMathOperator\wit{Wit}
+\DeclareMathOperator\Hard{Hard}
+\DeclareMathOperator\eval{eval}
+\DeclareMathOperator\Eval{Eval}
+\DeclareMathOperator\Circ{Circ}
+\DeclareMathOperator\Th{Th}
+\DeclareMathOperator\Mod{Mod}
+\DeclareMathOperator\Df{Def}
+\DeclareMathOperator\Var{Var}
+\DeclareMathOperator\Form{Form}
+\DeclareMathOperator\BS{BS}
+\DeclareMathOperator\prf{Prf}
+\DeclareMathOperator\clq{Clique}
+\DeclareMathOperator\clr{Colour}
+\def\hard{\Hard_}
+\def\avhd{\Hard^A_}
+\DeclareMathOperator\Ext{Ext}
+\DeclareMathOperator\NExt{NExt}
+\DeclareMathOperator\su{s}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Gal{Gal}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\Int{int}%\int clashes
+\DeclareMathOperator\chull{C}
+\DeclareMathOperator\rcl{rcl}
+\DeclareMathOperator\acl{acl}
+\DeclareMathOperator\Res{Res}
+\DeclareMathOperator\Ind{Ind}
+\DeclareMathOperator\dist{dist}
+%redefine the ugly Re, Im:
+\let\Re\relax
+\let\Im\relax
+\DeclareMathOperator\Re{Re}
+\DeclareMathOperator\Im{Im}
+\DeclareMathOperator\tp{tp}
+\DeclareMathOperator\base{bas}
+\DeclareMathOperator\xcl{xcl}
+\DeclareMathOperator\xcb{xcb}
+\DeclareMathOperator\bdt{bd}
+\DeclareMathOperator\crit{crit}
+\DeclareMathOperator\Sub{Sub}
+\DeclareMathOperator\sat{Sat}
+
+%%% complexity classes
+
+\let\cxt\mathrm
+\def\np{\cxt{NP}}
+\def\conp{\cxt{coNP}}
+\def\pnp{\cxt{prNP}}
+\def\rp{\cxt{RP}}
+\def\corp{\cxt{coRP}}
+\def\bpp{\cxt{BPP}}
+\def\pbpp{\cxt{prBPP}}
+\def\zpp{\cxt{ZPP}}
+\def\ma{\cxt{MA}}
+\def\pma{\cxt{prMA}}
+\def\am{\cxt{AM}}
+\def\coam{\cxt{coAM}}
+\def\pam{\cxt{prAM}}
+\def\app{\cxt{APP}}
+\def\ptime{\cxt P}
+\def\prp{\cxt{prP}}
+\def\ph{\cxt{PH}}
+\def\fp{\cxt{FP}}
+\def\CAPP{\M{CAPP}}
+\DeclareMathOperator\poly{poly}
+\def\wpwit{\M{WPHPWIT}}
+\def\mfpp{\cxt{MFRP}}
+\def\frp{\cxt{FRP}}
+\def\tfrp{\cxt{TFRP}}
+\def\pptm{\M{PPTM}}
+\def\tfzpp{\cxt{TFZPP}}
+\def\ppa{\cxt{PPA}}
+\def\ppad{\cxt{PPAD}}
+\def\ppp{\cxt{PPP}}
+\def\pwpp{\cxt{PWPP}}
+\def\nc{\cxt{NC}}
+\def\nci{\nc^1}
+\def\nca{\nci_*}
+\def\psp{\cxt{PSPACE}}
+\def\tc{\cxt{TC}^0}
+\def\Ac{\cxt{AC}^0}
+\def\task#1{{\normalfont\textsc{#1}}}
+\def\pig{\task{Pigeon}}
+\def\wpig{\task{WeakPigeon}}
+\def\lone{\task{Lonely}}
+\def\fac{\task{Factoring}}
+\def\ffac{\task{FullFac}}
+\def\fsr{\task{FacRoot}}
+\def\wfsr{\task{WeakFacRoot}}
+\def\fsrm{\task{FacRootMul}}
+\def\fsro{\task{FacRootOdd}}
+\def\fsre{\task{FacRootEven}}
+\def\sroot{\task{Root}}
+\def\qrec{\task{QuadRec}}
+
+%%% theories
+
+\def\sig{\Sigma^b_}
+\def\pii{\Pi^b_}
+\def\delt{\Delta^b_}
+\def\delz{\Delta_0}%^0
+\def\Sig{\Sigma^B_}
+\def\Pii{\Pi^B_}
+\def\Delt{\Delta^B_}
+\def\st{\expandafter\hat}
+\def\io{\M{IOpen}}
+\def\idz{I\Delta_0}
+\def\bas{\M{BASIC}}
+\def\pv{PV}
+\def\tpv{PV_1}
+\def\sss{S^1_2}
+\def\ttt{T^0_2}
+\def\tv{\M{TV}^0}
+\def\vtc{\M{VTC}^0}
+\def\vtcim{\vtc+\M{IMUL}}
+\def\vnc{\M{\!VNC}^1}
+\def\vnca{\M{\!VNC}^1_*}
+%\def\vncba{\overline{\M{VNC}}\setbox0\hbox{$\textstyle{\M{C}}$}\setbox2\null\ht2=\ht0\dp2=\dp0\box2^1_*}
+\def\vncba{\overline{\M{\!VNC}}{\def\mathpalette##1{##1{}}\vphantom{C}^1_*}}
+\def\lvncba{L_{\overline{\M{\!VNC}}{\def\mathpalette##1{##1{}}\vphantom{\scriptstyle C}^1_*}}}
+%-\def\sigc{\fixsup\Sigma c}
+%-\def\piic{\fixsup\Pi c}
+%-\def\delc{\fixsup\Delta c}
+%-\def\lc{L_{\M{Cnt}}}
+%-\def\cnt{\M{Cnt}_}
+%-\def\cq{\mathbf C^}
+%-\def\cth{C^1_2}
+%-\def\Gcth{GC^1_2}
+\def\BB{\M{BB}}
+\def\bbs{\BB\sig1}
+%-\def\php{\M{sPHP}}
+\def\php{\M{PHP}}
+\def\sphp{\M{sPHP}}
+\def\iphp{\M{iPHP}}
+\def\rphp{\M{rPHP}}
+\def\mphp{\M{mPHP}}
+%-\def\wphp{\M{sWPHP}}
+\def\wphp{\M{WPHP}}
+\def\swphp{\M{sWPHP}}
+\def\iwphp{\M{iWPHP}}
+\def\rwphp{\M{rWPHP}}
+\def\mwphp{\M{mWPHP}}
+\def\thard{\M{HARD}_}
+\def\tavhd{\M{HARD}^A}%!!! _}
+\def\bt{\tpv+\swphp(\pv)}
+%\def\bts{T^1_2+\php(\fp^{\sig1})}
+\def\bts{T^1_2+\swphp(\pv_2)}%\pv(\sig1))}
+\def\btr{T^1_2+\rwphp(\pv_2)}%\pv(\sig1))}
+\def\bta{\tpv(\alpha)+\swphp(\pv(\alpha))}
+\def\fpsa{\pv_2(\alpha)}%\pv(\sig1(\alpha))}
+\def\btsa{T^1_2(\alpha)+\swphp(\fpsa)}
+\def\btra{T^1_2(\alpha)+\rwphp(\fpsa)}
+%-\def\fpsl{\fp^{\sig1(\alpha)[\mathrm{wit},\log]}}
+%-\def\wbts{S^1_2(\alpha)+\swphp(\fpsl)}
+%-\def\wbtr{S^1_2(\alpha)+\rwphp(\fpsl)}
+%\def\lhmin{\sch{LENGTH}\sch{MIN}}
+%\def\lhmax{\sch{LENGTH}\sch{MAX}}
+\def\lhmin{$\M{LMIN}$}
+\def\lhmax{$\M{LMAX}$}
+\def\lind{$\M{LIND}$}
+\def\pind{$\M{PIND}$}
+\def\ind{$\M{IND}$}
+\def\comp{$\M{COMP}$}
+\def\compb{$\overline{\M{COMP}}$}
+\def\scv{$\M{SCV}$}
+\def\scvb{$\overline{\M{SCV}}$}
+\def\ac{$\M{AC}$}
+\def\acr{$\M{CR}$}
+\def\coun{\M{Count}}
+\def\open{\M{Open}}
+\def\la{\M{LA}}
+\def\lap{\M{LAP}}
+\def\vlap{\M{\forall LAP}}
+\def\mlap{\M{\forall LAP^-}}
+\def\ik{\M{IK}}
+\def\ikm{\M{IK^-}}
+\def\ikz{\M{IK}_0}
+\def\PA{\M{PA}}
+\def\rcf{\M{RCF}}
+\def\grh{\M{GRH}}
+\def\grhq{\M{GRH_q}}
+
+
+%%% logics, proof systems
+
+\let\lgc\mathbf
+\let\ax\mathrm
+\def\EF#1{#1\text-\M{EF}}
+\def\SF#1{#1\text-\M{SF}}
+\def\CF#1{#1\text-\M{CF}}
+\def\Fr#1{#1\text-\M{F}}
+\def\TL#1#2{#1{#2}^*}
+\def\CPC{\lgc{CPC}}
+\def\IPC{\lgc{IPC}}
+\def\MTL{\lgc{MTL}}
+\def\BL{\lgc{BL}}
+\def\luk{\textbf{\textup\L}}
+%should avoid:
+%-\def\gl{\M{GL}}
+%-\def\gla{\M{GLA}}
+%-\def\glal{\M{GLAL}}
+%-\def\agl{A_{GL}^\Box}
+\def\cf#1#2{\alpha(#1,#2)}
+\def\qcf#1#2{\alpha^\bullet(#1,#2)}
+\def\I{{\bullet}}
+\def\R{{\circ}}
+\def\RI{*}
+\let\F\sharp
+%\let\sng\widehat
+\def\sng#1{\lowercase{#1}^}
+\def\mon{{\mathbf m}}
+%-\def\K{K^\forall}
+%-\def\HK{\M{HK}^\forall}
+%-\def\GK{\M{GK}^\forall}
+%-\def\MLL{\M{MLL}}
+\def\mlk{\M{MLK}}
+\def\lk{\M{LK}}
+\def\mclk{\M{MCLK}}
+\def\G{G}
+\def\stG{\hat G}
+\def\WDP{\M{WDP}}
+\def\CC{\M{CC}}
+\def\RCC{\M{RCC}}
+\def\NA{\M{NA}}
+\def\siq{\Sigma^q_}
+\def\piq{\Pi^q_}
+\def\FL#1{\lgc{FL_{#1}}}
+\def\DP{\mathrm{DP}}
+\def\alc{\mathcal{ALC}}
+
+%%% structures
+
+\def\N{\mathbb N}
+\def\Q{\mathbb Q}
+\def\Z{\mathbb Z}
+\def\RR{\mathbb R}%\R clashes
+\def\C{\mathbb C}
+\def\qlog{\Q_{\Log}}
+\def\zg{\fixsup\Z*}
+\def\cg#1{C(#1)}
+%\def\GF#1{\M{GF}(#1)}
+\def\GF#1{\mathbb F_{#1}}
+\def\FG{\fixsup{\mathbb F}*}
+\let\stm\N
+\def\ukiv{U_0(K4)}
+\def\rn{\M{RN}}
+
+%%% misc
+
+%-\def\ast{\mathord*}% redef.!
+\mathcode`\*="0203
+\let\ob\overline
+\def\tria{{\vartriangle}}
+\mathchardef\mhyphen="2D
+
+%%%%% THEOREMS
+
+\def\noproof{\leavevmode\unskip\bme\vadjust{}\nobreak\hfill$\qed$\par}
+\let\qed\Box
+\newenvironment{Pf}[1][]
+  {\par\noindent\textit{Proof\optpar{#1}:}\bme\ignorespaces}
+  {\noproof\pagebreak[2]\vskip\medskipamount\ignorespacesafterend}
+%\def\optpar#1{\ifx\relax#1\relax\else\/ (#1)\fi}
+\def\optpar#1{\ifx\relax#1\relax\else\ #1\fi}
+%UWAGA: \medskip -> \vspace\medskipamount -> ... ->
+%       ->  \vskip\medskipamount \vskip 0pt  a to nechci
+\def\qedhere{\relax\ifmmode\eqno\qed\expandafter\aftergroup
+                   \else\noproof\fi\noqed}
+\def\noqed{\let\noproof\relax}
+
+\theoremstyle{plain}
+\ifx\shortthm\undefined
+\newtheorem{Thm}{Theorem}[section]
+\else
+\newtheorem{Thm}{Theorem}
+\fi
+\newtheorem{Prop}[Thm]{Proposition}
+\newtheorem{Cor}[Thm]{Corollary}
+\newtheorem{Lem}[Thm]{Lemma}
+\newtheorem{Fact}[Thm]{Fact}
+\newtheorem{Obs}[Thm]{Observation}
+\newtheorem{Conj}[Thm]{Conjecture}
+\newtheorem{Que}[Thm]{Question}
+\newtheorem{Prob}[Thm]{Problem}
+\newtheorem{Ass}[Thm]{Assumption}
+\newtheorem{Cl}{Claim}[Thm]
+\ifx\shortthm\undefined
+\def\theCl{\arabic{Cl}}
+\fi
+\def\qedCl{\Box\hbox{ (Claim \theCl)}}
+\theorembodyfont\upshape
+\newtheorem{Def}[Thm]{Definition}
+\newtheorem{Rem}[Thm]{Remark}
+\newtheorem{Exm}[Thm]{Example}
+\newtheorem{Expl}[Thm]{Explanation}
+\newenvironment{Pf*}{\let\qed\qedCl\Pf}\endPf
+\def\theequation{\arabic{equation}}
+
+
+%%%%% HACKS
+
+% %%% references with automatic theorem names:
+
+% % \begin{Lem}\thlabel{xyz}...
+% %
+% % \thref{xyz} -> "Lemma 5.7.7"
+% % \ref{xyz}  -> "5.7.7"
+% % \thnameref{xyz}-> "Lemma"
+% % \thref{xyz,pqr,abc} -> "Lemma 5.7.7 and Theorems 2.1.5 and 6.6.4"
+%
+\usepackage[reftex]{theoremref}
+% \makeatletter
+%   %hook in \@thm to get the name
+%   \let\origthm\@thm
+%   \def\newthm#1#2{\thmlowercase{\def\currthmname{#2}}\origthm{#1}{#2}}
+%   \def\amsnewthm#1#2#3{\thmlowercase{\def\currthmname{#3}}\origthm{#1}{#2}{#3}}
+%   \@ifpackageloaded{amsthm}{\let\@thm\newamsthm}{\let\@thm\newthm}
+% %  for lowercase names, replace next \def with
+% %  \let\thmlowercase\lowercase
+%   \def\thmlowercase#1{#1}
+%   %hacked version of \label from the kernel
+%   %put the theorem name in the useless slot for page number
+%   \def\thlabel#1{\@bsphack
+%     \protected@write\@auxout{}%
+%            {\string\newlabel{#1}{{\@currentlabel}{\currthmname}}}%
+%     \@esphack}
+%   %\let\thnameref\pageref breaks badly when the ref is undefined
+%   \def\thnameref#1{\expandafter\mysetref\csname r@#1\endcsname}
+%   \def\mysetref#1{\ifx#1\relax?THM?\else\expandafter\@secondoftwo#1\fi}
+% \makeatother
+% \newif\ifrefcomma \newif\iffinalcomma \newcount\refnum
+% \def\thref#1{\let\lastname\empty\let\refstack\empty\let\refhead\empty
+%   \refcommafalse\finalcommafalse\dothref#1,,}
+% \def\dothref#1,{\ifx,#1,\ifrefcomma\iffinalcomma,\fi\space and \fi
+%     \refcommafalse\expandafter\flushref
+%   \else\edef\thisname{\thnameref{#1}}\ifx\thisname\lastname
+%       \let\do\relax\edef\refstack{\refstack\do{\refhead}}%
+%     \else\flushref\let\lastname\thisname\fi
+%     \def\refhead{#1}\expandafter\dothref\fi}
+% \def\flushref{\ifx\lastname\empty\else
+%     \ifrefcomma, \finalcommatrue\fi\refcommatrue
+%     \lastname\ifx\refstack\empty\else s\fi\refnum 0
+%     \let\do\onethref\refstack\ifcase\refnum\or\space and\else
+%       \finalcommatrue, and\fi~$\ref{\refhead}$\let\refstack\empty\fi}
+% \def\onethref#1{\ifnum\refnum>0,\fi\space$\ref{#1}$\advance\refnum 1 }
+% %this is a hack to make reftex.el happy:
+% %can use \th\label, \th\ref instead of \thlabel, \thref
+% \def\th#1{\csname th\expandafter\gobble\string#1\endcsname}
+
+%%% algorithms:
+\newif\iflinenumbers
+\linenumberstrue
+\newenvironment{algo}[1][20em]{\catcode`\^^I=13 \obeylines\doalgo{#1}}{}
+{\catcode`\^^I=13 \catcode`\^^M=13
+\gdef\doalgo#1#2\end#{\hbox to\hsize{\hss \let^^I\qquad%
+  \def\\^^M{\nobreak\hfil\break\vadjust{}\qquad}%
+  \fboxsep1em \linenum0 %
+  \fbox{\hsize#1\vbox{%
+  \everypar{\advance\linenum1 %
+      \hbox to1.2em{%
+           \hss\iflinenumbers$\scriptstyle\the\linenum$\hskip.6em\fi}}%
+  #2}}\hss}\end}}
+\newcount\linenum
+\def\comment#1{\emph{/* #1 */}}
+\def\key{\relax\ifmmode\expandafter\mathbf\else\expandafter\textbf\fi}
+%\def\key#1{{\bf#1}} breaks at the beginning of a line
+
+
+%%% upshape parentheses:
+
+\def\allowhyphens{\nobreak\hskip0pt\relax}
+\def\hyph{\allowhyphens-\hskip0pt\relax}
+\DeclareRobustCommand*\magiclparen{\ifmmode(\else\textup(\allowhyphens\fi}
+\DeclareRobustCommand*\magicrparen{\ifmmode)\else\textup)\fi}
+\let\lparen=(  \let\rparen=)
+\def\magicparon{\catcode`\(\active\catcode`\)\active}
+\def\magicparoff{\catcode`\(12 \catcode`\)12 }
+%active parens break preview-latex.el:
+\AtBeginDocument{\ifx\ifPreview\iftrue\else\magicparon\fi}
+\magicparon
+\let (=\magiclparen  \let )=\magicrparen
+
+%%% labels etc.: here because it uses ( )
+\ifx\sameenum\undefined
+  \def\theenumi{\roman{enumi}}
+  \ifx\enumup\undefined
+    \def\labelenumi{(\textit\theenumi)}
+  \else
+    \def\labelenumi{(\theenumi)}
+  \fi
+  \def\theenumii{\greek{enumii}}
+  \def\labelenumii{(\theenumii)}
+\else
+  \def\theenumi{(\roman{enumi})}
+  \def\theenumii{(\greek{enumii})}
+  \def\labelenumi{\theenumi}
+  \def\labelenumii{\theenumii}
+\fi
+%\def\DT#1{(in $#1$)}
+\def\DT#1{(in $#1$)\pretolerance-1\nobreak\hfil\penalty1000\hfilneg}
+%(\hfil in a line forces zero badness, which essentially means that
+%TeX would never make it into pass 2, and will choose to break the
+%line badly after the \DT even if better solution exists with hyphenation.
+%Hence the \pretolerance=-1. The alternative of using finite
+%stretchability seems to do more harm than good.)
+\magicparoff
+
+
+%%% allow line breaks after commas, for use in longish \p{...}
+
+\def\cmb{\mathcode`\,"8000 }
+\mathchardef\comma=\mathcode`\,
+{\catcode`\,=\active \gdef,{\comma\penalty\relpenalty}}
+
+
+%%%%% FRONT MATTER
+
+\providecommand\dedic{\thanks{Supported by
+grant IAA100190902 of GA AV \v CR, Center of Excellence CE-ITI under the grant
+P202/12/G061 of GA \v CR, and RVO: 67985840.}}
+\author{Emil Je\v r\'abek\dedic\\[\medskipamount]
+Institute of Mathematics of the Academy of Sciences\\
+\small \v Zitn\'a 25,
+115\:67 Praha 1,
+Czech Republic,
+email: \texttt{jerabek@math.cas.cz}
+%URL: \texttt{http://math.cas.cz/\string~jerabek}
+}
+
+\endinput

@@ -1,0 +1,329 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{BertinettoHTV19}
+Luca Bertinetto, Jo{\~{a}}o~F. Henriques, Philip H.~S. Torr, and Andrea
+  Vedaldi.
+\newblock Meta-learning with differentiable closed-form solvers.
+\newblock In {\em 7th International Conference on Learning Representations,
+  {ICLR} 2019, New Orleans, LA, USA, May 6-9, 2019}, 2019.
+
+\bibitem{bojanowski2017unsupervised}
+Piotr Bojanowski and Armand Joulin.
+\newblock Unsupervised learning by predicting noise.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning-Volume 70}, pages 517--526, 2017.
+
+\bibitem{carlucci2019domain}
+Fabio~M Carlucci, Antonio D'Innocente, Silvia Bucci, Barbara Caputo, and
+  Tatiana Tommasi.
+\newblock Domain generalization by solving jigsaw puzzles.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 2229--2238, 2019.
+
+\bibitem{caron2019unsupervised}
+Mathilde Caron, Piotr Bojanowski, Julien Mairal, and Armand Joulin.
+\newblock Unsupervised pre-training of image features on non-curated data.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 2959--2968, 2019.
+
+\bibitem{chenmu21}
+Zhengyu Chen and Donglin Wang.
+\newblock Multi-initialization meta-learning with domain adaptation.
+\newblock In {\em 2021 {IEEE} International Conference on Acoustics, Speech and
+  Signal Processing, {ICASSP} 2021}, 2021.
+
+\bibitem{ChenWang21}
+Zhengyu Chen, Donglin Wang, and Shiqian Yin.
+\newblock Improving cold-start recommendation via multi-prior meta-learning.
+\newblock In {\em 43rd European Conference on Information Retrieval, {ECIR}
+  2021}, 2021.
+
+\bibitem{ChenDTTD2021}
+Zhengyu Chen, Ziqing Xu, and Donglin Wang.
+\newblock Deep transfer tensor decomposition with orthogonal constraint for
+  recommender systems.
+\newblock In {\em The Thirty-Fifth {AAAI} Conference on Artificial
+  Intelligence, {AAAI} 2021}, 2021.
+
+\bibitem{daglib}
+Kalyanmoy Deb.
+\newblock {\em Multi-objective optimization using evolutionary algorithms}.
+\newblock Wiley-Interscience series in systems and optimization. Wiley, 2001.
+
+\bibitem{doersch2015unsupervised}
+Carl Doersch, Abhinav Gupta, and Alexei~A Efros.
+\newblock Unsupervised visual representation learning by context prediction.
+\newblock In {\em Proceedings of the IEEE international conference on computer
+  vision}, pages 1422--1430, 2015.
+
+\bibitem{dosovitskiy2014discriminative}
+Alexey Dosovitskiy, Jost~Tobias Springenberg, Martin Riedmiller, and Thomas
+  Brox.
+\newblock Discriminative unsupervised feature learning with convolutional
+  neural networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  766--774, 2014.
+
+\bibitem{DvornikMS19}
+Nikita Dvornik, Julien Mairal, and Cordelia Schmid.
+\newblock Diversity with cooperation: Ensemble methods for few-shot
+  classification.
+\newblock In {\em 2019 {IEEE/CVF} International Conference on Computer Vision,
+  {ICCV} 2019, Seoul, Korea (South), October 27 - November 2, 2019}, pages
+  3722--3730, 2019.
+
+\bibitem{elsken2018efficient}
+Thomas Elsken, Jan~Hendrik Metzen, and Frank Hutter.
+\newblock Efficient multi-objective neural architecture search via lamarckian
+  evolution.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{FinnAL17}
+Chelsea Finn, Pieter Abbeel, and Sergey Levine.
+\newblock Model-agnostic meta-learning for fast adaptation of deep networks.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning, {ICML} 2017, Sydney, NSW, Australia, 6-11 August 2017}, pages
+  1126--1135, 2017.
+
+\bibitem{fliege2000steepest}
+J{\"o}rg Fliege and Benar~Fux Svaiter.
+\newblock Steepest descent methods for multicriteria optimization.
+\newblock {\em Mathematical Methods of Operations Research}, 51(3):479--494,
+  2000.
+
+\bibitem{FliegeV16}
+J{\"{o}}rg Fliege and A.~Ismael~F. Vaz.
+\newblock A method for constrained multiobjective optimization based on {SQP}
+  techniques.
+\newblock {\em {SIAM} J. Optim.}, 26(4):2091--2119, 2016.
+
+\bibitem{GidarisBKPC19}
+Spyros Gidaris, Andrei Bursuc, Nikos Komodakis, Patrick P{\'{e}}rez, and
+  Matthieu Cord.
+\newblock Boosting few-shot visual learning with self-supervision.
+\newblock In {\em 2019 {IEEE/CVF} International Conference on Computer Vision,
+  {ICCV} 2019, Seoul, Korea (South), October 27 - November 2, 2019}, pages
+  8058--8067, 2019.
+
+\bibitem{GidarisK18}
+Spyros Gidaris and Nikos Komodakis.
+\newblock Dynamic few-shot visual learning without forgetting.
+\newblock In {\em 2018 {IEEE} Conference on Computer Vision and Pattern
+  Recognition, {CVPR} 2018, Salt Lake City, UT, USA, June 18-22, 2018}, pages
+  4367--4375, 2018.
+
+\bibitem{gidaris2018unsupervised}
+Spyros Gidaris, Praveer Singh, and Nikos Komodakis.
+\newblock Unsupervised representation learning by predicting image rotations.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{GuoC20}
+Yiluan Guo and Ngai{-}Man Cheung.
+\newblock Attentive weights generation for few shot learning via information
+  maximization.
+\newblock In {\em 2020 {IEEE/CVF} Conference on Computer Vision and Pattern
+  Recognition, {CVPR} 2020, Seattle, WA, USA, June 13-19, 2020}, pages
+  13496--13505, 2020.
+
+\bibitem{he2020momentum}
+Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross Girshick.
+\newblock Momentum contrast for unsupervised visual representation learning.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 9729--9738, 2020.
+
+\bibitem{hernandez2016predictive}
+Daniel Hern{\'a}ndez-Lobato, Jose Hernandez-Lobato, Amar Shah, and Ryan Adams.
+\newblock Predictive entropy search for multi-objective bayesian optimization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  1492--1501, 2016.
+
+\bibitem{hillermeier2001generalized}
+Claus Hillermeier.
+\newblock Generalized homotopy approach to multiobjective optimization.
+\newblock {\em Journal of Optimization Theory and Applications},
+  110(3):557--583, 2001.
+
+\bibitem{hillermeier2001nonlinear}
+Claus Hillermeier et~al.
+\newblock {\em Nonlinear multiobjective optimization: a generalized homotopy
+  approach}, volume 135.
+\newblock Springer Science \& Business Media, 2001.
+
+\bibitem{kolesnikov2019revisiting}
+Alexander Kolesnikov, Xiaohua Zhai, and Lucas Beyer.
+\newblock Revisiting self-supervised visual representation learning.
+\newblock In {\em Proceedings of the IEEE conference on Computer Vision and
+  Pattern Recognition}, pages 1920--1929, 2019.
+
+\bibitem{lee20_sla}
+Hankook Lee, Sung~Ju Hwang, and Jinwoo Shin.
+\newblock Self-supervised label augmentation via input transformations.
+\newblock In {\em Proceedings of Machine Learning and Systems 2020}, pages
+  3537--3547. 2020.
+
+\bibitem{LeeMRS19}
+Kwonjoon Lee, Subhransu Maji, Avinash Ravichandran, and Stefano Soatto.
+\newblock Meta-learning with differentiable convex optimization.
+\newblock In {\em {IEEE} Conference on Computer Vision and Pattern Recognition,
+  {CVPR} 2019}, pages 10657--10665, 2019.
+
+\bibitem{LinZ0ZK19}
+Xi Lin, Hui{-}Ling Zhen, Zhenhua Li, Qingfu Zhang, and Sam Kwong.
+\newblock Pareto multi-task learning.
+\newblock In {\em Advances in Neural Information Processing Systems 32: Annual
+  Conference on Neural Information Processing Systems 2019, NeurIPS 2019, 8-14
+  December 2019, Vancouver, BC, Canada}, pages 12037--12047, 2019.
+
+\bibitem{ma2020continuous}
+Pingchuan Ma, Tao Du, and Wojciech Matusik.
+\newblock Efficient continuous pareto exploration in multi-task learning.
+\newblock In {\em International Conference on Machine Learning}, 2020.
+
+\bibitem{Mishra:SNAIL}
+Nikhil Mishra, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel.
+\newblock A simple neural attentive meta-learner.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{MunkhdalaiY17}
+Tsendsuren Munkhdalai and Hong Yu.
+\newblock Meta networks.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning, {ICML} 2017}, pages 2554--2563, 2017.
+
+\bibitem{oreshkin2018tadam}
+Boris Oreshkin, Pau~Rodr{\'\i}guez L{\'o}pez, and Alexandre Lacoste.
+\newblock Tadam: Task dependent adaptive metric for improved few-shot learning.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  721--731, 2018.
+
+\bibitem{pathak2016context}
+Deepak Pathak, Philipp Krahenbuhl, Jeff Donahue, Trevor Darrell, and Alexei~A
+  Efros.
+\newblock Context encoders: Feature learning by inpainting.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 2536--2544, 2016.
+
+\bibitem{QiaoLSY18}
+Siyuan Qiao, Chenxi Liu, Wei Shen, and Alan~L. Yuille.
+\newblock Few-shot image recognition by predicting parameters from activations.
+\newblock In {\em 2018 {IEEE} Conference on Computer Vision and Pattern
+  Recognition, {CVPR} 2018, Salt Lake City, UT, USA, June 18-22, 2018}, pages
+  7229--7238, 2018.
+
+\bibitem{RavichandranBS19}
+Avinash Ravichandran, Rahul Bhotika, and Stefano Soatto.
+\newblock Few-shot learning with embedded class models and shot-free meta
+  training.
+\newblock In {\em 2019 {IEEE/CVF} International Conference on Computer Vision,
+  {ICCV} 2019}, pages 331--339, 2019.
+
+\bibitem{russakovsky2015imagenet}
+Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma,
+  Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, et~al.
+\newblock Imagenet large scale visual recognition challenge.
+\newblock {\em International journal of computer vision}, 115(3):211--252,
+  2015.
+
+\bibitem{sabour2017dynamic}
+Sara Sabour, Nicholas Frosst, and Geoffrey~E Hinton.
+\newblock Dynamic routing between capsules.
+\newblock In {\em Advances in neural information processing systems}, pages
+  3856--3866, 2017.
+
+\bibitem{SatorrasE18}
+Victor~Garcia Satorras and Joan~Bruna Estrach.
+\newblock Few-shot learning with graph neural networks.
+\newblock In {\em 6th International Conference on Learning Representations,
+  {ICLR} 2018}, 2018.
+
+\bibitem{sener2018multi}
+Ozan Sener and Vladlen Koltun.
+\newblock Multi-task learning as multi-objective optimization.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  527--538, 2018.
+
+\bibitem{SnellSZ17}
+Jake Snell, Kevin Swersky, and Richard~S. Zemel.
+\newblock Prototypical networks for few-shot learning.
+\newblock In {\em Advances in Neural Information Processing Systems 30: Annual
+  Conference on Neural Information Processing Systems 2017, 4-9 December 2017,
+  Long Beach, CA, {USA}}, pages 4077--4087, 2017.
+
+\bibitem{SuMH20}
+Jong{-}Chyi Su, Subhransu Maji, and Bharath Hariharan.
+\newblock When does self-supervision improve few-shot learning?
+\newblock In {\em Computer Vision - {ECCV} 2020 - 16th European Conference,
+  Glasgow, UK, August 23-28, 2020, Proceedings, Part {VII}}, pages 645--666,
+  2020.
+
+\bibitem{Sung:RelationNet}
+Flood Sung, Yongxin Yang, Li Zhang, Tao Xiang, Philip H.~S. Torr, and
+  Timothy~M. Hospedales.
+\newblock Learning to compare: Relation network for few-shot learning.
+\newblock In {\em {IEEE} Conference on Computer Vision and Pattern
+  Recognition}, pages 1199--1208, 2018.
+
+\bibitem{TrivediSSG17}
+Anupam Trivedi, Dipti Srinivasan, Krishnendu Sanyal, and Abhiroop Ghosh.
+\newblock A survey of multiobjective evolutionary algorithms based on
+  decomposition.
+\newblock {\em {IEEE} Trans. Evol. Comput.}, 21(3):440--462, 2017.
+
+\bibitem{van2014multi}
+Kristof Van~Moffaert and Ann Now{\'e}.
+\newblock Multi-objective reinforcement learning using sets of pareto
+  dominating policies.
+\newblock {\em The Journal of Machine Learning Research}, 15(1):3483--3512,
+  2014.
+
+\bibitem{VinyalsBLKW16}
+Oriol Vinyals, Charles Blundell, Tim Lillicrap, Koray Kavukcuoglu, and Daan
+  Wierstra.
+\newblock Matching networks for one shot learning.
+\newblock In {\em Advances in Neural Information Processing Systems 29: Annual
+  Conference on Neural Information Processing Systems 2016, December 5-10,
+  2016, Barcelona, Spain}, pages 3630--3638, 2016.
+
+\bibitem{xiao2019dynamic}
+Teng Xiao, Shangsong Liang, and Zaiqiao Meng.
+\newblock Dynamic collaborative recurrent learning.
+\newblock In {\em Proceedings of the 28th ACM International Conference on
+  Information and Knowledge Management}, pages 1151--1160, 2019.
+
+\bibitem{xiao2018neural}
+Teng Xiao, Shangsong Liang, Hong Shen, and Zaiqiao Meng.
+\newblock Neural variational hybrid collaborative filtering.
+\newblock {\em arXiv preprint arXiv:1810.05376}, 2018.
+
+\bibitem{yan2020pointasnl}
+Xu Yan, Chaoda Zheng, Zhen Li, Sheng Wang, and Shuguang Cui.
+\newblock Pointasnl: Robust point clouds processing using nonlocal neural
+  networks with adaptive sampling.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 5589--5598, 2020.
+
+\bibitem{zhai2019s4l}
+Xiaohua Zhai, Avital Oliver, Alexander Kolesnikov, and Lucas Beyer.
+\newblock S4l: Self-supervised semi-supervised learning.
+\newblock In {\em Proceedings of the IEEE international conference on computer
+  vision}, pages 1476--1485, 2019.
+
+\bibitem{ZhangL07}
+Qingfu Zhang and Hui Li.
+\newblock {MOEA/D:} {A} multiobjective evolutionary algorithm based on
+  decomposition.
+\newblock {\em {IEEE} Trans. Evol. Comput.}, 11(6):712--731, 2007.
+
+\bibitem{Zitzler99}
+Eckart Zitzler.
+\newblock {\em Evolutionary algorithms for multiobjective optimization: methods
+  and applications}.
+\newblock PhD thesis, University of Zurich, Z{\"{u}}rich, Switzerland, 1999.
+
+\bibitem{zuluaga2013active}
+Marcela Zuluaga, Guillaume Sergent, Andreas Krause, and Markus P{\"u}schel.
+\newblock Active learning for multi-objective optimization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  462--470, 2013.
+
+\end{thebibliography}

@@ -1,0 +1,432 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
+
+\documentclass[conference]{IEEEtran}
+\usepackage[square,numbers,sort&compress]{natbib}
+
+\usepackage[font=small]{subcaption}
+\usepackage[font=small]{caption}  % and comment out 
+\def\tablename{Table}             % these two lines
+
+\pagestyle{plain}  % page numbers 2+
+
+\pdfminorversion=4
+
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{cancel}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{pifont}  % for ticks and crosses
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage{url}
+\usepackage{color, colortbl}
+\definecolor{Gray}{gray}{0.95}  % 1.0 to "turn off"
+
+\input{custom_math_commands}
+
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\newcommand{\mypara}[1]{\vspace{1mm}\noindent\textbf{#1}:}
+\definecolor{gold}{rgb}{0.83, 0.69, 0.22}
+\newcommand{\cmark}{\green{\ding{51}}}  % uses pifont package
+\newcommand{\xmark}{\red{\ding{55}}}  % uses pifont package
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\yellow}[1]{\textcolor{gold}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\green}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\white}[1]{\textcolor{white}{#1}}
+\usepackage{xspace}
+
+\newcommand{\ours}[0]{{CfO}}
+\newcommand{\oursfull}[0]{{Contingencies from Observations}}
+
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+\hypersetup{ %
+    pdftitle={},
+    pdfauthor={},
+    pdfsubject={},
+    pdfkeywords={},
+    pdfborder=0 0 0,
+    pdfpagemode=UseNone,
+    colorlinks=true,
+    linkcolor=mydarkblue,
+    citecolor=mydarkblue,
+    filecolor=mydarkblue,
+    urlcolor=mydarkblue,
+    pdfview=FitH}
+
+\begin{document}
+
+\captionsetup{justification=justified,singlelinecheck=false}
+
+\title{\vspace{3mm}{\huge
+\oursfull{}: Tractable Contingency Planning with Learned Behavior Models
+\vspace{-5pt}
+}} 
+
+\author{\IEEEauthorblockN{Nicholas Rhinehart${}^*$, Jeff He${}^*$, Charles Packer, Matthew A. Wright \\ 
+Rowan McAllister, Joseph E. Gonzalez, Sergey Levine}
+ \IEEEauthorblockA{%
+    UC Berkeley
+    \vspace{-10pt}
+  }}
+\maketitle
+
+\begin{abstract}
+Humans have a remarkable ability to make decisions by accurately reasoning about future events, including the future behaviors and states of mind of other agents. Consider driving a car through a busy intersection: it is necessary to reason about the physics of the vehicle, the intentions of other drivers, and their beliefs about your own intentions. If you signal a turn, another driver might yield to you, or if you enter the passing lane, another driver might decelerate to give you room to merge in front. Competent drivers must plan how they can safely react to a variety of potential future behaviors of other agents before they make their next move. This requires contingency planning: explicitly planning a set of conditional actions that depend on the stochastic outcome of future events. Contingency planning outputs a policy that is a function of future timesteps and observations, whereas standard model predictive control-based planning outputs a sequence of future actions, which is equivalent to a policy that is only a function of future timesteps. In this work, we develop a general-purpose contingency planner that is learned end-to-end using high-dimensional scene observations and low-dimensional behavioral observations. We use a conditional autoregressive flow model to create a compact contingency planning space, and show how this model can tractably learn contingencies from behavioral observations. We developed a closed-loop control benchmark of realistic multi-agent scenarios in a driving simulator (CARLA), on which we compare our method to various noncontingent methods that reason about multi-agent future behavior, including several state-of-the-art deep learning-based planning approaches. We illustrate that these noncontingent planning methods fundamentally fail on this benchmark, and find that our deep contingency planning method achieves significantly superior performance. 
+%Videos, code, and trained models are available at our website: {\small \url{https://sites.google.com/view/contingency-planning/home}.
+\end{abstract}
+
+\section{Introduction}
+
+The ability of humans to 
+anticipate, probe, and plan to react to what other actors could do or want
+is central to many social tasks that humans find simple but AI systems find difficult \citep[]{russell2019human}. Effectively driving a car,
+for example, generally requires (1) predictive dynamics models of how cars move, (2) predictive models of driver reactions,
+and (3) the ability to plan around and resolve uncertainty about other drivers' intentions.
+Autonomous systems that operate in multi-agent environments typically satisfy 1--3 with separate modules that decouple prediction and planning, yet in practice the modules are highly dependent on accurate perception, an unsolved task \citep{thrun2006stanley,urmson2008autonomous,paden2016survey}.
+Learning-based end-to-end systems that navigate complex multi-agent environments from raw sensory input have been the focus of recent work \citep{rhinehart2020deep,zeng2019end,filos2020can}, but do not satisfy (3), because they do not model the behaviors of the other agents.
+
+A potential approach to building a system is to first build models to forecast other agents' behavior, and then construct ``open-loop'' action plans using these models \cite{thompson2009probabilistic,ziebart2009planning}.
+However, this fails to account for the co-dependency between robot actions and environment.
+Specifically, it ignores how other agents would react to robot actions and how the robot's future actions should be different depending on what the other agents do. This can lead to underconfident behavior, known as the ``frozen robot problem'' \citep{trautman_unfreezing_2010}. Thus, in many real-world situations, decoupling the tasks of forecasting human behavior and planning robot behavior is a poor modeling assumption. A resolution to this problem can be achieved through \emph{contingency planning} \citep{hardy2013contingency,zhan2016non,galceran2017multipolicy,fisac2019hierarchical},  which produces a plan that is adaptive to future behaviors of other agents or the environment. This is equivalent to planning a closed-loop policy.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{\linewidth}
+    \includegraphics[width=\linewidth]{fig/decision_tree_v3.png}
+    \end{subfigure} \\
+        \caption{\small A robot's unprotected left, in which it does not have the right of way in the intersection and must either wait for the oncoming car to either pass or yield before turning. An unprotected left is a realistic multi-agent scenario that requires contingent behavior in order to achieve optimal outcomes, as the best \emph{a priori} robot trajectory suboptimally waits outside the intersection (left branch), i.e. the best sequence of noncontingent future decisions is (Wait Outside, Turn After Human), because the robot cannot be guaranteed to be able to traverse a fixed spatiotemporal path due to uncertainty about the human's intention. However, a contingent planner can achieve a better result: the optimal plan is to enter the intersection in order to observe if the other driver will yield to the robot, and either turn or wait contingent upon the other driver's decision. \textbf{Top}: The decision tree of robot and human behavior. Our approach, \oursfull, uses behavioral observations sampled from decision trees as training data to learn a behavioral model used in a contingent planning objective. \textbf{Bottom:} Conceptual diagrams of the outcomes at each leaf. Videos, code, and trained models are available at our website: {\small \url{https://sites.google.com/view/contingency-planning/home}}. }\label{fig:unprotected_left_didactic} 
+        \vspace{-1.5em}
+\end{figure}
+
+
+\newcommand{\Prediction}[0]{\textcolor{orange!100}{Prediction}\xspace}
+\newcommand{\Planning}[0]{\textcolor{blue!60}{Planning}\xspace}
+\newlength{\graphsubfiglen}
+\setlength{\graphsubfiglen}{.24\textwidth}
+\newlength{\graphpiclen}
+\setlength{\graphpiclen}{.6\graphsubfiglen}
+\newcommand{\graphspace}{\hspace{0pt}}
+
+\begin{figure*}[ht]
+    \centering
+    \begin{subfigure}[t]{\graphsubfiglen}
+    \centering
+        \includegraphics[width=\graphpiclen]{fig/tikz/2.pdf}
+        \caption{\textbf{Robot leader planning}. The planner does not model the human's influence on the robot, resulting in a deterministic noncontingent plan. Also known as MPC, this plans {action trajectories} independent of future behaviors of the other agents \citep{sadigh2016planning,schmerling2018multimodal,tang2019mfp}}
+        \label{fig:level2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{\graphsubfiglen}
+    \centering
+        \includegraphics[width=\graphpiclen]{fig/tikz/1.pdf}
+        \caption{\textbf{Human leader planning}. The planner does not model the robot's influence on the human, which means that the robot does not model how its future actions can affect decisions of the other agents \citep{hardy2013contingency,zhan2016non}. This can result in ``underconfident'' plans.}
+        \label{fig:level1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{\graphsubfiglen}
+        \centering
+        \includegraphics[width=\graphpiclen]{fig/tikz/7.pdf}
+        \caption{\textbf{Co-leader planning}. This approach plans a policy modelled to both influence and be influenced by the stochastic behavior of the human. In contrast to our method, prior contingency planning methods do not use a learned behavioral model \citep{galceran2017multipolicy,fisac2019hierarchical}.}
+        \label{fig:zplanning}
+    \end{subfigure}
+    \hfill
+         \begin{subfigure}[t]{\graphsubfiglen}
+         \centering
+        \includegraphics[width=\graphpiclen]{fig/tikz/6.pdf}
+        \caption{\textbf{Joint planning}. The planner erroneously assumes that it can control all agents, potentially resulting in ``overconfident'' behavior than can lead to unrecoverable errors. We demonstrate this phenomenon in our experiments.}
+        \label{fig:overconfidentplanning}
+        \vspace{-10pt}
+    \end{subfigure}
+    \caption{\small Various models of multi-agent interaction, based on different assumptions, as probabilistic graphical models. Circles denote random variables we can \textit{predict}, square nodes denote robot decisions we can \textit{plan}, shading indicates known values, and thick arrows represent ``carry-forward dependencies'' for visual simplicity (any two nodes connected by a chain of thick nodes has an implicit directed edge).
+    }
+    \vspace{-1.5em}
+    \label{fig:models} 
+\end{figure*}
+
+In many partially-observed settings, optimal policies must gather information about the state of the environment (e.g. the intentions of other agents) and then act accordingly.
+Consider a common scenario encountered when driving on public roads: an unprotected left-hand turn, in which the robot's goal is to turn left in the presence of another vehicle that may or may not yield, as seen in ~\cref{fig:unprotected_left_didactic}. The other driver's intention to yield must be revealed before we (the robot) commit to turning left; we must \emph{actively seek this information to resolve the uncertainty in the other driver’s intention}. Using a turn-signal indicator can provoke the other agent to reveal their intention, as can edging the robot into the intersection. Not only must we plan to be contingent upon the human, we must model the human as contingent upon us. 
+Let us term this ``active contingency'' to differentiate it from ``passively contingent'' models that neglect the robot's influence on the other agents. 
+In this case, we must plan to enter the intersection to indicate our desire to turn left ahead of the other driver and have a contingency planned in case the driver does not yield. 
+Because the other driver may not stop, we cannot produce a single state-space plan that is guaranteed to quickly cross the intersection without potentially causing a crash, unless we wait outside the intersection. 
+ 
+We demonstrate that autoregressive normalizing flows can explicitly represent a compact and rich space of contingent plans -- forking paths of future decisions necessary to operate successfully in environments with stochastic outcomes. We use this model class to design a deep contingency planner that scales to complex tasks with high-dimensional observations such as autonomous driving. We designed a contingency planning benchmark of common driving tasks in CARLA on which we compare our method to ablations and other methods. We show that a single, general deep contingency planning model is quite effective across several realistic scenarios, and that noncontingent planning methods fundamentally fail at these common tasks.
+
+\vspace{-.35em}
+\section{Related Work} \label{sec:related-work}
+\vspace{-.25em}
+
+
+Planning algorithms are central to robot navigation \citep{lavalle2006planning}, and planning under uncertainty is especially critical in uncontrolled environments like public roads.
+Various choices exist for designing autonomous vehicle planning algorithms that consider other vehicles (see \citet{schwarting2018planning} for a thorough survey). We highlight some of the distinguishing concepts and design choices below, and summarize the related work in Table~\ref{table:methods}. 
+In the following, we refer to \cref{fig:models}, which depicts various ways to model inter-agent dependencies. 
+
+
+\begin{table}[t!]
+\centering
+\resizebox{\linewidth}{!}{
+\small
+ \begin{tabular}{l c H H H c c c c c}
+ \toprule
+ \multirow{2}{*}{Planning Method} & \multirow{2}{*}{Contextual} & Stochastic & Continuous & High-Dimensional  & Learned  &
+ \multirow{2}{*}{Contingency} \\
+ & & &  State-Actions & Context & Behavior Model & \\
+ \midrule
+ \rowcolor{Gray}
+ \citet{hardy2013contingency} & \cmark  & \cmark & \cmark & \xmark & \xmark  & \orange{Passive} \\ 
+ \citet{bandyopadhyay2013intention} & \xmark & \cmark & \xmark & \xmark & \xmark  & \green{Active}  \\ 
+  \rowcolor{Gray}
+ \citet{xu2014motion} & \xmark & \cmark & \xmark & \xmark & \xmark  & \red{None} \\ 
+ \citet{zhan2016non} & \xmark & \cmark & \cmark & \xmark & \xmark &  \orange{Passive} \\ 
+  \rowcolor{Gray}
+ \citet{sadigh2016planning} & \xmark & \xmark  & \cmark & \xmark & \xmark &  \red{None}    \\ 
+ \citet{galceran2017multipolicy} & \cmark & \cmark & \cmark & \xmark & \xmark & \green{Active} \\
+  \rowcolor{Gray}
+ \citet{schmerling2018multimodal} & \xmark & \cmark  & \cmark & \xmark & \cmark &  \red{None}    \\ 
+ \citet{rhinehart2020deep} & \cmark & \cmark  & \cmark & \cmark & \cmark  & \red{None} \\ 
+  \rowcolor{Gray}
+ \citet{zhou2018joint} & \xmark & a & \cmark & \xmark & \xmark & \red{None} \\
+%  \rowcolor{Gray}
+ \citet{fisac2019hierarchical} & \xmark & \cmark  & \xmark & \xmark & \xmark &  \green{Active} \\ 
+  \rowcolor{Gray}
+ \citet{zeng2019end} & \cmark & \cmark  & \cmark & \cmark & \cmark &  \red{None}  \\ 
+ \citet{tang2019mfp} & \cmark & \cmark & \cmark  & \cmark & \cmark &  \red{None} \\ 
+ \rowcolor{Gray} 
+ \citet{cui2021lookout} & \cmark & \cmark & \cmark & \cmark & \cmark & \orange{Passive} \\ 
+\citet{bajcsy2021analyzing} & \xmark & ? & \cmark & \xmark & \cmark & \orange{Passive} \\
+ \midrule
+ \oursfull & \cmark & \cmark  & \cmark & \cmark & \cmark   & \green{Active} \\ 
+ \bottomrule
+\end{tabular}}
+\caption{\small Comparative summary of recent explicit planning methods for autonomous navigation tasks (ordered by publication date).
+}
+\label{table:methods}
+\vspace{-2.0em}
+\end{table}
+
+\mypara{Learned behavior model, noncontingent planning}
+
+Recently, fully learned planning approaches have shown promising results on autonomous navigation benchmarks and settings \cite{rhinehart2020deep,zeng2019end,filos2020can}. These approaches resemble model-based reinforcement learning (MBRL) because they model some aspect of environment dynamics in order to generate plans under reward functions. However, these methods will fail on tasks that require explicit contingency planning because they do not represent the future behavior of other agents, and therefore cannot be explicitly contingent; we demonstrate \cite{rhinehart2020deep} failing in our experiments. In the terminology of Fig.~\ref{fig:models}, ``robot leader'' methods, commonly referred to as MPC-shooting based methods, plan {action trajectories}, which means that the actions will be fixed for all possible future behaviors of the other agents \citep{sadigh2016planning,schmerling2018multimodal,tang2019mfp}. 
+
+Modular approaches such as those used in the DARPA Grand Challenge \citep{thrun2006stanley,urmson2008autonomous} and modern industry systems \citep{paden2016survey} have the potential to be contingent, but are highly dependent on imperfect perception pipelines. We are not aware of a published demonstration of contingency planning in a pipeline approach on a realistic autonomous navigation task. 
+
+\mypara{Passive contingency planning}
+While prior work has used contingency planning for autonomous navigation, it has not used learned behavioral models.
+In ``human leader'' approaches \citep{hardy2013contingency,zhan2016non,cui2021lookout}, the behavior prediction of the other agents is independent of the future behavior of the robot, which means that the robot does not model how its future actions can affect decisions of the other agents, shown \cref{fig:level1}. Unlike the active ``co-leader'' (\cref{fig:zplanning}) approach, ``human leader'' methods cannot plan to provoke other agents to reveal their intentions. 
+\citet{galceran2017multipolicy} and \citet{fisac2019hierarchical} perform co-leader contingency planning with hand-crafted models (dynamics models, behavior models, reward functions) rather than learned behavior models.
+Both \citet{cui2021lookout} and \citet{bajcsy2021analyzing} (a reachability analysis-based approach) only consider single-forking contingencies, whereas our method considers contingencies at every timestep, and therefore does not require determining a `branching time'.
+
+\mypara{Model-free methods}
+An alternative to using the model-based planning approaches described above is to learn a model-free {policy}, which has the capacity to implicitly represent contingent plans. Model-free imitation learning (IL) and reinforcement learning (RL) have been used to construct policies in autonomous driving environments with multi-agent interaction  \citep{dosovitskiy_carla_2017,chen2019deep,codevilla2019exploring,tang2019selfplay,palanisamy2019macad,hawke2020urban}. Model-free approaches can be successful when the data and task distribution shifts between train and test are small -- a well-trained policy will naturally mimic high-quality demonstration data exhibited by a contingent expert or evoked by a well-crafted reward function. However, if there is mismatch between the training and test rewards, the policy will produce suboptimal behavior. While goal-conditioning methods can address the suboptimality of adapting model-free methods to test-time data by serving as the representation for the test-time reward function, the goal space of the agents must be specified \emph{a priori}, requires goal labels, and precludes adapting the learned system to new types of test-time goal objectives \citep{codevilla2019exploring,hawke2020urban}.
+Furthermore, in contrast to model-free methods, our method explicitly represents the planned future behavior, which offers interpretability and model introspection benefits. 
+
+Our proposed method is both contingent and uses a fully-learned behavior model, unlike prior work that either had learned behavior models or was actively contingent, but never both, as shown in Table~\ref{table:methods}.
+
+\vspace{-.35em}
+\section{Deep Contingency Planning}
+\vspace{-.25em}
+
+Below, we outline the deployment phase, planner design, and training phase. Our method is depicted in Fig.~\ref{fig:method_overview}. 
+
+\mypara{Deployment} The following loop is executed during deployment: (1) the contingency planner is given a learned behavioral model, goals, and high-dimensional sensory observations as input, and outputs a multi-step plan in the form of a robot policy. (2) The planned robot policy is executed for one step to output a target position, which is (3) tracked by a proportional controller that outputs a control that includes robot steering, throttle, and braking controls. (4) The control is executed on the robot in the environment, which produces a new observation.
+
+\mypara{Planner design} The future behavior of the robot is planned in terms of a parametric policy; a \emph{subset} of the policy's parameters are used to optimize a planning criterion.
+Crucially, this policy is closed-loop -- it reacts differently to (i.e., is \emph{contingent} on) different possibilities of the future behavior of all agents (Fig.~\ref{fig:zplanning}). When the policy is open-loop, it is noncontingent, and represents the future positional trajectory of the robot, which can result in underconfident behavior (Fig.~\ref{fig:level2}). The planning criterion incorporates several components: (1) the learned behavioral model
+to forecast a probability distribution of the likely behaviors of all agents in terms of positional trajectories; the PDF of this distribution is used in the planning criterion. The planning criterion also incorporates (2) goals specified as positions, and optionally incorporates (3) hard or soft constraints on joint behavior. The planner optimizes for a robot policy that has a high expected probability of joint behavior, and a high expected probability of satisfying the provided goal location and optional goal constraints; the expectation is under the other agents' sources of uncertainty.
+
+\mypara{Model design and training} The behavioral model is trained with a dataset of trajectories of multi-agent positions paired with high-dimensional sensory observations of one of the agents. Training maximizes the likelihood of the trajectories, similar to multi-step Behavioral Cloning \cite{pomerleau1989alvinn}. Following prior IL work, we sometimes call these positions \emph{behavioral observations}, in contrast to \emph{demonstrations} (observations of state-action pairs). We assume that the behaviors in this data are goal-directed, but we do not assume that every behavior would score well under the planning criterion: some of these behaviors require navigation to different goals than those seen in training, and some of these trajectories exhibit behavior
+that may be undesirable. This somewhat general assumption on the quality of the data behavior demands a planning criterion that involves terms of multi-agent trajectories, which necessitates modeling the likely trajectories of the other agents. 
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{\columnwidth}
+\includegraphics[width=\columnwidth]{fig/CFO.png}
+\end{subfigure}
+\caption{\small Flowchart that describes the components of our approach. A behavioral model is trained to forecast multi-agent trajectories conditioned on high-dimensional scene observations, and is used during deployment to construct a contingency planner. The contingency planner receives goals $\mathcal{G}$ from an outer navigator, as well as high-dimensional observations $\bo_t$ at timestep $t$ from the environment. The contingency planner plans a policy, which predicts the immediate next target position $\bx_{t+1}^r$. This next position is passed to a P-controller to produce the necessary action $\ba_{t+1}^r$.} \label{fig:method_overview}
+
+\vspace{-2em}
+\end{figure}
+\subsection{Preliminaries}
+
+We consider multi-agent systems composed of $A\geq2$ agents (e.g., vehicles). We assume agent positions are fully observable by all agents, but the intentions of each agent (e.g.,\ intended destinations) are hidden from each other. We consider continuous positions and discrete time, and define the position of the $a$th vehicle at time $t$ by its location in a $d$-dimensional Cartesian space as $\bx^a_t \in\mathbb{R}^{d}$.
+The joint positions of all vehicles are denoted  by $\bx_t\in\mathbb{R}^{A\times d}$, where a lack of superscript indicates all vehicles.
+Let $\bx_t^r=\bx_t^1\in\mathbb{R}^{1\times d}$ index the position of the controlled robot vehicle, and $\bx_t^h=\bx_t^{2:A}\in\mathbb{R}^{(A-1)\times d}$ index the positions of other human-driven vehicles that the robot can influence but has no direct control over. Let $t=0$ and $\bx_0$ denote the current timestep and joint position of the multi-agent system, and let $\bx_{\leq t}$ denote future joint positions $[1, \dots, t]$.
+Uppercase denotes random variables (e.g. the stochastic sequence of all multi-agent positions $\bX_{\leq t}^{1:A}$), and lowercase denotes realized values.
+The current observation of the robot is denoted ${\bo} \doteq \{\bx_0, \bi_0\}$; $\bi_0$ provides high-dimensional information about the environment.
+In our implementation, $\bi_0\in\mathbb{R}^{H\times W}$ is a LIDAR range map image \cite{caccia2018deep}.
+
+\subsection{Model Design and Training Details}
+\label{sec:model_design}
+The planner requires a learned behavioral model that stochastically forecasts multi-agent trajectories $\bX_{\leq T}^{1:A}$ given context $\bo$, and
+captures co-dependencies between agents at all timesteps. Let $q_\theta(\bX|\bo)$ denote this model.
+The model factorizes into a product of autoregressive distributions parameterized by neural networks that receive observations and previous states:
+
+\begin{align}
+    q_\theta(\bX_{\leq T}^{1:A}=\bx_{\leq T}^{1:A}|{\bo})=\mathop{\prod}_{t=1}^{T}\mathop{\prod}_{a=1}^A  q^a
+    (
+    \bX^a_t\!=\!\bx^a_t;\phi_t^a),   \label{eq:esp_model}
+    \end{align}
+ where the parameters of $q^a$ are computed autoregressively in order to model reactions dependent only on past data: \mbox{$\phi_t^a=f_\theta^a(\bx_{<t}^{1:A},\bo)$}.  We restrict $q^a$ to the family of distributions that can be sampled by transforming a sample $\bz_t^a\in\mathbb R^d$ from a fixed simple base distribution chosen \emph{a priori}, $\bar{q}^a(\bz_t^a)$, to $\bx_t$, using a fixed invertible transformation of observations and learned values \mbox{$\bx_t^a=m(\bz_t^a; \phi_t^a)$}. E.g., if $q^a=\mathcal N(\cdot| \{\bmu_t^a, \bsigma_t^a\})$, then \mbox{$m(\bz_t^a; \phi_t^a)=\bmu_t^a + \bsigma_t^{a}\bz_t^a$}, and \mbox{$\bar{q}^a(\bz_t^a)=\mathcal N(\bz_t^a; 0, I)$}. Because the $\bar{q}^a$ are independent, the model represents multi-agent behavior as a learned coupling of independent variables, $\bz_t^a$. Taken together, these conditions specify that the model is a (conditional) autoregressive normalizing flow \cite{dinh2016density,papamakarios2017masked}. 
+
+Now we show how $q_\theta$ can be used to design a compact and rich space of contingent policies that is amenable to fast optimization at planning time. First, note that the process of generating agent $a$'s position at time $t$ with $q_\theta$ can be seen as generating a position from (state-space) policy: \mbox{$q^a(\bX_t^a \mid \bx_{<t}^{1:A},\bo; \theta)$}. Next, note that given $\bz_t^a$, $m$ can be written as the application of a deterministic policy parameterized by both $\bz_t^a$ and $\theta$: \mbox{$\bx_t^a=\pi^a(\bx_{<t}^{1:A},\bo; \bz_t^a, \theta)$}. On the one hand, $q_\theta$ can be seen as a collection of stochastic policies $\left\{q^a\right\}_{a=1}^{A}$. On the other hand, $q_\theta$ can be seen as a collection of deterministic policies and policy parameter priors $\{(\pi^a, \bar{q}^a)\}_{a=1}^{A}$. At planning time, we can specify a contingent robot plan by deciding values for the robot's policy parameters, $\bz_{\leq T}^r \in \mathbb R^{2 \times T}$, rather than sampling each $\bz_t^r$ from its prior $\bar{q}^r$. Doing so results in a contingency plan that is reactive to each potential joint behavior of the other agents, $\bX_{\leq t}^{2:A}$, for $t\in[1,T]$. Because the future behaviors of the other agents are unobserved at test-time, the overall system is still stochastic given the contingency plan parameterized by $\bz^r$. This method of partially parameterizing a policy is appealing because it requires no modifications to the model. Once $q_\theta$ is trained, $\theta$ is fixed, and planning is a matter of choosing the free parameters, $\bz^r$, of $\pi^r$. Other parameterizations could certainly be used, but we found this method efficient. \cite{rhinehart2020deep,singh2020parrot} employ similar parameterizations in the noncontingent setting.
+
+ A natural question that arises from this discussion is: which contingent plans can such a scheme actually represent? While analyzing this in the continuous case is difficult, we can provide a detailed analysis of this question in the case where all variables ($\bx$ and $\bz$) are discrete. In this case, we show in the Appendix that likely contingent plans can be expressed in terms of $\bz^r$ and can represent sequences of $n$-th best responses under the model $q_\theta$ (i.e., first-best, second-best, etc.). Key to this analysis and the general richness of the planning space is the invertibility of $m$ in $\bz_t^a$, which ensures that all $\bx_t^a \in \mathbb R^d$ are realizable outputs of $\pi^a$. In the Appendix (Fig.~\ref{fig:contingent_plan_examples}), we also give example visualizations of a single $\bz^r_{\leq T}$ resulting in high-quality plans contingent on plausible futures of other agents.
+
+We train the model, $q_\theta$, with a dataset $\{(\bx_{\leq T}^{1:A}, \bo)_n\}_{n=1}^N$, depicted in Fig~\ref{fig:method_overview}. As previously mentioned, we assume that these behaviors are goal-directed to diverse goals, which allows the model to represent many modes of plausible behavior (e.g., turning left, turning right, traveling passively, traveling aggressively). We defer implementation details of constructing and training $q_\theta$ to Section~\ref{sec:impl}. 
+
+\vspace{-.5em}
+\subsection{Planner Design Details}\label{sec:planner_design}
+\vspace{-.5em}
+\mypara{Primary planning objective} Having described our learned behavioral model and a method to parameterize a contingent plan as a closed-loop policy, we turn to constructing a planning objective in order to evaluate the \emph{quality} of the planned policy in terms of how plausible its behavior is and how well it satisfies goals at test time. In our application, goals $\mathcal G=(\mathbf{g},\mathbb G)$ are provided to the robot in terms of coordinate destinations $\mathbf{g} \in \mathbb R^2$, as well as a set of constraints, $\mathbb G$, on the joint trajectory specified as an indicator function $\delta_{\mathbb{G}}(\bx)$, which is $1$ where $\bx\in\mathbb G$ and $0$ otherwise. To evaluate the quality of a plan, we take inspiration from the single-agent (non-contingent) imitative model planning objective \citep{rhinehart2020deep} by formulating planning with the model as maximum \emph{a posteriori} (MAP) estimation. Instead of MAP estimation of a robot trajectory (non-contingent plan), we perform MAP estimation of the subset of policy parameters $\bz_{\leq T}^r$ with posterior $p(\bz_{\leq T}^r|\mathcal G, {\bo})$. The resulting lower-bound objective, derived on the supplementary website, is:
+ \begin{align}
+    &\mathcal{L}_\text{\ours}(\pi^r_{\bz_{\leq T}})
+    =  \label{eq:final_planning_criterion}\\
+    &\mathop{\E}_{\bz^h \sim \mathcal{N}(0, I)} \Big[
+    \log \underbrace{q_\theta(\bar{\bx}_{\leq T}|{\bo})}_{(1)~\text{prior}}\!+\!\log  \underbrace{\mathcal N\big(\bar{\bx}^r_T; \mathbf{g}, I
+    \big)}_{(2)~\text{destination}}\!+\!\log \underbrace{\delta_{\mathbb G}(\bar{\bx}_{\leq T})}_{(3)~\text{constraint}} 
+    \Big].\notag
+ \end{align}
+Eq.~\ref{eq:final_planning_criterion} consists of several terms: the (1) behavioral prior encourages the planned policy to result in joint behavior that is likely under the learned model; (2) the destination likelihood encourages the policy to end near a goal location; (3) an optional goal constraints penalizes the policy if it does not satisfy some desired constraint. The expectation results from the uncertainty due to the presence of other (uncontrolled) agents. In practice, we perform stochastic gradient ascent on Eq.~\ref{eq:final_planning_criterion} w.r.t. $\bz_{\leq T}^r$ and approximate a violated constraint ($\log \delta_{\mathbb G}(\bx_{\leq T})\!=\!-\infty$ when $\bx_{\leq T}\notin\mathbb G$) with a large negative value.
+
+\mypara{Alternative planning objectives} Consider instead directly planning $\bx_{\leq T}^r$ under uncertain human trajectories $\hat{\bx}_{\leq T}^h$: 
+ {\footnotesize
+ \begin{align*}
+  \mathcal L^{\text{r}}(\bx_{\leq T}^r)&=\mathop{\mathbb E}_{\hat{\bx}\sim q}\log\mathcal N(\bx_T^r;\!\mathbf{g},\!I) 
+    \! +\! \log \delta_{\mathbb G}([\bx^r\!,\!\hat{\bx}^h]) 
+     \! +\! \log q([\bx^r\!,\!\hat{\bx}^h]|{\bo}).
+ \end{align*}
+}
+Planning with ${\mathcal L^{\text{r}}}$ will result in a noncontingent plan that is \emph{underconfident}, because the criterion fails to account for the fact that $\bx^r_t$ affects $\bx^h_{>t}$. This is illustrated in Fig.~\ref{fig:level1}. For example, we show in our experiments how an underconfident planner leads to a \emph{frozen robot} that prefers not to enter the intersection and indicate that it intends to turn left, because the plan -- a single fixed trajectory -- is not affected by whether or not the human driver yields to it. The best trajectory under this criterion is a passive waiting trajectory that stays outside the intersection until the human has passed. Finally, consider planning \emph{both} $\bx^r$ and $\bx^h$ (Fig.~\ref{fig:overconfidentplanning}), i.e., assuming control of both the robot and the human trajectories: 
+\begin{equation*}
+    \mathcal L^{\text{joint}}(\bx) =\log \mathcal N(\bx_T^r; \mathbf{g}, I) + \log \delta_{\mathbb G}(\bx) + \log q_\theta(\bx|{\bo}).
+\end{equation*}
+This is an \emph{overconfident} planner, because it assumes that the other agents will obey the robot's plan for them. Thus, this planner is acceptable when the human behaves as planned, but risky when the human does not. In the left-turn scenario, $\mathcal L^{\text{joint}}$ causes the robot to assume that the human will always yield to it, resulting in dangerous behavior when the human sometimes does not. Instead, if the prior of joint behavior is the only component of the planning criterion (i.e. just the final term of $\mathcal L^{\text{joint}}$), then the planner simply optimizes for the mode of the prior, which will result in an undirected likely joint behavior.
+
+\vspace{-.25em}
+\section{Experiments} \label{sec:experiments}
+\vspace{-.25em}
+Our main experimental hypothesis is that \emph{(i)} some common driving situations that require multi-agent reasoning can be nearly solved with our deep contingency planning approach. This hypothesis is related to the following secondary hypotheses, which state that various noncontingent planning methods cannot solve these situations: \emph{(ii)} a noncontingent learning-based underconfident planner will lead to a frozen robot in some situations, \emph{(iii)} a noncontingent learning-based planner of joint trajectories will lead to an unsafe robot in some situations, \emph{(iv)} online model-free methods will incur a significant cost of failed behaviors before learning to succeed, in contrast to our method, and \emph{(v)} oblivious planning (unable to adapt to cost function) will lead to an unsafe robot in some situations. To evaluate these hypotheses, we developed a set of common driving scenarios in which contingency planning matters.
+\vspace{-.5em}
+\subsection{Benchmark Scenarios}
+\vspace{-.25em}
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[t]{\linewidth}
+    \includegraphics[width=\linewidth]{fig/overhead_label_v3.png}
+    \end{subfigure}
+        \caption{\small Overhead images for each scenario. The circles denote decision points; blue paths being robot, orange paths being ``human''. \emph{Left and Right}: The robot tries to turn. At (1), robot decides if to enter the intersection as turning signal to human. At (2), robot decides if to aggressively turn or wait.  At (3), if robot previously entered the intersection, human may or may not yield. Again at (2), if robot is waiting, it decides when to turn based on if human yielded. At (4), if robot turned aggressively and human didn’t yield, a near-collision occurs. \emph{Middle}: Robot tries to overtake. At (1), robot decides if to enter the left lane. At (2), robot decides if to overtake aggressively. At (3), human decides if to yield. Again at (2), if robot wasn't aggressive, it decides if to overtake. At (4), if robot was aggressive and human didn’t yield, a near-collision occurs.}\label{fig:task_images} 
+        \vspace{-1.75em}
+\end{figure}
+
+We evaluate our method and several others on three multi-agent driving scenarios that we built in the CARLA simulator \citep{dosovitskiy_carla_2017}: a left-turn scenario similar to the one discussed in Fig.~\ref{fig:unprotected_left_didactic} and conceptually similar to that in \cite{hardy2013contingency}, a highway overtaking scenario conceptually similar to that used in prior work \citep{sadigh2016planning,fisac2019hierarchical}, and a right turn at a stop sign scenario. Images from each scenario are shown in Fig.~\ref{fig:task_images}. For each scenario, we identified 4 suitable locations, and used 1 of them as training locations and 3 as test locations. At test time, we evaluate each method 10 times in each test location, resulting in a total of 90 evaluation episodes per method ($3~\frac{\mathrm{scenarios}}{\mathrm{method}}\cdot 3\frac{\mathrm{locations}}{\mathrm{scenario}}\cdot10\frac{\mathrm{episodes}}{\mathrm{location}}$). The testing episodes use a fixed set of random seeds in the simulator. 
+
+In the left turn scenario, the robot car needs to execute a left turn, but the oncoming vehicle may or may not yield.
+In the highway overtaking scenario, the robot car must pass the car in front of it, but this requires entering the left lane. Similar to how, in the left turn scenario, the other vehicle may or may not yield, the leading car in the overtaking scenario may slow down or maintain a constant speed to facilitate the robot car's overtaking, or it may accelerate to prevent it.
+In the right turn scenario, the robot car needs to execute a right turn into a lane that contains a vehicle that may or may not yield.
+
+These scenarios, while common and easily negotiated by human drivers, have features that make them difficult for many learning-based autonomous navigation methods.
+The optimal outcomes (making the turns quickly and safely, and successfully overtaking the other car) require cooperation from the human agent, but the intent of the human to cooperate is unknown.
+This calls for contingent planning.
+However, in order to infer the human's intent, we (the robot) must first act in a way that signals our own desire (entering the intersection or the opposite lane) and evaluate their response.
+
+\vspace{-.5em}
+\subsection{Implementation Details}\label{sec:impl}
+\vspace{-.25em}
+We designed these scenarios in suitable locations in the CARLA simulator \citep{dosovitskiy_carla_2017}.
+We generated training data from hand-crafted policies designed to generate each of the outcomes in each scenarios:
+first, the robot chooses whether to begin its maneuver (enter the intersection or the opposite lane).
+If the robot begins the maneuver, the other vehicle decides whether to accommodate the it (yield to it or allow passing). Then, the robot decides whether to attempt to complete the maneuver. The robot's policy can be considered a suboptimal expert, as it sometimes generates expert paths, but other times, it generates conservative paths (by sometimes not entering the intersection or opposite lane) and risky paths (by sometimes attempting to complete the maneuver despite the other agent not yielding). Examples are given in the Appendix (Fig.~\ref{fig:oc_uc}).
+
+We adapted the ESP model from \citep{rhinehart2019precog}, which uses $q_t^a=\mathcal N$ and we used $1.5$s of past at $10$Hz and $8$s of future at $3.75$Hz, resulting in pasts of length $15$ and futures of length $30$. In contrast to the LIDAR featurization in \citep{rhinehart2019precog}, we instead use $\bi_0\in\mathbb{R}^{H\times W}$ as a LIDAR range map image \cite{caccia2018deep}. Whereas \citep{rhinehart2019precog} performed \emph{passive forecasting} of behaviors of agents, and was not used to decide controls of a robot, our work focuses on building and executing actively contingent plans.
+
+\noindent\textbf{Method and baselines}: We trained a \emph{single} global \ours~model, which forces the method to generalize across scenarios and locations. For comparison, we use \cite{tang2019mfp} (MFP) by following the shooting-based planning method described therein. We experimented with a global model for MFP, but were unable to achieve good performance, instead, we trained separate \emph{per-scenario MFP models}. We use the \ours~model with the contingent planning objective (Eq.~\ref{eq:final_planning_criterion}) as well as with the ``overconfident'' noncontingent planner with criterion $\mathcal{L}^\textrm{joint}$ from Section \ref{sec:model_design}. For the ``underconfident'' planner, we used the suboptimal expert to create the set of per-agent paths available at each timestep, and used $\mathcal{L}^\textrm{r}$ without the prior term, which serves as a best-case underconfident planner (in the case of a perfect model). To measure the importance of multi-agent planning vs. an oblivious planner, we apply \citep{rhinehart2020deep} by constructing a single-agent version of our model, which cannot incorporate terms that involve predicted positions of other agents. For this baseline, like MFP, we trained separate per-scenario models. Further details are given in the Appendix.
+
+\vspace{-.5em}
+\subsection{Results}
+\vspace{-.25em}
+
+\begin{table}
+\centering
+\resizebox{.99\columnwidth}{!}{
+\begin{tabular}{l D{,}{/}{-1} D{,}{/}{-1} l D{,}{/}{-1} D{,}{/}{-1} l D{,}{/}{-1} D{,}{/}{-1}}
+\toprule
+& \multicolumn{2}{c}{Left Turns} &  & \multicolumn{2}{c}{Overtaking} & &  \multicolumn{2}{c}{Right Turns} \\
+\cline{2-3}\cline{5-6}\cline{8-9}\vspace{-2mm}\\
+Method     & \multicolumn{1}{c}{RG} & \multicolumn{1}{c}{RG*} & &  \multicolumn{1}{c}{RG}& \multicolumn{1}{c}{RG*} & &  \multicolumn{1}{c}{RG}& \multicolumn{1}{c}{RG*}\\
+\midrule
+Single-agent \citep{rhinehart2020deep} & {\scriptstyle 30},{\scriptstyle 30} & 16,30 & & {\scriptstyle 10},{\scriptstyle 30} & 8,30 & & {\scriptstyle 15},{\scriptstyle 30} & 2,30 \\
+Noncontingent, $\mathcal{L}^\textrm{r}$ & {\scriptstyle 30},{{\scriptstyle 30}} & 0,30 & & {\scriptstyle30},{\scriptstyle30} & 0,30 & & {\scriptstyle 30},{\scriptstyle 30} & 0,30\\
+Noncontingent, $\mathcal{L}^\textrm{joint}$& {\scriptstyle30},{\scriptstyle 30} & 9,30 & & {\scriptstyle29},{\scriptstyle30} & 12,30 & & {\scriptstyle23},{\scriptstyle 30} & 9,30\\
+MFP \cite{tang2019mfp} & {\scriptstyle 30},{\scriptstyle 30} & 9,30 & & {\scriptstyle16},{\scriptstyle30} & 9,30 & & {\scriptstyle 9},{\scriptstyle 30} & 9,30 \\ 
+\ours{} (Eq.~\ref{eq:final_planning_criterion}) (ours)& {{\scriptstyle 29}},{{\scriptstyle 30}} & \mathbf{28},\mathbf{30} & & {\scriptstyle27},{\scriptstyle30} & \mathbf{27},\mathbf{30} & & {\scriptstyle 27},{\scriptstyle30} & \mathbf{27},\mathbf{30}\\
+\bottomrule
+\end{tabular}
+}
+\caption{{\small Comparison of learning-based planning for control: Our co-Influence model (\ours{}) learns how agents behave together, and is able to control a vehicle to negotiate multi-agent driving scenarios safely and efficiently. Ablations show that alternative non-contingent planners lead to either overly conservative or unsafe trajectories.}} \label{table:evaluation} 
+\vspace{-2em}
+\end{table}
+
+Prior navigational planning work uses a variety of metrics to measure the quality of a planned or predicted trajectory \citep{tang2019mfp,rhinehart2019precog}.
+In this work, we evaluate our different planners in terms of closed-loop control metrics: the ability of a method to reach a goal (1) successfully, and (2) safely and efficiently.
+In Table \ref{table:evaluation}, we report results in terms of the goal-reaching success rate (``RG"), which simply means that the robot vehicle eventually reached the goal region, and \emph{near-expert} success rate (``RG*''), which we define as the vehicle reaching the goal as quickly as an expert would, without any near-collisions.
+
+Examining Table~\ref{table:evaluation}, we see evidence that supports the hypotheses mentioned at the beginning of the section.
+First, \emph{(i)} the \ours{}
+planner (i.e., the one that uses Eq. \ref{eq:final_planning_criterion}) has near perfect success rate in both scenarios, as well as a nearly perfect rate of near-expert success.
+The high rate of completing the maneuver in a near-expert way suggests that contingency planning is helpful for efficiently navigating these complex scenarios, which is possible only by probing the human's intentions and reacting accordingly.
+Next, \emph{(ii)} our ``underconfident'' noncontingent planner, while having a high success rate, has a much lower count of near-expert successes than the contingent \ours{} planner.
+The reason is that the underconfidence leads to ``frozen robot'' behavior that slowed down the underconfident planner.
+In the left turn scenario, for example, the underconfident planner will always wait for the oncoming vehicle to pass through the intersection before beginning its own left turn.
+This means the underconfident planner missed any opportunity to negotiate the intersection as quickly as the expert did in the trials where the human vehicle would have yielded.
+
+For \emph{(iii)}, note that the ``overconfident'' noncontingent planner always reaches the goal, but sometimes engages in unsafe behavior. Its aggressive planning means that it will try to solve the scenario quickly every time, which leads to near-collisions every time that the other vehicle does not yield.
+
+For \emph{(iv)}, we observe the ``oblivious'' planner \cite{rhinehart2020deep} indeed performs suboptimality across scenarios, leading to more near-collisions than the other planners. Due to the suboptimality present in the training data, its planner, which reasons solely about the ego-vehicle's behavior, is insufficient in these scenarios.
+Finally, for \emph{(v)}, we compare our approach to a model-free reinforcement learning (RL) baseline, Proximal Policy Optimization (PPO), on the left turn scenario.
+
+As seen in Fig. \ref{fig:modelfreecombined}, online model-free methods are capable of learning an optimal policy. 
+However, the RL agent incurs a significant number of collisions before reaching a reasonable success rate
+(in contrast, since \ours{} learns entirely offline, it need not experience collisions before learning how to complete the task).
+Additionally, learning a successful policy with PPO requires careful reward shaping on top of the cost model used in \ours{}. Further details about the RL experimental setup, as well as example qualitative results of contingent and noncontingent plans, are given in the Appendix.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.95\linewidth]{fig/rl/threepanel_5e5.png}
+    \vspace{-.1em}
+    \caption{\small
+    \textbf{Left:} Reward vs steps of experience on the left turn scenario (mean/std/min/max over three runs, best policy plotted in solid). 
+    \textbf{Middle:} Collision rate vs steps. PPO is the only baseline that requires online training (all other methods are horizontal lines). PPO (acceleration only, similar to \cite{tang2019mfp}) achieves a 0\% collision rate. 
+    \textbf{Right:} Success rate vs steps. PPO (acceleration only) achieves a 100\% success rate. PPO (throttle, steering and braking) is unable to exceed a 60\%.
+    }
+    \label{fig:modelfreecombined}
+    \vspace{-1.75em}
+\end{figure}
+\vspace{-.4em}
+\section{Discussion}
+\vspace{-.35em}
+We present a deep contingent planning method for control in multi-agent environments, and demonstrate its efficacy in common scenarios encountered in the urban driving setting in comparison to several alternative methods for data-driven planning, including a single-agent planner and a deep MPC-based trajectory shooting method. Our method is quite tractable to apply -- it is learned entirely from demonstrations of plausible multi-agent behavior and efficiently represents contingent plans in terms of components of the learned model.
+ 
+\mypara{Acknowledgements}
+This research was supported by the Office of Naval Research, ARL DCIST CRA W911NF-17-2-0181, JP Morgan, the Berkeley DeepDrive industry consortium, and the supporters of the Berkeley RISELab.
+
+ 
+{ \footnotesize
+\bibliographystyle{IEEEtranN}
+\bibliography{references}
+}
+
+\input{appendix.tex}
+
+\end{document}
