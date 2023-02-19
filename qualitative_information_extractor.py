@@ -140,18 +140,25 @@ class QualitativeInformationExtractor(InformationExtractor):
         return bib_data
     
     def find_titel_for_citation_bib(self, citation_keyword: str, bib_data):
+        author_list =[]
         if bib_data is not None:
             try:
-                author = bib_data.entries[citation_keyword].persons['author']
+                authors = bib_data.entries[citation_keyword].persons['author']
+                for author in authors:
+                    author_list.append(author)
             except KeyError:
-                author = None
+                authors = None
             try:
                 titel = bib_data.entries[citation_keyword].fields['title']
             except KeyError:
                 titel = None
+            try:
+                abstract = bib_data.entries[citation_keyword].fields['abstract']
+            except KeyError:
+                abstract = None
         else:
-            titel, author = "", ""
-        return titel, author
+            titel, author_list, abstract = "", "", ""
+        return titel, author_list, abstract
     
     def find_bibitem_for_citation_bbl(self, citation_keyword: str, bib_file: str):
         #find citation keyword and return string until line break with empty line
@@ -205,10 +212,11 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         clean_sentences[count] = self.compile_latex_to_text(sentence)
                                         citation_titel_list = []
                                         citation_author_list = []
+                                        citation_abstract_list = []
                                         none_titel = 0
                                         if bibliography_path.endswith(".bib"):
                                             for citation in citations_list:
-                                                titel, author = self.find_titel_for_citation_bib(citation, bib_data)
+                                                titel, author, abstract = self.find_titel_for_citation_bib(citation, bib_data)
                                                 if titel is not None:
                                                     titel = self.clean_titel(titel)
                                                 if titel is None:
@@ -216,6 +224,7 @@ class QualitativeInformationExtractor(InformationExtractor):
                                                     break
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
+                                                citation_abstract_list.append(abstract)
                                         elif bibliography_path.endswith(".bbl"):
                                             if include_bbl is True:
                                                 for citation in citations_list:
@@ -232,6 +241,7 @@ class QualitativeInformationExtractor(InformationExtractor):
                                         if len(citation_titel_list) > none_titel:
                                             sentence_dataset.append({'Foldername': paper_folder_path, 'sentenceID': sentence_ID, 'sentence': clean_sentences[count],
                                                                      'citations': citations_list, 'citation_titles': citation_titel_list, 'citation_authors': citation_author_list, 
+                                                                     'citation_abstract': citation_abstract_list,
                                                                      'PaperID': paper_ID, 'ParagraphID': paragraph_ID, 'Bibliography used': bibliography_path})            
                         except UnicodeDecodeError:
                             sys.stderr.write("Error message: Contains none unicode characters.\n")     
@@ -243,7 +253,7 @@ class QualitativeInformationExtractor(InformationExtractor):
                     sys.stderr.write("Error message: Is a directory. \n")
         file_exists = os.path.isfile(output_file)
         with open(output_file, 'a', newline = '', encoding = 'utf8') as f:
-            writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "PaperID", "ParagraphID", "Bibliography used"])
+            writer = csv.DictWriter(f, fieldnames=["Foldername", "sentenceID", "sentence", "citations", "citation_titles", "citation_authors", "citation_abstract", "PaperID", "ParagraphID", "Bibliography used"])
             if not file_exists:
                 writer.writeheader()
             for row in sentence_dataset:
