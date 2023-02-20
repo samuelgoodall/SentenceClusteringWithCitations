@@ -2,13 +2,13 @@ from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine('sqlite:///database/dataset.db', echo=True)
 Base = declarative_base()
-_SessionFactory = sessionmaker(bind=engine)
-
-def session_factory():
-    Base.metadata.create_all(engine)
-    return _SessionFactory()
+class SQAlchemyDatabase:
+    def __init__(self, database_path):
+        self.engine = create_engine('sqlite:///' + database_path, echo=True)
+        self.session = sessionmaker(bind=self.engine)
+        self.base = Base
+        self.base.metadata.create_all(self.engine)
 
 class Citation(Base):
     """

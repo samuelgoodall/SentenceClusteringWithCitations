@@ -1,9 +1,10 @@
+import os
 import time
 
 import pandas as pd
 
-import database.database
 from database.database import Paper
+from database.database import SQAlchemyDatabase
 
 
 def add_new_paper(session, paper_title, paper_authors):
@@ -23,10 +24,9 @@ def add_new_paper(session, paper_title, paper_authors):
 
 
 def main():
-    session = database.database.session_factory()
-
+    abs_path = os.path.abspath("dataset.db")
+    session = SQAlchemyDatabase(abs_path).session
     paper = Paper()
-
     return
 
     print("hello World")

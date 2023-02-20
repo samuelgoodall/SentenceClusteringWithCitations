@@ -3,21 +3,24 @@ import sys
 import unittest
 
 sys.path.append(".")
-from database.database import (Citation, Paragraph, Sentence, engine,
-                               session_factory)
+from database.database import (Citation, Paragraph, Sentence, SQAlchemyDatabase)
 
 
 class DatabaseTest(unittest.TestCase):
-    def setUp(self) -> None: 
-        self. session = session_factory()
-        
+    def setUp(self) -> None:
+        abs_path = os.path.abspath("dataset.db")
+        print("abs_path", abs_path)
+        self.session = SQAlchemyDatabase(abs_path).session()
+        self.engine = SQAlchemyDatabase(abs_path).engine
+
     def test_citation_saving(self) -> None:
         saved_citation = Citation("title", "author")
         self.session.add(saved_citation)
         self.session.commit()
         loaded_citation = self.session.query(Citation).first()
+        print("loaded_citation", loaded_citation.title)
         self.assertEqual(loaded_citation, saved_citation, "citation not saved in database")
-        
+
     def test_sentence_saving(self) -> None:
         saved_sentence = Sentence("Sentence")
         self.session.add(saved_sentence)
@@ -49,8 +52,11 @@ class DatabaseTest(unittest.TestCase):
         self.assertEqual(loaded_sentence, saved_sentence, "sentence paragraph relation not saved in database")
 
     def tearDown(self) -> None:
-        engine.dispose()
-        os.remove("database.db")
+        self.engine.dispose()
+
+        abs_path = os.path.abspath("dataset.db")
+        print("TearDown abs_path", abs_path)
+        os.remove(abs_path)
         
 if __name__ == "__main__":
     unittest.main()
