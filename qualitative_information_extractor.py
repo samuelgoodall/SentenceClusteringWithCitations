@@ -23,6 +23,14 @@ class QualitativeInformationExtractor(InformationExtractor):
 
     
     def get_related_work_beginning(self, complete_file_string: str) -> int:
+        """Searches for the beginning of a related work section in the complete file string.
+
+        Args:
+            complete_file_string (str): The full content of the tex file.
+
+        Returns:
+            int: The position of the beginning of the related work section after the related work symbol.
+        """
         related_work_symbol_position = -1
         length = 0
         for related_work_symbol in self._related_work_symbols:
