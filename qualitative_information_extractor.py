@@ -41,6 +41,14 @@ class QualitativeInformationExtractor(InformationExtractor):
         return related_work_symbol_position + length
           
     def get_related_work_end(self, complete_file_string:str) -> int:
+        """Searches for the end of a related work section in the complete file string.
+
+        Args:
+            complete_file_string (str): The full content of the tex file.
+
+        Returns:
+            int: The position of the End of the related work section without the stop symbol.
+        """
         related_work_symbol_position = self.get_related_work_beginning(complete_file_string)
         related_work_length = self.length_related_work(complete_file_string, related_work_symbol_position)
         if related_work_length == -1:
