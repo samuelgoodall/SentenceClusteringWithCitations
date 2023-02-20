@@ -81,13 +81,13 @@ class QualitativeInformationExtractor(InformationExtractor):
         return re.split(blank_line_regex, s.strip())
     
     def get_paragraphs(self, related_work:str) -> list:
-        """Gets the paragraphs of the related work section, by splitting on empty lines 
+        """Gets the paragraphs of the related work section, by splitting on empty lines or subsection symbols.
 
         Args:
-            related_work (str): _description_
+            related_work (str): related work section
 
         Returns:
-            list: _description_
+            list: list of paragraphs
         """
         subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{.*?})*|(?:\[.*?\])"
         related_work = re.sub(subsection_regex, "\n\n", related_work)
