@@ -69,11 +69,26 @@ class QualitativeInformationExtractor(InformationExtractor):
         return related_work
     
     def split_on_empty_lines(self, s: str) -> list:
-        # greedily match 2 or more new-lines, but not inside quote
+        """ Split on two or more consecutive line breaks, but only if they are not followed by an even number of quotes 
+
+        Args:
+            s (str): string to split
+
+        Returns:
+            list: splitted areas of the string
+        """
         blank_line_regex = r"(?:\r?\n){2,}(?=(?:[^\"]|\"[^\"]*\")*$)" 
         return re.split(blank_line_regex, s.strip())
     
     def get_paragraphs(self, related_work:str) -> list:
+        """Gets the paragraphs of the related work section, by splitting on empty lines 
+
+        Args:
+            related_work (str): _description_
+
+        Returns:
+            list: _description_
+        """
         subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{.*?})*|(?:\[.*?\])"
         related_work = re.sub(subsection_regex, "\n\n", related_work)
         return self.split_on_empty_lines(related_work)
