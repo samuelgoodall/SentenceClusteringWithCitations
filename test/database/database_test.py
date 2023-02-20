@@ -50,7 +50,7 @@ class DatabaseTest(unittest.TestCase):
 
     def tearDown(self) -> None:
         engine.dispose()
-        os.remove("student.db")
+        os.remove("database.db")
         
 if __name__ == "__main__":
     unittest.main()

@@ -2,7 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine('sqlite:///student.db', echo=True)
+engine = create_engine('sqlite:///database/dataset.db', echo=True)
 Base = declarative_base()
 _SessionFactory = sessionmaker(bind=engine)
 
@@ -66,4 +66,3 @@ class Paragraph(Base):
     __tablename__ = 'paragraph'
     id = Column(Integer, primary_key=True)
     sentences = relationship("Sentence", back_populates="paragraph")
-    
