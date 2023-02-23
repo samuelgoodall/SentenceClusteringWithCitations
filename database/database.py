@@ -21,8 +21,9 @@ class Citation(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     author = Column(String)
+    abstract = Column(String)
 
-    def __init__(self, title: str, author: str):
+    def __init__(self, title: str, author: str, abstract: str):
         """ Initialize the Citation class.
         Args:
             title (str): Title of the citation.
@@ -30,7 +31,7 @@ class Citation(Base):
         """
         self.title = title
         self.author = author
-
+        self.abstract = abstract
 
 class Sentence(Base):
     """Sentence class to save sentence information."""

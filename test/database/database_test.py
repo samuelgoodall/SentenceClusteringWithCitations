@@ -14,7 +14,7 @@ class DatabaseTest(unittest.TestCase):
         self.engine = SQAlchemyDatabase(abs_path).engine
 
     def test_citation_saving(self) -> None:
-        saved_citation = Citation(title="title", author="author")
+        saved_citation = Citation(title="title", author="author",abstract="abstract")
         self.session.add(saved_citation)
         self.session.commit()
         loaded_citation = self.session.query(Citation).first()
@@ -30,7 +30,7 @@ class DatabaseTest(unittest.TestCase):
 
     def test_sentence_citation_relation(self) -> None:
         saved_sentence = Sentence(content="Sentence")
-        saved_sentence.citations.append(Citation(title="title", author="author"))
+        saved_sentence.citations.append(Citation(title="title", author="author",abstract="abstract"))
         self.session.add(saved_sentence)
         self.session.commit()
         loaded_sentence = self.session.query(Sentence).first()
