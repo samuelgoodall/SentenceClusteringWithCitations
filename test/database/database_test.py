@@ -59,7 +59,7 @@ class DatabaseTest(unittest.TestCase):
         self.assertEqual(loaded_paper, saved_paper, "paper wasnt saved properly!")
 
     def test_paper_paragraph_relation(self):
-        saved_paper = Paper()
+        saved_paper = Paper(title="TITLE",authors="AUTHORS")
         saved_paragraph = Paragraph()
         saved_paragraph.paper = saved_paper
         self.session.add(saved_paper)

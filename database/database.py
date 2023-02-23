@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
+from sqlalchemy import Column, ForeignKey, Integer, String, create_engine, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -7,7 +7,7 @@ Base = declarative_base()
 
 class SQAlchemyDatabase:
     def __init__(self, database_path):
-        self.engine = create_engine('sqlite:///' + database_path, echo=True)
+        self.engine = create_engine('sqlite:///' + database_path, echo=False)
         self.session = sessionmaker(bind=self.engine)
         self.base = Base
         self.base.metadata.create_all(self.engine)
