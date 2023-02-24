@@ -14,7 +14,6 @@ class FeedingDBParserBot:
         paper_folder_paths = list(
             map(lambda foldername: os.path.join(self.dataset_folder_path, foldername), foldernames))
 
-        database_path = "database/dataset.db"
         for count, foldername in enumerate(tqdm(paper_folder_paths)):
             self.informationExtractor.fill_data_set(foldername, False)
 

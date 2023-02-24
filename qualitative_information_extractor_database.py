@@ -26,27 +26,22 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
             return paper
 
         paper = Paper(title=paper_title, authors=paper_authors)
-        self.sql_session.add(paper)
-        self.sql_session.commit()
         return paper
 
-    def add_new_paragraph(self, paper: Paper):
+    def create_new_paragraph(self, paper: Paper):
         new_paragraph = Paragraph()
         new_paragraph.paper = paper
-        self.sql_session.add(new_paragraph)
-        self.sql_session.commit()
         return new_paragraph
 
     def create_new_sentence(self, new_paragraph, sentence_content: str):
         new_sentence = Sentence(content=sentence_content)
         new_sentence.paragraph = new_paragraph
-        self.sql_session.add(new_sentence)
         return new_sentence
 
-    def add_new_citation(self, title:str, author:str, abstract:str,new_sentence:Sentence):
+    def create_new_citation(self, title:str, author:str, abstract:str,new_sentence:Sentence):
         new_citation = Citation(title=title,author=str(author),abstract=abstract)
         new_sentence.citations.append(new_citation)
-        self.sql_session.commit()
+        return new_citation
 
     def fill_data_set(self, paper_folder_path: str,  include_bbl: bool):
 
@@ -70,7 +65,7 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
                                     citation_paragraph_end = self.find_citations_paragraph_end(paragraph)
                                     paragraphs[index] = self.delete_citation_paragraph_end(paragraph,
                                                                                            citation_paragraph_end)
-                                    new_paragraph = self.add_new_paragraph(new_paper)
+                                    new_paragraph = self.create_new_paragraph(new_paper)
                                     sentences = self.get_sentences(paragraphs[index])
                                     for index, sentence in enumerate(sentences):
                                         sentences[index] = self.put_citation_paragraph_end_in_sentence(sentence,
@@ -92,14 +87,16 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
                                                                                                            bib_data)
                                                 if titel is not None:
                                                     titel = self.clean_titel(titel)
-                                                    new_citation = self.add_new_citation(titel, author, abstract,new_sentence)
+                                                    new_citation = self.create_new_citation(titel, author, abstract, new_sentence)
+
                                                 if titel is None:
                                                     none_titel = none_titel + 1
                                                     #break
                                                 citation_titel_list.append(titel)
                                                 citation_author_list.append(author)
                                                 citation_abstract_list.append(abstract)
-                                                self.sql_session.commit()
+                                            self.sql_session.add(new_paper)
+                                            self.sql_session.commit()
                                         elif bibliography_path.endswith(".bbl"):
                                             if include_bbl is True:
                                                 for citation in citations_list:
