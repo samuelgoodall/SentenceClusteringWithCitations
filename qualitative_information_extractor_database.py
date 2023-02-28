@@ -58,72 +58,57 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
                                     bib_data = self.initialize_bib_parser(bibliography_path)
                                 elif include_bbl is False:
                                     break
-                                new_paper = self.add_new_paper(paper_title=paper_folder_path, paper_authors="")
+                                paper_parsed_paragraphs = []
                                 related_work_string = self.get_related_work(complete_file_string)
                                 paragraphs = self.get_paragraphs(related_work_string)
                                 for index, paragraph in enumerate(paragraphs):
                                     citation_paragraph_end = self.find_citations_paragraph_end(paragraph)
                                     paragraphs[index] = self.delete_citation_paragraph_end(paragraph,
                                                                                            citation_paragraph_end)
-                                    new_paragraph = self.create_new_paragraph(new_paper)
+                                    paragraph_parsed_sentences = []
+
                                     sentences = self.get_sentences(paragraphs[index])
                                     for index, sentence in enumerate(sentences):
                                         sentences[index] = self.put_citation_paragraph_end_in_sentence(sentence,
                                                                                                        citation_paragraph_end)
                                     clean_sentences = self.delete_without_citations(sentences)
-                                    for count, sentence in enumerate(clean_sentences):
 
-                                        new_sentence = self.create_new_sentence(new_paragraph,self.compile_latex_to_text(sentence))
+                                    for count, sentence in enumerate(clean_sentences):
+                                        if self.compile_latex_to_text(sentence) == "":
+                                            continue
 
                                         citations_list = self.get_citation_keywords(sentence)
-                                        clean_sentences[count] = self.compile_latex_to_text(sentence)
-                                        citation_titel_list = []
-                                        citation_author_list = []
-                                        citation_abstract_list = []
-                                        none_titel = 0
+
+                                        processed_citations_list = []
                                         if bibliography_path.endswith(".bib"):
+                                            at_least_one_title_available = False
                                             for citation in citations_list:
                                                 titel, author, abstract = self.find_titel_for_citation_bib(citation,
                                                                                                            bib_data)
                                                 if titel is not None:
                                                     titel = self.clean_titel(titel)
-                                                    new_citation = self.create_new_citation(titel, author, abstract, new_sentence)
+                                                    processed_citations_list.append((titel, author, abstract))
+                                                    at_least_one_title_available = True
+                                            if at_least_one_title_available:
+                                                new_sentence = Sentence(content=self.compile_latex_to_text(
+                                                                                          sentence))
+                                                for citation in processed_citations_list:
+                                                    new_title, new_author, new_abstract = citation
+                                                    self.create_new_citation(new_title, new_author,
+                                                                             new_abstract, new_sentence)
+                                                paragraph_parsed_sentences.append(new_sentence)
 
-                                                if titel is None:
-                                                    none_titel = none_titel + 1
-                                                    #break
-                                                citation_titel_list.append(titel)
-                                                citation_author_list.append(author)
-                                                citation_abstract_list.append(abstract)
-                                            self.sql_session.add(new_paper)
-                                            self.sql_session.commit()
-                                        elif bibliography_path.endswith(".bbl"):
-                                            if include_bbl is True:
-                                                for citation in citations_list:
-                                                    bibitem = self.find_bibitem_for_citation_bbl(citation,
-                                                                                                 bibliography_path)
-                                                    try:
-                                                        # author, titel = "", ""
-                                                        author, titel = BibitemParser.convert_single_bib_item_string_2_author_title_tuple(
-                                                            self.bibitem_parser, bibitem)
-                                                    except TypeError:
-                                                        author, titel = "", ""
-                                                    if len(titel) < 10:
-                                                        none_titel += 1
-                                                    citation_titel_list.append(titel)
-                                                    citation_author_list.append(author)
-                                        if len(citation_titel_list) > none_titel:
-                                            #print("APPENDABLE!")
-                                            """
-                                            sentence_dataset.append(
-                                                {'Foldername': paper_folder_path, 'sentenceID': sentence_ID,
-                                                 'sentence': clean_sentences[count],
-                                                 'citations': citations_list, 'citation_titles': citation_titel_list,
-                                                 'citation_authors': citation_author_list,
-                                                 'citation_abstract': citation_abstract_list,
-                                                 'PaperID': paper_ID, 'ParagraphID': paragraph_ID,
-                                                 'Bibliography used': bibliography_path})
-                                            """
+                                    if len(paragraph_parsed_sentences) > 0:
+                                        new_paragraph = Paragraph()
+                                        for sentence in paragraph_parsed_sentences:
+                                            sentence.paragraph = new_paragraph
+                                        paper_parsed_paragraphs.append(new_paragraph)
+                                if len(paper_parsed_paragraphs) > 0:
+                                    new_paper = self.add_new_paper(paper_title=paper_folder_path, paper_authors="")
+                                    for paragaph in paper_parsed_paragraphs:
+                                        paragaph.paper= new_paper
+                                    self.sql_session.add(new_paper)
+                                    self.sql_session.commit()
 
                         except UnicodeDecodeError:
                             sys.stderr.write("Error message: Contains none unicode characters.\n")
