@@ -20,8 +20,6 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
             .filter(Paper.title == paper_title)
             .one_or_none()
         )
-
-        # TODO log if paper already exists!
         if paper is not None:
             return paper
 

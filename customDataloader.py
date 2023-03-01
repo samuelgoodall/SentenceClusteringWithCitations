@@ -35,7 +35,7 @@ class ArxivDataset(Dataset):
                                             sentence.id = sentence_citation_relation.sentence_id
                                                 INNER JOIN citation c on c.id = sentence_citation_relation.citation_id
         """
-        cursor.execute(sql_script, (idx,))
+        cursor.execute(sql_script, (idx+1,))
         rows = cursor.fetchall()
         sentences = []
         labels = []
@@ -52,9 +52,9 @@ class ArxivDataset(Dataset):
 def custom_collate(batch):
     return batch
 
-def get_dataloader(batch_size = 20):
+def get_dataloader(batch_size = 20,shuffle=False):
     dataset = ArxivDataset("database/dataset.db")
-    train_dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=custom_collate)
+    train_dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=custom_collate)
     return train_dataloader
 
 if __name__ == "__main__":
