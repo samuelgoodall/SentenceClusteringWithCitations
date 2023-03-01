@@ -87,8 +87,9 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
                                                                                                            bib_data)
                                                 if titel is not None:
                                                     titel = self.clean_titel(titel)
-                                                    processed_citations_list.append((titel, author, abstract))
-                                                    at_least_one_title_available = True
+                                                    if titel != "":
+                                                        processed_citations_list.append((titel, author, abstract))
+                                                        at_least_one_title_available = True
                                             if at_least_one_title_available:
                                                 new_sentence = Sentence(content=self.compile_latex_to_text(
                                                                                           sentence))
