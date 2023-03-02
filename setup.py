@@ -22,7 +22,9 @@ def download_with_progress_bar(URL,output_path):
 def main():
     print("downloading glove_embeddings")
     URL = "https://nlp.stanford.edu/data/glove.840B.300d.zip"
-    output_path=os.path.abspath("experiments/embedding_methods/embeddings/glove")
+    output_path = os.path.abspath("experiments/embedding_methods/embeddings/glove")
+    if not os.path.isdir(output_path):
+        output_path.mkdir(exist_ok=True)
     file_path = download_with_progress_bar(URL,output_path=output_path)
     print("unzip glove embeddings")
     if not os.path.isfile(os.path.join(output_path, "glove.840B.300d.txt")):
