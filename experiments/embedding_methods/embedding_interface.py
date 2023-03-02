@@ -11,3 +11,8 @@ class EmbeddingInterface(metaclass=abc.ABCMeta):
     def embed_sentence(self, sentence: str):
         """embeds the sentence"""
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def return_hyper_params(self):
+        """returns the hyperparameters used as json"""
+        raise NotImplementedError

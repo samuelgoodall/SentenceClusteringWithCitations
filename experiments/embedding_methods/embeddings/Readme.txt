@@ -1,0 +1,1 @@
+This folder is for keeping the static embeddings and other files needed

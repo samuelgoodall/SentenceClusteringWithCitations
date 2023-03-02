@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+import json
 import time
 from enum import Enum
 
@@ -11,11 +14,13 @@ from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
 
+
 class SentenceCitationFusingMethod(Enum):
     Concatenation = 1
     Averaging = 2
 
-def calculate_correct_labels(labels:list[int]):
+
+def calculate_correct_labels(labels: list[int]):
     """
     calculates the correct labels and swaps them in place
     this is necessary to make evaluation easier otherwise the clusterlabels would just be the database indexes
@@ -32,6 +37,7 @@ def calculate_correct_labels(labels:list[int]):
         labels[label_index] = label_map[label]
     return None
 
+
 def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_embedding,
                                          sentence_citation_fusing_method: SentenceCitationFusingMethod):
     """
@@ -42,14 +48,45 @@ def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_e
         return (sentence_embedding + sentence_citation_embedding) / 2
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Concatenation:
         return np.concatenate((sentence_embedding, sentence_citation_embedding), axis=None)
-def evaluate(embedding:EmbeddingInterface,clustering:ClusteringInterface):
+
+
+def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]):
+    """computes all the evaluation metrics"""
+    ari = metrics.adjusted_rand_score(labels, labels_predicted)
+    nmi = metrics.normalized_mutual_info_score(labels, labels_predicted)
+    fms = metrics.fowlkes_mallows_score(labels, labels_predicted)
+
+    return ari, nmi, fms
+
+def save_result(embedding_hyper_params,clustering_hyper_params,running_time:float):
+    """saves results of experiment as json"""
+    result = dict()
+    result["time_stamp"] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+    result["running_time"] = running_time
+    result["embedding_hyper_params"] = embedding_hyper_params
+    result["clustering_hyper_params"] = clustering_hyper_params
+
+
+    output_name = 'results.json'
+    if not os.path.isfile(output_name):
+        overall_results = []
+        with open(output_name, 'w') as f:
+            json.dump(overall_results, f,indent=4)
+
+    with open(output_name) as f:
+        overall_results = json.load(f)
+        overall_results.append(result)
+    with open(output_name,"w") as f:
+        json.dump(overall_results, f, indent=4)
+
+
+def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
-    dataloader = get_dataloader(batch_size,shuffle=False)
+    dataloader = get_dataloader(batch_size, shuffle=False)
     count = 0
     start = time.time()
-    #Adjusted Rand index as performance measure of the clustering
-    ARI = 0
+    eval_metrics = np.asarray((0.0, 0.0, 0.0))
 
     for i, data in enumerate(tqdm(dataloader)):
         sentences, labels = data[0]
@@ -63,22 +100,23 @@ def evaluate(embedding:EmbeddingInterface,clustering:ClusteringInterface):
                                                                      SentenceCitationFusingMethod.Averaging)
             bag_of_sentences.append(overall_embedding)
         # cluster & evaluate the stuff:
-
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
-        current_ari = metrics.adjusted_rand_score(labels, labels_predicted)
-        ARI += current_ari/len(dataloader)
+        current_metrics = get_evaluation_metrics(labels, labels_predicted)
+        eval_metrics += np.asarray(current_metrics) / len(dataloader)
         count += 1
 
-    end = time.time()
-    print("count", count)
-    print("time", -start + end)
-    print("ARI:", ARI)
+    runtime=time.time()-start
+    embedding_hyper_params = embedding.return_hyper_params()
+    clustering_hyper_params = clustering.return_hyper_params()
+    save_result(embedding_hyper_params=embedding_hyper_params,clustering_hyper_params=clustering_hyper_params,running_time=runtime)
 
-def main ():
+
+def main():
     glove_embeddings_path = "../embeddings/glove/glove.840B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
-    evaluate(embedding,clustering)
+    evaluate(embedding, clustering)
+
 
 
 if __name__ == "__main__":
