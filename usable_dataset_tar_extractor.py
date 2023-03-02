@@ -4,6 +4,8 @@ import shutil
 
 from tqdm import tqdm
 
+from texparser.quantitative_information_extractor import \
+    QuantitativeInformationExtractor
 from texparser.UsablePaperExtractor import UsablePaperExtractor
 from texparser.tar_extractor import TarExtractor
 

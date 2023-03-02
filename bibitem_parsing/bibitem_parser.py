@@ -4,8 +4,7 @@ import string
 import subprocess
 import sys
 
-from algorithmEnum import Algorithm
-
+from bibitem_parsing.algorithmEnum import Algorithm
 
 # import torch
 # from sciwing.models.neural_parscit import NeuralParscit
