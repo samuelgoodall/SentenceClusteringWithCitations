@@ -58,25 +58,23 @@ def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]):
 
     return ari, nmi, fms
 
-def save_result(embedding_hyper_params,clustering_hyper_params,running_time:float):
+
+def save_result(embedding_hyper_params: dict, clustering_hyper_params: dict, running_time: float):
     """saves results of experiment as json"""
     result = dict()
     result["time_stamp"] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
     result["running_time"] = running_time
     result["embedding_hyper_params"] = embedding_hyper_params
     result["clustering_hyper_params"] = clustering_hyper_params
-
-
     output_name = 'results.json'
     if not os.path.isfile(output_name):
         overall_results = []
         with open(output_name, 'w') as f:
-            json.dump(overall_results, f,indent=4)
-
+            json.dump(overall_results, f, indent=4)
     with open(output_name) as f:
         overall_results = json.load(f)
         overall_results.append(result)
-    with open(output_name,"w") as f:
+    with open(output_name, "w") as f:
         json.dump(overall_results, f, indent=4)
 
 
@@ -105,18 +103,18 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
         eval_metrics += np.asarray(current_metrics) / len(dataloader)
         count += 1
 
-    runtime=time.time()-start
+    runtime = time.time() - start
     embedding_hyper_params = embedding.return_hyper_params()
     clustering_hyper_params = clustering.return_hyper_params()
-    save_result(embedding_hyper_params=embedding_hyper_params,clustering_hyper_params=clustering_hyper_params,running_time=runtime)
+    save_result(embedding_hyper_params=embedding_hyper_params, clustering_hyper_params=clustering_hyper_params,
+                running_time=runtime)
 
 
 def main():
-    glove_embeddings_path = "../embeddings/glove/glove.840B.300d.txt"
+    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.840B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     evaluate(embedding, clustering)
-
 
 
 if __name__ == "__main__":
