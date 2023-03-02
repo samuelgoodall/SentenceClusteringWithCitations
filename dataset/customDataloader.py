@@ -3,7 +3,9 @@ import time
 
 from torch.utils.data import Dataset, DataLoader
 
-from database.database import SQAlchemyDatabase, Paper
+from dataset.database.database import SQAlchemyDatabase, Paper
+
+
 
 
 class ArxivDataset(Dataset):
@@ -22,7 +24,11 @@ class ArxivDataset(Dataset):
     def __len__(self):
         return self.length
 
+
     def __getitem__(self, idx):
+        """
+        Gets a single Item from the Dataset
+        """
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         sql_script = """
@@ -35,7 +41,7 @@ class ArxivDataset(Dataset):
                                             sentence.id = sentence_citation_relation.sentence_id
                                                 INNER JOIN citation c on c.id = sentence_citation_relation.citation_id
         """
-        cursor.execute(sql_script, (idx+1,))
+        cursor.execute(sql_script, (idx + 1,))
         rows = cursor.fetchall()
         sentences = []
         labels = []
@@ -49,20 +55,35 @@ class ArxivDataset(Dataset):
             labels.append(item[0])
         return sentences, labels
 
+
+
+
+
 def custom_collate(batch):
+    """
+    needed because of our special structure of dataset otherwise it would try to vectorize the data which doesnt work!
+    """
     return batch
 
-def get_dataloader(batch_size = 20,shuffle=False):
-    dataset = ArxivDataset("database/dataset.db")
+
+def get_dataloader(batch_size=20, shuffle=False):
+    """
+    gets the dataloader
+    """
+    dataset = ArxivDataset("../dataset/database/dataset.db")
     train_dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=custom_collate)
     return train_dataloader
 
+
 if __name__ == "__main__":
-    dataset = ArxivDataset("../database/dataset.db")
-    train_dataloader = DataLoader(dataset, batch_size=200, shuffle=True,collate_fn=custom_collate)
+    """
+    just used for manual testing
+    """
+    dataset = ArxivDataset("database/dataset.db")
+    train_dataloader = DataLoader(dataset, batch_size=200, shuffle=True, collate_fn=custom_collate)
 
     start = time.time()
     example = next(iter(train_dataloader))
     end = time.time()
 
-    print("seconds",end - start)
+    print("seconds", end - start)

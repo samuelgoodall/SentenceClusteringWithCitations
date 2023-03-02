@@ -1,9 +1,7 @@
 import os
 import sys
-import uuid
 
-from bibitem_parsing.bibitem_parser import BibitemParser
-from database.database import Paper, SQAlchemyDatabase, Paragraph, Sentence, Citation
+from dataset.database.database import Paper, SQAlchemyDatabase, Paragraph, Sentence, Citation
 from qualitative_information_extractor import QualitativeInformationExtractor
 
 
