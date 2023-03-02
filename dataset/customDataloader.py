@@ -58,7 +58,7 @@ def get_dataloader(batch_size = 20,shuffle=False):
     return train_dataloader
 
 if __name__ == "__main__":
-    dataset = ArxivDataset("database/dataset.db")
+    dataset = ArxivDataset("../database/dataset.db")
     train_dataloader = DataLoader(dataset, batch_size=200, shuffle=True,collate_fn=custom_collate)
 
     start = time.time()

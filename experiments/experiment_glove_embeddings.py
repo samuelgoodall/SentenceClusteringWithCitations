@@ -5,10 +5,9 @@ from pathlib import Path
 import numpy
 import numpy as np
 from sklearn import metrics
-from sklearn.metrics import pairwise
 from tqdm import tqdm
 
-from customDataloader import get_dataloader
+from dataset.customDataloader import get_dataloader
 from gensim.models import KeyedVectors
 from sklearn.cluster import KMeans, DBSCAN
 
