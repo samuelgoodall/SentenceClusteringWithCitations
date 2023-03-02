@@ -5,12 +5,13 @@ from pathlib import Path
 import numpy
 import numpy as np
 from sklearn import metrics
-from sklearn.metrics import pairwise
 from tqdm import tqdm
 
-from customDataloader import get_dataloader
+
 from gensim.models import KeyedVectors
 from sklearn.cluster import KMeans, DBSCAN
+
+from dataset.customDataloader import get_dataloader
 
 not_properly_embedded = 0
 
@@ -20,15 +21,16 @@ class SentenceCitationFusingMethod(Enum):
     Averaging = 2
 
 
-"""
-gets the glove_embeddings as gensim KeyedVectors
-----------
-glove_embeddings_path : str
-    path to the glove embeddings saved as txt
-"""
+
 
 
 def get_glove_embeddings_keyed_vectors(glove_embeddings_path):
+    """
+    gets the glove_embeddings as gensim KeyedVectors
+    ----------
+    glove_embeddings_path : str
+        path to the glove embeddings saved as txt
+    """
     word2vec_glove_file = glove_embeddings_path.split('.txt')[0] + "word2vec" + ".kv"
     if Path(word2vec_glove_file).is_file():
         return KeyedVectors.load(word2vec_glove_file)
@@ -38,20 +40,21 @@ def get_glove_embeddings_keyed_vectors(glove_embeddings_path):
         return keyed_vecs
 
 
-"""
-converts a sentence into glove embeddings
-if words are not part of the dictionary they are mapped to the zero vector
-----------
-sentence : str
-    the string that is to be embedded
-glove_embeddings: KeyedVectors
-    a gensim object specifically made for storing word embeddings
-embedding_dimension: int
-    the used dimension for the word embeddings
-"""
+
 
 
 def convert_sentence_2_glove_embedding(sentence: str, glove_embeddings: KeyedVectors, embedding_dimension: int):
+    """
+    converts a sentence into glove embeddings
+    if words are not part of the dictionary they are mapped to the zero vector
+    ----------
+    sentence : str
+        the string that is to be embedded
+    glove_embeddings: KeyedVectors
+        a gensim object specifically made for storing word embeddings
+    embedding_dimension: int
+        the used dimension for the word embeddings
+    """
     numpy.seterr(all='raise')
     words = sentence.lower().split()
     count = 0
@@ -73,28 +76,30 @@ def convert_sentence_2_glove_embedding(sentence: str, glove_embeddings: KeyedVec
         return sentence_embedding
 
 
-"""
-sentence_citation_fusing_method: SentenceCitationPoolingMethod
-    method to be used for fusing sentence and citation concat or average
-"""
+
 
 
 def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_embedding,
                                          sentence_citation_fusing_method: SentenceCitationFusingMethod):
+    """
+    sentence_citation_fusing_method: SentenceCitationPoolingMethod
+        method to be used for fusing sentence and citation concat or average
+    """
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Averaging:
         return (sentence_embedding + sentence_citation_embedding) / 2
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Concatenation:
         return np.concatenate((sentence_embedding, sentence_citation_embedding), axis=None)
 
 
-"""
-calculates the correct labels and swaps them in place
-this is necessary to make evaluation easier otherwise the clusterlabels would just be the database indexes
-______
-labels:list[int]
-    list of labels, the ith position in the list corresponds to the ith example that is to be clustered 
-"""
+
 def calculate_correct_labels(labels:list[int]):
+    """
+    calculates the correct labels and swaps them in place
+    this is necessary to make evaluation easier otherwise the clusterlabels would just be the database indexes
+    ______
+    labels:list[int]
+        list of labels, the ith position in the list corresponds to the ith example that is to be clustered
+    """
     label_cluster_index = 0
     label_map = {}
     for label_index, label in enumerate(labels):
@@ -104,10 +109,11 @@ def calculate_correct_labels(labels:list[int]):
         labels[label_index] = label_map[label]
     return None
 
-"""
-clusters with kmeans
-"""
+
 def cluster_with_kmeans(bag_of_sentences:list[str],number_of_clusters:int):
+    """
+    clusters with kmeans
+    """
     km = KMeans(
         n_clusters=number_of_clusters, init='random',
         n_init=10, max_iter=300,
@@ -118,6 +124,9 @@ def cluster_with_kmeans(bag_of_sentences:list[str],number_of_clusters:int):
 
 
 def cluster_with_dbscan(bag_of_sentences:list[str]):
+    """
+    clusters with db_scan
+    """
     db = DBSCAN(eps=1.5, min_samples=1, metric="euclidean").fit(bag_of_sentences)
     labels_predicted = db.labels_
     return labels_predicted

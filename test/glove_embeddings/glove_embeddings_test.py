@@ -1,6 +1,6 @@
 import unittest
 
-from experiment_glove_embeddings import convert_sentence_2_glove_embedding, get_glove_embeddings_keyed_vectors
+from experiments.experiment_glove_embeddings import convert_sentence_2_glove_embedding, get_glove_embeddings_keyed_vectors
 
 
 class GloveEmbeddingsTest(unittest.TestCase):

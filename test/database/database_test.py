@@ -3,7 +3,7 @@ import sys
 import unittest
 
 sys.path.append(".")
-from database.database import (Citation, Paragraph, Sentence, SQAlchemyDatabase, Paper)
+from dataset.database.database import (Citation, Paragraph, Sentence, SQAlchemyDatabase, Paper)
 
 
 class DatabaseTest(unittest.TestCase):
