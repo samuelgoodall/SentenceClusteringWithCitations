@@ -6,7 +6,9 @@ from sklearn import metrics
 from tqdm import tqdm
 
 from dataset.customDataloader import get_dataloader
+from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
+from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
 
 class SentenceCitationFusingMethod(Enum):
@@ -40,21 +42,14 @@ def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_e
         return (sentence_embedding + sentence_citation_embedding) / 2
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Concatenation:
         return np.concatenate((sentence_embedding, sentence_citation_embedding), axis=None)
-def main():
-
-    # is one at the moment makes iterating easier, batch size of 200 would save some sekonds of execute
+def evaluate(embedding:EmbeddingInterface,clustering:ClusteringInterface):
+    # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
     dataloader = get_dataloader(batch_size,shuffle=False)
     count = 0
     start = time.time()
-
-    glove_embeddings_path = "../embeddings/glove/glove.840B.300d.txt"
-    embedding = GloveEmbedding(300,glove_embeddings_path)
-    clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
-
     #Adjusted Rand index as performance measure of the clustering
     ARI = 0
-
 
     for i, data in enumerate(tqdm(dataloader)):
         sentences, labels = data[0]
@@ -67,7 +62,6 @@ def main():
                                                                      sentence_citation_embedding,
                                                                      SentenceCitationFusingMethod.Averaging)
             bag_of_sentences.append(overall_embedding)
-
         # cluster & evaluate the stuff:
 
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
@@ -79,6 +73,13 @@ def main():
     print("count", count)
     print("time", -start + end)
     print("ARI:", ARI)
+
+def main ():
+    glove_embeddings_path = "../embeddings/glove/glove.840B.300d.txt"
+    embedding = GloveEmbedding(300, glove_embeddings_path)
+    clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
+    evaluate(embedding,clustering)
+
 
 if __name__ == "__main__":
     main()
