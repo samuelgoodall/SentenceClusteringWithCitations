@@ -1,7 +1,8 @@
 import os
 import sys
 
-from dataset.database.database import Paper, SQAlchemyDatabase, Paragraph, Sentence, Citation
+from dataset.database.database import (Citation, Paper, Paragraph, Sentence,
+                                       SQAlchemyDatabase)
 from qualitative_information_extractor import QualitativeInformationExtractor
 
 
@@ -40,15 +41,16 @@ class QualitativeInformationExtractorDatabase(QualitativeInformationExtractor):
         return new_citation
 
     def fill_data_set(self, paper_folder_path: str,  include_bbl: bool):
-
+        not_found_right_tex = True
         for file_name in os.listdir(str(paper_folder_path)):
-            if file_name.endswith(".tex"):
+            if file_name.endswith(".tex") & not_found_right_tex:
                 absolute_paper_path = os.path.join(paper_folder_path, file_name)
                 try:
                     with open(absolute_paper_path, 'r', encoding="utf-8") as file:
                         try:
                             complete_file_string = file.read()
                             if self.get_related_work_beginning(complete_file_string) != -1:
+                                not_found_right_tex = False
                                 bibliography_path = self.check_bibliography_type(paper_folder_path)
                                 if bibliography_path.endswith(".bib"):
                                     bib_data = self.initialize_bib_parser(bibliography_path)
