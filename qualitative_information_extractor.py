@@ -50,7 +50,8 @@ class QualitativeInformationExtractor(InformationExtractor):
         return re.split(blank_line_regex, s.strip())
     
     def get_paragraphs(self, related_work:str) -> list:
-        subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{.*?})*|(?:\[.*?\])"
+        #subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:{.*?})*|(?:\[.*?\])"
+        subsection_regex = r"\\(?:subsection|subsubsection|paragraph|subparagraph|newline|\\|break|linebreak)(?:(?:\[.*?\])|(?:{.*?}))*"
         related_work = re.sub(subsection_regex, "\n\n", related_work)
         return self.split_on_empty_lines(related_work)
     
@@ -97,7 +98,7 @@ class QualitativeInformationExtractor(InformationExtractor):
         plain_text = re.sub(r"<cit\.>", "", plain_text)
         plain_text = re.sub(r"<ref>", "", plain_text)
         plain_text = re.sub(r"\n", "", plain_text)
-        plain_text = plain_text.strip()
+        plain_text = " ".join(plain_text.split())
         return plain_text
     
     def get_citation_keywords(self, sentence):
