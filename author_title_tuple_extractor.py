@@ -13,7 +13,6 @@ from bibitem_parsing.bibitem_parser import BibitemParser
 Skript for going over the extracted Dataset and extracting the Author title tuples does so with utilizing multiple threads
 """
 
-
 class AuthorTitleTuplesExtractor:
     def __init__(self, dataset_folder_path, paper_to_start: str = None) -> None:
         self.paper_to_start = paper_to_start
