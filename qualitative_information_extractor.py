@@ -83,6 +83,11 @@ class QualitativeInformationExtractor(InformationExtractor):
                 clean_sentence_list.append(sentence)  
         return clean_sentence_list                     
     
+    def clean_sentence_from_none_ASCII(self, sentence: str):
+        new_val = sentence.encode("ascii", "ignore")
+        updated_sentence = new_val.decode()
+        return updated_sentence
+    
     def compile_latex_to_text(self, sentence: str):
         #sentence = re.sub(r"(?<!\\)\$.*?(?<!\\)\$", "", sentence)
         try:
@@ -98,6 +103,7 @@ class QualitativeInformationExtractor(InformationExtractor):
         plain_text = re.sub(r"<cit\.>", "", plain_text)
         plain_text = re.sub(r"<ref>", "", plain_text)
         plain_text = re.sub(r"\n", "", plain_text)
+        plain_text = self.clean_sentence_from_none_ASCII(plain_text)
         plain_text = " ".join(plain_text.split())
         return plain_text
     
