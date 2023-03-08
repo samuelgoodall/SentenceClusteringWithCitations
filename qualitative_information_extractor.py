@@ -80,7 +80,12 @@ class QualitativeInformationExtractor(InformationExtractor):
             cite_symbol_position = sentence.find(self._cite_symbol)
             if cite_symbol_position != -1:
                 clean_sentence_list.append(sentence)  
-        return clean_sentence_list                     
+        return clean_sentence_list    
+                     
+    def clean_sentence_from_none_ASCII(self, sentence: str):
+        new_val = sentence.encode("ascii", "ignore")
+        updated_sentence = new_val.decode()
+        return updated_sentence
     
     def compile_latex_to_text(self, sentence: str):
         #sentence = re.sub(r"(?<!\\)\$.*?(?<!\\)\$", "", sentence)
@@ -98,6 +103,7 @@ class QualitativeInformationExtractor(InformationExtractor):
         plain_text = re.sub(r"<ref>", "", plain_text)
         plain_text = re.sub(r"\n", "", plain_text)
         plain_text = plain_text.strip()
+        plain_text = self.clean_sentence_from_none_ASCII(plain_text)
         return plain_text
     
     def get_citation_keywords(self, sentence):
