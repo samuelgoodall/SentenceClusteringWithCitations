@@ -7,11 +7,11 @@ from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from sentence_transformers import SentenceTransformer
 
 
-class SBertEmbedding(EmbeddingInterface):
+class SentenceTransformerEmbedding(EmbeddingInterface):
 
-    def __init__(self, embedding_dimension, sbert_embeddings_path):
-        self.embedding_dimension = embedding_dimension
-        self.sbert_embeddings_path = sbert_embeddings_path
+    def __init__(self, model_name: str):
+        self.model = SentenceTransformer(model_name)
+        self.model_name = model_name
 
     def embed_sentence(self, sentence: str):
         """
@@ -21,10 +21,10 @@ class SBertEmbedding(EmbeddingInterface):
         sentence : str
             the string that is to be embedded
         """
-        model = SentenceTransformer('all-MiniLM-L6-v2')
         # Sentences are encoded by calling model.encode()
-        embeddings = model.encode(sentence)
-        return embeddings
+        embedding = self.model.encode(sentence)
+        return embedding
     def return_hyper_params(self):
-        hyper_params = {"embedding_dimension": self.embedding_dimension}
+        hyper_params = {"embedding_dimension": self.model.get_sentence_embedding_dimension(),
+                        "model_name": self.model_name}
         return hyper_params

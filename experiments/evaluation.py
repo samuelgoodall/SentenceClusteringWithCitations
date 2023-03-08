@@ -12,7 +12,7 @@ from dataset.customDataloader import get_dataloader
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
-from experiments.embedding_methods.sbert_embedding import SBertEmbedding
+from experiments.embedding_methods.sbert_embedding import SentenceTransformerEmbedding
 
 
 class SentenceCitationFusingMethod(Enum):
@@ -111,8 +111,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
 
 
 def main():
-    sbert_embeddings_path = "../experiments/embedding_methods/embeddings/sbert/sbert.txt"
-    embedding = SBertEmbedding(sbert_embeddings_path)
+    embedding = SentenceTransformerEmbedding('all-MiniLM-L6-v2')
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     evaluate(embedding, clustering)
 
