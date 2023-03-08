@@ -3,9 +3,8 @@ from pathlib import Path
 
 import numpy
 import numpy as np
-from NLPProjekt.experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from sentence_transformers import SentenceTransformer
-
 
 
 class SBertEmbedding(EmbeddingInterface):
