@@ -112,11 +112,7 @@ class SphericalKMeansClustering(ClusteringInterface):
         )
         input_to_csr = csr_matrix(sentences)
         spherical_kmeans.fit(input_to_csr)
-        return (
-            spherical_kmeans.cluster_centers_,
-            spherical_kmeans.labels_,
-            spherical_kmeans.inertia_,
-        )
+        return spherical_kmeans.labels_
 
     def return_hyper_params(self):
         """returns the hyper params of the clustering algorithm"""
