@@ -5,6 +5,20 @@ import torch
 from torch.utils.data import Dataset, DataLoader, random_split
 
 from dataset.database.database import SQAlchemyDatabase, Paper
+from dataclasses import dataclass
+
+
+@dataclass
+class CitationItemTO:
+    citation_title: str
+    citation_abstract: str
+
+
+@dataclass
+class DataItemTO:
+    paragraph_id: int
+    sentence: str
+    citations: list[CitationItemTO]
 
 
 class ArxivDataset(Dataset):
@@ -75,17 +89,19 @@ class ArxivDataset(Dataset):
         """
         cursor.execute(sql_script, (idx + 1,))
         rows = cursor.fetchall()
-        sentences = []
-        labels = []
+
+        sentences = dict()
+
         for item in rows:
-            sentence_citation = {
-                "sentence": item[1],
-                "citation_title": item[2],
-                "citation_abstract": item[3] if (item[3] is not None) else "",
-                "sentence_id": item[4],
-            }
-            sentences.append(sentence_citation)
-            labels.append(item[0])
+            sentence_id = item[4]
+            paragraph_id = item[0]
+            if sentence_id not in sentences:
+                sentence = item[1]
+                sentences[sentence_id] = DataItemTO(paragraph_id=paragraph_id, sentence=sentence, citations=list())
+            sentences[sentence_id].citations.append(CitationItemTO(citation_title=item[2], citation_abstract=item[3] if (item[3] is not None) else ""))
+
+        sentences = list(sentences.values())
+        labels = list(map(lambda dataItem: dataItem.paragraph_id ,sentences))
         return sentences, labels
 
 
