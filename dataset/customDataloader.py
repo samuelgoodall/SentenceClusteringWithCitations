@@ -64,7 +64,7 @@ class ArxivDataset(Dataset):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         sql_script = """
-                        Select paragraph.id, sentence.content,c.title,c.abstract
+                        Select paragraph.id, sentence.content,c.title,c.abstract, sentence.id
                                 from paragraph
                                     INNER JOIN sentence 
                                         ON sentence.paragraph_id = paragraph.id
@@ -82,6 +82,7 @@ class ArxivDataset(Dataset):
                 "sentence": item[1],
                 "citation_title": item[2],
                 "citation_abstract": item[3] if (item[3] is not None) else "",
+                "sentence_id": item[4],
             }
             sentences.append(sentence_citation)
             labels.append(item[0])
