@@ -3,8 +3,9 @@ from sklearn.mixture import GaussianMixture
 
 
 class GMMClustering(ClusteringInterface):
-    def __init__(self, n_components:int, covariance_type:str="full", tol:float=1e-3, reg_covar:float=1e-6, max_iter:int=100, n_init:int=1, init_params:str="k-means++", random_state=None,
-                 warm_start:bool=False):
+    def __init__(self, n_components: int, covariance_type: str = "full", tol: float = 1e-3, reg_covar: float = 1e-6,
+                 max_iter: int = 100, n_init: int = 1, init_params: str = "k-means++", random_state=None,
+                 warm_start: bool = False):
         self.n_components = n_components
         self.covariance_type = covariance_type
         self.tol = tol
