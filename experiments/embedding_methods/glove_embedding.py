@@ -38,7 +38,6 @@ class GloveEmbedding(EmbeddingInterface):
         sentence : str
             the string that is to be embedded
         """
-        numpy.seterr(all='raise')
         words = sentence.lower().split()
         count = 0
         sentence_embedding = np.zeros(self.embedding_dimension)
