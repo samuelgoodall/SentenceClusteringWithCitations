@@ -11,9 +11,9 @@ from tqdm import tqdm
 from dataset.customDataloader import get_dataloader
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
+from experiments.clustering_methods.gmm_clustering import GMMClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
-
 
 class SentenceCitationFusingMethod(Enum):
     Concatenation = 1
@@ -52,6 +52,8 @@ def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_e
 
 def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]):
     """computes all the evaluation metrics"""
+    print(labels)
+    print(labels_predicted)
     ari = metrics.adjusted_rand_score(labels, labels_predicted)
     nmi = metrics.normalized_mutual_info_score(labels, labels_predicted)
     fms = metrics.fowlkes_mallows_score(labels, labels_predicted)
@@ -113,7 +115,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
 def main():
     glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.840B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
-    clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
+    clustering = GMMClustering(3)
     evaluate(embedding, clustering)
 
 
