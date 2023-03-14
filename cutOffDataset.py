@@ -1,12 +1,8 @@
-import math
 import sqlite3
 
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import sqlalchemy
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
 from tqdm import tqdm
 
 from dataset.database.database import (Citation, Paper, Paragraph, Sentence,
