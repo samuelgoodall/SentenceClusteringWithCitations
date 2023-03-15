@@ -46,7 +46,7 @@ def calculate_correct_labels(labels: list[int]) -> None:
     return None
 
 
-def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_embedding,
+def fuse_sentence_and_citation_embedding(sentence_embedding, citation_embeddings:list,
                                          sentence_citation_fusing_method: SentenceCitationFusingMethod):
     """
     sentence_citation_fusing_method: SentenceCitationPoolingMethod
@@ -66,10 +66,13 @@ def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_e
     numpy array
         numpy array that is the vector representation of both combined
     """
+
+    pooled_citation_embedding = np.mean(np.array(citation_embeddings), axis=0, dtype=np.float64)
+
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Averaging:
-        return (sentence_embedding + sentence_citation_embedding) / 2
+        return (sentence_embedding + pooled_citation_embedding) / 2
     if sentence_citation_fusing_method == SentenceCitationFusingMethod.Concatenation:
-        return np.concatenate((sentence_embedding, sentence_citation_embedding), axis=None)
+        return np.concatenate((sentence_embedding, pooled_citation_embedding), axis=None)
 
 
 def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]) -> dict:
@@ -159,13 +162,15 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
         bag_of_sentences = []
         calculate_correct_labels(labels)
         for sentence_index, sentence in enumerate(sentences):
-
-            sentence_embedding = embedding.embed_sentence(sentence["sentence"])
+            sentence_embedding = embedding.embed_sentence(sentence.sentence)
+            citation_embeddings = []
             if use_citation:
-                sentence_citation_embedding = embedding.embed_sentence(sentence["citation_title"])
+                for citation in sentence.citations:
+                    current_citation_embedding = embedding.embed_sentence(citation.citation_title)
+                    citation_embeddings.append(current_citation_embedding)
                 overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
-                                                                         sentence_citation_embedding,
-                                                                         SentenceCitationFusingMethod.Averaging)
+                                                                     citation_embeddings,
+                                                                     SentenceCitationFusingMethod.Averaging)
             else:
                 overall_embedding = sentence_embedding
             bag_of_sentences.append(overall_embedding)
