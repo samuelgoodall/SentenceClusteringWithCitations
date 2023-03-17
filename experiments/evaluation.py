@@ -12,7 +12,7 @@ from dataset.customDataloader import get_dataloader
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
-from experiments.embedding_methods.glove_embedding import GloveEmbedding
+from experiments.embedding_methods.bert_embedding import BertTransformerEmbedding
 
 
 class SentenceCitationFusingMethod(Enum):
@@ -111,8 +111,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
 
 
 def main():
-    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.840B.300d.txt"
-    embedding = GloveEmbedding(300, glove_embeddings_path)
+    embedding = BertTransformerEmbedding("bert-base-uncased")
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     evaluate(embedding, clustering)
 
