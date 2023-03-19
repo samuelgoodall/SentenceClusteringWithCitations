@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-import numpy
 import numpy as np
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from transformers import BertTokenizer, BertModel
@@ -19,12 +18,17 @@ class BertTransformerEmbedding(EmbeddingInterface):
         sentence : str
             the string that is to be embedded
         """
-        encoded_input = self.tokenizer(sentence, return_tensors='pt')
-        output = self.model(**encoded_input)
+        # add special tokens at the beginning and end of each sentence
+        sentence = ["[CLS]" + sentence + "[SEP]"]
+        tokenized_texts = self.tokenizer.tokenize(sentence)
+        # use the BERT tokenizer to convert tokens to their index numbers
+        input_ids = [self.tokenizer.convert_tokens_to_ids(x) for x in tokenized_texts]
+        # take the average of the input ID's for each sentence
+        output = np.Average(input_ids)
 
         return output
 
     def return_hyper_params(self):
-        hyper_params = {"embedding_dimension": self.,
-                        "model_name":}
+        hyper_params = {"Model name": self.model_name,
+                        "Padding Strategies": self.tokenizer._get_padding_truncation_strategies()}
         return hyper_params
