@@ -5,6 +5,7 @@ import pandas as pd
 
 
 class descriptiveStatistics:
+    """class to calculate descriptive statistics on a database"""
     def __init__(self, database_path):
         self.conn = sqlite3.connect(database_path)
         
@@ -13,6 +14,7 @@ class descriptiveStatistics:
             file.write(string + str(number) + "\n") 
     
     def analyze_paragraphs_per_paper(self):
+        """calculate descriptive statistics on number of paragraphs per paper and save boxplot and histogram"""
         query = "SELECT paper_id, id FROM paragraph WHERE id IN (SELECT s.paragraph_id FROM sentence s JOIN sentence_citation_relation c ON s.id = c.sentence_id)"
         data = pd.read_sql_query(query, self.conn)
         grouped_data = data.groupby('paper_id')['id'].count()
@@ -53,6 +55,7 @@ class descriptiveStatistics:
         table.to_csv('descriptive_statistic/tables/paragraphs_per_paper.csv', index=False)
 
     def analyze_sentences_per_paragraph(self):
+        """calculate descriptive statistics on number sentences per paragraph and save boxplot and histogram"""
         query = "SELECT s.id, paragraph_id FROM Sentence AS s WHERE s.id IN (SELECT c.sentence_id FROM sentence_citation_relation AS c)"
         data = pd.read_sql_query(query, self.conn)
         grouped_data = data.groupby('paragraph_id')['id'].count()
@@ -93,6 +96,7 @@ class descriptiveStatistics:
         table.to_csv('descriptive_statistic/tables/sentence_per_paragraph.csv', index=False)
 
     def analyze_citations_per_sentence(self):
+        """calculate descriptive statistics on citations per sentence and save boxplot and histogram"""
         data = pd.read_sql_query('SELECT * FROM "sentence_citation_relation"', self.conn)
         grouped_data = data.groupby('sentence_id')['citation_id'].count()
         mean_citation_per_sentences = grouped_data.mean()
@@ -132,6 +136,7 @@ class descriptiveStatistics:
         table.to_csv('descriptive_statistic/tables/citation_per_sentence.csv', index=False)
    
     def analyze_sentence_length(self):
+        """calculate descriptive statistics on words per sentence and save boxplot and histogram"""
         query = "SELECT s.id, paragraph_id, content FROM Sentence AS s WHERE s.id IN (SELECT c.sentence_id FROM sentence_citation_relation AS c)"
         data = pd.read_sql_query(query, self.conn)
         sentence_lengths = data['content'].apply(lambda x: len(x.split()))
@@ -169,6 +174,7 @@ class descriptiveStatistics:
         table.to_csv('descriptive_statistic/tables/sentence_length.csv', index=False)
 
     def count_usuable_abstracts(self):
+        """count database entries with a abstract"""
         cur = self.conn.cursor()
         cur.execute("SELECT COUNT(*) FROM citation WHERE abstract IS NULL")
         num_null = cur.fetchone()[0]
@@ -184,25 +190,6 @@ class descriptiveStatistics:
         self.conn.close()
 
 if __name__ == "__main__":
-    #run = descriptiveStatistics('dataset/database/dataset.db')
-    #run.run()
-    conn = sqlite3.connect('dataset/database/dataset.db')
-
-    # Define a cursor object to execute SQL queries
-    cursor = conn.cursor()
-
-    # Write an SQL query to retrieve data based on index
-    index = 14
-    sql_query = "SELECT content FROM sentence WHERE id = ?"
-    cursor.execute(sql_query, (index,))
-
-    # Retrieve the data using the fetchall() method
-    data = cursor.fetchone()[0]
-
-    # Loop through the data and print each row
-    print(data)
-
-    # Close the cursor and connection objects
-    cursor.close()
-    conn.close()
+    run = descriptiveStatistics('dataset/database/dataset.db')
+    run.run()
 
