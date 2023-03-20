@@ -11,19 +11,23 @@ from dataset.database.database import (Citation, Paper, Paragraph, Sentence,
 
 
 class cutOutlierData:
+    """class to delete database entries that are outlier data points"""
     def __init__(self, database_path):
         self.conn = sqlite3.connect(database_path)
         self.sql_session = SQAlchemyDatabase(database_path).session()
 
     def chunk_list(self, lst, chunk_size):
+        """seperates a list into chunks"""
         for i in range(0, len(lst), chunk_size):
             yield lst[i:i + chunk_size]
     
     def log(self, string, number):
+        """writes a string and number to txt file"""
         with open("log.txt", "a+") as file:
             file.write(string + str(number) + '\n')   
                  
     def find_long_papers(self):
+        """finds the paragraph amount, where 95% percents of the papers have less paragraphs"""
         query = "SELECT paper_id, id FROM paragraph WHERE id IN (SELECT s.paragraph_id FROM sentence s JOIN sentence_citation_relation c ON s.id = c.sentence_id)"
         data = pd.read_sql_query(query, self.conn)
         grouped_data = data.groupby('paper_id')['id'].count()
@@ -33,6 +37,8 @@ class cutOutlierData:
         return threshold
 
     def cut_long_papers(self):
+        """deletes papers that have more paragraphs than a certain treshold and connected 
+        paragraphs, sentences, citations and sentence-citation-relations from the database"""
         # select the paragraph IDs that satisfy the condition
         long_paper_ids = [result[0] for result in self.sql_session.query(Paragraph.paper_id)
                         .group_by(Paragraph.paper_id)
@@ -55,9 +61,7 @@ class cutOutlierData:
             
             # delete the paragraphs and connected data
             for long_paper_id in tqdm(chunk):
-                # delete the paragraph
                 self.sql_session.query(Paragraph).filter_by(paper_id=long_paper_id).delete()
-                # delete the paper if it doesn't have any more paragraphs
                 self.sql_session.query(Paper).filter_by(id=long_paper_id).delete(synchronize_session=False) 
             
             # delete sentences connected to the paper
@@ -69,10 +73,10 @@ class cutOutlierData:
                 self.sql_session.query(SentenceCitationRelation).filter_by(sentence_id=sentence).delete()
             for citation in citation_ids:
                 self.sql_session.query(Citation).filter_by(id=citation).delete()
-            # commit the changes
             self.sql_session.commit()
         
     def find_long_paragraphs(self):
+        """finds the sentence amount, where 95% percents of the paragraphs are have less sentences"""
         query = "SELECT s.id, paragraph_id FROM Sentence AS s WHERE s.id IN (SELECT c.sentence_id FROM sentence_citation_relation AS c)"
         data = pd.read_sql_query(query, self.conn)
         grouped_data = data.groupby('paragraph_id')['id'].count()
@@ -82,8 +86,8 @@ class cutOutlierData:
         return threshold_paragraph
 
     def cut_long_paragraphs(self):
-        #sql_session = SQAlchemyDatabase("dataset/database/dataset.db").session()
-        
+        """deletes paragraphs that have more sentences than a certain treshold and connected sentences,
+        citations and sentence-citation-relations from the database"""
         # select the paragraph IDs that satisfy the condition
         long_paragraphs_ids = [result[0] for result in self.sql_session.query(Sentence.paragraph_id)
                         .group_by(Sentence.paragraph_id)
@@ -113,20 +117,20 @@ class cutOutlierData:
             # delete citations connected to the sentence
             for sentence in sentence_ids:
                 self.sql_session.query(SentenceCitationRelation).filter_by(sentence_id=sentence).delete()
-            
             for citation in citation_ids:
                 self.sql_session.query(Citation).filter_by(id=citation).delete()
-            # commit the changes
             self.sql_session.commit()
             self.delete_papers_without_paragraph()
 
     def delete_papers_without_paragraph(self):
+        """delete papers from the database, that are connected to no paragraph in the database"""
         papers = self.sql_session.execute(text("DELETE FROM paper WHERE id NOT IN (SELECT DISTINCT paper_id FROM paragraph)"))
         num_deleted = papers.rowcount
         self.log("Number of papers to be deleted: ", num_deleted)
         self.sql_session.commit()   
         
     def find_long_sentence(self):
+        """finds the word amount, where 95% percent of the sentences have less words"""
         query = "SELECT s.id, paragraph_id, content FROM Sentence AS s WHERE s.id IN (SELECT c.sentence_id FROM sentence_citation_relation AS c)"
         data = pd.read_sql_query(query, self.conn)
         token_count = data['content'].apply(lambda x: len(x.split()))
@@ -136,6 +140,7 @@ class cutOutlierData:
         return threshold_sentence
 
     def cut_long_short_sentences(self):
+        """deletes sentences that have more words than a certain treshold and less than 3 words from the database"""
         threshold = self.find_long_sentence()
         sentences_long = self.sql_session.execute(text("DELETE FROM Sentence WHERE LENGTH(content) - LENGTH(REPLACE(content, ' ', '')) + 1 > :threshold;"), {'threshold': threshold})
         sentences_short = self.sql_session.execute(text("DELETE FROM Sentence WHERE LENGTH(content) - LENGTH(REPLACE(content, ' ', '')) + 1 < 3;"))
@@ -149,12 +154,14 @@ class cutOutlierData:
         self.delete_citations_without_sentence()
 
     def delete_paragraphs_without_sentence(self):
+        """delete paragraphs from database, that are connected to no sentence in the database"""
         paragraphs = self.sql_session.execute(text("DELETE FROM paragraph WHERE id NOT IN (SELECT DISTINCT paragraph_id FROM sentence)"))
         num_deleted = paragraphs.rowcount
         self.log("Number of paragraphs to be deleted: ", num_deleted)
         self.sql_session.commit()   
         
     def delete_citations_without_sentence(self):
+        """delete citations and sentence-citation-relations from database, that are connected to no sentence in the database"""
         self.sql_session.execute(text("DELETE FROM sentence_citation_relation WHERE sentence_id NOT IN (SELECT DISTINCT id FROM sentence)"))
         citations = self.sql_session.execute(text("DELETE FROM citation WHERE id NOT IN (SELECT DISTINCT citation_id FROM sentence_citation_relation)"))
         num_deleted = citations.rowcount
@@ -162,6 +169,7 @@ class cutOutlierData:
         self.sql_session.commit()   
 
     def find_sentences_with_many_citations(self):
+        """finds the citation amount, where 95% percent of the sentences have less citations"""
         data = pd.read_sql_query('SELECT * FROM "sentence_citation_relation"', self.conn)
         grouped_data = data.groupby('sentence_id')['citation_id'].count()
         threshold_citations = grouped_data.quantile(0.95)
@@ -170,6 +178,8 @@ class cutOutlierData:
         return threshold_citations
 
     def cut_many_citations(self):
+        """deletes sentences that have more citations than a certain treshold and connected citations and sentence-citation relations
+        from the database"""
         # select the sentence IDs that satisfy the condition
         many_citations_sentence_ids = [result[0] for result in self.sql_session.query(SentenceCitationRelation.sentence_id)
                         .group_by(SentenceCitationRelation.sentence_id)
@@ -190,13 +200,12 @@ class cutOutlierData:
 
             for citation in citation_ids:
                 self.sql_session.query(Citation).filter_by(id=citation).delete()
-            
-            # commit the changes
             self.sql_session.commit()
             self.delete_paragraphs_without_sentence()
             self.delete_papers_without_paragraph()
             
     def log_total(self):
+        """log the amount of papers, paragraphs, sentences, citations and sentence-citation-relations in the database"""
         cursor = self.conn.cursor()
         query = "SELECT COUNT(id) FROM paper;"
         cursor.execute(query)
@@ -225,7 +234,9 @@ class cutOutlierData:
 
         cursor.close()
         
-    def run(self):    
+    def run(self):
+        """delete long papers, paragraphs, sentences, and sentences with many citations, and all connected data from database
+        and log the the size of the database tables at each step"""    
         self.cut_long_papers()
         self.log("After Paper deletion: ", "")
         self.log_total()
