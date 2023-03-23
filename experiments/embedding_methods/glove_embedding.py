@@ -17,9 +17,15 @@ class GloveEmbedding(EmbeddingInterface):
     def _get_glove_embeddings_keyed_vectors(self, glove_embeddings_path):
         """
         gets the glove_embeddings as gensim KeyedVectors
+
+        Parameters
         ----------
         glove_embeddings_path : str
             path to the glove embeddings saved as txt
+        Returns
+        -------
+        keyed vectors
+            keyed vectors in essence just a big dictionary with the words as keys
         """
         word2vec_glove_file = glove_embeddings_path.split('.txt')[0] + "word2vec" + ".kv"
         if Path(word2vec_glove_file).is_file():
@@ -33,9 +39,16 @@ class GloveEmbedding(EmbeddingInterface):
         """
         converts a sentence into glove embeddings
         if words are not part of the dictionary they are mapped to the zero vector
+
+        Parameters
         ----------
         sentence : str
             the string that is to be embedded
+
+        Returns
+        -------
+        numpy array
+            the embedding vector
         """
         numpy.seterr(all='raise')
         words = sentence.lower().split()
@@ -57,6 +70,14 @@ class GloveEmbedding(EmbeddingInterface):
             return sentence_embedding
 
     def return_hyper_params(self):
+        """
+        returns the hyper params as dict it is dict in order to keep it flexible
+
+        Returns
+        -------
+        dict
+            the hyper_params as a dictionary
+        """
         hyper_params = {"embedding_dimension": self.embedding_dimension,
                         "glove_embeddings_path": self.glove_embeddings_path}
         return hyper_params

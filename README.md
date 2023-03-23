@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In order to install all required dependencys execute following command:
+In order to install most of the required dependencys execute following command:
 pip install -r requirements.txt
 
 ## Run the Experiments
