@@ -1,3 +1,5 @@
+import fasttext
+
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 
 
@@ -37,13 +39,3 @@ class FastTextEmbedding(EmbeddingInterface):
         hyper_params = {"embedding_dimension": self.embedding_dimension,
                         "fasttext_model_path": self.fasttext_model_path}
         return hyper_params
-
-
-
-import fasttext.util
-
-if __name__ == "__main__":
-    fasttext.util.download_model('en', if_exists='ignore')
-    ft = fasttext.load_model('embeddings/FastText/cc.en.300.bin')
-    wordvector = ft.get_word_vector("e")
-    print("DONE")

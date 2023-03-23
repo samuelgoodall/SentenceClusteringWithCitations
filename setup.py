@@ -2,7 +2,7 @@ import os
 import shutil
 import zipfile
 from pathlib import Path
-
+import fasttext.util
 import requests
 from tqdm import tqdm
 
@@ -36,6 +36,17 @@ def main():
     print("create KeyedVectors from GLoveEmbeddings")
     glove_embeddings_path = "experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
+
+    # download the fastText model eng must change wd for that changes back once it's done
+    print("downloading fastextmodel")
+    current_wd = os.getcwd()
+    fastext_model_path = os.path.abspath("experiments/embedding_methods/embeddings/FastText")
+    os.chdir(fastext_model_path)
+    fasttext.util.download_model('en', if_exists='ignore')  # English
+    ft = fasttext.load_model('cc.en.300.bin')
+    os.chdir(current_wd)
+
+
 
 if __name__ == "__main__":
     print("hello world!")
