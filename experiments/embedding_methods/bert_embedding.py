@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from transformers import BertTokenizer, BertModel
+import torch
 
 
 class BertTransformerEmbedding(EmbeddingInterface):
@@ -18,13 +19,20 @@ class BertTransformerEmbedding(EmbeddingInterface):
         sentence : str
             the string that is to be embedded
         """
-        tokenized_texts = self.tokenizer.tokenize(sentence)
-        # use the BERT tokenizer to convert tokens to their index numbers
-        input_ids = [self.tokenizer.convert_tokens_to_ids(x) for x in tokenized_texts]
-        # take the average of the input ID's for each sentence
-        output = np.average(input_ids)
+        # tokenize sentences
+        encoding = self.tokenizer.encode_plus(sentence, add_special_tokens=True,
+                                         truncation=True, padding="max_length",
+                                         return_attention_mask=True, return_tensors="pt")
+        attention_mask = encoding["attention_mask"][0]
+        output = self.model(**encoding)
 
-        return output
+        # Mean Pooling - Take attention mask into account for correct averaging
+        token_embeddings = output[0]  # First element of model_output contains all token embeddings
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+        sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
+        sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
+        return sum_embeddings / sum_mask
 
     def return_hyper_params(self):
         hyper_params = {"Model name": self.model_name,
