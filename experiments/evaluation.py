@@ -194,7 +194,7 @@ def main():
     is only used for testing the evaluation script at the moment
     """
 
-    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.840B.300d.txt"
+    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute

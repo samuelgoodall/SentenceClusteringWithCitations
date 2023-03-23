@@ -50,7 +50,6 @@ class GloveEmbedding(EmbeddingInterface):
         numpy array
             the embedding vector
         """
-        numpy.seterr(all='raise')
         words = sentence.lower().split()
         count = 0
         sentence_embedding = np.zeros(self.embedding_dimension)
