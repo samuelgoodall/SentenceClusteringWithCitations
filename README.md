@@ -5,6 +5,11 @@
 In order to install most of the required dependencys execute following command:
 pip install -r requirements.txt
 
+the fastext depency has to be installed manually like so:
+https://fasttext.cc/docs/en/support.html
+
+
+
 ## Run the Experiments
 
 In order to run experiments run the setup_script first
