@@ -13,12 +13,8 @@ class BertTransformerEmbedding(EmbeddingInterface):
         """
                 Parameters
                 ----------
-                model :
-                    Calls the specific pre-trained BERT model
                 model_name : str
-                    The name of the model
-                tokenizer :
-                    Calls the tokenizer that the BERT model uses to tokenize sentences
+                    The name of the BERT model to be used
                 """
         self.model = BertModel.from_pretrained(model_name)
         self.model_name = model_name
