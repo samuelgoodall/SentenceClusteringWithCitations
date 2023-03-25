@@ -10,15 +10,28 @@ import torch
 class BertTransformerEmbedding(EmbeddingInterface):
 
     def __init__(self, model_name: str):
+        """
+                Parameters
+                ----------
+                model :
+                    Calls the specific pre-trained BERT model
+                model_name : str
+                    The name of the model
+                tokenizer :
+                    Calls the tokenizer that the BERT model uses to tokenize sentences
+                """
         self.model = BertModel.from_pretrained(model_name)
         self.model_name = model_name
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
 
     def embed_sentence(self, sentence: str):
-        """
-        sentence : str
-            the string that is to be embedded
-        """
+        """Returns a value for the sentence embedding by taking the pooled values of each token embedding.
+
+                Parameters
+                ----------
+                sentence : str
+                    The string that is to be embedded
+                """
         # tokenize sentences
         encoding = self.tokenizer.encode_plus(sentence, add_special_tokens=True,
                                          truncation=True, padding="max_length",
@@ -35,6 +48,8 @@ class BertTransformerEmbedding(EmbeddingInterface):
         return sum_embeddings / sum_mask
 
     def return_hyper_params(self):
+        """returns hyperparameters for this embedding model
+                """
         hyper_params = {"Model name": self.model_name,
                         "Padding Strategies": self.tokenizer._get_padding_truncation_strategies(),
                         "Tokenizer": self.tokenizer}
