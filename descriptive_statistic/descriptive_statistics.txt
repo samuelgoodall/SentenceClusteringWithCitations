@@ -1,4 +1,3 @@
-
 Average paragraphs per paper:3.6675929281945954
 Minimum paragraphs per paper:1
 Maximum paragraphs per paper:10
@@ -18,3 +17,4 @@ Minimum citations per sentence:1
 Maximum citations per sentence:5
 Standard deviation:1.050312501905558
 Number of sentence with citations:417707
+Maximal title length:83
