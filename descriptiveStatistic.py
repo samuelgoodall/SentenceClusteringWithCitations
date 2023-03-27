@@ -181,12 +181,21 @@ class descriptiveStatistics:
         cur.execute("SELECT COUNT(*) FROM citation WHERE abstract IS NOT NULL")
         num_not_null = cur.fetchone()[0]
         print(f"Column 'abstract' has {num_null} null values and {num_not_null} non-null values.")
-        
+    
+    def analyze_title_length(self):
+        """calculate maximum title length in words"""
+        query = "SELECT title FROM Citation"
+        data = pd.read_sql_query(query, self.conn)
+        sentence_lengths = data['title'].apply(lambda x: len(x.split()))
+        max_length = sentence_lengths.max()
+        self.log('Maximal title length:', max_length)
+     
     def run(self):
         self.analyze_paragraphs_per_paper()
         self.analyze_sentences_per_paragraph()
         self.analyze_sentence_length()
         self.analyze_citations_per_sentence()
+        self.analyze_title_length()
         self.conn.close()
 
 if __name__ == "__main__":
