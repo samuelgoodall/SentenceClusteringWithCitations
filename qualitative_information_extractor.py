@@ -88,7 +88,6 @@ class QualitativeInformationExtractor(InformationExtractor):
         return updated_sentence
     
     def compile_latex_to_text(self, sentence: str):
-        #sentence = re.sub(r"(?<!\\)\$.*?(?<!\\)\$", "", sentence)
         try:
             plain_text  = LatexNodes2Text(math_mode = 'remove').latex_to_text(sentence)
         except Exception:
@@ -107,7 +106,6 @@ class QualitativeInformationExtractor(InformationExtractor):
         return plain_text
     
     def get_citation_keywords(self, sentence):
-        #~?\\cite(?:author|year|t|p|t\*|p\*|)(?:\[.*\])*{(\S+(?:\S+,\s?\S+)*)}
         citation_regex = r"~?\\cite(?:.*?)(?:\[.*?\])*{(.+?)}"
         citation_list = re.findall(citation_regex, sentence)
         for citation in citation_list:
@@ -177,8 +175,7 @@ class QualitativeInformationExtractor(InformationExtractor):
         match = re.search(blank_line_regex, sliced_bibliography)
         end_bibitem = len(sliced_bibliography) 
         if match:
-            end_bibitem = match.start()    
-        #bibitem = re.search(rf"\{bibitem_key}.*?(?:\n\n.*?\\)|$", bibliography, re.DOTALL)
+            end_bibitem = match.start()
         bibitem = sliced_bibliography[:end_bibitem]
         return bibitem
     
