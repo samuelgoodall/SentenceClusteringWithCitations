@@ -29,6 +29,7 @@ class BertTransformerEmbedding(EmbeddingInterface):
         sentence : str
             The string that is to be embedded
         """
+        sentence = sentence.lower()
         # tokenize sentences
         encoding = self.tokenizer.encode_plus(sentence, add_special_tokens=True,
                                          truncation=True, padding="max_length",
