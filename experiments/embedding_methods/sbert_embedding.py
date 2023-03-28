@@ -17,7 +17,7 @@ class SentenceTransformerEmbedding(EmbeddingInterface):
                     The name of the model used
                 """
         self.model = SentenceTransformer(model_name)
-        self.model.max_seq_length = 512
+        self.model.max_seq_length = 128
         self.model_name = model_name
 
     def embed_sentence(self, sentence: str):
@@ -27,6 +27,7 @@ class SentenceTransformerEmbedding(EmbeddingInterface):
         sentence : str
             the string that is to be embedded
         """
+        sentence = sentence.lower()
         # Sentences are encoded by calling model.encode()
         embedding = self.model.encode(sentence)
         return embedding

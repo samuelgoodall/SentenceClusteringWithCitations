@@ -111,7 +111,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface):
 
 
 def main():
-    embedding = SentenceTransformerEmbedding('all-MiniLM-L6-v2')
+    embedding = SentenceTransformerEmbedding('all-mpnet-base-v2')
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     evaluate(embedding, clustering)
 
