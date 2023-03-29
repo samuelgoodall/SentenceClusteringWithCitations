@@ -14,6 +14,7 @@ class GloveEmbedding(EmbeddingInterface):
         self.embedding_dimension = embedding_dimension
         self.glove_embeddings = self._get_glove_embeddings_keyed_vectors(glove_embeddings_path)
         self.glove_embeddings_path = glove_embeddings_path
+        spacy.require_gpu()
         self.spacy_model = spacy.load("en_core_web_trf")
 
     def _get_glove_embeddings_keyed_vectors(self, glove_embeddings_path):

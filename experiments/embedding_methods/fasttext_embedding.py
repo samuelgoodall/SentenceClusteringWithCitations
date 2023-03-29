@@ -8,6 +8,7 @@ class FastTextEmbedding(EmbeddingInterface):
         self.embedding_dimension = embedding_dimension
         self.model = fasttext.load_model(fasttext_model_path)
         self.fasttext_model_path = fasttext_model_path
+        spacy.require_gpu()
         self.spacy_model = spacy.load("en_core_web_trf")
 
     def embed_sentence(self, sentence: str):
