@@ -65,7 +65,7 @@ class AutomaticClusterFinder:
         for num_clusters in list(range(2, max_range)):
             skmeans = SphericalKMeans(n_clusters=num_clusters, init="k-means++")
             skmeans.fit_predict(csr_matrix(self.data))
-            score = silhouette_score(self.data, skmeans.labels_)
+            score = silhouette_score(self.data, skmeans.labels_, metric='cosine')
             if self.verbose:
                 print("Silhouette score for number of cluster(s) {}: {}".format(num_clusters, score))
                 print("-" * 100)
