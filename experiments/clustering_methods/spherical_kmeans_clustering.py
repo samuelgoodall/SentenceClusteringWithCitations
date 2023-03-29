@@ -120,20 +120,39 @@ class SphericalKMeansClustering(ClusteringInterface):
             labels : list
                 a list with the corresponding predicted labels for the input data
         """
-        spherical_kmeans = SphericalKMeans(
-            n_clusters=self.num_clusters,
-            max_iter=self.max_iter,
-            sparsity=self.sparsity,
-            init=self.init,
-            tol=self.tol,
-            verbose=self.verbose,
-            random_state=self.random_state,
-            max_similar=self.max_similar,
-            alpha=self.alpha,
-            radius=self.radius,
-            epsilon=self.epsilon,
-            minimum_df_factor=self.min_df_factor,
-        )
+        num_samples = len(sentences)
+        if num_samples == 1:
+            return [0]
+        elif num_samples < self.num_clusters:
+            spherical_kmeans = SphericalKMeans(
+                n_clusters=num_samples,
+                max_iter=self.max_iter,
+                sparsity=self.sparsity,
+                init=self.init,
+                tol=self.tol,
+                verbose=self.verbose,
+                random_state=self.random_state,
+                max_similar=self.max_similar,
+                alpha=self.alpha,
+                radius=self.radius,
+                epsilon=self.epsilon,
+                minimum_df_factor=self.min_df_factor,
+            )
+        else:
+            spherical_kmeans = SphericalKMeans(
+                n_clusters=self.num_clusters,
+                max_iter=self.max_iter,
+                sparsity=self.sparsity,
+                init=self.init,
+                tol=self.tol,
+                verbose=self.verbose,
+                random_state=self.random_state,
+                max_similar=self.max_similar,
+                alpha=self.alpha,
+                radius=self.radius,
+                epsilon=self.epsilon,
+                minimum_df_factor=self.min_df_factor,
+            )
         input_to_csr = csr_matrix(sentences)
         spherical_kmeans.fit(input_to_csr)
         return spherical_kmeans.labels_

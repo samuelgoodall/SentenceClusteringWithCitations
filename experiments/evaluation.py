@@ -52,8 +52,6 @@ def fuse_sentence_and_citation_embedding(sentence_embedding, sentence_citation_e
 
 def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]):
     """computes all the evaluation metrics"""
-    print(labels)
-    print(labels_predicted)
     ari = metrics.adjusted_rand_score(labels, labels_predicted)
     nmi = metrics.normalized_mutual_info_score(labels, labels_predicted)
     fms = metrics.fowlkes_mallows_score(labels, labels_predicted)
