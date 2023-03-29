@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the database
-conn = sqlite3.connect('dataset.db')
+conn = sqlite3.connect('dataset/database/dataset.db')
 
 # Create indexes
 conn.execute('CREATE INDEX paragraph_paper_index ON paragraph(paper_id)')
