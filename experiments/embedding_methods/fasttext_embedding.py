@@ -1,5 +1,5 @@
 import fasttext
-
+import spacy
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 
 
@@ -8,6 +8,7 @@ class FastTextEmbedding(EmbeddingInterface):
         self.embedding_dimension = embedding_dimension
         self.model = fasttext.load_model(fasttext_model_path)
         self.fasttext_model_path = fasttext_model_path
+        self.spacy_model = spacy.load("en_core_web_trf")
 
     def embed_sentence(self, sentence: str):
         """
@@ -23,7 +24,10 @@ class FastTextEmbedding(EmbeddingInterface):
         numpy array
             the embedding vector
         """
-        sentence_vector = self.model.get_sentence_vector(sentence)
+
+        doc = self.spacy_model(sentence.lower())
+        lemmatized_sentence = " ".join([token.lemma_ for token in doc])
+        sentence_vector = self.model.get_sentence_vector(lemmatized_sentence)
 
         return sentence_vector
 
