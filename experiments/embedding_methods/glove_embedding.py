@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import numpy
@@ -50,7 +49,7 @@ class GloveEmbedding(EmbeddingInterface):
             except KeyError:
                 continue
             except FloatingPointError:
-                print("ERROR!")
+                print("Floating Point ERROR!")
 
         if count != 0:
             return np.mean(np.array(word_embeddings), axis=0, dtype=np.float64)
