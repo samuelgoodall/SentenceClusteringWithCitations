@@ -2,6 +2,7 @@ from pathlib import Path
 
 import numpy
 import numpy as np
+import spacy
 from gensim.models import KeyedVectors
 
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
@@ -13,13 +14,20 @@ class GloveEmbedding(EmbeddingInterface):
         self.embedding_dimension = embedding_dimension
         self.glove_embeddings = self._get_glove_embeddings_keyed_vectors(glove_embeddings_path)
         self.glove_embeddings_path = glove_embeddings_path
+        self.spacy_model = spacy.load("en_core_web_trf")
 
     def _get_glove_embeddings_keyed_vectors(self, glove_embeddings_path):
         """
         gets the glove_embeddings as gensim KeyedVectors
+
+        Parameters
         ----------
         glove_embeddings_path : str
             path to the glove embeddings saved as txt
+        Returns
+        -------
+        keyed vectors
+            keyed vectors in essence just a big dictionary with the words as keys
         """
         word2vec_glove_file = glove_embeddings_path.split('.txt')[0] + "word2vec" + ".kv"
         if Path(word2vec_glove_file).is_file():
@@ -33,12 +41,20 @@ class GloveEmbedding(EmbeddingInterface):
         """
         converts a sentence into glove embeddings
         if words are not part of the dictionary they are mapped to the zero vector
+
+        Parameters
         ----------
         sentence : str
             the string that is to be embedded
+
+        Returns
+        -------
+        numpy array
+            the embedding vector
         """
-        numpy.seterr(all='raise')
-        words = sentence.lower().split()
+        doc = self.spacy_model(sentence.lower())
+        lemmatized_sentence = " ".join([token.lemma_ for token in doc])
+        words = lemmatized_sentence.lower().split()
         count = 0
         sentence_embedding = np.zeros(self.embedding_dimension)
         word_embeddings = []
@@ -57,6 +73,14 @@ class GloveEmbedding(EmbeddingInterface):
             return sentence_embedding
 
     def return_hyper_params(self):
+        """
+        returns the hyper params as dict it is dict in order to keep it flexible
+
+        Returns
+        -------
+        dict
+            the hyper_params as a dictionary
+        """
         hyper_params = {"embedding_dimension": self.embedding_dimension,
                         "glove_embeddings_path": self.glove_embeddings_path}
         return hyper_params

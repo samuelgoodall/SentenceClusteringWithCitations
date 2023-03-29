@@ -13,6 +13,7 @@ from dataset.customDataloader import get_dataloader, get_train_test_validation_d
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
 
 
@@ -194,8 +195,9 @@ def main():
     is only used for testing the evaluation script at the moment
     """
 
-    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.840B.300d.txt"
+    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
+    embedding = FastTextEmbedding(300,"../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
     clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
