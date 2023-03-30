@@ -1,9 +1,11 @@
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from sklearn.mixture import GaussianMixture
+from numpy import argmax, asarray
 
 
 class GMMClustering(ClusteringInterface):
-    def __init__(self, n_components: int, covariance_type: str = "full", tol: float = 1e-3, reg_covar: float = 1e-6,
+    def __init__(self, n_components: int = None, max_range: int = 20, covariance_type: str = "full", tol: float = 1e-3,
+                 reg_covar: float = 1e-6,
                  max_iter: int = 100, n_init: int = 1, init_params: str = "k-means++", weights_init=None,
                  means_init=None, precisions_init=None, random_state=None,
                  warm_start: bool = False, verbose: int = 0, verbose_interval: int = 10):
@@ -13,6 +15,10 @@ class GMMClustering(ClusteringInterface):
                   ----------
                   n_components : int, required
                       The number of mixture components.
+
+                  max_range : int, default: 20
+                    The range of components to evaluate the BIC criterion for determining
+                    the optimal component number if no cluster number is given at initialization
 
                   covariance_type : {‘full’, ‘tied’, ‘diag’, ‘spherical’}, default=’full’
                       String describing the type of covariance parameters to use. Must be one of:
@@ -66,6 +72,7 @@ class GMMClustering(ClusteringInterface):
                       Number of iteration done before the next print.
                   """
         self.n_components = n_components
+        self.max_range = max_range
         self.covariance_type = covariance_type
         self.tol = tol
         self.reg_covar = reg_covar
@@ -96,10 +103,13 @@ class GMMClustering(ClusteringInterface):
                 a list with the corresponding predicted labels for the input data
         """
         num_samples = len(sentences)
+        if self.n_components is None:
+            self.n_components = self._find_k_with_bic(sentences)
         if num_samples == 1:
             return [0]
         elif num_samples < self.n_components:
-            gmm = GaussianMixture(n_components=num_samples, covariance_type=self.covariance_type, tol=self.tol,
+            gmm = GaussianMixture(n_components=num_samples,
+                                  covariance_type=self.covariance_type, tol=self.tol,
                                   reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
                                   weights_init=self.weights_init, means_init=self.means_init,
                                   precisions_init=self.precisions_init,
@@ -107,7 +117,8 @@ class GMMClustering(ClusteringInterface):
                                   warm_start=self.warm_start, verbose=self.verbose,
                                   verbose_interval=self.verbose_interval)
         else:
-            gmm = GaussianMixture(n_components=self.n_components, covariance_type=self.covariance_type, tol=self.tol,
+            gmm = GaussianMixture(n_components=self.n_components,
+                                  covariance_type=self.covariance_type, tol=self.tol,
                                   reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
                                   weights_init=self.weights_init, means_init=self.means_init,
                                   precisions_init=self.precisions_init,
@@ -127,8 +138,44 @@ class GMMClustering(ClusteringInterface):
             a dictionary with the name of the hyperparameter and the corresponding value
         """
 
-        hyper_params = {"n_components": self.n_components, "covariance_type": self.covariance_type, "tol": self.tol,
+        hyper_params = {"n_components": self.n_components, "max_range": self.max_range,
+                        "covariance_type": self.covariance_type, "tol": self.tol,
                         "reg_covar": self.reg_covar, "max_iter": self.max_iter, "n_init": self.n_init,
                         "init_params": self.init_params, "random_state": self.random_state,
                         "warm_start": self.warm_start}
         return hyper_params
+
+    def _find_k_with_bic(self, sentences: list) -> int:
+        """Private method to use bic criterion with the gmm model
+
+                           Parameters
+                           ----------
+                           sentences : list
+                               data to evaluate BIC criterion
+
+                           Returns
+                           -------
+                           best_k : int
+                               the best number of clusters.
+                       """
+        gm_bic = []
+        gm_score = []
+        for i in range(2, self.max_range):
+            gm = GaussianMixture(n_components=self.n_components,
+                                 covariance_type=self.covariance_type, tol=self.tol,
+                                 reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
+                                 weights_init=self.weights_init, means_init=self.means_init,
+                                 precisions_init=self.precisions_init,
+                                 init_params=self.init_params, random_state=self.random_state,
+                                 warm_start=self.warm_start, verbose=0,
+                                 verbose_interval=self.verbose_interval).fit(sentences)
+            if self.verbose:
+                print("BIC for number of cluster(s) {}: {}".format(i, gm.bic(asarray(sentences))))
+                print("Log-likelihood score for number of cluster(s) {}: {}".format(i, gm.score(sentences)))
+                print("-" * 100)
+            gm_bic.append(-gm.bic(asarray(sentences)))
+            gm_score.append(gm.score(sentences))
+
+        best_score = argmax(gm_bic) + 2
+        print(f"Selected optimal components: {best_score} ")
+        return best_score

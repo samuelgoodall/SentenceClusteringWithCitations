@@ -1,19 +1,22 @@
 from clustering_interface import ClusteringInterface
 from soyclustering import SphericalKMeans
 from scipy.sparse import csr_matrix
+from sklearn.metrics import silhouette_score
+from numpy import argmax
 
 
 class SphericalKMeansClustering(ClusteringInterface):
 
     def __init__(
             self,
-            num_clusters: int,
+            num_clusters: int = None,
+            max_range: int = 20,
             init: str = "k-means++",
             sparsity: str = None,
             max_iter: int = 10,
             tol: float = 1e-4,
             verbose: int = 0,
-            random_state = None,
+            random_state=None,
             max_similar: float = 0.5,
             alpha: float = 3.0,
             radius: float = 10.0,
@@ -21,13 +24,17 @@ class SphericalKMeansClustering(ClusteringInterface):
             minimum_df_factor: float = 0.01,
     ):
         """ Creates a SphericalKmeansClustering object with the according parameters. These attributes are used for the
-        creation of the SphericalKmeans object
+        creation of the SphericalKmeans object. If no cluster number is passed we use silhouette criterion to calculate the optimal number
 
                 Parameters
                 ----------
 
                 num_clusters : int,
                     The number of clusters to form as well as the number of centroids to generate.
+
+                max_range : int, default: 20
+                    The range of cluster numbers to evaluate the silhouette criterion for determining
+                    the optimal cluster number if no cluster number is given at initialization
 
                 init : str or numpy.ndarray, default: 'similar_cut'
                     One of ['similar_cut', 'k-means++', 'random'] or an numpy.ndarray
@@ -94,6 +101,7 @@ class SphericalKMeansClustering(ClusteringInterface):
                     `minimum_df_factor` must be real number between (0, 1)
                 """
         self.num_clusters = num_clusters
+        self.max_range = max_range
         self.max_iter = max_iter
         self.sparsity = sparsity
         self.init = init
@@ -121,6 +129,9 @@ class SphericalKMeansClustering(ClusteringInterface):
                 a list with the corresponding predicted labels for the input data
         """
         num_samples = len(sentences)
+        if self.num_clusters is None:
+            self.num_clusters = self._find_k_with_silhouette(sentences)
+
         if num_samples == 1:
             return [0]
         elif num_samples < self.num_clusters:
@@ -168,6 +179,7 @@ class SphericalKMeansClustering(ClusteringInterface):
         """
         hyper_params = {
             "num_cluster": self.num_clusters,
+            "max_range": self.max_range,
             "max_iter": self.max_iter,
             "sparsity": self.sparsity,
             "init": self.init,
@@ -180,3 +192,41 @@ class SphericalKMeansClustering(ClusteringInterface):
             "minimum_df_factor": self.min_df_factor,
         }
         return hyper_params
+
+    def _find_k_with_silhouette(self, sentences: list) -> int:
+        """Private method to use silhouette criterion with the Spherical Kmeans model
+                   Parameter
+                   --------
+                   sentences : list
+                       data to evaluate silhouette criterion
+
+                   Returns
+                   -------
+                   best_k : int
+                       the best number of clusters.
+               """
+        silhouette_avg = []
+        for num_clusters in list(range(2, self.max_range)):
+            skmeans = SphericalKMeans(
+                n_clusters=num_clusters,
+                max_iter=self.max_iter,
+                sparsity=self.sparsity,
+                init=self.init,
+                tol=self.tol,
+                verbose=0,
+                random_state=self.random_state,
+                max_similar=self.max_similar,
+                alpha=self.alpha,
+                radius=self.radius,
+                epsilon=self.epsilon,
+                minimum_df_factor=self.min_df_factor,
+            )
+            skmeans.fit_predict(csr_matrix(sentences))
+            score = silhouette_score(sentences, skmeans.labels_, metric='cosine')
+            if self.verbose:
+                print("Silhouette score for number of cluster(s) {}: {}".format(num_clusters, score))
+                print("-" * 100)
+            silhouette_avg.append(score)
+        best_score = argmax(silhouette_avg) + 2
+        print(f"Selected optimal number of clusters: {best_score} ")
+        return best_score
