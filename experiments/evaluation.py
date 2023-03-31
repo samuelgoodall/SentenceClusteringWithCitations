@@ -16,7 +16,6 @@ from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
 
-
 class SentenceCitationFusingMethod(Enum):
     Concatenation = 1
     Averaging = 2
