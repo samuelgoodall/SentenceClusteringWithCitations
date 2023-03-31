@@ -129,12 +129,13 @@ class SphericalKMeansClustering(ClusteringInterface):
                 a list with the corresponding predicted labels for the input data
         """
         num_samples = len(sentences)
+        self.max_range = num_samples-1
         if self.num_clusters is None:
-            self.num_clusters = self._find_k_with_silhouette(sentences)
+            num_clusters = self._find_k_with_silhouette(sentences)
 
         if num_samples == 1:
             return [0]
-        elif num_samples < self.num_clusters:
+        elif num_samples < num_clusters:
             spherical_kmeans = SphericalKMeans(
                 n_clusters=num_samples,
                 max_iter=self.max_iter,
@@ -151,7 +152,7 @@ class SphericalKMeansClustering(ClusteringInterface):
             )
         else:
             spherical_kmeans = SphericalKMeans(
-                n_clusters=self.num_clusters,
+                n_clusters=num_clusters,
                 max_iter=self.max_iter,
                 sparsity=self.sparsity,
                 init=self.init,
