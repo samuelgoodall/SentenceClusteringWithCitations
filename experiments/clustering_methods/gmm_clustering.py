@@ -161,7 +161,7 @@ class GMMClustering(ClusteringInterface):
         gm_bic = []
         gm_score = []
         for i in range(2, self.max_range):
-            gm = GaussianMixture(n_components=self.n_components,
+            gm = GaussianMixture(n_components=i,
                                  covariance_type=self.covariance_type, tol=self.tol,
                                  reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
                                  weights_init=self.weights_init, means_init=self.means_init,

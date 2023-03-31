@@ -1,7 +1,8 @@
 from torch.utils.data import DataLoader
 
-from dataset.customDataloader import get_train_test_validation_dataloader, get_dataloader
+from dataset.customDataloader import get_dataloader
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
+from experiments.clustering_methods.gmm_clustering import GMMClustering
 from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
 from experiments.embedding_methods.bert_embedding import BertTransformerEmbedding
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
@@ -22,7 +23,7 @@ def conduct_experiment(embedding:EmbeddingInterface,dataloader: DataLoader = Non
     dataloader: str
         the dataloader for the dataset to be iterated
     """
-    gmm_clustering = None
+    gmm_clustering = GMMClustering()
     db_scan_clustering = DBScanClustering()
     spherical_kmeans_clustering = SphericalKMeansClustering()
     clustering_methods = [gmm_clustering,db_scan_clustering,spherical_kmeans_clustering]
@@ -42,8 +43,8 @@ def main():
     glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     glove_embedding = GloveEmbedding(300, glove_embeddings_path)
     fastText_embedding = FastTextEmbedding(300, "../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
-    bert_embedding = BertTransformerEmbedding("")
-    sbert_embedding = SentenceTransformerEmbedding("")
+    bert_embedding = BertTransformerEmbedding("bert-base-uncased")
+    sbert_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
 
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
@@ -54,11 +55,6 @@ def main():
     conduct_experiment(embedding=fastText_embedding,dataloader=unlemmatized_dataloader)
     conduct_experiment(embedding=bert_embedding,dataloader=unlemmatized_dataloader)
     conduct_experiment(embedding=sbert_embedding,dataloader=unlemmatized_dataloader)
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

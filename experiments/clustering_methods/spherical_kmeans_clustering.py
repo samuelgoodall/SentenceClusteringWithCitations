@@ -1,4 +1,4 @@
-from clustering_interface import ClusteringInterface
+from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from soyclustering import SphericalKMeans
 from scipy.sparse import csr_matrix
 from sklearn.metrics import silhouette_score
