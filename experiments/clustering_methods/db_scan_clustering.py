@@ -32,7 +32,7 @@ class DBScanClustering(ClusteringInterface):
         distance_list = []
         indexes = range(len(sentences))
 
-        if len(sentences)==1:
+        if len(sentences) == 1:
             return 1
 
         if self.metric == "euclidean":
@@ -49,10 +49,20 @@ class DBScanClustering(ClusteringInterface):
             distance_list.append(sum_dist/(len(sentences)-1))
         distance_list.sort()
         if len(distance_list)<=2:
+            if(distance_list[0]==0.0):
+                if distance_list[1]!=0.0:
+                    return distance_list[1]
+                else:
+                    return 0.05
             return distance_list[0]
-        elbow_locator = kneed.KneeLocator(x=range(len(sentences)), y=distance_list,
+        distance_list = list(filter(lambda x: (x != 0.0), distance_list))
+        elbow_locator = kneed.KneeLocator(x=range(len(distance_list)), y=distance_list,
                                           curve="convex", direction="increasing", interp_method="interp1d",
                                           online=True, S=0)
         optimal_eps = distance_list[elbow_locator.elbow]
         #print(f"Selected optimal eps value: {optimal_eps} ")
+        if optimal_eps == 0.0:
+            print("distance_list",distance_list)
+            print("optimal eps =",optimal_eps)
+            return 0.05
         return optimal_eps

@@ -28,8 +28,8 @@ def conduct_experiment(embedding:EmbeddingInterface,dataloader: DataLoader = Non
     spherical_kmeans_clustering = SphericalKMeansClustering()
     clustering_methods = [db_scan_clustering, spherical_kmeans_clustering, gmm_clustering]
     for clustering in clustering_methods:
-        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
+        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
 
 
 

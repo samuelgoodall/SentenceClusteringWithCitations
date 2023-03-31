@@ -1,8 +1,15 @@
 import os.path
+import sqlite3
 
 import spacy
 from tqdm import tqdm
 from dataset.database.database import SQAlchemyDatabase, Paper, Paragraph, Sentence, Citation
+
+"""
+This Script is for reindexing the database and lemmatizing the database-> both is done with creating a new database 
+saved as database_new.db and database_new_lemmatized.db
+"""
+
 
 def add_new_paper(session,paper_title="", paper_authors=""):
     paper = (
@@ -82,11 +89,29 @@ def create_lemmatized_dataset():
                     create_new_citation(title=lemmatized_title, author=citation.author, abstract=citation.abstract,
                                         new_sentence=new_sentence)
     sql_session_new.commit()
+
+def add_indexes(database_path:str):
+    # Connect to the database
+    conn = sqlite3.connect(database_path)
+
+    # Create indexes
+    conn.execute('CREATE INDEX paragraph_paper_index ON paragraph(paper_id)')
+    conn.execute('CREATE INDEX sentence_paragraph_index ON sentence(paragraph_id)')
+    conn.execute(
+        'CREATE UNIQUE INDEX sentence_citation_relation_index ON sentence_citation_relation(sentence_id,citation_id)')
+
+    # Commit changes and close the connection
+    conn.commit()
+    conn.close()
+
 def main():
     create_reindexed_dataset()
     create_lemmatized_dataset()
     print("query done!")
-
+    db_path_new_lemmatized = "database/dataset_new_lemmatized.db"
+    db_path_new = "database/dataset_new.db"
+    add_indexes(db_path_new_lemmatized)
+    add_indexes(db_path_new)
 
 
 if __name__ == "__main__":
