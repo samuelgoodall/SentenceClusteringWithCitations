@@ -26,7 +26,7 @@ def conduct_experiment(embedding:EmbeddingInterface,dataloader: DataLoader = Non
     gmm_clustering = GMMClustering()
     db_scan_clustering = DBScanClustering()
     spherical_kmeans_clustering = SphericalKMeansClustering()
-    clustering_methods = [gmm_clustering,db_scan_clustering,spherical_kmeans_clustering]
+    clustering_methods = [db_scan_clustering, spherical_kmeans_clustering, gmm_clustering]
     for clustering in clustering_methods:
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
