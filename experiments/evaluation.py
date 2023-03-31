@@ -99,7 +99,7 @@ def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]) -> di
     return {"ARI": ari, "NMI": nmi, "FMS": fms}
 
 
-def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, running_time: float, evaluation_metrics: dict):
+def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, running_time: float, evaluation_metrics: dict, use_citation:bool):
     """
     saves results of experiment as json
 
@@ -120,6 +120,7 @@ def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, 
     result = dict()
     result["time_stamp"] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
     result["running_time"] = running_time
+    result["with_citation_information"] = use_citation
     result["evalution_metrics"] = evaluation_metrics
     result["embedding_type"] = type(embedding).__name__
     result["clustering_type"] = type(clustering).__name__
@@ -187,7 +188,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
 
     runtime = time.time() - start
     save_result(embedding=embedding, clustering=clustering,
-                running_time=runtime,evaluation_metrics=eval_metrics)
+                running_time=runtime,evaluation_metrics=eval_metrics,use_citation=use_citation)
 
 
 def main():

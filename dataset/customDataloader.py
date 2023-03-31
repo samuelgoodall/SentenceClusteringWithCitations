@@ -122,7 +122,7 @@ def custom_collate(batch: list):
     return batch
 
 
-def get_dataloader(batch_size: int = 20, shuffle: bool = False):
+def get_dataloader(batch_size: int = 20, shuffle: bool = False, dataset_location : str = "../dataset/database/dataset.db"):
     """
     gets the dataloader on the whole dataset
 
@@ -132,13 +132,14 @@ def get_dataloader(batch_size: int = 20, shuffle: bool = False):
         The size of the batch = how many examples are fetched
     shuffle : bool
         Sets wether dataloader shall shuffle the data whilst iterating
-
+    dataset_location: str
+        gives location of sqlite database file
     Returns
     -------
     DataLoader
        DataLoader for the whole Dataset
     """
-    whole_dataset = ArxivDataset("../dataset/database/dataset.db")
+    whole_dataset = ArxivDataset(dataset_location)
     return DataLoader(whole_dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=custom_collate)
 
 
