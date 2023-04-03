@@ -45,8 +45,8 @@ def main():
 
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
-    unlemmatized_dataloader = get_dataloader(batch_size,shuffle=False,dataset_location="../dataset/database/dataset_new.db")
-    lemmatized_dataloader = get_dataloader(batch_size, shuffle=False,dataset_location="../dataset/database/dataset_new_lemmatized.db")
+    unlemmatized_dataloader = get_dataloader(batch_size, shuffle=False, dataset_location="../dataset/database/dataset_new.db")
+    lemmatized_dataloader = get_dataloader(batch_size, shuffle=False, dataset_location="../dataset/database/dataset_new_lemmatized.db")
 
     conduct_experiment(embedding=glove_embedding,dataloader=lemmatized_dataloader)
     conduct_experiment(embedding=fastText_embedding,dataloader=unlemmatized_dataloader)

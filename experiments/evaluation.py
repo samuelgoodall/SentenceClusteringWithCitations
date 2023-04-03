@@ -191,6 +191,58 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
     save_result(embedding=embedding, clustering=clustering,
                 running_time=runtime,evaluation_metrics=eval_metrics,use_citation=use_citation)
 
+def evaluate_with_precomputed_embeddings(clustering: ClusteringInterface, dataloader: DataLoader = None, use_citation: bool = True):
+    """
+    evaluates the dataset given as dataloader
+    uses dataset where embeddings have been precomputed
+    saves the evaluation metrics as results.json in current directory
+
+    Parameters
+    ----------
+    clustering : ClusteringInterface
+        the clustering class that is responsible for clustering the sentences
+    dataloader: DataLoader
+        the dataloader that is used to iterate over the dataset
+    use_citation: bool
+        flag to set to evaluate with or without embedding the citation(the title)
+    """
+
+    count = 0
+    start = time.time()
+    eval_metrics = {"ARI": 0.0, "NMI": 0.0, "FMS": 0.0}
+    total_len = len(dataloader)
+    for i, data in enumerate(tqdm(dataloader)):
+        sentences, labels = data[0]
+        bag_of_sentences = []
+        calculate_correct_labels(labels)
+        for sentence_index, sentence in enumerate(sentences):
+            sentence_embedding = embedding.embed_sentence(sentence.sentence)
+            citation_embeddings = []
+            if use_citation:
+                for citation in sentence.citations:
+                    current_citation_embedding = embedding.embed_sentence(citation.citation_title)
+                    citation_embeddings.append(current_citation_embedding)
+                overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
+                                                                         citation_embeddings,
+                                                                         SentenceCitationFusingMethod.Averaging)
+            else:
+                overall_embedding = sentence_embedding
+            bag_of_sentences.append(overall_embedding)
+        # cluster & evaluate the stuff:
+        labels_predicted = clustering.cluster_sentences(bag_of_sentences)
+        print("LABEls:", labels)
+        print("labels_predicted", labels_predicted)
+        current_metrics = get_evaluation_metrics(labels, labels_predicted)
+
+        # update eval_metrics
+        for key in eval_metrics.keys():
+            eval_metrics[key] = current_metrics[key] / total_len
+
+        count += 1
+
+    runtime = time.time() - start
+    save_result(embedding=embedding, clustering=clustering,
+                running_time=runtime, evaluation_metrics=eval_metrics, use_citation=use_citation)
 
 def main():
     """
