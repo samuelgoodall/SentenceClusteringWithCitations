@@ -1,5 +1,5 @@
 import numpy as np
-
+import kneed
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from soyclustering import SphericalKMeans
 from scipy.sparse import csr_matrix
@@ -133,7 +133,7 @@ class SphericalKMeansClustering(ClusteringInterface):
         num_samples = len(sentences)
         self.max_range = num_samples
         if self.num_clusters is None:
-            num_clusters = self._find_k_with_silhouette(sentences)
+            num_clusters = self._find_k_with_inertia(sentences)
 
         if num_clusters == 1:
             return np.zeros(num_samples)
@@ -199,7 +199,7 @@ class SphericalKMeansClustering(ClusteringInterface):
         }
         return hyper_params
 
-    def _find_k_with_silhouette(self, sentences: list) -> int:
+    def _find_k_with_inertia(self, sentences: list) -> int:
         """Private method to use silhouette criterion with the Spherical Kmeans model
                    Parameter
                    --------
@@ -211,10 +211,9 @@ class SphericalKMeansClustering(ClusteringInterface):
                    best_k : int
                        the best number of clusters.
                """
-        silhouette_avg = []
-        silhouette_avg.append(0)
+        inertia_list = []
 
-        for num_clusters in list(range(2, len(sentences))):
+        for num_clusters in range(1, len(sentences)):
             skmeans = SphericalKMeans(
                 n_clusters=num_clusters,
                 max_iter=self.max_iter,
@@ -230,11 +229,14 @@ class SphericalKMeansClustering(ClusteringInterface):
                 minimum_df_factor=self.min_df_factor,
             )
             skmeans.fit_predict(csr_matrix(sentences))
-            score = silhouette_score(sentences, skmeans.labels_, metric='cosine')
+            inertia = skmeans.inertia_
             if self.verbose:
-                print("Silhouette score for number of cluster(s) {}: {}".format(num_clusters, score))
+                print("Inertia for number of cluster(s) {}: {}".format(num_clusters, inertia))
                 print("-" * 100)
-            silhouette_avg.append(score)
-        best_score = argmax(silhouette_avg) + 1
-        print(f"Selected optimal number of clusters: {best_score} ")
-        return best_score
+            inertia_list.append(inertia)
+        elbow_locator = kneed.KneeLocator(x=range(len(inertia_list)), y=inertia_list,
+                                          curve="convex", direction="decreasing", interp_method="interp1d",
+                                          online=True, S=1)
+        best_k = elbow_locator.elbow
+        print(f"Selected optimal number of clusters: {best_k} ")
+        return best_k
