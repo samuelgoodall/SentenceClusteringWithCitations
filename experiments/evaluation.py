@@ -177,6 +177,8 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
             bag_of_sentences.append(overall_embedding)
         # cluster & evaluate the stuff:
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
+        print("LABEls:",labels)
+        print("labels_predicted",labels_predicted)
         current_metrics = get_evaluation_metrics(labels, labels_predicted)
 
         #update eval_metrics

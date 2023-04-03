@@ -56,6 +56,8 @@ class DBScanClustering(ClusteringInterface):
                     return 0.05
             return distance_list[0]
         distance_list = list(filter(lambda x: (x != 0.0), distance_list))
+        if len(distance_list) == 0:
+            return 0.05
         elbow_locator = kneed.KneeLocator(x=range(len(distance_list)), y=distance_list,
                                           curve="convex", direction="increasing", interp_method="interp1d",
                                           online=True, S=0)

@@ -20,19 +20,16 @@ def conduct_experiment(embedding:EmbeddingInterface,dataloader: DataLoader = Non
     ----------
     embedding : EmbeddingInterface
         The embedding to be used
-    dataloader: str
+    dataloader: DataLoader
         the dataloader for the dataset to be iterated
     """
     gmm_clustering = GMMClustering()
     db_scan_clustering = DBScanClustering()
     spherical_kmeans_clustering = SphericalKMeansClustering()
-    clustering_methods = [spherical_kmeans_clustering, gmm_clustering, db_scan_clustering]
+    clustering_methods = [spherical_kmeans_clustering, db_scan_clustering, gmm_clustering]
     for clustering in clustering_methods:
-        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
-
-
-
+        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
 
 
 def main():

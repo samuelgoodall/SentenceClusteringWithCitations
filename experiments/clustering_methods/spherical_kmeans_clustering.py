@@ -1,3 +1,5 @@
+import numpy as np
+
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from soyclustering import SphericalKMeans
 from scipy.sparse import csr_matrix
@@ -129,9 +131,12 @@ class SphericalKMeansClustering(ClusteringInterface):
                 a list with the corresponding predicted labels for the input data
         """
         num_samples = len(sentences)
-        self.max_range = num_samples-1
+        self.max_range = num_samples
         if self.num_clusters is None:
             num_clusters = self._find_k_with_silhouette(sentences)
+
+        if num_clusters == 1:
+            return np.zeros(num_samples)
 
         if num_samples == 1:
             return [0]
@@ -207,7 +212,9 @@ class SphericalKMeansClustering(ClusteringInterface):
                        the best number of clusters.
                """
         silhouette_avg = []
-        for num_clusters in list(range(2, self.max_range)):
+        silhouette_avg.append(0)
+
+        for num_clusters in list(range(2, len(sentences))):
             skmeans = SphericalKMeans(
                 n_clusters=num_clusters,
                 max_iter=self.max_iter,
@@ -228,6 +235,6 @@ class SphericalKMeansClustering(ClusteringInterface):
                 print("Silhouette score for number of cluster(s) {}: {}".format(num_clusters, score))
                 print("-" * 100)
             silhouette_avg.append(score)
-        best_score = argmax(silhouette_avg) + 2
+        best_score = argmax(silhouette_avg) + 1
         print(f"Selected optimal number of clusters: {best_score} ")
         return best_score

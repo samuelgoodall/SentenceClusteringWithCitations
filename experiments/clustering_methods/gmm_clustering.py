@@ -1,6 +1,9 @@
+import numpy as np
+from matplotlib import pyplot as plt
+
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from sklearn.mixture import GaussianMixture
-from numpy import argmax, asarray
+from numpy import argmax, asarray, argmin
 
 
 class GMMClustering(ClusteringInterface):
@@ -104,10 +107,13 @@ class GMMClustering(ClusteringInterface):
         """
         num_samples = len(sentences)
         if self.n_components is None:
-            self.n_components = self._find_k_with_bic(sentences)
+            n_components = self._find_k_with_bic(sentences)
+        else:
+            n_components= self.n_components
+
         if num_samples == 1:
             return [0]
-        elif num_samples < self.n_components:
+        elif num_samples < n_components:
             gmm = GaussianMixture(n_components=num_samples,
                                   covariance_type=self.covariance_type, tol=self.tol,
                                   reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
@@ -117,7 +123,7 @@ class GMMClustering(ClusteringInterface):
                                   warm_start=self.warm_start, verbose=self.verbose,
                                   verbose_interval=self.verbose_interval)
         else:
-            gmm = GaussianMixture(n_components=self.n_components,
+            gmm = GaussianMixture(n_components=n_components,
                                   covariance_type=self.covariance_type, tol=self.tol,
                                   reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
                                   weights_init=self.weights_init, means_init=self.means_init,
@@ -160,7 +166,9 @@ class GMMClustering(ClusteringInterface):
                        """
         gm_bic = []
         gm_score = []
-        for i in range(2, self.max_range):
+        if len(sentences) == 1:
+            return 1
+        for i in range(1, len(sentences)):
             gm = GaussianMixture(n_components=i,
                                  covariance_type=self.covariance_type, tol=self.tol,
                                  reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
@@ -173,9 +181,18 @@ class GMMClustering(ClusteringInterface):
                 print("BIC for number of cluster(s) {}: {}".format(i, gm.bic(asarray(sentences))))
                 print("Log-likelihood score for number of cluster(s) {}: {}".format(i, gm.score(sentences)))
                 print("-" * 100)
-            gm_bic.append(-gm.bic(asarray(sentences)))
+            gm_bic.append(gm.bic(asarray(sentences)))
             gm_score.append(gm.score(sentences))
 
-        best_score = argmax(gm_bic) + 2
-        print(f"Selected optimal components: {best_score} ")
+
+        plt.plot(range(0,len(gm_bic)), gm_bic,'o')
+        plt.xlabel("n_clusters")
+        plt.ylabel("bic_value")
+        plt.show()
+        plt.plot(range(0, len(gm_bic)), gm_score, 'o')
+        plt.xlabel("n_clusters")
+        plt.ylabel("gm_score, loglikelihood")
+        plt.show()
+        best_score = argmin(gm_bic) + 1
+        print(f"Selected optimal components: {best_score} \n number_sentences: {len(sentences)}")
         return best_score
