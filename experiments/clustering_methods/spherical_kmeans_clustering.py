@@ -1,10 +1,12 @@
 import numpy as np
 import kneed
+from matplotlib import pyplot as plt
+
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from soyclustering import SphericalKMeans
 from scipy.sparse import csr_matrix
 from sklearn.metrics import silhouette_score
-from numpy import argmax
+from numpy import argmax, argmin
 
 
 class SphericalKMeansClustering(ClusteringInterface):
@@ -115,6 +117,7 @@ class SphericalKMeansClustering(ClusteringInterface):
         self.radius = radius
         self.epsilon = epsilon
         self.min_df_factor = minimum_df_factor
+        self.processed_items_count = 0
 
     def cluster_sentences(self, sentences: list):
         """Creates a soyclustering.SphericalKmeans object with the attributes of the SphericalKmeansClustering class,
@@ -131,15 +134,15 @@ class SphericalKMeansClustering(ClusteringInterface):
                 a list with the corresponding predicted labels for the input data
         """
         num_samples = len(sentences)
+        if num_samples == 1:
+            return [0]
         self.max_range = num_samples
         if self.num_clusters is None:
             num_clusters = self._find_k_with_inertia(sentences)
 
         if num_clusters == 1:
-            return np.zeros(num_samples)
+            return np.zeros(num_samples, dtype=int)
 
-        if num_samples == 1:
-            return [0]
         elif num_samples < num_clusters:
             spherical_kmeans = SphericalKMeans(
                 n_clusters=num_samples,
@@ -213,7 +216,7 @@ class SphericalKMeansClustering(ClusteringInterface):
                """
         inertia_list = []
 
-        for num_clusters in range(1, len(sentences)):
+        for num_clusters in range(1, len(sentences)+1):
             skmeans = SphericalKMeans(
                 n_clusters=num_clusters,
                 max_iter=self.max_iter,
@@ -234,9 +237,20 @@ class SphericalKMeansClustering(ClusteringInterface):
                 print("Inertia for number of cluster(s) {}: {}".format(num_clusters, inertia))
                 print("-" * 100)
             inertia_list.append(inertia)
+
+        plt.plot(range(0, len(inertia_list)), inertia_list, 'o')
+        self.processed_items_count += 1
+        plt.title("Item nr:"+str(self.processed_items_count))
+        plt.xlabel("n_clusters")
+        plt.ylabel("bic_value")
+        plt.show()
+
+        if len(inertia_list)==2:
+            return argmin(inertia_list)+1
+
         elbow_locator = kneed.KneeLocator(x=range(len(inertia_list)), y=inertia_list,
                                           curve="convex", direction="decreasing", interp_method="interp1d",
-                                          online=True, S=1)
+                                          online=True, S=0)
         best_k = elbow_locator.elbow
         print(f"Selected optimal number of clusters: {best_k} ")
         return best_k

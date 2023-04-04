@@ -31,6 +31,24 @@ def conduct_experiment(embedding:EmbeddingInterface,dataloader: DataLoader = Non
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
 
+def conduct_experiment_precomputed_embedding(dataloader: DataLoader = None):
+    """
+    conducts a single experiment for a dataset with the embeddings already computed
+
+    Parameters
+    ----------
+    embedding : EmbeddingInterface
+        The embedding to be used
+    dataloader: DataLoader
+        the dataloader for the dataset to be iterated
+    """
+    gmm_clustering = GMMClustering()
+    db_scan_clustering = DBScanClustering()
+    spherical_kmeans_clustering = SphericalKMeansClustering()
+    clustering_methods = [spherical_kmeans_clustering, db_scan_clustering, gmm_clustering]
+    for clustering in clustering_methods:
+        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
+        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
 
 def main():
     """

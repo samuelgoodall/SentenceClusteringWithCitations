@@ -1,9 +1,6 @@
-import os
 import pickle
 import sqlite3
-from sqlite3 import Binary
 
-from sqlalchemy import LargeBinary
 from tqdm import tqdm
 
 from dataset.database.database import SQAlchemyDatabase, Paper as oldPaper
@@ -66,7 +63,7 @@ def create_embedded_dataset(db_path_old: str, db_path_new: str, embedding: Embed
                 new_sentence = create_new_sentence(new_paragraph, sentence.content, pickled_content)
                 for citation in sentence.citations:
                     embedded_content = embedding.embed_sentence(citation.title)
-                    pickled_content = sqlite3.Binary(embedded_content)
+                    pickled_content = sqlite3.Binary(pickle.dumps(embedded_content, pickle.HIGHEST_PROTOCOL))
                     create_new_citation(title=citation.title, author=citation.author, abstract=citation.abstract,
                                         new_sentence=new_sentence, content_embedded=pickled_content)
 

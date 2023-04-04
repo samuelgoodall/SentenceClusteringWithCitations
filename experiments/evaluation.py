@@ -10,8 +10,10 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from dataset.customDataloader import get_dataloader, get_train_test_validation_dataloader
+from dataset.customDataloaderPrecomputedEmbeddings import ArxivDatasetPrecomputedEmbeddings
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
+from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
 from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
@@ -191,7 +193,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
     save_result(embedding=embedding, clustering=clustering,
                 running_time=runtime,evaluation_metrics=eval_metrics,use_citation=use_citation)
 
-def evaluate_with_precomputed_embeddings(clustering: ClusteringInterface, dataloader: DataLoader = None, use_citation: bool = True):
+def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clustering: ClusteringInterface, dataloader: DataLoader = None, use_citation: bool = True):
     """
     evaluates the dataset given as dataloader
     uses dataset where embeddings have been precomputed
@@ -201,6 +203,8 @@ def evaluate_with_precomputed_embeddings(clustering: ClusteringInterface, datalo
     ----------
     clustering : ClusteringInterface
         the clustering class that is responsible for clustering the sentences
+    embedding : EmbeddingInterface
+        the embedding class that is responsible for embedding the sentences
     dataloader: DataLoader
         the dataloader that is used to iterate over the dataset
     use_citation: bool
@@ -216,11 +220,11 @@ def evaluate_with_precomputed_embeddings(clustering: ClusteringInterface, datalo
         bag_of_sentences = []
         calculate_correct_labels(labels)
         for sentence_index, sentence in enumerate(sentences):
-            sentence_embedding = embedding.embed_sentence(sentence.sentence)
+            sentence_embedding = sentence.sentence_embedded
             citation_embeddings = []
             if use_citation:
                 for citation in sentence.citations:
-                    current_citation_embedding = embedding.embed_sentence(citation.citation_title)
+                    current_citation_embedding = citation.citation_title_embedded
                     citation_embeddings.append(current_citation_embedding)
                 overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
                                                                          citation_embeddings,
@@ -252,13 +256,14 @@ def main():
     glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
     embedding = FastTextEmbedding(300,"../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
-    clustering = DBScanClustering(eps=1.5, min_samples=1, metric="euclidean")
+    clustering = DBScanClustering(eps=None, min_samples=1, metric="cosine")
+    clustering = SphericalKMeansClustering()
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
-    #dataloader = get_dataloader(batch_size, shuffle=False)
-    train, test, validation = get_train_test_validation_dataloader(batch_size=batch_size,shuffle=False,
-                                                                   train_test_validation_split=[0.8, 0.1, 0.1])
-    evaluate(embedding=embedding, clustering=clustering, dataloader=test, use_citation=True)
+    dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sbert.db")
+    dataloader = get_dataloader(batch_size=batch_size, shuffle=False, dataset=dataset)
+
+    evaluate_with_precomputed_embeddings(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
 
 
 if __name__ == "__main__":

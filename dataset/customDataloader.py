@@ -122,7 +122,7 @@ def custom_collate(batch: list):
     return batch
 
 
-def get_dataloader(batch_size: int = 20, shuffle: bool = False, dataset_location : str = "../dataset/database/dataset.db"):
+def get_dataloader(batch_size: int = 20, shuffle: bool = False, dataset : ArxivDataset = None):
     """
     gets the dataloader on the whole dataset
 
@@ -132,19 +132,18 @@ def get_dataloader(batch_size: int = 20, shuffle: bool = False, dataset_location
         The size of the batch = how many examples are fetched
     shuffle : bool
         Sets wether dataloader shall shuffle the data whilst iterating
-    dataset_location: str
-        gives location of sqlite database file
+    dataset: ArxivDataset
+       the ArxivDataset
     Returns
     -------
     DataLoader
        DataLoader for the whole Dataset
     """
-    whole_dataset = ArxivDataset(dataset_location)
-    return DataLoader(whole_dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=custom_collate)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=custom_collate)
 
 
 def get_train_test_validation_dataloader(batch_size: int = 20, shuffle: bool = True,
-                                         train_test_validation_split: list[float] = [], fixed_random_seed: int = None):
+                                         train_test_validation_split: list[float] = [], fixed_random_seed: int = None, dataset:ArxivDataset = None):
     """
     gets the dataloaders for train test and validation
 
@@ -177,12 +176,11 @@ def get_train_test_validation_dataloader(batch_size: int = 20, shuffle: bool = T
     if sum(train_test_validation_split) != 1.0:
         raise ValueError("train_test_validation_split values have to sum up to 1!")
 
-    whole_dataset = ArxivDataset("../dataset/database/dataset.db")
     if fixed_random_seed is None:
-        train_dataset, test_dataset, validation_dataset = random_split(whole_dataset,
+        train_dataset, test_dataset, validation_dataset = random_split(dataset,
                                                                        train_test_validation_split)
     else:
-        train_dataset, test_dataset, validation_dataset = random_split(whole_dataset,
+        train_dataset, test_dataset, validation_dataset = random_split(dataset,
                                                                        train_test_validation_split,
                                                                        generator=torch.Generator().manual_seed(
                                                                            fixed_random_seed))
