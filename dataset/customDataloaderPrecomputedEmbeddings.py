@@ -4,6 +4,7 @@ import time
 
 from numpy._typing import ArrayLike
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from dataset.customDataloader import ArxivDataset, custom_collate, get_dataloader
 from dataclasses import dataclass
@@ -95,8 +96,11 @@ if __name__ == "__main__":
     """
     dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sbert.db")
     train_dataloader = DataLoader(dataset, batch_size=200, shuffle=False, collate_fn=custom_collate)
-    train_dataloader = get_dataloader(batch_size=200, shuffle=False,
-                                      dataset_location="../dataset/database/dataset_new_precomputed_embeddings_bert.db")
+
+    train_dataloader = get_dataloader(batch_size=1, shuffle=False,
+                                     dataset=dataset)
+    for i, data in enumerate(tqdm(train_dataloader)):
+        pass
     start = time.time()
     example = next(iter(train_dataloader))
     end = time.time()

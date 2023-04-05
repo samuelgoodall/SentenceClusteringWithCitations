@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import time
 from enum import Enum
-
+import statistics
 import numpy as np
 from sklearn import metrics
 from torch.utils.data import DataLoader
@@ -48,7 +48,7 @@ def calculate_correct_labels(labels: list[int]) -> None:
     return None
 
 
-def fuse_sentence_and_citation_embedding(sentence_embedding, citation_embeddings:list,
+def fuse_sentence_and_citation_embedding(sentence_embedding, citation_embeddings: list,
                                          sentence_citation_fusing_method: SentenceCitationFusingMethod):
     """
     sentence_citation_fusing_method: SentenceCitationPoolingMethod
@@ -96,11 +96,11 @@ def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]) -> di
     ari = metrics.adjusted_rand_score(labels, labels_predicted)
     nmi = metrics.normalized_mutual_info_score(labels, labels_predicted)
     fms = metrics.fowlkes_mallows_score(labels, labels_predicted)
-
     return {"ARI": ari, "NMI": nmi, "FMS": fms}
 
 
-def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, running_time: float, evaluation_metrics: dict, use_citation:bool):
+def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, running_time: float,
+                evaluation_metrics: dict, use_citation: bool):
     """
     saves results of experiment as json
 
@@ -117,12 +117,14 @@ def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, 
     """
     embedding_hyper_params = embedding.return_hyper_params()
     clustering_hyper_params = clustering.return_hyper_params()
-
+    eval_metrics_result = {"ARI": 0.0, "NMI": 0.0, "FMS": 0.0}
+    for key in eval_metrics_result.keys():
+        eval_metrics_result[key] = statistics.mean(evaluation_metrics[key])
     result = dict()
     result["time_stamp"] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
     result["running_time"] = running_time
     result["with_citation_information"] = use_citation
-    result["evalution_metrics"] = evaluation_metrics
+    result["evalution_metrics"] = eval_metrics_result
     result["embedding_type"] = type(embedding).__name__
     result["clustering_type"] = type(clustering).__name__
     result["embedding_hyper_params"] = embedding_hyper_params
@@ -139,7 +141,8 @@ def save_result(embedding: EmbeddingInterface, clustering: ClusteringInterface, 
         json.dump(overall_results, f, indent=4)
 
 
-def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dataloader: DataLoader = None, use_citation: bool = True):
+def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dataloader: DataLoader = None,
+             use_citation: bool = True):
     """
     evaluates the dataset given as dataloader
     saves the evaluation metrics as results.json in current directory
@@ -158,8 +161,7 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
 
     count = 0
     start = time.time()
-    eval_metrics = {"ARI": 0.0, "NMI": 0.0, "FMS": 0.0}
-    total_len = len(dataloader)
+    eval_metrics = {"ARI": [], "NMI": [], "FMS": []}
     for i, data in enumerate(tqdm(dataloader)):
         sentences, labels = data[0]
         bag_of_sentences = []
@@ -172,28 +174,31 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
                     current_citation_embedding = embedding.embed_sentence(citation.citation_title)
                     citation_embeddings.append(current_citation_embedding)
                 overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
-                                                                     citation_embeddings,
-                                                                     SentenceCitationFusingMethod.Averaging)
+                                                                         citation_embeddings,
+                                                                         SentenceCitationFusingMethod.Averaging)
             else:
                 overall_embedding = sentence_embedding
             bag_of_sentences.append(overall_embedding)
         # cluster & evaluate the stuff:
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
-        print("LABEls:",labels)
-        print("labels_predicted",labels_predicted)
+        #print("LABEls:", labels)
+        #print("labels_predicted", labels_predicted)
         current_metrics = get_evaluation_metrics(labels, labels_predicted)
-
-        #update eval_metrics
+        # update eval_metrics
         for key in eval_metrics.keys():
-            eval_metrics[key] = current_metrics[key]/ total_len
+            eval_metrics[key].append(current_metrics[key])
 
         count += 1
 
     runtime = time.time() - start
-    save_result(embedding=embedding, clustering=clustering,
-                running_time=runtime,evaluation_metrics=eval_metrics,use_citation=use_citation)
 
-def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clustering: ClusteringInterface, dataloader: DataLoader = None, use_citation: bool = True):
+
+    save_result(embedding=embedding, clustering=clustering,
+                running_time=runtime, evaluation_metrics=eval_metrics, use_citation=use_citation)
+
+
+def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clustering: ClusteringInterface,
+                                         dataloader: DataLoader = None, use_citation: bool = True):
     """
     evaluates the dataset given as dataloader
     uses dataset where embeddings have been precomputed
@@ -213,8 +218,7 @@ def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clusteri
 
     count = 0
     start = time.time()
-    eval_metrics = {"ARI": 0.0, "NMI": 0.0, "FMS": 0.0}
-    total_len = len(dataloader)
+    eval_metrics = {"ARI": [], "NMI": [], "FMS": []}
     for i, data in enumerate(tqdm(dataloader)):
         sentences, labels = data[0]
         bag_of_sentences = []
@@ -234,19 +238,20 @@ def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clusteri
             bag_of_sentences.append(overall_embedding)
         # cluster & evaluate the stuff:
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
-        print("LABEls:", labels)
-        print("labels_predicted", labels_predicted)
+        # print("LABEls:", labels)
+        # print("labels_predicted", labels_predicted)
         current_metrics = get_evaluation_metrics(labels, labels_predicted)
 
         # update eval_metrics
         for key in eval_metrics.keys():
-            eval_metrics[key] = current_metrics[key] / total_len
+            eval_metrics[key].append(current_metrics[key])
 
         count += 1
 
     runtime = time.time() - start
     save_result(embedding=embedding, clustering=clustering,
                 running_time=runtime, evaluation_metrics=eval_metrics, use_citation=use_citation)
+
 
 def main():
     """
@@ -255,7 +260,7 @@ def main():
 
     glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     embedding = GloveEmbedding(300, glove_embeddings_path)
-    embedding = FastTextEmbedding(300,"../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
+    embedding = FastTextEmbedding(300, "../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
     clustering = DBScanClustering(eps=None, min_samples=1, metric="cosine")
     clustering = SphericalKMeansClustering()
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
@@ -263,7 +268,8 @@ def main():
     dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sbert.db")
     dataloader = get_dataloader(batch_size=batch_size, shuffle=False, dataset=dataset)
 
-    evaluate_with_precomputed_embeddings(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
+    evaluate_with_precomputed_embeddings(embedding=embedding, clustering=clustering, dataloader=dataloader,
+                                         use_citation=True)
 
 
 if __name__ == "__main__":

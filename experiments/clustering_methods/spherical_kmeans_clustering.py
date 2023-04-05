@@ -216,7 +216,7 @@ class SphericalKMeansClustering(ClusteringInterface):
                """
         inertia_list = []
 
-        for num_clusters in range(1, len(sentences)+1):
+        for num_clusters in range(1, len(sentences) + 1):
             skmeans = SphericalKMeans(
                 n_clusters=num_clusters,
                 max_iter=self.max_iter,
@@ -238,19 +238,18 @@ class SphericalKMeansClustering(ClusteringInterface):
                 print("-" * 100)
             inertia_list.append(inertia)
 
-        plt.plot(range(0, len(inertia_list)), inertia_list, 'o')
+
         self.processed_items_count += 1
-        plt.title("Item nr:"+str(self.processed_items_count))
-        plt.xlabel("n_clusters")
-        plt.ylabel("bic_value")
-        plt.show()
 
-        if len(inertia_list)==2:
-            return argmin(inertia_list)+1
 
-        elbow_locator = kneed.KneeLocator(x=range(len(inertia_list)), y=inertia_list,
+
+        if len(inertia_list) == 2:
+            return argmin(inertia_list) + 1
+
+        elbow_locator = kneed.KneeLocator(x=range(1,len(inertia_list)+1), y=inertia_list,
                                           curve="convex", direction="decreasing", interp_method="interp1d",
                                           online=True, S=0)
         best_k = elbow_locator.elbow
-        print(f"Selected optimal number of clusters: {best_k} ")
+        #print(f"Selected optimal number of clusters: {best_k} ")
+
         return best_k

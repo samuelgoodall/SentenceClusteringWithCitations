@@ -143,7 +143,8 @@ def get_dataloader(batch_size: int = 20, shuffle: bool = False, dataset : ArxivD
 
 
 def get_train_test_validation_dataloader(batch_size: int = 20, shuffle: bool = True,
-                                         train_test_validation_split: list[float] = [], fixed_random_seed: int = None, dataset:ArxivDataset = None):
+                                         train_test_validation_split: list[float] = [],
+                                         fixed_random_seed: int = None, dataset: ArxivDataset = None):
     """
     gets the dataloaders for train test and validation
 
