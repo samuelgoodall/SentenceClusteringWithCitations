@@ -1,0 +1,20 @@
+Average paragraphs per paper:3.6675929281945954
+Minimum paragraphs per paper:1
+Maximum paragraphs per paper:10
+Standard deviation:2.0073395063647745
+Number of Papers: 49662
+Average sentences per paragraph:2.2933293071263865
+Minimum sentences per paragraph:1
+Maximum sentences per paragraph:6
+Standard deviation:1.393472596502904
+Number of paragraphs with sentence:182140
+Average sentence length:21.626972973878818
+Standard deviation of sentence length:8.208007178073432
+Minimal sentence length:3
+Maximal sentence length:44
+Average citations per sentence:1.6914966711115687
+Minimum citations per sentence:1
+Maximum citations per sentence:5
+Standard deviation:1.050312501905558
+Number of sentence with citations:417707
+Maximal title length:83
