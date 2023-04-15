@@ -1,5 +1,7 @@
+import kneed
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.sparse import csr_matrix
 
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from sklearn.mixture import GaussianMixture
@@ -7,7 +9,7 @@ from numpy import argmax, asarray, argmin
 
 
 class GMMClustering(ClusteringInterface):
-    def __init__(self, n_components: int = None, max_range: int = 20, covariance_type: str = "full", tol: float = 1e-3,
+    def __init__(self, n_components: int = None, max_range: int = 20, covariance_type: str = "spherical", tol: float = 1e-3,
                  reg_covar: float = 1e-6,
                  max_iter: int = 100, n_init: int = 1, init_params: str = "k-means++", weights_init=None,
                  means_init=None, precisions_init=None, random_state=None,
@@ -166,9 +168,10 @@ class GMMClustering(ClusteringInterface):
                        """
         gm_bic = []
         gm_score = []
+        gm_aic = []
         if len(sentences) == 1:
             return 1
-        for i in range(1, len(sentences)):
+        for i in range(1, len(sentences)+1):
             gm = GaussianMixture(n_components=i,
                                  covariance_type=self.covariance_type, tol=self.tol,
                                  reg_covar=self.reg_covar, max_iter=self.max_iter, n_init=self.n_init,
@@ -183,16 +186,25 @@ class GMMClustering(ClusteringInterface):
                 print("-" * 100)
             gm_bic.append(gm.bic(asarray(sentences)))
             gm_score.append(gm.score(sentences))
+            gm_aic.append(gm.aic(asarray(sentences)))
+
+        if len(gm_bic) == 2:
+            return argmin(gm_bic) + 1
+        elbow_locator = kneed.KneeLocator(x=range(1, len(gm_bic) + 1), y=gm_bic,
+                                          curve="concave", direction="decreasing", interp_method="interp1d",
+                                          online=True, S=0)
+        best_k = elbow_locator.elbow
+        if self.verbose:
+            plt.plot(range(1, len(gm_aic)+1), gm_aic, 'o')
+            plt.plot(range(1, len(gm_bic)+1), gm_bic, 'o')
+            plt.xlabel("n_clusters_choosen:="+str(best_k)+"number_of_sentences"+str(len(sentences)))
+            plt.ylabel("bic_value")
+            plt.show()
+            plt.plot(range(1, len(gm_bic)+1), gm_score, 'o')
+            plt.xlabel("n_clusters")
+            plt.ylabel("gm_score, loglikelihood")
+            plt.show()
+            print(f"Selected optimal components: {best_k} \n number_sentences: {len(sentences)}")
 
 
-        plt.plot(range(0,len(gm_bic)), gm_bic,'o')
-        plt.xlabel("n_clusters")
-        plt.ylabel("bic_value")
-        plt.show()
-        plt.plot(range(0, len(gm_bic)), gm_score, 'o')
-        plt.xlabel("n_clusters")
-        plt.ylabel("gm_score, loglikelihood")
-        plt.show()
-        best_score = argmin(gm_bic) + 1
-        print(f"Selected optimal components: {best_score} \n number_sentences: {len(sentences)}")
-        return best_score
+        return best_k

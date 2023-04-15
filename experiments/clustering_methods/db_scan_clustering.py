@@ -1,4 +1,5 @@
 import kneed
+import numpy as np
 
 from sklearn.cluster import DBSCAN
 from scipy.spatial import distance
@@ -42,10 +43,11 @@ class DBScanClustering(ClusteringInterface):
         else:
             return -1
         for i in range(len(sentences)):
-            sum_dist = 0
+            sum_dist = 0.0
             for k in range(len(sentences)):
                 if i != k:
-                    sum_dist += dist(sentences[i], sentences[k])
+                    if np.any(sentences[i]) and np.any(sentences[k]):
+                        sum_dist += dist(sentences[i], sentences[k])
             distance_list.append(sum_dist/(len(sentences)-1))
         distance_list.sort()
         if len(distance_list)<=2:

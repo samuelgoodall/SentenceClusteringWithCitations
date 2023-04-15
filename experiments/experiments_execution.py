@@ -1,5 +1,6 @@
 import json
 
+import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
@@ -28,10 +29,10 @@ def conduct_experiment(embedding: EmbeddingInterface, dataloader: DataLoader = N
     dataloader: DataLoader
         the dataloader for the dataset to be iterated
     """
-    # gmm_clustering = GMMClustering()
+    gmm_clustering = GMMClustering()
     db_scan_clustering = DBScanClustering()
     spherical_kmeans_clustering = SphericalKMeansClustering()
-    clustering_methods = [db_scan_clustering, spherical_kmeans_clustering]
+    clustering_methods = [gmm_clustering,db_scan_clustering, spherical_kmeans_clustering]
     for clustering in clustering_methods:
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
