@@ -1,3 +1,5 @@
+import json
+
 import torch
 from torch.utils.data import DataLoader
 
@@ -78,6 +80,10 @@ def main():
     train_indexes, test_indexes, validation_indexes = get_train_test_validation_index_split(
         train_test_validation_split=[0.8, 0.2, 0.0],
         fixed_random_generator=generator, dataset=unlemmatized_dataset)
+
+    indexes = {"train":train_indexes,"test":test_indexes,"validation":validation_indexes}
+    with open('train_test_validation.json', 'w') as fp:
+        json.dump(indexes, fp)
 
     unlemmatized_dataloader_train, unlemmatized_dataloader, unlemmatized_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
