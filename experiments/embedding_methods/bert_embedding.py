@@ -52,6 +52,6 @@ class BertTransformerEmbedding(EmbeddingInterface):
         """returns hyperparameters for this embedding model
                 """
         hyper_params = {"Model name": self.model_name,
-                        "Padding Strategies": self.tokenizer._get_padding_truncation_strategies(),
-                        "Tokenizer": self.tokenizer}
+                        "Padding": "max_length",
+                        "Tokenizer": type(self.tokenizer).__name__}
         return hyper_params

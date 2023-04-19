@@ -36,6 +36,6 @@ class SentenceTransformerEmbedding(EmbeddingInterface):
                         """
         hyper_params = {"embedding_dimension": self.model.get_sentence_embedding_dimension(),
                         "model_name": self.model_name,
-                        "sentence_features": self.model.get_sentence_features(),
-                        "parameters": self.model.get_parameter()}
+                        "tokenizer": type(self.model.tokenizer).__name__,
+                        "maxSequenceLenght": self.model.max_seq_length}
         return hyper_params
