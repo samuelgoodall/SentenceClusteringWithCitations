@@ -1,9 +1,10 @@
 import fasttext
 import spacy
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+
+from experiments.embedding_methods.local_embedding import LocalEmbedding
 
 
-class FastTextEmbedding(EmbeddingInterface):
+class FastTextEmbedding(LocalEmbedding):
     def __init__(self, embedding_dimension, fasttext_model_path):
         self.embedding_dimension = embedding_dimension
         self.model = fasttext.load_model(fasttext_model_path)

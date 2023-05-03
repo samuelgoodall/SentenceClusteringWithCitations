@@ -1,21 +1,32 @@
+import itertools
 import json
+from os import path
 
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
-from dataset.customDataloader import ArxivDataset, get_train_test_validation_index_split, \
-    get_train_test_validation_split_indexbased_dataloader
-from dataset.customDataloaderPrecomputedEmbeddings import ArxivDatasetPrecomputedEmbeddings
+from dataset.customDataloader import (
+    ArxivDataset, get_train_test_validation_index_split,
+    get_train_test_validation_split_indexbased_dataloader)
+from dataset.customDataloaderPrecomputedEmbeddings import \
+    ArxivDatasetPrecomputedEmbeddings
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.clustering_methods.gmm_clustering import GMMClustering
-from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
-from experiments.embedding_methods.bert_embedding import BertTransformerEmbedding
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.clustering_methods.spherical_kmeans_clustering import \
+    SphericalKMeansClustering
+from experiments.embedding_methods.bert_embedding import \
+    BertTransformerEmbedding
+from experiments.embedding_methods.embedding_interface import \
+    EmbeddingInterface
 from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
-from experiments.embedding_methods.sbert_embedding import SentenceTransformerEmbedding
-from experiments.evaluation import evaluate, evaluate_with_precomputed_embeddings
+from experiments.embedding_methods.sbert_embedding import \
+    SentenceTransformerEmbedding
+from experiments.embedding_methods.tf_idf_embedding import TfIdfEmbedding
+from experiments.evaluation import (evaluate,
+                                    evaluate_with_precomputed_embeddings)
 
 
 def conduct_experiment(embedding: EmbeddingInterface, dataloader: DataLoader = None):
@@ -67,15 +78,16 @@ def main():
 
     generator = torch.Generator().manual_seed(42)
 
-    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
+    glove_embeddings_path = "./experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     glove_embedding = GloveEmbedding(300, glove_embeddings_path)
-    fastText_embedding = FastTextEmbedding(300, "../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
+    #fastText_embedding = FastTextEmbedding(300, "./experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
     sbert_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
+    tfidf_embedding = TfIdfEmbedding()
 
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
-    unlemmatized_dataset = ArxivDataset("../dataset/database/dataset_new.db")
+    unlemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new.db"))
 
     # the train, test and validation indexes have to be the same for all experiments in order to have comparability
     train_indexes, test_indexes, validation_indexes = get_train_test_validation_index_split(
@@ -90,28 +102,43 @@ def main():
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False, dataset=unlemmatized_dataset)
 
-    lemmatized_dataset = ArxivDataset("../dataset/database/dataset_new_lemmatized.db")
+    lemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new_lemmatized.db"))
     lemmatized_dataloader_train, lemmatized_dataloader, lemmatized_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=lemmatized_dataset)
-
-    sbert_dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sbert.db")
+    
+    setup_tfidf_embeddings(tfidf_embedding, lemmatized_dataloader_train)
+    """
+    sbert_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_sbert.db")
     sbert_dataloader_train, sbert_dataloader, sbert_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=sbert_dataset)
 
-    bert_dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_bert.db")
+    bert_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_bert.db")
     bert_dataloader_train, bert_dataloader, bert_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=bert_dataset)
     conduct_experiment_precomputed_embedding(embedding=bert_embedding, dataloader=bert_dataloader)
     conduct_experiment_precomputed_embedding(embedding=sbert_embedding, dataloader=sbert_dataloader)
-    conduct_experiment(embedding=glove_embedding, dataloader=lemmatized_dataloader)
-    conduct_experiment(embedding=fastText_embedding, dataloader=unlemmatized_dataloader)
-
-
+    """
+    #conduct_experiment(embedding=glove_embedding, dataloader=lemmatized_dataloader)
+    #conduct_experiment(embedding=fastText_embedding, dataloader=unlemmatized_dataloader)
+    conduct_experiment(embedding=tfidf_embedding, dataloader=lemmatized_dataloader)
+    
+def setup_tfidf_embeddings(tfidf_embedding: TfIdfEmbedding, dataloader: DataLoader):
+    try:
+        tfidf_embedding.load()
+    except:
+        print("Setup TfIdf Embedding")
+        all_sentences = []
+        for i, data in enumerate(tqdm(dataloader)):
+            sentences, labels = data[0]
+            all_sentences.append(sentences)
+        all_sentences = list(itertools.chain.from_iterable(all_sentences))
+        tfidf_embedding.setup(all_sentences=all_sentences)
+    
 if __name__ == "__main__":
     main()

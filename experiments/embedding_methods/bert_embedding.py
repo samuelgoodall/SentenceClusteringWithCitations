@@ -2,12 +2,13 @@ import json
 from pathlib import Path
 
 import numpy as np
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
-from transformers import BertTokenizer, BertModel
 import torch
+from transformers import BertModel, BertTokenizer
+
+from experiments.embedding_methods.local_embedding import LocalEmbedding
 
 
-class BertTransformerEmbedding(EmbeddingInterface):
+class BertTransformerEmbedding(LocalEmbedding):
 
     def __init__(self, model_name: str):
         """

@@ -1,7 +1,7 @@
-import os
-from datetime import datetime
 import json
+import os
 import time
+from datetime import datetime
 from enum import Enum
 import statistics
 import numpy as np
@@ -14,13 +14,10 @@ from dataset.customDataloaderPrecomputedEmbeddings import ArxivDatasetPrecompute
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.embedding_methods.embedding_interface import \
+    EmbeddingInterface
 from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
-
-class SentenceCitationFusingMethod(Enum):
-    Concatenation = 1
-    Averaging = 2
 
 
 def calculate_correct_labels(labels: list[int]) -> None:
@@ -46,36 +43,6 @@ def calculate_correct_labels(labels: list[int]) -> None:
             label_cluster_index += 1
         labels[label_index] = label_map[label]
     return None
-
-
-def fuse_sentence_and_citation_embedding(sentence_embedding, citation_embeddings: list,
-                                         sentence_citation_fusing_method: SentenceCitationFusingMethod):
-    """
-    sentence_citation_fusing_method: SentenceCitationPoolingMethod
-        method to be used for fusing sentence and citation concat or average
-
-    Parameters
-    ----------
-    sentence_embedding :
-        a vector representation of the sentence
-    sentence_citation_embedding:
-        a vector representation of the citation
-    sentence_citation_fusing_method:
-        the method used for fusing the embeddings can be concatenation or averaging
-
-    Returns
-    -------
-    numpy array
-        numpy array that is the vector representation of both combined
-    """
-
-    pooled_citation_embedding = np.mean(np.array(citation_embeddings), axis=0, dtype=np.float64)
-
-    if sentence_citation_fusing_method == SentenceCitationFusingMethod.Averaging:
-        return (sentence_embedding + pooled_citation_embedding) / 2
-    if sentence_citation_fusing_method == SentenceCitationFusingMethod.Concatenation:
-        return np.concatenate((sentence_embedding, pooled_citation_embedding), axis=None)
-
 
 def get_evaluation_metrics(labels: list[int], labels_predicted: list[int]) -> dict:
     """
@@ -164,21 +131,8 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
     eval_metrics = {"ARI": [], "NMI": [], "FMS": []}
     for i, data in enumerate(tqdm(dataloader)):
         sentences, labels = data[0]
-        bag_of_sentences = []
         calculate_correct_labels(labels)
-        for sentence_index, sentence in enumerate(sentences):
-            sentence_embedding = embedding.embed_sentence(sentence.sentence)
-            citation_embeddings = []
-            if use_citation:
-                for citation in sentence.citations:
-                    current_citation_embedding = embedding.embed_sentence(citation.citation_title)
-                    citation_embeddings.append(current_citation_embedding)
-                overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
-                                                                         citation_embeddings,
-                                                                         SentenceCitationFusingMethod.Averaging)
-            else:
-                overall_embedding = sentence_embedding
-            bag_of_sentences.append(overall_embedding)
+        bag_of_sentences = embedding.embed_sentences(sentences, use_citation=use_citation)
         # cluster & evaluate the stuff:
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
         #print("LABEls:", labels)
@@ -251,26 +205,3 @@ def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clusteri
     runtime = time.time() - start
     save_result(embedding=embedding, clustering=clustering,
                 running_time=runtime, evaluation_metrics=eval_metrics, use_citation=use_citation)
-
-
-def main():
-    """
-    is only used for testing the evaluation script at the moment
-    """
-
-    glove_embeddings_path = "../experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
-    embedding = GloveEmbedding(300, glove_embeddings_path)
-    embedding = FastTextEmbedding(300, "../experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
-    clustering = DBScanClustering(eps=None, min_samples=1, metric="cosine")
-    clustering = SphericalKMeansClustering()
-    # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
-    batch_size = 1
-    dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sbert.db")
-    dataloader = get_dataloader(batch_size=batch_size, shuffle=False, dataset=dataset)
-
-    evaluate_with_precomputed_embeddings(embedding=embedding, clustering=clustering, dataloader=dataloader,
-                                         use_citation=True)
-
-
-if __name__ == "__main__":
-    main()

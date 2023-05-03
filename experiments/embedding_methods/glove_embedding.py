@@ -5,10 +5,10 @@ import numpy as np
 import spacy
 from gensim.models import KeyedVectors
 
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.embedding_methods.local_embedding import LocalEmbedding
 
 
-class GloveEmbedding(EmbeddingInterface):
+class GloveEmbedding(LocalEmbedding):
 
     def __init__(self, embedding_dimension, glove_embeddings_path):
         self.embedding_dimension = embedding_dimension
