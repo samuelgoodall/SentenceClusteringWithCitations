@@ -3,7 +3,6 @@ import pickle
 from os import path
 
 import numpy as np
-import spacy
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 from experiments.embedding_methods.embedding_interface import (
@@ -16,11 +15,12 @@ class TfIdfEmbedding(EmbeddingInterface):
         self.hyper_parameter = {
             'stop_words': 'english',
             'lowercase': True, 
-            'max_features': 100, 
+            'max_features': 10000,
             'strip_accents':'ascii'
         }
         self.content_vectorizer = TfidfVectorizer(**self.hyper_parameter)
         self.citation_vectorizer = TfidfVectorizer(**self.hyper_parameter)
+        self.epsilon = 0.001
         
     def embed_sentences(self, sentences, use_citation):
         if use_citation:
@@ -41,22 +41,22 @@ class TfIdfEmbedding(EmbeddingInterface):
         citations_embeddings = []
         current_pos = 0
         for length in citations_titles_length:
-            citations_embeddings.append(citations_embeddings_flatted[current_pos:length])
+            citations_embeddings.append(citations_embeddings_flatted[current_pos:current_pos+length])
             current_pos += length
         contents_embeddings = self.content_vectorizer.transform(contents)
         embeddings = []
         for i in range(len(contents)):
             prepared_content_embedding = contents_embeddings[i].toarray()[0]
             prepared_citations_embeddings = citations_embeddings[i].toarray()
-            if (prepared_citations_embeddings.shape == (0, self.hyper_parameter["max_features"])):
-                prepared_citations_embeddings = np.zeros(self.hyper_parameter["max_features"]) 
-            embeddings.append(self.fuse_sentence_and_citation_embedding(prepared_content_embedding, prepared_citations_embeddings, SentenceCitationFusingMethod.Concatenation).tolist()) 
+            embeddings.append(self.fuse_sentence_and_citation_embedding(prepared_content_embedding, prepared_citations_embeddings, SentenceCitationFusingMethod.Concatenation).tolist()+self.epsilon*np.ones(len(self.fuse_sentence_and_citation_embedding(prepared_content_embedding, prepared_citations_embeddings, SentenceCitationFusingMethod.Concatenation).tolist())))
         return embeddings
     
     def embed_sentences_without_citations(self, sentences):
         sentences = [sentence.sentence for sentence in sentences]
         embeddings = self.content_vectorizer.transform(sentences)
         cluster_compatible_embeddings = embeddings.toarray().tolist()
+        for i,embedding in enumerate(cluster_compatible_embeddings):
+            cluster_compatible_embeddings[i] += self.epsilon*np.ones(len(cluster_compatible_embeddings[i]))
         return cluster_compatible_embeddings
     
     def return_hyper_params(self):

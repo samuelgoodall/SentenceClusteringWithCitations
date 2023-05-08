@@ -43,10 +43,11 @@ def conduct_experiment(embedding: EmbeddingInterface, dataloader: DataLoader = N
     gmm_clustering = GMMClustering()
     db_scan_clustering = DBScanClustering()
     spherical_kmeans_clustering = SphericalKMeansClustering()
-    clustering_methods = [gmm_clustering,db_scan_clustering, spherical_kmeans_clustering]
+    clustering_methods = [db_scan_clustering,gmm_clustering,spherical_kmeans_clustering]
     for clustering in clustering_methods:
-        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
         evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=True)
+        evaluate(embedding=embedding, clustering=clustering, dataloader=dataloader, use_citation=False)
+
 
 
 def conduct_experiment_precomputed_embedding(embedding: EmbeddingInterface, dataloader: DataLoader = None):
@@ -90,6 +91,7 @@ def main():
     unlemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new.db"))
 
     # the train, test and validation indexes have to be the same for all experiments in order to have comparability
+    """
     train_indexes, test_indexes, validation_indexes = get_train_test_validation_index_split(
         train_test_validation_split=[0.8, 0.2, 0.0],
         fixed_random_generator=generator, dataset=unlemmatized_dataset)
@@ -97,6 +99,11 @@ def main():
     indexes = {"train":train_indexes,"test":test_indexes,"validation":validation_indexes}
     with open('train_test_validation.json', 'w') as fp:
         json.dump(indexes, fp)
+    """
+    with open('train_test_validation.json','r') as fp:
+        train_indexes,test_indexes,validation_indexes = json.load(fp).values()
+
+
 
     unlemmatized_dataloader_train, unlemmatized_dataloader, unlemmatized_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
@@ -126,6 +133,7 @@ def main():
     """
     #conduct_experiment(embedding=glove_embedding, dataloader=lemmatized_dataloader)
     #conduct_experiment(embedding=fastText_embedding, dataloader=unlemmatized_dataloader)
+
     conduct_experiment(embedding=tfidf_embedding, dataloader=lemmatized_dataloader)
     
 def setup_tfidf_embeddings(tfidf_embedding: TfIdfEmbedding, dataloader: DataLoader):
@@ -139,6 +147,7 @@ def setup_tfidf_embeddings(tfidf_embedding: TfIdfEmbedding, dataloader: DataLoad
             all_sentences.append(sentences)
         all_sentences = list(itertools.chain.from_iterable(all_sentences))
         tfidf_embedding.setup(all_sentences=all_sentences)
+        print("TFIdf Embeddings setup!")
     
 if __name__ == "__main__":
     main()

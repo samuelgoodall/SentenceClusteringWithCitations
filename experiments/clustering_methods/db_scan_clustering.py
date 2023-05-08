@@ -64,7 +64,6 @@ class DBScanClustering(ClusteringInterface):
                                           curve="convex", direction="increasing", interp_method="interp1d",
                                           online=True, S=0)
         optimal_eps = distance_list[elbow_locator.elbow]
-        #print(f"Selected optimal eps value: {optimal_eps} ")
         if optimal_eps == 0.0:
             print("distance_list",distance_list)
             print("optimal eps =",optimal_eps)
