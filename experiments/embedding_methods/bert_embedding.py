@@ -1,13 +1,10 @@
-import json
-from pathlib import Path
-
-import numpy as np
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
-from transformers import BertTokenizer, BertModel
 import torch
+from transformers import BertModel, BertTokenizer
+
+from experiments.embedding_methods.local_embedding import LocalEmbedding
 
 
-class BertTransformerEmbedding(EmbeddingInterface):
+class BertTransformerEmbedding(LocalEmbedding):
 
     def __init__(self, model_name: str):
         """
@@ -52,6 +49,6 @@ class BertTransformerEmbedding(EmbeddingInterface):
         """returns hyperparameters for this embedding model
                 """
         hyper_params = {"Model name": self.model_name,
-                        "Padding Strategies": self.tokenizer._get_padding_truncation_strategies(),
-                        "Tokenizer": self.tokenizer}
+                        "Padding": "max_length",
+                        "Tokenizer": type(self.tokenizer).__name__}
         return hyper_params

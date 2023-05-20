@@ -5,17 +5,15 @@ import numpy as np
 import spacy
 from gensim.models import KeyedVectors
 
-from experiments.embedding_methods.embedding_interface import EmbeddingInterface
+from experiments.embedding_methods.local_embedding import LocalEmbedding
 
 
-class GloveEmbedding(EmbeddingInterface):
+class GloveEmbedding(LocalEmbedding):
 
     def __init__(self, embedding_dimension, glove_embeddings_path):
         self.embedding_dimension = embedding_dimension
         self.glove_embeddings = self._get_glove_embeddings_keyed_vectors(glove_embeddings_path)
         self.glove_embeddings_path = glove_embeddings_path
-        spacy.require_gpu()
-        self.spacy_model = spacy.load("en_core_web_trf")
 
     def _get_glove_embeddings_keyed_vectors(self, glove_embeddings_path):
         """
@@ -53,9 +51,7 @@ class GloveEmbedding(EmbeddingInterface):
         numpy array
             the embedding vector
         """
-        doc = self.spacy_model(sentence.lower())
-        lemmatized_sentence = " ".join([token.lemma_ for token in doc])
-        words = lemmatized_sentence.lower().split()
+        words = sentence.lower().split()
         count = 0
         sentence_embedding = np.zeros(self.embedding_dimension)
         word_embeddings = []
