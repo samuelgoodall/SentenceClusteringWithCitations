@@ -1,5 +1,4 @@
 import fasttext
-import spacy
 
 from experiments.embedding_methods.local_embedding import LocalEmbedding
 

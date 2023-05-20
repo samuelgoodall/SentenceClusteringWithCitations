@@ -1,8 +1,6 @@
 from pathlib import Path
 
-import numpy
 import numpy as np
-import spacy
 from gensim.models import KeyedVectors
 
 from experiments.embedding_methods.local_embedding import LocalEmbedding
