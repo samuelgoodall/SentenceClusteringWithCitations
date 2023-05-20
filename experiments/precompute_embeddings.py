@@ -9,7 +9,7 @@ from dataset.database.database_precomputed_embeddings import SQAlchemyDatabasePr
     Sentence, Paragraph
 from experiments.embedding_methods.bert_embedding import BertTransformerEmbedding
 from experiments.embedding_methods.embedding_interface import EmbeddingInterface
-from experiments.embedding_methods.sbert_embedding import SentenceTransformerEmbedding
+from experiments.embedding_methods.sentence_transformer_embedding import SentenceTransformerEmbedding
 
 
 def add_new_paper(session, paper_title="", paper_authors=""):
@@ -73,12 +73,12 @@ def create_embedded_dataset(db_path_old: str, db_path_new: str, embedding: Embed
 
 def main():
     print("query done!")
-    db_path_new_sbert = "../dataset/database/dataset_new_precomputed_embeddings_sbert.db"
+    db_path_new_sentence_transformer = "../dataset/database/dataset_new_precomputed_embeddings_sentence_transformer.db"
     db_path_new_bert = "../dataset/database/dataset_new_precomputed_embeddings_bert.db"
     db_path_old = "../dataset/database/dataset_new.db"
-    sbert_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
+    sentence_transformer_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
-    create_embedded_dataset(db_path_old=db_path_old, db_path_new=db_path_new_sbert, embedding=sbert_embedding)
+    create_embedded_dataset(db_path_old=db_path_old, db_path_new=db_path_new_sentence_transformer, embedding=sentence_transformer_embedding)
     create_embedded_dataset(db_path_old=db_path_old, db_path_new=db_path_new_bert, embedding=bert_embedding)
 
 

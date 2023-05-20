@@ -9,15 +9,11 @@ from sklearn import metrics
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from dataset.customDataloader import get_dataloader, get_train_test_validation_dataloader
-from dataset.customDataloaderPrecomputedEmbeddings import ArxivDatasetPrecomputedEmbeddings
+
 from experiments.clustering_methods.clustering_interface import ClusteringInterface
-from experiments.clustering_methods.db_scan_clustering import DBScanClustering
-from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
 from experiments.embedding_methods.embedding_interface import \
     EmbeddingInterface, SentenceCitationFusingMethod
-from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
-from experiments.embedding_methods.glove_embedding import GloveEmbedding
+
 
 
 def calculate_correct_labels(labels: list[int]) -> None:
