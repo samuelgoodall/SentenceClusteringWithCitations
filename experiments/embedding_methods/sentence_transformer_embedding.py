@@ -18,7 +18,7 @@ class SentenceTransformerEmbedding(LocalEmbedding):
 
     def embed_sentence(self, sentence: str):
         """
-        Embeds the words in a sentence using the Sentence Transformers package (SBERT)
+        Embeds the words in a sentence using the Sentence Transformers package (sentence_transformer)
         ----------
         sentence : str
             the string that is to be embedded

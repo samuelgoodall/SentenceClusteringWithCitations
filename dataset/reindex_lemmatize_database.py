@@ -1,5 +1,4 @@
 import os.path
-import sqlite3
 
 import spacy
 from tqdm import tqdm
