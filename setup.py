@@ -41,6 +41,8 @@ def main():
     print("downloading fastextmodel")
     current_wd = os.getcwd()
     fastext_model_path = os.path.abspath("experiments/embedding_methods/embeddings/FastText")
+    if not os.path.isdir(fastext_model_path):
+        Path(fastext_model_path).mkdir(exist_ok=True)
     os.chdir(fastext_model_path)
     fasttext.util.download_model('en', if_exists='ignore')  # English
     ft = fasttext.load_model('cc.en.300.bin')
@@ -49,6 +51,5 @@ def main():
 
 
 if __name__ == "__main__":
-    print("hello world!")
     main()
 
