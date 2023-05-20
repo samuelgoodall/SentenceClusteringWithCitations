@@ -15,7 +15,7 @@ from experiments.clustering_methods.clustering_interface import ClusteringInterf
 from experiments.clustering_methods.db_scan_clustering import DBScanClustering
 from experiments.clustering_methods.spherical_kmeans_clustering import SphericalKMeansClustering
 from experiments.embedding_methods.embedding_interface import \
-    EmbeddingInterface
+    EmbeddingInterface, SentenceCitationFusingMethod
 from experiments.embedding_methods.fasttext_embedding import FastTextEmbedding
 from experiments.embedding_methods.glove_embedding import GloveEmbedding
 
@@ -135,8 +135,6 @@ def evaluate(embedding: EmbeddingInterface, clustering: ClusteringInterface, dat
         bag_of_sentences = embedding.embed_sentences(sentences, use_citation=use_citation)
         # cluster & evaluate the stuff:
         labels_predicted = clustering.cluster_sentences(bag_of_sentences)
-        #print("LABEls:", labels)
-        #print("labels_predicted", labels_predicted)
         current_metrics = get_evaluation_metrics(labels, labels_predicted)
         # update eval_metrics
         for key in eval_metrics.keys():
@@ -184,9 +182,9 @@ def evaluate_with_precomputed_embeddings(embedding: EmbeddingInterface, clusteri
                 for citation in sentence.citations:
                     current_citation_embedding = citation.citation_title_embedded
                     citation_embeddings.append(current_citation_embedding)
-                overall_embedding = fuse_sentence_and_citation_embedding(sentence_embedding,
-                                                                         citation_embeddings,
-                                                                         SentenceCitationFusingMethod.Averaging)
+                overall_embedding = EmbeddingInterface.fuse_sentence_and_citation_embedding(sentence_embedding=sentence_embedding,
+                                                                         citation_embeddings=citation_embeddings,
+                                                                         sentence_citation_fusing_method=SentenceCitationFusingMethod.Averaging)
             else:
                 overall_embedding = sentence_embedding
             bag_of_sentences.append(overall_embedding)

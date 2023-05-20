@@ -1,8 +1,6 @@
 import itertools
 import json
 from os import path
-
-import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
@@ -76,12 +74,11 @@ def main():
     """
     Script used for conducting the experiments
     """
-
     generator = torch.Generator().manual_seed(42)
 
     glove_embeddings_path = "./experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
     glove_embedding = GloveEmbedding(300, glove_embeddings_path)
-    #fastText_embedding = FastTextEmbedding(300, "./experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
+    fastText_embedding = FastTextEmbedding(300, "./experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
     sbert_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
     tfidf_embedding = TfIdfEmbedding()
@@ -91,7 +88,6 @@ def main():
     unlemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new.db"))
 
     # the train, test and validation indexes have to be the same for all experiments in order to have comparability
-    """
     train_indexes, test_indexes, validation_indexes = get_train_test_validation_index_split(
         train_test_validation_split=[0.8, 0.2, 0.0],
         fixed_random_generator=generator, dataset=unlemmatized_dataset)
@@ -99,42 +95,30 @@ def main():
     indexes = {"train":train_indexes,"test":test_indexes,"validation":validation_indexes}
     with open('train_test_validation.json', 'w') as fp:
         json.dump(indexes, fp)
-    """
-    with open('train_test_validation.json','r') as fp:
-        train_indexes,test_indexes,validation_indexes = json.load(fp).values()
-
-
-
     unlemmatized_dataloader_train, unlemmatized_dataloader, unlemmatized_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False, dataset=unlemmatized_dataset)
-
     lemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new_lemmatized.db"))
     lemmatized_dataloader_train, lemmatized_dataloader, lemmatized_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=lemmatized_dataset)
-    
     setup_tfidf_embeddings(tfidf_embedding, lemmatized_dataloader_train)
-    """
     sbert_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_sbert.db")
     sbert_dataloader_train, sbert_dataloader, sbert_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=sbert_dataset)
-
     bert_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_bert.db")
     bert_dataloader_train, bert_dataloader, bert_dataloader_validation = get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=bert_dataset)
+    conduct_experiment(embedding=glove_embedding, dataloader=lemmatized_dataloader)
+    conduct_experiment(embedding=fastText_embedding, dataloader=unlemmatized_dataloader)
+    conduct_experiment(embedding=tfidf_embedding, dataloader=lemmatized_dataloader)
     conduct_experiment_precomputed_embedding(embedding=bert_embedding, dataloader=bert_dataloader)
     conduct_experiment_precomputed_embedding(embedding=sbert_embedding, dataloader=sbert_dataloader)
-    """
-    #conduct_experiment(embedding=glove_embedding, dataloader=lemmatized_dataloader)
-    #conduct_experiment(embedding=fastText_embedding, dataloader=unlemmatized_dataloader)
-
-    conduct_experiment(embedding=tfidf_embedding, dataloader=lemmatized_dataloader)
     
 def setup_tfidf_embeddings(tfidf_embedding: TfIdfEmbedding, dataloader: DataLoader):
     try:
@@ -148,6 +132,6 @@ def setup_tfidf_embeddings(tfidf_embedding: TfIdfEmbedding, dataloader: DataLoad
         all_sentences = list(itertools.chain.from_iterable(all_sentences))
         tfidf_embedding.setup(all_sentences=all_sentences)
         print("TFIdf Embeddings setup!")
-    
+
 if __name__ == "__main__":
     main()

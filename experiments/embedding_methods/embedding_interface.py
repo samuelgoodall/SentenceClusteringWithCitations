@@ -8,7 +8,8 @@ class SentenceCitationFusingMethod(Enum):
     Concatenation = 1
     Averaging = 2
 class EmbeddingInterface(metaclass=abc.ABCMeta):
-    def fuse_sentence_and_citation_embedding(self, sentence_embedding, citation_embeddings:list,
+    @staticmethod
+    def fuse_sentence_and_citation_embedding(sentence_embedding, citation_embeddings:list,
                                          sentence_citation_fusing_method: SentenceCitationFusingMethod):
         """
         sentence_citation_fusing_method: SentenceCitationPoolingMethod
@@ -47,8 +48,8 @@ class EmbeddingInterface(metaclass=abc.ABCMeta):
 
     
     @abc.abstractmethod
-    def embed_sentences(self, sentence, use_citation):
-        """embeds the sentence"""
+    def embed_sentences(self, sentences, use_citation):
+        """embeds the sentences"""
         raise NotImplementedError
     
     @abc.abstractmethod
