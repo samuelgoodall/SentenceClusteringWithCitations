@@ -6,7 +6,7 @@ from qualitative_information_extractor_database import QualitativeInformationExt
 class FeedingDBParserBot:
     def __init__(self, dataset_folder_path) -> None:
         self.dataset_folder_path = dataset_folder_path
-        abs_datasetdb_path = os.path.abspath("dataset/database/dataset.db")
+        abs_datasetdb_path = os.path.abspath("dataset/database/dataset2.db")
         self.informationExtractor = QualitativeInformationExtractorDatabase(abs_datasetdb_path)
 
     def run(self):
