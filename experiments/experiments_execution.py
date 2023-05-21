@@ -75,9 +75,9 @@ def main():
     """
     generator = torch.Generator().manual_seed(42)
 
-    glove_embeddings_path = "/embedding_methods/embeddings/glove/glove.42B.300d.txt"
+    glove_embeddings_path = "./embedding_methods/embeddings/glove/glove.42B.300d.txt"
     glove_embedding = GloveEmbedding(300, glove_embeddings_path)
-    fastText_embedding = FastTextEmbedding(300, "/embedding_methods/embeddings/FastText/cc.en.300.bin")
+    fastText_embedding = FastTextEmbedding(300, "./embedding_methods/embeddings/FastText/cc.en.300.bin")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
     sentence_transformer_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
     tfidf_embedding = TfIdfEmbedding()
