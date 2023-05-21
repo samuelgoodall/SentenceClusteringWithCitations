@@ -10,7 +10,7 @@ from experiments.embedding_methods.embedding_interface import (
 
 
 class TfIdfEmbedding(EmbeddingInterface):
-    path = "./experiments/embedding_methods/embeddings/"
+    path = "./embedding_methods/embeddings/"
     def __init__(self):
         self.hyper_parameter = {
             'stop_words': 'english',
