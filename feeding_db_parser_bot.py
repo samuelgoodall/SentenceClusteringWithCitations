@@ -19,9 +19,9 @@ class FeedingDBParserBot:
 
 
 if __name__ == "__main__":
-    print("PATH",os.path.abspath("../usable_dataset/usable_dataset"))
+    print("PATH",os.path.abspath("../usable_dataset"))
     "../../usable_dataset/"
-    qualitative_parser = FeedingDBParserBot("../usable_dataset/usable_dataset")
+    qualitative_parser = FeedingDBParserBot("../usable_dataset")
 
     print("Parser started")
     qualitative_parser.run()

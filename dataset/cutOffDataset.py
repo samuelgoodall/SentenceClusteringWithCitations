@@ -255,5 +255,5 @@ class cutOutlierData:
         self.conn.close()
         
 if __name__ == "__main__":
-    test = cutOutlierData('dataset/database/dataset.db')
+    test = cutOutlierData('database/dataset.db')
     test.run()

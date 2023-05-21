@@ -75,16 +75,16 @@ def main():
     """
     generator = torch.Generator().manual_seed(42)
 
-    glove_embeddings_path = "./experiments/embedding_methods/embeddings/glove/glove.42B.300d.txt"
+    glove_embeddings_path = "./embedding_methods/embeddings/glove/glove.42B.300d.txt"
     glove_embedding = GloveEmbedding(300, glove_embeddings_path)
-    fastText_embedding = FastTextEmbedding(300, "./experiments/embedding_methods/embeddings/FastText/cc.en.300.bin")
+    fastText_embedding = FastTextEmbedding(300, "./embedding_methods/embeddings/FastText/cc.en.300.bin")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
     sentence_transformer_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
     tfidf_embedding = TfIdfEmbedding()
 
     # is one at the moment makes iterating easier, batch size of 200 would save some seconds of execute
     batch_size = 1
-    unlemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new.db"))
+    unlemmatized_dataset = ArxivDataset(path.abspath("../dataset/database/dataset_new.db"))
 
     # the train, test and validation indexes have to be the same for all experiments in order to have comparability
     train_indexes, test_indexes, validation_indexes = CustomDataLoader.get_train_test_validation_index_split(
@@ -92,23 +92,23 @@ def main():
         fixed_random_generator=generator, dataset=unlemmatized_dataset)
 
     indexes = {"train":train_indexes,"test":test_indexes,"validation":validation_indexes}
-    with open('train_test_validation.json', 'w') as fp:
+    with open('../train_test_validation.json', 'w') as fp:
         json.dump(indexes, fp)
     unlemmatized_dataloader_train, unlemmatized_dataloader, unlemmatized_dataloader_validation = CustomDataLoader.get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False, dataset=unlemmatized_dataset)
-    lemmatized_dataset = ArxivDataset(path.abspath("./dataset/database/dataset_new_lemmatized.db"))
+    lemmatized_dataset = ArxivDataset(path.abspath("../dataset/database/dataset_new_lemmatized.db"))
     lemmatized_dataloader_train, lemmatized_dataloader, lemmatized_dataloader_validation = CustomDataLoader.get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=lemmatized_dataset)
     setup_tfidf_embeddings(tfidf_embedding, lemmatized_dataloader_train)
-    sentence_transformer_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_sentence_transformer.db")
+    sentence_transformer_dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_sentence_transformer.db")
     sentence_transformer_dataloader_train, sentence_transformer_dataloader, sentence_transformer_dataloader_validation = CustomDataLoader.get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
         dataset=sentence_transformer_dataset)
-    bert_dataset = ArxivDatasetPrecomputedEmbeddings("./dataset/database/dataset_new_precomputed_embeddings_bert.db")
+    bert_dataset = ArxivDatasetPrecomputedEmbeddings("../dataset/database/dataset_new_precomputed_embeddings_bert.db")
     bert_dataloader_train, bert_dataloader, bert_dataloader_validation = CustomDataLoader.get_train_test_validation_split_indexbased_dataloader(
         train_idx=train_indexes, test_idx=test_indexes, val_idx=validation_indexes, batch_size=batch_size,
         shuffle=False,
