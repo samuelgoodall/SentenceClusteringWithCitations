@@ -1,4 +1,3 @@
-import csv
 import json
 import os
 from multiprocessing import Process
