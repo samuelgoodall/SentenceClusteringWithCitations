@@ -39,7 +39,7 @@ class CustomDataLoader():
         DataLoader
            DataLoader for the whole Dataset
         """
-        return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=CustomDataLoader.custom_collate)
+        return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, collate_fn=CustomDataLoader._custom_collate)
 
     @staticmethod
     def get_train_test_validation_dataloader(batch_size: int = 20, shuffle: bool = True,
@@ -85,11 +85,11 @@ class CustomDataLoader():
                                                                            train_test_validation_split,
                                                                            generator=fixed_random_generator)
         train_dataloader = DataLoader(train_dataset, batch_size=batch_size,
-                                      shuffle=shuffle, collate_fn=CustomDataLoader.custom_collate)
+                                      shuffle=shuffle, collate_fn=CustomDataLoader._custom_collate)
         test_dataloader = DataLoader(test_dataset, batch_size=batch_size,
-                                     shuffle=shuffle, collate_fn=CustomDataLoader.custom_collate)
+                                     shuffle=shuffle, collate_fn=CustomDataLoader._custom_collate)
         validation_dataloader = DataLoader(validation_dataset, batch_size=batch_size,
-                                           shuffle=shuffle, collate_fn=CustomDataLoader.custom_collate)
+                                           shuffle=shuffle, collate_fn=CustomDataLoader._custom_collate)
 
         return train_dataloader, test_dataloader, validation_dataloader
 
@@ -163,10 +163,10 @@ class CustomDataLoader():
         """
 
         train_dataloader = DataLoader(Subset(dataset, train_idx), batch_size=batch_size,
-                                      shuffle=shuffle, collate_fn= CustomDataLoader.custom_collate)
+                                      shuffle=shuffle, collate_fn= CustomDataLoader._custom_collate)
         test_dataloader = DataLoader(Subset(dataset, test_idx), batch_size=batch_size,
-                                     shuffle=shuffle, collate_fn= CustomDataLoader.custom_collate)
+                                     shuffle=shuffle, collate_fn= CustomDataLoader._custom_collate)
         validation_dataloader = DataLoader(Subset(dataset, val_idx), batch_size=batch_size,
-                                           shuffle=shuffle, collate_fn= CustomDataLoader.custom_collate)
+                                           shuffle=shuffle, collate_fn= CustomDataLoader._custom_collate)
 
         return train_dataloader, test_dataloader, validation_dataloader

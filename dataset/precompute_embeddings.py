@@ -74,8 +74,8 @@ def create_embedded_dataset(db_path_old: str, db_path_new: str, embedding: Embed
 def main():
     print("query done!")
     db_path_new_sentence_transformer = "../dataset/database/dataset_new_precomputed_embeddings_sentence_transformer.db"
-    db_path_new_bert = "../dataset/database/dataset_new_precomputed_embeddings_bert.db"
-    db_path_old = "../dataset/database/dataset_new.db"
+    db_path_new_bert = "database/dataset_new_precomputed_embeddings_bert.db"
+    db_path_old = "database/dataset_new.db"
     sentence_transformer_embedding = SentenceTransformerEmbedding("all-mpnet-base-v2")
     bert_embedding = BertTransformerEmbedding("bert-base-uncased")
     create_embedded_dataset(db_path_old=db_path_old, db_path_new=db_path_new_sentence_transformer, embedding=sentence_transformer_embedding)
