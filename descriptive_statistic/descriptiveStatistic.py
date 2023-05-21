@@ -10,7 +10,7 @@ class descriptiveStatistics:
         self.conn = sqlite3.connect(database_path)
         
     def log(self, string, number):
-        with open("descriptive_statistic/descriptive_statistics.txt", "a+") as file:
+        with open("descriptive_statistics.txt", "a+") as file:
             file.write(string + str(number) + "\n") 
     
     def analyze_paragraphs_per_paper(self):
@@ -35,7 +35,7 @@ class descriptiveStatistics:
         ax.set_title('Distribution of Paragraphs per Paper')
         ax.set_xlabel('Paper')
         ax.set_ylabel('Number of Paragraphs')
-        plt.savefig('descriptive_statistic/plots/paragraphDistributionBP.png')
+        plt.savefig('./plots/paragraphDistributionBP.png')
         plt.show()
         #create histogram
         fig, ax = plt.subplots()
@@ -44,7 +44,7 @@ class descriptiveStatistics:
         ax.set_title('Distribution of Paragraphs per Paper')
         ax.set_xlabel('Number of Paragraphs')
         ax.set_ylabel('Number of Papers')
-        plt.savefig('descriptive_statistic/plots/paragraphDistributionHist.png')
+        plt.savefig('./plots/paragraphDistributionHist.png')
         plt.show()
         #create table
         paper_counts = grouped_data.value_counts().sort_index()
@@ -52,7 +52,7 @@ class descriptiveStatistics:
             'Number of paragraphs': paper_counts.index,
             'Number of papers': paper_counts.values
         })
-        table.to_csv('descriptive_statistic/tables/paragraphs_per_paper.csv', index=False)
+        table.to_csv('./tables/paragraphs_per_paper.csv', index=False)
 
     def analyze_sentences_per_paragraph(self):
         """calculate descriptive statistics on number sentences per paragraph and save boxplot and histogram"""
@@ -76,7 +76,7 @@ class descriptiveStatistics:
         ax.set_title('Distribution of Sentences per Paragraph')
         ax.set_xlabel('Paragraph')
         ax.set_ylabel('Number of Sentences')
-        plt.savefig('descriptive_statistic/plots/sentenceDistributionBP.png')
+        plt.savefig('./plots/sentenceDistributionBP.png')
         plt.show()
         #create histogram
         fig, ax = plt.subplots()
@@ -85,7 +85,7 @@ class descriptiveStatistics:
         ax.set_xlim([0, 6])
         ax.set_xlabel('Number of Sentences')
         ax.set_ylabel('Number of Paragraphs')
-        plt.savefig('descriptive_statistic/plots/sentenceDistributionHist.png')
+        plt.savefig('./plots/sentenceDistributionHist.png')
         plt.show()
         #create table
         paragraph_counts = grouped_data.value_counts().sort_index()
@@ -93,7 +93,7 @@ class descriptiveStatistics:
             'Number of sentences': paragraph_counts.index,
             'Number of paragraph': paragraph_counts.values
         })
-        table.to_csv('descriptive_statistic/tables/sentence_per_paragraph.csv', index=False)
+        table.to_csv('./tables/sentence_per_paragraph.csv', index=False)
 
     def analyze_citations_per_sentence(self):
         """calculate descriptive statistics on citations per sentence and save boxplot and histogram"""
@@ -116,7 +116,7 @@ class descriptiveStatistics:
         ax.set_title('Distribution of Citations per Sentence')
         ax.set_xlabel('Sentence')
         ax.set_ylabel('Number of Citations')
-        plt.savefig('descriptive_statistic/plots/citationDistributionBP.png')
+        plt.savefig('./plots/citationDistributionBP.png')
         plt.show()
         #create histogram
         fig, ax = plt.subplots()
@@ -125,7 +125,7 @@ class descriptiveStatistics:
         ax.set_xlim([0, 5])
         ax.set_xlabel('Number of Citations')
         ax.set_ylabel('Number of Sentences')
-        plt.savefig('descriptive_statistic/plots/citationDistributionHist.png')
+        plt.savefig('./plots/citationDistributionHist.png')
         plt.show()
         #create table
         sentence_counts = grouped_data.value_counts().sort_index()
@@ -133,7 +133,7 @@ class descriptiveStatistics:
             'Number of citations': sentence_counts.index,
             'Number of sentences': sentence_counts.values
         })
-        table.to_csv('descriptive_statistic/tables/citation_per_sentence.csv', index=False)
+        table.to_csv('./tables/citation_per_sentence.csv', index=False)
    
     def analyze_sentence_length(self):
         """calculate descriptive statistics on words per sentence and save boxplot and histogram"""
@@ -155,7 +155,7 @@ class descriptiveStatistics:
         ax.set_title('Distribution of Sentence Length')
         ax.set_xlabel('Sentence')
         ax.set_ylabel('Length in Words')
-        plt.savefig('descriptive_statistic/plots/sentenceLengthBP.png')
+        plt.savefig('./plots/sentenceLengthBP.png')
         plt.show()
         #create histogram
         fig, ax = plt.subplots()
@@ -164,14 +164,14 @@ class descriptiveStatistics:
         ax.set_xlim([0, 44])
         ax.set_xlabel('Length of Sentence')
         ax.set_ylabel('Number of Sentences')
-        plt.savefig('descriptive_statistic/plots/sentenceLengthHist.png')
+        plt.savefig('./plots/sentenceLengthHist.png')
         plt.show()
         sentence_counts = sentence_lengths.value_counts().sort_index()
         table = pd.DataFrame({
             'Number of sentences': sentence_counts.index,
             'Number of words': sentence_counts.values
         })
-        table.to_csv('descriptive_statistic/tables/sentence_length.csv', index=False)
+        table.to_csv('./tables/sentence_length.csv', index=False)
 
     def count_usuable_abstracts(self):
         """count database entries with a abstract"""
@@ -199,6 +199,6 @@ class descriptiveStatistics:
         self.conn.close()
 
 if __name__ == "__main__":
-    run = descriptiveStatistics('dataset/database/dataset.db')
+    run = descriptiveStatistics('../dataset/database/dataset.db')
     run.run()
 
