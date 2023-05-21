@@ -11,3 +11,4 @@ requests~=2.28.1
 kneed==0.8.2
 soyclustering==0.2.0
 transformers==4.28.1
+sentence-transformers
