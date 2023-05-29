@@ -1,20 +1,6 @@
 # NLProjekt
 
-## Introduction
-
-In order to install most of the required dependencys execute following command:
-pip install -r requirements.txt
-
-the fastext depency has to be installed manually like so:
-https://fasttext.cc/docs/en/support.html
-
-
-
-## Run the Experiments
-
-In order to run experiments run the setup_script first
-If executing the glove embedding experiment for the first time it can take some time for the embeddings to generate
-
-then evaluation.py is runnable enjoy :)
+#Documentation on Setup and 
+https://docs.google.com/document/d/1qKhrj97W9RL8QhEK3RtaYnLyFQEBd1P2eH2RZuVR-Jg/edit
 
 
